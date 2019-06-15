@@ -1,0 +1,1814 @@
+
+Copying from development directories to release directory.
+(Control-C aborts)
+
+here
+here1
+xcopy d:\dev\bin\web.dll c:\rel\anadll\ /w /e /h /i
+Press any key when ready to begin copying file(s)
+D:\dev\bin\web.dll
+1 File(s) copied
+Press any key when ready to begin copying file(s)
+D:\dev\bin\webu.dll
+1 File(s) copied
+D:\dev\bin\words.dll
+1 File(s) copied
+D:\dev\bin\lite.dll
+1 File(s) copied
+D:\dev\bin\libprim.dll
+1 File(s) copied
+D:\dev\bin\libkbm.dll
+1 File(s) copied
+D:\dev\bin\libconsh.dll
+1 File(s) copied
+D:\dev\bin\wordsu.dll
+1 File(s) copied
+D:\dev\bin\liteu.dll
+1 File(s) copied
+D:\dev\bin\libprimu.dll
+1 File(s) copied
+D:\dev\bin\libkbmu.dll
+1 File(s) copied
+D:\dev\bin\libconshu.dll
+1 File(s) copied
+D:\dev\bin\libstreamu.dll
+1 File(s) copied
+D:\dev\bin\DotNetAPI.dll
+1 File(s) copied
+D:\dev\bin\DotNetBridge.dll
+1 File(s) copied
+0 File(s) copied
+D:\dev\bin\DotNetTest.exe
+1 File(s) copied
+D:\dev\dll\ics.dll
+1 File(s) copied
+D:\dev\icu\bin\icudt34.dll
+D:\dev\icu\bin\icuin34.dll
+D:\dev\icu\bin\icuio34.dll
+D:\dev\icu\bin\icule34.dll
+D:\dev\icu\bin\iculx34.dll
+D:\dev\icu\bin\icutu34.dll
+D:\dev\icu\bin\icuuc34.dll
+7 File(s) copied
+D:\dev\dll\ics.dll
+1 File(s) copied
+C:\program files\codejock software\mfc\toolkit\bin_vc71\XT4100Lib.dll
+1 File(s) copied
+C:\program files\codejock software\mfc\toolkit\bin_vc71\XT4100Libu.dll
+1 File(s) copied
+0 File(s) copied
+C:\WINDOWS\SYSTEM32\shell32.dll
+1 File(s) copied
+C:\WINDOWS\SYSTEM32\MFC71.dll
+1 File(s) copied
+C:\WINDOWS\SYSTEM32\mfc71d.dll
+1 File(s) copied
+C:\WINDOWS\SYSTEM32\msvcp71.dll
+1 File(s) copied
+C:\WINDOWS\SYSTEM32\msvcp71d.dll
+1 File(s) copied
+C:\WINDOWS\SYSTEM32\msvcrt.dll
+1 File(s) copied
+C:\program files\microsoft visual studio .net 2003\common7\ide\msvcr71.dll
+1 File(s) copied
+D:\dev\lib\lite.exp
+1 File(s) copied
+D:\dev\lib\libprim.exp
+1 File(s) copied
+D:\dev\lib\libkbm.exp
+1 File(s) copied
+D:\dev\lib\libconsh.exp
+1 File(s) copied
+D:\dev\lib\web.exp
+1 File(s) copied
+D:\dev\lib\words.exp
+1 File(s) copied
+D:\dev\lib\lite.lib
+1 File(s) copied
+D:\dev\lib\libprim.lib
+1 File(s) copied
+D:\dev\lib\libkbm.lib
+1 File(s) copied
+D:\dev\lib\libconsh.lib
+1 File(s) copied
+D:\dev\lib\web.lib
+1 File(s) copied
+D:\dev\lib\words.lib
+1 File(s) copied
+D:\dev\include\Api\libStream.h
+D:\dev\include\Api\machine.h
+D:\dev\include\Api\my_tchar.h
+D:\dev\include\Api\streamClasses.h
+D:\dev\include\Api\u_convert.h
+D:\dev\include\Api\vtapi.h
+D:\dev\include\Api\consh\Aconsh.h
+D:\dev\include\Api\consh\cg.h
+D:\dev\include\Api\consh\libconsh.h
+D:\dev\include\Api\kbm\Akbm.h
+D:\dev\include\Api\kbm\con_.h
+D:\dev\include\Api\kbm\con_s.h
+D:\dev\include\Api\kbm\libkbm.h
+D:\dev\include\Api\kbm\ptr.h
+D:\dev\include\Api\kbm\ptr_s.h
+D:\dev\include\Api\kbm\st.h
+D:\dev\include\Api\kbm\sym.h
+D:\dev\include\Api\kbm\sym_s.h
+D:\dev\include\Api\lite\Agram.h
+D:\dev\include\Api\lite\algo.h
+D:\dev\include\Api\lite\ana.h
+D:\dev\include\Api\lite\arg.h
+D:\dev\include\Api\lite\Arun.h
+D:\dev\include\Api\lite\Aseq.h
+D:\dev\include\Api\lite\Auser.h
+D:\dev\include\Api\lite\Avar.h
+D:\dev\include\Api\lite\code.h
+D:\dev\include\Api\lite\delt.h
+D:\dev\include\Api\lite\dir.h
+D:\dev\include\Api\lite\dlist.h
+D:\dev\include\Api\lite\global.h
+D:\dev\include\Api\lite\Gui.h
+D:\dev\include\Api\lite\iarg.h
+D:\dev\include\Api\lite\inline.h
+D:\dev\include\Api\lite\lite.h
+D:\dev\include\Api\lite\mach.h
+D:\dev\include\Api\lite\nlp.h
+D:\dev\include\Api\lite\nlppp.h
+D:\dev\include\Api\lite\node.h
+D:\dev\include\Api\lite\parse.h
+D:\dev\include\Api\lite\pn.h
+D:\dev\include\Api\lite\pre.h
+D:\dev\include\Api\lite\rfasem.h
+D:\dev\include\Api\lite\rug.h
+D:\dev\include\Api\lite\selt.h
+D:\dev\include\Api\lite\sem.h
+D:\dev\include\Api\lite\slist.h
+D:\dev\include\Api\lite\std.h
+D:\dev\include\Api\lite\tree.h
+D:\dev\include\Api\lite\vtrun.h
+D:\dev\include\Api\prim\dyn.h
+D:\dev\include\Api\prim\libprim.h
+D:\dev\include\Api\prim\list.h
+D:\dev\include\Api\prim\list_s.h
+D:\dev\include\Api\prim\prim.h
+D:\dev\include\Api\prim\str.h
+D:\dev\include\Api\prim\unicode.h
+D:\dev\include\Api\web\Aweb.h
+D:\dev\include\Api\web\tear.h
+D:\dev\include\Api\web\url.h
+D:\dev\include\Api\web\urls.h
+D:\dev\include\Api\web\web.h
+D:\dev\include\Api\words\wordarrs.h
+D:\dev\include\Api\words\words.h
+64 File(s) copied
+D:\dev\data\Rfb\spec\actions.pat
+D:\dev\data\Rfb\spec\analyzer.seq
+D:\dev\data\Rfb\spec\bigtok.pat
+D:\dev\data\Rfb\spec\checks.pat
+D:\dev\data\Rfb\spec\code.pat
+D:\dev\data\Rfb\spec\components.pat
+D:\dev\data\Rfb\spec\Copy of decl.pat
+D:\dev\data\Rfb\spec\decl.pat
+D:\dev\data\Rfb\spec\decls.pat
+D:\dev\data\Rfb\spec\element.pat
+D:\dev\data\Rfb\spec\finalerr.pat
+D:\dev\data\Rfb\spec\gram1.pat
+D:\dev\data\Rfb\spec\gram2-saf.pat
+D:\dev\data\Rfb\spec\gram2.pat
+D:\dev\data\Rfb\spec\gram3.pat
+D:\dev\data\Rfb\spec\gram4.pat
+D:\dev\data\Rfb\spec\gram5.pat
+D:\dev\data\Rfb\spec\list.pat
+D:\dev\data\Rfb\spec\list1.pat
+D:\dev\data\Rfb\spec\multi.pat
+D:\dev\data\Rfb\spec\nlppp.pat
+D:\dev\data\Rfb\spec\nodes.pat
+D:\dev\data\Rfb\spec\pair.pat
+D:\dev\data\Rfb\spec\pairs.pat
+D:\dev\data\Rfb\spec\path.pat
+D:\dev\data\Rfb\spec\posts.pat
+D:\dev\data\Rfb\spec\preaction.pat
+D:\dev\data\Rfb\spec\pres.pat
+D:\dev\data\Rfb\spec\recurse.pat
+D:\dev\data\Rfb\spec\recurses.pat
+D:\dev\data\Rfb\spec\region.pat
+D:\dev\data\Rfb\spec\regions.pat
+D:\dev\data\Rfb\spec\retok.pat
+D:\dev\data\Rfb\spec\rule.pat
+D:\dev\data\Rfb\spec\rules.pat
+D:\dev\data\Rfb\spec\rulesfile.pat
+D:\dev\data\Rfb\spec\select.pat
+D:\dev\data\Rfb\spec\tmp.pat
+D:\dev\data\Rfb\spec\tmp.seq
+D:\dev\data\Rfb\spec\tmp1.pat
+D:\dev\data\Rfb\spec\un_mark.pat
+D:\dev\data\Rfb\spec\x_commas.pat
+D:\dev\data\Rfb\spec\x_white.pat
+D:\dev\data\spec\Emails.pat
+D:\dev\data\spec\funs.pat
+D:\dev\data\spec\kbtraverse.pat
+D:\dev\data\spec\Lines.pat
+D:\dev\data\spec\num.pat
+D:\dev\data\spec\RemoveBlankLines.pat
+D:\dev\data\spec\RemoveWhiteSpace.pat
+D:\dev\data\spec\tags.pat
+D:\dev\data\spec\traverse_parse_tree.pat
+D:\dev\data\spec\xmlfns.pat
+D:\dev\data\spec\Database_pats\01_SetupVariables.pat
+D:\dev\data\spec\Database_pats\02_SetupKB.pat
+D:\dev\data\spec\Database_pats\03_EmptyItems.pat
+D:\dev\data\spec\Database_pats\04_Items.pat
+D:\dev\data\spec\Database_pats\05_Fields.pat
+D:\dev\data\spec\Database_pats\06_FieldItems.pat
+D:\dev\data\spec\Database_pats\07_Records.pat
+D:\dev\data\spec\Database_pats\08_ItemsToKB.pat
+D:\dev\data\spec\Database_pats\09_FillRemainingItems.pat
+D:\dev\data\spec\Database_pats\10_KBOutput.pat
+D:\dev\data\spec\DatePlusNumerics_pats\01_SIMPLE_NUMERICS.pat
+D:\dev\data\spec\DatePlusNumerics_pats\02_COMPOUND_NUMERICS.pat
+D:\dev\data\spec\DatePlusNumerics_pats\03_COMPOUND_NUMERICS_2.pat
+D:\dev\data\spec\DatePlusNumerics_pats\04_Phone_Numbers_etc.pat
+D:\dev\data\spec\DatePlusNumerics_pats\05_Time_of_Day_plus_Abbrevs_and_Acronyms.pat
+D:\dev\data\spec\DatePlusNumerics_pats\06_Numeric_Sequences.pat
+D:\dev\data\spec\DatePlusNumerics_pats\07_Numeric_Lists.pat
+D:\dev\data\spec\DatePlusNumerics_pats\08_DATE_PATTERNS.pat
+D:\dev\data\spec\DatePlusNumerics_pats\09_DATE_PATTERNS_NO_YEAR.pat
+D:\dev\data\spec\HTML_pats\01_HTMLFormattingElements.pat
+D:\dev\data\spec\HTML_pats\02_HTMLTextTagging.pat
+D:\dev\data\spec\HTML_pats\03_HTMLCharacterPatterns.pat
+D:\dev\data\spec\HTML_pats\04_HTMLText Functions.pat
+D:\dev\data\spec\HTML_pats\05_HTMLTagStructure.pat
+D:\dev\data\spec\Numerics_pats\01_SIMPLE_NUMERICS.pat
+D:\dev\data\spec\Numerics_pats\02_COMPOUND_NUMERICS.pat
+D:\dev\data\spec\Numerics_pats\03_COMPOUND_NUMERICS_2.pat
+D:\dev\data\spec\Numerics_pats\04_PhoneNumbersetc.pat
+D:\dev\data\spec\Numerics_pats\05_TimeofDayplusAbbrevsandAcronyms.pat
+D:\dev\data\spec\Numerics_pats\06_NumericSequences.pat
+D:\dev\data\spec\Numerics_pats\07_NumericLists.pat
+D:\dev\data\spec\Trends\TrendInit.pat
+D:\dev\data\spec\Trends\TrendTree.pat
+D:\dev\data\spec\Trends\TrendWords.pat
+D:\dev\data\spec\XML_DTD_pats\01_XMLDTDbaseElements.pat
+D:\dev\data\spec\XML_DTD_pats\02_XMLDTDLiterals.pat
+D:\dev\data\spec\XML_DTD_pats\03_XMLDTDDOCTYPE.pat
+D:\dev\data\spec\XML_DTD_pats\04_XMLDTDNotationDeclarations.pat
+D:\dev\data\spec\XML_DTD_pats\05_XMLDTDExternalID.pat
+D:\dev\data\spec\XML_DTD_pats\06_XMLDTDEntityDefs.pat
+D:\dev\data\spec\XML_DTD_pats\07_XMLDTDattdefs.pat
+D:\dev\data\spec\XML_DTD_pats\08_XMLDTDattdefs2.pat
+D:\dev\data\spec\XML_DTD_pats\09_XMLDTDattdefs3.pat
+D:\dev\data\spec\XML_DTD_pats\10_XMLDTDdeclarationElements.pat
+D:\dev\data\spec\XML_DTD_pats\11_XMLDTDPCDATA.pat
+D:\dev\data\spec\XML_DTD_pats\12_XMLDTDdeclarationConstructors.pat
+D:\dev\data\spec\XML_DTD_pats\13_XMLDTDdeclarationConstructors2.pat
+D:\dev\data\spec\XML_DTD_pats\14_XMLDTDdeclSep.pat
+D:\dev\data\spec\Xml_pats\01_XMLbaseElements.pat
+D:\dev\data\spec\Xml_pats\02_XMLLiterals.pat
+D:\dev\data\spec\Xml_pats\03_XMLbaseDefs.pat
+D:\dev\data\spec\Xml_pats\04_XMLDecl.pat
+D:\dev\data\spec\Xml_pats\05_XMLDOCTYPE.pat
+D:\dev\data\spec\Xml_pats\06_XMLNotationDeclarations.pat
+D:\dev\data\spec\Xml_pats\07_XMLExternalID.pat
+D:\dev\data\spec\Xml_pats\08_XMLEntityDefs.pat
+D:\dev\data\spec\Xml_pats\09_XMLattdefs.pat
+D:\dev\data\spec\Xml_pats\10_XMLattdefs2.pat
+D:\dev\data\spec\Xml_pats\11_XMLattdefs3.pat
+D:\dev\data\spec\Xml_pats\12_XMLdeclarationElements.pat
+D:\dev\data\spec\Xml_pats\13_XMLPCDATA.pat
+D:\dev\data\spec\Xml_pats\14_XMLdeclarationConstructors.pat
+D:\dev\data\spec\Xml_pats\15_XMLdeclarationConstructors2.pat
+D:\dev\data\spec\Xml_pats\16_XMLdeclSep.pat
+D:\dev\data\spec\Xml_pats\17_XMLdeclSep2.pat
+D:\dev\data\spec\Xml_pats\18_XMLtagElements.pat
+D:\dev\data\spec\Xml_pats\19_XMLStartingTag.pat
+D:\dev\data\spec\Xml_pats\20_XMLtagStructure.pat
+D:\dev\data\spec\Xml_pats\21_XMLSubschema.pat
+D:\dev\data\spec\Xml_pats\22_XMLOverallSchema.pat
+123 File(s) copied
+D:\dev\icu\include\unicode\brkiter.h
+D:\dev\icu\include\unicode\calendar.h
+D:\dev\icu\include\unicode\caniter.h
+D:\dev\icu\include\unicode\chariter.h
+D:\dev\icu\include\unicode\choicfmt.h
+D:\dev\icu\include\unicode\coleitr.h
+D:\dev\icu\include\unicode\coll.h
+D:\dev\icu\include\unicode\curramt.h
+D:\dev\icu\include\unicode\currunit.h
+D:\dev\icu\include\unicode\datefmt.h
+D:\dev\icu\include\unicode\dbbi.h
+D:\dev\icu\include\unicode\dcfmtsym.h
+D:\dev\icu\include\unicode\decimfmt.h
+D:\dev\icu\include\unicode\docmain.h
+D:\dev\icu\include\unicode\dtfmtsym.h
+D:\dev\icu\include\unicode\fieldpos.h
+D:\dev\icu\include\unicode\fmtable.h
+D:\dev\icu\include\unicode\format.h
+D:\dev\icu\include\unicode\gregocal.h
+D:\dev\icu\include\unicode\locid.h
+D:\dev\icu\include\unicode\measfmt.h
+D:\dev\icu\include\unicode\measunit.h
+D:\dev\icu\include\unicode\measure.h
+D:\dev\icu\include\unicode\msgfmt.h
+D:\dev\icu\include\unicode\normlzr.h
+D:\dev\icu\include\unicode\numfmt.h
+D:\dev\icu\include\unicode\parseerr.h
+D:\dev\icu\include\unicode\parsepos.h
+D:\dev\icu\include\unicode\putil.h
+D:\dev\icu\include\unicode\pwin32.h
+D:\dev\icu\include\unicode\rbbi.h
+D:\dev\icu\include\unicode\rbnf.h
+D:\dev\icu\include\unicode\regex.h
+D:\dev\icu\include\unicode\rep.h
+D:\dev\icu\include\unicode\resbund.h
+D:\dev\icu\include\unicode\schriter.h
+D:\dev\icu\include\unicode\search.h
+D:\dev\icu\include\unicode\simpletz.h
+D:\dev\icu\include\unicode\smpdtfmt.h
+D:\dev\icu\include\unicode\sortkey.h
+D:\dev\icu\include\unicode\strenum.h
+D:\dev\icu\include\unicode\stsearch.h
+D:\dev\icu\include\unicode\symtable.h
+D:\dev\icu\include\unicode\tblcoll.h
+D:\dev\icu\include\unicode\timezone.h
+D:\dev\icu\include\unicode\translit.h
+D:\dev\icu\include\unicode\ubidi.h
+D:\dev\icu\include\unicode\ubrk.h
+D:\dev\icu\include\unicode\ucal.h
+D:\dev\icu\include\unicode\ucasemap.h
+D:\dev\icu\include\unicode\ucat.h
+D:\dev\icu\include\unicode\uchar.h
+D:\dev\icu\include\unicode\uchriter.h
+D:\dev\icu\include\unicode\uclean.h
+D:\dev\icu\include\unicode\ucnv.h
+D:\dev\icu\include\unicode\ucnv_cb.h
+D:\dev\icu\include\unicode\ucnv_err.h
+D:\dev\icu\include\unicode\ucol.h
+D:\dev\icu\include\unicode\ucoleitr.h
+D:\dev\icu\include\unicode\uconfig.h
+D:\dev\icu\include\unicode\ucurr.h
+D:\dev\icu\include\unicode\udat.h
+D:\dev\icu\include\unicode\udata.h
+D:\dev\icu\include\unicode\udeprctd.h
+D:\dev\icu\include\unicode\udraft.h
+D:\dev\icu\include\unicode\uenum.h
+D:\dev\icu\include\unicode\uidna.h
+D:\dev\icu\include\unicode\uiter.h
+D:\dev\icu\include\unicode\uloc.h
+D:\dev\icu\include\unicode\ulocdata.h
+D:\dev\icu\include\unicode\umachine.h
+D:\dev\icu\include\unicode\umisc.h
+D:\dev\icu\include\unicode\umsg.h
+D:\dev\icu\include\unicode\unifilt.h
+D:\dev\icu\include\unicode\unifunct.h
+D:\dev\icu\include\unicode\unimatch.h
+D:\dev\icu\include\unicode\unirepl.h
+D:\dev\icu\include\unicode\uniset.h
+D:\dev\icu\include\unicode\unistr.h
+D:\dev\icu\include\unicode\unorm.h
+D:\dev\icu\include\unicode\unum.h
+D:\dev\icu\include\unicode\uobject.h
+D:\dev\icu\include\unicode\uobslete.h
+D:\dev\icu\include\unicode\uregex.h
+D:\dev\icu\include\unicode\urename.h
+D:\dev\icu\include\unicode\urep.h
+D:\dev\icu\include\unicode\ures.h
+D:\dev\icu\include\unicode\uscript.h
+D:\dev\icu\include\unicode\usearch.h
+D:\dev\icu\include\unicode\uset.h
+D:\dev\icu\include\unicode\usetiter.h
+D:\dev\icu\include\unicode\ushape.h
+D:\dev\icu\include\unicode\usprep.h
+D:\dev\icu\include\unicode\ustdio.h
+D:\dev\icu\include\unicode\ustream.h
+D:\dev\icu\include\unicode\ustring.h
+D:\dev\icu\include\unicode\utext.h
+D:\dev\icu\include\unicode\utf.h
+D:\dev\icu\include\unicode\utf16.h
+D:\dev\icu\include\unicode\utf32.h
+D:\dev\icu\include\unicode\utf8.h
+D:\dev\icu\include\unicode\utf_old.h
+D:\dev\icu\include\unicode\utrace.h
+D:\dev\icu\include\unicode\utrans.h
+D:\dev\icu\include\unicode\utypes.h
+D:\dev\icu\include\unicode\uversion.h
+106 File(s) copied
+D:\dev\VisualText\release\VisualText.exe
+1 File(s) copied
+        1 file(s) copied.
+0 File(s) copied
+0 File(s) copied
+D:\dev\Templates\Bare\compile-all.bat
+D:\dev\Templates\Bare\compile-dev.bat
+D:\dev\Templates\Bare\compile-devu.bat
+D:\dev\Templates\Bare\compile-rel.bat
+D:\dev\Templates\Bare\compile-relu.bat
+D:\dev\Templates\Bare\input.txt
+D:\dev\Templates\Bare\main.cpp
+D:\dev\Templates\Bare\prog.dsp
+D:\dev\Templates\Bare\prog.dsw
+D:\dev\Templates\Bare\prog.sln
+D:\dev\Templates\Bare\prog.vcproj
+D:\dev\Templates\Bare\Uanalyze.cpp
+D:\dev\Templates\Bare\Uanalyze.h
+D:\dev\Templates\Bare\u_out.cpp
+D:\dev\Templates\Bare\u_out.h
+D:\dev\Templates\Bare\bin\user.dll
+D:\dev\Templates\Bare\bin\user.exp
+D:\dev\Templates\Bare\bin\user.lib
+D:\dev\Templates\Bare\bin\userd.dll
+D:\dev\Templates\Bare\bin\userd.exp
+D:\dev\Templates\Bare\bin\userd.lib
+D:\dev\Templates\Bare\bin\userdu.dll
+D:\dev\Templates\Bare\bin\userdu.exp
+D:\dev\Templates\Bare\bin\userdu.lib
+D:\dev\Templates\Bare\bin\useru.dll
+D:\dev\Templates\Bare\bin\useru.exp
+D:\dev\Templates\Bare\bin\useru.lib
+D:\dev\Templates\Bare\kb\kb.cpp
+D:\dev\Templates\Bare\kb\kb.def
+D:\dev\Templates\Bare\kb\kb.dsp
+D:\dev\Templates\Bare\kb\kb.dsw
+D:\dev\Templates\Bare\kb\kb.h
+D:\dev\Templates\Bare\kb\kb.sln
+D:\dev\Templates\Bare\kb\kb.vcproj
+D:\dev\Templates\Bare\kb\kb_setup.cpp
+D:\dev\Templates\Bare\kb\kb_setup.h
+D:\dev\Templates\Bare\kb\StdAfx.cpp
+D:\dev\Templates\Bare\kb\StdAfx.h
+D:\dev\Templates\Bare\kb\user\attr.kb
+D:\dev\Templates\Bare\kb\user\hier.kb
+D:\dev\Templates\Bare\kb\user\phr.kb
+D:\dev\Templates\Bare\kb\user\word.kb
+D:\dev\Templates\Bare\run\analyzer.cpp
+D:\dev\Templates\Bare\run\analyzer.h
+D:\dev\Templates\Bare\run\auxiliary.cpp
+D:\dev\Templates\Bare\run\data.h
+D:\dev\Templates\Bare\run\edata.h
+D:\dev\Templates\Bare\run\ehash.cpp
+D:\dev\Templates\Bare\run\ehead.h
+D:\dev\Templates\Bare\run\rchain.h
+D:\dev\Templates\Bare\run\rdata.h
+D:\dev\Templates\Bare\run\rhash.cpp
+D:\dev\Templates\Bare\run\rhead.h
+D:\dev\Templates\Bare\run\run.cpp
+D:\dev\Templates\Bare\run\run.def
+D:\dev\Templates\Bare\run\run.dsp
+D:\dev\Templates\Bare\run\run.dsw
+D:\dev\Templates\Bare\run\run.h
+D:\dev\Templates\Bare\run\run.sln
+D:\dev\Templates\Bare\run\run.vcproj
+D:\dev\Templates\Bare\spec\analyzer.seq
+D:\dev\Templates\Bare\user\Ualgo.cpp
+D:\dev\Templates\Bare\user\Ualgo.h
+D:\dev\Templates\Bare\user\Ucode.cpp
+D:\dev\Templates\Bare\user\Ucode.h
+D:\dev\Templates\Bare\user\Umisc.cpp
+D:\dev\Templates\Bare\user\Umisc.h
+D:\dev\Templates\Bare\user\Upre.cpp
+D:\dev\Templates\Bare\user\Upre.h
+D:\dev\Templates\Bare\user\Ureg.cpp
+D:\dev\Templates\Bare\user\Ureg.h
+D:\dev\Templates\Bare\user\user.cpp
+D:\dev\Templates\Bare\user\user.def
+D:\dev\Templates\Bare\user\user.dsp
+D:\dev\Templates\Bare\user\user.dsw
+D:\dev\Templates\Bare\user\user.h
+D:\dev\Templates\Bare\user\user.sln
+D:\dev\Templates\Bare\user\user.vcproj
+D:\dev\Templates\Database\compile-all.bat
+D:\dev\Templates\Database\compile-dev.bat
+D:\dev\Templates\Database\compile-devu.bat
+D:\dev\Templates\Database\compile-rel.bat
+D:\dev\Templates\Database\compile-relu.bat
+D:\dev\Templates\Database\input.txt
+D:\dev\Templates\Database\main.cpp
+D:\dev\Templates\Database\prog.dsp
+D:\dev\Templates\Database\prog.dsw
+D:\dev\Templates\Database\prog.ncb
+D:\dev\Templates\Database\prog.sln
+D:\dev\Templates\Database\prog.suo
+D:\dev\Templates\Database\prog.vcproj
+D:\dev\Templates\Database\Uanalyze.cpp
+D:\dev\Templates\Database\Uanalyze.h
+D:\dev\Templates\Database\u_out.cpp
+D:\dev\Templates\Database\u_out.h
+D:\dev\Templates\Database\bin\user.dll
+D:\dev\Templates\Database\bin\user.exp
+D:\dev\Templates\Database\bin\user.lib
+D:\dev\Templates\Database\bin\userd.dll
+D:\dev\Templates\Database\bin\userd.exp
+D:\dev\Templates\Database\bin\userd.lib
+D:\dev\Templates\Database\bin\userdu.dll
+D:\dev\Templates\Database\bin\userdu.exp
+D:\dev\Templates\Database\bin\userdu.lib
+D:\dev\Templates\Database\bin\useru.dll
+D:\dev\Templates\Database\bin\useru.exp
+D:\dev\Templates\Database\bin\useru.lib
+D:\dev\Templates\Database\input\SampleGlosses.txt
+D:\dev\Templates\Database\kb\kb.cpp
+D:\dev\Templates\Database\kb\kb.def
+D:\dev\Templates\Database\kb\kb.dsp
+D:\dev\Templates\Database\kb\kb.dsw
+D:\dev\Templates\Database\kb\kb.h
+D:\dev\Templates\Database\kb\kb.ncb
+D:\dev\Templates\Database\kb\kb.sln
+D:\dev\Templates\Database\kb\kb.suo
+D:\dev\Templates\Database\kb\kb.vcproj
+D:\dev\Templates\Database\kb\kb_setup.cpp
+D:\dev\Templates\Database\kb\kb_setup.h
+D:\dev\Templates\Database\kb\StdAfx.cpp
+D:\dev\Templates\Database\kb\StdAfx.h
+D:\dev\Templates\Database\kb\user\attr.kb
+D:\dev\Templates\Database\kb\user\hier.kb
+D:\dev\Templates\Database\kb\user\phr.kb
+D:\dev\Templates\Database\kb\user\word.kb
+D:\dev\Templates\Database\run\analyzer.cpp
+D:\dev\Templates\Database\run\analyzer.h
+D:\dev\Templates\Database\run\auxiliary.cpp
+D:\dev\Templates\Database\run\data.h
+D:\dev\Templates\Database\run\edata.h
+D:\dev\Templates\Database\run\ehash.cpp
+D:\dev\Templates\Database\run\ehead.h
+D:\dev\Templates\Database\run\rchain.h
+D:\dev\Templates\Database\run\rdata.h
+D:\dev\Templates\Database\run\rhash.cpp
+D:\dev\Templates\Database\run\rhead.h
+D:\dev\Templates\Database\run\run.cpp
+D:\dev\Templates\Database\run\run.def
+D:\dev\Templates\Database\run\run.dsp
+D:\dev\Templates\Database\run\run.dsw
+D:\dev\Templates\Database\run\run.h
+D:\dev\Templates\Database\run\run.ncb
+D:\dev\Templates\Database\run\run.sln
+D:\dev\Templates\Database\run\run.suo
+D:\dev\Templates\Database\run\run.vcproj
+D:\dev\Templates\Database\spec\analyzer.seq
+D:\dev\Templates\Database\spec\EmptyItems.pat
+D:\dev\Templates\Database\spec\FieldItems.pat
+D:\dev\Templates\Database\spec\Fields.pat
+D:\dev\Templates\Database\spec\FillRemainingItems.pat
+D:\dev\Templates\Database\spec\Items.pat
+D:\dev\Templates\Database\spec\ItemsToKB.pat
+D:\dev\Templates\Database\spec\KBOutput.pat
+D:\dev\Templates\Database\spec\Records.pat
+D:\dev\Templates\Database\spec\SetupKB.pat
+D:\dev\Templates\Database\spec\SetupVariables.pat
+D:\dev\Templates\Database\user\Ualgo.cpp
+D:\dev\Templates\Database\user\Ualgo.h
+D:\dev\Templates\Database\user\Ucode.cpp
+D:\dev\Templates\Database\user\Ucode.h
+D:\dev\Templates\Database\user\Umisc.cpp
+D:\dev\Templates\Database\user\Umisc.h
+D:\dev\Templates\Database\user\Upre.cpp
+D:\dev\Templates\Database\user\Upre.h
+D:\dev\Templates\Database\user\Ureg.cpp
+D:\dev\Templates\Database\user\Ureg.h
+D:\dev\Templates\Database\user\user.cpp
+D:\dev\Templates\Database\user\user.def
+D:\dev\Templates\Database\user\user.dsp
+D:\dev\Templates\Database\user\user.dsw
+D:\dev\Templates\Database\user\user.h
+D:\dev\Templates\Database\user\user.sln
+D:\dev\Templates\Database\user\user.vcproj
+D:\dev\Templates\DatesPlusNumbers\compile-all.bat
+D:\dev\Templates\DatesPlusNumbers\compile-dev.bat
+D:\dev\Templates\DatesPlusNumbers\compile-devu.bat
+D:\dev\Templates\DatesPlusNumbers\compile-rel.bat
+D:\dev\Templates\DatesPlusNumbers\compile-relu.bat
+D:\dev\Templates\DatesPlusNumbers\input.txt
+D:\dev\Templates\DatesPlusNumbers\main.cpp
+D:\dev\Templates\DatesPlusNumbers\prog.dsp
+D:\dev\Templates\DatesPlusNumbers\prog.dsw
+D:\dev\Templates\DatesPlusNumbers\prog.ncb
+D:\dev\Templates\DatesPlusNumbers\prog.sln
+D:\dev\Templates\DatesPlusNumbers\prog.suo
+D:\dev\Templates\DatesPlusNumbers\prog.vcproj
+D:\dev\Templates\DatesPlusNumbers\Uanalyze.cpp
+D:\dev\Templates\DatesPlusNumbers\Uanalyze.h
+D:\dev\Templates\DatesPlusNumbers\u_out.cpp
+D:\dev\Templates\DatesPlusNumbers\u_out.h
+D:\dev\Templates\DatesPlusNumbers\bin\user.dll
+D:\dev\Templates\DatesPlusNumbers\bin\user.exp
+D:\dev\Templates\DatesPlusNumbers\bin\user.lib
+D:\dev\Templates\DatesPlusNumbers\bin\userd.dll
+D:\dev\Templates\DatesPlusNumbers\bin\userd.exp
+D:\dev\Templates\DatesPlusNumbers\bin\userd.lib
+D:\dev\Templates\DatesPlusNumbers\bin\userdu.dll
+D:\dev\Templates\DatesPlusNumbers\bin\userdu.exp
+D:\dev\Templates\DatesPlusNumbers\bin\userdu.lib
+D:\dev\Templates\DatesPlusNumbers\bin\useru.dll
+D:\dev\Templates\DatesPlusNumbers\bin\useru.exp
+D:\dev\Templates\DatesPlusNumbers\bin\useru.lib
+D:\dev\Templates\DatesPlusNumbers\input\Dates and Numbers.txt
+D:\dev\Templates\DatesPlusNumbers\input\Sold.txt
+D:\dev\Templates\DatesPlusNumbers\kb\kb.cpp
+D:\dev\Templates\DatesPlusNumbers\kb\kb.def
+D:\dev\Templates\DatesPlusNumbers\kb\kb.dsp
+D:\dev\Templates\DatesPlusNumbers\kb\kb.dsw
+D:\dev\Templates\DatesPlusNumbers\kb\kb.h
+D:\dev\Templates\DatesPlusNumbers\kb\kb.ncb
+D:\dev\Templates\DatesPlusNumbers\kb\kb.sln
+D:\dev\Templates\DatesPlusNumbers\kb\kb.suo
+D:\dev\Templates\DatesPlusNumbers\kb\kb.vcproj
+D:\dev\Templates\DatesPlusNumbers\kb\kb_setup.cpp
+D:\dev\Templates\DatesPlusNumbers\kb\kb_setup.h
+D:\dev\Templates\DatesPlusNumbers\kb\StdAfx.cpp
+D:\dev\Templates\DatesPlusNumbers\kb\StdAfx.h
+D:\dev\Templates\DatesPlusNumbers\kb\user\attr.kb
+D:\dev\Templates\DatesPlusNumbers\kb\user\hier.kb
+D:\dev\Templates\DatesPlusNumbers\kb\user\phr.kb
+D:\dev\Templates\DatesPlusNumbers\kb\user\word.kb
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\action.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\actions.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\analyzer.seq
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\bigtok.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\code.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\components.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\element.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\list.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\multi.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\nodes.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\pair.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\pairs.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\path.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\recurse.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\recurses.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\region.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\regions.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\retok.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\rule.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\rules.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\rulesfile.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\select.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\x_commas.pat
+D:\dev\Templates\DatesPlusNumbers\rfa\spec\x_white.pat
+D:\dev\Templates\DatesPlusNumbers\run\analyzer.cpp
+D:\dev\Templates\DatesPlusNumbers\run\analyzer.h
+D:\dev\Templates\DatesPlusNumbers\run\auxiliary.cpp
+D:\dev\Templates\DatesPlusNumbers\run\data.h
+D:\dev\Templates\DatesPlusNumbers\run\edata.h
+D:\dev\Templates\DatesPlusNumbers\run\ehash.cpp
+D:\dev\Templates\DatesPlusNumbers\run\ehead.h
+D:\dev\Templates\DatesPlusNumbers\run\rchain.h
+D:\dev\Templates\DatesPlusNumbers\run\rdata.h
+D:\dev\Templates\DatesPlusNumbers\run\rhash.cpp
+D:\dev\Templates\DatesPlusNumbers\run\rhead.h
+D:\dev\Templates\DatesPlusNumbers\run\run.cpp
+D:\dev\Templates\DatesPlusNumbers\run\run.def
+D:\dev\Templates\DatesPlusNumbers\run\run.dsp
+D:\dev\Templates\DatesPlusNumbers\run\run.dsw
+D:\dev\Templates\DatesPlusNumbers\run\run.h
+D:\dev\Templates\DatesPlusNumbers\run\run.ncb
+D:\dev\Templates\DatesPlusNumbers\run\run.sln
+D:\dev\Templates\DatesPlusNumbers\run\run.suo
+D:\dev\Templates\DatesPlusNumbers\run\run.vcproj
+D:\dev\Templates\DatesPlusNumbers\spec\analyzer.seq
+D:\dev\Templates\DatesPlusNumbers\spec\COMPOUND_NUMERICS.pat
+D:\dev\Templates\DatesPlusNumbers\spec\COMPOUND_NUMERICS_2.pat
+D:\dev\Templates\DatesPlusNumbers\spec\DATE_PATTERNS.pat
+D:\dev\Templates\DatesPlusNumbers\spec\DATE_PATTERNS_NO_YEAR.pat
+D:\dev\Templates\DatesPlusNumbers\spec\NumericLists.pat
+D:\dev\Templates\DatesPlusNumbers\spec\NumericSequences.pat
+D:\dev\Templates\DatesPlusNumbers\spec\PhoneNumbersetc.pat
+D:\dev\Templates\DatesPlusNumbers\spec\SIMPLE_NUMERICS.pat
+D:\dev\Templates\DatesPlusNumbers\spec\TimeofDayplusAbbrevsandAcronyms.pat
+D:\dev\Templates\DatesPlusNumbers\user\Ualgo.cpp
+D:\dev\Templates\DatesPlusNumbers\user\Ualgo.h
+D:\dev\Templates\DatesPlusNumbers\user\Ucode.cpp
+D:\dev\Templates\DatesPlusNumbers\user\Ucode.h
+D:\dev\Templates\DatesPlusNumbers\user\Umisc.cpp
+D:\dev\Templates\DatesPlusNumbers\user\Umisc.h
+D:\dev\Templates\DatesPlusNumbers\user\Upre.cpp
+D:\dev\Templates\DatesPlusNumbers\user\Upre.h
+D:\dev\Templates\DatesPlusNumbers\user\Ureg.cpp
+D:\dev\Templates\DatesPlusNumbers\user\Ureg.h
+D:\dev\Templates\DatesPlusNumbers\user\user.cpp
+D:\dev\Templates\DatesPlusNumbers\user\user.def
+D:\dev\Templates\DatesPlusNumbers\user\user.dsp
+D:\dev\Templates\DatesPlusNumbers\user\user.dsw
+D:\dev\Templates\DatesPlusNumbers\user\user.h
+D:\dev\Templates\DatesPlusNumbers\user\user.sln
+D:\dev\Templates\DatesPlusNumbers\user\user.vcproj
+D:\dev\Templates\EnglishLexicon\compile-all.bat
+D:\dev\Templates\EnglishLexicon\compile-dev.bat
+D:\dev\Templates\EnglishLexicon\compile-devu.bat
+D:\dev\Templates\EnglishLexicon\compile-rel.bat
+D:\dev\Templates\EnglishLexicon\compile-relu.bat
+D:\dev\Templates\EnglishLexicon\input.txt
+D:\dev\Templates\EnglishLexicon\main.cpp
+D:\dev\Templates\EnglishLexicon\prog.dsp
+D:\dev\Templates\EnglishLexicon\prog.dsw
+D:\dev\Templates\EnglishLexicon\prog.ncb
+D:\dev\Templates\EnglishLexicon\prog.sln
+D:\dev\Templates\EnglishLexicon\prog.suo
+D:\dev\Templates\EnglishLexicon\prog.vcproj
+D:\dev\Templates\EnglishLexicon\Uanalyze.cpp
+D:\dev\Templates\EnglishLexicon\Uanalyze.h
+D:\dev\Templates\EnglishLexicon\u_out.cpp
+D:\dev\Templates\EnglishLexicon\u_out.h
+D:\dev\Templates\EnglishLexicon\bin\user.dll
+D:\dev\Templates\EnglishLexicon\bin\user.exp
+D:\dev\Templates\EnglishLexicon\bin\user.lib
+D:\dev\Templates\EnglishLexicon\bin\userd.dll
+D:\dev\Templates\EnglishLexicon\bin\userd.exp
+D:\dev\Templates\EnglishLexicon\bin\userd.lib
+D:\dev\Templates\EnglishLexicon\bin\userdu.dll
+D:\dev\Templates\EnglishLexicon\bin\userdu.exp
+D:\dev\Templates\EnglishLexicon\bin\userdu.lib
+D:\dev\Templates\EnglishLexicon\bin\useru.dll
+D:\dev\Templates\EnglishLexicon\bin\useru.exp
+D:\dev\Templates\EnglishLexicon\bin\useru.lib
+D:\dev\Templates\EnglishLexicon\input\Test\Fred.txt
+D:\dev\Templates\EnglishLexicon\input\Test\test01.txt
+D:\dev\Templates\EnglishLexicon\input\Test\test02.txt
+D:\dev\Templates\EnglishLexicon\kb\kb.cpp
+D:\dev\Templates\EnglishLexicon\kb\kb.def
+D:\dev\Templates\EnglishLexicon\kb\kb.dsp
+D:\dev\Templates\EnglishLexicon\kb\kb.dsw
+D:\dev\Templates\EnglishLexicon\kb\kb.h
+D:\dev\Templates\EnglishLexicon\kb\kb.ncb
+D:\dev\Templates\EnglishLexicon\kb\kb.sln
+D:\dev\Templates\EnglishLexicon\kb\kb.suo
+D:\dev\Templates\EnglishLexicon\kb\kb.vcproj
+D:\dev\Templates\EnglishLexicon\kb\kb_setup.cpp
+D:\dev\Templates\EnglishLexicon\kb\kb_setup.h
+D:\dev\Templates\EnglishLexicon\kb\StdAfx.cpp
+D:\dev\Templates\EnglishLexicon\kb\StdAfx.h
+D:\dev\Templates\EnglishLexicon\kb\user\attr.kb
+D:\dev\Templates\EnglishLexicon\kb\user\hier.kb
+D:\dev\Templates\EnglishLexicon\kb\user\phr.kb
+D:\dev\Templates\EnglishLexicon\kb\user\word.kb
+D:\dev\Templates\EnglishLexicon\run\analyzer.cpp
+D:\dev\Templates\EnglishLexicon\run\analyzer.h
+D:\dev\Templates\EnglishLexicon\run\auxiliary.cpp
+D:\dev\Templates\EnglishLexicon\run\data.h
+D:\dev\Templates\EnglishLexicon\run\edata.h
+D:\dev\Templates\EnglishLexicon\run\ehash.cpp
+D:\dev\Templates\EnglishLexicon\run\ehead.h
+D:\dev\Templates\EnglishLexicon\run\rchain.h
+D:\dev\Templates\EnglishLexicon\run\rdata.h
+D:\dev\Templates\EnglishLexicon\run\rhash.cpp
+D:\dev\Templates\EnglishLexicon\run\rhead.h
+D:\dev\Templates\EnglishLexicon\run\run.cpp
+D:\dev\Templates\EnglishLexicon\run\run.def
+D:\dev\Templates\EnglishLexicon\run\run.dsp
+D:\dev\Templates\EnglishLexicon\run\run.dsw
+D:\dev\Templates\EnglishLexicon\run\run.h
+D:\dev\Templates\EnglishLexicon\run\run.ncb
+D:\dev\Templates\EnglishLexicon\run\run.sln
+D:\dev\Templates\EnglishLexicon\run\run.suo
+D:\dev\Templates\EnglishLexicon\run\run.vcproj
+D:\dev\Templates\EnglishLexicon\spec\analyzer.seq
+D:\dev\Templates\EnglishLexicon\spec\RemoveWhiteSpace.pat
+D:\dev\Templates\EnglishLexicon\spec\Tagger.pat
+D:\dev\Templates\EnglishLexicon\spec\TrimKB.pat
+D:\dev\Templates\EnglishLexicon\user\Ualgo.cpp
+D:\dev\Templates\EnglishLexicon\user\Ualgo.h
+D:\dev\Templates\EnglishLexicon\user\Ucode.cpp
+D:\dev\Templates\EnglishLexicon\user\Ucode.h
+D:\dev\Templates\EnglishLexicon\user\Umisc.cpp
+D:\dev\Templates\EnglishLexicon\user\Umisc.h
+D:\dev\Templates\EnglishLexicon\user\Upre.cpp
+D:\dev\Templates\EnglishLexicon\user\Upre.h
+D:\dev\Templates\EnglishLexicon\user\Ureg.cpp
+D:\dev\Templates\EnglishLexicon\user\Ureg.h
+D:\dev\Templates\EnglishLexicon\user\user.cpp
+D:\dev\Templates\EnglishLexicon\user\user.def
+D:\dev\Templates\EnglishLexicon\user\user.dsp
+D:\dev\Templates\EnglishLexicon\user\user.dsw
+D:\dev\Templates\EnglishLexicon\user\user.h
+D:\dev\Templates\EnglishLexicon\user\user.sln
+D:\dev\Templates\EnglishLexicon\user\user.vcproj
+D:\dev\Templates\HTML\compile-all.bat
+D:\dev\Templates\HTML\compile-dev.bat
+D:\dev\Templates\HTML\compile-devu.bat
+D:\dev\Templates\HTML\compile-rel.bat
+D:\dev\Templates\HTML\compile-relu.bat
+D:\dev\Templates\HTML\input.txt
+D:\dev\Templates\HTML\main.cpp
+D:\dev\Templates\HTML\prog.dsp
+D:\dev\Templates\HTML\prog.dsw
+D:\dev\Templates\HTML\prog.ncb
+D:\dev\Templates\HTML\prog.sln
+D:\dev\Templates\HTML\prog.suo
+D:\dev\Templates\HTML\prog.vcproj
+D:\dev\Templates\HTML\Uanalyze.cpp
+D:\dev\Templates\HTML\Uanalyze.h
+D:\dev\Templates\HTML\u_out.cpp
+D:\dev\Templates\HTML\u_out.h
+D:\dev\Templates\HTML\bin\user.dll
+D:\dev\Templates\HTML\bin\user.exp
+D:\dev\Templates\HTML\bin\user.lib
+D:\dev\Templates\HTML\bin\userd.dll
+D:\dev\Templates\HTML\bin\userd.exp
+D:\dev\Templates\HTML\bin\userd.lib
+D:\dev\Templates\HTML\bin\userdu.dll
+D:\dev\Templates\HTML\bin\userdu.exp
+D:\dev\Templates\HTML\bin\userdu.lib
+D:\dev\Templates\HTML\bin\useru.dll
+D:\dev\Templates\HTML\bin\useru.exp
+D:\dev\Templates\HTML\bin\useru.lib
+D:\dev\Templates\HTML\input\PRNS9771800.htm
+D:\dev\Templates\HTML\input\PRNS9771800.htm_log\ana001.log
+D:\dev\Templates\HTML\input\PRNS9771800.htm_log\ana002.log
+D:\dev\Templates\HTML\input\PRNS9771800.htm_log\ana003.log
+D:\dev\Templates\HTML\input\PRNS9771800.htm_log\ana004.log
+D:\dev\Templates\HTML\input\PRNS9771800.htm_log\ana005.log
+D:\dev\Templates\HTML\input\PRNS9771800.htm_log\ana006.log
+D:\dev\Templates\HTML\input\PRNS9771800.htm_log\err.log
+D:\dev\Templates\HTML\input\PRNS9771800.htm_log\final.log
+D:\dev\Templates\HTML\input\PRNS9771800.htm_log\init.log
+D:\dev\Templates\HTML\kb\kb.cpp
+D:\dev\Templates\HTML\kb\kb.def
+D:\dev\Templates\HTML\kb\kb.dsp
+D:\dev\Templates\HTML\kb\kb.dsw
+D:\dev\Templates\HTML\kb\kb.h
+D:\dev\Templates\HTML\kb\kb.ncb
+D:\dev\Templates\HTML\kb\kb.sln
+D:\dev\Templates\HTML\kb\kb.suo
+D:\dev\Templates\HTML\kb\kb.vcproj
+D:\dev\Templates\HTML\kb\kb_setup.cpp
+D:\dev\Templates\HTML\kb\kb_setup.h
+D:\dev\Templates\HTML\kb\StdAfx.cpp
+D:\dev\Templates\HTML\kb\StdAfx.h
+D:\dev\Templates\HTML\kb\user\attr.kb
+D:\dev\Templates\HTML\kb\user\hier.kb
+D:\dev\Templates\HTML\kb\user\phr.kb
+D:\dev\Templates\HTML\kb\user\word.kb
+D:\dev\Templates\HTML\rfa\spec\action.pat
+D:\dev\Templates\HTML\rfa\spec\actions.pat
+D:\dev\Templates\HTML\rfa\spec\analyzer.seq
+D:\dev\Templates\HTML\rfa\spec\bigtok.pat
+D:\dev\Templates\HTML\rfa\spec\code.pat
+D:\dev\Templates\HTML\rfa\spec\components.pat
+D:\dev\Templates\HTML\rfa\spec\element.pat
+D:\dev\Templates\HTML\rfa\spec\list.pat
+D:\dev\Templates\HTML\rfa\spec\multi.pat
+D:\dev\Templates\HTML\rfa\spec\nodes.pat
+D:\dev\Templates\HTML\rfa\spec\pair.pat
+D:\dev\Templates\HTML\rfa\spec\pairs.pat
+D:\dev\Templates\HTML\rfa\spec\path.pat
+D:\dev\Templates\HTML\rfa\spec\recurse.pat
+D:\dev\Templates\HTML\rfa\spec\recurses.pat
+D:\dev\Templates\HTML\rfa\spec\region.pat
+D:\dev\Templates\HTML\rfa\spec\regions.pat
+D:\dev\Templates\HTML\rfa\spec\retok.pat
+D:\dev\Templates\HTML\rfa\spec\rule.pat
+D:\dev\Templates\HTML\rfa\spec\rules.pat
+D:\dev\Templates\HTML\rfa\spec\rulesfile.pat
+D:\dev\Templates\HTML\rfa\spec\select.pat
+D:\dev\Templates\HTML\rfa\spec\x_commas.pat
+D:\dev\Templates\HTML\rfa\spec\x_white.pat
+D:\dev\Templates\HTML\run\analyzer.cpp
+D:\dev\Templates\HTML\run\analyzer.h
+D:\dev\Templates\HTML\run\auxiliary.cpp
+D:\dev\Templates\HTML\run\data.h
+D:\dev\Templates\HTML\run\edata.h
+D:\dev\Templates\HTML\run\ehash.cpp
+D:\dev\Templates\HTML\run\ehead.h
+D:\dev\Templates\HTML\run\rchain.h
+D:\dev\Templates\HTML\run\rdata.h
+D:\dev\Templates\HTML\run\rhash.cpp
+D:\dev\Templates\HTML\run\rhead.h
+D:\dev\Templates\HTML\run\run.cpp
+D:\dev\Templates\HTML\run\run.def
+D:\dev\Templates\HTML\run\run.dsp
+D:\dev\Templates\HTML\run\run.dsw
+D:\dev\Templates\HTML\run\run.h
+D:\dev\Templates\HTML\run\run.ncb
+D:\dev\Templates\HTML\run\run.sln
+D:\dev\Templates\HTML\run\run.suo
+D:\dev\Templates\HTML\run\run.vcproj
+D:\dev\Templates\HTML\spec\analyzer.seq
+D:\dev\Templates\HTML\spec\HTMLCharacterPatterns.pat
+D:\dev\Templates\HTML\spec\HTMLFormattingElements.pat
+D:\dev\Templates\HTML\spec\HTMLTagStructure.pat
+D:\dev\Templates\HTML\spec\HTMLTextFunctions.pat
+D:\dev\Templates\HTML\spec\HTMLTextTagging.pat
+D:\dev\Templates\HTML\user\Ualgo.cpp
+D:\dev\Templates\HTML\user\Ualgo.h
+D:\dev\Templates\HTML\user\Ucode.cpp
+D:\dev\Templates\HTML\user\Ucode.h
+D:\dev\Templates\HTML\user\Umisc.cpp
+D:\dev\Templates\HTML\user\Umisc.h
+D:\dev\Templates\HTML\user\Upre.cpp
+D:\dev\Templates\HTML\user\Upre.h
+D:\dev\Templates\HTML\user\Ureg.cpp
+D:\dev\Templates\HTML\user\Ureg.h
+D:\dev\Templates\HTML\user\user.cpp
+D:\dev\Templates\HTML\user\user.def
+D:\dev\Templates\HTML\user\user.dsp
+D:\dev\Templates\HTML\user\user.dsw
+D:\dev\Templates\HTML\user\user.h
+D:\dev\Templates\HTML\user\user.sln
+D:\dev\Templates\HTML\user\user.vcproj
+D:\dev\Templates\XML\compile-all.bat
+D:\dev\Templates\XML\compile-dev.bat
+D:\dev\Templates\XML\compile-devu.bat
+D:\dev\Templates\XML\compile-rel.bat
+D:\dev\Templates\XML\compile-relu.bat
+D:\dev\Templates\XML\input.txt
+D:\dev\Templates\XML\main.cpp
+D:\dev\Templates\XML\prog.dsp
+D:\dev\Templates\XML\prog.dsw
+D:\dev\Templates\XML\prog.ncb
+D:\dev\Templates\XML\prog.sln
+D:\dev\Templates\XML\prog.suo
+D:\dev\Templates\XML\prog.vcproj
+D:\dev\Templates\XML\Uanalyze.cpp
+D:\dev\Templates\XML\Uanalyze.h
+D:\dev\Templates\XML\u_out.cpp
+D:\dev\Templates\XML\u_out.h
+D:\dev\Templates\XML\bin\user.dll
+D:\dev\Templates\XML\bin\user.exp
+D:\dev\Templates\XML\bin\user.lib
+D:\dev\Templates\XML\bin\userd.dll
+D:\dev\Templates\XML\bin\userd.exp
+D:\dev\Templates\XML\bin\userd.lib
+D:\dev\Templates\XML\bin\userdu.dll
+D:\dev\Templates\XML\bin\userdu.exp
+D:\dev\Templates\XML\bin\userdu.lib
+D:\dev\Templates\XML\bin\useru.dll
+D:\dev\Templates\XML\bin\useru.exp
+D:\dev\Templates\XML\bin\useru.lib
+D:\dev\Templates\XML\input\plant_catalog.xml
+D:\dev\Templates\XML\kb\kb.cpp
+D:\dev\Templates\XML\kb\kb.def
+D:\dev\Templates\XML\kb\kb.dsp
+D:\dev\Templates\XML\kb\kb.dsw
+D:\dev\Templates\XML\kb\kb.h
+D:\dev\Templates\XML\kb\kb.ncb
+D:\dev\Templates\XML\kb\kb.sln
+D:\dev\Templates\XML\kb\kb.suo
+D:\dev\Templates\XML\kb\kb.vcproj
+D:\dev\Templates\XML\kb\kb_setup.cpp
+D:\dev\Templates\XML\kb\kb_setup.h
+D:\dev\Templates\XML\kb\StdAfx.cpp
+D:\dev\Templates\XML\kb\StdAfx.h
+D:\dev\Templates\XML\kb\user\attr.kb
+D:\dev\Templates\XML\kb\user\hier.kb
+D:\dev\Templates\XML\kb\user\phr.kb
+D:\dev\Templates\XML\kb\user\word.kb
+D:\dev\Templates\XML\rfa\spec\action.pat
+D:\dev\Templates\XML\rfa\spec\actions.pat
+D:\dev\Templates\XML\rfa\spec\analyzer.seq
+D:\dev\Templates\XML\rfa\spec\bigtok.pat
+D:\dev\Templates\XML\rfa\spec\code.pat
+D:\dev\Templates\XML\rfa\spec\components.pat
+D:\dev\Templates\XML\rfa\spec\element.pat
+D:\dev\Templates\XML\rfa\spec\list.pat
+D:\dev\Templates\XML\rfa\spec\multi.pat
+D:\dev\Templates\XML\rfa\spec\nodes.pat
+D:\dev\Templates\XML\rfa\spec\pair.pat
+D:\dev\Templates\XML\rfa\spec\pairs.pat
+D:\dev\Templates\XML\rfa\spec\path.pat
+D:\dev\Templates\XML\rfa\spec\recurse.pat
+D:\dev\Templates\XML\rfa\spec\recurses.pat
+D:\dev\Templates\XML\rfa\spec\region.pat
+D:\dev\Templates\XML\rfa\spec\regions.pat
+D:\dev\Templates\XML\rfa\spec\retok.pat
+D:\dev\Templates\XML\rfa\spec\rule.pat
+D:\dev\Templates\XML\rfa\spec\rules.pat
+D:\dev\Templates\XML\rfa\spec\rulesfile.pat
+D:\dev\Templates\XML\rfa\spec\select.pat
+D:\dev\Templates\XML\rfa\spec\x_commas.pat
+D:\dev\Templates\XML\rfa\spec\x_white.pat
+D:\dev\Templates\XML\run\analyzer.cpp
+D:\dev\Templates\XML\run\analyzer.h
+D:\dev\Templates\XML\run\auxiliary.cpp
+D:\dev\Templates\XML\run\data.h
+D:\dev\Templates\XML\run\edata.h
+D:\dev\Templates\XML\run\ehash.cpp
+D:\dev\Templates\XML\run\ehead.h
+D:\dev\Templates\XML\run\rchain.h
+D:\dev\Templates\XML\run\rdata.h
+D:\dev\Templates\XML\run\rhash.cpp
+D:\dev\Templates\XML\run\rhead.h
+D:\dev\Templates\XML\run\run.cpp
+D:\dev\Templates\XML\run\run.def
+D:\dev\Templates\XML\run\run.dsp
+D:\dev\Templates\XML\run\run.dsw
+D:\dev\Templates\XML\run\run.h
+D:\dev\Templates\XML\run\run.ncb
+D:\dev\Templates\XML\run\run.sln
+D:\dev\Templates\XML\run\run.suo
+D:\dev\Templates\XML\run\run.vcproj
+D:\dev\Templates\XML\spec\analyzer.seq
+D:\dev\Templates\XML\spec\XMLattdefs.pat
+D:\dev\Templates\XML\spec\XMLattdefs2.pat
+D:\dev\Templates\XML\spec\XMLattdefs3.pat
+D:\dev\Templates\XML\spec\XMLbaseDefs.pat
+D:\dev\Templates\XML\spec\XMLbaseElements.pat
+D:\dev\Templates\XML\spec\XMLDecl.pat
+D:\dev\Templates\XML\spec\XMLdeclarationConstructors.pat
+D:\dev\Templates\XML\spec\XMLdeclarationConstructors2.pat
+D:\dev\Templates\XML\spec\XMLdeclarationElements.pat
+D:\dev\Templates\XML\spec\XMLdeclSep.pat
+D:\dev\Templates\XML\spec\XMLdeclSep2.pat
+D:\dev\Templates\XML\spec\XMLDOCTYPE.pat
+D:\dev\Templates\XML\spec\XMLEntityDefs.pat
+D:\dev\Templates\XML\spec\XMLExternalID.pat
+D:\dev\Templates\XML\spec\XMLLiterals.pat
+D:\dev\Templates\XML\spec\XMLNotationDeclarations.pat
+D:\dev\Templates\XML\spec\XMLOverallSchema.pat
+D:\dev\Templates\XML\spec\XMLPCDATA.pat
+D:\dev\Templates\XML\spec\XMLStartingTag.pat
+D:\dev\Templates\XML\spec\XMLSubschema.pat
+D:\dev\Templates\XML\spec\XMLtagElements.pat
+D:\dev\Templates\XML\spec\XMLtagStructure.pat
+D:\dev\Templates\XML\user\Ualgo.cpp
+D:\dev\Templates\XML\user\Ualgo.h
+D:\dev\Templates\XML\user\Ucode.cpp
+D:\dev\Templates\XML\user\Ucode.h
+D:\dev\Templates\XML\user\Umisc.cpp
+D:\dev\Templates\XML\user\Umisc.h
+D:\dev\Templates\XML\user\Upre.cpp
+D:\dev\Templates\XML\user\Upre.h
+D:\dev\Templates\XML\user\Ureg.cpp
+D:\dev\Templates\XML\user\Ureg.h
+D:\dev\Templates\XML\user\user.cpp
+D:\dev\Templates\XML\user\user.def
+D:\dev\Templates\XML\user\user.dsp
+D:\dev\Templates\XML\user\user.dsw
+D:\dev\Templates\XML\user\user.h
+D:\dev\Templates\XML\user\user.sln
+D:\dev\Templates\XML\user\user.vcproj
+D:\dev\Templates\XML DTD\compile-all.bat
+D:\dev\Templates\XML DTD\compile-dev.bat
+D:\dev\Templates\XML DTD\compile-devu.bat
+D:\dev\Templates\XML DTD\compile-rel.bat
+D:\dev\Templates\XML DTD\compile-relu.bat
+D:\dev\Templates\XML DTD\input.txt
+D:\dev\Templates\XML DTD\main.cpp
+D:\dev\Templates\XML DTD\prog.dsp
+D:\dev\Templates\XML DTD\prog.dsw
+D:\dev\Templates\XML DTD\prog.ncb
+D:\dev\Templates\XML DTD\prog.sln
+D:\dev\Templates\XML DTD\prog.suo
+D:\dev\Templates\XML DTD\prog.vcproj
+D:\dev\Templates\XML DTD\Uanalyze.cpp
+D:\dev\Templates\XML DTD\Uanalyze.h
+D:\dev\Templates\XML DTD\u_out.cpp
+D:\dev\Templates\XML DTD\u_out.h
+D:\dev\Templates\XML DTD\bin\user.dll
+D:\dev\Templates\XML DTD\bin\user.exp
+D:\dev\Templates\XML DTD\bin\user.lib
+D:\dev\Templates\XML DTD\bin\userd.dll
+D:\dev\Templates\XML DTD\bin\userd.exp
+D:\dev\Templates\XML DTD\bin\userd.lib
+D:\dev\Templates\XML DTD\bin\userdu.dll
+D:\dev\Templates\XML DTD\bin\userdu.exp
+D:\dev\Templates\XML DTD\bin\userdu.lib
+D:\dev\Templates\XML DTD\bin\useru.dll
+D:\dev\Templates\XML DTD\bin\useru.exp
+D:\dev\Templates\XML DTD\bin\useru.lib
+D:\dev\Templates\XML DTD\kb\kb.cpp
+D:\dev\Templates\XML DTD\kb\kb.def
+D:\dev\Templates\XML DTD\kb\kb.dsp
+D:\dev\Templates\XML DTD\kb\kb.dsw
+D:\dev\Templates\XML DTD\kb\kb.h
+D:\dev\Templates\XML DTD\kb\kb.ncb
+D:\dev\Templates\XML DTD\kb\kb.sln
+D:\dev\Templates\XML DTD\kb\kb.suo
+D:\dev\Templates\XML DTD\kb\kb.vcproj
+D:\dev\Templates\XML DTD\kb\kb_setup.cpp
+D:\dev\Templates\XML DTD\kb\kb_setup.h
+D:\dev\Templates\XML DTD\kb\StdAfx.cpp
+D:\dev\Templates\XML DTD\kb\StdAfx.h
+D:\dev\Templates\XML DTD\kb\user\attr.kb
+D:\dev\Templates\XML DTD\kb\user\hier.kb
+D:\dev\Templates\XML DTD\kb\user\phr.kb
+D:\dev\Templates\XML DTD\kb\user\word.kb
+D:\dev\Templates\XML DTD\rfa\spec\action.pat
+D:\dev\Templates\XML DTD\rfa\spec\actions.pat
+D:\dev\Templates\XML DTD\rfa\spec\analyzer.seq
+D:\dev\Templates\XML DTD\rfa\spec\bigtok.pat
+D:\dev\Templates\XML DTD\rfa\spec\code.pat
+D:\dev\Templates\XML DTD\rfa\spec\components.pat
+D:\dev\Templates\XML DTD\rfa\spec\element.pat
+D:\dev\Templates\XML DTD\rfa\spec\list.pat
+D:\dev\Templates\XML DTD\rfa\spec\multi.pat
+D:\dev\Templates\XML DTD\rfa\spec\nodes.pat
+D:\dev\Templates\XML DTD\rfa\spec\pair.pat
+D:\dev\Templates\XML DTD\rfa\spec\pairs.pat
+D:\dev\Templates\XML DTD\rfa\spec\path.pat
+D:\dev\Templates\XML DTD\rfa\spec\recurse.pat
+D:\dev\Templates\XML DTD\rfa\spec\recurses.pat
+D:\dev\Templates\XML DTD\rfa\spec\region.pat
+D:\dev\Templates\XML DTD\rfa\spec\regions.pat
+D:\dev\Templates\XML DTD\rfa\spec\retok.pat
+D:\dev\Templates\XML DTD\rfa\spec\rule.pat
+D:\dev\Templates\XML DTD\rfa\spec\rules.pat
+D:\dev\Templates\XML DTD\rfa\spec\rulesfile.pat
+D:\dev\Templates\XML DTD\rfa\spec\select.pat
+D:\dev\Templates\XML DTD\rfa\spec\x_commas.pat
+D:\dev\Templates\XML DTD\rfa\spec\x_white.pat
+D:\dev\Templates\XML DTD\run\analyzer.cpp
+D:\dev\Templates\XML DTD\run\analyzer.h
+D:\dev\Templates\XML DTD\run\auxiliary.cpp
+D:\dev\Templates\XML DTD\run\data.h
+D:\dev\Templates\XML DTD\run\edata.h
+D:\dev\Templates\XML DTD\run\ehash.cpp
+D:\dev\Templates\XML DTD\run\ehead.h
+D:\dev\Templates\XML DTD\run\rchain.h
+D:\dev\Templates\XML DTD\run\rdata.h
+D:\dev\Templates\XML DTD\run\rhash.cpp
+D:\dev\Templates\XML DTD\run\rhead.h
+D:\dev\Templates\XML DTD\run\run.cpp
+D:\dev\Templates\XML DTD\run\run.def
+D:\dev\Templates\XML DTD\run\run.dsp
+D:\dev\Templates\XML DTD\run\run.dsw
+D:\dev\Templates\XML DTD\run\run.h
+D:\dev\Templates\XML DTD\run\run.ncb
+D:\dev\Templates\XML DTD\run\run.sln
+D:\dev\Templates\XML DTD\run\run.suo
+D:\dev\Templates\XML DTD\run\run.vcproj
+D:\dev\Templates\XML DTD\spec\analyzer.seq
+D:\dev\Templates\XML DTD\spec\XML_DTD_Attdefs.pat
+D:\dev\Templates\XML DTD\spec\XML_DTD_Attdefs2.pat
+D:\dev\Templates\XML DTD\spec\XML_DTD_Attdefs3.pat
+D:\dev\Templates\XML DTD\spec\XML_DTD_BaseElements.pat
+D:\dev\Templates\XML DTD\spec\XML_DTD_DeclarationConstructors.pat
+D:\dev\Templates\XML DTD\spec\XML_DTD_DeclarationConstructors2.pat
+D:\dev\Templates\XML DTD\spec\XML_DTD_DeclarationElements.pat
+D:\dev\Templates\XML DTD\spec\XML_DTD_DeclSep.pat
+D:\dev\Templates\XML DTD\spec\XML_DTD_DocType.pat
+D:\dev\Templates\XML DTD\spec\XML_DTD_EntityDefs.pat
+D:\dev\Templates\XML DTD\spec\XML_DTD_ExternalID.pat
+D:\dev\Templates\XML DTD\spec\XML_DTD_Literals.pat
+D:\dev\Templates\XML DTD\spec\XML_DTD_NotationDeclarations.pat
+D:\dev\Templates\XML DTD\spec\XML_DTD_PcData.pat
+D:\dev\Templates\XML DTD\user\Ualgo.cpp
+D:\dev\Templates\XML DTD\user\Ualgo.h
+D:\dev\Templates\XML DTD\user\Ucode.cpp
+D:\dev\Templates\XML DTD\user\Ucode.h
+D:\dev\Templates\XML DTD\user\Umisc.cpp
+D:\dev\Templates\XML DTD\user\Umisc.h
+D:\dev\Templates\XML DTD\user\Upre.cpp
+D:\dev\Templates\XML DTD\user\Upre.h
+D:\dev\Templates\XML DTD\user\Ureg.cpp
+D:\dev\Templates\XML DTD\user\Ureg.h
+D:\dev\Templates\XML DTD\user\user.cpp
+D:\dev\Templates\XML DTD\user\user.def
+D:\dev\Templates\XML DTD\user\user.dsp
+D:\dev\Templates\XML DTD\user\user.dsw
+D:\dev\Templates\XML DTD\user\user.h
+D:\dev\Templates\XML DTD\user\user.sln
+D:\dev\Templates\XML DTD\user\user.vcproj
+758 File(s) copied
+D:\dev\Help\Help.chm
+1 File(s) copied
+D:\dev\docs\Release Notes.txt
+D:\dev\docs\tutorial1\myAnalyzer1.zip
+D:\dev\docs\tutorial2\myAnalyzer2.zip
+D:\dev\docs\tutorial3\myAnalyzer3.zip
+D:\dev\docs\tutorial4\myAnalyzer4.zip
+D:\dev\docs\tutorial5\myAnalyzer5.zip
+D:\dev\docs\tutorial6\myAnalyzer6.zip
+7 File(s) copied
+here6
+D:\dev\apps\201_bare_u\201_bare_u.ana
+D:\dev\apps\201_bare_u\compile-all.bat
+D:\dev\apps\201_bare_u\compile-dev.bat
+D:\dev\apps\201_bare_u\compile-devu.bat
+D:\dev\apps\201_bare_u\compile-rel.bat
+D:\dev\apps\201_bare_u\compile-relu.bat
+D:\dev\apps\201_bare_u\input.txt
+D:\dev\apps\201_bare_u\main.cpp
+D:\dev\apps\201_bare_u\prog.dsp
+D:\dev\apps\201_bare_u\prog.dsw
+D:\dev\apps\201_bare_u\prog.sln
+D:\dev\apps\201_bare_u\prog.vcproj
+D:\dev\apps\201_bare_u\Uanalyze.cpp
+D:\dev\apps\201_bare_u\Uanalyze.h
+D:\dev\apps\201_bare_u\u_out.cpp
+D:\dev\apps\201_bare_u\u_out.h
+D:\dev\apps\201_bare_u\bin\user.dll
+D:\dev\apps\201_bare_u\bin\user.exp
+D:\dev\apps\201_bare_u\bin\user.lib
+D:\dev\apps\201_bare_u\bin\userd.dll
+D:\dev\apps\201_bare_u\bin\userd.exp
+D:\dev\apps\201_bare_u\bin\userd.lib
+D:\dev\apps\201_bare_u\bin\userdu.dll
+D:\dev\apps\201_bare_u\bin\userdu.exp
+D:\dev\apps\201_bare_u\bin\userdu.lib
+D:\dev\apps\201_bare_u\bin\useru.dll
+D:\dev\apps\201_bare_u\bin\useru.exp
+D:\dev\apps\201_bare_u\bin\useru.lib
+D:\dev\apps\201_bare_u\input\Tenth_IUC-utf8.txt
+D:\dev\apps\201_bare_u\input\tst.txt
+D:\dev\apps\201_bare_u\input\utf-8-demo.txt
+D:\dev\apps\201_bare_u\input\xyz.txt
+D:\dev\apps\201_bare_u\input\Tenth_IUC-utf8.txt_log\dbg.log
+D:\dev\apps\201_bare_u\input\Tenth_IUC-utf8.txt_log\err.log
+D:\dev\apps\201_bare_u\input\Tenth_IUC-utf8.txt_log\final.log
+D:\dev\apps\201_bare_u\input\tst.txt_log\dbg.log
+D:\dev\apps\201_bare_u\input\tst.txt_log\err.log
+D:\dev\apps\201_bare_u\input\tst.txt_log\final.log
+D:\dev\apps\201_bare_u\input\tst.txt_log\init.log
+D:\dev\apps\201_bare_u\input\utf-8-demo.txt_log\dbg.log
+D:\dev\apps\201_bare_u\input\utf-8-demo.txt_log\err.log
+D:\dev\apps\201_bare_u\input\utf-8-demo.txt_log\final.log
+D:\dev\apps\201_bare_u\input\xyz.txt_log\dbg.log
+D:\dev\apps\201_bare_u\input\xyz.txt_log\err.log
+D:\dev\apps\201_bare_u\input\xyz.txt_log\final.log
+D:\dev\apps\201_bare_u\input\xyz.txt_log\init.log
+D:\dev\apps\201_bare_u\kb\kb.cpp
+D:\dev\apps\201_bare_u\kb\kb.def
+D:\dev\apps\201_bare_u\kb\kb.dsp
+D:\dev\apps\201_bare_u\kb\kb.dsw
+D:\dev\apps\201_bare_u\kb\kb.h
+D:\dev\apps\201_bare_u\kb\kb.sln
+D:\dev\apps\201_bare_u\kb\kb.vcproj
+D:\dev\apps\201_bare_u\kb\kb_setup.cpp
+D:\dev\apps\201_bare_u\kb\kb_setup.h
+D:\dev\apps\201_bare_u\kb\StdAfx.cpp
+D:\dev\apps\201_bare_u\kb\StdAfx.h
+D:\dev\apps\201_bare_u\kb\user\attr.kb
+D:\dev\apps\201_bare_u\kb\user\hier.kb
+D:\dev\apps\201_bare_u\kb\user\phr.kb
+D:\dev\apps\201_bare_u\kb\user\word.kb
+D:\dev\apps\201_bare_u\logs\cgerr.log
+D:\dev\apps\201_bare_u\logs\dbg.log
+D:\dev\apps\201_bare_u\logs\make_ana.log
+D:\dev\apps\201_bare_u\run\analyzer.cpp
+D:\dev\apps\201_bare_u\run\analyzer.h
+D:\dev\apps\201_bare_u\run\auxiliary.cpp
+D:\dev\apps\201_bare_u\run\data.h
+D:\dev\apps\201_bare_u\run\edata.h
+D:\dev\apps\201_bare_u\run\ehash.cpp
+D:\dev\apps\201_bare_u\run\ehead.h
+D:\dev\apps\201_bare_u\run\rchain.h
+D:\dev\apps\201_bare_u\run\rdata.h
+D:\dev\apps\201_bare_u\run\rhash.cpp
+D:\dev\apps\201_bare_u\run\rhead.h
+D:\dev\apps\201_bare_u\run\run.cpp
+D:\dev\apps\201_bare_u\run\run.def
+D:\dev\apps\201_bare_u\run\run.dsp
+D:\dev\apps\201_bare_u\run\run.dsw
+D:\dev\apps\201_bare_u\run\run.h
+D:\dev\apps\201_bare_u\run\run.sln
+D:\dev\apps\201_bare_u\run\run.vcproj
+D:\dev\apps\201_bare_u\spec\analyzer.seq
+D:\dev\apps\201_bare_u\spec\dummy.pat
+D:\dev\apps\201_bare_u\spec\tmp.seq
+D:\dev\apps\201_bare_u\user\Ualgo.cpp
+D:\dev\apps\201_bare_u\user\Ualgo.h
+D:\dev\apps\201_bare_u\user\Ucode.cpp
+D:\dev\apps\201_bare_u\user\Ucode.h
+D:\dev\apps\201_bare_u\user\Umisc.cpp
+D:\dev\apps\201_bare_u\user\Umisc.h
+D:\dev\apps\201_bare_u\user\Upre.cpp
+D:\dev\apps\201_bare_u\user\Upre.h
+D:\dev\apps\201_bare_u\user\Ureg.cpp
+D:\dev\apps\201_bare_u\user\Ureg.h
+D:\dev\apps\201_bare_u\user\user.cpp
+D:\dev\apps\201_bare_u\user\user.def
+D:\dev\apps\201_bare_u\user\user.dsp
+D:\dev\apps\201_bare_u\user\user.dsw
+D:\dev\apps\201_bare_u\user\user.h
+D:\dev\apps\201_bare_u\user\user.sln
+D:\dev\apps\201_bare_u\user\user.vcproj
+D:\dev\apps\corporate\compile-all.bat
+D:\dev\apps\corporate\compile-dev.bat
+D:\dev\apps\corporate\compile-devu.bat
+D:\dev\apps\corporate\compile-rel.bat
+D:\dev\apps\corporate\compile-relu.bat
+D:\dev\apps\corporate\corporate.ana
+D:\dev\apps\corporate\input.txt
+D:\dev\apps\corporate\main.cpp
+D:\dev\apps\corporate\prog.dsp
+D:\dev\apps\corporate\prog.dsw
+D:\dev\apps\corporate\prog.sln
+D:\dev\apps\corporate\prog.vcproj
+D:\dev\apps\corporate\Uanalyze.cpp
+D:\dev\apps\corporate\Uanalyze.h
+D:\dev\apps\corporate\u_out.cpp
+D:\dev\apps\corporate\u_out.h
+D:\dev\apps\corporate\bin\user.dll
+D:\dev\apps\corporate\bin\user.exp
+D:\dev\apps\corporate\bin\user.lib
+D:\dev\apps\corporate\bin\userd.dll
+D:\dev\apps\corporate\bin\userd.exp
+D:\dev\apps\corporate\bin\userd.lib
+D:\dev\apps\corporate\bin\userdu.dll
+D:\dev\apps\corporate\bin\userdu.exp
+D:\dev\apps\corporate\bin\userdu.lib
+D:\dev\apps\corporate\bin\useru.dll
+D:\dev\apps\corporate\bin\useru.exp
+D:\dev\apps\corporate\bin\useru.lib
+D:\dev\apps\corporate\input\Dev\Sold.txt
+D:\dev\apps\corporate\input\Samples\cities.txt
+D:\dev\apps\corporate\input\Samples\companies.txt
+D:\dev\apps\corporate\input\Samples\states.txt
+D:\dev\apps\corporate\kb\kb.cpp
+D:\dev\apps\corporate\kb\kb.def
+D:\dev\apps\corporate\kb\kb.dsp
+D:\dev\apps\corporate\kb\kb.dsw
+D:\dev\apps\corporate\kb\kb.h
+D:\dev\apps\corporate\kb\kb.sln
+D:\dev\apps\corporate\kb\kb.vcproj
+D:\dev\apps\corporate\kb\kb_setup.cpp
+D:\dev\apps\corporate\kb\kb_setup.h
+D:\dev\apps\corporate\kb\StdAfx.cpp
+D:\dev\apps\corporate\kb\StdAfx.h
+D:\dev\apps\corporate\kb\user\attr.kb
+D:\dev\apps\corporate\kb\user\hier.kb
+D:\dev\apps\corporate\kb\user\phr.kb
+D:\dev\apps\corporate\kb\user\word.kb
+D:\dev\apps\corporate\run\analyzer.cpp
+D:\dev\apps\corporate\run\analyzer.h
+D:\dev\apps\corporate\run\auxiliary.cpp
+D:\dev\apps\corporate\run\data.h
+D:\dev\apps\corporate\run\edata.h
+D:\dev\apps\corporate\run\ehash.cpp
+D:\dev\apps\corporate\run\ehead.h
+D:\dev\apps\corporate\run\rchain.h
+D:\dev\apps\corporate\run\rdata.h
+D:\dev\apps\corporate\run\rhash.cpp
+D:\dev\apps\corporate\run\rhead.h
+D:\dev\apps\corporate\run\run.cpp
+D:\dev\apps\corporate\run\run.def
+D:\dev\apps\corporate\run\run.dsp
+D:\dev\apps\corporate\run\run.dsw
+D:\dev\apps\corporate\run\run.h
+D:\dev\apps\corporate\run\run.sln
+D:\dev\apps\corporate\run\run.vcproj
+D:\dev\apps\corporate\spec\analyzer.seq
+D:\dev\apps\corporate\spec\anaphora.pat
+D:\dev\apps\corporate\spec\anaphoraCompany.pat
+D:\dev\apps\corporate\spec\anaphoraEvent.pat
+D:\dev\apps\corporate\spec\city.pat
+D:\dev\apps\corporate\spec\companies.pat
+D:\dev\apps\corporate\spec\company.pat
+D:\dev\apps\corporate\spec\companyAttributes.pat
+D:\dev\apps\corporate\spec\companyDet.pat
+D:\dev\apps\corporate\spec\conjCompany.pat
+D:\dev\apps\corporate\spec\conjMoney.pat
+D:\dev\apps\corporate\spec\eventAttributes.pat
+D:\dev\apps\corporate\spec\events.pat
+D:\dev\apps\corporate\spec\events2.pat
+D:\dev\apps\corporate\spec\initKB.pat
+D:\dev\apps\corporate\spec\join.pat
+D:\dev\apps\corporate\spec\lookup.pat
+D:\dev\apps\corporate\spec\money.pat
+D:\dev\apps\corporate\spec\moneyAttributes.pat
+D:\dev\apps\corporate\spec\output.pat
+D:\dev\apps\corporate\spec\paragraphs.pat
+D:\dev\apps\corporate\spec\phrases.pat
+D:\dev\apps\corporate\spec\removeWhite.pat
+D:\dev\apps\corporate\spec\sentences.pat
+D:\dev\apps\corporate\spec\state.pat
+D:\dev\apps\corporate\spec\tmp.seq
+D:\dev\apps\corporate\spec\vocabulary.pat
+D:\dev\apps\corporate\user\Ualgo.cpp
+D:\dev\apps\corporate\user\Ualgo.h
+D:\dev\apps\corporate\user\Ucode.cpp
+D:\dev\apps\corporate\user\Ucode.h
+D:\dev\apps\corporate\user\Umisc.cpp
+D:\dev\apps\corporate\user\Umisc.h
+D:\dev\apps\corporate\user\Upre.cpp
+D:\dev\apps\corporate\user\Upre.h
+D:\dev\apps\corporate\user\Ureg.cpp
+D:\dev\apps\corporate\user\Ureg.h
+D:\dev\apps\corporate\user\user.cpp
+D:\dev\apps\corporate\user\user.def
+D:\dev\apps\corporate\user\user.dsp
+D:\dev\apps\corporate\user\user.dsw
+D:\dev\apps\corporate\user\user.h
+D:\dev\apps\corporate\user\user.sln
+D:\dev\apps\corporate\user\user.vcproj
+D:\dev\apps\database1\compile-all.bat
+D:\dev\apps\database1\compile-dev.bat
+D:\dev\apps\database1\compile-devu.bat
+D:\dev\apps\database1\compile-rel.bat
+D:\dev\apps\database1\compile-relu.bat
+D:\dev\apps\database1\database1.ana
+D:\dev\apps\database1\input.txt
+D:\dev\apps\database1\main.cpp
+D:\dev\apps\database1\prog.dsp
+D:\dev\apps\database1\prog.dsw
+D:\dev\apps\database1\prog.sln
+D:\dev\apps\database1\prog.vcproj
+D:\dev\apps\database1\README.txt
+D:\dev\apps\database1\Uanalyze.cpp
+D:\dev\apps\database1\Uanalyze.h
+D:\dev\apps\database1\u_out.cpp
+D:\dev\apps\database1\u_out.h
+D:\dev\apps\database1\bin\user.dll
+D:\dev\apps\database1\bin\user.exp
+D:\dev\apps\database1\bin\user.lib
+D:\dev\apps\database1\bin\userd.dll
+D:\dev\apps\database1\bin\userd.exp
+D:\dev\apps\database1\bin\userd.lib
+D:\dev\apps\database1\bin\userdu.dll
+D:\dev\apps\database1\bin\userdu.exp
+D:\dev\apps\database1\bin\userdu.lib
+D:\dev\apps\database1\bin\useru.dll
+D:\dev\apps\database1\bin\useru.exp
+D:\dev\apps\database1\bin\useru.lib
+D:\dev\apps\database1\data\createdb
+D:\dev\apps\database1\data\createdb1
+D:\dev\apps\database1\input\misc\xxx.txt
+D:\dev\apps\database1\input\misc\xxx.txt_log\dbg.log
+D:\dev\apps\database1\input\misc\xxx.txt_log\err.log
+D:\dev\apps\database1\input\misc\xxx.txt_log\final.log
+D:\dev\apps\database1\input\misc\xxx.txt_log\init.log
+D:\dev\apps\database1\input\misc\xxx.txt_log\output.txt
+D:\dev\apps\database1\kb\kb.cpp
+D:\dev\apps\database1\kb\kb.def
+D:\dev\apps\database1\kb\kb.dsp
+D:\dev\apps\database1\kb\kb.dsw
+D:\dev\apps\database1\kb\kb.h
+D:\dev\apps\database1\kb\kb.sln
+D:\dev\apps\database1\kb\kb.vcproj
+D:\dev\apps\database1\kb\kb_setup.cpp
+D:\dev\apps\database1\kb\kb_setup.h
+D:\dev\apps\database1\kb\StdAfx.cpp
+D:\dev\apps\database1\kb\StdAfx.h
+D:\dev\apps\database1\kb\user\attr.kb
+D:\dev\apps\database1\kb\user\hier.kb
+D:\dev\apps\database1\kb\user\phr.kb
+D:\dev\apps\database1\kb\user\word.kb
+D:\dev\apps\database1\logs\cgerr.log
+D:\dev\apps\database1\logs\dbg.log
+D:\dev\apps\database1\logs\make_ana.log
+D:\dev\apps\database1\output\dbg.log
+D:\dev\apps\database1\output\def.log
+D:\dev\apps\database1\output\init.log
+D:\dev\apps\database1\run\analyzer.cpp
+D:\dev\apps\database1\run\analyzer.h
+D:\dev\apps\database1\run\auxiliary.cpp
+D:\dev\apps\database1\run\data.h
+D:\dev\apps\database1\run\edata.h
+D:\dev\apps\database1\run\ehash.cpp
+D:\dev\apps\database1\run\ehead.h
+D:\dev\apps\database1\run\rchain.h
+D:\dev\apps\database1\run\rdata.h
+D:\dev\apps\database1\run\rhash.cpp
+D:\dev\apps\database1\run\rhead.h
+D:\dev\apps\database1\run\run.cpp
+D:\dev\apps\database1\run\run.def
+D:\dev\apps\database1\run\run.dsp
+D:\dev\apps\database1\run\run.dsw
+D:\dev\apps\database1\run\run.h
+D:\dev\apps\database1\run\run.sln
+D:\dev\apps\database1\run\run.vcproj
+D:\dev\apps\database1\spec\analyzer.seq
+D:\dev\apps\database1\spec\database.pat
+D:\dev\apps\database1\spec\pop.pat
+D:\dev\apps\database1\spec\tmp.seq
+D:\dev\apps\database1\user\Ualgo.cpp
+D:\dev\apps\database1\user\Ualgo.h
+D:\dev\apps\database1\user\Ucode.cpp
+D:\dev\apps\database1\user\Ucode.h
+D:\dev\apps\database1\user\Umisc.cpp
+D:\dev\apps\database1\user\Umisc.h
+D:\dev\apps\database1\user\Upre.cpp
+D:\dev\apps\database1\user\Upre.h
+D:\dev\apps\database1\user\Ureg.cpp
+D:\dev\apps\database1\user\Ureg.h
+D:\dev\apps\database1\user\user.cpp
+D:\dev\apps\database1\user\user.def
+D:\dev\apps\database1\user\user.dsp
+D:\dev\apps\database1\user\user.dsw
+D:\dev\apps\database1\user\user.h
+D:\dev\apps\database1\user\user.sln
+D:\dev\apps\database1\user\user.vcproj
+D:\dev\apps\DotNetTest\App.ico
+D:\dev\apps\DotNetTest\AssemblyInfo.cs
+D:\dev\apps\DotNetTest\DotNetTest.csproj
+D:\dev\apps\DotNetTest\DotNetTest.csproj.user
+D:\dev\apps\DotNetTest\DotNetTest.sln
+D:\dev\apps\DotNetTest\DotNetTest.sln.old
+D:\dev\apps\DotNetTest\dotnettest.snk
+D:\dev\apps\DotNetTest\DotNetTest.suo
+D:\dev\apps\DotNetTest\FormMain.cs
+D:\dev\apps\DotNetTest\FormMain.resx
+D:\dev\apps\DotNetTest\VisualTextLogo.gif
+D:\dev\apps\DotNetTest\bin\Debug\DotNetTest.exe
+D:\dev\apps\DotNetTest\bin\Debug\DotNetTest.pdb
+D:\dev\apps\DotNetTest\bin\Release\DotNetTest.exe
+D:\dev\apps\DotNetTest\bin\Release\DotNetTest_pure.log
+D:\dev\apps\DotNetTest\obj\Debug\DotNetTest.exe
+D:\dev\apps\DotNetTest\obj\Debug\DotNetTest.exe.incr
+D:\dev\apps\DotNetTest\obj\Debug\DotNetTest.pdb
+D:\dev\apps\DotNetTest\obj\Debug\DotNetTest.projdata
+D:\dev\apps\DotNetTest\obj\Debug\VisualText.FormMain.resources
+D:\dev\apps\DotNetTest\obj\Release\DotNetTest.exe
+D:\dev\apps\DotNetTest\obj\Release\DotNetTest.projdata
+D:\dev\apps\DotNetTest\obj\Release\VisualText.FormMain.resources
+D:\dev\apps\DotNetWeb\AssemblyInfo.cs
+D:\dev\apps\DotNetWeb\DotNetWeb.csproj
+D:\dev\apps\DotNetWeb\DotNetWeb.csproj.webinfo
+D:\dev\apps\DotNetWeb\DotNetWeb.vsdisco
+D:\dev\apps\DotNetWeb\Global.asax
+D:\dev\apps\DotNetWeb\Global.asax.cs
+D:\dev\apps\DotNetWeb\Global.asax.resx
+D:\dev\apps\DotNetWeb\Web.config
+D:\dev\apps\DotNetWeb\WebForm1.aspx
+D:\dev\apps\DotNetWeb\WebForm1.aspx.cs
+D:\dev\apps\DotNetWeb\WebForm1.aspx.resx
+D:\dev\apps\DotNetWeb\bin\DotNetAPI.dll
+D:\dev\apps\DotNetWeb\bin\DotNetWeb.dll
+D:\dev\apps\LexTagger-1.0\licence.html
+D:\dev\apps\LexTagger-1.0\Properties.txt
+D:\dev\apps\LexTagger-1.0\Readme.txt
+D:\dev\apps\LexTagger-1.0\run.bat
+D:\dev\apps\LexTagger-1.0\TaggerLog.txt
+D:\dev\apps\LexTagger-1.0\classes\umist\co\nlp\tagger\BTagger.class
+D:\dev\apps\LexTagger-1.0\classes\umist\co\nlp\tagger\InitialState.class
+D:\dev\apps\LexTagger-1.0\classes\umist\co\nlp\tagger\LexElement.class
+D:\dev\apps\LexTagger-1.0\classes\umist\co\nlp\tagger\LexicalLearner.class
+D:\dev\apps\LexTagger-1.0\classes\umist\co\nlp\tagger\Lexicon.class
+D:\dev\apps\LexTagger-1.0\classes\umist\co\nlp\tagger\LexLearner.class
+D:\dev\apps\LexTagger-1.0\classes\umist\co\nlp\tagger\LexTagger.class
+D:\dev\apps\LexTagger-1.0\classes\umist\co\nlp\tagger\LineTokenizer.class
+D:\dev\apps\LexTagger-1.0\classes\umist\co\nlp\tagger\MainTagger.class
+D:\dev\apps\LexTagger-1.0\classes\umist\co\nlp\tagger\Measures.class
+D:\dev\apps\LexTagger-1.0\classes\umist\co\nlp\tagger\Rank.class
+D:\dev\apps\LexTagger-1.0\classes\umist\co\nlp\tagger\RuleTransformation.class
+D:\dev\apps\LexTagger-1.0\classes\umist\co\nlp\tagger\Tagger.class
+D:\dev\apps\LexTagger-1.0\classes\umist\co\nlp\tagger\TextTransformation.class
+D:\dev\apps\LexTagger-1.0\classes\umist\co\nlp\tagger\Tokenizer.class
+D:\dev\apps\LexTagger-1.0\classes\umist\co\nlp\tagger\TokTagger.class
+D:\dev\apps\LexTagger-1.0\data\lexicon.txt
+D:\dev\apps\LexTagger-1.0\data\lexrules.txt
+D:\dev\apps\LexTagger-1.0\data\rules100000.txt
+D:\dev\apps\LexTagger-1.0\lib\gnu-regexp-1.1.4.jar
+D:\dev\apps\LexTagger-1.0\src\umist\co\nlp\tagger\BTagger.java
+D:\dev\apps\LexTagger-1.0\src\umist\co\nlp\tagger\InitialState.java
+D:\dev\apps\LexTagger-1.0\src\umist\co\nlp\tagger\LexElement.java
+D:\dev\apps\LexTagger-1.0\src\umist\co\nlp\tagger\LexicalLearner.java
+D:\dev\apps\LexTagger-1.0\src\umist\co\nlp\tagger\Lexicon.java
+D:\dev\apps\LexTagger-1.0\src\umist\co\nlp\tagger\LexLearner.java
+D:\dev\apps\LexTagger-1.0\src\umist\co\nlp\tagger\LexTagger.java
+D:\dev\apps\LexTagger-1.0\src\umist\co\nlp\tagger\LineTokenizer.java
+D:\dev\apps\LexTagger-1.0\src\umist\co\nlp\tagger\MainTagger.java
+D:\dev\apps\LexTagger-1.0\src\umist\co\nlp\tagger\Measures.java
+D:\dev\apps\LexTagger-1.0\src\umist\co\nlp\tagger\Rank.java
+D:\dev\apps\LexTagger-1.0\src\umist\co\nlp\tagger\RuleTransformation.java
+D:\dev\apps\LexTagger-1.0\src\umist\co\nlp\tagger\Tagger.java
+D:\dev\apps\LexTagger-1.0\src\umist\co\nlp\tagger\TextTransformation.java
+D:\dev\apps\LexTagger-1.0\src\umist\co\nlp\tagger\Tokenizer.java
+D:\dev\apps\LexTagger-1.0\src\umist\co\nlp\tagger\TokTagger.java
+D:\dev\apps\LexTagger-1.0\test\crop1.txt
+D:\dev\apps\LexTagger-1.0\test\input.txt
+D:\dev\apps\LexTagger-1.0\test\result.tokenized
+D:\dev\apps\LexTagger-1.0\test\result.txt
+D:\dev\apps\minanalyzer\compile-all.bat
+D:\dev\apps\minanalyzer\compile-dev.bat
+D:\dev\apps\minanalyzer\compile-devu.bat
+D:\dev\apps\minanalyzer\compile-rel.bat
+D:\dev\apps\minanalyzer\compile-relu.bat
+D:\dev\apps\minanalyzer\input.txt
+D:\dev\apps\minanalyzer\main.cpp
+D:\dev\apps\minanalyzer\minanalyzer.ana
+D:\dev\apps\minanalyzer\prog.dsp
+D:\dev\apps\minanalyzer\prog.dsw
+D:\dev\apps\minanalyzer\prog.sln
+D:\dev\apps\minanalyzer\prog.vcproj
+D:\dev\apps\minanalyzer\Uanalyze.cpp
+D:\dev\apps\minanalyzer\Uanalyze.h
+D:\dev\apps\minanalyzer\u_out.cpp
+D:\dev\apps\minanalyzer\u_out.h
+D:\dev\apps\minanalyzer\bin\user.dll
+D:\dev\apps\minanalyzer\bin\user.exp
+D:\dev\apps\minanalyzer\bin\user.lib
+D:\dev\apps\minanalyzer\bin\userd.dll
+D:\dev\apps\minanalyzer\bin\userd.exp
+D:\dev\apps\minanalyzer\bin\userd.lib
+D:\dev\apps\minanalyzer\bin\userdu.dll
+D:\dev\apps\minanalyzer\bin\userdu.exp
+D:\dev\apps\minanalyzer\bin\userdu.lib
+D:\dev\apps\minanalyzer\bin\useru.dll
+D:\dev\apps\minanalyzer\bin\useru.exp
+D:\dev\apps\minanalyzer\bin\useru.lib
+D:\dev\apps\minanalyzer\input\misc\xyz.txt
+D:\dev\apps\minanalyzer\kb\kb.cpp
+D:\dev\apps\minanalyzer\kb\kb.def
+D:\dev\apps\minanalyzer\kb\kb.dsp
+D:\dev\apps\minanalyzer\kb\kb.dsw
+D:\dev\apps\minanalyzer\kb\kb.h
+D:\dev\apps\minanalyzer\kb\kb.sln
+D:\dev\apps\minanalyzer\kb\kb.vcproj
+D:\dev\apps\minanalyzer\kb\kb_setup.cpp
+D:\dev\apps\minanalyzer\kb\kb_setup.h
+D:\dev\apps\minanalyzer\kb\StdAfx.cpp
+D:\dev\apps\minanalyzer\kb\StdAfx.h
+D:\dev\apps\minanalyzer\kb\user\attr.kb
+D:\dev\apps\minanalyzer\kb\user\hier.kb
+D:\dev\apps\minanalyzer\kb\user\phr.kb
+D:\dev\apps\minanalyzer\kb\user\word.kb
+D:\dev\apps\minanalyzer\logs\cgerr.log
+D:\dev\apps\minanalyzer\logs\dbg.log
+D:\dev\apps\minanalyzer\logs\make_ana.log
+D:\dev\apps\minanalyzer\output\dbg.log
+D:\dev\apps\minanalyzer\output\def.log
+D:\dev\apps\minanalyzer\output\init.log
+D:\dev\apps\minanalyzer\run\analyzer.cpp
+D:\dev\apps\minanalyzer\run\analyzer.h
+D:\dev\apps\minanalyzer\run\auxiliary.cpp
+D:\dev\apps\minanalyzer\run\data.h
+D:\dev\apps\minanalyzer\run\edata.h
+D:\dev\apps\minanalyzer\run\ehash.cpp
+D:\dev\apps\minanalyzer\run\ehead.h
+D:\dev\apps\minanalyzer\run\rchain.h
+D:\dev\apps\minanalyzer\run\rdata.h
+D:\dev\apps\minanalyzer\run\rhash.cpp
+D:\dev\apps\minanalyzer\run\rhead.h
+D:\dev\apps\minanalyzer\run\run.cpp
+D:\dev\apps\minanalyzer\run\run.def
+D:\dev\apps\minanalyzer\run\run.dsp
+D:\dev\apps\minanalyzer\run\run.dsw
+D:\dev\apps\minanalyzer\run\run.h
+D:\dev\apps\minanalyzer\run\run.sln
+D:\dev\apps\minanalyzer\run\run.vcproj
+D:\dev\apps\minanalyzer\spec\analyzer.seq
+D:\dev\apps\minanalyzer\spec\iopass100.pat
+D:\dev\apps\minanalyzer\spec\tmp.seq
+D:\dev\apps\minanalyzer\user\Ualgo.cpp
+D:\dev\apps\minanalyzer\user\Ualgo.h
+D:\dev\apps\minanalyzer\user\Ucode.cpp
+D:\dev\apps\minanalyzer\user\Ucode.h
+D:\dev\apps\minanalyzer\user\Umisc.cpp
+D:\dev\apps\minanalyzer\user\Umisc.h
+D:\dev\apps\minanalyzer\user\Upre.cpp
+D:\dev\apps\minanalyzer\user\Upre.h
+D:\dev\apps\minanalyzer\user\Ureg.cpp
+D:\dev\apps\minanalyzer\user\Ureg.h
+D:\dev\apps\minanalyzer\user\user.cpp
+D:\dev\apps\minanalyzer\user\user.def
+D:\dev\apps\minanalyzer\user\user.dsp
+D:\dev\apps\minanalyzer\user\user.dsw
+D:\dev\apps\minanalyzer\user\user.h
+D:\dev\apps\minanalyzer\user\user.sln
+D:\dev\apps\minanalyzer\user\user.vcproj
+D:\dev\apps\POStagger\compile-all.bat
+D:\dev\apps\POStagger\compile-dev.bat
+D:\dev\apps\POStagger\compile-devu.bat
+D:\dev\apps\POStagger\compile-rel.bat
+D:\dev\apps\POStagger\compile-relu.bat
+D:\dev\apps\POStagger\input.txt
+D:\dev\apps\POStagger\main.cpp
+D:\dev\apps\POStagger\POStagger.ana
+D:\dev\apps\POStagger\prog.dsp
+D:\dev\apps\POStagger\prog.dsw
+D:\dev\apps\POStagger\prog.sln
+D:\dev\apps\POStagger\prog.vcproj
+D:\dev\apps\POStagger\Uanalyze.cpp
+D:\dev\apps\POStagger\Uanalyze.h
+D:\dev\apps\POStagger\u_out.cpp
+D:\dev\apps\POStagger\u_out.h
+D:\dev\apps\POStagger\bin\user.dll
+D:\dev\apps\POStagger\bin\user.exp
+D:\dev\apps\POStagger\bin\user.lib
+D:\dev\apps\POStagger\bin\userd.dll
+D:\dev\apps\POStagger\bin\userd.exp
+D:\dev\apps\POStagger\bin\userd.lib
+D:\dev\apps\POStagger\bin\userdu.dll
+D:\dev\apps\POStagger\bin\userdu.exp
+D:\dev\apps\POStagger\bin\userdu.lib
+D:\dev\apps\POStagger\bin\useru.dll
+D:\dev\apps\POStagger\bin\useru.exp
+D:\dev\apps\POStagger\bin\useru.lib
+D:\dev\apps\POStagger\input\files\crop1.txt
+D:\dev\apps\POStagger\input\files\misc.txt
+D:\dev\apps\POStagger\input\files\crop1.txt_log\dbg.log
+D:\dev\apps\POStagger\input\files\crop1.txt_log\err.log
+D:\dev\apps\POStagger\input\files\crop1.txt_log\final.log
+D:\dev\apps\POStagger\input\files\crop1.txt_log\init.log
+D:\dev\apps\POStagger\kb\kb.cpp
+D:\dev\apps\POStagger\kb\kb.def
+D:\dev\apps\POStagger\kb\kb.dsp
+D:\dev\apps\POStagger\kb\kb.dsw
+D:\dev\apps\POStagger\kb\kb.h
+D:\dev\apps\POStagger\kb\kb.sln
+D:\dev\apps\POStagger\kb\kb.vcproj
+D:\dev\apps\POStagger\kb\kb_setup.cpp
+D:\dev\apps\POStagger\kb\kb_setup.h
+D:\dev\apps\POStagger\kb\StdAfx.cpp
+D:\dev\apps\POStagger\kb\StdAfx.h
+D:\dev\apps\POStagger\kb\user\attr.kb
+D:\dev\apps\POStagger\kb\user\hier.kb
+D:\dev\apps\POStagger\kb\user\phr.kb
+D:\dev\apps\POStagger\kb\user\word.kb
+D:\dev\apps\POStagger\logs\cgerr.log
+D:\dev\apps\POStagger\logs\dbg.log
+D:\dev\apps\POStagger\logs\make_ana.log
+D:\dev\apps\POStagger\run\analyzer.cpp
+D:\dev\apps\POStagger\run\analyzer.h
+D:\dev\apps\POStagger\run\auxiliary.cpp
+D:\dev\apps\POStagger\run\data.h
+D:\dev\apps\POStagger\run\edata.h
+D:\dev\apps\POStagger\run\ehash.cpp
+D:\dev\apps\POStagger\run\ehead.h
+D:\dev\apps\POStagger\run\rchain.h
+D:\dev\apps\POStagger\run\rdata.h
+D:\dev\apps\POStagger\run\rhash.cpp
+D:\dev\apps\POStagger\run\rhead.h
+D:\dev\apps\POStagger\run\run.cpp
+D:\dev\apps\POStagger\run\run.def
+D:\dev\apps\POStagger\run\run.dsp
+D:\dev\apps\POStagger\run\run.dsw
+D:\dev\apps\POStagger\run\run.h
+D:\dev\apps\POStagger\run\run.sln
+D:\dev\apps\POStagger\run\run.vcproj
+D:\dev\apps\POStagger\spec\analyzer.seq
+D:\dev\apps\POStagger\spec\POStagger.pat
+D:\dev\apps\POStagger\spec\tmp.seq
+D:\dev\apps\POStagger\user\Ualgo.cpp
+D:\dev\apps\POStagger\user\Ualgo.h
+D:\dev\apps\POStagger\user\Ucode.cpp
+D:\dev\apps\POStagger\user\Ucode.h
+D:\dev\apps\POStagger\user\Umisc.cpp
+D:\dev\apps\POStagger\user\Umisc.h
+D:\dev\apps\POStagger\user\Upre.cpp
+D:\dev\apps\POStagger\user\Upre.h
+D:\dev\apps\POStagger\user\Ureg.cpp
+D:\dev\apps\POStagger\user\Ureg.h
+D:\dev\apps\POStagger\user\user.cpp
+D:\dev\apps\POStagger\user\user.def
+D:\dev\apps\POStagger\user\user.dsp
+D:\dev\apps\POStagger\user\user.dsw
+D:\dev\apps\POStagger\user\user.h
+D:\dev\apps\POStagger\user\user.sln
+D:\dev\apps\POStagger\user\user.vcproj
+567 File(s) copied
+here7
+Deleted file - c:\rel\apps\DotNetTest\FormMain.resx
+Deleted file - c:\rel\apps\DotNetTest\obj\Debug\VisualText.FormMain.resources
+Deleted file - c:\rel\apps\DotNetTest\obj\Release\VisualText.FormMain.resources
+Deleted file - c:\rel\apps\DotNetWeb\Global.asax.resx
+Deleted file - c:\rel\apps\DotNetWeb\WebForm1.aspx.resx
+Deleted file - c:\rel\Templates\Database\prog.ncb
+Deleted file - c:\rel\Templates\Database\kb\kb.ncb
+Deleted file - c:\rel\Templates\Database\run\run.ncb
+Deleted file - c:\rel\Templates\DatesPlusNumbers\prog.ncb
+Deleted file - c:\rel\Templates\DatesPlusNumbers\kb\kb.ncb
+Deleted file - c:\rel\Templates\DatesPlusNumbers\run\run.ncb
+Deleted file - c:\rel\Templates\EnglishLexicon\prog.ncb
+Deleted file - c:\rel\Templates\EnglishLexicon\kb\kb.ncb
+Deleted file - c:\rel\Templates\EnglishLexicon\run\run.ncb
+Deleted file - c:\rel\Templates\HTML\prog.ncb
+Deleted file - c:\rel\Templates\HTML\kb\kb.ncb
+Deleted file - c:\rel\Templates\HTML\run\run.ncb
+Deleted file - c:\rel\Templates\XML\prog.ncb
+Deleted file - c:\rel\Templates\XML\kb\kb.ncb
+Deleted file - c:\rel\Templates\XML\run\run.ncb
+Deleted file - c:\rel\Templates\XML DTD\prog.ncb
+Deleted file - c:\rel\Templates\XML DTD\kb\kb.ncb
+Deleted file - c:\rel\Templates\XML DTD\run\run.ncb
+Deleted file - c:\rel\apps\DotNetTest\bin\Debug\DotNetTest.pdb
+Deleted file - c:\rel\apps\DotNetTest\obj\Debug\DotNetTest.pdb
+Deleted file - c:\rel\apps\201_bare_u\input\Tenth_IUC-utf8.txt_log\dbg.log
+Deleted file - c:\rel\apps\201_bare_u\input\Tenth_IUC-utf8.txt_log\err.log
+Deleted file - c:\rel\apps\201_bare_u\input\Tenth_IUC-utf8.txt_log\final.log
+Deleted file - c:\rel\apps\201_bare_u\input\tst.txt_log\dbg.log
+Deleted file - c:\rel\apps\201_bare_u\input\tst.txt_log\err.log
+Deleted file - c:\rel\apps\201_bare_u\input\tst.txt_log\final.log
+Deleted file - c:\rel\apps\201_bare_u\input\tst.txt_log\init.log
+Deleted file - c:\rel\apps\201_bare_u\input\utf-8-demo.txt_log\dbg.log
+Deleted file - c:\rel\apps\201_bare_u\input\utf-8-demo.txt_log\err.log
+Deleted file - c:\rel\apps\201_bare_u\input\utf-8-demo.txt_log\final.log
+Deleted file - c:\rel\apps\201_bare_u\input\xyz.txt_log\dbg.log
+Deleted file - c:\rel\apps\201_bare_u\input\xyz.txt_log\err.log
+Deleted file - c:\rel\apps\201_bare_u\input\xyz.txt_log\final.log
+Deleted file - c:\rel\apps\201_bare_u\input\xyz.txt_log\init.log
+Deleted file - c:\rel\apps\201_bare_u\logs\cgerr.log
+Deleted file - c:\rel\apps\201_bare_u\logs\dbg.log
+Deleted file - c:\rel\apps\201_bare_u\logs\make_ana.log
+Deleted file - c:\rel\apps\database1\input\misc\xxx.txt_log\dbg.log
+Deleted file - c:\rel\apps\database1\input\misc\xxx.txt_log\err.log
+Deleted file - c:\rel\apps\database1\input\misc\xxx.txt_log\final.log
+Deleted file - c:\rel\apps\database1\input\misc\xxx.txt_log\init.log
+Deleted file - c:\rel\apps\database1\logs\cgerr.log
+Deleted file - c:\rel\apps\database1\logs\dbg.log
+Deleted file - c:\rel\apps\database1\logs\make_ana.log
+Deleted file - c:\rel\apps\database1\output\dbg.log
+Deleted file - c:\rel\apps\database1\output\def.log
+Deleted file - c:\rel\apps\database1\output\init.log
+Deleted file - c:\rel\apps\DotNetTest\bin\Release\DotNetTest_pure.log
+Deleted file - c:\rel\apps\minanalyzer\logs\cgerr.log
+Deleted file - c:\rel\apps\minanalyzer\logs\dbg.log
+Deleted file - c:\rel\apps\minanalyzer\logs\make_ana.log
+Deleted file - c:\rel\apps\minanalyzer\output\dbg.log
+Deleted file - c:\rel\apps\minanalyzer\output\def.log
+Deleted file - c:\rel\apps\minanalyzer\output\init.log
+Deleted file - c:\rel\apps\POStagger\input\files\crop1.txt_log\dbg.log
+Deleted file - c:\rel\apps\POStagger\input\files\crop1.txt_log\err.log
+Deleted file - c:\rel\apps\POStagger\input\files\crop1.txt_log\final.log
+Deleted file - c:\rel\apps\POStagger\input\files\crop1.txt_log\init.log
+Deleted file - c:\rel\apps\POStagger\logs\cgerr.log
+Deleted file - c:\rel\apps\POStagger\logs\dbg.log
+Deleted file - c:\rel\apps\POStagger\logs\make_ana.log
+Deleted file - c:\rel\Templates\HTML\input\PRNS9771800.htm_log\ana001.log
+Deleted file - c:\rel\Templates\HTML\input\PRNS9771800.htm_log\ana002.log
+Deleted file - c:\rel\Templates\HTML\input\PRNS9771800.htm_log\ana003.log
+Deleted file - c:\rel\Templates\HTML\input\PRNS9771800.htm_log\ana004.log
+Deleted file - c:\rel\Templates\HTML\input\PRNS9771800.htm_log\ana005.log
+Deleted file - c:\rel\Templates\HTML\input\PRNS9771800.htm_log\ana006.log
+Deleted file - c:\rel\Templates\HTML\input\PRNS9771800.htm_log\err.log
+Deleted file - c:\rel\Templates\HTML\input\PRNS9771800.htm_log\final.log
+Deleted file - c:\rel\Templates\HTML\input\PRNS9771800.htm_log\init.log
+Deleted file - c:\rel\apps\database1\input\misc\xxx.txt_log\output.txt
+Done backing up.

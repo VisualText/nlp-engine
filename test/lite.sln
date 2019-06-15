@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lite", "lite.vcproj", "{5B63F12C-3F96-4650-8CD2-FC5A1D98167F}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+		Release_Static = Release_Static
+		Unicode_Debug = Unicode_Debug
+		Unicode_Release = Unicode_Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{5B63F12C-3F96-4650-8CD2-FC5A1D98167F}.Debug.ActiveCfg = Debug|Win32
+		{5B63F12C-3F96-4650-8CD2-FC5A1D98167F}.Debug.Build.0 = Debug|Win32
+		{5B63F12C-3F96-4650-8CD2-FC5A1D98167F}.Release.ActiveCfg = Release|Win32
+		{5B63F12C-3F96-4650-8CD2-FC5A1D98167F}.Release.Build.0 = Release|Win32
+		{5B63F12C-3F96-4650-8CD2-FC5A1D98167F}.Release_Static.ActiveCfg = Release_Static|Win32
+		{5B63F12C-3F96-4650-8CD2-FC5A1D98167F}.Release_Static.Build.0 = Release_Static|Win32
+		{5B63F12C-3F96-4650-8CD2-FC5A1D98167F}.Unicode_Debug.ActiveCfg = Unicode_Debug|Win32
+		{5B63F12C-3F96-4650-8CD2-FC5A1D98167F}.Unicode_Debug.Build.0 = Unicode_Debug|Win32
+		{5B63F12C-3F96-4650-8CD2-FC5A1D98167F}.Unicode_Release.ActiveCfg = Unicode_Release|Win32
+		{5B63F12C-3F96-4650-8CD2-FC5A1D98167F}.Unicode_Release.Build.0 = Unicode_Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

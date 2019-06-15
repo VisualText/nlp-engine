@@ -1,0 +1,27 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libconsh", "libconsh.vcproj", "{9670D2E5-B333-4260-BEBB-BB3242BE1374}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+		Unicode_Debug = Unicode_Debug
+		Unicode_Release = Unicode_Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{9670D2E5-B333-4260-BEBB-BB3242BE1374}.Debug.ActiveCfg = Debug|Win32
+		{9670D2E5-B333-4260-BEBB-BB3242BE1374}.Debug.Build.0 = Debug|Win32
+		{9670D2E5-B333-4260-BEBB-BB3242BE1374}.Release.ActiveCfg = Release|Win32
+		{9670D2E5-B333-4260-BEBB-BB3242BE1374}.Release.Build.0 = Release|Win32
+		{9670D2E5-B333-4260-BEBB-BB3242BE1374}.Unicode_Debug.ActiveCfg = Unicode_Debug|Win32
+		{9670D2E5-B333-4260-BEBB-BB3242BE1374}.Unicode_Debug.Build.0 = Unicode_Debug|Win32
+		{9670D2E5-B333-4260-BEBB-BB3242BE1374}.Unicode_Release.ActiveCfg = Unicode_Release|Win32
+		{9670D2E5-B333-4260-BEBB-BB3242BE1374}.Unicode_Release.Build.0 = Unicode_Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

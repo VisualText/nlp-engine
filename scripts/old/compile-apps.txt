@@ -1,0 +1,27 @@
+rem RESUME APP
+
+msdev %fldr%\apps\resume\user\user.dsp /MAKE "user - Win32 Debug" /REBUILD
+if errorlevel 4 goto lowmemory
+if errorlevel 2 goto abort
+
+msdev %fldr%\apps\resume\resume.dsp /MAKE "Resume - Win32 Debug" /REBUILD
+if errorlevel 4 goto lowmemory
+if errorlevel 2 goto abort
+
+rem CHATTER APP
+
+msdev %fldr%\apps\chatter\kb\kb.dsp /MAKE "kb - Win32 Debug" /REBUILD
+if errorlevel 4 goto lowmemory
+if errorlevel 2 goto abort
+
+rem msdev %fldr%\apps\chatter\run\run.dsp /MAKE "run - Win32 Debug" /REBUILD
+rem if errorlevel 4 goto lowmemory
+rem if errorlevel 2 goto abort
+
+msdev %fldr%\apps\chatter\user\user.dsp /MAKE "user - Win32 Debug" /REBUILD
+if errorlevel 4 goto lowmemory
+if errorlevel 2 goto abort
+
+msdev %fldr%\apps\chatter\chatter.dsp /MAKE "chatter - Win32 Debug" /REBUILD
+if errorlevel 4 goto lowmemory
+if errorlevel 2 goto abort

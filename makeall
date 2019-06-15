@@ -1,0 +1,14 @@
+#
+cd cs/libprim
+make
+cd ../libkbm
+make
+cd ../libconsh
+make
+cd ../../src/words
+make
+#cd ../web
+#make
+cd ../../lite
+make
+

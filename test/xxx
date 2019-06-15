@@ -1,0 +1,18 @@
+g++ -g -DLINUX -I../include/Api/lite -I../include/Api -I/../cs/include -c ireturn.cpp -o ireturn.o
+In file included from ../include/Api/lite/nlppp.h:20:0,
+                 from ireturn.cpp:26:
+../include/Api/lite/Arun.h:381:60: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+  static bool listadd(Nlppp *,long,long,_TCHAR * =_T("false"));  // 06/02/00 AM.
+                                                            ^
+In file included from ireturn.cpp:27:0:
+gen.h:71:27: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+   _TCHAR *indent   = _T(""),  // Amount to indent code.
+                           ^
+ireturn.cpp:36:5: error: ‘Ireturn::count_’ is not a static data member of a class template [-fpermissive]
+ int Ireturn::count_ = 0;
+     ^
+ireturn.cpp: In constructor ‘Ireturn::Ireturn(RFASem*, long int)’:
+ireturn.cpp:49:31: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+  : Istmt(_T("returnstmt"),line)            // 03/12 02 AM.
+                               ^
+make: *** [ireturn.o] Error 1

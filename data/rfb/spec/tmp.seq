@@ -1,0 +1,36 @@
+# 
+tokenize		# 
+line		# 
+pat	retok	# 
+pat	bigtok	# 
+pat	x_white	# 
+pat	nlppp	# comment here
+pat	un_mark	# comment here
+pat	list	# 
+pat	list1	# comment here
+pat	gram1	# comment here
+rec	gram2	# comment here
+pat	decls	# 
+pat	pair	# 
+pat	pairs	# 
+pat	element	# 
+pat	rule	# 
+pat	rules	# 
+pat	decl	# comment here
+pat	code	# 
+pat	pres	# 
+pat	checks	# comment here
+pat	posts	# comment here
+pat	tmp	# comment here
+pat	tmp1	# comment here
+pat	select	# 
+pat	region	# 
+pat	regions	# 
+pat	recurse	# 
+pat	recurses	# 
+pat	rulesfile	# 
+pat	finalerr	# comment here
+nintern	nil	# comment here
+gen	nil	# comment here
+hash	nil	# 
+genhash	nil	# 

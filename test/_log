@@ -1,0 +1,48 @@
+g++ -g -DLINUX -I../include/Api/lite -I../include/Api -I/../cs/include -c Agram.cpp -o Agram.o
+In file included from Agram.cpp:18:0:
+../include/Api/consh/cg.h:107:37: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+  bool readKB(_TCHAR *dir = _T("user"));
+                                     ^
+../include/Api/consh/cg.h:111:38: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+  bool writeKB(_TCHAR *dir = _T("user"));
+                                      ^
+In file included from Agram.cpp:22:0:
+str.h:90:2: error: ‘UINT’ has not been declared
+  UINT nCodePage
+  ^
+str.h:98:2: error: ‘UINT’ has not been declared
+  UINT nCodePage,
+  ^
+In file included from ../include/Api/lite/nlppp.h:20:0,
+                 from Agram.cpp:26:
+../include/Api/lite/Arun.h:381:60: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+  static bool listadd(Nlppp *,long,long,_TCHAR * =_T("false"));  // 06/02/00 AM.
+                                                            ^
+In file included from Agram.cpp:27:0:
+gen.h:71:27: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+   _TCHAR *indent   = _T(""),  // Amount to indent code.
+                           ^
+In file included from Agram.cpp:30:0:
+../include/Api/lite/ana.h:47:28: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+  Ana(_TCHAR *appdir = _T(""));  // Default constructor.
+                            ^
+../include/Api/lite/ana.h:107:34: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+  void genAna(_TCHAR *dir = _T("."));           // 11/04/99 AM.
+                                  ^
+In file included from Agram.cpp:32:0:
+../include/Api/lite/nlp.h:322:25: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+   _TCHAR *outdir = _T("")              // 03/10/99 AM.
+                         ^
+Agram.cpp: In static member function ‘static bool Agram::makeDirty(CONCEPT*, CG*)’:
+Agram.cpp:81:52: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+ return cg->replaceVal(conc, _T("dirty"), _T("true"));
+                                                    ^
+Agram.cpp:81:52: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+Agram.cpp: In static member function ‘static int Agram::smartPassnum(CONCEPT*, CG*)’:
+Agram.cpp:170:49: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+  ok = cg->findVal(par, _T("passnum"), /*UP*/ val);
+                                                 ^
+Agram.cpp:172:50: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+  ok = cg->findVal(conc, _T("passnum"), /*UP*/ val);
+                                                  ^
+make: *** [Agram.o] Error 1

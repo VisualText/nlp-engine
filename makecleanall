@@ -1,0 +1,16 @@
+#
+cd cs/libprim
+make clean
+cd ../libkbm
+make clean
+cd ../libconsh
+make clean
+cd ../../src/words
+make clean
+#cd ../web
+#make clean
+cd ../../lite
+make clean
+cd ../lib
+rm -f *.a
+

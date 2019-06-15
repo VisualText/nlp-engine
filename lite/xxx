@@ -1,0 +1,28 @@
+g++ -g -DLINUX -I../include/Api/lite -I../include/Api -I/../cs/include -c nlppp.cpp -o nlppp.o
+In file included from ../include/Api/lite/parse.h:31:0,
+                 from nlppp.cpp:27:
+../include/Api/lite/Arun.h:422:60: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+  static bool listadd(Nlppp *,long,long,_TCHAR * =_T("false"));  // 06/02/00 AM.
+                                                            ^
+In file included from nlppp.cpp:28:0:
+../include/Api/lite/nlp.h:324:25: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+   _TCHAR *outdir = _T("")              // 03/10/99 AM.
+                         ^
+In file included from nlppp.cpp:31:0:
+gen.h:69:27: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+   _TCHAR *indent   = _T(""),  // Amount to indent code.
+                           ^
+In file included from nlppp.cpp:32:0:
+../include/Api/lite/ana.h:47:28: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+  Ana(_TCHAR *appdir = _T(""));  // Default constructor.
+                            ^
+../include/Api/lite/ana.h:107:34: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+  void genAna(_TCHAR *dir = _T("."));           // 11/04/99 AM.
+                                  ^
+nlppp.cpp:35:5: error: specializing member ‘Selt<char>::count_’ requires ‘template<>’ syntax
+ int Selt<_TCHAR>::count_ = 0; // 01/08/07 AM.
+     ^
+nlppp.cpp:36:5: error: specializing member ‘Slist<char>::count_’ requires ‘template<>’ syntax
+ int Slist<_TCHAR>::count_ = 0; // 01/08/07 AM.
+     ^
+make: *** [nlppp.o] Error 1

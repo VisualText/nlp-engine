@@ -1,0 +1,1 @@
+g++ -g -DLINUX -I../../include/Api -I../include -c cg.cpp -o cg.o
