@@ -1,0 +1,20 @@
+; DEF file for the  DLL
+
+LIBRARY user
+
+EXPORTS
+
+  fnUsr                    ;   Called from C program in __cdecl
+
+  regUser					; Function to register algorithms & actions.
+
+  ucodeAction				; Fun to execute user-defined code action.
+
+  ucodeAlgo					; Fun to execute user-defined pass algo.
+
+  ucodeIni					; Fun for user initializations.
+
+  ucodeFin					; Fun for user cleanups.
+
+;  CdeclFunc                            @2  NONAME
+

@@ -1,0 +1,28 @@
+Printing from code region.
+Word con=abc
+/dev/nlp/analyzers/noop
+/dev/nlp/analyzers/noop/data/xxx.txt
+Printing from code region.
+Word con=abc
+/dev/nlp/analyzers/noop
+/dev/nlp/analyzers/noop/data/xxx.txt
+Printing from code region.
+Word con=abc
+/dev/nlp/analyzers/noop
+/dev/nlp/analyzers/noop/data/xxx.txt
+Printing from code region.
+Word con=abc
+/dev/nlp/analyzers/noop
+/dev/nlp/analyzers/noop/data/xxx.txt
+Printing from code region.
+Word con=abc
+/dev/nlp/analyzers/noop
+/dev/nlp/analyzers/noop/data/xxx.txt
+Printing from code region.
+Word con=abc
+/dev/nlp/analyzers/noop
+/dev/nlp/analyzers/noop/data/xxx.txt
+Printing from code region.
+Word con=abc
+/dev/nlp/analyzers/noop
+/dev/nlp/analyzers/noop/data/xxx.txt

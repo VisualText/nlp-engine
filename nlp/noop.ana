@@ -1,0 +1,27 @@
+findstate	
+loadcompiledkb	false
+treeoffsets	false
+treesemantics	false
+browsertoolbar	false
+tabtoolbar	false
+debugtoolbar	false
+kbtoolbar	false
+batchmode	false
+pagemode	true
+verbosemode	false
+loganalyzer	true
+highlighttext	true
+textstate	1
+textsel	2
+analyzerstate	
+analyzersel	2
+grammarstate	
+grammarsel	
+activetab	1
+processfile	misc\abc.txt
+docopen	input\misc\abc.txt_log\output.txt	50	350	50	550	0	0	0	02223036
+docopen	spec\stuff.pat	102	629	160	660	0	0	353	3532223036
+docopen	input\misc\abc.txt	0	300	0	500	0	0	69	692223036
+attributeeditor	false
+addcombotext	misc
+addcombotext	misc\abc.txt

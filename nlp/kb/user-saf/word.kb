@@ -1,0 +1,57 @@
+add word "
+"
+add word "	"
+add word " "
+add word ">"
+add word "<"
+add word "/"
+add word "\\"
+add word "|"
+add word "]"
+add word "["
+add word "}"
+add word "{"
+add word "+"
+add word "="
+add word "_"
+add word "-"
+add word ")"
+add word "("
+add word "*"
+add word "&"
+add word "^"
+add word "%"
+add word "$"
+add word "#"
+add word "@"
+add word "`"
+add word "~"
+add word "?"
+add word "!"
+add word "\""
+add word "'"
+add word ":"
+add word ","
+add word "."
+add word ";"
+add word "closed"
+add word "constrain"
+add word "dirty"
+add word "gen"
+add word "lit"
+add word "locked"
+add word "quicksem"
+add word "split"
+add word "xwhite"
+add word active
+add word algo
+add word building
+add word comment
+add word data
+add word pass
+add word passnum
+add word state
+add word type
+
+quit
+
