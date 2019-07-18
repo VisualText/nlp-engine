@@ -11,7 +11,7 @@ LIBOBJ =	Agram.o algo.o ana.o angen.o arg.o Arug.o Arun.o Aseq.o Auser.o Avar.o 
 
 TARG	= lite.a
 CC	= g++
-CFLAGS	= -g -DLINUX -I../include/Api/lite -I../include/Api -I/../cs/include
+CFLAGS	= -g -DLINUX -I../include/Api/lite -I../include/Api -I/../cs/include -I/usr/include/libiodbc
 
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
