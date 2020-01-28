@@ -2192,7 +2192,7 @@ return true;
 CONCEPT *CG::makeParentConcept(_TCHAR *name, CONCEPT *conStart, CONCEPT *conEnd)
 {
 if (!conStart || !conEnd || ((CON *) conStart)->kind != cBASIC || ((CON *) conEnd)->kind != cBASIC)
-	return false;
+	return NULL;
 
 // GET POS OF FIRST CONCEPT
 CON *sibling = ((CON *)conStart);
@@ -2217,7 +2217,7 @@ while (sibling) {
 }
 
 if (!isSibling)
-	return false;
+	return NULL;
 
 dirty_ = true;
 
@@ -2229,7 +2229,7 @@ CON *next = NULL;
 while (sibling) {
 	next = ((CON *)sibling)->next;
 	if (!rmConcept(sibling))
-		return false;
+		return NULL;
 	kbm_->acon_->con_add_nth((CON *) newParent, (CON *)sibling, 0);
 	if (sibling == ((CON *)conEnd))
 		break;
@@ -2396,7 +2396,7 @@ if (!(word = kbm_->dict_find_word(name))
 bool dirt;																		// 06/29/03 AM.
 CON *word = kbm_->dict_get_word(name,dirt);							// 06/29/03 AM.
 if (!word)																		// 06/29/03 AM.
-	return false;																// 06/29/03 AM.
+	return NULL;																// 06/29/03 AM.
 
 CON *proxy;
 proxy = kbm_->acon_->con_add_proxy(word);
