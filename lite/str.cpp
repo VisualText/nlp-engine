@@ -2542,7 +2542,7 @@ _TCHAR *strstem(
 	)
 {
 if (!word || !*word)
-	return false;
+	return NULL;	// 09/26/19 AM.
 
 long len = _tcsclen(word);
 

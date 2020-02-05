@@ -2969,7 +2969,7 @@ if (!con_sem || !name_str || !*name_str || !nlppp)
 	{
 	if (con_sem)
 		delete con_sem;									// MEM LEAK.	// 06/27/00 AM.
-	return false;
+	return NULL;	// 09/26/19 AM.
 	}
 
 if (con_sem->getType() != RS_KBCONCEPT)
@@ -4158,7 +4158,7 @@ if (!sem1 || !nlppp)
 	{
 	if (sem1)
 		delete sem1;										// MEM LEAK.	// 06/27/00 AM.
-	return false;
+	return NULL;	// 09/26/19 AM.
 	}
 
 // Need to get the current KB.
@@ -4172,7 +4172,7 @@ if (sem1->getType() != RS_KBCONCEPT)
 	gerrStr << _T("[findphrase: Bad semantic arg.]") << ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
-	return false;
+	return NULL;	// 09/26/19 AM.
 	}
 CONCEPT *conc1 = sem1->getKBconcept();
 
@@ -4364,7 +4364,7 @@ if (!sem1 || !nlppp)
 	{
 	if (sem1)
 		delete sem1;										// MEM LEAK.	// 06/27/00 AM.
-	return false;
+	return NULL;	// 09/26/19 AM.
 	}
 
 // Need to get the current KB.
@@ -4407,7 +4407,7 @@ if (!sem1 || !nlppp)
 	{
 	if (sem1)
 		delete sem1;
-	return false;
+	return NULL;	// 09/26/19 AM.
 	}
 
 // Need to get the current KB.
@@ -4421,7 +4421,7 @@ if (sem1->getType() != RS_KBCONCEPT)
 	gerrStr << _T("[nodeowner: Bad semantic arg.]") << ends;
 	errOut(&gerrStr,false);
 	delete sem1;
-	return 0;
+	return NULL;	// 09/26/19 AM.
 	}
 CONCEPT *node = sem1->getKBconcept();
 
@@ -4452,7 +4452,7 @@ if (!sem1 || !name1 || !*name1 || !nlppp)
 	{
 	if (sem1)
 		delete sem1;										// MEM LEAK.	// 06/27/00 AM.
-	return false;
+	return NULL;	// 09/26/19 AM.
 	}
 
 // Need to get the current KB.
@@ -4466,7 +4466,7 @@ if (sem1->getType() != RS_KBPHRASE)
 	gerrStr << _T("[findnode: Bad semantic arg.]") << ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
-	return 0;
+	return NULL;	// 09/26/19 AM.
 	}
 PHRASE *phr1 = sem1->getKBphrase();
 CONCEPT *node = 0;
@@ -4489,7 +4489,7 @@ if (!sem1 || num1 <= 0 || !nlppp)
 	{
 	if (sem1)
 		delete sem1;										// MEM LEAK.	// 06/27/00 AM.
-	return false;
+	return NULL;	// 09/26/19 AM.
 	}
 
 // Need to get the current KB.
@@ -4503,7 +4503,7 @@ if (sem1->getType() != RS_KBPHRASE)
 	gerrStr << _T("[findnode: Bad semantic arg.]") << ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
-	return false;
+	return NULL;	// 09/26/19 AM.
 	}
 PHRASE *phr1 = sem1->getKBphrase();
 CONCEPT *node = 0;
@@ -4849,7 +4849,7 @@ if (!phr_sem || !str || !*str || num <= 0 || !nlppp)
 	{
 	if (phr_sem)
 		delete phr_sem;									// MEM LEAK.	// 06/27/00 AM.
-	return 0;
+	return NULL;	// 09/26/19 AM.
 	}
 
 if (phr_sem->getType() != RS_KBPHRASE)
@@ -4858,7 +4858,7 @@ if (phr_sem->getType() != RS_KBPHRASE)
 	gerrStr << _T("[addnode: Bad semantic arg.]") << ends;
 	errOut(&gerrStr,false);
 	delete phr_sem;										// MEM LEAK.	// 06/27/00 AM.
-	return false;
+	return NULL;	// 09/26/19 AM.
 	}
 PHRASE *phr = phr_sem->getKBphrase();
 
@@ -8547,14 +8547,14 @@ RFASem *sem = 0;
 
 if (!nlppp || num1 < 1)											// FIX.	// 04/29/01 AM.
 //if (!nlppp || num < 1)	// VC++ "FEATURE"--THIS COMPILES!	// 04/29/01 AM.
-	return 0;
+	return NULL;	// 09/26/19 AM.
 
 if (!name1 || !*name1)
 	{
 	_t_strstream gerrStr;
 	gerrStr << _T("[varinlist: Warning. Given no var name.]") << ends;
 	errOut(&gerrStr,false);
-	return 0;
+	return NULL;	// 09/26/19 AM.
 	}
 
 // This type of logic appears in post-actions.  Fetch the node(s) that
@@ -8568,7 +8568,7 @@ node1 = (Node<Pn> *) coll->start;	// Try to get start of range.
 node2 = (Node<Pn> *) coll->end;	// Try to get end of range.
 
 if (!node1 || !node2)
-	return 0;
+	return NULL;	// 09/26/19 AM.
 
 Node<Pn> *end = node2->Right();
 
@@ -8591,7 +8591,7 @@ RFASem *Arun::varinlist(
 	)
 {
 if (!name_sem)
-	return 0;
+	return NULL;	// 09/26/19 AM.
 _TCHAR *name = name_sem->sem_to_str();
 delete name_sem;
 return varinlist(nlppp,name,num);
@@ -8605,12 +8605,12 @@ RFASem *Arun::varinlist(
 	)
 {
 if (!num_sem)
-	return false;
+	return NULL;	// 09/26/19 AM.
 bool ok = false;
 long num = num_sem->sem_to_long(ok);
 delete num_sem;
 if (!ok)
-	return false;
+	return NULL;	// 09/26/19 AM.
 return varinlist(nlppp,name,num);
 }
 
@@ -8625,12 +8625,12 @@ if (!name_sem)
 	{
 	if (num_sem)
 		delete num_sem;
-	return false;
+	return NULL;	// 09/26/19 AM.
 	}
 if (!num_sem)
 	{
 	delete name_sem;
-	return false;
+	return NULL;	// 09/26/19 AM.
 	}
 _TCHAR *name = name_sem->sem_to_str();
 delete name_sem;
@@ -8638,7 +8638,7 @@ bool ok = false;
 long num = num_sem->sem_to_long(ok);
 delete num_sem;
 if (!ok)
-	return false;
+	return NULL;	// 09/26/19 AM.
 return varinlist(nlppp,name,num);
 }
 
@@ -9962,7 +9962,7 @@ if (!ostr)
 	errOut(&gerrStr,false);
 	gerrStr << _T("[file=") << str << _T("]") << ends;
 	errOut(&gerrStr,false);
-	return false;
+	return NULL;	// 09/26/19 AM.
 	}
 
 return new RFASem(ostr);
@@ -10530,7 +10530,8 @@ str_spell_candidate(lcstr1, str2, buf);
 
 Chars::destroy(lcstr1);														// 09/28/00 AM.
 
-_TCHAR *str = '\0';
+// _TCHAR *str = '\0';
+_TCHAR *str = "";	// 09/26/19 AM.
 if (buf[0] == '\0')															// 09/28/00 AM.
 	return 0;
 
@@ -17739,7 +17740,7 @@ _TCHAR *Arun::urltofile(
 	)
 {
 if (!url_s || !*url_s || !outfile_s || !*outfile_s)
-	return 0;
+	return NULL;	// 09/26/19 AM.
 
 
 bool ret = false;	// FAIL.	// 05/13/14 AM.
@@ -17748,7 +17749,7 @@ Parse *parse = nlppp->parse_;
 	{
 	_stprintf(Errbuf,_T("[urltofile: LINUX version unimplemented]"));
 	parse->errOut(false); // UNFIXED
-	return 0;
+	return NULL;	// 09/26/19 AM.
 	}
 #else
 
@@ -17801,7 +17802,7 @@ _TCHAR *Arun::urltofile(
 	)
 {
 if (!name1_sem)
-	return false;
+	return NULL;	// 09/26/19 AM.
 _TCHAR *name1 = name1_sem->sem_to_str();
 delete name1_sem;
 return urltofile(nlppp,name1,name2);
@@ -17815,7 +17816,7 @@ _TCHAR *Arun::urltofile(
 	)
 {
 if (!name2_sem)
-	return 0;
+	return NULL;	// 09/26/19 AM.
 _TCHAR *name2 = name2_sem->sem_to_str();
 delete name2_sem;
 return urltofile(nlppp,name1,name2);

@@ -988,7 +988,11 @@ Dlist<Iarg> *args;
 Iarg *arg = 0;
 args = pairx->getVals();
 
-arg = new Iarg(sem);		// Build an arg for the given sem.
+// CRASH: Inconsistent handling of sem=0, interp vs compiled runtime. // 09/30/19 AM.
+if (sem)	// HACK TO STOP CRASH.	// 09/30/19 AM.
+	arg = new Iarg(sem);		// Build an arg for the given sem.
+else
+	arg = new Iarg((long)0);	// HACK TO STOP CRASH.	// 09/30/19 AM.
 
 if (!args)
 	{
@@ -1006,6 +1010,7 @@ if (args->getFirst())
 	args->setLast(0);
 	}
 
+// if (sem)	// (THIS STOPPED THE CRASH)	// DEBUGGING!!!! // 09/30/19 AM.
 args->rpush(arg);			// Add it to the vals list.
 
 return true;
@@ -1779,7 +1784,8 @@ switch (arg->getType())														// 11/03/99 AM.
 	case IANUM:
 		num = arg->getNum();													// 11/03/99 AM.
 		// Convert to string.
-		_stprintf(buf, _T("%d"), num);											// 11/03/99 AM.
+		// _stprintf(buf, _T("%d"), num);	// 11/03/99 AM.
+		_stprintf(buf, _T("%ld"), num);	// 11/03/99 AM.	// 09/26/19 AM.
 		break;
 	case IAFLOAT:																// 08/17/01 AM.
 		_stprintf(buf, _T("%f"), arg->getFloat());							// 08/17/01 AM.

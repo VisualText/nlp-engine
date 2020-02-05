@@ -9,9 +9,13 @@ LIBOBJ =	Agram.o algo.o ana.o angen.o arg.o Arug.o Arun.o Aseq.o Auser.o Avar.o 
 	starr.o StdAfx.o std.o str.o string.o stub_e.o stub_s.o sym.o tok.o tsym.o uAlgo.o \
 	u_ofstream.o u_out.o var.o vtrun.o WNFunctions.o xml.o cmltok.o regexp.o dicttok.o kb.o
 
+# NOTE: RUNEMBED_ to run embedded analyzer! # 09/29/19 AM>
 TARG	= lite.a
 CC	= g++
-CFLAGS	= -g -DLINUX -I../include/Api/lite -I../include/Api -I/../cs/include -I/usr/include/libiodbc
+CFLAGS	= -g -DLINUX -I../include/Api/lite -I../include/Api -I/../cs/include \
+	-I/usr/local/include \
+	-DRUNEMBED_ \
+	 -Wno-write-strings -Wno-deprecated
 
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c $< -o $@

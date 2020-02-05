@@ -14,6 +14,8 @@ All rights reserved.
 *******************************************************************************/
 
 #include "StdAfx.h"
+#include <iostream>	// 09/27/19 AM.
+#include <strstream>	// 09/27/19 AM.
 #include <time.h>
 #include "machine.h"				// 03/08/00 AM.
 #include "u_out.h"		// 01/19/06 AM.
@@ -84,7 +86,8 @@ LIBPRIM_API DWORD run_silent(_TCHAR* strCMD);	// 09/15/08 AM.
 #include "consh/cg.h"			// 07/18/03 AM.
 
 #ifdef RUNEMBED_
-#include "analyzer.h"
+//#include "analyzer.h"	// 09/29/19 AM.
+extern "C" bool run_analyzer(Parse *);	// 09/29/19 AM.
 #endif
 
 #include "lite/nlp.h"
@@ -1311,14 +1314,26 @@ Parse *NLP::initAnalyze(
 	)
 {
 // BUG: cbufv is already an ostrstream at this point.	// 06/30/05 AM.
-_t_ostrstream *cbuf = (_t_ostrstream *) cbufv;			// 06/30/05 AM.
+// WINDOWS:
 
+#ifndef LINUX
+_t_ostrstream *cbuf = (_t_ostrstream *) cbufv;			// 06/30/05 AM.
+#else
+// BUFFER/ARRAY STREAM ALREADY CREATED!!!	// 09/28/19 AM.
+ostrstream *cbuf = (ostrstream *) cbufv;			// 06/30/05 AM.	// 09/28/19 AM.
+
+// cerr << "initAnalyze in: " << ends;
+// cerr << "cbufv: *" << cbuf->str() << "*" << endl;
+#endif
+
+// ANCIENT STUFF HERE...	// 09/28/19 AM.
 #ifdef UNICODE
 //_t_ostrstream *cbuf = new _t_ostrstream((char*)cbufv,ios::out);			// 03/29/05 AM.
 #else
 //_t_ostrstream *cbuf = new _t_ostrstream((char*)cbufv,outlen,ios::out);	// 03/29/05 AM.
 #endif
 //_t_ostrstream *cbuf = (_t_ostrstream *) cbufv;								// 10/10/03 AM.
+
 _t_ostream* sout = 0;
 _t_ofstream* fout = 0;
 _t_ostream *sdbg=0;																// 02/21/02 AM.
@@ -1581,11 +1596,17 @@ void NLP::analyze(
 
 #ifdef LINUX
 // How to return to outbuf.	// 10/26/06 AM.
-_t_ostrstream ocbuf;
-_t_ostrstream *pbuf = 0;
-pbuf = &ocbuf;
+//_t_ostrstream ocbuf;
+//_t_ostrstream *pbuf = 0;
+//pbuf = &ocbuf;
+//ostrstream ocbuf(outbuf, outlen, ios::out);							// 05/11/02 AM.	// 09/28/19 AM.
+ostrstream ocbuf(outbuf, outlen, ios::app);							// 09/28/19 AM.
+ostrstream *pbuf = 0;														// 05/13/02 AM.	// 09/28/19 AM.
+if (outbuf && outlen > 1)													// 05/13/02 AM.	// 09/28/19 AM.
+	pbuf = &ocbuf;																// 05/13/02 AM.	// 09/28/19 AM.
 #else
-_t_ostrstream ocbuf(outbuf, outlen, ios::out);							// 05/11/02 AM.
+//_t_ostrstream ocbuf(outbuf, outlen, ios::out);							// 05/11/02 AM.
+_t_ostrstream ocbuf(outbuf, outlen, ios::app);							// 09/28/19 AM.
 _t_ostrstream *pbuf = 0;														// 05/13/02 AM.
 if (outbuf && outlen > 1)													// 05/13/02 AM.
 	pbuf = &ocbuf;																// 05/13/02 AM.
@@ -1856,7 +1877,8 @@ Parse *prs = (Parse *) parse;
 
 Eana *eana = prs->getEana();
 
-_t_ostream *cbuf = prs->getCbuf();											// 05/13/02 AM.
+//_t_ostream *cbuf = prs->getCbuf();											// 05/13/02 AM.
+ostrstream *cbuf = prs->getCbuf();											// 09/28/19 AM.
 if (cbuf)																		// 05/13/02 AM.
 	*cbuf << ends;		// Terminate buffer.								// 05/13/02 AM.
 
@@ -1966,6 +1988,7 @@ parse->setFbatchstart(fbatchstart_);									// 05/16/08 AM.
 if (parse->getText())
 	{
 #ifdef RUNEMBED_
+  cout << "runAnalyzer: RUNEMBED_ calling run_analyzer(parse)" << endl;
   run_analyzer(parse);
 #else
 #ifndef LINUX
@@ -1979,7 +2002,8 @@ if (parse->getText())
 #endif
 	}
 
-_t_ostream *cbf = parse->getCbuf();										// 04/25/05 AM.
+//_t_ostream *cbf = parse->getCbuf();										// 04/25/05 AM.
+ostrstream *cbf = parse->getCbuf();										// 09/28/19 AM.
 if (cbf)																			// 05/13/02 AM.
 	*cbf << ends;		// Terminate buffer.								// 05/13/02 AM.
 

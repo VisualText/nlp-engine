@@ -7102,7 +7102,7 @@ str_spell_candidate(lcstr1, str2, buf);
 
 Chars::destroy(lcstr1);														// 09/28/00 AM.
 
-_TCHAR *str = '\0';
+_TCHAR *str = "\0";
 if (buf[0] == '\0')															// 09/28/00 AM.
 	return true;
 
@@ -11223,15 +11223,15 @@ Arun::assign(	// Using compiled assignment style, quick and dirty.
 // GET THE ADDRESS OF THE LONG, INSIDE THE VAR.
 vals = pairx->getVals();
 if (!vals)
-	return false;
+	return 0;	// 09/26/19 AM.
 Delt<Iarg> *darg = vals->getFirst();
 if (!darg)
-	return false;
+	return 0;	// 09/26/19 AM.
 Iarg *iarg = darg->getData();
 if (!iarg)
-	return false;
+	return 0;	// 09/26/19 AM.
 if (iarg->getType() != IANUM)
-	return false;
+	return 0;	// 09/26/19 AM.
 long *addr = iarg->getNumaddr();
 
 return addr;

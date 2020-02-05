@@ -2447,6 +2447,7 @@ switch (type_)
 					case RSOSTREAM:	// New type for convenience.
 						// Strung together output ops return this.
 						ostr = lval->getOstream();
+					// cout << _T("[LINUX DEBUG cbuf(): got iexpr/OUTOP/lval/ostr]") << endl;	// 09/29/19 AM.
 						break;
 					case RSVAR:
 						// If it's an ostream val, use that.
@@ -2600,11 +2601,14 @@ switch (type_)
 					case RSSTR:
 					case RSNAME:
 						{
+					// cout << _T("[LINUX DEBUG cbuf(): at iexpr/OUTOP/rval/RSSTR]") << endl;	// 09/29/19 AM.
 						// Name should become identifiers, local vars, whatever.
 						_TCHAR *str = rval->getName();						// 12/24/02 AM.
 						if (str && *str)
 							try													// 10/27/04 AM.
 								{
+								// Amazing that this works ok when LHS is cbuf() !!	// 09/28/19 AM.
+								// (Else, cbuf() can get its own expr type, rather than OUTOP. Or a conditional.)
 								*ostr << str;				// Print it!
 								// Try unicode output overload.	// 01/06/06 AM.
 								//char *lpstr8;

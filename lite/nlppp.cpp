@@ -11,6 +11,8 @@ All rights reserved.
 *******************************************************************************/
 
 #include "StdAfx.h"
+#include <iostream>	// 09/27/19 AM.
+#include <strstream>	// 09/27/19 AM.
 #include "machine.h"	// 10/25/06 AM.
 #include "u_out.h"		// 01/19/06 AM.
 #include "lite/lite.h"				// 07/07/03 AM.

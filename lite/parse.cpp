@@ -13,6 +13,8 @@ All rights reserved.
 #include "StdAfx.h"
 
 #ifdef LINUX
+#include <iostream>	// 09/27/19 AM.
+#include <strstream>	// 09/27/19 AM.
 #include <sql.h>
 #include <sqlext.h>
 #include <sqlucode.h>
@@ -169,7 +171,8 @@ long	Parse::getCurrpass()		{return currpass_;}		// REN.	// 08/22/02 AM.
 long	Parse::getRulepass()		{return rulepass_;}					// 02/03/05 AM.
 long	Parse::getInputpass()	{return inputpass_;}					// 08/23/02 AM.
 Delt<Seqn> *Parse::getSeq()		{return seq_;}						// 07/24/01 AM.
-_t_ostrstream		*Parse::getCbuf()	{return cbuf_;}					// 05/11/02 AM.
+//_t_ostrstream		*Parse::getCbuf()	{return cbuf_;}					// 05/11/02 AM.
+ostrstream		*Parse::getCbuf()	{return cbuf_;}					// 05/11/02 AM. // 09/27/19 AM.
 long	Parse::getCbufmax()			{return cbufmax_;}				// 05/11/02 AM.
 long	Parse::getCbuftot()			{return cbuftot_;}				// 05/11/02 AM.
 bool	Parse::getCbufover()		{return cbufover_;}					// 05/11/02 AM.
@@ -234,7 +237,8 @@ void Parse::setCurrpass(long x)		{currpass_		= x;}// REN	// 08/22/02 AM.
 void Parse::setRulepass(long x)		{rulepass_		=	x;}		// 02/03/05 AM.
 void Parse::setInputpass(long x)		{inputpass_	= x;}				// 08/23/02 AM.
 void Parse::setSeq(Delt<Seqn> *x)		{seq_		= x;}				// 07/24/01 AM.
-void Parse::setCbuf(_t_ostrstream *x)		{cbuf_	= x;}				// 05/11/02 AM.
+//void Parse::setCbuf(_t_ostrstream *x)		{cbuf_	= x;}				// 05/11/02 AM.
+void Parse::setCbuf(ostrstream *x)		{cbuf_	= x;}				// 05/11/02 AM. // 09/27/19 AM.
 void Parse::setCbufmax(long x)			{cbufmax_ = x;}			// 05/11/02 AM.
 void Parse::setCbuftot(long x)			{cbuftot_ = x;}			// 05/11/02 AM.
 void Parse::setCbufover(bool x)			{cbufover_ = x;}			// 05/11/02 AM.

@@ -12,6 +12,7 @@ All rights reserved.
 
 #ifndef STR_H_
 #define STR_H_
+# define UINT long	// 09/26/19 AM.
 
 class Parse;	// Forward reference.
 

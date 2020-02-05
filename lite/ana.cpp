@@ -12,10 +12,10 @@ All rights reserved.
 
 #include "StdAfx.h"
 #ifdef LINUX
-#include <sql.h>
-#include <sqlext.h>
-#include <sqlucode.h>
-#include <iodbcext.h>
+//#include <sql.h>
+//#include <sqlext.h>
+//#include <sqlucode.h>
+//#include <iodbcext.h>
 #endif
 
 #include "machine.h"		// 03/08/00 AM.
