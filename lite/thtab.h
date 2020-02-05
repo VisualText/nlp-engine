@@ -910,7 +910,8 @@ for (ii = 0; ii < size_; ++ii)
 		*rhash << _T("0,");
 		continue;			// Empty hash chain.
 		}
-	_stprintf(arr, _T("%s_%d"), buf, ii);
+	// _stprintf(arr, _T("%s_%d"), buf, ii);	// 09/26/19 AM.
+	_stprintf(arr, _T("%s_%ld"), buf, ii);
 	*rhash << arr << _T(",");
 	*rchain << _T("const RHASH ") << arr << _T("[]={");
 	jj = 0;
@@ -924,7 +925,8 @@ for (ii = 0; ii < size_; ++ii)
 
 		sym = ptr->getData();
 
-		_stprintf(chain,_T("%s%d_%d_%d_%d"),cname,id,recid,ii,jj);
+		// _stprintf(chain,_T("%s%d_%d_%d_%d"),cname,id,recid,ii,jj);
+		_stprintf(chain,_T("%s%d_%d_%ld_%ld"),cname,id,recid,ii,jj);	// 09/26/19 AM.
 		*rdata << _T("const int ") << chain << _T("[]={");
 		// Get length of conflict array.									// 06/19/00 AM.
 		len = sym->getPtr()->genConflicts(rdata);						// 06/17/00 AM.

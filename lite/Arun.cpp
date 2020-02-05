@@ -5836,13 +5836,13 @@ RFASem *Arun::group(																// 04/28/01 AM.
 	)
 {
 if (!from_sem)
-	return false;
+	return NULL;	// 09/26/19 AM.
 // Convert sem to num and trash sem.
 bool ok = true;
 int from = from_sem->sem_to_long(ok);
 delete from_sem;
 if (!ok)
-	return false;
+	return NULL;	// 09/26/19 AM.
 return Arun::group(nlppp,from,to,name);
 }
 
@@ -5855,13 +5855,13 @@ RFASem *Arun::group(																// 04/28/01 AM.
 	)
 {
 if (!to_sem)
-	return false;
+	return NULL;	// 09/26/19 AM.
 // Convert sem to num and trash sem.
 bool ok = true;
 int to = to_sem->sem_to_long(ok);
 delete to_sem;
 if (!ok)
-	return false;
+	return NULL;	// 09/26/19 AM>
 return Arun::group(nlppp,from,to,name);
 }
 
@@ -5874,11 +5874,11 @@ RFASem *Arun::group(																// 04/28/01 AM.
 	)
 {
 if (!name_sem)
-	return false;
+	return NULL;	// 09/26/19 AM.
 _TCHAR *name = sem_to_str(name_sem);
 delete name_sem;
 if (!name || !*name)
-	return false;
+	return NULL;	// 09/26/19 AM.
 return Arun::group(nlppp,from,to,name);
 }
 
@@ -5890,7 +5890,7 @@ RFASem *Arun::group(																// 04/28/01 AM.
 	)
 {
 if (!from_sem || !to_sem)
-	return false;
+	return NULL;	// 09/26/19 AM.
 // Convert sem to num and trash sem.
 bool ok = true;
 int from = from_sem->sem_to_long(ok);
@@ -5898,12 +5898,12 @@ delete from_sem;
 if (!ok)
 	{
 	delete to_sem;
-	return false;
+	return NULL;	// 09/26/19 AM.
 	}
 int to = to_sem->sem_to_long(ok);
 delete to_sem;
 if (!ok)
-	return false;
+	return NULL;	// 09/26/19 AM.
 return Arun::group(nlppp,from,to,name);
 }
 
@@ -5915,7 +5915,7 @@ RFASem *Arun::group(																// 04/28/01 AM.
 	)
 {
 if (!from_sem || !name_sem)
-	return false;
+	return NULL;	// 09/26/19 AM.
 
 bool ok = true;
 int from = from_sem->sem_to_long(ok);
@@ -5923,13 +5923,13 @@ delete from_sem;
 if (!ok)
 	{
 	delete name_sem;
-	return false;
+	return NULL;	// 09/26/19 AM.
 	}
 
 _TCHAR *name = sem_to_str(name_sem);
 delete name_sem;
 if (!name || !*name)
-	return false;
+	return NULL;	// 09/26/19 AM.
 return Arun::group(nlppp,from,to,name);
 }
 
@@ -5942,7 +5942,7 @@ RFASem *Arun::group(																// 04/28/01 AM.
 	)
 {
 if (!to_sem || !name_sem)
-	return false;
+	return NULL;	// 09/26/19 AM.
 
 bool ok = true;
 int to = to_sem->sem_to_long(ok);
@@ -5950,13 +5950,13 @@ delete to_sem;
 if (!ok)
 	{
 	delete name_sem;
-	return false;
+	return NULL;	// 09/26/19 AM.
 	}
 
 _TCHAR *name = sem_to_str(name_sem);
 delete name_sem;
 if (!name || !*name)
-	return false;
+	return NULL;	// 09/26/19 AM.
 return Arun::group(nlppp,from,to,name);
 }
 
@@ -5969,7 +5969,7 @@ RFASem *Arun::group(																// 04/25/10 AM.
 	int nm	// Name for grouped node.
 	)
 {
-return false;
+return NULL;	// 09/26/19 AM.
 }
 
 RFASem *Arun::group(																// 04/28/01 AM.
@@ -5980,7 +5980,7 @@ RFASem *Arun::group(																// 04/28/01 AM.
 	)
 {
 if (!from_sem || !to_sem || !name_sem)
-	return false;
+	return NULL;	// 09/26/19 AM.
 // Convert sem to num and trash sem.
 bool ok = true;
 int from = from_sem->sem_to_long(ok);
@@ -5989,20 +5989,20 @@ if (!ok)
 	{
 	delete to_sem;
 	delete name_sem;
-	return false;
+	return NULL;	// 09/26/19 AM.
 	}
 int to = to_sem->sem_to_long(ok);
 delete to_sem;
 if (!ok)
 	{
 	delete name_sem;
-	return false;
+	return NULL;	// 09/26/19 AM.
 	}
 
 _TCHAR *name = sem_to_str(name_sem);
 delete name_sem;
 if (!name || !*name)
-	return false;
+	return NULL;	// 09/26/19 AM.
 
 return Arun::group(nlppp,from,to,name);
 }
@@ -6867,7 +6867,7 @@ if (sem)				// 04/04/10 AM.
 	delete sem;		// 04/04/10 AM.
 	return true;	// 04/04/10 AM.
 	}
-return false;		// 04/04/10 AM.
+return NULL;		// 04/04/10 AM.	// 09/26/19 AM.
 }
 
 

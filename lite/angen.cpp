@@ -15,10 +15,10 @@ All rights reserved.
 
 #include "StdAfx.h"
 #ifdef LINUX
-#include <sql.h>
-#include <sqlext.h>
-#include <sqlucode.h>
-#include <iodbcext.h>
+//#include <sql.h>
+//#include <sqlext.h>
+//#include <sqlucode.h>
+//#include <iodbcext.h>
 #endif
 #include "machine.h"						// 04/27/00 AM.
 #include "lite/global.h"
