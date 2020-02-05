@@ -8,7 +8,7 @@ wordarrs.o
 
 TARG	= words.a
 CC	= g++
-CFLAGS	= -g -DLINUX -I../../include/Api
+CFLAGS	= -g -DLINUX -I../../include/Api -Wno-write-strings
 
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c $< -o $@

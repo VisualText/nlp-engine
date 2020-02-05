@@ -3,7 +3,7 @@ LIBOBJ = StdAfx.o tear.o url.o urls.o util.o web.o
 
 TARG	= web.a
 CC	= g++
-CFLAGS	= -g -DLINUX -I../../include/Api
+CFLAGS	= -g -DLINUX -I../../include/Api -Wno-write-strings
 
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
