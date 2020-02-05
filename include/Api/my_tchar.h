@@ -49,6 +49,9 @@ All rights reserved.
 
 #ifdef LINUX
 // Changing to use sstream
+//#define _t_strstream		ostringstream
+//#define _t_ostrstream		ostringstream
+// THIS IS THE WINDOWS SIDE.  KEEP IT	// 09/27/19 AM.
 #define _t_strstream		ostringstream
 #define _t_ostrstream		ostringstream
 
@@ -60,7 +63,7 @@ All rights reserved.
 //#define LPCWSTR char *
 // 3/3/16 AM. Supposedly empty declaration.
 // 04/21/16 AM. Some complaints in lite, need this.
-#define UINT long
+// #define UINT long	// 09/26/19 AM.
 
 #define lstrlen		strlen
 
@@ -97,7 +100,7 @@ All rights reserved.
 
 #else
 #define _t_strstream		strstream
-#define _t_ostrstream		ostrstream
+#define _t_ostrstream		ostrstream // 09/27/19 AM>
 
 #endif
 

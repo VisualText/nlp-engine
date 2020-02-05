@@ -15,6 +15,9 @@ All rights reserved.
 #define PARSE_H_
 #ifndef LINUX
 #include <windows.h>		// defines HINSTANCE.						// 02/14/01 AM.
+#else
+#include <iostream>	// 09/27/19 AM.
+#include <strstream>	// 09/27/19 AM.
 #endif
 #include <time.h>
 
@@ -132,7 +135,8 @@ public:
 	long getLine();					// 08/24/02 AM.
 	long getInputline();				// 08/24/02 AM.
 
-	_t_ostrstream *getCbuf();			// 05/11/02 AM.
+//	_t_ostrstream *getCbuf();			// 05/11/02 AM.
+	ostrstream *getCbuf();			// 05/11/02 AM. // 09/27/19 AM.
 	long getCbufmax();				// 05/11/02 AM.
 	long getCbuftot();				// 05/11/02 AM.
 	bool getCbufover();				// 05/11/02 AM.
@@ -178,7 +182,8 @@ public:
 	void setLine(long);				// 08/24/02 AM.
 	void setInputline(long);		// 08/24/02 AM.
 
-	void setCbuf(_t_ostrstream *);	// 05/11/02 AM.
+//	void setCbuf(_t_ostrstream *);	// 05/11/02 AM.
+	void setCbuf(ostrstream *);	// 09/27/19 AM.
 	void setCbufmax(long);			// 05/11/02 AM.
 	void setCbuftot(long);			// 05/11/02 AM.
 	void setCbufover(bool);			// 05/11/02 AM.
@@ -536,7 +541,8 @@ private:
 
 	// Output to a buffer.													// 05/11/02 AM.
 	// (Looks like this should be an output-buffer class.)		// 05/11/02 AM.
-	_t_ostrstream *cbuf_;		// Stream for output buffer.			// 05/11/02 AM.
+//	_t_ostrstream *cbuf_;		// Stream for output buffer.			// 05/11/02 AM.
+	ostrstream *cbuf_;		// Stream for output buffer.			// 05/11/02 AM. // 09/27/19 AM.
 	long cbufmax_;			// Length of output buffer.				// 05/11/02 AM.
 	long cbuftot_;			// Total output length so far.			// 05/11/02 AM.
 	bool cbufover_;		// Buffer overflow.							// 05/11/02 AM.

@@ -37,10 +37,12 @@ using namespace std;											// Upgrade	// 01/24/01 AM.
 typedef long ID;
 #endif
 
+namespace consh_cg {		// 09/26/19 AM.
 // COMPILED KB IN LINUX.	// 02/19/19 AM.
 #ifdef LINUX
 typedef double HINSTANCE;
 #endif
+}
 
 // Readability definitions.
 #ifndef CONCEPT
@@ -84,7 +86,8 @@ public:
 	AKBM  *getKBM();															// 06/11/02 AM.
 	ALIST *getALIST();														// 08/14/02 AM.
 //#ifndef LINUX
-	HINSTANCE getHkbdll();													// 06/29/00 AM.
+//	HINSTANCE getHkbdll();	// 06/29/00 AM.
+	consh_cg::HINSTANCE getHkbdll();	// 06/29/00 AM. // 09/26/19 AM.
 //#endif
 
 	// Modify
@@ -93,7 +96,8 @@ public:
 	void setKBM(AKBM*);														// 06/11/02 AM.
 	void setALIST(ALIST*);													// 08/14/02 AM.
 //#ifndef LINUX
-	void setHkbdll(HINSTANCE);												// 06/29/00 AM.
+//	void setHkbdll(HINSTANCE);	// 06/29/00 AM.
+	void setHkbdll(consh_cg::HINSTANCE);	// 06/29/00 AM.	// 09/26/19 AM.
 //#endif
 
 	// General.
@@ -591,7 +595,8 @@ private:
 //#ifndef LINUX
 
 	// COMPILED KB TO LOAD DYNAMICALLY.									// 06/29/00 AM.
-	HINSTANCE hkbdll_;														// 06/29/00 AM.
+//	HINSTANCE hkbdll_;	// 06/29/00 AM.
+	consh_cg::HINSTANCE hkbdll_;	// 06/29/00 AM.	// 09/26/19 AM.
 //#endif
 
 
