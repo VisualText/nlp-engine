@@ -9,10 +9,11 @@ LIBOBJ = Cc_code.o Con0.o Con_ini.o kb.o kb_setup.o Ptr0.o Ptr_ini.o St0.o \
 	Sym7.o Sym8.o Sym9.o Sym_ini.o
 
 # Note: Need an environment var to point to TEXTAI area.
-TEXTAI	= /u/nlpsearch/dev
+TEXTAI	= /opt/nlp-engine/
 TARG	= kb.a
 CC	= gcc
-CFLAGS	= -DLINUX -I$(TEXTAI)/include/Api
+CFLAGS	= -DLINUX -I$(TEXTAI)/include/Api \
+          -Wno-write-strings -Wno-deprecated
 
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c $< -o $@

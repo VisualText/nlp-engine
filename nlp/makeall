@@ -1,0 +1,10 @@
+#
+cd user
+make
+cd ../kb
+make
+cd ../run
+make
+cd ..
+make
+

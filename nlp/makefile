@@ -1,20 +1,17 @@
 #
 OBJS = main.o Uanalyze.o u_out.o
 
-# Note: Need an environment var to point to NLPDEV area.
-NLPDEV	= /dev/nlp/nlp-engine
-APP	= /dev/nlp/nlp-engine/nlp
+NLP	= /opt/nlp-engine
 TARG	= nlp.exe
-#CC	= gcc
 CC	= g++
-LIBD	= $(NLPDEV)/lib
-LIBS	= $(APP)/user/user.a $(LIBD)/lite.a $(LIBD)/libconsh.a $(LIBD)/libkbm.a \
-	  $(LIBD)/libprim.a $(LIBD)/words.a $(APP)/lib/kb.a \
-	  /usr/lib64/libiodbc.so /usr/lib64/libiodbcinst.so -ldl
-#	  /usr/local/lib/libiodbc.a /usr/local/lib/libiodbcinst.a -ldl
-#	  -ldl
+LIBD	= $(NLP)/lib
+LIBS	= $(LIBD)/lite.a $(LIBD)/libconsh.a $(LIBD)/libkbm.a \
+	  $(LIBD)/libprim.a $(LIBD)/words.a $(NLP)/nlp/kb/kb.a \
+          $(NLP)/nlp/run/run.a /usr/local/lib/libiodbc.a -ldl
 
-CFLAGS	= -g -DLINUX -I$(NLPDEV)/include/Api -I/usr/local/include -I/usr/include/libiodbc -L$(LIBD)
+CFLAGS	= -g -DLINUX -I$(NLP)/include/Api -L$(LIBD) \
+          -I/usr/local/libiodbc-3.52.12/include \
+          -Wno-write-strings -Wno-deprecated
 
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c $< -o $@

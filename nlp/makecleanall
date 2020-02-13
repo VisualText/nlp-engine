@@ -1,0 +1,11 @@
+#
+cd user
+make clean
+cd ../kb
+make clean
+cd ../run
+make clean
+cd ../lib
+rm -f *.a
+cd ..
+make clean
