@@ -413,7 +413,7 @@ if (!appsem)
 	{
 	if (ostrsem)
 	  delete ostrsem;
-   return false;
+   return NULL;
 	}
 _TCHAR *appname = Arun::sem_to_str(appsem);
 delete appsem;
@@ -436,7 +436,7 @@ if (!insem)
 	{
 	if (ostrsem)
 		delete ostrsem;
-   return false;
+   return NULL;
 	}
 _TCHAR *infile = Arun::sem_to_str(insem);
 delete insem;
@@ -464,7 +464,7 @@ if (!appsem || !insem)
       delete insem;
 	if (ostrsem)
 		delete ostrsem;
-   return false;
+   return NULL;
    }
 _TCHAR *appname = Arun::sem_to_str(appsem);
 _TCHAR *infile = Arun::sem_to_str(insem);
@@ -492,7 +492,7 @@ if (!appsem)
       delete datum;
 	if (ostrsem)
 		delete ostrsem;
-   return false;
+   return NULL;
    }
 _TCHAR *appname = Arun::sem_to_str(appsem);
 delete appsem;
@@ -517,7 +517,7 @@ if (!insem)
       delete datum;
 	if (ostrsem)
 		delete ostrsem;
-   return false;
+   return NULL;
    }
 _TCHAR *infile = Arun::sem_to_str(insem);
 delete insem;
@@ -547,7 +547,7 @@ if (!appsem || !insem)
       delete datum;
 	if (ostrsem)
 		delete ostrsem;
-   return false;
+   return NULL;
    }
 _TCHAR *appname = Arun::sem_to_str(appsem);
 _TCHAR *infile = Arun::sem_to_str(insem);
@@ -575,7 +575,7 @@ if (!nlppp)
       delete datum;
 	if (ostrsem)
 		delete ostrsem;
-   return false;
+   return NULL;
    }
 if (!appname || !*appname || !infile || !*infile)
    {
@@ -583,7 +583,7 @@ if (!appname || !*appname || !infile || !*infile)
       delete datum;
 	if (ostrsem)
 		delete ostrsem;
-   return false;
+   return NULL;
    }
 _TCHAR *s_datum = Arun::sem_to_str(datum);
 delete datum;
@@ -607,13 +607,13 @@ if (!nlppp)
    {
 	if (ostrsem)
 		delete ostrsem;
-   return false;
+   return NULL;
    }
 if (!appname || !*appname || !infile || !*infile)
    {
 	if (ostrsem)
 		delete ostrsem;
-   return false;
+   return NULL;
    }
 _t_ostream *ostr = 0;
 if (ostrsem)
@@ -632,7 +632,7 @@ _TCHAR *user::analyzefile(Nlppp *nlppp, RFASem *appsem, _TCHAR *infile,
    )
 {
 if (!appsem)
-   return false;
+   return NULL;
 _TCHAR *appname = Arun::sem_to_str(appsem);
 delete appsem;
 return analyzefile(nlppp,appname,infile,datum,ostr);
@@ -645,7 +645,7 @@ _TCHAR *user::analyzefile(Nlppp *nlppp, _TCHAR *appname, RFASem *insem,
    )
 {
 if (!insem)
-   return false;
+   return NULL;
 _TCHAR *infile = Arun::sem_to_str(insem);
 delete insem;
 return analyzefile(nlppp,appname,infile,datum,ostr);
@@ -664,7 +664,7 @@ if (!appsem || !insem)
       delete appsem;
    if (insem)
       delete insem;
-   return false;
+   return NULL;
    }
 _TCHAR *appname = Arun::sem_to_str(appsem);
 _TCHAR *infile = Arun::sem_to_str(insem);
@@ -684,7 +684,7 @@ if (!appsem)
    {
    if (datum)
       delete datum;
-   return false;
+   return NULL;
    }
 _TCHAR *appname = Arun::sem_to_str(appsem);
 delete appsem;
@@ -701,7 +701,7 @@ if (!insem)
    {
    if (datum)
       delete datum;
-   return false;
+   return NULL;
    }
 _TCHAR *infile = Arun::sem_to_str(insem);
 delete insem;
@@ -723,7 +723,7 @@ if (!appsem || !insem)
       delete insem;
    if (datum)
       delete datum;
-   return false;
+   return NULL;
    }
 _TCHAR *appname = Arun::sem_to_str(appsem);
 _TCHAR *infile = Arun::sem_to_str(insem);
@@ -743,13 +743,13 @@ if (!nlppp)
    {
    if (datum)
       delete datum;
-   return false;
+   return NULL;
    }
 if (!appname || !*appname || !infile || !*infile)
    {
    if (datum)
       delete datum;
-   return false;
+   return NULL;
    }
 _TCHAR *s_datum = Arun::sem_to_str(datum);
 delete datum;
@@ -764,9 +764,9 @@ _TCHAR *user::analyzefile(Nlppp *nlppp, _TCHAR *appname, _TCHAR *infile,
    )
 {
 if (!nlppp)
-   return false;
+   return NULL;
 if (!appname || !*appname || !infile || !*infile)
-   return false;
+   return NULL;
 
 // Get global data structures.
 VTRun *vtrun = VTRun_Ptr;   // Exported global from Lite Library.
@@ -863,7 +863,7 @@ if (!cg)	// 07/18/03 AM.
    {
    cerr << _T("[Couldn't read knowledge base.]") << endl;
    vtrun->deleteNLP(nlp); // 07/18/03 AM.
-   return false;
+   return NULL;
    }
 
 // Root of the KB hierarchy.
@@ -884,7 +884,7 @@ if (!nlp->make_analyzer(seqfile, appdir, develop,
    cerr << _T("[Couldn't build analyzer.]") << endl;
 	vtrun->deleteCG(cg);	// 07/18/03 AM.
    vtrun->deleteNLP(nlp); // 07/18/03 AM.
-   return false;
+   return NULL;
    }
 
 
@@ -1041,7 +1041,7 @@ if (!appsem)
 	{
 	if (ostrsem)
 	  delete ostrsem;
-   return false;
+   return NULL;
 	}
 _TCHAR *appname = Arun::sem_to_str(appsem);
 delete appsem;
@@ -1064,7 +1064,7 @@ if (!insem)
 	{
 	if (ostrsem)
 		delete ostrsem;
-   return false;
+   return NULL;
 	}
 _TCHAR *infile = Arun::sem_to_str(insem);
 delete insem;
@@ -1092,7 +1092,7 @@ if (!appsem || !insem)
       delete insem;
 	if (ostrsem)
 		delete ostrsem;
-   return false;
+   return NULL;
    }
 _TCHAR *appname = Arun::sem_to_str(appsem);
 _TCHAR *infile = Arun::sem_to_str(insem);
@@ -1120,7 +1120,7 @@ if (!appsem)
       delete datum;
 	if (ostrsem)
 		delete ostrsem;
-   return false;
+   return NULL;
    }
 _TCHAR *appname = Arun::sem_to_str(appsem);
 delete appsem;
@@ -1145,7 +1145,7 @@ if (!insem)
       delete datum;
 	if (ostrsem)
 		delete ostrsem;
-   return false;
+   return NULL;
    }
 _TCHAR *infile = Arun::sem_to_str(insem);
 delete insem;
@@ -1175,7 +1175,7 @@ if (!appsem || !insem)
       delete datum;
 	if (ostrsem)
 		delete ostrsem;
-   return false;
+   return NULL;
    }
 _TCHAR *appname = Arun::sem_to_str(appsem);
 _TCHAR *infile = Arun::sem_to_str(insem);
@@ -1203,7 +1203,7 @@ if (!nlppp)
       delete datum;
 	if (ostrsem)
 		delete ostrsem;
-   return false;
+   return NULL;
    }
 if (!appname || !*appname || !infile || !*infile)
    {
@@ -1211,7 +1211,7 @@ if (!appname || !*appname || !infile || !*infile)
       delete datum;
 	if (ostrsem)
 		delete ostrsem;
-   return false;
+   return NULL;
    }
 _TCHAR *s_datum = Arun::sem_to_str(datum);
 delete datum;
@@ -1235,13 +1235,13 @@ if (!nlppp)
    {
 	if (ostrsem)
 		delete ostrsem;
-   return false;
+   return NULL;
    }
 if (!appname || !*appname || !infile || !*infile)
    {
 	if (ostrsem)
 		delete ostrsem;
-   return false;
+   return NULL;
    }
 _t_ostream *ostr = 0;
 if (ostrsem)
@@ -1312,7 +1312,7 @@ if (!appsem)
    {
    if (datum)
       delete datum;
-   return false;
+   return NULL;
    }
 _TCHAR *appname = Arun::sem_to_str(appsem);
 delete appsem;
@@ -1329,7 +1329,7 @@ if (!insem)
    {
    if (datum)
       delete datum;
-   return false;
+   return NULL;
    }
 _TCHAR *infile = Arun::sem_to_str(insem);
 delete insem;
@@ -1351,7 +1351,7 @@ if (!appsem || !insem)
       delete insem;
    if (datum)
       delete datum;
-   return false;
+   return NULL;
    }
 _TCHAR *appname = Arun::sem_to_str(appsem);
 _TCHAR *infile = Arun::sem_to_str(insem);
@@ -1371,13 +1371,13 @@ if (!nlppp)
    {
    if (datum)
       delete datum;
-   return false;
+   return NULL;
    }
 if (!appname || !*appname || !infile || !*infile)
    {
    if (datum)
       delete datum;
-   return false;
+   return NULL;
    }
 _TCHAR *s_datum = Arun::sem_to_str(datum);
 delete datum;
@@ -1640,9 +1640,9 @@ _TCHAR *user::loadanalyzer(	// 04/29/03 AM.
    )
 {
 if (!nlppp)
-   return false;
+   return NULL;
 if (!appname || !*appname)
-   return false;
+   return NULL;
 
 // For now, the analyzer name is the handle.
 // Todo: handle should be separate, so that multiple
@@ -1733,7 +1733,7 @@ if (!cg)	// 07/18/03 AM.
    {
    cerr << _T("[Couldn't read knowledge base.]") << endl;
    vtrun->deleteNLP(nlp); // 07/18/03 AM.
-   return false;
+   return NULL;
    }
 
 // Root of the KB hierarchy.
@@ -1754,7 +1754,7 @@ if (!nlp->make_analyzer(seqfile, appdir, develop,
    cerr << _T("[Couldn't build analyzer.]") << endl;
 	vtrun->deleteCG(cg);	// 07/18/03 AM.
    vtrun->deleteNLP(nlp); // 07/18/03 AM.
-   return false;
+   return NULL;
    }
 return handle;
 }
