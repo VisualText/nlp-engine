@@ -1,0 +1,111 @@
+include_directories(../include/Api/lite)
+include_directories(../include/Api)
+include_directories(../cs/include)
+
+add_definitions( -DLITE_EXPORTS )
+add_definitions( -DRUNEMBED_ )
+if(WIN32)
+  add_definitions( -DMSVC_VERSION=${MSVC_VERSION} -D_CRT_SECURE_NO_WARNINGS )
+else()
+  add_definitions( -DLINUX -Wno-write-strings)
+endif()
+
+add_library(lite STATIC
+    algo.cpp
+    ana.cpp
+    angen.cpp
+    arg.cpp
+    Arug.cpp
+    Arun.cpp
+    Aseq.cpp
+    Auser.cpp
+    Avar.cpp
+    chars.cpp
+    check.cpp
+    code.cpp
+    dir.cpp
+    dsem.cpp
+    dyn.cpp
+    eana.cpp
+    fn.cpp
+    fnrun.cpp
+    folder.cpp
+    gen.cpp
+    genhash.cpp
+    global.cpp
+    Gui.cpp
+    htab.cpp
+    iaction.cpp
+    iarg.cpp
+    ielement.cpp
+    ielt.cpp
+    iexpr.cpp
+    iexprstmt.cpp
+    ifile.cpp
+    ifunc.cpp
+    iifstmt.cpp
+    intern.cpp
+    io.cpp
+    iop.cpp
+    ipair.cpp
+    ipnode.cpp
+    ipost.cpp
+    ipre.cpp
+    irecurse.cpp
+    iregion.cpp
+    ireturn.cpp
+    irule.cpp
+    istmt.cpp
+    istr.cpp
+    isugg.cpp
+    ivar.cpp
+    iwhilestmt.cpp
+    lextagger.cpp
+    line.cpp
+    lite.cpp
+    literug.cpp
+    ln.cpp
+    mach.cpp
+    mode.cpp
+    multi.cpp
+    nintern.cpp
+    nlp.cpp
+    nlppp.cpp
+    nug.cpp
+    parse.cpp
+    pat.cpp
+    path.cpp
+    phash.cpp
+    pn.cpp
+    post.cpp
+    postrfa.cpp
+    pre.cpp
+    rec.cpp
+    rfa.cpp
+    rfasem.cpp
+    rug.cpp
+    sem.cpp
+    seqn.cpp
+    stab.cpp
+    starr.cpp
+    StdAfx.cpp
+    std.cpp
+    str.cpp
+    string.cpp
+    stub_e.cpp
+    stub_s.cpp
+    sym.cpp
+    tok.cpp
+    tsym.cpp
+    uAlgo.cpp
+    u_ofstream.cpp
+    u_out.cpp
+    var.cpp
+    vtrun.cpp
+    WNFunctions.cpp
+    xml.cpp
+    cmltok.cpp
+    regexp.cpp
+    dicttok.cpp
+    kb.cpp
+)
