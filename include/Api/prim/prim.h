@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright © 1998-2009 by Text Analysis International, Inc.
+Copyright Â© 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 ********************************************************************************
 *
@@ -29,7 +29,9 @@ All rights reserved.
 #define _32_K		_2_16
 
 #ifndef LINUX
+#if MSVC_VERSION < 1900
 #define INFINITY
+#endif
 #endif
 
 // Upped size by factor of 2.												// 04/20/01 AM.
