@@ -166,6 +166,7 @@ _TCHAR *fname = _T("kbu");										// kbu.dll		// 01/17/06 AM.
 
 #endif
 
+#ifdef EMBEDED_KB
 if (compiled)																	// 04/27/01 AM.
 	{
 	*cgerr << _T("[CG: Trying to load compiled KB.]") << endl;		// 02/19/02 AM.
@@ -283,6 +284,7 @@ interp:																			// 05/06/01 AM.
 	;		// Empty statement for the label :-)						// 05/06/01 AM.
 	}
 //#endif
+#endif
 
 // THIS IS THE HARD-WIRED INITIALIZATION OF AN EMPTY KB.
 if (!loaded)		// No kb.dll file was loaded.						// 06/29/00 AM.

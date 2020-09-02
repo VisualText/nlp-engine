@@ -1,7 +1,0 @@
-[CG: Trying to load compiled KB.]
-[Compiled kb=/dev/nlp/analyzers/noop/lib/kb.a]
-[Loading compiled kb: /dev/nlp/analyzers/noop/lib/kb.a]
-[Loaded compiled kb library]
-call_kb_setup: Kb setup completed.
-[readKB:]
-[Using compiled kb. readKB ignored.]

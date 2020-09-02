@@ -1,5 +1,0 @@
-; DEF file for KB.DLL
-LIBRARY kb
-EXPORTS
- kb_setup
-;  CdeclFunc                            @2  NONAME

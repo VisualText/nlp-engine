@@ -1,5 +1,0 @@
-; DEF file for RUN.DLL
-LIBRARY run
-EXPORTS
- run_analyzer
-;  CdeclFunc                            @2  NONAME
