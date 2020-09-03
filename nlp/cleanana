@@ -1,4 +1,0 @@
-#
-rm -f logs/*.log
-rm -f output/*.log
-rm -f output/*.txt

@@ -14,7 +14,6 @@ TARG	= lite.a
 CC		= g++
 CFLAGS	= -g -DLINUX -I../include/Api/lite -I../include/Api -I/../cs/include \
 		-I/usr/local/include -I/usr/local/libiodbc-3.52.12/include \
-		-DRUNEMBED_ \
 		-Wno-write-strings -Wno-deprecated
 
 %.o: %.cpp

@@ -158,8 +158,8 @@ NLP *nlp = vtrun->makeNLP(                                     // 07/21/03 AM.
 
 CG *cg = vtrun->makeCG(                                        // 07/21/03 AM.
          anadir,
-         true,      // LOAD COMPILED KB IF POSSIBLE.
-			nlp);      // Associated analyzer object.             // 07/21/03 AM.
+         false,     // LOAD COMPILED KB IF POSSIBLE.
+         nlp);      // Associated analyzer object.             // 07/21/03 AM.
 if (!cg)                                                       // 07/21/03 AM.
    {
    _t_cerr << _T("[Couldn't make knowledge base.]") << endl;          // 07/21/03 AM.
