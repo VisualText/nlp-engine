@@ -1,7 +1,7 @@
 #
 OBJS = main.o Uanalyze.o u_out.o
 
-NLP	    = /opt/nlp-engine/
+NLP	= /opt/nlp-engine/
 TARG	= nlp.exe
 CC	= g++
 LIBD	= $(NLP)/lib
@@ -20,6 +20,7 @@ all: $(TARG)
 $(TARG): $(OBJS) $(LIBS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $@
 		chmod 755 $(TARG)
+	cp $(TARG) ../
 
 clean:
 	/bin/rm -f $(TARG) *.o
