@@ -1,7 +1,7 @@
 #
 OBJS = main.o Uanalyze.o u_out.o
 
-NLP	= /opt/nlp-engine/
+NLP	= ../
 TARG	= nlp.exe
 CC	= g++
 LIBD	= $(NLP)/lib

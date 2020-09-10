@@ -140,7 +140,7 @@ off = id % CON_SEG_SIZE;	// DIV
 
 if (seg >= Con_segs_tot)
    {
-   _ftprintf(stderr, _T("[Con: seg %ld > tot segs %ld]\n"), seg, Con_segs_tot);
+   _ftprintf(stderr, _T("[Con: seg %ld > tot segs %d]\n"), seg, Con_segs_tot);
    return(CNULL);
    }
 
