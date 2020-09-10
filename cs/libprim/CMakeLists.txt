@@ -8,7 +8,7 @@ else()
   add_definitions( -DLINUX -Wno-write-strings)
 endif()
 
-add_library(libprim STATIC
+add_library(prim STATIC
     dir.cpp
     io.cpp
     libprim.cpp

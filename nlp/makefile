@@ -9,7 +9,7 @@ LIBS	= $(LIBD)/lite.a $(LIBD)/libconsh.a $(LIBD)/libkbm.a \
           $(LIBD)/libprim.a $(LIBD)/words.a \
           /usr/local/lib/libiodbc.a -ldl
 
-CFLAGS	= -g -DLINUX -I$(NLP)/include/Api -L$(LIBD) \
+CFLAGS	= -DLINUX -I$(NLP)/include/Api -L$(LIBD) \
           -I/usr/local/libiodbc-3.52.12/include \
           -Wno-write-strings -Wno-deprecated
 

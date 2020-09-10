@@ -12,7 +12,7 @@ LIBOBJ =	Agram.o algo.o ana.o angen.o arg.o Arug.o Arun.o Aseq.o Auser.o Avar.o 
 # NOTE: RUNEMBED_ to run embedded analyzer! # 09/29/19 AM>
 TARG	= lite.a
 CC		= g++
-CFLAGS	= -g -DLINUX -I../include/Api/lite -I../include/Api -I/../cs/include \
+CFLAGS	= -DLINUX -I../include/Api/lite -I../include/Api -I/../cs/include \
 		-I/usr/local/include -I/usr/local/libiodbc-3.52.12/include \
 		-Wno-write-strings -Wno-deprecated
 

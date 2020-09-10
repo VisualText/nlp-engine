@@ -8,7 +8,7 @@ else()
   add_definitions( -DLINUX -Wno-write-strings)
 endif()
 
-add_library(libkbm STATIC
+add_library(kbm STATIC
     con_.cpp
     Akbm.cpp
     st.cpp
