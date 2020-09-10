@@ -8,18 +8,5 @@ else()
   add_definitions( -DLINUX -Wno-write-strings)
 endif()
 
-add_library(kbm STATIC
-    con_.cpp
-    Akbm.cpp
-    st.cpp
-    attr.cpp
-    dict.cpp
-    find.cpp
-    kbm_alloc.cpp
-    kbm.cpp
-    kbm_kb.cpp
-    libkbm.cpp
-    pret.cpp
-    ptr.cpp
-    sym.cpp
-)
+file(GLOB kbm_src "*.h" "*.cpp")
+add_library(kbm STATIC ${kbm_src})
