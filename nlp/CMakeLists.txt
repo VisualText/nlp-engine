@@ -10,10 +10,7 @@ else()
   add_definitions( -DLINUX -Wno-write-strings -Wno-deprecated)
 endif()
 
-add_executable(nlp
-    main.cpp
-    Uanalyze.cpp
-    u_out.cpp
-)
+file(GLOB nlp_src "*.h" "*.cpp")
+add_library(nlp STATIC ${nlp_src})
 
 target_link_libraries(nlp PUBLIC prim kbm consh words lite odbc)

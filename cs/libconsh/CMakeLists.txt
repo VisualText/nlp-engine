@@ -8,33 +8,7 @@ else()
   add_definitions( -DLINUX -Wno-write-strings)
 endif()
 
-add_library(consh STATIC
-    Aconsh.cpp
-    arg.cpp
-    bind.cpp
-    cc_code.cpp
-    cc_gen.cpp
-    cg.cpp
-    cg_global.cpp
-    cmd.cpp
-    con_gen.cpp
-    con_ini.cpp
-    consh_gen.cpp
-    consh_kb.cpp
-    dyn.cpp
-    gen.cpp
-    help.cpp
-    ind.cpp
-    io.cpp
-    libconsh.cpp
-    ptr_gen.cpp
-    ptr_ini.cpp
-    st_gen.cpp
-    st_ini.cpp
-    sym_gen.cpp
-    sym_ini.cpp
-    u_out.cpp
-    ui.cpp
-)
+file(GLOB consh_src "*.cpp")
+add_library(consh STATIC ${consh_src})
 
 target_link_libraries(consh PUBLIC prim kbm)

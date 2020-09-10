@@ -8,14 +8,5 @@ else()
   add_definitions( -DLINUX -Wno-write-strings)
 endif()
 
-add_library(prim STATIC
-    dir.cpp
-    io.cpp
-    libprim.cpp
-    list.cpp
-    prim.cpp
-    sm.cpp
-    str.cpp
-    dyn.cpp
-    u_out.cpp
-)
+file(GLOB prim_src "*.h" "*.cpp")
+add_library(prim STATIC ${prim_src})
