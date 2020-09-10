@@ -19,7 +19,7 @@ All rights reserved.
 #include "inline.h"
 #include "lite/lite.h"
 #include "lite/mach.h"
-
+#include <sys/stat.h>
 #include "lite/dir.h"
 
 
@@ -306,8 +306,11 @@ if (!name || !*name)
 struct _tfinddata_t i_file;
 if (_tfindfirst(name, &i_file) == -1L)
 	return false;
-#endif
 return true;
+#else
+struct stat buffer;
+return (stat (name, &buffer) == 0) ? true : false;
+#endif
 }
 
 /********************************************

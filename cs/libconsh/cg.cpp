@@ -599,6 +599,7 @@ if (!kbm_ || !ast_ || !aptr_ || !asym_ || !acon_)	// 07/29/03 AM.
 
 // ASSUME COMPILED KB.	// 02/19/19 AM.
 // #ifndef LINUX
+hkbdll_ = 0;
 if (hkbdll_)
 	{
 	*cgerr << _T("[Using compiled kb. readKB ignored.]") << endl;	// 06/29/00 AM.
