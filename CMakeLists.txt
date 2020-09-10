@@ -9,6 +9,7 @@ set(NLP_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 add_subdirectory(cs)
 add_subdirectory(src)
 add_subdirectory(lite)
+add_subdirectory(nlp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

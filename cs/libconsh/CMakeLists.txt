@@ -8,7 +8,7 @@ else()
   add_definitions( -DLINUX -Wno-write-strings)
 endif()
 
-add_library(libconsh STATIC
+add_library(consh STATIC
     Aconsh.cpp
     arg.cpp
     bind.cpp
@@ -36,3 +36,5 @@ add_library(libconsh STATIC
     u_out.cpp
     ui.cpp
 )
+
+target_link_libraries(consh PUBLIC prim kbm)

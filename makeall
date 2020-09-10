@@ -11,4 +11,6 @@ make
 #make
 cd ../../lite
 make
+cd ../nlp
+make
 

@@ -1,13 +1,13 @@
 include_directories(../include/Api/lite)
 include_directories(../include/Api)
 include_directories(../cs/include)
+include_directories(/usr/local/libiodbc-3.52.12/include)
 
 add_definitions( -DLITE_EXPORTS )
-add_definitions( -DRUNEMBED_ )
 if(WIN32)
   add_definitions( -DMSVC_VERSION=${MSVC_VERSION} -D_CRT_SECURE_NO_WARNINGS )
 else()
-  add_definitions( -DLINUX -Wno-write-strings)
+  add_definitions( -DLINUX -Wno-write-strings -Wno-deprecated)
 endif()
 
 add_library(lite STATIC
@@ -109,3 +109,5 @@ add_library(lite STATIC
     dicttok.cpp
     kb.cpp
 )
+
+target_link_libraries(lite PUBLIC prim kbm consh words)

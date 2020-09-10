@@ -6,7 +6,7 @@ ptr_ini.o st_gen.o st_ini.o sym_gen.o sym_ini.o u_out.o ui.o
 
 TARG	= libconsh.a
 CC	= g++
-CFLAGS	= -g -DLINUX -I../../include/Api -I../include -Wno-write-strings
+CFLAGS	= -DLINUX -I../../include/Api -I../include -Wno-write-strings
 
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
