@@ -1,0 +1,23 @@
+findstate	
+loadcompiledkb	false
+treeoffsets	false
+treesemantics	false
+browsertoolbar	false
+tabtoolbar	false
+debugtoolbar	false
+kbtoolbar	false
+batchmode	false
+pagemode	true
+verbosemode	false
+loganalyzer	false
+highlighttext	false
+textstate	1
+textsel	2
+analyzerstate	
+analyzersel	2
+grammarstate	
+grammarsel	
+activetab	1
+processfile	misc\xxx.txt
+attributeeditor	false
+addcombotext	misc\xxx.txt
