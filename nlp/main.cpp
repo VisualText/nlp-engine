@@ -102,7 +102,6 @@ if (stat(anapath,&st) != 0) {
        if (getcwd(cwd, sizeof(cwd)) != NULL) {
 		  _t_cout << _T("[current directory: ") << cwd << _T("]") << endl;
 		  _stprintf(anapath, _T("%s%sanalyzers%s%s"),cwd,DIR_STR,DIR_STR,analyzerpath);
-		  _t_cout << _T("[analyzer path: ") << anapath << _T("]") << endl;
        } else {
           _t_cerr << _T("[couldn't get current directory") << analyzerpath << _T("]") << endl;
 		  return 0;
@@ -111,6 +110,13 @@ if (stat(anapath,&st) != 0) {
 } else {
    _stprintf(anapath, _T("%s"),analyzerpath);	
 }
+
+if (stat(anapath,&st) != 0)
+	{
+	_t_cerr << _T("[Analyzer path not found: ") << anapath << _T("]\n") << endl;
+	return 0;
+	}
+_t_cout << _T("[analyzer path: ") << anapath << _T("]") << endl;
 
 _TCHAR *ana = _tcsrchr(anapath,_T('/'));
 ++ana;
@@ -457,7 +463,7 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 		{
 			if (input && output)
 				{
-				_t_cerr << _T("[") << argv[0] << _T(": Extra arguments.]");
+				_t_cerr << _T("[") << argv[0] << _T(": Extra arguments.]") << endl;
 				cmdHelpargs(argv[0]);
 				return false;
 				}
@@ -484,12 +490,12 @@ void cmdHelpargs(_TCHAR *name)
 {
 _t_cout << endl
 	<< _T("usage: nlp [--version] [--help]") << endl
-	<< _T("           [/INTERP][/COMPILED] INTERP is the default") << endl
-	<< _T("           [/ANA analyzer] name or path to NLP++ analyzer folder") << endl
-	<< _T("           [/IN infile] input text file") << endl
-	<< _T("           [/OUT outfile] output text file") << endl
-	<< _T("           [/DEV][/SILENT] /DEV generates logs, /SILENT (default) does not") << endl
-	<< _T("           [infile [outfile]] when no /IN or /OUT specified") << endl
+	<< _T("           [-INTERP][-COMPILED] INTERP is the default") << endl
+	<< _T("           [-ANA analyzer] name or path to NLP++ analyzer folder") << endl
+	<< _T("           [-IN infile] input text file") << endl
+	<< _T("           [-OUT outfile] output text file") << endl
+	<< _T("           [-DEV][-SILENT] /DEV generates logs, -SILENT (default) does not") << endl
+	<< _T("           [infile [outfile]] when no /IN or -OUT specified") << endl
 	<< endl
 	<< _T("Directories in the nlp.exe files:") << endl
 	<< _T("   data        nlp engine bootstrap grammar") << endl
