@@ -11,6 +11,6 @@ else()
 endif()
 
 file(GLOB nlp_src "*.h" "*.cpp")
-add_library(nlp STATIC ${nlp_src})
+add_executable(nlp.exe ${nlp_src})
 
-target_link_libraries(nlp PUBLIC prim kbm consh words lite odbc)
+target_link_libraries(nlp.exe PUBLIC prim kbm consh words lite odbc)
