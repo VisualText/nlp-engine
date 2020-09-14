@@ -1,1 +1,0 @@
-g++ -g -DLINUX -I../include/Api/lite -I../include/Api -I/../cs/include -c Agram.cpp -o Agram.o
