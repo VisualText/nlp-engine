@@ -113,4 +113,7 @@ public:
     );
 
     int close();
+
+private:
+    int createDir(_TCHAR *dirPath);
 };
