@@ -89,10 +89,12 @@ int NLP_ENGINE::init(
 	_t_cout << _T("[analyzer directory: ") << m_anadir << _T("]") << endl;
     _t_cout << _T("[analyzer name: ") << m_ananame << _T("]") << endl; 
 
-    _stprintf(m_rfbdir, _T("data%crfb%cspec"),DIR_CH,DIR_CH);  
+    _stprintf(m_rfbdir, _T("./data%crfb%cspec"),DIR_CH,DIR_CH);  
     _t_cout << _T("[rfb file: ") << m_rfbdir << _T("]") << endl;
 
-    _stprintf(m_logfile, _T("./tmp%cvisualtext.log"),DIR_CH);
+    _TCHAR *tmp = _T("./tmp");
+    _stprintf(m_logfile, _T("%s%cvisualtext.log"),tmp,DIR_CH);
+       NLP_ENGINE::createDir(tmp);
     _t_cout << _T("[log file: ") << m_logfile << _T("]") << endl;
 
     _stprintf(m_specdir, _T("%s%sspec"), m_anadir, DIR_STR);
@@ -102,14 +104,7 @@ int NLP_ENGINE::init(
     _t_cout << _T("[spec file: ") << m_seqfile << _T("]") << endl;
 
     _stprintf(m_outdir, _T("%s%s%s"), m_anadir,DIR_STR,_T("output"));
-    if (stat(m_outdir,&st) != 0) {
-#ifdef LINUX
-	    mkdir(m_outdir, 777);
-#else
-	    CreateDirectory(m_outdir,NULL);
-#endif
-	    _t_cout << _T("[Creating output directory: ") << m_outdir << _T("]") << endl;
-	}
+    NLP_ENGINE::createDir(m_outdir);
     _t_cout << _T("[output directory: ") << m_outdir << _T("]") << endl;
 
     /////////////////////////////////////////////////
@@ -192,15 +187,36 @@ int NLP_ENGINE::analyze(
     bool compiled
 	)
 {   
+    struct stat st;
+    if (stat(infile,&st) == 0)
+        _stprintf(m_infile, _T("%s"),infile);
+    else
+        _stprintf(m_infile, _T("%s%sinput%s%s"),m_anadir,DIR_STR,DIR_STR,infile);
+    _t_cout << _T("[infile path: ") << m_infile << _T("]") << endl;
+    _stprintf(m_outfile, _T("%s%soutput.txt"),m_anadir,DIR_STR);
+    _t_cout << _T("[outfile path: ") << m_outfile << _T("]") << endl;
+
+    // Analyzer can output to a stream.
+    _TCHAR ofstr[MAXSTR];
+    #ifdef LINUX
+    _stprintf(ofstr,_T("./dummy.txt"));
+    #else
+    _stprintf(ofstr,_T("e:\\dummy.txt"));
+    #endif
+    _t_ofstream os(TCHAR2CA(ofstr), ios::out);						// 08/07/02 AM.
+
+    // Testing output to buffer.
+    _TCHAR obuf[MAXSTR];
+
     m_nlp->analyze(m_infile, m_outfile, m_anadir, m_develop,
         m_silent,        // Debug/log output files.                  // 06/16/02 AM.
         0,             // Outdir.
         0,           // Input buffer.
         0,        // Length of input buffer, or 0.
         m_compiled,      // If running compiled analyzer.
-        0,	   // Rebind cout output stream in analyzer    // 08/07/02 AM.
-        0,       // 05/11/02 AM.
-        0	   // 05/11/02 AM.
+        &os,	   // Rebind cout output stream in analyzer    // 08/07/02 AM.
+        obuf,       // 05/11/02 AM.
+        MAXSTR	   // 05/11/02 AM.
         );
 
     NLP_ENGINE::close();
@@ -216,13 +232,25 @@ int NLP_ENGINE::analyze(
     bool compiled
 	)
 {
+    // Analyzer can output to a stream.
+    _TCHAR ofstr[MAXSTR];
+    #ifdef LINUX
+    _stprintf(ofstr,_T("./dummy.txt"));
+    #else
+    _stprintf(ofstr,_T("e:\\dummy.txt"));
+    #endif
+    _t_ofstream os(TCHAR2CA(ofstr), ios::out);
+    
+    _t_cout << _T("[infile path: ") << m_infile << _T("]") << endl;
+    _t_cout << _T("[outfile path: ") << m_outfile << _T("]") << endl;
+
     m_nlp->analyze(m_infile, m_outfile, m_anadir, m_develop,
         m_silent,        // Debug/log output files.                  // 06/16/02 AM.
         0,             // Outdir.
         inbuf,           // Input buffer.
         len,        // Length of input buffer, or 0.
         m_compiled,      // If running compiled analyzer.
-        0,	   // Rebind cout output stream in analyzer    // 08/07/02 AM.
+        &os,	   // Rebind cout output stream in analyzer    // 08/07/02 AM.
         outbuf,       // 05/11/02 AM.
         outlen	   // 05/11/02 AM.
         );
@@ -242,5 +270,18 @@ int NLP_ENGINE::close()
     object_counts();    // Report memory leaks to standard output.
 
     return 0;
+}
+
+int NLP_ENGINE::createDir(_TCHAR *dirPath) {
+    struct stat st;
+
+    if (stat(dirPath,&st) != 0) {
+#ifdef LINUX
+	    mkdir(dirPath, 777);
+#else
+	    CreateDirectory(dirPath,NULL);
+#endif
+	    _t_cout << _T("[Creating output directory: ") << dirPath << _T("]") << endl;
+	}
 
 }

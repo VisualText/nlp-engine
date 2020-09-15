@@ -7,6 +7,8 @@
 ###############################################
 
 @CODE
+cbuf() << "hello world!\n";
+
 L("hello") = 0;
 "output.txt" << "Printing from code region." << "\n";
 
