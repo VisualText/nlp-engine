@@ -14,15 +14,14 @@ _tmain(
     _TCHAR input[1001];
     _TCHAR output[1001];
 
-    _stprintf(analyzer,"%s",_T("noop"));
-     _t_cout << _T("[analyzer name: ") << analyzer << _T("]") << endl;
-     
-    NLP_ENGINE *nlpEngine = new NLP_ENGINE(analyzer);
-
-    _stprintf(input,"%s",_T("The quick brown fox jumped over the lazy boy."));
-    _t_cout << _T("[input: ") << input << _T("]") << endl;
+    _stprintf(analyzer,"%s",_T("taiparse"));
+    _stprintf(input,"%s",_T("The quick brown fox jumped over the lazy dog."));
     output[0] = '\0';
 
+    _t_cout << _T("[analyzer name: ") << analyzer << _T("]") << endl;
+    _t_cout << _T("[input: ") << input << _T("]") << endl;
+     
+    NLP_ENGINE *nlpEngine = new NLP_ENGINE(analyzer);
     nlpEngine->analyze(input,1000,output,1000);
 
     _t_cout << _T("[output: ") << output << _T("]") << endl;
