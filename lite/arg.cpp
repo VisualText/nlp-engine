@@ -14,10 +14,12 @@ All rights reserved.
 
 #include "StdAfx.h"
 #ifdef LINUX
+#ifdef _ODBC
 #include <sql.h>
 #include <sqlext.h>
 #include <sqlucode.h>
 #include <iodbcext.h>
+#endif
 #endif
 #include "machine.h"	// 10/25/06 AM.
 #include "lite/global.h"

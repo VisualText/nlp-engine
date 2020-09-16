@@ -95,6 +95,10 @@ bool UTL_GetUnicodeFromMBCS(                                         // 03/03/05
 
 bool writeConvert(_TCHAR *,_TCHAR *,long=0,long=MAXSTR);				// 07/18/00 AM.
 
+#ifndef LPCWSTR
+// Hack. 09/16/20 AM.
+#define LPCWSTR double
+#endif
 bool UTL_GetMBCSFromUnicodeString(                                   // 03/06/05 AM.
 	LPCWSTR lpwUnicode,
 	UINT nCodePage,

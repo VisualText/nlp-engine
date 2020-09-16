@@ -15,10 +15,12 @@ All rights reserved.
 
 #include "StdAfx.h"
 #ifdef LINUX
+#ifdef _ODBC
 #include <sql.h>
 #include <sqlext.h>
 #include <sqlucode.h>
 #include <iodbcext.h>
+#endif
 #else
 #include <direct.h>	// For _mkdir										// 06/11/03 AM.
 
@@ -37,6 +39,9 @@ All rights reserved.
 #include "kb.h"					// 02/12/07 AM.
 
 #include "prim/libprim.h"	// 09/15/08 AM.
+#ifndef DWORD	// 09/16/20 AM.
+#define DWORD double
+#endif
 LIBPRIM_API DWORD run_silent(_TCHAR* strCMD);	// 09/15/08 AM.
 
 //#include "lite/lite.h"				// 07/07/03 AM.
@@ -12979,6 +12984,7 @@ delete node_sem;
 return pnvarnames(nlppp,pnode);
 }
 
+#ifdef _ODBC
 
 /********************************************
 * FN:		DBOPEN
@@ -13462,6 +13468,7 @@ if (retcode != SQL_SUCCESS && retcode != SQL_SUCCESS_WITH_INFO)
 return true;
 }
 
+#endif // _ODBC
 
 /********************************************
 * FN:		EXITTOPOPUP
@@ -13577,6 +13584,8 @@ nlp->setPopupdat(0);
 // Return as string type.
 return str;
 }
+
+#ifdef _ODBC
 
 /********************************************
 * FN:		DBBINDCOL
@@ -13901,6 +13910,7 @@ if (!ok1 || !ok2)
 return dbbindcol(nlppp,column_num,typ,bsiz,var,flagv);
 }
 
+#endif // _ODBC
 
 /********************************************
 * FN:		PNMAKEVAR

@@ -15,8 +15,10 @@ All rights reserved.
 //#include <iostream.h>
 #include <assert.h>
 #include "lite/lite.h"
+#ifdef _ODBC
 #include "sql.h"				// ODBC	// 05/29/02 Dd.
 #include "sqlext.h"			// ODBC	// 05/23/02 AM.
+#endif
 
 // Readability definitions.
 typedef void FN;
@@ -981,6 +983,7 @@ public:
 	static Dlist<Iarg> *unpackdirs(_TCHAR *, Parse *);				// 10/20/00 AM.
 	static Dlist<Iarg> *split_util(_TCHAR*,_TCHAR*,Parse*);			// 03/14/03 AM.
 
+#ifdef _ODBC
 	static SQLSMALLINT SeqlTypeFromString(_TCHAR *typeStr);			// 05/29/02 DD.
 	static bool SeqlValidType(_TCHAR *typeStr);							// 05/29/02 DD.
 
@@ -991,6 +994,7 @@ public:
 	static bool dbbind2float(Nlppp*,RFASem*,SQLSMALLINT,
 												long,RFASem*);					// 06/08/02 AM.
 	static long *bindvar(Nlppp*,RFASem*);								// 06/12/02 AM.
+#endif
 
 	static bool prosify(													// 10/01/10 AM.
 		Node<Pn> *node,
