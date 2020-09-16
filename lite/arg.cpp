@@ -18,7 +18,6 @@ All rights reserved.
 #include <sql.h>
 #include <sqlext.h>
 #include <sqlucode.h>
-#include <iodbcext.h>
 #endif
 #endif
 #include "machine.h"	// 10/25/06 AM.
