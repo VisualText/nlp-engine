@@ -97,10 +97,12 @@ cbufover_ = false;		// 05/11/02 AM.
 // Default will be standard output stream.
 cout_ = &_t_cout;				// 05/04/03 AM.
 
+#ifdef _ODBC
 henv_ = 0;					// 05/23/02 AM.
 hdbc_ = 0;					// 05/23/02 AM.
 hstmt_ = 0;					// 05/25/02 AM.
 cursor_ = 0;				// 05/26/02 AM.
+#endif
 
 blobs_ = new Dlist<Iarg>();	// Make empty list.						// 02/27/03 AM.
 datum_ = 0;					// 03/13/03 AM.
@@ -176,12 +178,13 @@ long	Parse::getCbufmax()			{return cbufmax_;}				// 05/11/02 AM.
 long	Parse::getCbuftot()			{return cbuftot_;}				// 05/11/02 AM.
 bool	Parse::getCbufover()		{return cbufover_;}					// 05/11/02 AM.
 
+#ifdef _ODBC
 SQLHENV Parse::getHenv()	{return henv_;}							// 05/23/02 AM.
 SQLHDBC Parse::getHdbc()	{return hdbc_;}							// 05/23/02 AM.
 SQLHDBC Parse::getHstmt()	{return hstmt_;}							// 05/25/02 AM.
 SDWORD  Parse::getCursor()	{return cursor_;}							// 05/26/02 AM.
-
 SDWORD *Parse::getPcursor()	{return &cursor_;}					// 05/26/02 AM.
+#endif
 
 Dlist<Iarg>	*Parse::getBlobs()		{return blobs_;}				// 02/27/03 AM.
 _TCHAR	 *Parse::getDatum()	{return datum_;}							// 03/13/03 AM.
@@ -242,10 +245,12 @@ void Parse::setCbufmax(long x)			{cbufmax_ = x;}			// 05/11/02 AM.
 void Parse::setCbuftot(long x)			{cbuftot_ = x;}			// 05/11/02 AM.
 void Parse::setCbufover(bool x)			{cbufover_ = x;}			// 05/11/02 AM.
 
+#ifdef _ODBC
 void Parse::setHenv(SQLHENV x)			{henv_	= x;}				// 05/23/02 AM.
 void Parse::setHdbc(SQLHDBC x)			{hdbc_	= x;}				// 05/23/02 AM.
 void Parse::setHstmt(SQLHSTMT x)			{hstmt_	= x;}				// 05/25/02 AM.
 void Parse::setCursor(SDWORD x)			{cursor_	= x;}				// 05/26/02 AM.
+#endif
 
 void Parse::setBlobs(Dlist<Iarg> *x)	{blobs_	= x;}				// 02/27/03 AM.
 
@@ -875,11 +880,12 @@ deleteostrs();		// Delete Parse's ostream list.					// 05/24/01 AM.
 // Commented out. When called from prog/main.cpp, not deletable. // 06/25/05 AM.
 //if (cbuf_)																		// 02/21/05 AM.
 //	delete cbuf_;																// 02/21/05 AM.
-
+#ifdef _ODBC
 if (hstmt_)																		// 05/25/02 AM.
   freeDbstmt();																// 05/25/02 AM.
 
 dbclose();			// Close ODBC handlers.								// 05/23/02 AM.
+#endif
 
 deleteblobs();		// Delete allocated blobs.							// 02/27/03 AM.
 
@@ -1228,7 +1234,7 @@ ostrs_ = 0;
 return true;
 }
 
-
+#ifdef _ODBC
 /********************************************
 * FN:		DBCLOSE
 * CR:		05/23/02 AM.
@@ -1312,7 +1318,7 @@ if (hstmt_)
 	}
 return true;
 }
-
+#endif
 
 /********************************************
 * FN:		ERROUT

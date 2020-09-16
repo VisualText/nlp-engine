@@ -12,16 +12,21 @@ All rights reserved.
 #ifndef WORDS_H_
 #define WORDS_H_
 
-#ifdef LINUX
-#define WORDS_API
+#ifdef _MSC_VER
+ #define DECL_EXPORT __declspec(dllexport)
+ #define DECL_IMPORT __declspec(dllimport)
+#elif __GNUC__ >= 4
+ #define DECL_EXPORT __attribute__ ((visibility ("default")))
+ #define DECL_IMPORT __attribute__ ((visibility ("default")))
 #else
-
-#ifdef WORDS_EXPORTS
-#define WORDS_API __declspec(dllexport)
-#else
-#define WORDS_API __declspec(dllimport)
+ #define DECL_EXPORT
+ #define DECL_IMPORT
 #endif
 
+#ifdef WORDS_EXPORTS
+#define WORDS_API DECL_EXPORT
+#else
+#define WORDS_API DECL_IMPORT
 #endif
 
 // This class is exported from the words.dll

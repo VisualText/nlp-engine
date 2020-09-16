@@ -1104,7 +1104,7 @@ Arug::fillPass(rugpass, rules, selects);
 // Intern pass.
 
 // Build file path for pass.
-_TCHAR buff[1024];
+_TCHAR buff[2048];
 _stprintf(buff, _T("%s%c%s%c%s.pat"), appdir_,DIR_CH,
 			SPECDIRNAME,														// 05/14/00 AM.
 			DIR_CH, conname);

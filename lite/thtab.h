@@ -880,7 +880,7 @@ int recid = gen->getRecid();
 _TCHAR *rname = _T("rhash");		// For naming hash tables.
 _TCHAR *cname = _T("chain");		// For naming conflict chain.
 _TCHAR buf[MAXSTR];
-_TCHAR arr[MAXSTR];
+_TCHAR arr[1024];
 _TCHAR chain[MAXSTR];
 _TCHAR buf1[MAXSTR+1];
 _TCHAR buf2[MAXSTR+1];

@@ -242,6 +242,7 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnCbuf(args,nlppp,/*UP*/sem);							// 05/11/02 AM.
 	case FNcoutreset:
 		return fnCoutreset(args,nlppp,/*UP*/sem);						// 05/06/02 AM.
+#ifdef _ODBC
 	case FNdballocstmt:
 		return fnDballocstmt(args,nlppp,/*UP*/sem);					// 05/25/02 AM.
 	case FNdbbindcol:
@@ -258,6 +259,7 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnDbfreestmt(args,nlppp,/*UP*/sem);					// 05/25/02 AM.
 	case FNdbopen:
 		return fnDbopen(args,nlppp,/*UP*/sem);							// 05/23/02 AM.
+#endif
 	case FNdeaccent:
 		return fnDeaccent(args,nlppp,/*UP*/sem);						// 09/07/03 AM.
 	case FNdebug:

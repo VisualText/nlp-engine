@@ -6,16 +6,21 @@ All rights reserved.
 #ifndef LIBKBM_H_
 #define LIBKBM_H_
 
-#ifdef LINUX
-#define LIBKBM_API
+#ifdef _MSC_VER
+ #define DECL_EXPORT __declspec(dllexport)
+ #define DECL_IMPORT __declspec(dllimport)
+#elif __GNUC__ >= 4
+ #define DECL_EXPORT __attribute__ ((visibility ("default")))
+ #define DECL_IMPORT __attribute__ ((visibility ("default")))
 #else
-
-#ifdef LIBKBM_EXPORTS
-#define LIBKBM_API __declspec(dllexport)
-#else
-#define LIBKBM_API __declspec(dllimport)
+ #define DECL_EXPORT
+ #define DECL_IMPORT
 #endif
 
+#ifdef LIBKBM_EXPORTS
+#define LIBKBM_API DECL_EXPORT
+#else
+#define LIBKBM_API DECL_IMPORT
 #endif
 
 #include "my_tchar.h"

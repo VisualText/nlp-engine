@@ -1,7 +1,7 @@
 #include "lite/nlp_engine.h"
 
 #ifdef LINUX
-main(
+int main(
 #else
 _tmain(
 #endif
@@ -15,14 +15,23 @@ _tmain(
     _TCHAR output[1001];
 
     _stprintf(analyzer,"%s",_T("taiparse"));
-    _stprintf(input,"%s",_T("The quick brown fox jumped over the lazy dog."));
     output[0] = '\0';
 
     _t_cout << _T("[analyzer name: ") << analyzer << _T("]") << endl;
     _t_cout << _T("[input: ") << input << _T("]") << endl;
      
     NLP_ENGINE *nlpEngine = new NLP_ENGINE(analyzer);
+    _t_cout << _T("post constructor: ") << input << _T("]") << endl;
+
+    _stprintf(input,"%s",_T("The quick brown fox jumped over the lazy dog."));
+    nlpEngine->analyze(input,1000,output,1000);
+    _t_cout << _T("[output: ") << output << _T("]") << endl;
+
+    output[0] = '\0';
+    _stprintf(input,"%s",_T("All good people must come to the aid of their country."));
     nlpEngine->analyze(input,1000,output,1000);
 
     _t_cout << _T("[output: ") << output << _T("]") << endl;
+
+    nlpEngine->close();
 }
