@@ -12,6 +12,10 @@ MIT License
 
 #include "nlp_engine.h"
 
+#ifdef LINUX
+#include <unistd.h>
+#endif
+
 NLP_ENGINE::NLP_ENGINE(
 	_TCHAR *analyzer,
     bool develop,

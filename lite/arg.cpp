@@ -17,7 +17,6 @@ All rights reserved.
 #include <sql.h>
 #include <sqlext.h>
 #include <sqlucode.h>
-#include <iodbcext.h>
 #endif
 #include "machine.h"	// 10/25/06 AM.
 #include "lite/global.h"

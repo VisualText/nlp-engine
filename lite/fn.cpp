@@ -22,7 +22,6 @@ All rights reserved.
 #include <sql.h>
 #include <sqlext.h>
 #include <sqlucode.h>
-#include <iodbcext.h>
 #else
 #include <direct.h>	// For _mkdir										// 12/07/01 AM.
 #endif
