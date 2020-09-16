@@ -12,16 +12,21 @@ All rights reserved.
 #ifndef LIBPRIM_H_
 #define LIBPRIM_H_
 
-#ifdef LINUX
-#define LIBPRIM_API
+#ifdef _MSC_VER
+ #define DECL_EXPORT __declspec(dllexport)
+ #define DECL_IMPORT __declspec(dllimport)
+#elif __GNUC__ >= 4
+ #define DECL_EXPORT __attribute__ ((visibility ("default")))
+ #define DECL_IMPORT __attribute__ ((visibility ("default")))
 #else
-
-#ifdef LIBPRIM_EXPORTS
-#define LIBPRIM_API __declspec(dllexport)
-#else
-#define LIBPRIM_API __declspec(dllimport)
+ #define DECL_EXPORT
+ #define DECL_IMPORT
 #endif
 
+#ifdef LIBPRIM_EXPORTS
+#define LIBPRIM_API DECL_EXPORT
+#else
+#define LIBPRIM_API DECL_IMPORT
 #endif
 
 // This class is exported from the libprim.dll

@@ -493,7 +493,7 @@ if (!(labels = cg->Down(conc)))
 	return true;						// Concept without labels is ok.
 
 _TCHAR buff[256];
-_TCHAR name[256];
+_TCHAR name[512];
 _TCHAR *tmp;
 
 PHRASE *samples;		// Phrase of samples under concept.

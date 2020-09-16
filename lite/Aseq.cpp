@@ -774,7 +774,7 @@ _t_ostream *serr;																	// 05/19/01 AM.
 _t_ofstream *ferr;																// 05/19/01 AM.
 _t_ostream *sdbg=0;																// 02/21/02 AM.
 _TCHAR outd[MAXSTR];															// 02/21/02 AM.
-_TCHAR errout[MAXSTR];															// 05/19/01 AM.
+_TCHAR errout[1024];															// 05/19/01 AM.
 _stprintf(outd,_T("%s%c%s"), ana->getAppdir(),DIR_CH,_T("logs"));			// 02/21/02 AM.
 _stprintf(errout, _T("%s%cmake_ana.log"),outd,DIR_CH);					// 02/21/02 AM.
 fileErr(errout, /*DU*/ ferr, serr);										// 05/19/01 AM.

@@ -290,7 +290,7 @@ outStr << dir << DIR_CH << rules_file_name_ << _T(".pat") << ends; // 03/08/00 A
 _t_ofstream fout(TCHAR2CA(fname), ios::out);											// 03/08/00 AM.
 
 
-_TCHAR fhead[MAXSTR];
+_TCHAR fhead[1024];
 _TCHAR upp[MAXSTR];
 str_to_upper(rules_file_name_, upp);
 _stprintf(fhead, _T("%s.PAT (pass %d)"), upp, passnum_);

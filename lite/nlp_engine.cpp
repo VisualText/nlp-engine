@@ -72,17 +72,17 @@ int NLP_ENGINE::init(
 
     struct stat st;
 
+    char cwd[MAXSTR] = "/home/gordon/HPCC-Platform/plugins/nlp/nlp-engine";
     if (stat(analyzer,&st) != 0) {
 	#ifdef LINUX
-        char cwd[MAXSTR];
-        if (getcwd(cwd, sizeof(cwd)) != NULL) {
-            _t_cout << _T("[current directory: ") << cwd << _T("]") << endl;
+        // if (getcwd(cwd, sizeof(cwd)) != NULL) {
+        //     _t_cout << _T("[current directory: ") << cwd << _T("]") << endl;
             _stprintf(m_anadir, _T("%s%sanalyzers%s%s"),cwd,DIR_STR,DIR_STR,analyzer);
             _stprintf(m_ananame, _T("%s"),analyzer);
-        } else {
-            _t_cerr << _T("[couldn't get current directory") << analyzer << _T("]") << endl;
-            return 0;
-        }
+        // } else {
+        //     _t_cerr << _T("[couldn't get current directory") << analyzer << _T("]") << endl;
+        //     return 0;
+        // }
 	#endif
     } else {
         _stprintf(m_anadir, _T("%s"),analyzer);	
@@ -93,7 +93,7 @@ int NLP_ENGINE::init(
 	_t_cout << _T("[analyzer directory: ") << m_anadir << _T("]") << endl;
     _t_cout << _T("[analyzer name: ") << m_ananame << _T("]") << endl; 
 
-    _stprintf(m_rfbdir, _T("./data%crfb%cspec"),DIR_CH,DIR_CH);  
+    _stprintf(m_rfbdir, _T("%s/data%crfb%cspec"),cwd, DIR_CH,DIR_CH);  
     _t_cout << _T("[rfb file: ") << m_rfbdir << _T("]") << endl;
 
     _TCHAR *tmp = _T("./tmp");
@@ -181,6 +181,8 @@ int NLP_ENGINE::init(
     delete rug;
     rug = 0;
     #endif
+
+    return 0;
 }
  
 int NLP_ENGINE::analyze(
@@ -224,6 +226,7 @@ int NLP_ENGINE::analyze(
         );
 
     NLP_ENGINE::close();
+    return 0;
 }
 
 int NLP_ENGINE::analyze(
@@ -260,6 +263,7 @@ int NLP_ENGINE::analyze(
         );
 
     NLP_ENGINE::close();
+    return 0;
 }
 
 int NLP_ENGINE::close()
@@ -287,5 +291,5 @@ int NLP_ENGINE::createDir(_TCHAR *dirPath) {
 #endif
 	    _t_cout << _T("[Creating output directory: ") << dirPath << _T("]") << endl;
 	}
-
+    return 0;
 }
