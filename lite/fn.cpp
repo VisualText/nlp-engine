@@ -19,10 +19,12 @@ All rights reserved.
 //#include <atlstr.h>	// 05/19/14 DDH.
 
 #ifdef LINUX
+#ifdef _ODBC
 #include <sql.h>
 #include <sqlext.h>
 #include <sqlucode.h>
 #include <iodbcext.h>
+#endif
 #else
 #include <direct.h>	// For _mkdir										// 12/07/01 AM.
 #endif
@@ -39,6 +41,9 @@ All rights reserved.
 #include "kb.h"					// 02/12/07 AM.
 
 #include "prim/libprim.h"	// 09/15/08 AM.
+#ifndef DWORD	// 09/16/20 AM.
+#define DWORD double
+#endif
 LIBPRIM_API DWORD run_silent(_TCHAR* strCMD);	// 09/15/08 AM.
 
 //#include "lite/lite.h"				// 07/07/03 AM.
@@ -10449,6 +10454,7 @@ if (vars)
 return true;
 }
 
+#ifdef _ODBC
 
 /********************************************
 * FN:		FNDBOPEN
@@ -10735,6 +10741,7 @@ if (Arun::dbfetch(nlppp))
 return true;
 }
 
+#endif // _ODBC
 
 /********************************************
 * FN:		FNEXITTOPOPUP
@@ -10802,6 +10809,7 @@ sem = new RFASem(str, RSSTR);
 return true;
 }
 
+#ifdef _ODBC
 
 /********************************************
 * FN:		FNDBBINDCOL
@@ -11237,6 +11245,7 @@ long *addr = iarg->getNumaddr();
 return addr;
 }
 
+#endif // _ODBC
 
 /********************************************
 * FN:		FNSORTCONSBYATTR

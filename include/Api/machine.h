@@ -17,6 +17,7 @@ All rights reserved.
 
 #include "machine-min.h"	// 11/01/06 AM.
 
+#ifdef _ODBC
 #include <sql.h>
 
 #ifdef LINUX
@@ -24,6 +25,7 @@ All rights reserved.
 #include <sqlucode.h>
 // Try without odbc for now... 03/03/16 AM.
 //#include <iodbcext.h>
+#endif
 #endif
 
 #endif

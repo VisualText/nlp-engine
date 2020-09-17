@@ -141,11 +141,13 @@ public:
 	long getCbuftot();				// 05/11/02 AM.
 	bool getCbufover();				// 05/11/02 AM.
 
+#ifdef _ODBC
 	SQLHENV getHenv();				// 05/23/02 AM.
 	SQLHDBC getHdbc();				// 05/23/02 AM.
 	SQLHSTMT getHstmt();				// 05/25/02 AM.
 	SDWORD getCursor();				// 05/26/02 AM.
 	SDWORD *getPcursor();			// 05/26/02 AM.
+#endif
 
 	Dlist<Iarg> *getBlobs();		// 02/27/03 AM.
 	_TCHAR *getDatum();					// 03/13/03 AM.
@@ -188,10 +190,12 @@ public:
 	void setCbuftot(long);			// 05/11/02 AM.
 	void setCbufover(bool);			// 05/11/02 AM.
 
+#ifdef _ODBC
 	void setHenv(SQLHENV);			// 05/23/02 AM.
 	void setHdbc(SQLHDBC);			// 05/23/02 AM.
 	void setHstmt(SQLHSTMT);		// 05/25/02 AM.
 	void setCursor(SDWORD);			// 05/26/02 AM.
+#endif
 
 	void setBlobs(Dlist<Iarg> *);	// 02/27/03 AM.
 	void setDatum(_TCHAR*);			// 03/13/03 AM.
@@ -483,10 +487,12 @@ public:
 	Delt<Iarg> *newblob(long);												// 02/27/03 AM.
 	bool deleteblobs();														// 02/27/03 AM.
 
+#ifdef _ODBC
 	// ODBC, SQL handling.													// 05/23/02 AM.
 	bool dbclose();															// 05/23/02 AM.
 	bool allocDbstmt();														// 05/25/02 AM.
 	bool freeDbstmt();														// 05/25/02 AM.
+#endif
 
 #ifndef LINUX
         inline
@@ -556,6 +562,7 @@ private:
 	_t_ostream *sout_;															// 05/13/99 AM.
 	_t_ofstream *fout_;															// 05/13/99 AM.
 
+#ifdef _ODBC
 	// MyODBC,MySQL connectivity.											// 05/23/02 AM.
 	SQLHENV henv_;																// 05/23/02 AM.
 	SQLHDBC hdbc_;																// 05/23/02 AM.
@@ -563,6 +570,8 @@ private:
 	// For now, allowing only on active statement handle.			// 05/25/02 AM.
 	SQLHSTMT hstmt_;															// 05/25/02 AM.
 	SDWORD cursor_;	// "Cursor buffer".								// 05/26/02 AM.
+#endif
+
 
 	// If this parse interns an analyzers (eg, RFB or user's analyzer),
 	// then record if any syntax errors were encountered.			// 05/26/01 AM.
