@@ -3,7 +3,6 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -11,7 +10,7 @@ All rights reserved.
 *
 *									STR.C
 *
-* FILE:	conan.¹/str.c
+* FILE:	cs/libstream/str.c
 * SUBJ:	Primitive string functions.
 * NOTE:	
 * CR:		5/10/95 AM.
@@ -368,7 +367,7 @@ LIBPRIM_API int strlen_cmp(_TCHAR *str, long num)
 {
 if (num < 0)
    {
-   _ftprintf(stderr, _T("[strlen_cmp: Error. len=%ld]\n"), num);
+//   _ftprintf(stderr, _T("[strlen_cmp: Error. len=%ld]\n"), num); // 09/18/20 AM. hack comment.
    return(1);			/* Recover.	*/
    }
 if (!str)
