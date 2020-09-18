@@ -12,16 +12,21 @@ All rights reserved.
 #ifndef LIBCONSH_H_
 #define LIBCONSH_H_
 
-#ifdef LINUX
-#define LIBCONSH_API
+#ifdef _MSC_VER
+ #define DECL_EXPORT __declspec(dllexport)
+ #define DECL_IMPORT __declspec(dllimport)
+#elif __GNUC__ >= 4
+ #define DECL_EXPORT __attribute__ ((visibility ("default")))
+ #define DECL_IMPORT __attribute__ ((visibility ("default")))
 #else
-
-#ifdef LIBCONSH_EXPORTS
-#define LIBCONSH_API __declspec(dllexport)
-#else
-#define LIBCONSH_API __declspec(dllimport)
+ #define DECL_EXPORT
+ #define DECL_IMPORT
 #endif
 
+#ifdef LIBCONSH_EXPORTS
+#define LIBCONSH_API DECL_EXPORT
+#else
+#define LIBCONSH_API DECL_IMPORT
 #endif
 
 #ifdef JUNK_

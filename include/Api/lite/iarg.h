@@ -22,7 +22,7 @@ class Parse;	// For interning strings.		// 01/09/07 AM.
 class RFASem;											// 02/16/00 AM.
 class Starr;											// 05/06/00 AM.
 
-LITE_API enum Iargtype
+enum LITE_API Iargtype
 	{
 	IANULL,				// No type set.
 	IASTR,				// String type.

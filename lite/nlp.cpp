@@ -745,7 +745,7 @@ if (!dir_exists(outdir))
 _t_ostream *serr;
 _t_ofstream *ferr;
 _t_ostream *sdbg=0;																// 02/21/02 AM.
-_TCHAR errout[MAXSTR];
+_TCHAR errout[1024];
 //if (!silent)																	// 06/16/02 AM.
 	{
 	_stprintf(errout, _T("%s%cmake_rfb.log"), outdir, DIR_CH);			// 03/08/00 AM.
@@ -772,7 +772,7 @@ rfb->setSpecdir(rfbspecdir);	// Where the RFB definition resides.
 // Use the analyzer sequence to read and parse pass files.
 // Could condense into an ana.parseSeqfile(sequence) call.
 
-_TCHAR defout[MAXSTR];
+_TCHAR defout[1024];
 _stprintf(defout, _T("%s%cdef_rfb.log"), outdir, DIR_CH);
 fileOut(defout, /*DU*/ fout, sout);
 

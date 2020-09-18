@@ -6,19 +6,21 @@ All rights reserved.
 #ifndef LITE_H_
 #define LITE_H_
 
-#ifdef LINUX
-#define LITE_API
+#ifdef _MSC_VER
+ #define DECL_EXPORT __declspec(dllexport)
+ #define DECL_IMPORT __declspec(dllimport)
+#elif __GNUC__ >= 4
+ #define DECL_EXPORT __attribute__ ((visibility ("default")))
+ #define DECL_IMPORT __attribute__ ((visibility ("default")))
 #else
-
-#ifdef LITE_EXPORTS
-#define LITE_API __declspec(dllexport)
-#elif LITE_STATIC
-// For static compile. // 09/26/01 AM.
-#define LITE_API 
-#else
-#define LITE_API __declspec(dllimport)
+ #define DECL_EXPORT
+ #define DECL_IMPORT
 #endif
 
+#ifdef LITE_EXPORTS
+#define LITE_API DECL_EXPORT
+#else
+#define LITE_API DECL_IMPORT
 #endif
 
 #ifdef EXAMPLES_

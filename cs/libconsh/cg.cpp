@@ -464,10 +464,10 @@ _stprintf(path, _T("%s%c%s%c%s"), getAppdir(), DIR_CH, kbdir, DIR_CH, dir);
 make_dir(path);	// 05/06/99 AM.
 
 // Prep and open up the output files.
-_TCHAR o_hier[FNAMESIZ];
-_TCHAR o_word[FNAMESIZ];
-_TCHAR o_attr[FNAMESIZ];
-_TCHAR o_phr[FNAMESIZ];
+_TCHAR o_hier[FNAMESIZ*2];
+_TCHAR o_word[FNAMESIZ*2];
+_TCHAR o_attr[FNAMESIZ*2];
+_TCHAR o_phr[FNAMESIZ*2];
 
 _TCHAR *suff;
 suff = _T("kb");		// Kb file suffix.
@@ -620,7 +620,7 @@ _stprintf(path, _T("%s%c%s%c%s"), getAppdir(),DIR_CH, kbdir,DIR_CH, dir);
 
 // Prep and open up the input file.
 // hier, word, phr, attr.
-_TCHAR infile[FNAMESIZ];
+_TCHAR infile[FNAMESIZ*2];
 
 _TCHAR *suff;
 suff = _T("kb");		// Kb file suffix.
@@ -2822,10 +2822,10 @@ _stprintf(path, _T("%s%c%s"), getAppdir(), DIR_CH, dir);
 make_dir(path);
 
 // Prep and open up the output files.
-_TCHAR o_hier[FNAMESIZ];
-_TCHAR o_word[FNAMESIZ];
-_TCHAR o_attr[FNAMESIZ];
-_TCHAR o_phr[FNAMESIZ];
+_TCHAR o_hier[FNAMESIZ*2];
+_TCHAR o_word[FNAMESIZ*2];
+_TCHAR o_attr[FNAMESIZ*2];
+_TCHAR o_phr[FNAMESIZ*2];
 
 _TCHAR *suff;
 suff = _T("kb");		// Kb file suffix.
@@ -2899,7 +2899,7 @@ delete f_in;
 delete f_dump;
 
 #else
-_TCHAR cmd[2048];
+_TCHAR cmd[4096];
 _TCHAR *cp = _T("cat");
 _stprintf(cmd, _T("%s %s %s %s %s %s"),
 	cp, o_hier, o_word, o_attr, o_phr, file);
@@ -3017,7 +3017,7 @@ switch (con->kind)
 	}
 
 // Make path to concept itself.
-_TCHAR conpath[MAXPATH];
+_TCHAR conpath[4096];
 if (path && *path)
 	_stprintf(conpath, _T("%s \"%s\""), path, buf);
 else if (*buf && !_tcscmp(buf,_T("concept")))				// CHECK.	// 12/28/01 AM.

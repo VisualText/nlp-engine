@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									IO.C
 *
-* FILE:	conch.¹/io.c
+* FILE:	conch.ï¿½/io.c
 * SUBJ:	Input/output stuff.
 * CR:	8/26/95 AM.
 *
@@ -266,6 +266,8 @@ run_silent(_TCHAR* strFunct, _TCHAR* strstrParams)
 	CloseHandle(ProcessInfo.hProcess);
 
 	return rc;
+#else
+	return 0;
 #endif
 }
 
@@ -321,6 +323,8 @@ run_silent(_TCHAR* strCMD)
 	CloseHandle(ProcessInfo.hProcess);
 
 	return rc;
+#else
+	return 0;
 #endif
 }
 

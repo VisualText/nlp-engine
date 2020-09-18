@@ -287,6 +287,8 @@ if ((h_file = _tfindfirst(name, &i_file)) == -1L)
 	return false;
 	}
 return plain_file(i_file);
+#else
+    return true;
 #endif
 }
 
