@@ -15,9 +15,11 @@ All rights reserved.
 #ifdef LINUX
 #include <iostream>	// 09/27/19 AM.
 #include <strstream>	// 09/27/19 AM.
+#ifdef _ODBC
 #include <sql.h>
 #include <sqlext.h>
 #include <sqlucode.h>
+#endif
 #endif
 
 #include "machine.h"										// 03/08/00 AM.
