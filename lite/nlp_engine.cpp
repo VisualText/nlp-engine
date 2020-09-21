@@ -20,10 +20,11 @@ NLP_ENGINE::NLP_ENGINE(
 	_TCHAR *analyzer,
     bool develop,
 	bool silent,
-    bool compiled
+    bool compiled,
+	const _TCHAR *workingFolder
 	)
 {
-    NLP_ENGINE::init(analyzer,develop,silent,compiled);
+    NLP_ENGINE::init(analyzer,develop,silent,compiled,workingFolder);
 }
 
 NLP_ENGINE::~NLP_ENGINE()
@@ -61,7 +62,8 @@ int NLP_ENGINE::init(
     _TCHAR *analyzer,
 	bool develop,
 	bool silent,
-    bool compiled
+    bool compiled,
+    const _TCHAR *workingFolder
 )
 {   
     NLP_ENGINE::zeroInit();
@@ -73,7 +75,11 @@ int NLP_ENGINE::init(
     struct stat st;
     char cwd[MAXSTR] = _T("");
 
-    if (stat(analyzer,&st) != 0) {
+    if (workingFolder != NULL) {
+        strcpy(cwd, workingFolder);
+        _stprintf(m_anadir, _T("%s%sanalyzers%s%s"),cwd,DIR_STR,DIR_STR,analyzer);
+        _stprintf(m_ananame, _T("%s"),analyzer);
+    } else if (stat(analyzer,&st) != 0) {
 	#ifdef LINUX
         if (getcwd(cwd, sizeof(cwd)) != NULL) {
             _t_cout << _T("[current directory: ") << cwd << _T("]") << endl;

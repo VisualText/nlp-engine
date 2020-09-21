@@ -23,15 +23,27 @@ _tmain(
     NLP_ENGINE *nlpEngine = new NLP_ENGINE(analyzer);
     _t_cout << _T("post constructor: ") << input << _T("]") << endl;
 
-   _stprintf(input,"%s",_T("The quick brown fox jumped over the lazy dog."));
+    NLP_ENGINE *nlpEngine2 = new NLP_ENGINE("noop");
+    _t_cout << _T("post constructor: ") << input << _T("]") << endl;
+
+    _stprintf(input,"%s",_T("The quick brown fox jumped over the lazy dog."));
     nlpEngine->analyze(input,1000,output,1000);
     _t_cout << _T("[output: ") << output << _T("]") << endl;
+    output[0] = '\0';
+    nlpEngine2->analyze(input,1000,output,1000);
+    _t_cout << _T("[output2: ") << output << _T("]") << endl;
     output[0] = '\0';
 
     _stprintf(input,"%s",_T("All good people must come to the aid of their country."));
     nlpEngine->analyze(input,1000,output,1000);
     _t_cout << _T("[output: ") << output << _T("]") << endl;
     output[0] = '\0';
+    nlpEngine2->analyze(input,1000,output,1000);
+    _t_cout << _T("[output2: ") << output << _T("]") << endl;
+    output[0] = '\0';
+
+    nlpEngine2->close();
+    delete nlpEngine2;
 
     nlpEngine->close();
     delete nlpEngine;

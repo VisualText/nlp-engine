@@ -18,7 +18,6 @@
 #define LIBNLPLIB_API DECL_IMPORT
 #endif
 
-LIBNLPLIB_API int test(const char * in, int inLen, char * out, int outLen);
-LIBNLPLIB_API int test2();
+LIBNLPLIB_API int analyse(const char * workingFolder, const char * analyzer, const char * in, int inLen, char * out, int outLen);
 
 #endif
