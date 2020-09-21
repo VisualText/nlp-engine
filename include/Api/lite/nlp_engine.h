@@ -52,7 +52,8 @@ public:
         _TCHAR *analyzer,
         bool develop=false,
         bool silent=false,
-        bool compiled=false
+        bool compiled=false,
+        const _TCHAR *workingFolder = NULL
 	);
 
 	~NLP_ENGINE();
@@ -91,7 +92,8 @@ public:
         _TCHAR *analyzer,
         bool develop=false,
         bool silent=false,
-        bool compiled=false
+        bool compiled=false,
+        const _TCHAR *workingFolder = NULL
     );
 
     int analyze(

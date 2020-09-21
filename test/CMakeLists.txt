@@ -10,9 +10,10 @@ else()
   add_definitions( -DLINUX -Wno-write-strings -Wno-deprecated)
 endif()
 
-file(GLOB test_src "*.h" "*.cpp")
-add_executable(test.exe ${test_src})
-
+add_executable(test.exe main.cpp)
 target_link_libraries(test.exe PUBLIC prim kbm consh words lite)
 #target_link_libraries(test.exe PUBLIC prim kbm consh words lite odbc)
+
+add_executable(test2.exe main2.cpp)
+target_link_libraries(test2.exe PUBLIC prim kbm consh words lite)
 
