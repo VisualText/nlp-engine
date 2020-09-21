@@ -15,7 +15,7 @@ public:
 
     ~Global() {
         for (EngineMap::const_iterator itr = engines.begin(); itr != engines.end(); ++itr) {
-            itr->close();
+            itr->second->close();
             delete itr->second;
         }
         engines.clear();
@@ -33,9 +33,8 @@ LIBNLPLIB_API int analyse(const char * workingFolder, const char * analyzer, con
         strncpy(out, e.what(), outLen);
         return -1;
     } catch(...) {
-        strncpy(out, "Unknown exception 2", outLen);
-        return -1;
+        strncpy(out, "Unknown exception ...", outLen);
+        return -2;
     }
     return 0;
 }
-
