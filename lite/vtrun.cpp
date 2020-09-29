@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright © 2002-2010 by Text Analysis International, Inc.
+Copyright ï¿½ 2002-2010 by Text Analysis International, Inc.
 All rights reserved.
 ********************************************************************************
 *
@@ -68,7 +68,8 @@ using namespace std;											// Upgrade	// 01/24/01 AM.
 // Keep track of the first instance of this class.
 VTRun *VTRun_Ptr = 0;
 
-int VTRun::count_ = 0;
+	int VTRun::count_ = 0;
+
 #ifdef LINUX
 template<> int Slist<NLP>::count_	= 0;	// 01/06/03 AM.
 template<> int Selt<NLP>::count_	= 0;	// 01/06/03 AM.
@@ -109,7 +110,7 @@ clear();
 zero();
 
 #ifndef STABLE_
---count_;
+--count_;	// VTRun::count_	// 09/24/20 AM.
 #endif
 }
 
@@ -130,6 +131,9 @@ return htab_;
 
 void VTRun::clear()
 {
+if (anas_)		// 09/28/20 AM.
+  deleteAnas();	// 09/28/20 AM.
+
 if (rfa_)
 	{
 	RFA::rfa_clean(*((Ana *)rfa_));		// Special cleanups for RFA.
@@ -148,7 +152,10 @@ if (nlpc_)
 	delete (NLP *) nlpc_;
 
 if (htab_)
+	{
+//	((Htab *)htab_)->pretty(&_t_cout); return;  // TESTING!!!!  // 09/28/20 AM.
 	delete (Htab *) htab_;
+	}
 if (stab_)
 	delete (Stab *) stab_;
 if (htfunc_)
@@ -159,10 +166,12 @@ if (alist_)
 	delete (ALIST *) alist_;
 	}
 
+// Issue in deleting analyzers.	// 09/28/20 AM.
+#ifdef TESTTEST	// 09/28/20 AM.
 if (anas_)																			// 01/06/03 AM.
 //	Slist<NLP>::DeleteSlist((Slist<NLP>*)anas_);							// 07/18/03 AM.
 	Slist<NLP>::DeleteSlistAndData((Slist<NLP>*)anas_);	// FIX.	// 07/18/03 AM.
-
+#endif
 
 // PARSE TREE NODE FREE LIST.												// 06/18/10 AM.
 if (pnodefreelist_)															// 06/18/10 AM.
@@ -385,6 +394,12 @@ if (!anas_)
 _TCHAR *name = nlp->getName();
 if (!name || !*name)
 	return false;	// Only register if it has a name.
+// Make sure name is not present.	// 09/28/20 AM.
+if (findAna(name))	// 09/28/20 AM.
+	{
+	_t_cerr << _T("[addAna: Named analyzer already present: ") << name << _T("]") << endl;
+	return true;	// ASSUME THIS IS OK.	// 09/28/20 AM.
+	}
 ((Slist<NLP>*)anas_)->push(nlp);
 return true;
 }
@@ -430,6 +445,38 @@ if (selt && selt->Right())
 	Selt<NLP> *tmp =							// FIX.	// 07/19/03 AM.
 		((Slist<NLP>*)anas_)->rmNext(selt);
 	Selt<NLP>::DeleteSelt(tmp);	// MEM LEAK.	// 07/19/03 AM.
+	}
+return true;
+}
+
+
+
+/********************************************
+* FN:		DELETEANAS
+* CR:		09/28/20 AM.
+* SUBJ:	Delete the entire analyzer list.
+* NOTE:	Some unresolved issue in deleting
+*		the VTRUN system.
+********************************************/
+
+bool VTRun::deleteAnas()
+{
+if (!anas_)
+	return false;
+
+ Selt<NLP> *selt = ((Slist<NLP>*)anas_)->getFirst();
+ Selt<NLP> *next = NULL;
+NLP *nlp = NULL;
+if (!selt)
+	return false;
+while (selt)
+	{
+	next = selt->Right();
+	((Slist<NLP>*)anas_)->pop();
+	nlp = selt->getData();
+	Selt<NLP>::DeleteSelt(selt);
+	deleteNLP(nlp);
+	selt = next;
 	}
 return true;
 }
@@ -494,7 +541,7 @@ if (!cg)
 #ifdef QDBM_
 if (!cg->getLoaded())		// QDBM ...	// 03/04/07 AM.
 #endif
-if (!cg->readKB())
+if (!cg->readKB(_T("user")))	// 09/23/20 AM.
    {
    _t_cerr << _T("[Couldn't read knowledge base.]") << endl;
 //   if (cg) delete cg;	// 07/18/03 AM.

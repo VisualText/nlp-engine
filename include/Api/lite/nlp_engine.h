@@ -49,12 +49,9 @@ class LITE_API NLP_ENGINE
 
 public:
 	NLP_ENGINE(
-        _TCHAR *analyzer,
-        bool develop=false,
-        bool silent=false,
-        bool compiled=false,
-        const _TCHAR *workingFolder = NULL
-	);
+        _TCHAR *workingFolder = NULL,
+        bool silent=false
+ 	);
 
 	~NLP_ENGINE();
 
@@ -63,6 +60,7 @@ public:
     _TCHAR *m_output;
     _TCHAR *m_sequence;
 
+    _TCHAR m_workingFolder[MAXSTR];
     _TCHAR m_anadir[MAXSTR];
     _TCHAR m_ananame[MAXSTR];
     _TCHAR m_rfbdir[MAXSTR];
@@ -89,32 +87,37 @@ public:
     void zeroInit();
 
     int init(
-        _TCHAR *analyzer,
-        bool develop=false,
-        bool silent=false,
-        bool compiled=false,
-        const _TCHAR *workingFolder = NULL
-    );
-
-    int analyze(
-        _TCHAR *infile,
-        _TCHAR *outfile,
+        _TCHAR *analyzer = NULL,
+        _TCHAR *workingFolder = NULL,
         bool develop=false,
         bool silent=false,
         bool compiled=false
     );
 
     int analyze(
+        _TCHAR *analyzer,
+        _TCHAR *infile,
+        _TCHAR *outfile,
+        _TCHAR *workingFolder = NULL,
+        bool develop=false,
+        bool silent=false,
+        bool compiled=false
+    );
+
+    int analyze(
+        _TCHAR *analyzer,
         _TCHAR *inbuf,
         long len,
         _TCHAR *outbuf,
         long outlen,
+        _TCHAR *workingFolder = NULL,
         bool develop=false,
         bool silent=false,
         bool compiled=false
     );
 
     int close();
+    int close(_TCHAR *analyzer);
 
 private:
     int createDir(_TCHAR *dirPath);

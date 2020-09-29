@@ -24,6 +24,7 @@ public:
 
 LIBNLPLIB_API int analyse(const char * workingFolder, const char * analyzer, const char * in, int inLen, char * out, int outLen)
 {
+    /*
     try {
         if (engines.find(analyzer) == engines.end()) {
             engines[analyzer] = new NLP_ENGINE(const_cast<char *>(analyzer), false, true, false, workingFolder);
@@ -36,5 +37,6 @@ LIBNLPLIB_API int analyse(const char * workingFolder, const char * analyzer, con
         strncpy(out, "Unknown exception ...", outLen);
         return -2;
     }
+    */
     return 0;
 }

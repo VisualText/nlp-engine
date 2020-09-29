@@ -48,8 +48,8 @@ struct stat st;
 if (!cmdReadArgs(argc,argv,analyzerpath,input,output,develop,compiled,silent))
    exit(1);
 
-NLP_ENGINE *nlpEngine = new NLP_ENGINE(analyzerpath,develop,silent,compiled);
-nlpEngine->analyze(input,output);
+NLP_ENGINE *nlpEngine = new NLP_ENGINE();
+nlpEngine->analyze(analyzerpath,input,output,NULL,develop,silent,compiled);
 
 }
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright © 2002-2009 by Text Analysis International, Inc.
+Copyright ï¿½ 2002-2009 by Text Analysis International, Inc.
 All rights reserved.
 ********************************************************************************
 *
@@ -41,13 +41,15 @@ class CG;	// 07/18/03 AM.
 
 class LITE_API VTRun
 {
+	friend class Aseq;	// 09/21/20 AM.
+	friend class Nlp;	// 09/21/20 AM.
 public:
    VTRun(                   // Default constructor.
       _TCHAR *logfile = 0,    // Log file for verbose output.
       _TCHAR *rfbspecdir = 0,
       bool silent = true
 		);
-   ~VTRun();                // Destructor.
+   ~VTRun();                // Destructor. 
 
 	void init(_TCHAR*,_TCHAR*,bool);  // Initialize ds.
 	void clear();                 // Delete ds.
@@ -73,6 +75,9 @@ public:
 	// API: Unregister analyzer INSTANCE.
 	// Does NOT remove NLP object.
 	bool rmAna(NLP*);			// 01/06/03 AM.
+
+	// Delete all the analyzers from VTRUN.	// 09/28/20 AM.
+	bool deleteAnas();						// 09/28/20 AM.
 
 	// API: Find registered analyzer INSTANCE by name.
 	NLP *findAna(_TCHAR*);		// 01/06/03 AM.
@@ -148,7 +153,7 @@ private:
 
 };
 
-extern LITE_API VTRun *VTRun_Ptr;
+extern LITE_API VTRun *VTRun_Ptr;	// 09/21/20 AM.
 
 #endif
 /*************************      END OF FILE      ******************************/

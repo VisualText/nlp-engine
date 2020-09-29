@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright © 1998-2009 by Text Analysis International, Inc.
+Copyright ï¿½ 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 ********************************************************************************
 *
@@ -321,7 +321,8 @@ private:
 	void init(_TCHAR *appdir, bool develop,
 		bool silent,															// 06/16/02 AM.
 		bool compiled,			// Running compiled analyzer.			// 07/03/00 AM.
-		_TCHAR *outdir = _T("")														// 03/10/99 AM.
+//		_TCHAR *outdir = _T("")														// 03/10/99 AM.
+		_TCHAR *outdir = NULL														// 09/23/20 AM.
 		);
 	void clean();
 
