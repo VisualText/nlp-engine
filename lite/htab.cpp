@@ -734,6 +734,8 @@ for (ii = 0; ii < size_; ++ii)
 	{
 	list = &(parr_[ii]);	// 12/12/98 AM
 	//list = &(arr_[ii]);	// 12/12/98 AM
+	if (!list)		// RECOVER	// 02/27/20 AM.
+		continue;	// RECOVER	// 02/27/20 AM.
 	if (!(ptr = list->getFirst()))
 		continue;			// Empty hash chain.
 	Slist<Sym>::DelSlistAndData(ptr);		// 11/24/98 AM.
@@ -771,6 +773,7 @@ for (ii = 0; ii < size_; ++ii)
 	if (!(ptr = list->getFirst()))
 		continue;			// Empty hash chain.
 	*gout << ii << _T(": ");
+//	if (!ptr) *gout << "<EMPTY>";	// DEBUGGING!!!!	// 09/28/20 AM.
 	for (; ptr; ptr = ptr->pRight)
 		{
 		// Pretty print the entry.

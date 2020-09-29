@@ -121,11 +121,12 @@ public:
 
 	// Read the latest (user-modified) kb from files.
 	// If dir is present, kb is read from $appdir/kb/dir.
-	bool readKB(_TCHAR *dir = _T("user"));
+	bool readKB(_TCHAR *dir);	// _T("user")	// 09/23/20 AM.
 
 	// Save latest KB (from memory to files).
 	// If dir is present, kb is written to $appdir/kb/dir.
-	bool writeKB(_TCHAR *dir = _T("user"));
+//	bool writeKB(_TCHAR *dir = _T("user"));
+	bool writeKB(_TCHAR *dir);	// _T("user")	// 09/23/20 AM.
 
 	// Modular dump of a kb subtree.										// 08/06/01 AM.
 	bool dumpTree(CONCEPT*, _TCHAR*);										// 08/06/01 AM.

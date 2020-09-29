@@ -1403,8 +1403,10 @@ parse->setCbufmax(outlen);													// 05/11/02 AM.
 
 // 12/14/98 AM. Moving these here, to more cleanly separate initialization
 // and execution of an analyzer.
-parse->setInput(input);		// Input file for the parse.
-parse->setOutput(output);	// Output file for the parse.
+if (input)	// 09/25/20 AM.
+	parse->setInput(input);		// Input file for the parse.
+if (output)	// 09/25/20 AM.
+	parse->setOutput(output);	// Output file for the parse.
 
 //parse->setVerbose(false);												// 10/13/99 AM.
 parse->setVerbose(eana->getFverbose());								// 10/13/99 AM.

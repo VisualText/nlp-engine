@@ -16,19 +16,52 @@ MIT License
 #include <unistd.h>
 #endif
 
+////////// NLP_INIT /////////////
+// CR:  09/23/20 AM.
+// DESC:    Initialize the NLP framework.
+// NOTE:    Uses the global variables VTRun_ptr and VTRun_count.
+//          Create RFA and RFB analyzers, ie, generate the NLP++ parser.
+//          (data/Rfb/spec folder holds definition of NLP++ parser.)
+//          Create the list manager.  And whatever else the VTRUN
+//          framework manages.
+/////////////////////////////////
+/////////////////////////////////
+
+////////// NLP_FIN /////////////
+// CR:  09/23/20 AM.
+// DESC:    Shut down the NLP framework.
+// NOTE:    Uses the global variables VTRun_ptr and VTRun_count.
+/////////////////////////////////
+/////////////////////////////////
+
+
+
 NLP_ENGINE::NLP_ENGINE(
-	_TCHAR *analyzer,
-    bool develop,
-	bool silent,
-    bool compiled,
-	const _TCHAR *workingFolder
+    _TCHAR *workingFolder,
+	bool silent
 	)
 {
-    NLP_ENGINE::init(analyzer,develop,silent,compiled,workingFolder);
+    static _TCHAR logfile[MAXSTR];
+    static _TCHAR rfbdir[MAXSTR];
+    _stprintf(logfile,"%s%s",workingFolder,_T("vtrun_logfile.out"));
+    _t_cout << _T("[logfile: ") << logfile << _T("]") << endl;
+ 
+    _stprintf(rfbdir,"%sdata/rfb/spec",workingFolder);
+    _t_cout << _T("[rfbdir: ") << rfbdir << _T("]") << endl;
+ 
+ if (!VTRun_Ptr)
+    {
+        m_vtrun = VTRun::makeVTRun(                               // 07/21/03 AM.
+            logfile,                // Verbose/error log file.         // 08/28/02 AM.
+            rfbdir,                 // VisualText dir for RFB spec.    // 08/28/02 AM.
+            silent                      // Build silently.                 // 08/28/02 AM.
+            );
+    }
 }
 
 NLP_ENGINE::~NLP_ENGINE()
 {
+    close();    // 09/27/20 AM.
 }
 
 void NLP_ENGINE::zeroInit()
@@ -39,7 +72,7 @@ void NLP_ENGINE::zeroInit()
 
     m_anadir[0] = '\0';
     m_ananame[0] = '\0';
-    m_rfbdir[0] = '\0';
+//  m_rfbdir[0] = '\0';
     m_rfbdir[0] = '\0';
     m_logfile[0] = '\0';	
     m_specdir[0] = '\0';
@@ -60,13 +93,17 @@ void NLP_ENGINE::zeroInit()
  
 int NLP_ENGINE::init(
     _TCHAR *analyzer,
+    _TCHAR *workingFolder,
 	bool develop,
 	bool silent,
-    bool compiled,
-    const _TCHAR *workingFolder
+    bool compiled
 )
 {   
-    NLP_ENGINE::zeroInit();
+     NLP_ENGINE::zeroInit();
+ 
+    // Convenience ptr.
+    m_vtrun = VTRun_Ptr;    // 09/27/20 AM.
+
     m_analyzer = analyzer;
     m_develop = develop;
     m_silent = silent;
@@ -75,8 +112,8 @@ int NLP_ENGINE::init(
     struct stat st;
     char cwd[MAXSTR] = _T("");
 
-    if (workingFolder != NULL) {
-        strcpy(cwd, workingFolder);
+    if (m_workingFolder[0] != '\0') {
+        strcpy(cwd, m_workingFolder);
         _stprintf(m_anadir, _T("%s%sanalyzers%s%s"),cwd,DIR_STR,DIR_STR,analyzer);
         _stprintf(m_ananame, _T("%s"),analyzer);
     } else if (stat(analyzer,&st) != 0) {
@@ -96,6 +133,7 @@ int NLP_ENGINE::init(
         ++ana;
         _stprintf(m_ananame, _T("%s"), ana); 
     }
+
 	_t_cout << _T("[analyzer directory: ") << m_anadir << _T("]") << endl;
     _t_cout << _T("[analyzer name: ") << m_ananame << _T("]") << endl; 
 
@@ -104,7 +142,7 @@ int NLP_ENGINE::init(
 
     _TCHAR *tmp = _T("./tmp");
     _stprintf(m_logfile, _T("%s%cvisualtext.log"),tmp,DIR_CH);
-       NLP_ENGINE::createDir(tmp);
+    NLP_ENGINE::createDir(tmp);
     _t_cout << _T("[log file: ") << m_logfile << _T("]") << endl;
 
     _stprintf(m_specdir, _T("%s%sspec"), m_anadir, DIR_STR);
@@ -112,7 +150,7 @@ int NLP_ENGINE::init(
 
     _stprintf(m_seqfile, _T("%s%sanalyzer.seq"),m_specdir,DIR_STR);
     _t_cout << _T("[spec file: ") << m_seqfile << _T("]") << endl;
-
+ 
     _stprintf(m_outdir, _T("%s%s%s"), m_anadir,DIR_STR,_T("output"));
     NLP_ENGINE::createDir(m_outdir);
     _t_cout << _T("[output directory: ") << m_outdir << _T("]") << endl;
@@ -120,56 +158,70 @@ int NLP_ENGINE::init(
     /////////////////////////////////////////////////
     // INITIALIZE VISUALTEXT RUNTIME SYSTEM                        // 08/27/02 AM.
     /////////////////////////////////////////////////
-    m_vtrun = VTRun::makeVTRun(                               // 07/21/03 AM.
-        m_logfile,                // Verbose/error log file.         // 08/28/02 AM.
-        m_rfbdir,                 // VisualText dir for RFB spec.    // 08/28/02 AM.
-        true                      // Build silently.                 // 08/28/02 AM.
-        );
 
     /////////////////////////////////////////////////
     // INITIALIZE ANALYZER RUNTIME ENGINE
     /////////////////////////////////////////////////
-    // Create and initialize an NLP object to manage text analysis.
-    // NOTE: This init will dynamically load the user extensions dll at
-    // appdir\user\debug\user.dll
-    m_nlp = m_vtrun->makeNLP(m_anadir,m_analyzer,m_develop,m_silent,m_compiled);  // 07/21/03 AM.
+    if (m_nlp = VTRun_Ptr->findAna(analyzer))
+        {
+        _t_cout << _T("Analyzer found: ") << analyzer << analyzer << endl;
+        _t_cout << _T("[TODO: RELOAD ANALYZER (NLP) INTO NLPENGINE HERE.]") << analyzer << endl;
+        // return 1;    // If reloading same analyzer, done init....
+        m_cg = m_nlp->getCG();
 
-    /////////////////////////////////////////////////
-    // SET UP THE KNOWLEDGE BASE
-    /////////////////////////////////////////////////
+ 
+        //    _t_cout << _T("Analyzer not found: ") << analyzer << endl;
+        }
+    else
+        {
+        // Create and initialize an NLP object to manage text analysis.
+        // NOTE: This init will dynamically load the user extensions dll at
+        // appdir\user\debug\user.dll
+        m_nlp = m_vtrun->makeNLP(m_anadir,m_analyzer,m_develop,m_silent,m_compiled);  // 07/21/03 AM.
 
-    m_cg = m_vtrun->makeCG(                                        // 07/21/03 AM.
-            m_anadir,
-            true,      // LOAD COMPILED KB IF POSSIBLE.
-            m_nlp);      // Associated analyzer object.              // 07/21/03 AM.
+        VTRun_Ptr->addAna(m_nlp);   // Add ana to runtime manager.  // 09/27/20 AM.
 
-    if (!m_cg)                                                       // 07/21/03 AM.
-    {
-        _t_cerr << _T("[Couldn't make knowledge base.]") << endl;  // 07/21/03 AM.
-        m_vtrun->deleteNLP(m_nlp);                                     // 07/21/03 AM.
-        VTRun::deleteVTRun(m_vtrun);                                 // 07/21/03 AM.
-        return -1;
-    }
 
-    _t_cerr << _T("[Loaded knowledge base.]") << endl;             // 02/19/19 AM.
+        /////////////////////////////////////////////////
+        // SET UP THE KNOWLEDGE BASE
+        /////////////////////////////////////////////////
 
-    /////////////////////////////////////////////////
-    // BUILD ANALYZER APPLICATION
-    /////////////////////////////////////////////////
-    // Create an analyzer dynamically using the sequence file and rules files
-    // under appdir\spec.
+         m_cg = m_vtrun->makeCG(                                        // 07/21/03 AM.
+                m_anadir,
+                true,      // LOAD COMPILED KB IF POSSIBLE.
+                m_nlp);      // Associated analyzer object.              // 07/21/03 AM.
 
-    if (!m_nlp->make_analyzer(m_seqfile, m_anadir, m_develop,
-        silent,              // Debug/log file output.             // 06/16/02 AM.
-        0,
-        false,               // false == Don't compile during load.
-        compiled))           // Compiled/interp analyzer.
-    {
-        _t_cerr << _T("[Couldn't build analyzer.]") << endl;
-        m_vtrun->deleteNLP(m_nlp);                                     // 07/21/03 AM.
-        VTRun::deleteVTRun(m_vtrun);                                 // 07/21/03 AM.
-        return -1;
-    }
+
+        if (!m_cg)                                                       // 07/21/03 AM.
+        {
+            _t_cerr << _T("[Couldn't make knowledge base.]") << endl;  // 07/21/03 AM.
+            m_vtrun->rmAna(m_nlp);  // 09/27/20 AM.
+            m_vtrun->deleteNLP(m_nlp);                                     // 07/21/03 AM.
+    //        VTRun::deleteVTRun(m_vtrun);                                 // 07/21/03 AM.
+            return -1;
+        }
+
+        _t_cerr << _T("[Loaded knowledge base.]") << endl;             // 02/19/19 AM.
+
+        /////////////////////////////////////////////////
+        // BUILD ANALYZER APPLICATION
+        /////////////////////////////////////////////////
+        // Create an analyzer dynamically using the sequence file and rules files
+        // under appdir\spec.
+
+        if (!m_nlp->make_analyzer(m_seqfile, m_anadir, m_develop,
+            silent,              // Debug/log file output.             // 06/16/02 AM.
+            0,
+            false,               // false == Don't compile during load.
+            compiled))           // Compiled/interp analyzer.
+            {
+            _t_cerr << _T("[Couldn't build analyzer.]") << endl;
+            m_vtrun->rmAna(m_nlp);  // 09/27/20 AM.
+            m_vtrun->deleteNLP(m_nlp);                                     // 07/21/03 AM.
+    //        VTRun::deleteVTRun(m_vtrun);                                 // 07/21/03 AM.
+            return -1;
+            }
+        }   // end ELSE...
 
     /////////////////////////////
     // TEST RULE GENERATION.
@@ -192,13 +244,18 @@ int NLP_ENGINE::init(
 }
  
 int NLP_ENGINE::analyze(
+    _TCHAR *analyzer,
     _TCHAR *infile,
     _TCHAR *outfile,
+    _TCHAR *workingFolder,
 	bool develop,
 	bool silent,
     bool compiled
 	)
 {   
+ 
+    NLP_ENGINE::init(analyzer,workingFolder,develop,silent,compiled);
+
     struct stat st;
     if (stat(infile,&st) == 0)
         _stprintf(m_infile, _T("%s"),infile);
@@ -231,20 +288,25 @@ int NLP_ENGINE::analyze(
         MAXSTR	   // 05/11/02 AM.
         );
 
-    NLP_ENGINE::close();
+//    NLP_ENGINE::close();  // NO.  // 09/27/20 AM.
     return 0;
 }
 
 int NLP_ENGINE::analyze(
+    _TCHAR *analyzer,
     _TCHAR *inbuf,
     long len,
     _TCHAR *outbuf,
     long outlen,
+    _TCHAR *workingFolder,
 	bool develop,
 	bool silent,
     bool compiled
 	)
 {
+ 
+    NLP_ENGINE::init(analyzer,workingFolder,develop,silent,compiled);
+
     // Analyzer can output to a stream.
     _TCHAR ofstr[MAXSTR];
     #ifdef LINUX
@@ -257,6 +319,9 @@ int NLP_ENGINE::analyze(
     _t_cout << _T("[infile path: ") << m_infile << _T("]") << endl;
     _t_cout << _T("[outfile path: ") << m_outfile << _T("]") << endl;
 
+//_t_cout << _T("BEFORE ANALYSIS: ") << endl; // 09/27/20 AM.
+//object_counts();    // TESTING analysis cleanup.    // 09/27/20 AM.
+
     m_nlp->analyze(m_infile, m_outfile, m_anadir, m_develop,
         m_silent,        // Debug/log output files.                  // 06/16/02 AM.
         0,             // Outdir.
@@ -268,6 +333,8 @@ int NLP_ENGINE::analyze(
         outlen	   // 05/11/02 AM.
         );
 
+//_t_cout << _T("AFTER ANALYSIS: ") << endl; // 09/27/20 AM.
+//object_counts();    // TESTING analysis cleanup.    // 09/27/20 AM.
     return 0;
 }
 
@@ -277,12 +344,35 @@ int NLP_ENGINE::close()
     // CLEANUP VISUALTEXT RUNTIME
     /////////////////////////////////////////////////
 
+
+    // Compiled analyzers: need to close the user.dll for the application also.
+    // Shutdown the runtime manager.
+
+    VTRun::deleteVTRun(VTRun_Ptr);                      // 9/27/20 AM.
+    VTRun_Ptr = 0;      // Clear out static var.        // 09/27/20 AM.
+    _t_cout << _T("[AFTER VTRUN DELETE: ]") << endl;    // 09/27/20 AM.
+
+    // Report memory leaks to standard output.
+    object_counts();    // 09/27/20 AM.
+
+    return 0;
+}
+
+// Remove a single named analyzer.
+int NLP_ENGINE::close(_TCHAR *analyzer)
+{
+    /////////////////////////////////////////////////
+    // CLEANUP VISUALTEXT RUNTIME
+    /////////////////////////////////////////////////
+
     //NLP_ENGINE::close();
 
     // This will close the user.dll for the application also.
-    m_vtrun->deleteNLP(m_nlp);                                         // 07/21/03 AM.
-    VTRun::deleteVTRun(m_vtrun);                                     // 07/21/03 AM.
-    object_counts();    // Report memory leaks to standard output.
+ //   m_vtrun->deleteNLP(m_nlp);                                         // 07/21/03 AM.
+ //   VTRun::deleteVTRun(m_vtrun);                                     // 07/21/03 AM.
+    m_nlp = VTRun_Ptr->findAna(analyzer);
+    m_vtrun->rmAna(m_nlp);  // 09/27/20 AM.
+    m_vtrun->deleteNLP(m_nlp);   // Remove analyzer from manager.    // 09/27/20 AM.
 
     return 0;
 }
