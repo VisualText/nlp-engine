@@ -5,6 +5,25 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "(gbd) nlp",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/nlp.exe",
+            "args": ["-ANA","corporate","Dev/Sold.txt","-DEV"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
             "name": "(gbd) test",
             "type": "cppdbg",
             "request": "launch",
