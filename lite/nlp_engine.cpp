@@ -43,10 +43,15 @@ NLP_ENGINE::NLP_ENGINE(
 {
     static _TCHAR logfile[MAXSTR];
     static _TCHAR rfbdir[MAXSTR];
-    _stprintf(logfile,"%s%s",workingFolder,_T("vtrun_logfile.out"));
+    if (workingFolder) {
+        _stprintf(logfile,"%s%s",workingFolder,_T("vtrun_logfile.out"));
+        _stprintf(rfbdir,"%sdata/rfb/spec",workingFolder);
+    } else {
+        _stprintf(logfile,"%s",_T("vtrun_logfile.out"));
+        _stprintf(rfbdir,"data/rfb/spec");
+    }
     _t_cout << _T("[logfile: ") << logfile << _T("]") << endl;
  
-    _stprintf(rfbdir,"%sdata/rfb/spec",workingFolder);
     _t_cout << _T("[rfbdir: ") << rfbdir << _T("]") << endl;
  
  if (!VTRun_Ptr)
@@ -379,7 +384,6 @@ int NLP_ENGINE::close(_TCHAR *analyzer)
 
 int NLP_ENGINE::createDir(_TCHAR *dirPath) {
     struct stat st;
-
     if (stat(dirPath,&st) != 0) {
 #ifdef LINUX
 	    mkdir(dirPath, 777);
