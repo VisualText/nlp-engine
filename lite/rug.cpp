@@ -25,6 +25,7 @@ All rights reserved.
 #include "lite/mach.h"		// 08/29/99 AM. For remove_path.
 #include "node.h"	// 07/07/03 AM.
 #include "lite/nlp.h"
+#include "vtrun.h"	// [DEGLOB]	// 10/15/20 AM.
 #include "iarg.h"		// 02/14/01 AM.
 #include "parse.h"	// 05/19/99 AM.
 #include "Eana.h"		// 10/13/99 AM.
@@ -241,8 +242,11 @@ if (!gram || !nlp || !appdir || !*appdir)
 // Set up to use persistent global hash,sym tables.		// 07/03/03 AM.
 Htab *savehtab = (Htab*) nlp_->getHtab();						// 07/03/03 AM.
 Stab *savestab = (Stab*) nlp_->getStab();						// 07/03/03 AM.
-nlp_->setHtab((Htab*)VTRun_Ptr->htab_);						// 07/03/03 AM.
-nlp_->setStab((Stab*)VTRun_Ptr->stab_);						// 07/03/03 AM.
+VTRun *vtrun = nlp_->getVTRun();	// [DEGLOB]	// 10/15/20 AM.
+//nlp_->setHtab((Htab*)VTRun_Ptr->htab_);	// 07/03/03 AM.	// [DEGLOB]	// 10/15/20 AM.
+//nlp_->setStab((Stab*)VTRun_Ptr->stab_);	// 07/03/03 AM.	// [DEGLOB]	// 10/15/20 AM.
+nlp_->setHtab((Htab*)vtrun->htab_);	// [DEGLOB]	// 10/15/20 AM.
+nlp_->setStab((Stab*)vtrun->stab_);	// [DEGLOB]	// 10/15/20 AM.
 
 // Remove generated passes, if any, from analyzer.		// 06/01/99 AM.
 rmGenpasses();

@@ -111,9 +111,11 @@ NLP::NLP(
 	_TCHAR *outdir,		// Intermed files.			// 03/10/99 AM.
 //	char *datadir		// Data area for analyzer.	// 12/08/99 AM.
 	_TCHAR *name,			// Unique name for analyzer.	// 01/06/03 AM.
-	_TCHAR *logfile	// VTLOG	// 05/06/13 AM.
+	_TCHAR *logfile,	// VTLOG	// 05/06/13 AM.
+	VTRun *vtrun		// VT Runtime Environment	// [DEGLOB]	// 10/15/20 AM.
 	)
 {
+vtrun_ = vtrun;	// [DEGLOB]	// 10/15/20 AM.
 //rfa_  = 0;
 //rfb_  = 0;													// 11/05/99 AM.
 htab_ = 0;
@@ -145,8 +147,8 @@ if (name && *name)															// 01/06/03 AM.
 else																				// 01/06/03 AM.
 	name_[0] = '\0';															// 01/06/03 AM.
 
-if (VTRun_Ptr)																	// 01/06/03 AM.
-	VTRun_Ptr->addAna(this);	// Register this ana instance.	// 01/06/03 AM.
+if (vtrun_)		// 01/06/03 AM.	// [DEGLOB]	// 10/15/20 AM.
+	vtrun_->addAna(this);	// Register this ana instance.	// 01/06/03 AM. // [DEGLOB]	// 10/15/20 AM.
 
 init(appdir, develop,silent,compiled,outdir); // Set these objects up properly.
 
@@ -160,6 +162,7 @@ NLP::NLP(
 	bool dummy
 	)
 {
+vtrun_ = 0;	// [DEGLOB]	// 10/15/20 AM.
 htab_ = 0;
 stab_ = 0;
 //htfunc_ = 0;
@@ -198,8 +201,8 @@ NLP::~NLP()
 // User-defined cleanups in USER Project.								// 01/23/02 AM.
 user_fin();																		// 01/23/02 AM.
 
-if (VTRun_Ptr)																	// 01/06/03 AM.
-	VTRun_Ptr->rmAna(this);	// Unregister this ana instance.		// 01/06/03 AM.
+if (vtrun_)	// 01/06/03 AM.	// [DEGLOB]	// 10/15/20 AM.
+	vtrun_->rmAna(this);	// Unregister this ana instance.	// 01/06/03 AM. // [DEGLOB]	// 10/15/20 AM.
 
 clean();
 
@@ -276,6 +279,7 @@ void *NLP::getAna()			{return ana_;}								// 01/13/99 AM.
 void *NLP::getHtab()			{return htab_;}							// 01/18/99 AM.
 void *NLP::getStab()			{return stab_;}							// 05/26/02 AM.
 //void *NLP::getHtfunc()		{return htfunc_;}							// 12/20/01 AM.
+VTRun *NLP::getVTRun()			{return vtrun_;}	// [DEGLOB]	// 10/15/20 AM.
 #ifndef LINUX
 HINSTANCE NLP::getHdll()	{return hdll_;}							// 01/29/99 AM.
 HINSTANCE NLP::getHrundll(){return hrundll_;}						// 05/14/00 AM.
@@ -303,6 +307,7 @@ void	NLP::setStab(Stab *x)		{stab_ = x;}						// 07/03/03 AM.
 void	NLP::setFbatchstart(bool x){fbatchstart_ = x;}				// 10/19/00 AM.
 void	NLP::setFinteractive(bool x){finteractive_ = x;}			// 05/06/02 AM.
 //void	NLP::setHtfunc(void *x)		{htfunc_			= x;}				// 12/20/01 AM.
+void	NLP::setVTRun(VTRun *x)		{vtrun_ = x;}	// [DEGLOB]	// 10/15/20 AM.
 
 void	NLP::setPopupmsg(_TCHAR *x)	{popupmsg_ = x;}					// 05/24/02 AM.
 void	NLP::setPopuptyp(_TCHAR *x)	{popuptyp_ = x;}					// 05/24/02 AM.
@@ -547,7 +552,7 @@ s_time = clock();																// 08/28/02 AM.
 
 // Use global data structures, by default.							// 08/28/02 AM.
 // Note: User can install private versions, if he dares.			// 08/28/02 AM.
-if (!VTRun_Ptr)																// 08/28/02 AM.
+if (!vtrun_)	// 08/28/02 AM.	// [DEGLOB]	// 10/15/20 AM.
 	{
 	_t_strstream gerrStr;						// 08/28/02 AM.
 	gerrStr << _T("[NLP: Error. VTRun not initialized.]") << ends;	// 08/28/02 AM.
@@ -559,8 +564,8 @@ if (!VTRun_Ptr)																// 08/28/02 AM.
 	}
 
 #ifdef OLD_030625_
-htab_   = (Htab *)VTRun_Ptr->htab_;										// 08/28/02 AM.
-stab_   = (Stab *)VTRun_Ptr->stab_;										// 08/28/02 AM.
+htab_   = (Htab *)vtrun_->htab_;	// 08/28/02 AM.	// [DEGLOB]	// 10/15/20 AM.
+stab_   = (Stab *)vtrun_->stab_;	// 08/28/02 AM.	// [DEGLOB]	// 10/15/20 AM.
 #endif
 
 // Now current analyzer instance gets a LOCAL hash and string table.
@@ -917,7 +922,7 @@ ana_->setSeqfile(sequence);	// Analyzer sequence file = analyzer specification.
 // For now, getting global hash table from env.						// 06/25/03 AM.
 // Todo: Each analyzer def gets its own hash table.				// 06/25/03 AM.
 //ana_->setHtab(htab_);			// Use the global hash table.		// 11/19/98 AM.
-ana_->setHtab((Htab *)VTRun_Ptr->htab_);								// 06/25/03 AM.
+ana_->setHtab((Htab *)vtrun_->htab_);	// 06/25/03 AM.	// [DEGLOB]	// 10/15/20 AM.
 
 // 12/03/98 AM. Using the appdir for finding the analyzer specification also.
 _TCHAR specdir[MAXSTR];
@@ -1079,26 +1084,26 @@ if (compile)																	// 05/10/00 AM.
 // USE THE RFB OR RFA HERE.
 ok = true;		// Asynchrony.												// 12/11/99 AM.
 //if (rfb_)																		// 11/05/99 AM.
-if (VTRun_Ptr->rfb_)															// 08/28/02 AM.
+if (vtrun_->rfb_)	// 08/28/02 AM.	// [DEGLOB]	// 10/15/20 AM.
 	{
 	// RESET APPDIR TO CURRENT ANALYZER'S.	// 04/03/09 AM.
 	// Compiling analyzer needs appdir.		// 04/03/09 AM.
-	((Ana *)VTRun_Ptr->rfb_)->setAppdir(ana_->getAppdir());		// 04/03/09 AM.
-	((Ana *)VTRun_Ptr->rfb_)->setGen(gen);								// 08/28/02 AM.
+	((Ana *)vtrun_->rfb_)->setAppdir(ana_->getAppdir());	// 04/03/09 AM.	// [DEGLOB]	// 10/15/20 AM.
+	((Ana *)vtrun_->rfb_)->setGen(gen);	// 08/28/02 AM.	// [DEGLOB]	// 10/15/20 AM.
 //	rfb_->setGen(gen);		// Tell RFB how to compile.			// 05/10/00 AM.
 	ok = ana_->internSeq(
 //								*rfb_,
-								*((Ana *)VTRun_Ptr->rfb_),					// 08/28/02 AM.
+								*((Ana *)vtrun_->rfb_),	// 08/28/02 AM. // [DEGLOB]	// 10/15/20 AM.
 										&eana,									// 11/05/99 AM.
-								VTRun_Ptr->htfunc_);							// 08/28/02 AM.
+								vtrun_->htfunc_); // 08/28/02 AM. // [DEGLOB]	// 10/15/20 AM.
 //										this);									// 12/20/01 AM.
 	}
-else if (VTRun_Ptr->rfa_)													// 01/10/06 AM.
+else if (vtrun_->rfa_)	// 01/10/06 AM.	// [DEGLOB]	// 10/15/20 AM.
 	ok = ana_->internSeq(
 //								*rfa_,
-								*((Ana *)VTRun_Ptr->rfa_),					// 08/28/02 AM.
+								*((Ana *)vtrun_->rfa_),	// 08/28/02 AM.	// [DEGLOB]	// 10/15/20 AM.
 										&eana,									// 01/13/99 AM.
-								VTRun_Ptr->htfunc_);							// 08/28/02 AM.
+								vtrun_->htfunc_);	// 08/28/02 AM.	// [DEGLOB]	// 10/15/20 AM.
 //										this);									// 12/20/01 AM.
 else																				// 01/10/06 AM.
 	ok = false;																	// 01/10/06 AM.
@@ -1276,15 +1281,15 @@ if (gui_.IsStatus(GUI_STATUS_GENERATING))								// 11/18/99 DD.
 #endif
 
 // Handle asynchrony by checking return.								// 12/11/99 AM.
-if (VTRun_Ptr->rfb_)															// 08/28/02 AM.
+if (vtrun_->rfb_)	// 08/28/02 AM.	// [DEGLOB]	// 10/15/20 AM.
 //if (rfb_)																		// 11/05/99 AM.
 	return ana_->internPass(pass,
-									*((Ana *)VTRun_Ptr->rfb_),				// 08/28/02 AM.
+									*((Ana *)vtrun_->rfb_),	// 08/28/02 AM. // [DEGLOB]	// 10/15/20 AM.
 //									*rfb_,
 									erfa);										// 11/05/99 AM.
 else
 	return ana_->internPass(pass,
-									*((Ana *)VTRun_Ptr->rfa_),				// 08/28/02 AM.
+									*((Ana *)vtrun_->rfa_),	// 08/28/02 AM.	// [DEGLOB]	// 10/15/20 AM.
 //								   *rfa_,
 									erfa);
 //return true;																	// 12/11/99 AM.
@@ -1466,7 +1471,7 @@ fout = parse->getFout();
 
 #ifdef PERFORM_
 //*fout << "SYSTEM HASH" << endl;
-//Htab *htab = (Htab *)VTRun_Ptr->htab_;									// 06/24/03 AM.
+//Htab *htab = (Htab *)vtrun_->htab_;	// 06/24/03 AM.	// [DEGLOB]	// 10/15/20 AM.
 //htab->pretty(fout);															// 06/24/03 AM.
 //*fout << "\n\nLOCAL HASH" << endl;
 //htab_->pretty(fout);
@@ -1723,7 +1728,7 @@ if (flogfiles)																	// 02/21/02 AM.
 
 #ifdef PERFORM_
 //*gout << "SYSTEM HASH" << endl;
-//Htab *htab = (Htab *)VTRun_Ptr->htab_;									// 06/24/03 AM.
+//Htab *htab = (Htab *)vtrun_->htab_;	// 06/24/03 AM.	// [DEGLOB]	// 10/15/20 AM.
 //htab->pretty(gout);															// 06/24/03 AM.
 //*gout << "\n\nLOCAL HASH" << endl;
 //htab_->pretty(gout);

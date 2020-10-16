@@ -16529,11 +16529,14 @@ bool Arun::findana(
 	)
 {
 Parse *parse = nlppp->parse_;
+NLP *nlp = parse->getNLP();		// [DEGLOB]	// 10/15/20 AM.
+VTRun *vtrun = nlp->getVTRun();	// [DEGLOB]	// 10/15/20 AM.
 
 if (!appname || !*appname)
 	return false;
 
-NLP *nlp1 = VTRun_Ptr->findAna(appname);
+//NLP *nlp1 = VTRun_Ptr->findAna(appname);	// [DEGLOB]	// 10/15/20 AM.
+NLP *nlp1 = vtrun->findAna(appname);		// [DEGLOB]	// 10/15/20 AM.
 bool retval = (nlp1 ? true : false);
 return retval;
 }

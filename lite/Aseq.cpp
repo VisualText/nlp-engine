@@ -803,11 +803,15 @@ ana->setHtfunc(htfunc);														// 12/20/01 AM.
 Delt<Seqn> *selt;
 Seqn *seqn;
 Ana *rfa;
+VTRun *vtrun;	// [DEGLOB]	// 10/15/20 AM.
 // IF RFB IS AROUND, USE IT.									// FIX	// 11/16/99 AM.
 //if (!(rfa = (Ana *) nlp->getRFB()))						// FIX	// 11/16/99 AM.
 //	rfa = (Ana *) nlp->getRFA();
-if (!(rfa = ((Ana *)VTRun_Ptr->rfb_)))									// 08/28/02 AM.
-	rfa = (Ana *)VTRun_Ptr->rfa_;											// 08/28/02 AM.
+//if (!(rfa = ((Ana *)VTRun_Ptr->rfb_)))									// 08/28/02 AM.
+//	rfa = (Ana *)VTRun_Ptr->rfa_;											// 08/28/02 AM.
+vtrun = (VTRun*)nlp->getVTRun();
+if (!(rfa = ((Ana *)(vtrun->rfb_))))	// [DEGLOB]	// 10/15/20 AM.
+	rfa = (Ana *)vtrun->rfa_;			// [DEGLOB]	// 10/15/20 AM.
 long currseqpass = 0;	// Count input file passes.				// 08/23/02 AM.
 bool okparse = true;		// If interning went ok.					// 05/26/01 AM.
 Ifile *rf;																		// 12/20/01 AM.
@@ -835,7 +839,7 @@ for (selt = (Delt<Seqn> *)Aseq::firstPass(nlp); selt; selt = selt->Right())
 		if (rf = seqn->getRulesfile())									// 12/20/01 AM.
 			if (!Ifunc::loadHtab(htfunc,									// 12/20/01 AM.
 							rf->getDecls(),									// 12/20/01 AM.
-							VTRun_Ptr->htfunc_,								// 08/28/02 AM.
+							vtrun->htfunc_,	// 08/28/02 AM.	// [DEGLOB]	// 10/15/20 AM.
 //							nlp->getHtfunc(),		// Builtin hash tab.	// 12/20/01 AM.
 							currseqpass ))										// 08/23/02 AM.
 				okparse = false;												// 12/21/01 AM.

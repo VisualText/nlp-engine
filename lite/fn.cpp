@@ -158,8 +158,10 @@ else																				// 12/26/01 AM.
 	// LOOK UP FUNCTION ID IN BUILTINS HASH TABLE.					// 12/21/01 AM.
 	Ana *ana = parse->getAna();											// 12/21/01 AM.
 	NLP *nlp = ana->getNLP();												// 12/21/01 AM.
+	VTRun *vtrun = nlp->getVTRun();	// [DEGLOB]	// 10/15/20 AM.
 //	void *htab = nlp->getHtfunc();										// 12/21/01 AM.
-	void *htab = VTRun_Ptr->htfunc_;										// 08/28/02 AM.
+//	void *htab = VTRun_Ptr->htfunc_;				// 08/28/02 AM.
+	void *htab = vtrun->htfunc_;	// [DEGLOB]	// 10/15/20 AM.
 	Ifunc *ifunc = Ifunc::htLookup(func,htab);						// 12/27/01 AM.
 	if (ifunc)																	// 12/26/01 AM.
 		{
@@ -807,6 +809,8 @@ bool Fn::userFn(
 {
 sem = 0;
 Parse *parse = nlppp->parse_;												// 08/24/02 AM.
+NLP *nlp = parse->getNLP();		// [DEGLOB]	// 10/15/20 AM.
+VTRun *vtrun = nlp->getVTRun();	// [DEGLOB]	// 10/15/20 AM.
 
 fnret = false;
 badname = true;
@@ -815,7 +819,8 @@ badname = true;
 // Set up info transfer object.
 glob_Auser.zero();		// Empty out structure.
 glob_Auser.setNlppp(nlppp);
-glob_Auser.vtrun_ = VTRun_Ptr;											// 08/28/02 AM.
+//glob_Auser.vtrun_ = VTRun_Ptr;	// 08/28/02 AM.	// [DEGLOB]	// 10/15/20 AM.
+glob_Auser.vtrun_ = vtrun;							// [DEGLOB]	// 10/15/20 AM.
 
 // Do the ucodeAction(func, args, nlppp) thing here.
 // In the USER.DLL library.
@@ -11402,7 +11407,10 @@ bool Fn::fnFindana(
 	)
 {
 sem = 0;
+// Current analyzer info.		// [DEGLOB]	// 10/15/20 AM.
 Parse *parse = nlppp->parse_;
+NLP *nlp = parse->getNLP();		// [DEGLOB]	// 10/15/20 AM.
+VTRun *vtrun = nlp->getVTRun();	// [DEGLOB]	// 10/15/20 AM.
 
 _TCHAR *appname;
 
@@ -11412,7 +11420,8 @@ if (!Arg::done((DELTS*)args, _T("findana"),parse))
 	return false;
 
 
-NLP *nlp1 = VTRun_Ptr->findAna(appname);
+//	NLP *nlp1 = VTRun_Ptr->findAna(appname);	// [DEGLOB]	// 10/15/20 AM.
+NLP *nlp1 = vtrun->findAna(appname);			// [DEGLOB]	// 10/15/20 AM.
 long retval = (nlp1 ? 1 : 0);
 
 sem = new RFASem(retval);

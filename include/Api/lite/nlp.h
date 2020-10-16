@@ -47,6 +47,7 @@ All rights reserved.
 #include "Aseq.h"			// 05/17/99 AM.
 #include "lite.h"
 #include "global.h"		// 02/05/00 AM. (for FNAME_SIZE).
+#include "vtrun.h"		// [DEGLOB]	// 10/14/20 AM.
 
 LITE_API void object_counts(
 	_t_ofstream* =0	// 07/18/03 AM.
@@ -86,7 +87,8 @@ public:
 		_TCHAR *outdir = 0,     // DIRECTORY FOR OUTPUT.			  // 03/10/99 AM.
 //		char *datadir = 0			// VISUALTEXT DATA DIRECTORY		  // 12/08/99 AM.
       _TCHAR *name = 0,       // UNIQUE NAME FOR ANALYZER.       // 01/06/03 AM.
-      _TCHAR *logfile = 0     // VTLOG	// 05/06/13 AM.
+      _TCHAR *logfile = 0,      // VTLOG	// 05/06/13 AM.
+	  VTRun *vtrun = 0			// VT Runtime Environment.	// [DEGLOB]	// 10/15/20 AM.
 		);
 	NLP(bool);                 // Dummy constructor.              // 06/30/03 AM.
 	~NLP();									// Destructor.
@@ -98,6 +100,7 @@ public:
 	void *getHtab();							// 01/18/99 AM.
 	void *getStab();							// 05/26/02 AM.
 //	void *getHtfunc();						// 12/20/01 AM.
+	VTRun *getVTRun();	// [DEGLOB]	// 10/15/20 AM.
 #ifndef LINUX
 	HINSTANCE getHdll();						// 01/29/99 AM.
 	HINSTANCE getHrundll();					// 05/14/00 AM.
@@ -122,6 +125,7 @@ public:
 	void	setFbatchstart(bool);			// 10/19/00 AM.
 	void	setFinteractive(bool);			// 05/06/02 AM.
 //	void	setHtfunc(void*);					// 12/20/01 AM.
+	void	setVTRun(VTRun*);	// [DEGLOB]	// 10/15/20 AM.
 
 	// Internals for analyzer invoking a GUI popup window.
 	void	setPopupmsg(_TCHAR*);				// 05/24/02 AM.
@@ -325,6 +329,9 @@ private:
 		_TCHAR *outdir = NULL														// 09/23/20 AM.
 		);
 	void clean();
+
+	// Reference the runtime environment that this analyzer belongs to.	// [DEGLOB]	// 10/14/20 AM.
+	VTRun *vtrun_;				// [DEGLOB]	// 10/14/20 AM.
 
 //	Ana *rfa_;				// The rules-file analyzer.
 //	Ana *rfb_;				// The RFA Blaster!							// 11/05/99 AM.
