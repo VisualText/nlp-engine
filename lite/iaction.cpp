@@ -813,6 +813,10 @@ if (!name_ || !*name_)
 
 _TCHAR *indent = gen->indent_;
 
+NLP *nlp = gen->getNLP();		// [DEGLOB]	// 10/15/20 AM.
+VTRun *vtrun = nlp->getVTRun();	// [DEGLOB]	// 10/15/20 AM.
+
+
 //ostream *fcode = gen->fcode_;
 
 // SOME SPECIAL CASES.
@@ -933,7 +937,8 @@ if (top) *fcode << indent << _T("Arun::stmt(");
 bool userdef = false;	// User-defined in NLP++					// 03/11/02 AM.
 if (!scope_ || !*scope_)													// 02/13/01 AM.
 	{
-	if (VTRun_Ptr->isBuiltin(fnname))										// 08/28/02 AM.
+//	if (VTRun_Ptr->isBuiltin(fnname))	// 08/28/02 AM.	// [DEGLOB]	// 10/15/20 AM.
+	if (vtrun->isBuiltin(fnname))						// [DEGLOB]	// 10/15/20 AM.
 		*fcode << _T("Arun::") << fnname << _T("(");
 	else																			// 12/24/01 AM.
 		{

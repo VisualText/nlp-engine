@@ -41,6 +41,8 @@ NLP_ENGINE::NLP_ENGINE(
 	bool silent
 	)
 {
+     NLP_ENGINE::zeroInit();    // [DEGLOB]	// 10/15/20 AM.
+
     static _TCHAR logfile[MAXSTR];
     static _TCHAR rfbdir[MAXSTR];
     _stprintf(logfile,"%s%s",workingFolder,_T("vtrun_logfile.out"));
@@ -49,7 +51,7 @@ NLP_ENGINE::NLP_ENGINE(
     _stprintf(rfbdir,"%sdata/rfb/spec",workingFolder);
     _t_cout << _T("[rfbdir: ") << rfbdir << _T("]") << endl;
  
- if (!VTRun_Ptr)
+// if (!VTRun_Ptr)  // [DEGLOB]	// 10/15/20 AM.
     {
         m_vtrun = VTRun::makeVTRun(                               // 07/21/03 AM.
             logfile,                // Verbose/error log file.         // 08/28/02 AM.
@@ -64,6 +66,7 @@ NLP_ENGINE::~NLP_ENGINE()
     close();    // 09/27/20 AM.
 }
 
+// Onetime init of NLP_ENGINE and VTRun environment.    // [DEGLOB]	// 10/15/20 AM.
 void NLP_ENGINE::zeroInit()
 { 
     m_input = 0;
@@ -90,7 +93,32 @@ void NLP_ENGINE::zeroInit()
     m_rug = 0;
     #endif
 }
- 
+
+
+// Reset if calling an analyzer other than the current one.    // [DEGLOB]	// 10/15/20 AM.
+void NLP_ENGINE::zeroAna()
+{ 
+    m_input = 0;
+    m_output = 0;
+    m_sequence = 0;
+
+    m_anadir[0] = '\0';
+    m_ananame[0] = '\0';
+//  m_rfbdir[0] = '\0';
+    m_rfbdir[0] = '\0';
+    m_logfile[0] = '\0';	
+    m_specdir[0] = '\0';
+    m_infile[0] = '\0';
+    m_outdir[0] = '\0';
+    m_outfile[0] = '\0';
+    m_seqfile[0] = '\0';
+
+ //   m_vtrun = 0;
+    m_nlp = 0;
+    m_cg = 0;
+
+}
+
 int NLP_ENGINE::init(
     _TCHAR *analyzer,
     _TCHAR *workingFolder,
@@ -99,10 +127,13 @@ int NLP_ENGINE::init(
     bool compiled
 )
 {   
-     NLP_ENGINE::zeroInit();
+//     NLP_ENGINE::zeroInit();    // [DEGLOB]	// 10/15/20 AM.
+    // If calling a different analyzer, clear out info. // [DEGLOB]	// 10/15/20 AM.
+    // Todo: The NLP object should store all analyzer information.  // [DEGLOB]	// 10/15/20 AM.
+    NLP_ENGINE::zeroAna();  // [DEGLOB]	// 10/15/20 AM.
  
     // Convenience ptr.
-    m_vtrun = VTRun_Ptr;    // 09/27/20 AM.
+    //m_vtrun = VTRun_Ptr;    // [DEGLOB]	// 10/15/20 AM.
 
     m_analyzer = analyzer;
     m_develop = develop;
@@ -162,7 +193,8 @@ int NLP_ENGINE::init(
     /////////////////////////////////////////////////
     // INITIALIZE ANALYZER RUNTIME ENGINE
     /////////////////////////////////////////////////
-    if (m_nlp = VTRun_Ptr->findAna(analyzer))
+//    if (m_nlp = VTRun_Ptr->findAna(analyzer))   // [DEGLOB]	// 10/15/20 AM.
+    if (m_nlp = m_vtrun->findAna(analyzer))   // [DEGLOB]	// 10/15/20 AM.
         {
         _t_cout << _T("Analyzer found: ") << analyzer << analyzer << endl;
         _t_cout << _T("[TODO: RELOAD ANALYZER (NLP) INTO NLPENGINE HERE.]") << analyzer << endl;
@@ -179,7 +211,8 @@ int NLP_ENGINE::init(
         // appdir\user\debug\user.dll
         m_nlp = m_vtrun->makeNLP(m_anadir,m_analyzer,m_develop,m_silent,m_compiled);  // 07/21/03 AM.
 
-        VTRun_Ptr->addAna(m_nlp);   // Add ana to runtime manager.  // 09/27/20 AM.
+//        VTRun_Ptr->addAna(m_nlp);   // Add ana to runtime manager.    // [DEGLOB]	// 10/15/20 AM.
+        m_vtrun->addAna(m_nlp); // Register analyzer.   // [DEGLOB]	// 10/15/20 AM.
 
 
         /////////////////////////////////////////////////
@@ -348,8 +381,10 @@ int NLP_ENGINE::close()
     // Compiled analyzers: need to close the user.dll for the application also.
     // Shutdown the runtime manager.
 
-    VTRun::deleteVTRun(VTRun_Ptr);                      // 9/27/20 AM.
-    VTRun_Ptr = 0;      // Clear out static var.        // 09/27/20 AM.
+//    VTRun::deleteVTRun(VTRun_Ptr);                      // 9/27/20 AM.
+//    VTRun_Ptr = 0;      // Clear out static var.        // 09/27/20 AM.
+    VTRun::deleteVTRun(m_vtrun);    // [DEGLOB]	// 10/15/20 AM.
+    m_vtrun = 0;    // [DEGLOB]	// 10/15/20 AM.
     _t_cout << _T("[AFTER VTRUN DELETE: ]") << endl;    // 09/27/20 AM.
 
     // Report memory leaks to standard output.
@@ -370,7 +405,8 @@ int NLP_ENGINE::close(_TCHAR *analyzer)
     // This will close the user.dll for the application also.
  //   m_vtrun->deleteNLP(m_nlp);                                         // 07/21/03 AM.
  //   VTRun::deleteVTRun(m_vtrun);                                     // 07/21/03 AM.
-    m_nlp = VTRun_Ptr->findAna(analyzer);
+//    m_nlp = VTRun_Ptr->findAna(analyzer); // [DEGLOB]	// 10/15/20 AM.
+    m_nlp = m_vtrun->findAna(analyzer); // [DEGLOB]	// 10/15/20 AM.
     m_vtrun->rmAna(m_nlp);  // 09/27/20 AM.
     m_vtrun->deleteNLP(m_nlp);   // Remove analyzer from manager.    // 09/27/20 AM.
 

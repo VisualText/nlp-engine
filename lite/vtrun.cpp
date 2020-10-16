@@ -66,9 +66,9 @@ using namespace std;											// Upgrade	// 01/24/01 AM.
 #include "lite/vtrun.h"
 
 // Keep track of the first instance of this class.
-VTRun *VTRun_Ptr = 0;
+//VTRun *VTRun_Ptr = 0;	// [DEGLOB]	// 10/15/20 AM.
 
-	int VTRun::count_ = 0;
+//	int VTRun::count_ = 0;	// [DEGLOB]	// 10/15/20 AM.
 
 #ifdef LINUX
 template<> int Slist<NLP>::count_	= 0;	// 01/06/03 AM.
@@ -90,14 +90,14 @@ VTRun::VTRun(
 	)
 {
 zero();
-if (!VTRun_Ptr)	// Creating first instance.
+//if (!VTRun_Ptr)	// Creating first instance.	// [DEGLOB]	// 10/15/20 AM.
 	{
 	init(logfile,rfbspecdir,silent);
-	VTRun_Ptr = this;
+//	VTRun_Ptr = this;	// [DEGLOB]	// 10/15/20 AM.
 	}
 
 #ifndef STABLE_
-++count_;
+//++count_;	// [DEGLOB]	// 10/15/20 AM.
 #endif
 
 }
@@ -105,12 +105,12 @@ if (!VTRun_Ptr)	// Creating first instance.
 
 VTRun::~VTRun()
 {
-VTRun_Ptr = 0;		// Clear out this global.
+//VTRun_Ptr = 0;		// Clear out this global.	// [DEGLOB]	// 10/15/20 AM.
 clear();
 zero();
 
 #ifndef STABLE_
---count_;	// VTRun::count_	// 09/24/20 AM.
+//--count_;	// VTRun::count_	// 09/24/20 AM.	// [DEGLOB]	// 10/15/20 AM.
 #endif
 }
 
@@ -629,7 +629,8 @@ NLP *nlp = new NLP(
 	compiled,
 	0,
 	name,
-	logfile_	// VTLOG	// 05/06/13 AM.
+	logfile_,	// VTLOG	// 05/06/13 AM.
+	this	// [DEGLOB]	// 10/15/20 AM.
 	);
 return nlp;
 }

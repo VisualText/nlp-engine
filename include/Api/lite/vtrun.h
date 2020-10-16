@@ -143,6 +143,9 @@ public:
 //	Slist<NLP> *anas_;														// 01/06/03 AM.
 	NLPS *anas_;																// 07/07/03 AM.
 
+	// The global VTRun::count_ variable now part of class.	// [DEGLOB]	// 10/15/20 AM.
+	int anacount_;	// [DEGLOB]	// 10/15/20 AM.
+
 #ifndef STABLE_
 public:
 	static int getCount();
@@ -153,7 +156,7 @@ private:
 
 };
 
-extern LITE_API VTRun *VTRun_Ptr;	// 09/21/20 AM.
+//extern LITE_API VTRun *VTRun_Ptr;	// 09/21/20 AM.	// [DEGLOB]	// 10/15/20 AM.
 
 #endif
 /*************************      END OF FILE      ******************************/

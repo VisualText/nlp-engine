@@ -85,6 +85,7 @@ public:
     bool m_compiled;
 
     void zeroInit();
+    void zeroAna(); // [DEGLOB]	// 10/15/20 AM.
 
     int init(
         _TCHAR *analyzer = NULL,
