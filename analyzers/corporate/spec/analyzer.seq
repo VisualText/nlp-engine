@@ -1,6 +1,6 @@
 # 
 tokenize	nil	# Gen:   Convert input to token list.
-lines	nil	# Gen:   Build a list of text lines.
+pat lines	nil	# Gen:   Build a list of text lines.
 pat	initKB	# comment
 pat	join	# Copy of join
 pat	sentences	# comment here
