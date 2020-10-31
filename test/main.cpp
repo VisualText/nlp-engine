@@ -17,7 +17,7 @@ int _tmain( // 09/23/20 AM.
     _TCHAR output[1001];
 
     _stprintf(anaParse,"%s",_T("taiparse"));
-    _stprintf(anaNoop,"%s",_T("noop"));
+    _stprintf(anaNoop,"%s",_T("corporate"));
     _stprintf(workingFolder,"%s",_T("./"));
  
     _t_cout << _T("[Create runtime manager.]") << endl;

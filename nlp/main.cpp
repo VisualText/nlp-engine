@@ -14,7 +14,7 @@ All rights reserved.
 
 #include "lite/nlp_engine.h"
 
-bool cmdReadArgs(int,_TCHAR*argv[],_TCHAR*&,_TCHAR*&,_TCHAR*&,bool&,bool&,bool&);
+bool cmdReadArgs(int,_TCHAR*argv[],_TCHAR*&,_TCHAR*&,_TCHAR*&,_TCHAR*&,bool&,bool&,bool&);
 void cmdHelpargs(_TCHAR*);
 
 #ifdef LINUX
@@ -32,7 +32,7 @@ _tmain(
 // READ ARGUMENTS
 /////////////////////////////////////////////////
 // Need to get command line arguments and/or some kind of init file.
-_TCHAR *analyzerpath=0, *input=0, *output=0;
+_TCHAR *analyzerpath=0, *input=0, *output=0, *workdir=0;
 bool develop = false;    	// Development mode.
 _TCHAR *sequence=0;
 bool compiled=false;       	// Run compiled/interp analyzer.
@@ -45,11 +45,11 @@ struct stat st;
 /////////////////////////////////////////////////
 
 // Get analyzer name, input and output filenames from command line.
-if (!cmdReadArgs(argc,argv,analyzerpath,input,output,develop,compiled,silent))
+if (!cmdReadArgs(argc,argv,analyzerpath,input,output,workdir,develop,compiled,silent))
    exit(1);
 
-NLP_ENGINE *nlpEngine = new NLP_ENGINE();
-nlpEngine->analyze(analyzerpath,input,output,NULL,develop,silent,compiled);
+NLP_ENGINE *nlpEngine = new NLP_ENGINE(workdir);
+nlpEngine->analyze(analyzerpath,input,output,develop,silent,compiled);
 
 }
 
@@ -67,6 +67,7 @@ bool cmdReadArgs(
     _TCHAR* &anapath,	// Analzyer name
     _TCHAR* &input,		// Input file from args.
 	_TCHAR* &output,	// Output file from args.
+	_TCHAR* &workdir,	// Working directory from args.
 	bool &develop,		// Development mode (output intermediate files).
 	bool &compiled,		// true - compiled ana. false=interp(DEFAULT).
 	bool &silent		// true == only output files specified by analyzer.
@@ -78,6 +79,7 @@ _TCHAR **parg;
 bool f_ana = false;
 bool f_in  = false;
 bool f_out = false;
+bool f_work = false;
 bool flag  = false;
 bool compiledck = false;	// If compiled/interp arg seen.
 bool doubledash = false;
@@ -124,6 +126,8 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 			f_in = flag = true;					// Expecting input file.
 		else if (!strcmp_i(ptr, _T("out")))
 			f_out = flag = true;					// Expecting output file.
+		else if (!strcmp_i(ptr, _T("work")))
+			f_work = flag = true;					// Expecting output file.
 		else if (!strcmp_i(ptr, _T("dev")))		// 12/25/98 AM.
 			{
 			if (silent)
@@ -202,6 +206,19 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 			output = ptr;
 			f_out = flag = false;
 			}
+		else if (f_work)
+			{
+			if (workdir)
+				{
+				_t_cerr << _T("[") << argv[0]
+						  << _T(": Output file specified twice.]");
+				cmdHelpargs(argv[0]);
+				return false;
+				}
+			// Grab value as output file.
+			workdir = ptr;
+			f_work = flag = false;
+			}
 		}
 		else										// Got a "floating" value.
 		{
@@ -236,8 +253,9 @@ _t_cout << endl
 	<< _T("usage: nlp [--version] [--help]") << endl
 	<< _T("           [-INTERP][-COMPILED] INTERP is the default") << endl
 	<< _T("           [-ANA analyzer] name or path to NLP++ analyzer folder") << endl
-	<< _T("           [-IN infile] input text file") << endl
-	<< _T("           [-OUT outfile] output text file") << endl
+	<< _T("           [-IN infile] input text file path") << endl
+	<< _T("           [-OUT outdir] output directory") << endl
+	<< _T("           [-WORK workdir] working directory") << endl
 	<< _T("           [-DEV][-SILENT] /DEV generates logs, -SILENT (default) does not") << endl
 	<< _T("           [infile [outfile]] when no /IN or -OUT specified") << endl
 	<< endl

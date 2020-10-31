@@ -5,11 +5,30 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(gbd) nlp",
+            "name": "(gbd) nlp DOJ",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/nlp.exe",
-            "args": ["-ANA","corporate","Dev/Sold.txt","-DEV"],
+            "args": ["-ANA","/home/dehilster/nlp-engine/analyzers/DOJ-Quick","/home/dehilster/nlp-engine/analyzers/DOJ-Quick/input/Scrapy-New/article_12.txt","-DEV"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "(gbd) nlp Corporate",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/nlp.exe",
+            "args": ["-ANA","/home/dehilster/nlp-engine/analyzers/corporate","/home/dehilster/nlp-engine/analyzers/corporate/input/Dev/Sold.txt","-DEV"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

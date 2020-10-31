@@ -84,12 +84,12 @@ public:
     bool m_silent;
     bool m_compiled;
 
+    void setWorkingFolder(_TCHAR *workingFolder);
     void zeroInit();
     void zeroAna(); // [DEGLOB]	// 10/15/20 AM.
 
     int init(
         _TCHAR *analyzer = NULL,
-        _TCHAR *workingFolder = NULL,
         bool develop=false,
         bool silent=false,
         bool compiled=false
@@ -99,7 +99,6 @@ public:
         _TCHAR *analyzer,
         _TCHAR *infile,
         _TCHAR *outfile,
-        _TCHAR *workingFolder = NULL,
         bool develop=false,
         bool silent=false,
         bool compiled=false
@@ -111,7 +110,6 @@ public:
         long len,
         _TCHAR *outbuf,
         long outlen,
-        _TCHAR *workingFolder = NULL,
         bool develop=false,
         bool silent=false,
         bool compiled=false

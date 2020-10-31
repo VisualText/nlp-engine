@@ -126,7 +126,6 @@ void NLP_ENGINE::zeroAna()
 
 int NLP_ENGINE::init(
     _TCHAR *analyzer,
-    _TCHAR *workingFolder,
 	bool develop,
 	bool silent,
     bool compiled
@@ -284,15 +283,14 @@ int NLP_ENGINE::init(
 int NLP_ENGINE::analyze(
     _TCHAR *analyzer,
     _TCHAR *infile,
-    _TCHAR *outfile,
-    _TCHAR *workingFolder,
+    _TCHAR *outdir,
 	bool develop,
 	bool silent,
     bool compiled
 	)
 {   
  
-    NLP_ENGINE::init(analyzer,workingFolder,develop,silent,compiled);
+    NLP_ENGINE::init(analyzer,develop,silent,compiled);
 
     struct stat st;
     if (stat(infile,&st) == 0)
@@ -300,8 +298,18 @@ int NLP_ENGINE::analyze(
     else
         _stprintf(m_infile, _T("%s%sinput%s%s"),m_anadir,DIR_STR,DIR_STR,infile);
     _t_cout << _T("[infile path: ") << m_infile << _T("]") << endl;
-    _stprintf(m_outfile, _T("%s%soutput.txt"),m_anadir,DIR_STR);
+
+    _stprintf(m_outfile, _T("%s%soutfile.txt"),m_anadir,DIR_STR);
     _t_cout << _T("[outfile path: ") << m_outfile << _T("]") << endl;
+
+    stat(outdir,&st);
+    if ((st.st_mode & S_IFREG) == S_IFDIR) {
+        _stprintf(m_outdir, _T("%s"),outdir);
+    } else {
+        _stprintf(m_outdir, _T("%s_log"),infile);
+        NLP_ENGINE::createDir(m_outdir);
+    }
+    _t_cout << _T("[outdir path: ") << m_outdir << _T("]") << endl;
 
     // Analyzer can output to a stream.
     _TCHAR ofstr[MAXSTR];
@@ -317,7 +325,7 @@ int NLP_ENGINE::analyze(
 
     m_nlp->analyze(m_infile, m_outfile, m_anadir, m_develop,
         m_silent,        // Debug/log output files.                  // 06/16/02 AM.
-        0,             // Outdir.
+        m_outdir,             // Outdir.
         0,           // Input buffer.
         0,        // Length of input buffer, or 0.
         m_compiled,      // If running compiled analyzer.
@@ -336,14 +344,13 @@ int NLP_ENGINE::analyze(
     long len,
     _TCHAR *outbuf,
     long outlen,
-    _TCHAR *workingFolder,
 	bool develop,
 	bool silent,
     bool compiled
 	)
 {
  
-    NLP_ENGINE::init(analyzer,workingFolder,develop,silent,compiled);
+    NLP_ENGINE::init(analyzer,develop,silent,compiled);
 
     // Analyzer can output to a stream.
     _TCHAR ofstr[MAXSTR];
