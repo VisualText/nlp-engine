@@ -1,0 +1,195 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>findattrs</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1734>
+<meta name=layout-width content=916>
+<meta name=date content="01 4, 2002 1:06:39 PM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF=default.css>
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>findattrs</h1>
+
+<h2>Purpose</h2>
+
+<p>Fetch the list of attributes belonging to the concept named <span style="font-style: italic;">concept</span>.</p>
+
+<h2>Syntax</h2>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">returnedAttribute = findattrs(concept)</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">returnedAttribute - type: attr<br>
+concept - type: con</p>
+
+<h2>Returns</h2>
+
+<p>An attribute if the concept has an attribute. If the concept has no 
+ attributes, a null attribute structure is returned. You test to see whether 
+ anything was returned with code like:</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">G(&quot;result&quot;) = <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">findattrs</span>(G(&quot;foo&quot;));<br>
+if(G(&quot;result&quot;)) <br>
+&quot;output.txt&quot; &lt;&lt; &quot;G(result) = &quot; &lt;&lt; attrname(G(&quot;result&quot;)) &lt;&lt; &quot;\n&quot;;</p>
+
+<p>In this example, while G(&quot;foo&quot;) is a concept, it has no attributes.</p>
+
+<h2>Remarks</h2>
+
+<p>Similar to findattr, except you don't pass the function the name of 
+ the attribute. So, if your application does not 'know' the attributes 
+ of a concept, use findattrs. If you know the specific concept you want, 
+ use findattr. If a bad concept is passed, such as a string instead of 
+ a concept, an error is written to the output log file.</p>
+
+<h2>Example</h2>
+
+<p>In this example, we create the concept of <span style="font-style: italic;">apples</span>, 
+ and give them the attribute <span style="font-style: italic;">have </span><span 
+ style="font-style: normal;">with value </span><span style="font-style: italic;">color</span><span 
+ style="font-style: normal;">. This is sort of like saying 'Apples have 
+ color.' Then we give apples the attribute </span><span style="font-style: italic;">color</span><span 
+ style="font-style: normal;"> who's value is </span><span style="font-style: italic;">red</span><span 
+ style="font-style: normal;">, then the values of color </span><span style="font-style: italic;">green</span><span 
+ style="font-style: normal;"> and </span><span style="font-style: italic;">yellow</span></p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">G(&quot;root&quot;) = findroot(); <br>
+# look for apples in the concept hierarchy<br>
+G(&quot;apple&quot;) = findconcept(G(&quot;root&quot;),&quot;apple&quot;);<br>
+# if you find them, kill them (to start fresh)<br>
+if (G(&quot;apple&quot;)) rmconcept(G(&quot;apple&quot;));<br>
+# Apples exist<br>
+G(&quot;apple&quot;) = makeconcept(G(&quot;root&quot;),&quot;apple&quot;);<br>
+# Apples have color<br>
+addstrval(G(&quot;apple&quot;),&quot;have&quot;,&quot;color&quot;);<br>
+# Apple's color is red<br>
+addstrval(G(&quot;apple&quot;),&quot;color&quot;,&quot;red&quot;);<br>
+# Apple's color is also green and yellow<br>
+addstrval(G(&quot;apple&quot;),&quot;color&quot;,&quot;green and yellow&quot;);</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: 10pt;
+			font-family: monospace;"># Now we access the attributes of the concept apple:</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;"># Find apple's attribute list<br>
+G(&quot;attrList&quot;) = <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">findattrs</span>(G(&quot;apple&quot;));<br>
+# Find the first attribute's name<br>
+G(&quot;attrName&quot;) = attrname(G(&quot;attrList&quot;));<br>
+# Find the list of values of the attribute<br>
+G(&quot;valList&quot;) = attrvals(G(&quot;attrList&quot;));<br>
+# get the first value<br>
+G(&quot;valName&quot;) = getstrval(G(&quot;valList&quot;));<br>
+# print out the first attribute's name and value<br>
+If(G(&quot;attrName&quot;)){<br>
+&quot;output.txt&quot; &lt;&lt; &quot;first attribute of apple is: &quot; <br>
+&lt;&lt; G(&quot;attrName&quot;) &lt;&lt; &quot;\n&quot;;<br>
+&quot;output.txt&quot; &lt;&lt; &quot;first value of that attribute is: &quot; <br>
+&lt;&lt; G(&quot;valName&quot;) &lt;&lt; &quot;\n&quot;;<br>
+}<br>
+# get the next attribute<br>
+G(&quot;nextAttr&quot;) = nextattr(G(&quot;attrList&quot;));<br>
+# get its name<br>
+G(&quot;attrName&quot;) = attrname(G(&quot;nextAttr&quot;)); <br>
+If(G(&quot;attrName&quot;)){<br>
+&quot;output.txt&quot; &lt;&lt; &quot;next attribute of apple is: &quot; <br>
+&lt;&lt; G(&quot;attrName&quot;) &lt;&lt; &quot;\n&quot;;<br>
+}<br>
+# get the list of values of the second attribute<br>
+G(&quot;valList&quot;) = attrvals(G(&quot;nextAttr&quot;));<br>
+# get the first value's name<br>
+G(&quot;valName&quot;) = getstrval(G(&quot;valList&quot;));<br>
+# print it out<br>
+&quot;output.txt&quot; &lt;&lt; &quot;first value of that attribute is: &quot; <br>
+&lt;&lt; G(&quot;valName&quot;) &lt;&lt; &quot;\n&quot;;<br>
+# get the second value of the second attribute<br>
+G(&quot;nextValName&quot;) = getstrval(nextval(G(&quot;valList&quot;)));<br>
+# print it out<br>
+&quot;output.txt&quot; &lt;&lt; &quot;second value of that attribute is: &quot;<br>
+&lt;&lt; G(&quot;nextValName&quot;) &lt;&lt; &quot;\n&quot;;</p>
+
+<p>&nbsp;</p>
+
+<p>This prints the following to output.txt:</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">first attribute of apple is: have<br>
+first value of that attribute is: color<br>
+next attribute of apple is: color<br>
+first value of that attribute is: red<br>
+second value of that attribute is: green and yellow</p>
+
+<h2>See Also</h2>
+
+<p style="margin-bottom: 0;"><a HREF="findattr.htm">findattr</a>, <a href="Table_of_Knowledge_Base_Functions.htm">Knowledge 
+ Base Functions</a> </p>
+
+</body>
+
+</html>

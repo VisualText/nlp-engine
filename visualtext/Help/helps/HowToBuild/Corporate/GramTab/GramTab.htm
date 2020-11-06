@@ -1,0 +1,297 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>GramTab</title>
+
+<!--(Meta)==========================================================-->
+
+<meta HTTP-EQUIV=Content-Type CONTENT="text/html; charset=windows-1252">
+<meta NAME=Template CONTENT="D:\Program Files\Microsoft Office\Office\html.dot">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=3138>
+<meta name=layout-width content=775>
+<meta name=date content="08 27, 2001 2:32:58 PM">
+
+
+
+<!--(Style Sheet)===================================================-->
+
+<style>
+<!--
+
+A:visited {
+	color: #800080;
+}
+
+A:link {
+	color: #0000ff;
+}
+
+-->
+</style>
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<!--(Table)=========================================================-->
+<!--begin!kadov{{--><div align=center><!--}}end!kadov-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 617px;
+				border-spacing: 0px;
+				float: aligncenter;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=617>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../Format/Format.htm"><img src="Bullet8.gif"
+													style="width: 15px;
+															height: 12px;
+															border-style: none;
+															margin-top: 0px;
+															margin-bottom: 0px;
+															margin-left: 0px;
+															margin-right: 0px;"
+													width=15
+													height=12
+													border=0>&nbsp;Formatting</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 50%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../Toc/TOC.htm">CORPORATE ANALYZER</a><span style="font-weight: bold;"><font 
+ style="color: #000080;"
+	color=#000080><br>
+Rule Generation</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 26%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../HandDict/HandDict.htm">KB &amp; Dictionary 
+ <img src="Bullet7.gif"
+		style="width: 15px;
+				height: 12px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=15
+		height=12
+		border=0></a></td></tr>
+</table>
+<!--begin!kadov{{--></div><!--}}end!kadov-->
+
+<!--(HR)============================================================-->
+<hr style="height: 2px;
+			width: 100%;
+			float: aligncenter;"
+	size=2
+	width=100%
+	align=center>
+
+
+<p><span style="font-weight: bold;">Ana Tab Window: Passes 8 - 12</span></p>
+
+<p>This section describes the analyzer passes &quot;city&quot;, &quot;company&quot;, 
+ and &quot;state&quot; in the &quot;words&quot; stub region.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image54.gif"
+						style="border-style: none;
+								width: 108px;
+								height: 84px;"
+						width=108
+						height=84
+						border=0></p>
+
+<p><span style="font-weight: bold;">Sample Files</span></p>
+
+<p>We have included a few automatically generated (or &quot;RUG&quot;) 
+ passes in the corporate analyzer, for the purpose of &quot;dictionary&quot; 
+ lookup. We describe how we set up this capability in the corporate analyzer.</p>
+
+<p>First, we added a folder called &quot;Samples&quot; under which we have 
+ created three files: &quot;cities.txt&quot;, &quot;companies.txt&quot;, 
+ and &quot;states.txt&quot;. Below is &quot;companies.txt&quot;. Note that 
+ each text sample (company name in this case) appears on a separate line. 
+ Only multi-word phrases are added to the companies.txt file, for reasons 
+ that will become apparent later.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image55.gif"
+						style="border-style: none;
+								width: 442px;
+								height: 141px;"
+						width=442
+						height=141
+						border=0></p>
+
+<p><span style="font-weight: bold;">Stubs</span></p>
+
+<p>Next, we created a &quot;stub&quot;, or placeholder in the analyzer 
+ sequence, for automatically generated passes. This allows us to control 
+ where in the sequence of passes these automatically generated passes will 
+ occur. Since we are using RUG for a dictionary-like function, the stub 
+ comes early on in the analyzer flow, right after formatting:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image65.gif"
+						style="border-style: none;
+								width: 112px;
+								height: 193px;"
+						width=112
+						height=193
+						border=0></p>
+
+<p><span style="font-weight: bold;">Gram Tab</span></p>
+
+<p>The Gram Tab is where we set up a hierarchy of text samples. We created 
+ a stub concept called &quot;words&quot; and under it, we created rule 
+ concepts for city, company, and state. The Gram Tab allows us to quickly 
+ add text samples to the rule concepts, e.g., by importing the sample files 
+ built above. You can also add samples to the hierarchy manually by highlighting 
+ a text region and selecting the rule concept in which to place it.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image61.gif"
+						style="border-style: none;
+								width: 430px;
+								height: 270px;"
+						width=430
+						height=270
+						border=0></p>
+
+<p><span style="font-weight: bold;">Setting Auto-Generation Flags</span></p>
+
+<p>Before using RUG to generate our rules for us, we may need to provide 
+ constraints and instructions that control the rule-construction process. 
+ In the case of literal constructs such as company names, we use the Gram 
+ Concept Properties window to specify that &quot;literal&quot; rules are 
+ to be generated.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image59.gif"
+						style="border-width: 1px;
+								border-style: solid;
+								width: 465px;
+								height: 398px;"
+						width=465
+						height=398
+						border=1></p>
+
+<p><span style="font-weight: bold;">Invoking RUG</span></p>
+
+<p>To automatically generate the passes, we now choose &quot;All&quot; 
+ under &quot;Generate Rules&quot; under the &quot;Analyzer&quot; menu:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image62.gif"
+						style="border-style: none;
+								width: 328px;
+								height: 233px;"
+						width=328
+						height=233
+						border=0></p>
+
+<p><span style="font-weight: bold;">Automatically Generated Rules</span></p>
+
+<p>Now we can double-click on the rules in the Gram Tab to see the corresponding 
+ passes that have been built. Note, in pass file 10, the warning about 
+ editing automatically generated files. Currently, any edits made to such 
+ a pass file will be overwritten the next time RUG is invoked.</p>
+
+<p>Second, notice the form of the rules. RUG creates rules that match the 
+ phrase and rewrites them to &quot;_company&quot;. The rules also include 
+ a &quot;@PRE&quot; area that restricts the words to be capitalized or 
+ not. The form of the rules in this pass file is determined by the flags 
+ set in the &quot;Properties&quot; window above.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image63.gif"
+						style="border-width: 1px;
+								border-style: solid;
+								width: 587px;
+								height: 376px;"
+						width=587
+						height=376
+						border=1></p>
+
+<p><span style="font-weight: bold;">Highlighting Matches</span></p>
+
+<p>These pass files are like any other pass files in that you can highlight 
+ pass matches. In the Gram Tab, you can click on any rule icon and display 
+ the highlights as show below:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image64.gif"
+						style="border-width: 1px;
+								border-style: solid;
+								width: 683px;
+								height: 157px;"
+						width=683
+						height=157
+						border=1></p>
+
+
+<!--(HR)============================================================-->
+<hr style="height: 2px;
+			width: 100%;
+			float: aligncenter;"
+	size=2
+	width=100%
+	align=center>
+
+
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><span style="font-weight: bold;">Next Section:</span> 
+ <a HREF="../HandDict/HandDict.htm">KB &amp; Dictionary <img src="Bullet7.gif"
+															style="width: 15px;
+	height: 12px;
+	border-style: none;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 0px;"
+															width=15
+															height=12
+															border=0></a> 
+ </p>
+
+</body>
+
+</html>

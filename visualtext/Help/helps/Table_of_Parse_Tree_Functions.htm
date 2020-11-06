@@ -1,0 +1,1000 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Table of Parse Tree Functions</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=date content="05 13, 2002 11:00:58 AM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1000>
+<meta name=layout-width content=1027>
+<meta name=x-ignored-words content="arraylength(VAR;INT;expr;lasteltnode(elt_num;PNODE;elt_numth;phrasetext(;STR;phraseraw(;pndeletechilds(pnode;pnode;pnname(pnode;pnode's;pnnext(pnode;pnprev(pnode;pnrename(pnode;str;pnroot(;pnsingletdown(pnode;singlet;pnup(pnode;pnvar(pnode;var_str;value(s;varinlist(var_str;elt_num">
+
+
+<!--(Links)=========================================================-->
+
+<link rel="StyleSheet" href="default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Table of Parse Tree Functions</h1>
+
+<p>The functions used to operate on parse trees have been listed here in 
+ table form for easy reference. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For 
+ examples of these functions, refer to the individual function pages included 
+ in the Parse Tree Functions section.</p>
+
+<p>The return types include: <!--kadov_tag{{<spaces>}}-->&nbsp;<span style="font-weight: bold;"><!--kadov_tag{{</spaces>}}-->INT</span> 
+ (integer), <span style="font-weight: bold;">PNODE</span> (parse tree node), 
+ <span style="font-weight: bold;">STR</span> (string), and <span style="font-weight: bold;">VAR 
+ VALUES</span> (variable values). <span style="font-weight: bold;">NONE</span> 
+ indicates nothing is returned.</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				margin-top: 14pt;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 0px;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=100%
+		border=1>
+
+<tr>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#00FF00
+	width=25%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000><span style="font-weight: bold;">FUNCTION 
+ NAME</span></font></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#00FF00
+	width=9%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000><span style="font-weight: bold;">RETURNS</span></font></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#00FF00
+	width=66%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000><span style="font-weight: bold;">DESCRIPTION</span></font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">arraylength(VAR)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">INT</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Count number of values in given variable or 
+ expr. (Like a call-by-reference)</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">eltnode(elt_num)</span></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0; font-weight: bold;">PNODE</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Fetch the first node that matched the nth 
+ element of a rule.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0;
+			color: #ff0000;
+			font-weight: normal;">group(start_n,end_n,name_str)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0;
+			color: #ff0000;
+			font-weight: normal;">PNODE</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;
+			color: #ff0000;
+			font-weight: normal;">Perform a reduction in the @POST region. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Replaces 
+ the old group action. (2.3.1.9 return the created node.)</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;">inputrange(start_n,end_n)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0; font-weight: bold;">STR</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Return a substring of the input text as specified 
+ by start and end offsets.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;">inputrange(start_n,end_n,out_ostr)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0; font-weight: bold;">BOOL</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Print a range of chars from the input text 
+ to an output stream.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">lasteltnode(elt_num)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">PNODE</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Fetch the last node that matched the nth element 
+ of a rule.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">phrasetext()</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Fetch the text that matched the right hand 
+ side phrase of a rule. Analogous to $text.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">phraseraw()</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Fetch the raw text that matched the right 
+ hand side phrase of a rule. Analogous to $raw</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="font-weight: bold;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">pncopyvars()</p>
+<p style="font-weight: bold;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">pncopyvars(aPnode)</p>
+<p style="font-weight: bold;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">pncopyvars(0)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0; font-weight: bold;">NONE</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Copy a node's variables to the suggested node 
+ of a rule match. Must be called from the POST Region and can be considered 
+ a new-style NLP++ action.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">pndeletechilds(pnode)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">NONE</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Delete children of given pnode.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;"><span>pninsert(name, pnode, 
+ after_n)</span></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">PNODE</span></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Insert nonliteral node with name into parse 
+ tree. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->If 
+ after_n == 1, insert after pnode, else if 0 then before pnode.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;">pnmakevar(pnode, var_str, 
+ val)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0; font-weight: bold;">NONE</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Make a variable for a given pnode.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">pnname(pnode)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Fetch the name of a pnode.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">pnnext(pnode)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">PNODE</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Fetch a pnode's right sibling, if any.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;">pnpushval(pnode, var_str, 
+ val)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0;">&nbsp;</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Push a value onto pnode's variable. <span 
+ style="color: #ff0000; font-weight: bold;">New in 2.7.3.2</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">pnprev(pnode)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">PNODE</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Fetch a pnode's left sibling, if any.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">pnrename(pnode, 
+ str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Rename given pnode. Returns the interned name.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;">pnreplaceval</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0; font-weight: bold;">NONE</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Replace the value of pnode's variable.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">pnroot()</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">PNODE</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Fetch the root of a parse tree.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;">pnrpushval(pnode, var_str, 
+ val)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0; font-weight: bold;">&nbsp;</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Push a value onto end of pnode's variable. 
+ <span style="color: #ff0000; font-weight: bold;">New in 2.7.3.2</span></td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;">pndown(pnode)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0; font-weight: bold;">PNODE</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Fetch the child of a parse tree node.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">pnsingletdown(pnode)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">PNODE</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Fetch the child of a parse tree node, obeying 
+ rules about going down a &quot;singlet chain.&quot; I.e., get child only 
+ if no branching and if not going past node with BASE flag set.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">pnup(pnode)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">PNODE</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Fetch a pnode's parent, if any. Only leftmost 
+ pnode in a list has a parent.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">pnvar(pnode, 
+ var_str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">ARRAY</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Fetch a pnode's variable value(s).</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;">pnvarnames(pnode)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0; font-weight: bold;">ARRAY</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Fetch a node's variable names as an array.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">varinlist(var_str, 
+ elt_num)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="font-weight: bold;">ARRAY</td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Find var_str variable's value(s) in any pnode 
+ that matched elt_numth element</td></tr>
+</table>
+
+<h2>See Also</h2>
+
+<p style="margin-bottom: 0;"><a href="Table_of_Special_Functions.htm">Special 
+ Functions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Table_of_Knowledge_Base_Functions.htm">Knowledge 
+ Base Functions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Table_of_Formatting_and_I_O_Functions.htm">Formatting 
+ and I/O Functions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Table_of_String_Functions.htm">String 
+ Functions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Table_of_Spelling_Functions.htm">Spelling 
+ Functions</a></p>
+
+</body>
+
+</html>

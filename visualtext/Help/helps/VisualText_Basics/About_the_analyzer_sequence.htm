@@ -1,0 +1,241 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>About the analyzer sequence</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=date content="08 27, 2001 4:24:25 PM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1669>
+<meta name=layout-width content=1027>
+
+
+<!--(Links)=========================================================-->
+
+<link REL="StyleSheet" HREF="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>About the Analyzer Sequence</h1>
+
+<h2>Passes</h2>
+
+<p>The analyzer sequence is a series of steps or <span style="font-weight: bold;">passes</span>, 
+ each containing its own pass algorithm. As the analyzer is run over the 
+ text, each pass is taken in the order it occurs in the sequence and executes 
+ the code and rules that are contained in it. The <span style="font-weight: bold;">Ana 
+ Tab</span> manages the analyzer sequence.</p>
+
+<p>Analyzer passes use and modify a common data structure, called a <span 
+ style="font-weight: bold;">parse tree</span>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->They 
+ may also post and use shared information in the knowledge base. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->VisualText 
+ analyzers can be very fast because they build a <span style="font-style: italic;">single</span> 
+ parse tree per text.</p>
+
+<h2><a name=sys_and_user></a>System and User Passes</h2>
+
+<p>There are two types of passes in the analyzer sequence: <span style="font-weight: bold;">system</span> 
+ or built-in passes and <span style="font-weight: bold;">user</span> passes. 
+ The first pass in the analyzer sequence is <span style="font-weight: bold;">tokenize</span> 
+ by default, which is a system pass that converts the input text to a parse 
+ tree. The tokenize pass, like all system passes, cannot be modified.</p>
+
+<p>User passes employ either the <span style="font-weight: bold;">pattern</span> 
+ (or <span style="font-weight: bold;">pat</span>) and the <span style="font-weight: bold;">recursive</span> 
+ (or <span style="font-weight: bold;">rec</span>) algorithm. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Both 
+ employ a <span style="font-weight: bold;">pass file</span>, in which the 
+ user places NLP++ code and rules.</p>
+
+<p style="color: #ff0000;"><span style="font-weight: bold;">NOTE:</span> 
+ VisualText does not provide a way to add system passes to the analyzer 
+ sequence. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->You 
+ can do this manually by exiting VisualText and editing the <span style="font-weight: bold;">analyzer.seq</span> 
+ file in the project's <span style="font-weight: bold;">spec</span> folder. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<span style="font-weight: bold;"><!--kadov_tag{{</spaces>}}-->VisualText 
+ 2.5.x.x</span> and onward provides a new tokenize pass called <span style="font-weight: bold;">dicttok</span> 
+ that uses a knowledge base to automatically put part-of-speech information 
+ on the parse tree. (Grab the three kb.* files from <span style="font-weight: bold;">bin</span> 
+ folder of TAIParse, available at our website, and put them in a new analyzer 
+ project's <span style="font-weight: bold;">bin</span> folder).</p>
+
+<p style="color: #ff0000;">If you need a customized tokenization pass to 
+ handle OCR output (already exists, commercially available in conjunction 
+ with http://www.XIEO.info)), convert HTML to plain text, or another specialized 
+ input format, TAI can help. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Contact 
+ us at support@textanalysis.com, 1-877-235-6259 USA toll free.</p>
+
+<p><span style="font-weight: bold;">dicttok</span> also puts a <span style="font-weight: bold;">CTRL</span> 
+ attribute on control characters to help manage control characters (e.g., 
+ using feature-based matching), as in the code snippet below.</p>
+
+<p style="font-size: 10pt;"><span style="color: #0000ff; font-weight: bold;">@PRE</span><br>
+&lt;2,2&gt; <span style="color: #800080; font-weight: bold;">vareq</span>(<span 
+ style="color: #ff00ff; font-weight: bold;">&quot;CTRL&quot;</span>,128); 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<span style="color: #008080;"><!--kadov_tag{{</spaces>}}--># 
+ Match ASCII 128 = €</span><span style="font-weight: bold; color: #0000ff;"><br>
+@POST</span><span style="color: #ff00ff;"><br>
+&quot;output.txt&quot;</span> &lt;&lt; <span style="color: #ff00ff;">&quot;Found 
+ ctrl = &quot;</span> &lt;&lt; <span style="font-weight: bold; color: #ff0000;">N</span>(<span 
+ style="color: #ff00ff;">&quot;$text&quot;</span>,2) &lt;&lt; &quot;\n&quot;;<span 
+ style="font-weight: bold; color: #0000ff;"><br>
+@RULES</span><span style="color: #ff0000; font-weight: bold;"><br>
+_xNIL</span> &lt;-<br>
+â<span style="color: #ff0000; font-weight: bold;"><br>
+_xCTRL</span><span style="color: #ff0000; font-weight: bold;"><br>
+_xALPHA</span><span style="font-weight: bold; color: #0000ff;"><br>
+@@</span></p>
+
+<p>will match the character (€) in the following text and output it.</p>
+
+<p><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->â€œsmall</p>
+
+<p>&nbsp;</p>
+
+<h2><a name=ordering_of_passes></a>Ordering of Passes</h2>
+
+<p>Since each pass in the analyzer typically builds upon the last one (via 
+ a common parse tree), careful attention should be given to the ordering 
+ of each pass in the sequence. When a pass creates a structure that is 
+ used by later passes, the pass is said to be <a name=feeding></a><span 
+ style="font-weight: bold;">feeding</span> them. If it removes or hides 
+ information from successive passes, it is said to be <span style="font-weight: bold;">bleeding</span>. 
+ One nice feature of VisualText is that you can create an analyzer sequence, 
+ see how it works and easily change the sequence around to suit your needs. 
+ Since the ordering of rules <span style="font-style: italic;">within</span> 
+ a pass file can also create, hide or destroy parse tree structure available 
+ for later rules and passes, careful attention should also be given to 
+ the ordering of rules within the pass file.</p>
+
+<h2><a name=pass_types></a>Pass Types</h2>
+
+<p>Pattern - The <span style="font-style: italic;">pattern</span> algorithm 
+ is the workhorse pattern-matching algorithm type used in VisualText. For 
+ each node in the currently selected phrase, each rule within the pass 
+ file is tried in turn. When a rule has matched, the pattern algorithm 
+ executes its associated code and actions, then moves onto the node following 
+ those that matched the current rule. (Notes: [1] when rules have a trigger, 
+ they are only tried if the triggered rule element will successfully match. 
+ [2] The next node to be tried after a rule match may be selected using 
+ the <span style="font-weight: bold;">lookahead</span> element action.)</p>
+
+<p>Recursive - The <span style="font-style: italic;">recursive</span> algorithm 
+ type implements a standard recursive-grammar algorithm. The nodes of the 
+ current phrase are in effect traversed repeatedly, as long as a rule in 
+ the current pass file matches. When no rules match in a phrase, then the 
+ next phrase in the parse tree is selected, till no more phrases remain 
+ to select. (Notes: [1] <span style="font-weight: bold;">noop</span> rule 
+ matches are counted as <span style="font-style: italic;">failures</span> 
+ by the Recursive algorithm, so that they won't cause an infinite loop.)</p>
+
+<h2><a name=adding_passes></a>Adding Passes to the Analyzer Sequence</h2>
+
+<p>There are several ways to add passes to the analyzer sequence. One way 
+ is to create or add the pass yourself and the other way is to have VisualText 
+ create the pass for you. An analyzer will generally contain both types 
+ of passes.</p>
+
+<h4 style="color: #008080;">Hand Building Passes</h4>
+
+<p>To create the pass yourself, you write NLP++ code and rules in the pass 
+ file used by the pass. It is also possible to add an existing pass file 
+ from another analyzer directly into your project. When you add your own 
+ passes, you use the Ana Tab. For more information on adding passes to 
+ the analyzer sequence yourself, see <a HREF="../Using_VisualText/Analyzer_Sequence/Hand-Built_Pass_Files/Adding_passes.htm">Adding 
+ Pass Files</a>.</p>
+
+<h4 style="color: #008080;">Automatically Generating Passes</h4>
+
+<p>When VisualText automatically creates a pass, it takes samples that 
+ you provide, makes generalizations from those samples and then creates 
+ the passes and the associated pass files. The automatically created passes 
+ are placed in a <span style="font-weight: bold;">stub region</span>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ process of adding samples is called <span style="font-weight: bold;">sampling</span>. 
+ Automatically generated passes can be edited, but any edits will be lost 
+ the next time the automatic rule generation (RUG) is invoked. To make 
+ changes, you will have to go through the sampling process again. The Gram 
+ Tab is used for sampling. For more information on the automatic rule generation, 
+ see <a HREF="About_Automated_Rule_Generation.htm">About Automatic Rule 
+ Generation</a>.</p>
+
+<h2><a name=inactivating></a>Inactivating a Pass in the Sequence</h2>
+
+<p>As you add new passes to the Ana Tab, they become part of the stepwise 
+ sequence executed when the text analyzer runs on an input text. It is 
+ possible to have the analyzer <span style="font-weight: bold;">skip</span> 
+ a pass in the analyzer sequence by setting the pass properties for the 
+ pass. When you inactivate a pass, you tell the analyzer to ignore the 
+ code and rules included in the pass file associated with the pass. Skipping 
+ passes can be used as a tool to debug your analyzer. For more information, 
+ see <a href="../Using_VisualText/Hand_Building_Pass_Files/Inactivating_a_pass.htm">Ina<a 
+ HREF="../Using_VisualText/Hand_Building_Pass_Files/Inactivating_a_pass.htm">ctivating 
+ Passes</a>.</a></p>
+
+<h2><a name=icons></a>Icons Used in the Analyzer Sequence</h2>
+
+<ul>
+	
+	<li class=kadov-p><p>&nbsp;<img src="dna-link.gif"
+									style="width: 18px;
+											height: 18px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=18
+									height=18
+									border=0> A DNA link denotes a user 
+ pass (if recursive, includes a letter R). Inactivated passes are indicated 
+ by a break in the chain.</p></li>
+	
+	<li class=kadov-p><p>&nbsp;<img src="stub_region.gif"
+									style="width: 13px;
+											height: 12px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=13
+									height=12
+									border=0> A red bead denotes a <span 
+ style="font-weight: bold;">stub region</span> start or end. A stub region 
+ holds automatically generated passes.</p></li>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;">&nbsp;<img src="system_pass.gif"
+	style="width: 11px;
+			height: 10px;
+			border-style: none;
+			margin-top: 0px;
+			margin-bottom: 0px;
+			margin-left: 0px;
+			margin-right: 0px;"
+	width=11
+	height=10
+	border=0> A vertical bar denotes a system pass (e.g., tokenize). </p></li>
+</ul>
+
+</body>
+
+</html>

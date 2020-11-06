@@ -1,0 +1,24 @@
+# 
+tokenize	nil	# Gen:   Convert input to token list.
+pat	XMLbaseElements	# comment
+pat	XMLLiterals	# comment
+pat	XMLbaseDefs	# comment
+pat	XMLDecl	# comment
+pat	XMLDOCTYPE	# comment
+pat	XMLNotationDeclarations	# comment
+pat	XMLExternalID	# comment
+pat	XMLEntityDefs	# comment
+pat	XMLattdefs	# comment
+pat	XMLattdefs2	# comment
+pat	XMLattdefs3	# comment
+rec	XMLdeclarationElements	# comment
+pat	XMLPCDATA	# comment
+pat	XMLdeclarationConstructors	# comment
+rec	XMLdeclarationConstructors2	# comment
+pat	XMLdeclSep	# comment
+pat	XMLdeclSep2	# comment
+pat	XMLtagElements	# comment
+pat	XMLStartingTag	# comment
+rec	XMLtagStructure	# comment
+pat	XMLSubschema	# comment
+pat	XMLOverallSchema	# comment

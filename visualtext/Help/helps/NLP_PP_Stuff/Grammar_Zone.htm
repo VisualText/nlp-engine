@@ -1,0 +1,121 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Grammar Zone</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1035>
+<meta name=layout-width content=345>
+<meta name=date content="07 26, 2001 9:18:08 AM">
+<meta name=x-ignored-words content="Minipasses;RECURSE;minipasses;recurse;abc">
+
+
+<!--(Links)=========================================================-->
+
+<link REL="StyleSheet" HREF="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Grammar Zone</h1>
+
+<p>The Grammar Zone is where you place the main rules of a pass file. </p>
+
+<p>The Grammar Zone occurs as the last zone (or possibly the only zone) 
+ of a pass file. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Unlike 
+ other zones, the Grammar Zone does not have a distinguishing marker. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--></p>
+
+<h2>Grammar Region</h2>
+
+<p>The Grammar Zone contains zero or more Grammar Regions. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ Grammar Region is where rules and actions may be written.</p>
+
+<h2>Invoking Minipasses</h2>
+
+<p>If a pass file contains RECURSE Regions, then at least one rule in the 
+ Grammar Zone must invoke a RECURSE Region to &quot;start the ball rolling&quot;, 
+ or no minipasses will ever be executed. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->See 
+ the phrase element modifier, <a href="Phrase_element_modifiers.htm#recurse">recurse</a>.)</p>
+
+<h2>Common Error: <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->No 
+ Grammar Zone with RECURSE Region</h2>
+
+<p>Since a Grammar Zone has no beginning marker, a problem can occur if 
+ a pass file looks like:</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">@RECURSE abc</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">@RULES</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">...</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">#Intended start of Grammar 
+ Zone.</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">@RULES</p>
+
+<p>In the above example, the last RULES Region is understood as part of 
+ the previous RECURSE Region, rather than as the start of the Grammar Zone. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->To obtain 
+ the right reading, the RECURSE Region terminator should be used. </p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">@RECURSE abc</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">@RULES</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">...</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">@@RECURSE</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">#Intended start of Grammar 
+ Zone.</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">@RULES</p>
+
+<h2>See Also</h2>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a HREF="About_Pass_Files.htm">About 
+ Pass Files</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a HREF="Grammar_Region.htm">Grammar 
+ Region</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="../PRE.htm">PRE 
+ Region</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="../CHECK.htm">CHECK 
+ Region</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="../POST.htm">POST 
+ Region</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="../RULES.htm">RULES 
+ Region</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+</body>
+
+</html>

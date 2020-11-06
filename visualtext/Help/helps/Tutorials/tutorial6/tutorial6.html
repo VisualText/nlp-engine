@@ -1,0 +1,1676 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>tutorial6</title>
+
+<!--(Meta)==========================================================-->
+
+<meta HTTP-EQUIV=Content-Type CONTENT="text/html; charset=windows-1252">
+<meta NAME=Author CONTENT="Phil Shinn">
+<meta name=date content="02 2, 2002 3:55:45 PM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=8757>
+<meta name=layout-width content=1027>
+<meta name=x-ignored-words content="recursiveAdj;G(;PQR">
+
+
+<!--(Links)=========================================================-->
+
+<link REL="StyleSheet" HREF="../../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Tutorial 6 - More on Rules</h1>
+
+<p>In this tutorial we will cover more details of rule construction.&nbsp; 
+ We will review rule element conditions, special rule elements and some 
+ code region rule conditions.</p>
+
+<p>The analyzer we will start with in the this tutorial, is the one that 
+ you created in Tutorial 3. If you are taking Tutorial 6 directly after 
+ Tutorial 5, you will have to close <!--kadov_tag{{<ignored>}}-->myAnalyzer<!--kadov_tag{{</ignored>}}--> 
+ before going through the steps below. (Select <span style="font-weight: bold;">Close 
+ Analyzer</span> from the File Menu.)</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Rename the <span style="font-weight: bold;"><!--kadov_tag{{<ignored>}}-->myAnalyzer<!--kadov_tag{{</ignored>}}--></span> 
+ folder in:</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">C:\<!--kadov_tag{{<ignored>}}-->apps\myAnalyzerFolder<!--kadov_tag{{</ignored>}}--></p>
+
+<p>to <span style="font-weight: bold;">myAnalyzer5</span>.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> If you saved myAnalyzer3 at the end of Tutorial 3, you 
+ can copy that and rename it to myAnalyzer.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> OR, if available, do the following. (If not available, 
+ you'll need to go through Tutorials 1, 2, and 3, executing the yellow 
+ arrow instructions.) <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Unzip 
+ the <span style="font-weight: bold;">myAnalyzer3.zip</span> located in 
+ the release directory:</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">C:\Program Files\TextAI\VisualText\docs\tutorial3\myAnalyzer3.zip</p>
+
+<p>and place the <span style="font-weight: bold;">myAnalyzer</span> folder 
+ in the working directory:</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">C:\<!--kadov_tag{{<ignored>}}-->apps\myAnalyzerFolder<!--kadov_tag{{</ignored>}}--></p>
+
+<h2><a NAME=Recursion></a>Recursion</h2>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Launch VisualText and open the <span style="font-weight: bold;"><!--kadov_tag{{<ignored>}}-->myanalyzer.ana<!--kadov_tag{{</ignored>}}--></span> 
+ file located in</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">C:\<!--kadov_tag{{<ignored>}}-->apps\myAnalyzerFolder\myAnalyzer<!--kadov_tag{{</ignored>}}--></p>
+
+<p>or select <span style="font-weight: bold;">File &gt; Recent Analyzers 
+ &gt; c:\<!--kadov_tag{{<ignored>}}-->apps\myanalyzerfolder\myanalyzer<!--kadov_tag{{</ignored>}}--></span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> In the <span style="font-weight: bold;">Ana Tab</span>, 
+ double-click on the <span style="font-weight: bold;">NP</span> pass to 
+ open it in the Workspace.</p>
+
+<p>Here are the NP rules created by the end of Tutorial 3:</p>
+
+<p><img src="npStartPass.gif"
+		x-maintain-ratio=TRUE
+		style="border-width: 1px;
+				border-style: solid;
+				width: 387px;
+				height: 385px;
+				border-left-style: Solid;
+				border-left-width: 1px;
+				border-right-style: Solid;
+				border-right-width: 1px;
+				border-top-style: Solid;
+				border-top-width: 1px;
+				border-bottom-style: Solid;
+				border-bottom-width: 1px;
+				float: none;"
+		width=387
+		height=385
+		border=1></p>
+
+<p>Our current NP pass file will work for sentences in which we have a 
+ maximum of two adjectives preceding a noun. However, for sentences in 
+ which there are more than three adjectives in succession, such as ''He's 
+ a big brown friendly dog.&quot; the rules in our NP file are insufficient. 
+ Of course, if we wanted to, we could add another rule to our NP pass file 
+ to account for this. But since there are many possibilities, our rule 
+ file would get extremely bulky. A more efficient way to handle cases like 
+ this is to use a 'recursive' pass.</p>
+
+<p>The recursive algorithm will apply the rules within each context node 
+ (i.e., each node found by a <font style="color: #0000ff;"
+									color=#0000FF>NODES</font> or <font 
+ style="color: #0000ff;"
+	color=#0000FF>PATH</font> selector) until no more matches are found. 
+ Let's create a recursive pass now to see how this works.</p>
+
+<p>We will create a new pass just after the <span style="font-weight: bold;">POSS</span> 
+ pass in the analyzer sequence.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <span style="font-weight: bold;"><span style="font-weight: normal;">In 
+ the </span>Ana</span><span style="font-weight: bold;"> Tab</span>, click 
+ on <span style="font-weight: bold;">POSS</span>, right-click and select 
+ <span style="font-weight: bold;">Add &gt; </span><span style="font-weight: bold;">New</span><span 
+ style="font-weight: bold;"> Pass</span><span style="font-weight: normal;">. 
+ (You'll see why we are placing a new pass file at this point in the analyzer 
+ sequence in a moment.)</span></p>
+
+<p>&nbsp;</p>
+
+<h2><a NAME=Set_pass_properties></a>Set Pass Properties</h2>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> In the <span style="font-weight: bold;">Pass Properties</span> 
+ dialog, name the pass <span style="font-weight: bold;"><!--kadov_tag{{<ignored>}}-->recursiveAdj<!--kadov_tag{{</ignored>}}--></span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> For Type<span style="font-weight: normal;">, </span><span 
+ style="font-weight: bold;"><span style="font-weight: normal;">select </span>Recursive. 
+ <span style="font-weight: normal;">Click </span><span style="font-weight: bold;">OK</span><span 
+ style="font-weight: normal;">.</span></span></p>
+
+<p>Notice the <font style="color: #0000ff;"
+					color=#0000FF><span style="font-weight: bold;">R</span></font> 
+ next to the new pass in the <span style="font-weight: bold;">Ana Tab</span>. 
+ This lets you know that it as a <span style="x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">r</span>ecursive 
+ pass.&nbsp;</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Double click <span style="font-weight: bold;">recursiveAdj</span> 
+ pass<span style="font-weight: normal;"> (pass #10) to open it in the Workspace</span>.&nbsp;</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Edit the pass file so that it looks like this:</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@CODE</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><span style="font-weight: bold; color: #ff0000;">L</span>(<span 
+ style="color: #ff00ff;">&quot;hello&quot;</span>) = 0;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@@CODE</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><span style="color: #0000ff; font-weight: bold;">@NODES</span> 
+ _ROOT</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@RULES</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">_adj &lt;- _adj <span style="font-weight: bold; color: #ff0000;">_xWHITE</span> 
+ _adj <span style="color: #0000ff;">@@</span></p>
+
+<p>Your Ana Tab should look like this:</p>
+
+<p><img src="anaTabWrecAdj.gif"
+		x-maintain-ratio=TRUE
+		style="border-width: 1px;
+				border-style: solid;
+				width: 192px;
+				height: 301px;
+				border-left-style: Solid;
+				border-left-width: 1px;
+				border-right-style: Solid;
+				border-right-width: 1px;
+				border-top-style: Solid;
+				border-top-width: 1px;
+				border-bottom-style: Solid;
+				border-bottom-width: 1px;
+				float: none;"
+		width=192
+		height=301
+		border=1></p>
+
+<p>This rule will recursively join adjacent adjectives (separated by a 
+ single space), so that the dominating <span style="font-weight: bold;">_adj</span> 
+ built by one instance of this rule matching becomes element one the next 
+ time this rule is matched.&nbsp; The recursion stops when no rules match.&nbsp;</p>
+
+<p><font style="color: #000000;"
+		color=#000000>The recursiveAdj pass is placed after the POSS pass 
+ so that possessives can be collected into lists of adjectives. It precedes 
+ the NP pass so that adjective lists can be collected into noun phrases. 
+ This illustrates that multi-pass text analyzers are sensitive to the ordering 
+ of passes.</font></p>
+
+<p>The rule matcher looks for context (that is, the dominating node, in 
+ this case <span style="font-weight: bold;">_ROOT</span> ) and then tries 
+ to match rules in the phrase of children under the context nodes.&nbsp; 
+ In this case, the rule matcher finds <span style="font-weight: bold;">_ROOT</span>, 
+ then finds the first instance of '<span style="font-weight: bold;">_adj 
+ </span><font style="color: #ff0000;"
+				color=#FF0000><span style="font-weight: bold;">_xWHITE</span></font><span 
+ style="font-weight: bold;"> _adj</span>'.&nbsp; It reduces this to a single 
+ <span style="font-weight: bold;">_adj</span> and then continues looking 
+ within the <span style="font-weight: bold;">_ROOT</span> context node 
+ for another match of the pattern.&nbsp; It uses the newly created <span 
+ style="font-weight: bold;">_adj</span> node as the first element of the 
+ rule and searches for an <font style="color: #ff0000;"
+								color=#FF0000><span style="font-weight: bold;">_xWHITE</span></font><span 
+ style="font-weight: bold;"> _adj</span> to complete the rest of the rule.&nbsp; 
+ As you will see below in the tree structure, the leftmost '<span style="font-weight: bold;">_adj 
+ </span><font style="color: #ff0000;"
+				color=#FF0000><span style="font-weight: bold;">_xWHITE</span></font><span 
+ style="font-weight: bold;"> _adj</span>' becomes the most deeply embedded 
+ phrase.</p>
+
+<p>When the recursive pass can no longer match rules in a phrase, the rule 
+ matcher tries to find (i.e. <span style="font-weight: bold;">select</span> 
+ via <span style="font-weight: bold;"><font style="color: #3366FF;"
+											color=#3366FF>NODES</font></span> 
+ or <span style="font-weight: bold;"><font style="color: #3366FF;"
+											color=#3366FF>PATH</font></span>) 
+ another context node that matches. If there is another string of adjectives 
+ later, the same algorithm applies.&nbsp; When this finishes, the rule 
+ matcher looks for another context node.&nbsp; In this case, there is only 
+ one context node <span style="font-weight: bold;">_ROOT</span> in the 
+ parse tree, so the algorithm stops here.&nbsp; In a slightly different 
+ situation, where the context node was not <span style="font-weight: bold;">_ROOT</span> 
+ but rather a node name that appeared more than once in the parse tree, 
+ the recursive algorithm would apply to each of those context nodes. (This 
+ selection mechanism is also used by the nonrecursive <span style="font-weight: bold;">pat</span> 
+ algorithm.)</p>
+
+<p>What happens with a <span style="font-weight: bold;">noop</span> rule, 
+ i.e., one that does consume a phrase of nodes to build a new dominating 
+ node? The recursive algorithm pretends that a noop rule has failed and 
+ keeps looking in the phrase for a &quot;real&quot; rule match, i.e., one 
+ that modifies the parse tree. Had the noop rule match been counted a success, 
+ the recursive algorithm would fail to terminate (i.e., it would be in 
+ an infinite loop) whenever it matched a noop rule. (There are several 
+ other ways to get into an infinite grammar loop, as you may discover!)</p>
+
+<h2><a NAME=simplify_np></a>Simplify NP Rule</h2>
+
+<p>Look at the sequence of passes in our analyzer. Notice that <span style="font-weight: bold;">recursiveAdj</span> 
+ occurs before the <span style="font-weight: bold;">NP</span> pass. Since 
+ the analyzer goes from pass to pass along the chain, instances of multiple 
+ adjectives occurring together will be handled by the <span style="font-weight: bold;">recursiveAdj</span> 
+ pass making some of the rules in our NP pass file redundant.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Edit the <span style="font-weight: bold;">NP</span> pass 
+ file so that the first rule (the rule highlighted below) is deleted from 
+ the file:</p>
+
+<p><img src="npFirstRuleOut.gif"
+		x-maintain-ratio=TRUE
+		style="border-width: 1px;
+				border-style: solid;
+				width: 366px;
+				height: 378px;
+				border-left-style: Solid;
+				border-left-width: 1px;
+				border-right-style: Solid;
+				border-right-width: 1px;
+				border-top-style: Solid;
+				border-top-width: 1px;
+				border-bottom-style: Solid;
+				border-bottom-width: 1px;
+				float: none;"
+		width=366
+		height=378
+		border=1></p>
+
+<p>To test our recursive adjective rule, let's create a new text file with 
+ lots of adjectives.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> In the <span style="font-weight: bold;">Text Tab</span> 
+ window, right click and select <span style="font-weight: bold;">Add &gt; 
+ New Text File</span>.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Name the file <span style="font-weight: bold;">eg2.txt</span><span 
+ style="font-weight: normal;">. Add the following sentence:</span></p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">John gave the quick little brown fox's baby's yellow book to Mary.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Click the <span style="font-weight: bold;">Run</span> 
+ button to run the analyzer.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Right click on <span style="font-weight: bold;">eg2.txt</span> 
+ in the Workspace and select <span style="font-weight: bold;">View &gt; 
+ Parse Tree</span>.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Under the second <span style="font-weight: bold;">_NP</span> 
+ node, expand the <span style="font-weight: bold;">_adj</span> node to 
+ see the effect of the recursive algorithm:</p>
+
+<p><img src="adjParseTree.gif"
+		x-maintain-ratio=TRUE
+		style="border-width: 1px;
+				border-style: solid;
+				width: 438px;
+				height: 396px;
+				border-left-style: Solid;
+				border-left-width: 1px;
+				border-right-style: Solid;
+				border-right-width: 1px;
+				border-top-style: Solid;
+				border-top-width: 1px;
+				border-bottom-style: Solid;
+				border-bottom-width: 1px;
+				float: none;"
+		width=438
+		height=396
+		border=1></p>
+
+<h2><a NAME=better_list></a>A Better List</h2>
+
+<p>There's a way to build a more efficient and compact list, such as the 
+ list of adjectives that we have built up to this point.<font style="color: #000000;"
+	color=#000000> Also, to reflect the difference between a lone adjective 
+ and an adjective list, we'll create a new <span style="font-weight: normal;">nonliteral, 
+ or abstract name, </span>called <span style="font-weight: bold;">_adjlist</span>.</font></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Edit the <span style="font-weight: bold;">recursiveAdj</span> 
+ pass file to look like:</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@CODE</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><span style="font-weight: bold; color: #ff0000;">L</span>(<span 
+ style="color: #ff00ff;">&quot;hello&quot;</span>) = 0;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@@CODE</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><span style="font-weight: bold; color: #0000ff;">@NODES</span> 
+ _ROOT</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			color: #0000ff;
+			font-weight: bold;">@RULES</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><span style="color: #008000;">#_adj 
+ &lt;- _adj _xWHITE _adj</span> <span style="color: #0000ff;">@@</span></p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">_adjlist [<span style="color: #a76ff2; font-weight: bold;">base</span>] 
+ &lt;- _adj <span style="color: #0000ff;">@@</span></p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@POST</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="color: #7c00a6;"><!--kadov_tag{{</spaces>}}-->listadd</span>(1,3, 
+ <span style="color: #ff00ff; font-weight: normal;">&quot;false&quot;</span>);</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@RULES</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><span style="font-weight: bold; color: #ff0000;">_xNIL</span> 
+ &lt;- _adjlist <span style="color: #ff0000; font-weight: bold;">_xWHITE</span> 
+ _adj <span style="color: #0000ff;">@@</span></p>
+
+<p>The first rule (<span style="font-family: Arial, sans-serif;">_adjlist 
+ [</span><span style="font-weight: bold;
+						font-family: Arial, sans-serif;
+						color: #a76ff2;">base</span><span style="font-family: Arial, sans-serif;">] 
+ &lt;- _adj</span>) builds an adjective list from one adjective. The second 
+ rule (<font style="color: #ff0000;"
+			color=#FF0000><span style="font-weight: bold; font-family: Arial, sans-serif;">_xNIL</span></font><span 
+ style="font-family: Arial, sans-serif;"> &lt;- adjlist </span><span style="font-weight: bold;"><font 
+ style="color: #ff0000; font-family: Arial, sans-serif;"
+	color=#FF0000
+	face=Arial>_xWHITE</font></span><span style="font-family: Arial, sans-serif;"> 
+ _adj</span>) uses a special reduce action called<font style="color: #800080;"
+														color=#800080> 
+ </font><font><span style="font-weight: bold; color: #7c00a6;">listadd</span></font><span 
+ style="color: #7c00a6;"> </span>in order to extend an adjective list with 
+ one adjective node. Rather than building a new list node, <span style="font-weight: bold;"><font 
+ style="color: #800080;"
+	color=#800080>listadd</font></span> places the new <span style="font-weight: bold;">_adj</span> 
+ node under the list of nodes already collected under the <span style="font-weight: bold;">_adjlist</span> 
+ node. The arguments to <span style="font-weight: bold;"><font style="color: #800080;"
+	color=#800080>listadd</font></span> are</p>
+
+<p><span style="font-weight: bold;"><font style="color: #800080;"
+											color=#800080>listadd</font></span>(&lt;element 
+ number of the list node&gt;, &lt;element number of the new element to 
+ add to list&gt;, &lt;true/false to also collect nodes between the list 
+ node and new element node.)</p>
+
+<p>The <span style="font-weight: bold; color: #b298e2;">base</span> attribute 
+ in the first rule keeps the recursive algorithm from finding <span style="font-weight: bold;">_adj</span> 
+ within <span style="font-weight: bold;">_adjlist</span> and getting stuck 
+ in an infinite loop. It's not strictly necessary in the rule as written, 
+ but would be necessary if written as</p>
+
+<p>_adjlist [<span style="font-weight: bold;"><font style="color: #958ADD;"
+													color=#958ADD>base</font></span>] 
+ &lt;- _adj [<span style="font-weight: bold;"><font style="color: #9D9DDD;"
+													color=#9D9DDD>s</font></span>]<font 
+ style="color: #0000ff;"
+	color=#0000FF><span style="font-weight: bold;"> @@</span></font></p>
+
+<p><span style="font-weight: normal;"><font style="color: #000000;"
+											color=#000000>where the element 
+ action </font></span><font style="color: #958ADD;"
+							color=#958ADD><span style="font-weight: bold;">s</span></font><span 
+ style="font-weight: normal;"><font style="color: #000000;"
+									color=#000000> (for </font></span><font 
+ style="color: #958ADD;"
+	color=#958ADD><span style="font-weight: bold;">singlet</span></font><span 
+ style="font-weight: normal;"><font style="color: #000000;"
+									color=#000000>) leads to finding</font></span><font 
+ style="color: #000000;"
+	color=#000000><span style="font-weight: bold;"> _adj</span></font><span 
+ style="font-weight: normal;"><font style="color: #000000;"
+									color=#000000> even when it is buried 
+ <span style="font-style: italic;">under</span> </font></span><font style="color: #000000;"
+	color=#000000><span style="font-weight: bold;">_adjlist</span></font><span 
+ style="font-weight: normal;"><font style="color: #000000;"
+									color=#000000>.</font></span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> If not enabled, select the <span style="font-weight: bold;">Toggle 
+ Generate Logs </span>button on the toolbar.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Run the analyzer on <span style="font-weight: bold;">eg2.txt</span>.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Select the <span style="font-weight: bold;">recursiveAdj 
+ </span>pass in the analyzer sequence. Then right click on <span style="font-weight: bold;">eg2.txt</span> 
+ in the Workspace and <span style="font-weight: bold;">View &gt; Parse 
+ Tree</span><span style="font-weight: normal;">.</span><span style="font-weight: bold;"> 
+ </span><span style="font-weight: normal;">Notice how all of the adjectives 
+ are now part of</span><span style="font-weight: bold;"> _adjlist</span><span 
+ style="font-weight: normal;">.</span></p>
+
+<p><img src="recAdjBetterlist.gif"
+		x-maintain-ratio=TRUE
+		style="border-width: 1px;
+				border-style: solid;
+				width: 385px;
+				height: 391px;
+				border-left-style: Solid;
+				border-left-width: 1px;
+				border-right-style: Solid;
+				border-right-width: 1px;
+				border-top-style: Solid;
+				border-top-width: 1px;
+				border-bottom-style: Solid;
+				border-bottom-width: 1px;
+				float: none;"
+		width=385
+		height=391
+		border=1></p>
+
+<p>This version of the adjective list is more practically useful than the 
+ first form we built. It's more compact, easier to read, faster and easier 
+ to traverse. The philosophy underlying NLP++ is to support similar engineering 
+ of text analyzers in enhanced ways wherever feasible.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> To integrate <span style="font-weight: bold;">_adjlist</span> 
+ into the analyzer, edit the first <span style="font-weight: bold;">_NP</span> 
+ rule in the <span style="font-weight: bold;">NP</span> pass file to use 
+ _adjlist instead of _adj.</p>
+
+<p>The first rule in your NP pass file should look like this:</p>
+
+<p style="font-family: monospace;">_NP &lt;- _det <span style="font-weight: bold;"><font 
+ style="color: #ff0000;"
+	color=#FF0000>_xWHITE</font></span> <span style="font-weight: bold;">_adjlist</span> 
+ <font style="color: #ff0000;"
+		color=#FF0000><span style="font-weight: bold;">_xWHITE</span></font> 
+ _noun <font style="color: #0000ff;"
+			color=#0000FF><span style="font-weight: bold;">@@</span></font></p>
+
+<p>&nbsp;</p>
+
+<h2><a NAME=optional_elements></a>Optional Rule Elements</h2>
+
+<p>You just learned how to create a recursive pass file. We made the recursiveAdj 
+ pass file so that we could account for multiple adjectives such as 'the 
+ big brown friendly dog' without having to write individual rules to cover 
+ the number of different possible ways adjectives can be used in sentences. 
+ One other way to optimize rules is by using the optional element modifier<span 
+ style="font-weight: bold;"> </span>[<span><font style="color: #b298e2; font-weight: bold;"
+												color=#B298E2>opt</font></span>]. 
+ Though it is possible to specify every variant of the same basic rule, 
+ we can cut down on the number of rules in a pass file by using [<font 
+ style="color: #b298e2; font-weight: bold;"
+	color=#B298E2>opt</font>]. Some might argue that optional rule elements 
+ make the rules less comprehensible. Nevertheless, they can be useful for 
+ development, and in some situations may even help to clarify the rules.</p>
+
+<p>For example, the first rule of our NP pass file has two optional elements, 
+ <span style="font-weight: bold;">_adjlist</span> (an adjective) and <span 
+ style="font-weight: bold; color: #ff0000;">_xWHITE</span> (a white space). 
+ You can rewrite the rule to indicate that these two elements are optional 
+ like this:</p>
+
+<p style="font-family: monospace;">NP &lt;- _det <span style="font-weight: bold;"><font 
+ style="color: #ff0000;"
+	color=#FF0000>_xWHITE</font></span> <span style="font-weight: bold;">_</span>adjlist 
+ [<font style="color: #b298e2; font-weight: bold;"
+		color=#B298E2>opt</font>] <font style="color: #ff0000;"
+										color=#FF0000><span style="font-weight: bold;">_xWHITE 
+ </span></font>[<font style="color: #b298e2; font-weight: bold;"
+						color=#B298E2>opt</font>] _noun <font style="color: #0000ff;"
+	color=#0000FF><span style="font-weight: bold;">@@</span></font></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Edit the first rule of your <span style="font-weight: bold;">NP</span> 
+ pass file using the [<font style="color: #b298e2; font-weight: bold;"
+							color=#B298E2>opt</font>] element modifier.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> While we are at it, go ahead and eliminate the second 
+ rule in the <span style="font-weight: bold;">NP</span> pass file since 
+ the rule is now redundant with the first rule. That is, the rule <span 
+ style="font-weight: bold;">_NP</span> &lt;- <span style="font-weight: bold;">_det</span> 
+ <font style="color: #ff0000; font-weight: bold;"
+		color=#FF0000>_xWHITE</font> <span style="font-weight: bold;">_noun</span> 
+ is now contained or covered by the first rule.</p>
+
+<p>Your NP pass file should look like this:</p>
+
+<p><img src="twoRuleNP.gif"
+		x-maintain-ratio=TRUE
+		style="border-width: 1px;
+				border-style: solid;
+				width: 444px;
+				height: 245px;
+				border-left-style: Solid;
+				border-left-width: 1px;
+				border-right-style: Solid;
+				border-right-width: 1px;
+				border-top-style: Solid;
+				border-top-width: 1px;
+				border-bottom-style: Solid;
+				border-bottom-width: 1px;
+				float: none;"
+		width=444
+		height=245
+		border=1></p>
+
+<p>Optional elements that place conditions on rule elements such as [<font 
+ style="color: #b298e2; font-weight: bold;"
+	color=#B298E2>opt</font>] must be contained in square brackets. See 
+ <a HREF="../../NLP_PP_Stuff/Phrase_element_modifiers.htm">Phrase Element 
+ Modifiers</a> for more information on [<font style="color: #b298e2; font-weight: bold;"
+												color=#B298E2>opt</font>] 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->and other 
+ modifiers that can be used with rule elements.</p>
+
+<h2><a NAME=xwild></a>Special Rule Elements - Variables</h2>
+
+<p>We've already seen some of the conditions that the automatic rule generator 
+ uses.</p>
+
+<p>For example, in the verb rule below:</p>
+
+<p><img src="verbPass.gif"
+		x-maintain-ratio=TRUE
+		style="border-width: 1px;
+				border-style: solid;
+				width: 510px;
+				height: 182px;
+				border-left-style: Solid;
+				border-left-width: 1px;
+				border-right-style: Solid;
+				border-right-width: 1px;
+				border-top-style: Solid;
+				border-top-width: 1px;
+				border-bottom-style: Solid;
+				border-bottom-width: 1px;
+				float: none;"
+		width=510
+		height=182
+		border=1></p>
+
+<p>there's a list of conditions in the square brackets.</p>
+
+<p><font style="color: #ff0000;"
+		color=#FF0000>&nbsp;<span style="font-weight: bold;">_xWILD</span> 
+ </font>is a special rule element, and very useful.&nbsp; It behaves like 
+ any other rule element, such as <span style="font-weight: bold;">_NP</span> 
+ or <span style="font-weight: bold;">_verb</span>, in the sense that the 
+ text of that element can be extracted, or the node operated on, but special 
+ rule elements have&nbsp;properties that make writing rules easy.</p>
+
+<p>The rule element <font style="color: #ff0000; font-weight: bold;"
+							color=#FF0000>_xWILD</font> is an unrestricted 
+ wildcard and will match zero or more tokens.&nbsp; For example, in a rule 
+ like</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><font style="color: #000000;"
+											color=#000000>_foo &lt;- four </font><font style="color: #ff0000;"
+	color=#FF0000>_xWILD </font><font style="color: #000000;"
+										color=#000000>seven </font><font style="color: #3366FF;"
+	color=#3366FF>@@</font></p>
+
+<p><font style="color: #000000;"
+		color=#000000>a phrase of nodes in the parse tree corresponding 
+ to 'four five six seven' would match and the new node _foo would be created.</font></p>
+
+<p><font style="color: #000000;"
+		color=#000000>In the rule</font></p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><font style="color: #000000;"
+											color=#000000>_verb &lt;- </font><font style="color: #ff0000;"
+	color=#FF0000>_xWILD</font><font style="color: #000000;"
+									color=#000000> [</font><font style="color: #3366FF;"
+	color=#3366FF>min</font><font style="color: #000000;"
+									color=#000000>=1 </font><font style="color: #3366FF;"
+	color=#3366FF>max</font><font style="color: #000000;"
+									color=#000000>=1 </font><font style="color: #3366FF;"
+	color=#3366FF>s match</font><font style="color: #000000;"
+										color=#000000>=(</font><font style="color: #CC33CC;"
+	color=#CC33CC>&quot;gave&quot; &quot;jumped&quot; &quot;kissed&quot;</font><font style="color: #000000;"
+	color=#000000>)] </font><font style="color: #3366FF;"
+									color=#3366FF>@@</font></p>
+
+<p>what <font style="color: #ff0000; font-weight: bold;"
+				color=#FF0000>_xWILD</font> can&nbsp;match is specified 
+ in a match list. The list of possible matches for <span style="font-weight: bold; color: #ff0000;">_xWILD</span> 
+ are <span style="font-weight: bold;">gave</span>, <span style="font-weight: bold;">jumped</span> 
+ and <span style="font-weight: bold;">kissed</span>.</p>
+
+<p><font style="color: #ff0000; font-weight: bold;"
+		color=#FF0000>_xWILD</font> is a unique rule element in that what 
+ it matches depends on the element following it in a rule. By contrast, 
+ <font style="color: #ff0000;"
+		color=#FF0000><span style="font-weight: bold;">_xANY</span> </font>(which 
+ matches any single node) in the following rule</p>
+
+<p style="font-family: monospace;">_ABC &lt;- PQR <span style="font-weight: bold;">_<font 
+ style="color: #ff0000; font-weight: bold;"
+	color=#FF0000>xANY</font></span> [<font style="color: #3366FF;"
+											color=#3366FF><span style="font-weight: bold;">min</span></font>=1 
+ <span style="font-weight: bold;"><font style="color: #3366FF;"
+										color=#3366FF>max</font></span>=5] 
+ XYZ <font style="color: #3366FF;"
+			color=#3366FF><span style="font-weight: bold;">@@</span></font></p>
+
+<p>will <span style="font-style: italic;">greedily</span> gobble up any 
+ XYZ node that it encounters, possibly failing though it &quot;could&quot; 
+ have matched. Only <font style="color: #ff0000; font-weight: bold;"
+							color=#FF0000>_xWILD</font> knows how to &quot;back 
+ up&quot; to make such a rule match succeed.</p>
+
+<p>&nbsp;</p>
+
+<h2><a NAME=matchList></a>Match List</h2>
+
+<p>If the match list were absent, this rule would match any single node.&nbsp; 
+ Items in the match list can be literals, as is the case in this rule, 
+ but they can also be nonliterals, such as <span style="font-weight: bold;">_NP</span> 
+ or <span style="font-weight: bold;">_noun</span>.&nbsp;<a NAME=min></a> 
+ <font style="color: #3366FF;"
+		color=#3366FF><span style="font-weight: bold;">min</span></font>=1 
+ means match a minimum of 1 element. <font style="color: #3366FF;"
+											color=#3366FF><span style="font-weight: bold;">min</span></font>=0 
+ would mean the current element is optional, and is the same as using <span 
+ style="font-weight: bold;"><font style="color: #3366FF;"
+									color=#3366FF>opt</font></span>.&nbsp;<a 
+ NAME=max></a><font style="color: #3366FF;"
+					color=#3366FF><span style="font-weight: bold;">max</span></font>=1 
+ means match a maximum of 1 element. <font style="color: #3366FF;"
+											color=#3366FF><span style="font-weight: bold;">max</span></font>=0 
+ means the current element can match an indefinite number of nodes.&nbsp; 
+ In addition to the match list, there is also a <span style="font-weight: bold;">fail</span> 
+ list, which uses the same syntax ('fail=(&quot;X&quot;, &quot;Y&quot;, 
+ &quot;Z&quot;)') but means fail to match the rule if any of the listed 
+ items are present in the input. The element modifiers fail and match are 
+ further discussed in the <a HREF="../../NLP_PP_Stuff/Phrase_element_modifiers.htm">Phrase 
+ Element Modifiers</a> topic.</p>
+
+<h2><a NAME=special_rule_elements></a><font style="color: #008080;"
+											color=#008080>Special Rule 
+ Elements</font></h2>
+
+<p><font style="color: #000000;"
+		color=#000000>Here is a list of the special rule elements in NLP++.</font></p>
+
+<p style="margin-bottom: 0;">&nbsp;</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				margin-top: 14pt;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 0px;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=100%
+		border=1>
+<col style="width: 19.665%;">
+<col style="width: 80.335%;">
+
+<tr>
+<td style="width: 19.665%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=19.665%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Rule Element</span></td>
+<td style="width: 80.335%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=80.335%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Description</span></td></tr>
+
+<tr>
+<td style="width: 19.665%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=19.665%>
+<p style="margin-bottom: 0;
+			color: #ff0000;
+			font-weight: bold;">_xWILD</td>
+<td style="width: 80.335%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=80.335%>
+<p style="margin-bottom: 0;">Matches any nodes and any number of nodes. 
+ An intelligent matcher that is &quot;back up aware.&quot;</td></tr>
+
+<tr>
+<td style="width: 19.665%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=19.665%>
+<p style="margin-bottom: 0;"><a NAME=_xANY></a><font style="color: #ff0000; font-weight: bold;"
+													color=#FF0000>_xANY</font></td>
+<td style="width: 80.335%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=80.335%>
+<p style="margin-bottom: 0;">Matches any single token. A dumb or greedy 
+ matcher that can't &quot;back up&quot; the way <font style="color: #ff0000; font-weight: bold;"
+														color=#FF0000>_xWILD</font> 
+ can.</td></tr>
+
+<tr>
+<td style="width: 19.665%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=19.665%>
+<p style="margin-bottom: 0;"><a NAME=_xALPHA></a><font style="color: #ff0000; font-weight: bold;"
+														color=#FF0000>_xALPHA</font></td>
+<td style="width: 80.335%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=80.335%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000>Matches an alphabetic 
+ token.</font></td></tr>
+
+<tr>
+<td style="width: 19.665%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=19.665%>
+<p style="margin-bottom: 0;"><a NAME=_xNUM></a><font style="color: #ff0000; font-weight: bold;"
+													color=#FF0000>_xNUM</font></td>
+<td style="width: 80.335%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=80.335%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000>Matches a numeric token.</font></td></tr>
+
+<tr>
+<td style="width: 19.665%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=19.665%>
+<p style="margin-bottom: 0;"><a NAME=_xPUNCT></a><font style="color: #ff0000; font-weight: bold;"
+														color=#FF0000>_xPUNCT</font></td>
+<td style="width: 80.335%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=80.335%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000>Matches a punctuation 
+ token.</font></td></tr>
+
+<tr>
+<td style="width: 19.665%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=19.665%>
+<p style="margin-bottom: 0;"><a NAME=_xWHITE></a><font style="color: #ff0000; font-weight: bold;"
+														color=#FF0000>_xWHITE</font></td>
+<td style="width: 80.335%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=80.335%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000>Matches a whitespace 
+ token, including newline.</font></td></tr>
+
+<tr>
+<td style="width: 19.665%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=19.665%>
+<p style="margin-bottom: 0;"><a NAME=_xBLANK></a><font style="color: #ff0000; font-weight: bold;"
+														color=#FF0000>_xBLANK</font></td>
+<td style="width: 80.335%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=80.335%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000>Matches a whitespace 
+ token, excluding newline. Equivalent to _xWILD [<!--kadov_tag{{<ignored>}}-->match=(\<!--kadov_tag{{</ignored>}}--> 
+ \t)]</font></td></tr>
+
+<tr>
+<td style="width: 19.665%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=19.665%>
+<p style="margin-bottom: 0;"><a NAME=_xCAP></a><font><span style="font-weight: bold;">_</font><font 
+ style="color: #ff0000; font-weight: bold;"
+	color=#FF0000>xCAP</font></span></td>
+<td style="width: 80.335%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=80.335%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000>Matches an alphabetic 
+ with uppercase first letter.</font></td></tr>
+
+<tr>
+<td style="width: 19.665%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=19.665%>
+<p style="margin-bottom: 0;"><a NAME=_xEOF></a><font style="color: #ff0000; font-weight: bold;"
+													color=#FF0000>_xEOF</font></td>
+<td style="width: 80.335%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=80.335%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000>Matches the end of file.</font></td></tr>
+
+<tr>
+<td style="width: 19.665%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=19.665%>
+<p style="margin-bottom: 0;"><a NAME=_xSTART></a><font style="color: #ff0000; font-weight: bold;"
+														color=#FF0000>_xSTART</font></td>
+<td style="width: 80.335%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=80.335%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000>Matches if at the start 
+ of a phrase in the parse tree.</font></td></tr>
+
+<tr>
+<td style="width: 19.665%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=19.665%>
+<p style="margin-bottom: 0;"><a NAME=_xEND></a><font style="color: #ff0000; font-weight: bold;"
+													color=#FF0000>_xEND</font></td>
+<td style="width: 80.335%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=80.335%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000>Matches if at the end 
+ of a phrase in the parse tree.</font></td></tr>
+</table>
+
+<p>We'll use <font style="color: #ff0000; font-weight: bold;"
+					color=#FF0000>_xALPHA</font> in our next example.</p>
+
+<h2><a NAME=pass_regions></a>Pass Regions</h2>
+
+<p>In the previous tutorials, you were introduced to some of the different 
+ regions of a pass file, namely <font style="color: #0000ff;"
+										color=#0000FF>POST</font> and <font 
+ style="color: #0000ff;"
+	color=#0000FF>RULES</font>. We also briefly saw what the <font style="color: #0000ff;"
+	color=#0000FF>PRE</font> Region does in Tutorial 4. These different 
+ regions are used to control the application of rules in a pass file. Here 
+ we will summarize these three regions and also introduce a new region, 
+ the <font style="color: #0000ff;"
+			color=#0000FF>CHECK <span style="color: #000000;">Region</span></font>. 
+ These are the main regions used in pass files.</p>
+
+<ul>
+	
+	<li class=kadov-p><p><font style="color: #3366FF;"
+								color=#3366FF>PRE</font><font style="color: #000000;"
+	color=#000000> - Additional conditions on the matching of individual 
+ rule elements.</font></p></li>
+	
+	<li class=kadov-p><p><font style="color: #3366FF;"
+								color=#3366FF>CHECK</font><font style="color: #000000;"
+	color=#000000> - When a rule has matched, these actions check self-consistency 
+ and/or build semantic data. These actions can be used to reject a rule 
+ match.</font></p></li>
+	
+	<li class=kadov-p><p><font style="color: #3366FF;"
+								color=#3366FF>POST</font><font style="color: #000000;"
+	color=#000000>&nbsp; - Actions that operate once a rule match has been 
+ accepted. Parse tree modifications (e.g., reduce actions) are typically 
+ performed here.</font></p></li>
+	
+	<li class=kadov-p><p><font style="color: #3366FF;"
+								color=#3366FF>RULES</font><font style="color: #000000;"
+	color=#000000> -&nbsp; Subregion containing the actual rules that are 
+ subject to immediately preceding PRE,CHECK, and POST subregions.</font></p></li>
+</ul>
+
+<p><font style="color: #000000;"
+		color=#000000>Each region has a set of begin and end markers for 
+ it: </font><font style="color: #3366FF;"
+					color=#3366FF>@PRE</font><font style="color: #000000;"
+													color=#000000> and</font><font 
+ style="color: #958ADD;"
+	color=#958ADD> </font><font style="color: #3366FF;"
+								color=#3366FF>@@PRE</font><font style="color: #958ADD;"
+	color=#958ADD>, </font><font style="color: #3366FF;"
+								color=#3366FF>@CHECK</font><font style="color: #000000;"
+	color=#000000> and</font><font style="color: #958ADD;"
+									color=#958ADD> </font><font style="color: #3366FF;"
+	color=#3366FF>@@CHECK</font><font style="color: #958ADD;"
+										color=#958ADD>, </font><font style="color: #3366FF;"
+	color=#3366FF>@POST</font><font style="color: #958ADD;"
+									color=#958ADD> </font><font style="color: #000000;"
+	color=#000000>and</font><font style="color: #958ADD;"
+									color=#958ADD> </font><font style="color: #3366FF;"
+	color=#3366FF>@@POST</font><font style="color: #958ADD;"
+									color=#958ADD>, </font><font style="color: #3366FF;"
+	color=#3366FF>@RULES</font><font style="color: #958ADD;"
+									color=#958ADD> </font><font style="color: #000000;"
+	color=#000000>and</font><font style="color: #958ADD;"
+									color=#958ADD> </font><font style="color: #3366FF;"
+	color=#3366FF>@@RULES</font><font style="color: #000000;"
+										color=#000000>. </font>You may 
+ wonder why we have not been using the end markers in the pass files we 
+ have been editing. The use of end markers is optional when writing pass 
+ files<font style="color: #000000;"
+			color=#000000>. Some people like using the end markers to make 
+ the pass file easier to read. This is a matter of personal preference.</font></p>
+
+<p><font style="color: #000000;"
+		color=#000000>&nbsp;In the next example, we will use the </font><font 
+ style="color: #3366FF;"
+	color=#3366FF>PRE</font><font style="color: #000000;"
+									color=#000000> Region to control the 
+ application of a rule. The PRE Region along with CHECK, POST and RULES 
+ make up the Grammar Region of a pass file. See the <a HREF="../../NLP_PP_Stuff/Grammar_Region.htm">Grammar 
+ Region</a> topic for more information.</font></p>
+
+<p>&nbsp;</p>
+
+<h2><a NAME=acrobyms></a>Finding Unknown Acronyms - PRE Region</h2>
+
+<p>The <span style="color: #0000ff;">PRE</span> Region places conditions 
+ on individual rule elements and operates during the rule matching of a 
+ rule. Suppose we want to add to our system the capability to categorize 
+ unknown words.&nbsp; Given the sentence, 'The <!--kadov_tag{{<ignored>}}-->XZY<!--kadov_tag{{</ignored>}}--> 
+ took the <!--kadov_tag{{<ignored>}}-->QRS<!--kadov_tag{{</ignored>}}--> 
+ to <!--kadov_tag{{<ignored>}}-->LMNO<!--kadov_tag{{</ignored>}}-->&quot; 
+ we might infer that the capitalized phrases, <!--kadov_tag{{<ignored>}}-->XZY<!--kadov_tag{{</ignored>}}-->, 
+ <!--kadov_tag{{<ignored>}}-->QRS<!--kadov_tag{{</ignored>}}--> and <!--kadov_tag{{<ignored>}}-->LMNO<!--kadov_tag{{</ignored>}}--> 
+ were nouns.&nbsp; (Basically, any uppercase word of a certain size is 
+ likely to be an acronym, and a noun.) We can set up the conditions in 
+ the <span style="color: #0000ff;">PRE</span> Region so that words in all 
+ capital letters are identified as nouns. To illustrate this, we will have 
+ to create another pass in the analyzer sequence. We'll place it before 
+ the POSS pass, since we're building nouns that can potentially be used 
+ in possessive constructs (e.g., &quot;IBM's software&quot;).</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <font style="color: #000000;"
+						color=#000000>In the <span style="font-weight: bold;">Ana 
+ Tab</span>, create a new pass</font><span><font style="color: #000000;"
+												color=#000000><span style="font-weight: normal;"> 
+ just before </span></font></span><font style="color: #000000;"
+										color=#000000><span><span style="font-weight: normal;">the 
+ POSS</span></span> pass. (Sel<span style="font-weight: normal;">ect </span><span 
+ style="font-weight: bold;"><!--kadov_tag{{<ignored>}}-->end_words<!--kadov_tag{{</ignored>}}--></span></font><span 
+ style="font-weight: bold;"><font style="color: #000000;"
+									color=#000000>. </font></span><font 
+ style="color: #000000;"
+	color=#000000><span style="font-weight: normal;">Right click, </span><span 
+ style="font-weight: bold;">Add &gt; New Pass</span>)</font></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <font style="color: #000000;"
+						color=#000000>Name the pass, <span style="font-weight: bold;">Acronyms</span>. 
+ Leave <span style="font-weight: bold;">Type</span>: as <span style="font-weight: bold;">Pattern</span><span 
+ style="font-weight: normal;"> and click </span></font><span style="font-weight: bold;"><font 
+ style="color: #000000;"
+	color=#000000>OK</font></span><font style="color: #000000;"
+										color=#000000><span style="font-weight: normal;">.</span></font></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <font style="color: #000000;"
+						color=#000000>Double click the <span style="font-weight: bold;">Acronym</span> 
+ pass and edit so that it looks like this:</font></p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@CODE</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><span style="font-weight: bold; color: #ff0000;">L</span>(<span 
+ style="color: #ff00ff;">&quot;hello&quot;</span>) = 0;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			color: #0000ff;
+			font-weight: bold;">@@CODE</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><span style="font-weight: bold; color: #0000ff;">@NODES</span> 
+ _ROOT</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@PRE</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->&lt;1,1&gt; 
+ <span style="color: #800080; font-weight: bold;">uppercase</span>();</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->&lt;1,1&gt; 
+ <span style="font-weight: bold; color: #800080;">lengthr</span>(3,10);</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@RULES</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">_noun &lt;- <span style="color: #ff0000; font-weight: bold;">_xALPHA</span> 
+ <span style="color: #0000ff;">@@</span></p>
+
+<p>Let's look at the conditions in the <font style="color: #0000ff;"
+											color=#0000FF>PRE</font> Region.</p>
+
+<p><font style="font-family: monospace;"
+		face=monospace><span style="font-family: monospace;">&lt;1,1&gt;</span><span 
+ style="font-weight: bold; font-family: monospace;"> </span></font><font><span 
+ style="font-weight: bold;
+		font-family: monospace;
+		color: #800080;">u</font>ppercase</span><span style="font-family: monospace;">();</span> 
+ means 'from the first element to the first element of the rule, the elements 
+ must be all uppercase in order for this rule to match.'&nbsp;<span style="font-family: monospace;"><br>
+&lt;1,1&gt; l</span><span style="font-weight: bold;
+									font-family: monospace;
+									color: #800080;">engthr</span><span 
+ style="font-family: monospace;">(3,10);</span> means from the 'first element 
+ to the first element, the element must be a minimum of three characters 
+ long and a maximum of 10.'&nbsp;</p>
+
+<p>In other words, if <span style="font-weight: bold; color: #ff0000;">_xALPHA</span> 
+ (the first element of our rule) is composed of uppercase letters, and 
+ is between three and ten characters long, create a dominating node named 
+ <span style="font-weight: bold;">_noun</span>.</p>
+
+<p>Both <span style="font-weight: bold;
+						font-family: monospace;
+						color: #800080;">uppercase</span> and <span style="font-weight: bold;
+	color: #800080;
+	font-family: monospace;">lengthr</span> are special NLP++ functions 
+ and are called &quot;PRE Actions&quot;. You'll learn more about these 
+ later.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <font style="color: #000000;"
+						color=#000000>Running the analyzer on the sentence</font></p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">TAI gave <font style="color: #000000;"
+													color=#000000>VISUALTEXT to the WORLD.</font></p>
+
+<p><font style="color: #000000;"
+		color=#000000>produces a parse tree like:</font></p>
+
+<p><img src="acroParse.gif"
+		x-maintain-ratio=TRUE
+		style="border-width: 1px;
+				border-style: solid;
+				width: 408px;
+				height: 328px;
+				border-left-style: Solid;
+				border-left-width: 1px;
+				border-right-style: Solid;
+				border-right-width: 1px;
+				border-top-style: Solid;
+				border-top-width: 1px;
+				border-bottom-style: Solid;
+				border-bottom-width: 1px;
+				float: none;"
+		width=408
+		height=328
+		border=1></p>
+
+<p>Notice how TAI, WORLD and VISUALTEXT have been identified as nouns.</p>
+
+<p>The <span style="color: #0000ff;">PRE</span> Region handles only special 
+ functions (called <span style="color: #0000ff;">PRE</span> Actions). It 
+ does not yet understand NLP++ expressions and statements.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <span>Close the files in the workspace and exit the analyzer.</span></p>
+
+<h2>Summary</h2>
+
+<p style="margin-bottom: 0;">In this tutorial we introduced the <span style="font-weight: bold;">recursive</span> 
+ pass-algorithm and showed that it could handle an indefinitely long list 
+ (e.g., of adjectives).&nbsp; We looked at other features of rule construction, 
+ such as making elements optional [<font style="color: #b298e2;
+												font-weight: bold;
+												font-family: monospace;"
+										color=#B298E2
+										face=monospace>opt</font>].&nbsp; 
+ We reviewed special rule elements, showing <font style="color: #ff0000;"
+													color=#FF0000><span 
+ style="font-weight: bold;">_xWILD</span></font> and <font style="color: #ff0000;"
+															color=#FF0000><span 
+ style="font-weight: bold;">_xALPHA</span></font> in action, and finished 
+ with some conditions placed on rule elements in the <span style="color: #0000ff;">PRE</span> 
+ Region.<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp; </p>
+
+</body>
+
+</html>

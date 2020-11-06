@@ -1,0 +1,12 @@
+# hello
+tokenize	nil	# Gen:   Convert input to token list.
+pat	SetupVariables	# comment
+pat	SetupKB	# comment
+pat	EmptyItems	# comment
+pat	Items	# comment
+pat	Fields	# comment
+pat	FieldItems	# comment
+pat	Records	# comment
+pat	ItemsToKB	# comment
+pat	FillRemainingItems	# comment
+pat	KBOutput	# comment

@@ -1,0 +1,272 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Basic steps for creating a text analyzer</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1704>
+<meta name=layout-width content=775>
+<meta name=date content="06 23, 2001 1:12:44 AM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Basic steps for creating a text analyzer</h1>
+
+<p>This topic outlines the basic steps for creating and running a text 
+ analyzer using VisualText. Since VisualText can be used to create many 
+ different types of text analyzers, we will give a rough outline of the 
+ overall process of creating, running and defining a text analyzer.</p>
+
+<p><span style="font-weight: bold;">Creating a new analyzer project</span>:</p>
+
+<ol>
+	
+	<li class=kadov-p><p>From the <span style="font-weight: bold;">File</span> 
+ menu, select <span style="font-weight: bold;">New Analyzer</span>.</p></li>
+	
+	<li class=kadov-p><p>In the <span style="font-weight: bold;">New Analyzer</span> 
+ dialog, provide the following information:</p></li>
+</ol>
+
+<ul>
+	
+	<li style="margin-left: 40px;"
+		class=kadov-p><p><span style="font-weight: bold;">Analyzer Name</span>: 
+ This name will be used to organize the analyzer project. VisualText automatically 
+ assigns a <span style="font-weight: normal;">.ana</span> extension to 
+ the name to mark it as the analyzer project file. You use the .ana file 
+ to open the analyzer project.</p></li>
+	
+	<li style="margin-left: 40px;"
+		class=kadov-p><p><span style="font-weight: bold;">Location: </span>Select 
+ the default location or navigate to the drive and folder that you would 
+ like to save the analyzer project in.</p></li>
+	
+	<li style="margin-left: 40px;"
+		class=kadov-p><p><span style="font-weight: bold;">Template</span>: 
+ Select &quot;Bare&quot;. (Currently, the only template available is Bare.) 
+ Bare is the absolute basic or minimal analyzer.)</p></li>
+</ul>
+
+<ol START=3>
+	
+	<li class=kadov-p><p>Click <span style="font-weight: bold;">OK</span>.</p></li>
+</ol>
+
+<p><span style="font-weight: bold;">Creating text files to be analyzed</span>:</p>
+
+<ol>
+	
+	<li class=kadov-p><p>In the <span style="font-weight: bold;">Text</span> 
+ Tab, right click and select <span style="font-weight: bold;">Add</span> 
+ &gt; <span style="font-weight: bold;">New Text File</span>.</p></li>
+	
+	<li class=kadov-p><p>In the dialog box, give the text file a <span 
+ style="font-weight: bold;">name</span><span style="font-weight: normal;">.</span></p></li>
+	
+	<li class=kadov-p><p>Click <span style="font-weight: bold;">OK</span><span 
+ style="font-weight: normal;">. The newly created text file opens up in 
+ the Workspace. (The text file is stored in the </span><span style="font-weight: bold;">input</span><span 
+ style="font-weight: normal;"> folder of the analyzer project. You can 
+ also add files to be analyzed directly into the input folder.)</span></p></li>
+</ol>
+
+<p><span style="font-weight: bold;">Adding and saving text to a text file</span><span 
+ style="font-weight: normal;">:</span></p>
+
+<ol>
+	
+	<li class=kadov-p><p><span style="font-weight: normal;">Double click 
+ on the a file in the </span><span style="font-weight: bold;">Text</span><span 
+ style="font-weight: normal;"> Tab to open it in the </span><span style="font-weight: bold;">Workspace</span><span 
+ style="font-weight: normal;">.</span></p></li>
+	
+	<li style="/*begin!kadov{{*/ font-weight: normal; /*}}end!kadov*/ "
+		class=kadov-p><p><span style="font-weight: normal;">Add text to 
+ the file.</span></p></li>
+	
+	<li class=kadov-p><p><span style="font-weight: normal;">Save the file 
+ by right-clicking on the file and selecting </span><span style="font-weight: bold;">Save</span><span 
+ style="font-weight: normal;">. You can also use the save icon on the Main 
+ Toolbar. <img src="../Toolbar_buttons/save_button.gif"
+				style="width: 24px;
+						height: 23px;
+						border-width: 1px;
+						border-style: solid;
+						margin-top: 0px;
+						margin-bottom: 0px;
+						margin-left: 0px;
+						margin-right: 0px;"
+				width=24
+				height=23
+				border=1></span></p></li>
+</ol>
+
+<p><span style="font-weight: bold;">Defining the analyzer sequence</span><span 
+ style="font-weight: normal;">:</span></p>
+
+<p><span style="font-weight: normal;">The analyzer sequence, made up of 
+ </span><span style="font-weight: bold;">passes</span><span style="font-weight: normal;">, 
+ is viewed and managed in the </span><span style="font-weight: bold;">Ana 
+ Tab</span><span style="font-weight: normal;">. A pass is a discrete step 
+ in the analyzer sequence that has its own pass algorithm. Each analyzer 
+ project comes with a built-in pass in the analyzer sequence. The default 
+ pass </span><span style="font-weight: bold;">tokenize</span><span style="font-weight: normal;"> 
+ tokenizes each of the characters in an input file into token types, such 
+ as </span><span style="font-weight: bold;">alpha</span><span style="font-weight: normal;"> 
+ for alphabetic, </span><span style="font-weight: bold;">num</span><span 
+ style="font-weight: normal;"> for numeric, </span><span style="font-weight: bold;">punct</span><span 
+ style="font-weight: normal;"> for punctuation, etc. As you build your 
+ analyzer, you add passes to the analyzer sequence after the tokenize pass. 
+ Each pass in the analyzer sequence is associated with a </span><span style="font-weight: bold;">pass 
+ file</span><span style="font-weight: normal;"> that contains NLP++ code 
+ and rules which instruct the rule matcher what to do. Here is how you 
+ add passes to the analyzer sequence:</span></p>
+
+<ol>
+	
+	<li style="/*begin!kadov{{*/ font-weight: normal; /*}}end!kadov*/ "
+		class=kadov-p><p><span style="font-weight: normal;">Select the 
+ pass in the analyzer sequence where you want to add a pass.</span></p></li>
+	
+	<li class=kadov-p><p><span style="font-weight: normal;">Right-click 
+ and select, </span><span style="font-weight: bold;">Add</span><span style="font-weight: normal;"> 
+ &gt; </span><span style="font-weight: bold;">New Pass</span><span style="font-weight: normal;">. 
+ (The pass is inserted AFTER the pass you selected.)</span></p></li>
+	
+	<li style="/*begin!kadov{{*/ font-weight: normal; /*}}end!kadov*/ "
+		class=kadov-p><p><span style="font-weight: normal;">In the Pass 
+ Properties dialog, provide the following:</span></p></li>
+</ol>
+
+<ul>
+	
+	<li style="margin-left: 40px;"
+		class=kadov-p><p><span style="font-weight: bold;">Name</span><span 
+ style="font-weight: normal;">: This is the name for the analyzer pass.</span></p></li>
+	
+	<li style="margin-left: 40px;"
+		class=kadov-p><p><span style="font-weight: bold;">Type</span><span 
+ style="font-weight: normal;">: Select Pattern for a pattern-based pass 
+ and recursive for a recursive pass.</span></p></li>
+</ul>
+
+<ol START=4>
+	
+	<li class=kadov-p><p><span style="font-weight: normal;">Click </span><span 
+ style="font-weight: bold;">OK</span><span style="font-weight: normal;">.</span></p></li>
+</ol>
+
+<p><span style="font-weight: normal;">The new pass is created in the analyzer 
+ sequence. To edit the pass, double click on the pass to open the associated 
+ pass file in the Workspace. For a description on editing pass files, see 
+ the Developer's section.</span></p>
+
+<p><span style="font-weight: bold;">Running an analyzer</span><span style="font-weight: normal;">:</span></p>
+
+<ol>
+	
+	<li class=kadov-p><p><span style="font-weight: normal;">Select a</span><span 
+ style="font-weight: bold;"> </span><span style="font-weight: normal;">file 
+ in the </span><span style="font-weight: bold;">Text</span><span style="font-weight: normal;"> 
+ </span><span style="font-weight: bold;">Tab</span><span style="font-weight: normal;">.</span></p></li>
+	
+	<li class=kadov-p><p><span style="font-weight: normal;">From the </span><span 
+ style="font-weight: bold;">Analyzer</span><span style="font-weight: normal;"> 
+ Menu, select </span><span style="font-weight: bold;">Run</span><span style="font-weight: normal;">. 
+ You can also use the run icon from the Workspace toolbar. <img src="../Toolbar_buttons/run_button.gif"
+	style="width: 24px;
+			height: 26px;
+			border-width: 1px;
+			border-style: solid;
+			margin-top: 0px;
+			margin-bottom: 0px;
+			margin-left: 0px;
+			margin-right: 0px;"
+	width=24
+	height=26
+	border=1> A red checkmark on the file icon indicates that the file 
+ has been analyzed.</span></p></li>
+</ol>
+
+<p><span style="font-weight: normal;">When an analyzer is run, a parse 
+ tree is created for the analyzed text. How you define your analyzer sequence 
+ and pass files will determine what kind of information will be displayed 
+ in the parse tree.</span></p>
+
+<p><span style="font-weight: bold;">Viewing the parse tree of an analyzed 
+ text</span></p>
+
+<ol>
+	
+	<li class=kadov-p><p><span style="font-weight: normal;">Select the 
+ analyzed file in the </span><span style="font-weight: bold;">Text Tab</span><span 
+ style="font-weight: normal;">.</span></p></li>
+	
+	<li class=kadov-p><p><span style="font-weight: normal;">Click on the 
+ Parse Tree button. <img src="../Toolbar_buttons/view_entire_tree_button.gif"
+						style="width: 25px;
+								height: 24px;
+								border-style: none;
+								margin-top: 0px;
+								margin-bottom: 0px;
+								margin-left: 0px;
+								margin-right: 0px;"
+						width=25
+						height=24
+						border=0> You can also open the file in the Workspace, 
+ right-click on the file and select </span><span style="font-weight: bold;">View</span><span 
+ style="font-weight: normal;"> &gt; </span><span style="font-weight: bold;">Parse 
+ Tree</span><span style="font-weight: normal;">.</span></p></li>
+</ol>
+
+<p><span style="font-weight: bold;">Saving the Analyzer</span><span style="font-weight: normal;">:</span></p>
+
+<ol>
+	
+	<li class=kadov-p><p>Select <span style="font-weight: bold;">Save Analyzer</span> 
+ from the <span style="font-weight: bold;">File</span> menu. Save Analyzer 
+ saves the analyzer project and the associated Knowledge Base. (You should 
+ save your project often.)</p></li>
+	
+	<li class=kadov-p><p>Answer <span style="font-weight: bold;">Yes</span> 
+ to the prompt asking if you want to save the analyzer.</p></li>
+</ol>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p style="margin-bottom: 0;">&nbsp; </p>
+
+</body>
+
+</html>

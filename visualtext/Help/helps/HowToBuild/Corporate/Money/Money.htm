@@ -1,0 +1,265 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Money</title>
+
+<!--(Meta)==========================================================-->
+
+<meta HTTP-EQUIV=Content-Type CONTENT="text/html; charset=windows-1252">
+<meta NAME=Template CONTENT="D:\Program Files\Microsoft Office\Office\html.dot">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=2798>
+<meta name=layout-width content=775>
+<meta name=date content="08 27, 2001 2:34:14 PM">
+
+
+
+<!--(Style Sheet)===================================================-->
+
+<style>
+<!--
+
+A:visited {
+	color: #800080;
+}
+
+A:link {
+	color: #0000ff;
+}
+
+-->
+</style>
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<!--(Table)=========================================================-->
+<!--begin!kadov{{--><div align=center><!--}}end!kadov-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 617px;
+				border-spacing: 0px;
+				float: aligncenter;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=617>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../HandDict/HandDict.htm"><img src="Bullet8.gif"
+														style="width: 15px;
+	height: 12px;
+	border-style: none;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 0px;"
+														width=15
+														height=12
+														border=0>&nbsp;KB 
+ &amp; Dictionary</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 50%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../Toc/TOC.htm">CORPORATE ANALYZER</a><span style="font-weight: bold;"><font 
+ style="color: #000080;"
+	color=#000080><br>
+Money</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 26%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../Companies/Companies.htm">Companies <img src="Bullet7.gif"
+	style="width: 15px;
+			height: 12px;
+			border-style: none;
+			margin-top: 0px;
+			margin-bottom: 0px;
+			margin-left: 0px;
+			margin-right: 0px;"
+	width=15
+	height=12
+	border=0></a></td></tr>
+</table>
+<!--begin!kadov{{--></div><!--}}end!kadov-->
+
+<!--(HR)============================================================-->
+<hr style="height: 2px;
+			width: 100%;
+			float: aligncenter;"
+	size=2
+	width=100%
+	align=center>
+
+
+<p><span style="font-weight: bold;">Ana Tab Window: Passes 16 - 18</span></p>
+
+<p>This section describes the analyzer passes &quot;money&quot;, &quot;moneyAttributes&quot;, 
+ and &quot;conjMoney&quot;.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image75.gif"
+						style="border-style: none;
+								width: 140px;
+								height: 53px;"
+						width=140
+						height=53
+						border=0></p>
+
+<p><span style="font-weight: bold;">Lessons in Phrases</span></p>
+
+<p>In diagramming sentences in English class, you may have come across 
+ <span style="font-weight: bold;">noun phrases</span> (NP). These come 
+ in many many forms and basically represent nouns (persons, places, things) 
+ and attributes about those nouns (color, amount, type). Knowing this, 
+ we can write a more organized text analyzer.</p>
+
+<p>In passes 16 - 18, we process money phrases. First we gather the root 
+ money noun (money), then process its attributes (moneyAttributes), and 
+ then gather lists of money constructs (conjMoney).</p>
+
+<p><span style="font-weight: bold;">Money</span></p>
+
+<p>In the money phrase, we key off the word &quot;dollars&quot;. Since 
+ this is a demonstration analyzer, we will only write rules for those patterns 
+ we are matching in our &quot;Sold.txt&quot; article. The rules below match 
+ constructs such as &quot;$30 million dollars&quot; and &quot;30 million 
+ dollars&quot;.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image76.gif"
+						style="border-style: none;
+								width: 328px;
+								height: 311px;"
+						width=328
+						height=311
+						border=0></p>
+
+<p>In the @POST area, we perform our &quot;normalization&quot;, multiplying 
+ the numeric value in the text by 1,000,000 to compute the number of dollars.</p>
+
+<p><span style="font-weight: bold;">Money Attributes:</span></p>
+
+<p>Next, we gather the attributes in the text surrounding the money phrases. 
+ Study the moneyAttributes pass for yourself. Below is the highlighting 
+ for this pass. You can easily see the attribute phrases: &quot;more than 
+ X&quot;, &quot;X in cash&quot;, &quot;X in assumed debt&quot;, &quot;a 
+ total of X&quot;, etc.:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image79.gif"
+						style="border-style: none;
+								width: 460px;
+								height: 460px;"
+						width=460
+						height=460
+						border=0></p>
+
+<p>&nbsp;</p>
+
+<p><span style="font-weight: bold;">Conjunctions</span></p>
+
+<p>In analyzing text, conjunctions can be very painful to handle. Not so 
+ in VisualText. NLP++ includes an array construct that can simplify the 
+ problem of conjoining similar phrases. To illustrate, we will elaborate 
+ one case.</p>
+
+<p>In the conjMoney pass, we take the money and value and put it in the 
+ arrays S(&quot;conj value&quot;) and S(&quot;conj type&quot;) using the 
+ counter S(&quot;conj count&quot;). These will be used in future passes 
+ to loop through and recover the money values.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image80.gif"
+						style="border-style: none;
+								width: 380px;
+								height: 294px;"
+						width=380
+						height=294
+						border=0></p>
+
+<p><span style="font-weight: bold;">Tree of Selected</span></p>
+
+<p>Below is the matched conjunction phrase and the tree for that phrase. 
+ Two useful features of VisualText should be pointed out here. One is that 
+ the semantic information is displayed in the trees. Below, you can see 
+ the result of firing the above conjunction rule: (&quot;conj count&quot; 
+ 2) (&quot;conj value&quot; 120000000140000000) (&quot;conj type&quot; 
+ &quot;cash&quot; &quot;assumed debt&quot;).</p>
+
+<p>The second convenient function is found in the right-click menu of the 
+ processed text window. Select the pass you are interested in (usually 
+ it is already selected), then select any portion of text you want. Using 
+ the right-click menu, choose &quot;View&gt;Tree of Selected&quot; and 
+ the partial parse tree for that text will appear in the context of the 
+ chosen pass. This is a handy function to remember.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image82.gif"
+						style="border-style: none;
+								width: 589px;
+								height: 494px;"
+						width=589
+						height=494
+						border=0></p>
+
+
+<!--(HR)============================================================-->
+<hr style="height: 2px;
+			width: 100%;
+			float: aligncenter;"
+	size=2
+	width=100%
+	align=center>
+
+
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><span style="font-weight: bold;">Next Section:</span> 
+ <a HREF="../Companies/Companies.htm">Companies <img src="Bullet7.gif"
+													style="width: 15px;
+															height: 12px;
+															border-style: none;
+															margin-top: 0px;
+															margin-bottom: 0px;
+															margin-left: 0px;
+															margin-right: 0px;"
+													width=15
+													height=12
+													border=0></a> </p>
+
+</body>
+
+</html>

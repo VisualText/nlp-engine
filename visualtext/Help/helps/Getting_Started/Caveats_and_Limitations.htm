@@ -1,0 +1,1030 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 10">
+<meta name=Originator content="Microsoft Word 10">
+<link rel=File-List href="Caveats_and_Limitations_files/filelist.xml">
+<title>Programming Notes and Issues</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Amnon Meyers</o:Author>
+  <o:LastAuthor>Amnon Meyers</o:LastAuthor>
+  <o:Revision>5</o:Revision>
+  <o:TotalTime>22</o:TotalTime>
+  <o:Created>2005-11-23T23:44:00Z</o:Created>
+  <o:LastSaved>2008-09-21T18:10:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>1253</o:Words>
+  <o:Characters>7145</o:Characters>
+  <o:Company>Text Analysis International, Inc.</o:Company>
+  <o:Lines>59</o:Lines>
+  <o:Paragraphs>16</o:Paragraphs>
+  <o:CharactersWithSpaces>8382</o:CharactersWithSpaces>
+  <o:Version>10.3501</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:Zoom>125</w:Zoom>
+  <w:Compatibility>
+   <w:UseFELayout/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]-->
+<link rel=Stylesheet type="text/css" media=all href="../default.css">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:"MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;
+	mso-font-alt:"\FF2D\FF33 \660E\671D";
+	mso-font-charset:128;
+	mso-generic-font-family:modern;
+	mso-font-pitch:fixed;
+	mso-font-signature:-1610612033 1757936891 16 0 131231 0;}
+@font-face
+	{font-family:"\@MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;
+	mso-font-charset:128;
+	mso-generic-font-family:modern;
+	mso-font-pitch:fixed;
+	mso-font-signature:-1610612033 1757936891 16 0 131231 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"MS Mincho";}
+h1
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:1;
+	font-size:18.0pt;
+	font-weight:bold;}
+h2
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:2;
+	font-size:14.0pt;}
+h3
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:3;
+	font-size:14.0pt;
+	font-weight:bold;}
+h4
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:4;
+	font-size:12.0pt;
+	font-weight:bold;}
+h5
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:5;
+	font-size:12.0pt;
+	font-weight:bold;}
+h6
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:6;
+	font-size:12.0pt;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"MS Mincho";}
+p.description, li.description, div.description
+	{mso-style-name:description;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:8.0pt;
+	mso-fareast-font-family:"MS Mincho";}
+p.color-bullets, li.color-bullets, div.color-bullets
+	{mso-style-name:color-bullets;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"MS Mincho";}
+span.expandtext
+	{mso-style-name:expandtext;}
+span.glosstext
+	{mso-style-name:glosstext;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:20866417;
+	mso-list-template-ids:-251877974;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l0:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1
+	{mso-list-id:115298562;
+	mso-list-template-ids:584584202;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2
+	{mso-list-id:227693725;
+	mso-list-template-ids:-1606241776;}
+@list l2:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l2:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3
+	{mso-list-id:293366177;
+	mso-list-template-ids:96380444;}
+@list l3:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4
+	{mso-list-id:1201358893;
+	mso-list-template-ids:1128291176;}
+@list l4:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l4:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5
+	{mso-list-id:1449272014;
+	mso-list-template-ids:-554526348;}
+@list l5:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6
+	{mso-list-id:1832256760;
+	mso-list-template-ids:-1861090656;}
+@list l6:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l6:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7
+	{mso-list-id:2042658531;
+	mso-list-template-ids:1658207316;}
+@list l7:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l7:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8
+	{mso-list-id:2049836929;
+	mso-list-type:hybrid;
+	mso-list-template-ids:18900884 786722978 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l8:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:63.0pt;
+	mso-level-number-position:left;
+	margin-left:63.0pt;
+	text-indent:-.25in;
+	mso-ansi-font-size:11.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:Symbol;}
+@list l8:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";}
+</style>
+<![endif]--><!--(Meta)==========================================================-->
+<meta name=date content="06 17, 2002 3:25:33 PM">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=2425>
+<meta name=layout-width content=1024>
+<!--(Links)=========================================================--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="5122"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<!--(Body)==========================================================-->
+
+<body bgcolor=white lang=EN-US link=blue vlink=blue style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<h1>Programming Notes and Issues</h1>
+
+<p><span style='font-family:Arial'>This document details issues with
+VisualText™ and NLP++™. Additional information about the current release can be
+found in the <a href="../New_in_Current_Version.htm">New in Current Version</a>
+page and in the Release Report, located by default at<o:p></o:p></span></p>
+
+<p><!--kadov_tag{{<spaces>}}--><span style='font-family:Arial'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->C:\Program
+Files\TextAI\VisualText\Docs\ReleaseReport.txt.<o:p></o:p></span></p>
+
+<h4><span style='font-family:Arial;color:teal'>DOCUMENTATION ISSUES</span><span
+style='font-family:Arial'><o:p></o:p></span></h4>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo2;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>Zipped
+tutorial analyzers may be missing in some versions, so you'll have to start
+working them from Tutorial number 1.<o:p></o:p></span></span></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo2;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>Documentation
+for Linux is not provided in the present Help. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Workaround:
+contact our customer support for assistance.<o:p></o:p></span></span></p>
+
+<h4><span style='font-family:Arial;color:teal'>INSTALLATION</span><span
+style='font-family:Arial'><o:p></o:p></span></h4>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l6 level1 lfo4;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>On
+rare occasions, the installation program may hang.<span
+style='mso-spacerun:yes'>  </span>Please try another computer, and contact our
+customer support for workarounds.<o:p></o:p></span></span></p>
+
+<h4><span style='font-family:Arial;color:teal'>RUNNING ANALYZERS</span><span
+style='font-family:Arial'><o:p></o:p></span></h4>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l3 level1 lfo6;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>Analyzers
+cannot be run on files with the .log extension.<o:p></o:p></span></span></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l3 level1 lfo6;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>VisualText
+is optimized for processing large numbers of relatively small text files. Input
+files larger than <b><span style='color:red'>1MB</span></b> may substantially
+slow processing, and it is inadvisable to process individual files larger than <b><span
+style='color:red'>4 MB</span></b>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Workaround:
+a program may split large texts into buffers and submit them to an analyzer one
+at a time, using the knowledge base to manage information across segments of a
+document.<o:p></o:p></span></span></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l3 level1 lfo6;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>Scale
+Up issues. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->A variety
+of scale-up issues have been addressed in VisualText 2.x.<span
+style='mso-spacerun:yes'>  </span>If you are experiencing problems, contact us.<o:p></o:p></span></span></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l3 level1 lfo6;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>Knowledge
+base DLL file. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For
+huge knowledge bases, the KB.DLL compiled knowledge base can become extremely
+large (100s of MB). <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->VisualText
+QDBM addresses this, but is too slow for commercial-grade use at this time.<o:p></o:p></span></span></p>
+
+<h4><span style='font-family:Arial;color:teal'>GUI ISSUES</span><span
+style='font-family:Arial'><o:p></o:p></span></h4>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l7 level1 lfo8;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>It
+is safest to edit the <b>gram</b> subhierarchy using the Gram Tab only, rather
+than the KB Editor. Where feasible, use the Gram Concept Properties dialog
+(available from Gram Tab popup &gt; Properties) to edit attributes of <b>gram</b>
+concepts. Use the Attribute Editor only to edit attributes that are not
+accessible from the Gram Concept Properties dialog.<o:p></o:p></span></span></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l7 level1 lfo8;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>Editing
+the <b>sys</b> hierarchy can easily corrupt the Knowledge Base. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Before
+editing the <b>sys</b> hierarchy (either manually or programmatically), you are
+advised to create a backup copy of your project. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->A
+KB Safe Mode is provided in the VisualText preferences for those who want to
+disable inadvertent manual editing of the sys hierarchy.<o:p></o:p></span></span></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l7 level1 lfo8;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>Size
+Dynamically in VisualText display preferences is currently working for the KB
+Editor window only.<o:p></o:p></span></span></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l7 level1 lfo8;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>Currently,
+folders are not part of the Ana Tab. Descriptions for Ana Tab folders in the
+Ana Tab Popup Menu are for future enhancements.<o:p></o:p></span></span></p>
+
+<h4><span style='font-family:Arial;color:teal'>WRITING CODE AND RULES</span><span
+style='font-family:Arial'><o:p></o:p></span></h4>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l5 level1 lfo10;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>NLP++<b>
+</b>is an evolving language. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->If
+constructs that you would like to see in the language are absent, you may often
+create them yourself by writing a user-defined NLP++ function or a C++ version
+within the <b>User Project</b> for an analyzer. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->We
+appreciate your feedback about capabilities to incorporate in the language,
+both to provide you with faster execution of the functions and to enhance NLP++
+and VisualText as a development environment.<o:p></o:p></span></span></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l5 level1 lfo10;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>One
+way to implement a new type of pass algorithm is to define a new NLP++ function
+in the user project and invoke that function from the <b>code</b> region of a
+pass. The user function may traverse the parse tree, interface to third party
+code, and so on. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(Now
+the same can be done with an NLP++ function defined in a @DECL region).<o:p></o:p></span></span></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l5 level1 lfo10;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>Some
+data types are not yet implemented, including <b>bool</b>, and <b>char</b>.
+Nonzero integer values are used for Boolean <b>true</b> and zero is used for
+Boolean <b>false</b>, analogous to the C Programming Language. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->We
+recommend NOT explicitly comparing the returns of functions documented as bool
+with 1 and 0. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For
+example, write <span style='color:blue'>if (batchstart())</span> rather than <span
+style='color:blue'>if (batchstart() == 1)</span>.<o:p></o:p></span></span></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l5 level1 lfo10;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>Numeric
+overflow and underflow are not flagged. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For
+example, the maximum <b>int</b> is 2147483647 in Windows and must be checked by
+the programmer as needed. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For
+large numbers, the <b>float</b> type should be used.<o:p></o:p></span></span></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l5 level1 lfo10;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>POST
+Actions should operate on rule elements from right to left (or bottom to top,
+if written one element per line).<o:p></o:p></span></span></p>
+
+<p style='margin-left:30.0pt'><span style='font-family:Arial'>When the POST
+region includes group and excise actions, the numbering of rule elements is
+affected. For example, if element 3 is to be excised, then referring to
+elements 4, 5, etc. subsequently is invalid. Therefore, operations on rule
+elements should proceed from right to left, that is from high-numbered rule
+elements to lower-numbered elements. For example, the following POST actions
+will work as expected:<o:p></o:p></span></p>
+
+<p style='margin-left:30.0pt'><span style='font-family:Arial'>N(&quot;status&quot;,4)
+= &quot;good&quot;;<br>
+excise(2,3);<o:p></o:p></span></p>
+
+<p style='margin-left:30.0pt'><span style='font-family:Arial'>The node matching
+element 4 gets a variable named &quot;status&quot; with value &quot;good&quot;,
+after which the nodes matching elements 2 and 3 are excised. But if written
+this way:<o:p></o:p></span></p>
+
+<p style='margin-left:30.0pt'><span style='font-family:Arial'>excise(2,3);<br>
+N(&quot;status&quot;,4) = &quot;good&quot;;<o:p></o:p></span></p>
+
+<p style='margin-left:30.0pt'><span style='font-family:Arial'>there may no
+longer be an element 4 after the excise action, or a different rule element may
+be referred to than expected. Conditionally excising rule elements would
+further complicate the tracking of rule element numbers.<o:p></o:p></span></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l4 level1 lfo12;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>Stacking
+POST Actions should be avoided.<o:p></o:p></span></span></p>
+
+<p style='margin-left:.5in'><span style='font-family:Arial'>While group actions
+may be repeated in a POST Region (<i>but see below</i>), the user should avoid
+writing multiple actions (e.g., single, excise, singler, singlex) that modify
+the parse tree within a single POST Region. After an action such as <b>single</b>,
+the elements of the current rule may no longer available.<o:p></o:p></span></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l4 level1 lfo12;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>GROUP
+action differs in compiled versus interpreted versions of an analyzer<br>
+<br>
+In interpreted NLP++, a group action such as <b>group(5,7,&quot;_list&quot;)</b>
+collapses elements 5 through 7 under a new node called _list, which is numbered
+5, with the subsequent element (which was numbered 8) now numbered as 6. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->But
+in compiled code, 5 through 7 are collapsed as before, but now elements 6 and 7
+are retained with zero nodes, and numbering is <i>unchanged</i>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->That
+is, element 8 is still number 8. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->This
+discrepancy will be fixed in a subsequent version.<o:p></o:p></span></span></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l4 level1 lfo12;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>Some
+NLP++ actions will not accept general NLP++ expressions as arguments. For
+example, <b>singler</b>(1,3) is valid, but
+singler(G(&quot;lo&quot;),G(&quot;hi&quot;)) will result in a syntax error.<o:p></o:p></span></span></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l4 level1 lfo12;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>Partly
+constrained wildcards don’t work in some cases.<span style='mso-spacerun:yes'> 
+</span>The following example<o:p></o:p></span></span></p>
+
+<p style='margin-left:.5in'><span style='font-family:Arial'>@PRE<br>
+&lt;2,2&gt; var(“lower”);<br>
+@RULES<br>
+_NP &lt;-<br>
+<span style='mso-spacerun:yes'>  </span>_The<br>
+<span style='mso-spacerun:yes'>  </span>_xWILD [plus]<br>
+<span style='mso-spacerun:yes'>  </span>_Bears<br>
+<span style='mso-spacerun:yes'>  </span>@@<o:p></o:p></span></p>
+
+<p style='margin-left:.5in'><span style='font-family:Arial'>will match nodes to
+the wildcard regardless of whether they have a nonzero variable called “lower”.<span
+style='mso-spacerun:yes'>  </span>A workaround is to write the rule as<o:p></o:p></span></p>
+
+<p style='margin-left:.5in'><span style='font-family:Arial'>@PRE<br>
+&lt;2,2&gt; var(“lower”);<br>
+@RULES<br>
+_NP &lt;-<br>
+<span style='mso-spacerun:yes'>  </span>_The<br>
+<span style='mso-spacerun:yes'>  </span>_xWILD [plus fail=(_Bears)]<br>
+<span style='mso-spacerun:yes'>  </span>_Bears<br>
+<span style='mso-spacerun:yes'>  </span>@@<o:p></o:p></span></p>
+
+<p style='margin-left:.5in'><span style='font-family:Arial'>This will work as
+specified. Only nodes with a nonzero variable called “lower” will match the
+_xWILD element.<o:p></o:p></span></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l4 level1 lfo12;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>Infinite
+loops. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->As in
+most grammar systems, it is possible to write &quot;grammar loops&quot; in
+NLP++. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Also, a
+lone rule such as<o:p></o:p></span></span></p>
+
+<p style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:60.0pt;
+margin-bottom:.0001pt'><span style='font-family:Arial'>@POST<o:p></o:p></span></p>
+
+<p style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:60.0pt;
+margin-bottom:.0001pt'><!--kadov_tag{{<spaces>}}--><span style='font-family:
+Arial'>&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->singler(1,1);<o:p></o:p></span></p>
+
+<p style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:60.0pt;
+margin-bottom:.0001pt'><span style='font-family:Arial'>@RULES<o:p></o:p></span></p>
+
+<p style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:60.0pt;
+margin-bottom:.0001pt'><span style='font-family:Arial'>_np &lt;- noun [opt]
+prep [lookahead] @@<o:p></o:p></span></p>
+
+<p style='margin-top:5.0pt;margin-right:0in;margin-bottom:0in;margin-left:27.0pt;
+margin-bottom:.0001pt'><span style='font-family:Arial'>where everything is
+optional except the lookahead elements, can cause an infinite loop.<o:p></o:p></span></p>
+
+<p style='margin-top:5.0pt;margin-right:0in;margin-bottom:0in;margin-left:27.0pt;
+margin-bottom:.0001pt'><span style='font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p style='margin-top:5.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-indent:-.25in;mso-list:l8 level1 lfo14;tab-stops:
+list .5in 63.0pt'><![if !supportLists]><span style='font-size:11.0pt;
+font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>Modifying
+the lookahead region.<span style='mso-spacerun:yes'>  </span>Reducing or
+grouping a node at or past the [lookahead] keyword can cause a pass to silently
+stop matching rules, as below:<o:p></o:p></span></span></p>
+
+<p style='margin-top:5.0pt;margin-right:0in;margin-bottom:0in;margin-left:.25in;
+margin-bottom:.0001pt'><span style='font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:60.0pt;
+margin-bottom:.0001pt'><span style='font-family:Arial'>@POST<o:p></o:p></span></p>
+
+<p style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:60.0pt;
+margin-bottom:.0001pt'><!--kadov_tag{{<spaces>}}--><span style='font-family:
+Arial'>&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->single();<span
+style='mso-spacerun:yes'>  </span>#<span style='mso-spacerun:yes'> 
+</span>Correct would be singler(1,4);<o:p></o:p></span></p>
+
+<p style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:60.0pt;
+margin-bottom:.0001pt'><span style='font-family:Arial'>@RULES<o:p></o:p></span></p>
+
+<p style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:60.0pt;
+margin-bottom:.0001pt'><span style='font-family:Arial'>_np &lt;- _det _quan
+_adj _noun _prep [lookahead] @@<o:p></o:p></span></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l1 level1 lfo16;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>In
+recursive analyzer passes, an infinite loop occurs with rules having one
+right-hand-side element with singlet mode:<o:p></o:p></span></span></p>
+
+<p style='margin-left:60.0pt'><span style='font-family:Arial'>_adjlist &lt;-
+_adj [s] @@<o:p></o:p></span></p>
+
+<p style='margin-left:27.0pt'><span style='font-family:Arial'><!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Here,
+_adj is found &quot;inside&quot; repeatedly. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Two
+ways to fix this are shown below.<o:p></o:p></span></p>
+
+<p style='margin-top:5.0pt;margin-right:0in;margin-bottom:0in;margin-left:60.0pt;
+margin-bottom:.0001pt'><span style='font-family:Arial'>_adjlist [<b><span
+style='color:#958ADD'>base</span></b>] &lt;- _adj [s] @@<o:p></o:p></span></p>
+
+<p style='margin-top:0in;margin-right:0in;margin-bottom:5.0pt;margin-left:60.0pt'><span
+style='font-family:Arial'>_adjlist &lt;- _adj <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->@@<o:p></o:p></span></p>
+
+<p style='margin-left:27.0pt'><span style='font-family:Arial'><!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->In
+the first, case, _adj is found &quot;inside&quot; the current parse tree node only
+once, since the <b><span style='color:#958ADD'>base</span></b> attribute placed
+on the _adjlist keeps the internal _adj from being found inside it. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->In
+the second case, _adj only matches when it labels the current &quot;top
+level&quot; parse tree node being examined. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Once
+it is reduced to _adjlist, the internal _adj is no longer visible.<o:p></o:p></span></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo18;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR><span style='font-family:Arial'>KB
+Phrase. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->A
+knowledge base PHRASE is implemented merely as the first element in the phrase.
+<!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Thus, fetching
+the phrase and then adding a new first element requires re-fetching the phrase.<o:p></o:p></span></span></p>
+
+<p style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:60.0pt;
+margin-bottom:.0001pt'><span style='font-family:"Courier New"'>G(&quot;phrase&quot;)
+= findphrase(G(&quot;some concept&quot;)); <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->#
+Fetch the &quot;phrase&quot;, i.e., the first node.<o:p></o:p></span></p>
+
+<p style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:60.0pt;
+margin-bottom:.0001pt'><span style='font-family:"Courier New"'>addnode(G(&quot;phrase&quot;),&quot;nodename&quot;,
+1); <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->#
+Add a new first node of phrase.<o:p></o:p></span></p>
+
+<p style='margin-top:5.0pt;margin-right:0in;margin-bottom:0in;margin-left:27.0pt;
+margin-bottom:.0001pt'><span style='font-family:Arial'>In the above,
+G(&quot;phrase&quot;) no longer points to the first node in the phrase. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->A
+workaround is to track the first node in a phrase, or to re-fetch the phrase as
+needed using findphrase, as below<o:p></o:p></span></p>
+
+<p style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:60.0pt;
+margin-bottom:.0001pt'><span style='font-family:"Courier New"'>&nbsp;<o:p></o:p></span></p>
+
+<p style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:60.0pt;
+margin-bottom:.0001pt'><span style='font-family:"Courier New"'>G(&quot;phrase&quot;)
+= findphrase(G(&quot;some concept&quot;)); <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->#
+Fetch the &quot;phrase&quot;, i.e., the first node.<o:p></o:p></span></p>
+
+<p style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:60.0pt;
+margin-bottom:.0001pt'><span style='font-family:"Courier New"'>addnode(G(&quot;phrase&quot;),&quot;nodename&quot;,
+1); <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->#
+Add a new first node of phrase.<o:p></o:p></span></p>
+
+<p style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:60.0pt;
+margin-bottom:.0001pt'><span style='font-family:"Courier New"'>G(&quot;phrase&quot;)
+= findphrase(G(&quot;some concept&quot;)); <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->#
+Re-fetch the first node of phrase.<o:p></o:p></span></p>
+
+<p><span style='font-family:Arial'>&nbsp;<o:p></o:p></span></p>
+
+<p><span style='font-family:Arial'>&nbsp;<o:p></o:p></span></p>
+
+<p><span style='font-family:Arial'>&nbsp;<o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+</html>

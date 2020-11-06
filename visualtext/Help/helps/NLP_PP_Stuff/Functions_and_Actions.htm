@@ -1,0 +1,229 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Functions and Actions</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1443>
+<meta name=layout-width content=916>
+<meta name=date content="05 9, 2002 1:00:20 PM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Functions and Actions</h1>
+
+<h2>Functions</h2>
+
+<p>NLP++ supports function calls, which have a similar form to other programming 
+ languages (such as C/C++): </p>
+
+<p><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-weight: bold;"><!--kadov_tag{{</spaces>}}-->functionName(arg1, 
+ .... argN)</span> </p>
+
+<p>where functionName is constrained to be alphabetic and where each argument 
+ to the function may be an NLP++ expression.</p>
+
+<p>Only call-by-value arguments are supported at present. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->That 
+ means that when a variable is used as an argument, its value is not changed 
+ by a change to the local variable that it becomes associated with in the 
+ function.</p>
+
+<p>Functions have no template or declaration -- only a definition. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Even 
+ so, you may use a function in one pass and define it in a subsequent pass 
+ (forward reference). <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ parameters to functions take arbitrary data types that may vary dynamically. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Return 
+ statements similarly return arbitrary data types. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ same function could return a numeric value in one call and a string in 
+ another. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->We 
+ discourage the abuse of this extreme flexibility, however! <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ new <span style="color: #ff0000; font-weight: bold;">L</span> variable 
+ reference has been introduced to support formal function parameters as 
+ well as local variables within a function body. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Recursive 
+ functions are also possible. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ example below illustrates the definition and use of user-defined functions 
+ in NLP++.</p>
+
+<p style="font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;
+			margin-top: 0.5pt;
+			margin-bottom: 0.5pt;">@DECL</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">xuf(<span style="color: #ff0000; font-weight: bold;">L</span>(<span 
+ style="color: #ff00ff;">&quot;var&quot;</span>))</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">{</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><span style="color: #ff00ff;">&quot;output.txt&quot;</span> 
+ &lt;&lt; <span style="color: #ff0000; font-weight: bold;">L</span>(<span 
+ style="color: #ff00ff;">&quot;var&quot;</span>) &lt;&lt; <span style="color: #ff00ff;">&quot;\n&quot;</span>;</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><span style="color: #ff0000; font-weight: bold;">L</span>(<span 
+ style="color: #ff00ff;">&quot;local&quot;</span>) = 3; <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="font-family: monospace; color: #008000;"><!--kadov_tag{{</spaces>}}--># 
+ create a local variable.</span></p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><span style="color: #ff00ff;">&quot;output.txt&quot;</span> 
+ &lt;&lt; <span style="color: #ff0000; font-weight: bold;">L</span>(<span 
+ style="color: #ff00ff;">&quot;local&quot;</span>) &lt;&lt; <span style="color: #ff00ff;">&quot;\n&quot;</span>;</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><span style="color: #800080; font-weight: bold;">return 
+ </span>1+2;</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">}</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp;</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">facto(<span style="color: #ff0000; font-weight: bold;">L</span>(<span 
+ style="color: #ff00ff;">&quot;num&quot;</span>)) <!--kadov_tag{{<spaces>}}-->&nbsp;<span 
+ style="font-family: monospace; color: #008000;"><!--kadov_tag{{</spaces>}}--># 
+ recursive factorial function.</span></p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">{</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><span style="color: #800080; font-weight: bold;">if 
+ </span>(<span style="color: #ff0000; font-weight: bold;">L</span>(<span 
+ style="color: #ff00ff;">&quot;num&quot;</span>) &lt;= 0)</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><span style="color: #800080; font-weight: bold;">return 
+ </span>1;</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><span style="color: #800080; font-weight: bold;">return 
+ </span><span style="color: #ff0000; font-weight: bold;">L</span>(<span 
+ style="color: #ff00ff;">&quot;num&quot;</span>) * facto(<span style="color: #ff0000; font-weight: bold;">L</span>(<span 
+ style="color: #ff00ff;">&quot;num&quot;</span>) - 1);</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">}</p>
+
+<p style="font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;
+			margin-top: 0.5pt;
+			margin-bottom: 0.5pt;">@@DECL</p>
+
+<p style="font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;
+			margin-top: 0.5pt;
+			margin-bottom: 0.5pt;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			color: #0000ff;
+			font-weight: bold;
+			margin-top: 0.5pt;
+			margin-bottom: 0.5pt;">@CODE</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><span style="color: #ff0000; font-weight: bold;">G</span>(<span 
+ style="color: #ff00ff;">&quot;x&quot;</span>)[2] = 3;</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><span style="color: #ff00ff;">&quot;output.txt&quot;</span> 
+ &lt;&lt; <span style="color: #ff0000; font-weight: bold;">G</span>(<span 
+ style="color: #ff00ff;">&quot;x&quot;</span>) &lt;&lt; <span style="color: #ff00ff;">&quot;\n&quot;</span>;</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">xuf(<span style="color: #ff0000; font-weight: bold;">G</span>(<span 
+ style="color: #ff00ff;">&quot;x&quot;</span>));</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><span style="color: #ff00ff;">&quot;output.txt&quot;</span> 
+ &lt;&lt; <span style="color: #ff00ff;">&quot;4! = &quot;</span> &lt;&lt; 
+ facto(4) &lt;&lt; <span style="color: #ff00ff;">&quot;\n&quot;</span>;</p>
+
+<p style="font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;
+			margin-top: 0.5pt;
+			margin-bottom: 0.5pt;">@@CODE</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp;</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">The code above prints 
+ out</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">0 0 3</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">0 0 3</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">3</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">4! = 24</p>
+
+<h2>Actions</h2>
+
+<p>Actions, e.g., <span style="font-weight: bold;">single</span>, are specialized 
+ functions that don't take generalized NLP++ expressions as arguments. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Though 
+ some actions have been upgraded and now take NLP++ arguments (e.g. <span 
+ style="font-weight: bold;">group</span>), some actions have not been upgraded 
+ and the argument must be a literal value.</p>
+
+<p>A unique feature of actions in the PRE Region is that they have a mandatory 
+ range. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ syntax is as follows:</p>
+
+<p style="margin-left: 40px;"><span style="font-weight: bold;">&lt;num,num&gt; 
+ pre_action_name(args....)</span></p>
+
+<p>The action applies to each rule element in the &lt;num, num&gt; range 
+ individually.</p>
+
+<p>See <a HREF="Actions.htm">Actions</a> as a starting point for per-page 
+ descriptions for actions.</p>
+
+<h2>Case Sensitivity</h2>
+
+<p>NLP++ function and action names are case-sensitive. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--></p>
+
+<h2><a name=define></a>Defining New Functions</h2>
+
+<p>In VisualText 1.2 and later, user-defined NLP++ functions are fully 
+ supported, including parameter lists, return statements, recursive calls, 
+ and compilation of these. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Functions 
+ are specified in the @DECL region, which must appear first within a pass 
+ file, if present.</p>
+
+<p>New NLP++ functions can also be defined with C++ code,<font style="color: #ff0000;"
+	color=#FF0000> </font>within an application's <span style="font-weight: bold;">user</span> 
+ project. User-defined function calls must be preceded by the '<span style="font-style: italic;">user</span>' 
+ scope qualifier, e.g., <span style="font-style: italic;">user::myfunction</span>. 
+ (Interpreted NLP++ will find the correct function and issue a warning, 
+ but user functions without the scope qualifier will be compiled incorrectly.)</p>
+
+<h2>See Also</h2>
+
+<p style="margin-top: 0pt; margin-bottom: 0px;"><a HREF="Actions.htm">Actions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0px;"><a HREF="Functions.htm">Functions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0px;"><!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--></p>
+
+</body>
+
+</html>

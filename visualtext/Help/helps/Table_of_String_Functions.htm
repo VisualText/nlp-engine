@@ -1,0 +1,1547 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Table of String Functions</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=date content="12 28, 2001 4:27:33 PM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1264>
+<meta name=layout-width content=1027>
+
+
+<!--(Links)=========================================================-->
+
+<link rel="StyleSheet" href="default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Table of String Functions</h1>
+
+<p>The NLP++ functions used to operate on strings are listed here in table 
+ form for easy reference. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For 
+ examples of these functions, refer to the individual function pages included 
+ in the String Functions section. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--></p>
+
+<p>The return types include: <!--kadov_tag{{<spaces>}}-->&nbsp;<span style="font-weight: bold;"><!--kadov_tag{{</spaces>}}-->STR</span> 
+ (string), <span style="font-weight: bold;">STR ARRAY</span> (string array), 
+ <span style="font-weight: bold;">INT</span> (integer), and <span style="font-weight: bold;">BOOL</span> 
+ (Boolean). <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Boolean 
+ type is currently implemented by integer <span style="font-weight: bold;">1</span> 
+ (or non-zero) for <span style="font-weight: bold;">true</span> and <span 
+ style="font-weight: bold;">0</span> for <span style="font-weight: bold;">false</span>. 
+ </p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				margin-top: 14pt;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00
+	width=35%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><font style="color: #000000;"
+					color=#000000><span style="font-weight: bold;">FUNCTION 
+ NAME</span></font></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00
+	width=22%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><font style="color: #000000;"
+					color=#000000><span style="font-weight: bold;">RETURNS</span></font></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00
+	width=43%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><font style="color: #000000;"
+					color=#000000><span style="font-weight: bold;">DESCRIPTION</span></font></td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>deaccent(str)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="font-weight: bold;">STR</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Convert string to replace accented characters.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left><span style="font-weight: bold;">dejunk(str)</span></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="font-weight: bold;">STR</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Convert string to replace all but simple ASCII 
+ chars. <span style="color: #ff0000; font-weight: bold;">New in 2.6.0.3.</span></td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>flt(str)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="font-weight: bold;">FLOAT</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Convert string or int to float, if possible.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left>l<span style="font-weight: bold;">evenshtein(str1,str2)</span></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>INT</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Levenshtein edit-distance between two strings.<span 
+ style="color: #ff0000; font-weight: bold;"> New in 2.0.2.9</span></td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><font style="color: #000000;"
+					color=#000000><span style="font-weight: bold;">num(str)</span></font></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left><span style="font-weight: bold;">INT</span></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Convert string to number, if possible. (Also 
+ accepts num arg).</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="margin-bottom: 0; font-weight: bold;">split(str, char_str)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="margin-bottom: 0; font-weight: bold;">STR ARRAY</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p>Split a string using the given char as separator.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="margin-bottom: 0; font-weight: bold;">stem(str)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="margin-bottom: 0; font-weight: bold;">STR</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p>Compute stem of noun and verb. Return lowercase string.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">strchar(str, 
+ num)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Index to numth char of string</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">strchr(str, 
+ ch_str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Find first occurrence of char in string. Return 
+ string headed by char.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="margin-bottom: 0; font-weight: bold;">strchrcount(str, ch_str)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="margin-bottom: 0; font-weight: bold;">INT</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Count the occurrences of a character in a 
+ string.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">strclean(str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Remove leading, trailing, and repeat whitespace 
+ separators.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>strcontains(str1,str2)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>BOOL</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span>Check if </span>str1is contained in str2.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>strcontainsnocase(str1,str2)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>BOOL</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><font style="color: #000000;"
+					color=#000000>Check if str1 is contained in str2, ignoring 
+ letter case.</font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">strendswith(str, 
+ suffix_str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">BOOL</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Does given str end with given suffix_str</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>strequal(str1,str2)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>BOOL</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><font style="color: #000000;"
+					color=#000000>Check if str1 is identical to str2.</font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">strisalpha(str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>BOOL</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Check if str is all alphabetic chars.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">strisdigit(str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>BOOL</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Check if str is all numeric chars.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>strislower</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>BOOL</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left>Check if first char of string is lowercase</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>strisupper</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>BOOL</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left>Check if first char of string is uppercase.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>strnotequal(str1,str2)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>BOOL</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><font style="color: #000000;"
+					color=#000000>Check if str1 differs from str2.</font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>strequalnocase(str1,str2)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>BOOL</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><font style="color: #000000;"
+					color=#000000>Check if str1 is identical to str2, ignoring 
+ letter case.</font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>strnotequalnocase(str1,str2)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>BOOL</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><font style="color: #000000;"
+					color=#000000>Check if str1 differs from str2, ignoring 
+ letter case.</font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>strlessthan(str1,str2)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>BOOL</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><font style="color: #000000;"
+					color=#000000>Check if str1 is lexically before str2.</font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>strgreaterthan(str1,str2)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>BOOL</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><font style="color: #000000;"
+					color=#000000>Check if str1 is lexically after str2.</font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">strlength(str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">INT</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Return length of string.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">strpiece(str, 
+ start_num, end_num)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Fetch substring of string from start_num to 
+ end_num indexes. Zero-based</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">strrchr(str, 
+ ch_str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Find last occurrence of char in string. Return 
+ string headed by char</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">strsubst(str, 
+ old_str, new_str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Replace substring old_str of a string str 
+ with new_str.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">strtolower(str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Convert string to lowercase.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">strtotitle(str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Convert string to title capitalization.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">strtoupper(str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Convert string to uppercase.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">strtrim(str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Remove leading and trailing whitespace from 
+ str.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">strwrap(str, 
+ num)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="margin-bottom: 0;">Break string at specified length.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><font style="color: #000000;"
+					color=#000000><span style="font-weight: bold;">str(num)</span></font></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>STR</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left>Convert numeric value to string. (Also accepts string arg).</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>strescape(str, charsToEscapeStr, escapeStr)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>STR</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left>Escape characters in string.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left><span style="font-weight: bold;">strunescape(str, escapedCharsStr, 
+ escapeStr)</span></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left><span style="font-weight: bold;">STR</span></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left>Unescape characters in string.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left><span>suffix(wordStr, suffixStr)</span></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left><span>BOOL</span></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left>True if suffixStr may be the suffix of wordStr.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>unpackdirs(dir_str)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>STR ARRAY</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left>Unpack directory names from a full directory path string.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>xmlstr(str)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>STR</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left>Convert chars to appropriate chars for an XML/HTML file.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 35%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=35%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>&nbsp;</td>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=22%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>&nbsp;</td>
+<td style="x-cell-content-align: TOP;
+			width: 43%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=43%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left>&nbsp;</td></tr>
+</table>
+
+<h2>See Also</h2>
+
+<p style="margin-bottom: 0;"><a href="Table_of_Special_Functions.htm">Special 
+ Functions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Table_of_Knowledge_Base_Functions.htm">Knowledge 
+ Base Functions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Table_of_Formatting_and_I_O_Functions.htm">Formatting 
+ and I/O Functions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Table_of_Parse_Tree_Functions.htm">Parse 
+ Tree Functions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Table_of_Spelling_Functions.htm">Spelling 
+ Functions</a></p>
+
+</body>
+
+</html>

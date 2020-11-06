@@ -1,0 +1,991 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Special Variables</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=date content="07 27, 2001 6:51:21 PM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1485>
+<meta name=layout-width content=1027>
+
+
+<!--(Links)=========================================================-->
+
+<link REL="StyleSheet" HREF="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Special Variables</h1>
+
+<p>To get useful information from the parse tree and other sources when 
+ analyzing a text, some special variable names have been provided. All 
+ start with a dollar sign (<span style="font-weight: bold;">$</span>). 
+ No such variable names are usable with suggested (<span style="font-weight: bold;">S</span>) 
+ variables, at present.</p>
+
+<h2>Notes on <span style="font-weight: normal;"><font style="color: #008080;"
+														color=#008080>Special 
+ Variables</font></span></h2>
+
+<ol>
+	
+	<li style="/*begin!kadov{{*/ font-weight: normal; /*}}end!kadov*/ "
+		class=kadov-p><p><span style="font-weight: normal;">Special variable 
+ names must be quoted. E.g., N(&quot;$text&quot;, 2).</span></p></li>
+	
+	<li style="/*begin!kadov{{*/ font-weight: normal; /*}}end!kadov*/ "
+		class=kadov-p><p><span style="font-weight: normal;">You should 
+ not assign to or create your own &quot;dollar&quot; variables. NLP++ reserves 
+ all variable names that start with a dollar sign.</span></p></li>
+</ol>
+
+<h2>Types of Special Variables</h2>
+
+<p>These special variables have been organized into the following four 
+ groups:</p>
+
+<ul>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;">File Variables</p></li>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;">Letter Case Variables</p></li>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;">Test Variables</p></li>
+	
+	<li class=kadov-p
+		class=kadov-p>Text Variables</li>
+</ul>
+
+<p>A consolidated table of NLP++ special variables is provided below. Each 
+ item in the table is also detailed in individual topics in the Special 
+ Variables section.</p>
+
+<h2><a name=table></a>Table of Special Variables</h2>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				margin-top: 14pt;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00
+	width=18%>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><span style="font-weight: bold;">VARIABLE NAME</span></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00
+	width=13%>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><span style="font-weight: bold;">VARIABLE TYPES</span></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00
+	width=48%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">DESCRIPTION</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">$treetext</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">N, X</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Fetch the 'cleaned up' (removing leading and 
+ trailing, convert separators to single space) text gleaned from a node's 
+ subtree. Uses the parse tree as input, not text buffer. Analogous to $text. 
+ Difference between $treetext and $text is $text returns text from the 
+ input text buffer while $treetext returns text from the parse tree. So, 
+ if you have removed some nodes from a tree with an excise(), $treetext 
+ returns the text minus the excised elements, while $text returns everything 
+ in the input text buffer, including the text under excised nodes.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">$text</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">N, X</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Fetch the text covered by the node. Cleanup 
+ whitespace (removing leading and trailing, convert separators to single 
+ space). Uses the original text buffer, rather than the subtree under the 
+ node, in order to gather text. See also $treetext and $treeraw.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">$treeraw</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">N, X</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Fetch the text covered by the node from the 
+ parse tree. Text is not 'cleaned up'. Analogous to $treetext. See also 
+ $treetext and $raw.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">$raw</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">N, X</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Fetch the 'cleaned up' text covered by the 
+ node from the text buffer. See also $treetext, $treeraw and $text.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">$xmltext</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">N, X</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Same as <span style="font-style: normal; font-weight: normal;">$raw</span><span 
+ style="font-style: italic; font-weight: bold;">,</span> but converts characters 
+ that are special to HTML and XML. E.g., &quot;&lt;&quot; is converted 
+ to &quot;&amp;lt;&quot;.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>$length</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>N, 
+ X</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000>Get the length of node's 
+ text.</font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">$ostart</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">N, X</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Start offset of the referenced node in the 
+ input text.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">$oend</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">N, X</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">End offset of the referenced node in the input 
+ text.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">$start</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">N, X</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Check if referenced node has left sibling 
+ in parse tree. Evaluates to 1<span style="font-weight: bold;"> </span>if 
+ the referenced node has no left sibling, else 0.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">$end</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">N, X</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left>Check if referenced node has right sibling in parse tree. 
+ Evaluates to 1<span style="font-weight: bold;"> </span>if referenced node 
+ has no right sibling, else 0.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">$apppath</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">G</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Get base directory path for current application. 
+ E.g., &quot;D:\dev\apps\Resume&quot;.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">$input</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">G</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Get full input file. E.g., &quot;D:\apps\Resume\input\Dev1\rez.txt&quot;</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">$inputpath</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">G</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Get input file path. E.g., &quot;D:\apps\Resume\input\Dev1&quot;</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">$inputname</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">G</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Get input file name. E.g., &quot;rez.txt&quot;</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">$inputhead</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">G</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Get input file head. E.g., &quot;rez&quot;</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">$inputtail</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">G</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Get input file tail. E.g., &quot;txt&quot;</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>$passnum</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>G</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Get current pass number. <!--kadov_tag{{<spaces>}}-->&nbsp;<span 
+ style="font-weight: bold; color: #ff0000;"><!--kadov_tag{{</spaces>}}-->NEW 
+ 2.0.2.4</span></td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>$rulenum</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>G</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Get current rule number within current pass. 
+ <span style="color: #ff0000; font-weight: bold;">NEW 2.0.2.4</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">$allcaps</span><span style="font-weight: bold;"><br>
+$uppercase</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">N</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Check if token underlying node is all uppercase. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Returns 
+ 1 if token is all uppercase. If multiple words (even if all are all-caps), 
+ returns 0. WARN: Not identical to the <span style="font-weight: bold;"><a 
+ href="../uppercase.htm">uppercase</a></span>() PRE Action.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">$lowercase</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">N</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Check if token underlying node is all lowercase. 
+ Returns 1 if token is all lowercase If multiple words (even if all are 
+ all-caps), returns 0. WARN: Not identical to the <span style="font-weight: bold;"><a 
+ href="../lowercase.htm">lowercase</a></span>() PRE Action.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">$cap</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">N</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Check if token underlying node is a capitalized 
+ word. Returns 1 if token is a capitalized word. WARN: Not identical to 
+ the <span style="font-weight: bold;"><a href="../cap.htm">cap</a></span>() 
+ PRE Action.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">$mixcap</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">N</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Check if token underlying node is a mixed-capitalized 
+ word. Returns 1 if token is a mixed-capitalized word. Examples: &quot;MIchigan&quot;, 
+ &quot;abcD&quot;.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">$exists</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">N</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Check if node exists in parse tree. Returns 
+ 1 if node exists, else 0.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">$unknown</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=13%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">N</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 48%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=48%>
+<p style="margin-bottom: 0;">Check if token underlying node is an unknown 
+ word. Returns 1 if token underlying node is unknown. WARN: Not identical 
+ to the <span style="font-weight: bold;"><a href="../unknown.htm">unknown</a></span>() 
+ PRE Action. Requires a <span style="font-weight: bold;"><a href="../lookup.htm">lookup</a></span>() 
+ CODE Action prior to any use of this special variable.</td></tr>
+</table>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 90%;
+				border-spacing: 0px;
+				margin-top: 14pt;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=90%>
+
+<tr>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 100%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=100%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Notes</span>: 
+ <span style="font-weight: normal;">The $uppercase, $lowercase, $cap, and 
+ $unknown differ from the analogous PRE Actions in that they all traverse 
+ down to the &quot;leafiest&quot; node they can find, in order to perform 
+ their check. The corresponding PRE Actions only chain down if the [s] 
+ flag is present in the associated phrase element(s). Also, the $ variables 
+ are not stopped by a [base] attribute in a node.</span></td></tr>
+</table>
+
+<h2>See Also</h2>
+
+<p style="margin-bottom: 0;"><a href="About_NLP++_Variables.htm">Variables</a></p>
+
+</body>
+
+</html>

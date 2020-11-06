@@ -1,0 +1,188 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>attrvals</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1873>
+<meta name=layout-width content=916>
+<meta name=date content="01 4, 2002 1:02:53 PM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF=default.css>
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>attrvals</h1>
+
+<h2>Purpose</h2>
+
+<p>Fetch attribute's list of values.</p>
+
+<h2>Syntax</h2>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">returnedValue(s) = attrvals(anAttribute);</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">returnedValue(s) - type: val<br>
+anAttribute - type: attr</p>
+
+<h2>Returns</h2>
+
+<p>A list of values.</p>
+
+<h2>Remarks</h2>
+
+<p>Concepts can have zero or more attributes. Each attribute can zero or 
+ more values. This function takes an attribute as argument and returns 
+ the list of values associated with the attribute. If there are no values 
+ of the attribute, the function returns NULL.</p>
+
+<h2>Example</h2>
+
+<p>To demonstrate attrvals, we first need to build a KB:</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">@CODE<br>
+# if you find apples in the concept hierarchy<br>
+if (findconcept(findroot(),&quot;apple&quot;)) <br>
+# kill them (to start fresh) <br>
+rmconcept(findconcept(findroot(),&quot;apple&quot;));<br>
+# Create the apple concept<br>
+G(&quot;apple&quot;) = makeconcept(findroot(),&quot;apple&quot;);<br>
+# Apples have color<br>
+addstrval(G(&quot;apple&quot;),&quot;have&quot;,&quot;color&quot;);<br>
+# Apple's color is red<br>
+addstrval(G(&quot;apple&quot;),&quot;color&quot;,&quot;red&quot;);<br>
+# Apple's color is also green and yellow<br>
+addstrval(G(&quot;apple&quot;),&quot;color&quot;,&quot;green and yellow&quot;);</p>
+
+<p>The code creates a KB like this:</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><img src="Image%20Files/apple.gif"
+											style="width: 470px;
+													height: 378px;
+													border-width: 1px;
+													border-style: solid;
+													margin-top: 0px;
+													margin-bottom: 0px;
+													margin-left: 0px;
+													margin-right: 0px;"
+											width=470
+											height=378
+											border=1></p>
+
+<p>The following code accesses the KB's attributes and values:</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;"># Find apple's attribute list<br>
+G(&quot;attrList&quot;) = findattrs(G(&quot;apple&quot;));<br>
+# Find the list of values of the first attribute<br>
+G(&quot;valList&quot;) = <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">attrvals</span>(G(&quot;attrList&quot;));<br>
+# print out the first attribute's name and value<br>
+if(attrname(G(&quot;attrList&quot;))){ <br>
+&quot;output.txt&quot; &lt;&lt; &quot;1) first attribute of apple is: &quot; <br>
+&lt;&lt; attrname(G(&quot;attrList&quot;)) &lt;&lt; &quot;\n&quot;; <br>
+&quot;output.txt&quot; &lt;&lt; &quot;2) first value of that attribute is: &quot; <br>
+&lt;&lt; getstrval(G(&quot;valList&quot;)) &lt;&lt; &quot;\n&quot;;}<br>
+# get the next attribute<br>
+G(&quot;nextAttr&quot;) = nextattr(G(&quot;attrList&quot;));<br>
+if(attrname(nextattr(G(&quot;attrList&quot;)))) <br>
+&quot;output.txt&quot; &lt;&lt; &quot;3) next attribute of apple is: &quot; <br>
+&lt;&lt; attrname(G(&quot;nextAttr&quot;)) &lt;&lt; &quot;\n&quot;;<br>
+# get the list of values of the second attribute<br>
+G(&quot;valList&quot;) = <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">attrvals</span>(G(&quot;nextAttr&quot;));<br>
+# print the first value's name <br>
+&quot;output.txt&quot; &lt;&lt; &quot;4) first value of that attribute is: &quot; <br>
+&lt;&lt; getstrval(G(&quot;valList&quot;)) &lt;&lt; &quot;\n&quot;;<br>
+# print the second value of the second attribute<br>
+&quot;output.txt&quot; &lt;&lt; &quot;5) second value of that attribute is: &quot; <br>
+&lt;&lt; getstrval(nextval(G(&quot;valList&quot;))) &lt;&lt; &quot;\n&quot;;</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">The output looks like this:</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><img src="Image%20Files/attrvalout.gif"
+											style="width: 421px;
+													height: 159px;
+													border-width: 1px;
+													border-style: solid;
+													margin-top: 0px;
+													margin-bottom: 0px;
+													margin-left: 0px;
+													margin-right: 0px;"
+											width=421
+											height=159
+											border=1></p>
+
+<h2>See Also</h2>
+
+<p style="margin-bottom: 0;"><a HREF="attrexists.htm">attrexists</a>, <a 
+ HREF="attrwithval.htm">attrwithval</a>, <a href="findvals.htm">findvals</a>, 
+ <a href="Table_of_Knowledge_Base_Functions.htm">Knowledge Base Functions</a></p>
+
+</body>
+
+</html>

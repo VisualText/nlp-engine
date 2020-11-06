@@ -1,0 +1,10 @@
+{
+    "visualText": [
+        {
+            "name": "Analyzer",
+            "type": "state",
+            "engineDir": "/home/dehilster/nlp-engine/",
+            "currentAnalyzer": ""   
+        }
+    ]
+}

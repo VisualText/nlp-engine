@@ -1,0 +1,111 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>@RULES Region</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=951>
+<meta name=layout-width content=472>
+<meta name=date content="08 10, 2001 9:08:04 AM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF=default.css>
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>RULES Region</h1>
+
+<p>The RULES Region is where you write the actual NLP++ rules. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ RULES Region begins with the @RULES marker and optionally terminates with 
+ the @@RULES marker.</p>
+
+<p>Action Regions (i.e. PRE, CHECK, and POST) that precede a RULES Region 
+ apply to every rule within the RULES Region.</p>
+
+<p>A RULES Region with no preceding Action Regions gets the default reduce 
+ action, <span style="font-weight: bold;">single</span>() applied to every 
+ rule match within it.</p>
+
+<h2>Common Error: Not Resetting Actions</h2>
+
+<p>In order to reset the actions that apply to a RULES Region, one must 
+ reset actions by adding a @RULES marker before the rules to be reset.</p>
+
+<p><span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">Example:</span></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">@POST<br>
+N(&quot;noun&quot;, 3) = &quot;true&quot;;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">single();<br>
+@RULES<br>
+_np &lt;- _det _quan _xALPHA @@<br>
+_np &lt;- _det _xALPHA @@</p>
+
+<p>In the above, we want to mark alphabetic tokens as possible nouns based 
+ on their context. But the code in the POST Region sets a variable called 
+ &quot;noun&quot; to &quot;true&quot; in the node matching the THIRD element 
+ of each rule in the RULES Region. However, this will fail, since the second 
+ rule has only two elements on the right hand side. Therefore, this example 
+ must be rewritten as</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">@POST<br>
+N(&quot;noun&quot;, 3) = &quot;true&quot;;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">single();<br>
+@RULES<br>
+_np &lt;- _det _quan _xALPHA @@</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">@POST<br>
+N(&quot;noun&quot;, 2) = &quot;true&quot;;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">single();<br>
+@RULES<br>
+_np &lt;- _det _xALPHA @@</p>
+
+<p>It's even easier to forget to add a lone @RULES so as to reset to the 
+ default action for subsequent rules.</p>
+
+<h2>See Also</h2>
+
+<p style="margin-top: 0pt; margin-bottom: 0px;"><a HREF="NLP_PP_Stuff/Grammar_Region.htm">Grammar 
+ Region</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0px;"><a HREF="NLP_PP_Stuff/Rule_syntax.htm">Rule 
+ Syntax</a> </p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="PRE.htm">PRE Region</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="CHECK.htm">CHECK 
+ Region</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="POST.htm">POST 
+ Region</a></p>
+
+</body>
+
+</html>

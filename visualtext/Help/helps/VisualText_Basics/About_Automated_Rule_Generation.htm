@@ -1,0 +1,208 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>About Automated Rule Generation</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=date content="08 27, 2001 4:50:30 PM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1634>
+<meta name=layout-width content=1024>
+
+
+<!--(Links)=========================================================-->
+
+<link REL="StyleSheet" HREF="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1><a name=about_automated_rule_gen></a>About Automated Rule Generation</h1>
+
+<p>VisualText allows you to enhance text analyzers by merely highlighting 
+ and categorizing samples from text. Automated rule generation (or <span 
+ style="font-weight: bold;">RUG</span>, for short) creates passes and rules 
+ for you automatically, so that you don't have to worry about the details 
+ of rule writing. It also makes analyzers much more maintainable, because 
+ when you modify an analyzer and then invoke RUG, it <span style="font-style: italic;">automatically</span> 
+ updates rules according to changes made earlier on in the analyzer. That 
+ is, the developer doesn't need to worry that changes to rules in one pass 
+ will invalidate dependent rules in subsequent passes.</p>
+
+<p>RUG is best used for word and phrase-level constructs that are modular 
+ and well defined, e.g., telephone numbers. More generally, RUG can be 
+ used for the things that an analyzer deals with explicitly. For example, 
+ a linguistically sophisticated analyzer that identifies the components 
+ of sentences (noun phrases, verb phrases, etc.) can exploit RUG to identify 
+ clausal and sentential patterns.</p>
+
+<p>RUG is less useful for completely open ended or nonproductive constructs. 
+ For example, RUG might not be very useful for storing and identifying 
+ many instances of full names, such as &quot;John Smith.&quot;</p>
+
+<p>As you develop your text analyzer, you will learn how best to organize 
+ the samples that you want to collect within the Gram Tab.</p>
+
+<h2>Controlling Automated Rule Generation</h2>
+
+<p>A caveat in using RUG is that sometimes rules will not be as general 
+ as you want, or they may be more general than you want. The <a HREF="../Setting_Rule_Generation_Properties.htm">Gram 
+ Concept Properties</a> dialog can be used to help control some of these 
+ behaviors. Updates to this Help documentation will help detail some settings, 
+ but experimentation may also be required.</p>
+
+<h2><a name=gram_tab></a>Automated Rule Generation and the Gram Tab</h2>
+
+<p>The <a href="../VisualText_Interface/Tab.htm#Gram_Tab">Gram Tab</a> 
+ is where you set up concepts and samples for the automated rule generation 
+ process. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--></p>
+
+<h2><a name=basic_process></a>Basic Process of Automated Rule Generation</h2>
+
+<p>VisualText automatically generates rules by taking samples you provide, 
+ making generalizations from the samples, and then creating the rules. 
+ An outline of the process of automatic rule generation is given below. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<span style="font-weight: bold;"><!--kadov_tag{{</spaces>}}-->Each 
+ step is detailed in the Automatically Generating Pass Files section</span>.</p>
+
+<ol>
+	
+	<li class=kadov-p>
+	<p>&nbsp;Create a <span style="font-weight: bold;">stub</span>, (e.g., 
+ called phrases).</p>
+	
+	<p>Select a pass in the Ana Tab at the location where you want a set 
+ of automatically generated passes to be placed. Then, either add a <span 
+ style="font-weight: bold;">stub concept</span> in the Gram Tab or a <span 
+ style="font-weight: bold;">stub region</span> in the Ana Tab, since adding 
+ one always adds the other automatically. The stub concept is the primary 
+ organizer of user-highlighted samples. The stub region is reserved for 
+ the automatically generated passes and rules. When RUG is invoked, it 
+ automatically inserts or overwrites passes within the stub regions.</p>
+	
+	<p>We recommend that the ordering of stub concepts (in the Gram Tab) 
+ and their corresponding stub regions (in the Ana Tab) be kept in tandem, 
+ for clarity.</p>
+	</li>
+	
+	<li class=kadov-p>
+	<p>Create a <span style="font-weight: bold;">folder concept</span><span 
+ style="font-weight: normal;">, another level of organizing user samples 
+ (e.g., contact information).</span></p>
+	
+	<p>Folder concepts organize multiple types of samples.</p>
+	</li>
+	
+	<li class=kadov-p>
+	<p>Create a <span style="font-weight: bold;">rule concept</span>, which 
+ represents a set of closely related samples (e.g., telephone number).</p>
+	
+	<p>Rule concepts &quot;own&quot; a set of related samples.</p>
+	</li>
+	
+	<li class=kadov-p>
+	<p>Create a<span style="font-weight: bold;"> label concept</span>, 
+ which represents a set of subsamples (e.g., area code).</p>
+	
+	<p>Label concepts &quot;own&quot; a set of related subsamples. Label 
+ concepts and subsamples are optional. For example, if you don't care about 
+ subdividing a telephone number, then you need not create a label concept 
+ for the area code.</p>
+	</li>
+	
+	<li class=kadov-p>
+	<p>Select a <span style="font-weight: bold;">concept</span> in the 
+ Gram Tab (under which you want to add text samples).</p>
+	
+	<p>This will dynamically create a menu of rule and label concepts, 
+ with which the user may categorize samples.</p>
+	</li>
+	
+	<li class=kadov-p>
+	<p>Highlight a <span style="font-weight: bold;">sample</span> within 
+ a text file in the workspace.</p>
+	
+	<p>Use the Text Tab to find and open a text file, then highlight a 
+ text sample within it.</p>
+	</li>
+	
+	<li class=kadov-p>
+	<p>Right-click and select a rule or label concept.</p>
+	
+	<p>For example, if a full telephone number sample is highlighted, select 
+ the rule concept for telephone numbers. If you highlight a part of the 
+ full sample, such as an area code, then select the label concept for area 
+ codes.</p>
+	</li>
+	
+	<li class=kadov-p>
+	<p>Invoke RUG.</p>
+	
+	<p>When done adding samples and subsamples, from the Main Menu select 
+ Analyzer &gt; Generate Rules &gt; All. RUG will create new passes, as 
+ appropriate, in the stub regions of the Ana Tab. (You could also use the 
+ Generate button, but we recommend that Generate Rules &gt; All be used 
+ as far as possible.)</p>
+	
+	<p style="margin-bottom: 0;">&nbsp;</p>
+	</li>
+</ol>
+
+<h2>See Also</h2>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="../Using_VisualText/Automatically_Generating_Pass_Files/Adding_stub_regions.htm">Adding 
+ Stub Regions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="../Using_VisualText/Automatically_Generating_Pass_Files/Adding_rule_concepts.htm">Adding 
+ Rule Concepts</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="../Using_VisualText/Automatically_Generating_Pass_Files/Adding_folders.htm">Adding 
+ Folder Concepts</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="../Using_VisualText/Automatically_Generating_Pass_Files/Adding_samples_to_rule_concepts.htm">Adding 
+ Samples to Rule Concepts</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="../Using_VisualText/Automatically_Generating_Pass_Files/Adding_Label_Concepts.htm">Adding 
+ Label Concepts</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="../Using_VisualText/Automatically_Generating_Pass_Files/Setting_concept_properties.htm">Setting 
+ Concept Properties</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="../Using_VisualText/Automatically_Generating_Pass_Files/Running_the_Rule_Generator.htm">Running 
+ the Rule Generator</a></p>
+
+<p style="margin-bottom: 0;">&nbsp;</p>
+
+<p style="margin-bottom: 0;">&nbsp;</p>
+
+<p style="margin-bottom: 0;">&nbsp;</p>
+
+<p style="margin-bottom: 0;">&nbsp;</p>
+
+<p style="margin-bottom: 0;">&nbsp;</p>
+
+<p style="margin-bottom: 0;">&nbsp;</p>
+
+</body>
+
+</html>

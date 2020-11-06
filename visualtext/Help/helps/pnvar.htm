@@ -1,0 +1,92 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>pnvar</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=636>
+<meta name=layout-width content=916>
+<meta name=date content="01 4, 2002 12:55:37 PM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF=default.css>
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>pnvar</h1>
+
+<h2>Purpose</h2>
+
+<p>Fetch the value(s) of a parse tree node's <span style="font-style: italic;">aPnode</span> 
+ variable.</p>
+
+<h2>Syntax</h2>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">returnedValue = pnvar(aPnode, var_str)</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">returnedValue - type: var value<br>
+aPnode - type: pnode<br>
+var_str - type: str</p>
+
+<h2>Returns</h2>
+
+<h2>Remarks</h2>
+
+<p>NLP++ currently doesn't let you parameterize things like <span style="color: #ff0000; font-weight: bold;">N</span>(&quot;tmp&quot;,1). 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->That is, 
+ &quot;tmp&quot; must be a literal string. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Pnvar 
+ provides a way around this, by saying pnvar(N(1), &quot;NAME&quot;), where 
+ &quot;NAME&quot; can be a literal string, a variable, or string-valued 
+ NLP++ expression. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->So, 
+ something like pnvar(G(&quot;node&quot;), G(&quot;varname&quot;)) lets 
+ you dynamically determine the node and variable to fetch.</p>
+
+<h2>Example</h2>
+
+<h2>See Also</h2>
+
+<p style="margin-bottom: 0;"><a href="varinlist.htm">varinlist</a>, <a 
+ href="pnmakevar.htm">pnmakevar</a>, <a href="Table_of_Parse_Tree_Functions.htm">Parse 
+ Tree Functions</a> </p>
+
+<p>&nbsp;</p>
+
+</body>
+
+</html>

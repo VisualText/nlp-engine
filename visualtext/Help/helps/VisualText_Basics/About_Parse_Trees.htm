@@ -1,0 +1,189 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>About Parse Trees</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1698>
+<meta name=layout-width content=775>
+<meta name=date content="08 28, 2001 10:43:58 PM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>About Parse Trees</h1>
+
+<p>VisualText analyzers build and use a single <span style="font-weight: bold;">parse 
+ tree</span> (or <span style="font-weight: bold;">tree,</span> for short) 
+ which is a data structure that tracks the patterns that have matched within 
+ the input text. Building parse trees is similar to the sentence diagramming 
+ taught in elementary school. The first pass of every analyzer tokenizes 
+ the text, that is, it converts a stream of characters to a parse tree 
+ in which alphabetic, numeric, whitespace, and punctuation are grouped 
+ into units called <span style="font-weight: bold;">nodes</span>. Below 
+ is a tokenized parse tree as displayed in the Parse Tree View.</p>
+
+<p>&nbsp;</p>
+
+<p><img src="aboutparsetree.gif"
+		style="width: 417px;
+				height: 311px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=417
+		height=311
+		border=1></p>
+
+<p>&nbsp;</p>
+
+<h2><a name=parse_tree_terminology></a>Parse Tree Terminology</h2>
+
+<p>Each line in the display above corresponds to one node of the parse 
+ tree. The <span style="font-weight: bold;">root</span>, or top-level node 
+ of the parse tree, is named _ROOT and appears at the top of the display. 
+ The remaining nodes are <span style="font-weight: bold;">children</span> 
+ of the root, and the root is their <span style="font-weight: bold;">parent</span>. 
+ Generations, or <span style="font-weight: bold;">levels</span>, of nodes 
+ in the parse tree are indicated by indentation. The <span style="font-weight: bold;">phrase</span> 
+ or <span style="font-weight: bold;">list</span> of children are all in 
+ a <span style="font-weight: bold;">sibling</span> relationship to each 
+ other. In general, a parse tree has more levels than shown above. We speak 
+ of ancestors and descendants to describe the relationships between nodes 
+ at different levels of the parse tree.</p>
+
+<p>A <span style="font-weight: bold;">token</span>, <span style="font-weight: bold;">literal</span>, 
+ <span style="font-weight: bold;">leaf</span>, or <span style="font-weight: bold;">terminal</span> 
+ node, represents a literal text. Tokens are drawn with red dashes, as 
+ above. A <span style="font-weight: bold;">nonterminal</span> (or <span 
+ style="font-weight: bold;">abstract</span>) node is one with descendants. 
+ We say that a nonterminal node <span style="font-weight: bold;">dominates</span> 
+ its descendant nodes. Nonterminal nodes are drawn with a grey pentagon. 
+ The root node is the only nonterminal in the above tree. When selected, 
+ a node's color changes to blue.</p>
+
+<h2><a name=terminal_nodes></a>Terminal Nodes</h2>
+
+<p>A terminal node is a token and represents words, numbers, whitespace, 
+ and punctuation. The format for terminal nodes is as follows:<br>
+<br>
+nodename::(node_type info1 info2.. (&quot;var1&quot; &quot;val&quot;)...) 
+ text-associated-with-node</p>
+
+<p>The node type identifies the type of token. It is one of <span style="font-weight: bold;">alpha</span> 
+ (for alphabetic), <span style="font-weight: bold;">num</span> (for number), 
+ <span style="font-weight: bold;">white</span> (for whitespace), or <span 
+ style="font-weight: bold;">punct</span> (for punctuation). Information 
+ about the node follows the node type. Flag settings such as <span style="font-weight: bold;">unsealed</span> 
+ (or <span style="font-weight: bold;">un</span>), <span style="font-weight: bold;">built</span>, 
+ and <span style="font-weight: bold;">fired</span> may be shown in abbreviated 
+ form. Variables and values attached to the node may be displayed on the 
+ node line as well. Each variable and value-list is a parenthesized list 
+ of the form (&quot;varname&quot; &quot;value1&quot; &quot;value2&quot; 
+ ... ).</p>
+
+<h2><a name=nonterminal_nodes></a>Nonterminal Nodes</h2>
+
+<p>A nonterminal node is a node with descendants. An underscore is normally 
+ the first character in the name of a nonterminal. The format for nonterminal 
+ nodes in the parse tree is as follows:</p>
+
+<p>_nodename::(node info1 info2) text-associated-with-node</p>
+
+<p>For example, a non-terminal node <span style="font-style: italic;">_company</span> 
+ created when the rule matcher encountered the company name &quot;Text 
+ Analysis International&quot; in a text might look like:</p>
+
+<p>_company::(node un) Text Analysis International</p>
+
+<p>The information following the node type is as described for terminal 
+ nodes above.</p>
+
+<h2>Distinguishing Terminal and Nonterminal Nodes</h2>
+
+<p>You can distinguish between terminal and nonterminal nodes by the symbols 
+ used in the parse tree display.</p>
+
+<ol>
+	
+	<p><img src="../Buttons/parsetreearrowunselected.gif"
+			style="width: 18px;
+					height: 13px;
+					border-style: none;
+					margin-top: 0px;
+					margin-bottom: 0px;
+					margin-left: 0px;
+					margin-right: 0px;"
+			width=18
+			height=13
+			border=0> denotes a nonterminal node, and</p>
+	
+	<p><img src="../Buttons/parsetreebar.gif"
+			style="width: 13px;
+					height: 9px;
+					border-style: none;
+					margin-top: 0px;
+					margin-bottom: 0px;
+					margin-left: 0px;
+					margin-right: 0px;"
+			width=13
+			height=9
+			border=0> denotes a terminal node.</p>
+</ol>
+
+<p>When a node is selected in a parse tree view, the icon for the selected 
+ node turns blue. A nonterminal is blue when selected and grey otherwise. 
+ A terminal is blue when selected and red otherwise. You can collapse and 
+ expand nodes by clicking on the + and - symbols.</p>
+
+<h2><a name=final_tree></a>Final Parse Tree</h2>
+
+<p>The <span style="font-weight: bold;">final parse tree</span> is the 
+ tree produced by fully analyzing a text with a text analyzer.</p>
+
+<h2><a name=intermediate_parse></a>Intermediate Parse Tree</h2>
+
+<p style="margin-bottom: 0;">VisualText enables you to view the parse tree 
+ after each pass has executed. Each such <span style="font-weight: bold;">intermediate 
+ parse tree</span> records the patterns found in the input text by the 
+ analyzer passes up to and including the current pass. </p>
+
+<h2><a name=concept_tree></a>Concept Tree</h2>
+
+<p>The <span style="font-weight: bold;">concept tree</span> is a parse 
+ tree that contains only nodes that have been built for the selected pass 
+ in the analyzer sequence. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ concept tree view lets you quickly check which nodes were created in order 
+ to step through your analyzer. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--></p>
+
+</body>
+
+</html>

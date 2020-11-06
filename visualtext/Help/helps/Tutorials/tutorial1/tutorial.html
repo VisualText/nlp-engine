@@ -1,0 +1,1002 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>tutorial</title>
+
+<!--(Meta)==========================================================-->
+
+<meta HTTP-EQUIV=Content-Type CONTENT="text/html; charset=windows-1252">
+<meta NAME=Author CONTENT="Phil Shinn">
+<meta name=date content="11 17, 2001 0:05:16 AM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=8281>
+<meta name=layout-width content=1027>
+
+
+<!--(Links)=========================================================-->
+
+<!-- saved from url=(0022)http://internet.e-mail -->
+ <link REL="StyleSheet" HREF="../../default.css">
+
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Tutorial 1 - Creating a New Analyzer</h1>
+
+<p>In Tutorial 1, you create and run a simple text analyzer. You give the 
+ analyzer a name and a location, select an initial template, and save the 
+ analyzer. Then you exit VisualText™ and reload the analyzer you created. 
+ We also introduce the Tab Window and the Log Window portions of the interface 
+ and explain how to create an input file. Finally, you run the analyzer 
+ and view the parse tree, which holds the patterns matched in a text.</p>
+
+<h2><a NAME=startup></a>Startup</h2>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Launch VisualText by double clicking on the VisualText 
+ icon on your desktop (or from Start button &gt; TextAI &gt; VisualText).&nbsp; 
+ You should see the following screen:</p>
+
+<p><img src="../../VisualText_Interface/Windows/vt_screen_no_analyzer.gif"
+		style="width: 761px;
+				height: 533px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=761
+		height=533
+		border=1></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> If your toolbar area does not look like the above, right-click 
+ the mouse in the toolbar area, then enable all the toolbars. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->We 
+ recommend rearranging them as shown.</p>
+
+<p>Take a moment to familiarize yourself with the interface, which divides 
+ into three general areas: toolbars, windows, and a workspace.</p>
+
+<p>The various<span style="font-weight: bold;"> </span><span style="font-weight: normal;">toolbars</span><span 
+ style="font-weight: bold;"> </span>give you access to commonly used functions. 
+ In Tutorial 1 you will mostly be working with the Main Toolbar. (See the 
+ <a HREF="../../VisualText_Interface/Interface_Intro.htm#Interface_Overview">Interface 
+ Overview</a> section for the naming of the VisualText components).</p>
+
+<p>At the bottom of the Main Window, you'll see the Log Window and the 
+ Find Window (VisualText 2 separates these into tabs). This is where you 
+ will be creating and monitoring your analyzer. You will learn more about 
+ the Main Window later in this tutorial. The Workspace is where you can 
+ view and manipulate files and tools for building and running text analyzers. 
+ For more details on the function of all of the windows, toolbars and menus, 
+ see the <a href="../../VisualText_Interface/Interface_Intro.htm">Interface</a> 
+ section of this manual.</p>
+
+<h2><a NAME=create_analyzer></a>Create Analyzer</h2>
+
+<p>Now, let's create a new analyzer.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Select <span style="font-weight: bold;">File &gt; New 
+ Analyzer </span>from the Main Menu. Note the title bar &quot;VisualText 
+ - (no analyzer currently loaded)&quot; below:</p>
+
+<p><img src="file_new_analyzer.gif"
+		style="width: 265px;
+				height: 175px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=265
+		height=175
+		border=1></p>
+
+<p>A New Analyzer dialog box appears.</p>
+
+<p><img src="new_analyzer_dialog_tut1.gif"
+		style="width: 426px;
+				height: 254px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=426
+		height=254
+		border=1></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Give the analyzer the name <span style="font-weight: bold;">myAnalyzer</span>.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> For location, give the following path <span style="font-weight: bold;">C:\apps\myAnalyzerFolder</span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> For template, choose<span style="font-weight: bold;"> 
+ Bare<span style="font-weight: normal;">.</span></span></p>
+
+<p>A template is a starter or skeletal analyzer that you can copy and modify. 
+ The Bare template analyzer is a minimal analyzer and with a single<span 
+ style="font-style: italic;"> </span>pass calle<span style="font-style: italic;">d 
+ tokenize. </span>The tokenize pass is discussed later in this tutorial.</p>
+
+<p><span style="font-style: italic;"><img src="../GO.gif"
+											style="width: 19px;
+													height: 16px;
+													border-style: none;
+													margin-top: 0px;
+													margin-bottom: 0px;
+													margin-left: 0px;
+													margin-right: 0px;"
+											width=19
+											height=16
+											border=0> </span>Click <span 
+ style="font-weight: bold;">OK</span>. You now see a VisualText splash 
+ screen appear on the screen.</p>
+
+<p style="font-style: normal;">After a few seconds, the VisualText title 
+ bar reads &quot;VisualText - myAnalyzer.&quot;</p>
+
+<p>When new analyzers are created, VisualText makes a directory structure 
+ in the working directory. For this analyzer, VisualText created the following 
+ directory structure in c:\apps<span style="font-style: italic;">:</span></p>
+
+<p><img src="direct_struc0731.gif"
+		x-maintain-ratio=TRUE
+		style="border-style: none;
+				border: none;
+				width: 187px;
+				height: 208px;
+				float: none;"
+		width=187
+		height=208
+		border=0></p>
+
+<p style="font-style: normal;">This folder structure houses all the information 
+ needed to run the analyzer, including folders for input and output, a 
+ folder for the knowledge base, etc. The analyzer you just created, myAnalyzer, 
+ refers to this entire directory structure. The set of related files and 
+ directories under myAnalyzer is called a <span style="font-weight: bold;">project</span> 
+ in VisualText and other development environments. For a detailed description 
+ of an analyzer project, see <a HREF="../../VisualText_Basics/Structure_of_Analyzer_Projects.htm"
+								style="font-style: normal;">Structure of 
+ Analyzer Projects</a>.</p>
+
+<p style="font-style: normal;">One important file automatically generated 
+ in the myAnalyzer folder is <span style="font-weight: bold;">myAnalyzer.ana</span>, 
+ which organizes your project. When you load an analyzer, you do so by 
+ opening the myAnalyzer.ana file.</p>
+
+<h2 style="font-style: normal;"><a NAME=exit_analyzer></a>Exit and Load 
+ Analyzer</h2>
+
+<p style="font-style: normal;">Now we exit the program. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(Note 
+ that the Help should stay as-is, as a separate program.) <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Launch 
+ VisualText again to continue with Tutorial 1.</p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> Select <span style="font-weight: bold;">File 
+ &gt; Exit </span>from the Main Menu.</p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> To load the analyzer you 
+ just created, invoke VisualText and select <span style="font-weight: bold;">File 
+ &gt; Open Analyzer</span>.</p>
+
+<p style="font-style: normal;"><img src="file%20open%20analyzer.gif"
+									style="width: 265px;
+											height: 175px;
+											border-width: 1px;
+											border-style: solid;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=265
+									height=175
+									border=1></p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> Use the Open dialog to navigate 
+ to <span style="font-weight: bold;">C:\apps\myAnalyzerFolder\myAnalyzer</span>:</p>
+
+<p style="font-style: normal;"><img src="open_myAnalyzer.ana_tut1.gif"
+									style="width: 425px;
+											height: 260px;
+											border-width: 1px;
+											border-style: solid;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=425
+									height=260
+									border=1></p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> Select <span style="font-weight: bold;">myAnalyzer.ana</span>, 
+ then select <span style="font-weight: bold;">Open</span>.</p>
+
+<p style="font-style: normal;">This step loads the analyzer.</p>
+
+<p style="font-style: normal;">Once an analyzer is open, be careful to 
+ distinguish between <span style="font-weight: bold;">File &gt; Open...</span> 
+ which opens a file into the Workspace area, and <span style="font-weight: bold;">File 
+ &gt; Open Analyzer, </span>which enables you to close the current analyzer 
+ project and browse to an .ana file of another project.</p>
+
+<h2 style="font-style: normal;"><a NAME=Main_windows></a>Main Windows</h2>
+
+<p style="font-style: normal;">Three large windows comprise the analyzer 
+ work area: the Log Window, located in the lower left corner of the VisualText 
+ interface, the Tab Window located in the upper left portion of the interface 
+ and the Find Window<span style="font-weight: bold;"> </span>located in 
+ the lower right corner. You can resize, dock and dismiss these windows 
+ as you choose.&nbsp; If you close a window and want to reopen it, use 
+ the toggle buttons on the main menu toolbar:</p>
+
+<p style="font-style: normal;"><img src="toggle%20buttons.gif"
+									style="width: 84px;
+											height: 32px;
+											border-width: 1px;
+											border-style: solid;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=84
+									height=32
+									border=1></p>
+
+<p style="font-style: normal;">The leftmost button toggles the Tab Window.</p>
+
+<p style="font-style: normal;">The left hammer toggles the Log Window while 
+ the right hammer toggles the Find Window.</p>
+
+<h2 style="font-style: normal;"><a NAME=log_window></a>Log Window</h2>
+
+<p style="font-style: normal;">The Log Window gives you some basic information 
+ about an analyzer when you open it. It also displays information about 
+ rules as they are processed and applied to text you are analyzing.</p>
+
+<p style="font-style: normal;"><img src="log_win_tut1.gif"
+									style="width: 443px;
+											height: 152px;
+											border-width: 1px;
+											border-style: solid;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=443
+									height=152
+									border=1></p>
+
+<p style="font-style: normal;">Here it displays the time it took to load 
+ the minimal analyzer (myAnalyzer) and its associated knowledge base (KB).</p>
+
+<p style="font-style: normal;">When an error occurs or other information 
+ needs to be reported to the user, it is displayed in the Log Window. For 
+ typical messages displayed in the Log Window, refer to <a HREF="../../Log_Window.htm"
+															style="font-style: normal;">Log 
+ Window Messages</a>.</p>
+
+<h2 style="font-style: normal;"><a NAME=tabs_window></a>Tab Window</h2>
+
+<p style="font-style: normal;">There are three tabs in the Tab Window: 
+ Gram, Ana and<span style="font-weight: bold;"> </span>Text.</p>
+
+<p style="font-style: normal;"><img src="../../VisualText_Interface/Windows/tab_window.gif"
+									style="width: 227px;
+											height: 223px;
+											border-width: 1px;
+											border-style: solid;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=227
+									height=223
+									border=1></p>
+
+<ul>
+	
+	<li class=kadov-p><p style="margin-bottom: 0; font-style: normal;"><span 
+ style="font-weight: bold;">Gram</span> is where you manage samples taken 
+ from input texts.</p></li>
+	
+	<li class=kadov-p><p style="margin-bottom: 0; font-style: normal;"><span 
+ style="font-weight: bold;">Ana</span> is where you control the text analyzer 
+ sequence, passes, and pass files.</p></li>
+	
+	<li class=kadov-p><p><span style="font-weight: bold;">Text</span><span> 
+ is where you manage text input and output files.&nbsp;</span></p></li>
+</ul>
+
+<p style="font-style: normal;">VisualText is an integrated development 
+ environment (IDE) for creating text analyzers. It gives you access to 
+ all the machinery you need to create an analyzer in a single framework. 
+ The Gram, Text and Ana tabs are essential parts of the machinery. Generally 
+ speaking, you view and manage the input and output files through the Text 
+ Tab; the text analyzer sequence, passes, and manually-edited rules in 
+ the Ana Tab; and the automatically-generated rules in the Gram Tab.</p>
+
+<p style="font-style: normal;">The Tab Window can be resized by dragging 
+ the right edge of the window towards the left. When resizing the window 
+ hides one of the tabs, you can use the toggle arrows to find it.</p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> Familiarize yourself with 
+ each of the tabs in the Tab Window, by selecting the tab (Ana, Gram or 
+ Text) and with the cursor in the window (not directly on the tab), right 
+ clicking to bring up the popup menu.</p>
+
+<p style="font-style: normal;">You'll be working with a few of these popup 
+ menu items in this tutorial. But for a detailed list of the various functions 
+ available in the Tab Window, see <a HREF="../../VisualText_Interface/Popups/Popup_Menus.htm"
+									style="font-style: normal;">Popup Menus</a> 
+ in the Interface section of this guide.</p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> Click on the <span style="font-weight: bold;">Gram 
+ Tab</span> and then on the <span style="font-weight: bold;">Text Tab</span>.</p>
+
+<p style="font-style: normal;">Notice that nothing is contained in either 
+ of these tabs. By default, these two tabs are left empty. As you add input 
+ texts, analyze them, and sample information from the texts, you will create 
+ data in these two areas.</p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> Now click on the <span style="font-weight: bold;">Ana 
+ Tab.</span></p>
+
+<p style="font-style: normal;">Notice that it is not empty.<span style="font-weight: bold;"> 
+ </span>The<span style="font-weight: bold;"> </span>Ana Tab comes with 
+ a built-in default pass, the <span style="font-weight: bold;">tokenize</span> 
+ pass.&nbsp; A pass is a discrete step in the text analyzer, with its own 
+ <span style="font-weight: bold;">pass algorithm</span>. The main pattern-matching 
+ pass type in VisualText (called <span style="font-weight: bold;">pat</span>) 
+ uses a <span style="font-weight: bold;">pass file</span>, which consists 
+ of NLP++™ code and rules. NLP++ is a general purpose programming language 
+ that is integrated with both a grammar and a hierarchical knowledge base 
+ management system (KBMS). This tight, three-way coupling is ideal for 
+ developing text analysis applications. NLP++ code can manipulate the parse 
+ tree and attach information to it, as well as access and modify knowledge 
+ used during text analysis.</p>
+
+<p style="font-style: normal;">The <span style="font-weight: bold;">tokenize</span> 
+ pass algorithm is a system pass and does not have an associated pass file. 
+ <span style="font-weight: bold;">Tokenize</span> executes first, traversing 
+ the input text to convert it to a structure called a <span style="font-weight: bold;">parse 
+ tree</span>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->As 
+ you add new passes to the Ana Tab, they become part of the stepwise sequence 
+ executed when the text analyzer runs on an input text. Each pass typically 
+ updates the parse tree with patterns that it identifies. As we'll see, 
+ NLP++ enables a pass to also manipulate the information in the parse tree 
+ and the KB.</p>
+
+<h2 style="font-style: normal;">Find Window</h2>
+
+<p style="font-style: normal;">The last of the Main Windows is the <a HREF="../../Find_Window.htm#Find_Window"
+	style="font-style: normal;">Find Window</a>. It is used to display 
+ search results when running a search on texts. Since we don't have any 
+ text to search yet, we won't be able to use this window now.</p>
+
+<h2 style="font-style: normal;"><a NAME=add_text></a>Add Text File</h2>
+
+<p style="font-style: normal;">Now we need some text to analyze.&nbsp; 
+ In VisualText you have the option to use existing text files or to create 
+ new text files. For this tutorial, we'll create a text file from scratch.</p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> Click the <span style="font-weight: bold;">Text 
+ Tab</span>.</p>
+
+<p style="font-style: normal;">Then, with the cursor in the white area 
+ of the Text Tab, right click in the window to bring up the Text Tab Popup 
+ Menu.</p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> Select <span style="font-weight: bold;">Add 
+ &gt; New Text File</span>:</p>
+
+<p style="font-style: normal;"><img src="add_new_file_tut1.gif"
+									style="width: 433px;
+											height: 343px;
+											border-width: 1px;
+											border-style: solid;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=433
+									height=343
+									border=1></p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> Name the file <span style="font-weight: bold;">eg1</span> 
+ (and don't include an ending such as <span style="font-weight: bold;">.txt</span>).</p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> Click <span style="font-weight: bold;">OK</span>.</p>
+
+<p style="font-style: normal;">Notice that a file called <span style="font-weight: bold;">eg1.txt</span> 
+ has been added to the Workspace and that the file has also been added 
+ in the Text Tab. The default extension .txt is automatically added to 
+ the file name. &quot;<span style="font-weight: bold;">input</span>&quot; 
+ after the file name indicates the file is located in the input folder.</p>
+
+<p style="font-style: normal;">In addition to text files, you can use binary 
+ or formatted text files such as html as input.</p>
+
+<p style="font-style: normal;">Your Tab Window and Workspace should look 
+ like this:</p>
+
+<p style="font-style: normal;"><img src="added_eg1.tut1.gif"
+									style="width: 563px;
+											height: 302px;
+											border-width: 1px;
+											border-style: solid;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=563
+									height=302
+									border=1></p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> Now, type the following text 
+ in the <span style="font-weight: bold;">eg1.txt</span> file:</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;
+			font-style: normal;">The quick brown fox jumped over the lazy yellow dog.<br>
+John gave the book to Mary.<br>
+Susan kissed the little baby's cheek.</p>
+
+<p style="font-style: normal;">An asterisk <span style="font-weight: bold; font-size: 11.0pt;">*</span> 
+ is added to the top of the file indicating the file has changes which 
+ have not been saved.</p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> To save the file, put the 
+ cursor in the body of the text file and right click to launch the Text 
+ File Popup Menu:</p>
+
+<p style="font-style: normal;"><img src="save_eg1_tut1.gif"
+									style="width: 431px;
+											height: 292px;
+											border-width: 1px;
+											border-style: solid;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=431
+									height=292
+									border=1></p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> Select <span style="font-weight: bold;">Save</span>.</p>
+
+<p style="font-style: normal;">You can also save files in the Workspace 
+ with the <span style="font-weight: bold;">Save</span> button <img src="../../Toolbar_buttons/save_button.gif"
+	style="width: 24px;
+			height: 23px;
+			border-width: 1px;
+			border-style: solid;
+			margin-top: 0px;
+			margin-bottom: 0px;
+			margin-left: 0px;
+			margin-right: 0px;"
+	width=24
+	height=23
+	border=1> located on the Main Toolbar.</p>
+
+<p style="font-style: normal;">The file is written to the following directory:</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;
+			font-style: normal;">C:\apps\myAnalyzerFolder\myAnalyzer\input</p>
+
+<p style="font-style: normal;">When you are supplying your own files, you 
+ would copy them into this same directory.</p>
+
+<p style="font-style: normal;">If you do add existing text files to the 
+ directory, it will be necessary to refresh the Text Tab. You can refresh 
+ by putting your cursor inside the Text Tab Window, right clicking and 
+ selecting <span style="font-weight: bold;">Refresh</span> from the Text 
+ Tab Popup Menu. Note that in this case you will get a dire-looking message 
+ saying that &quot;all knowledge associated with text files&quot; will 
+ be lost if you refresh. You can safely ignore that message and continue 
+ to refresh. (It refers to attribute knowledge that one could add to text-file 
+ concepts in the knowledge base.)</p>
+
+<h2 style="font-style: normal;"><a NAME=run_analyzer></a>Run Analyzer</h2>
+
+<p style="font-style: normal;">Now that we have some text, we are ready 
+ to run the analyzer. Recall that the analyzer at this point is made up 
+ of one default rule pass:<span style="font-weight: bold;"> </span>tokenize.</p>
+
+<p style="font-style: normal;">So that you can see each step in the analyzer 
+ sequence, select<span style="font-weight: bold;"> Generate Logs</span> 
+ button <img src="../../Toolbar_buttons/toggle_gen_logs_button.gif"
+			style="width: 24px;
+					height: 25px;
+					border-width: 1px;
+					border-style: solid;
+					margin-top: 0px;
+					margin-bottom: 0px;
+					margin-left: 0px;
+					margin-right: 0px;"
+			width=24
+			height=25
+			border=1> on the <a HREF="../../VisualText_Interface/Toolbars/Toolbar.htm#KB_Toolbar"
+								style="font-style: normal;">Workspace Toolbar</a>. 
+ (When the button is depressed, it appears indented.) When you run an analyzer 
+ with Generate Logs on, log files will be created so that you can get detailed 
+ information about each step of the analyzer sequence, which can help you 
+ debug your analyzer. You'll learn more about generating logs in later 
+ tutorials.</p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> Select <span style="font-weight: bold;">eg1.txt</span> 
+ in the Text Tab<span style="font-weight: bold;">.</span></p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> Click the <span style="font-weight: bold;">Run</span> 
+ button <img src="../../Toolbar_buttons/run_button.gif"
+			style="width: 24px;
+					height: 26px;
+					border-width: 1px;
+					border-style: solid;
+					margin-top: 0px;
+					margin-bottom: 0px;
+					margin-left: 0px;
+					margin-right: 0px;"
+			width=24
+			height=26
+			border=1> on the Workspace Toolbar to &quot;run&quot; the analyzer.</p>
+
+<p style="font-style: normal;">Notice that information about the application 
+ of rule passes is displayed in the Log Window.<span style="font-weight: bold;"> 
+ </span>Here it lets you know the name of the text being analyzed and the 
+ date the file is processed.</p>
+
+<p style="font-style: normal;">We recommend keeping the <span style="font-weight: bold;">Verbose 
+ Mode</span> <img src="../../Toolbar_buttons/toggle_verbose_mode_button.gif"
+					style="width: 23px;
+							height: 25px;
+							border-style: none;
+							margin-top: 0px;
+							margin-bottom: 0px;
+							margin-left: 0px;
+							margin-right: 0px;"
+					width=23
+					height=25
+					border=0> button TURNED OFF, as it has no useful function 
+ at present. It is always a good idea to check the Log Window when creating 
+ your analyzer since this is where error messages will show up.</p>
+
+<h2 style="font-style: normal;"><a NAME=view_parse_tree></a>View Parse 
+ Tree</h2>
+
+<p style="font-style: normal;">Now that we applied the tokenize pass to 
+ the input file,&nbsp; we can look at one output of the analysis, called 
+ the <span style="font-weight: bold;">parse tree</span>.</p>
+
+<p style="font-style: normal;">When the analyzer is run on a text, it first 
+ converts the sequence of characters to &quot;tokens&quot; or &quot;lexemes&quot; 
+ and places them under a root. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->This 
+ constitutes the initial parse tree. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Subsequent 
+ passes modify the parse tree as they match new patterns within it. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->A 
+ parse tree is similar to the sentence diagramming taught in elementary 
+ school where you break a sentence down into parts such as nouns, verbs, 
+ noun phrases, verb phrases, subjects, objects, etc. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Each 
+ pass in a VisualText analyzer takes as input the accumulated parse tree 
+ built by all the prior passes.&nbsp;</p>
+
+<p style="font-style: normal;">There'll be a lot more information about 
+ passes and trees later on in these tutorials, but for now, let's take 
+ a look at the parse tree you just built for the eg1.txt file.</p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> Select <span style="font-weight: bold;">eg1.txt</span> 
+ in the Workspace.</p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> Right click to bring up the 
+ <span style="font-weight: bold;"><a HREF="../../VisualText_Interface/Popups/Text_File_Popup.htm"
+									style="font-style: normal;">Text File 
+ Popup Menu</a></span>.</p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> Select <span style="font-weight: bold;">View 
+ &gt; Parse Tree:</span></p>
+
+<p style="font-style: normal;"><img src="eg1_tree_tut1.gif"
+									style="width: 448px;
+											height: 337px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=448
+									height=337
+									border=0></p>
+
+<p style="font-style: normal;">VisualText displays a parse tree for the 
+ text file in a new window.</p>
+
+<p style="font-style: normal;"><img src="tut1_parsetree0616.gif"
+									style="width: 440px;
+											height: 299px;
+											border-width: 1px;
+											border-style: solid;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=440
+									height=299
+									border=1></p>
+
+<p style="font-style: normal;">Notice the title of the window, 'eg1.txt: 
+ _ROOT [1 tokenize 0-119]' and the graphic that precedes the title, the 
+ parse tree graphic. The title lets you know that this is the parse tree 
+ for the file eg1.txt and it corresponds to the first pass in our analyzer 
+ sequence (1 tokenize) and also that 119 characters were tokenized. If 
+ you don't have 119 this just means that there may have been some extra 
+ spaces or carriage returns in your file.</p>
+
+<p style="font-style: normal;">The parse tree consists of <span style="font-weight: bold;">nodes</span>. 
+ Each line in the parse tree represents a single node. Our parse tree starts 
+ with the <span style="font-weight: bold;">node</span><a NAME=node></a> 
+ _ROOT. The root of the parse tree covers the entire input text.</p>
+
+<p style="font-style: normal;">Nodes 'contain' text and other nodes and 
+ are said to be either terminal or non-terminal. A node is non-terminal 
+ if it dominates other nodes and terminal if it does not. As you can see, 
+ there is only one non-terminal node in our parse tree, _ROOT. All of the 
+ elements in our sentences, right down to the punctuation are dominated 
+ by _ROOT. The other nodes in our parse tree are terminal nodes. The terminal 
+ nodes are like the 'leaves' or end point of the tree and do not dominate 
+ anything else.</p>
+
+<p style="font-style: normal;">Each terminal node contains the following: 
+ the node name, the token type and the text from the file. The first terminal 
+ node under ROOT is 'The::[alpha] The'. This means that the input text 
+ has as its first terminal node 'The' and that the text 'The' is a sequence 
+ of alpha characters. The next terminal node in the file is \_ which means 
+ a white space, ie the white space after the word 'The'. (More on the literal 
+ use of \ will be discussed in later tutorials.)</p>
+
+<p style="font-style: normal;">As you may have found, you can distinguish 
+ between terminal and non-terminal nodes by the symbols used in the parse 
+ tree. The non-terminal nodes are indicated by an arrow and the terminal 
+ nodes are indicated by a thin, rectangular bar. A non-terminal node will 
+ be blue when selected and grey otherwise. A terminal node is red unless 
+ it is selected at which time it will turn blue. You can collapse and expand 
+ nodes by clicking on the + and - symbols.</p>
+
+<p style="font-style: normal;">If you want to see the details of the analyzer 
+ run, you can look at the log files located under the eg1.txt file in the 
+ Text Tab Window.&nbsp;</p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> Click the &quot;<span style="font-weight: bold;">X</span>&quot; 
+ in the upper right-hand corner of the eg1.txt and parse tree files to 
+ close them.</p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> Exit the analyzer by selecting 
+ <span style="font-weight: bold;">File &gt; Exit.</span></p>
+
+<p style="font-style: normal;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> (In some versions) answer 
+ <span style="font-weight: bold;">No </span>at the confirmation prompt 
+ for saving the knowledge base.</p>
+
+<h2 style="font-style: normal;"><a NAME=summary></a>Summary</h2>
+
+<p style="margin-bottom: 0; font-style: italic;"><span style="font-style: normal;">In 
+ this tutorial, we created an analyzer, gave it a name and a location, 
+ selected a template, saved it, exited and reloaded it. We introduced the 
+ Tab Window with the Text Tab, Ana Tab and Gram Tab. We looked at the Log 
+ Window, then gave our analyzer some text to analyze. Finally, we analyzed 
+ the text using the default system pass tokenize and viewed the resultant 
+ parse tree.</span> </p>
+
+</body>
+
+</html>

@@ -1,0 +1,3470 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Pass Files</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=8693>
+<meta name=layout-width content=775>
+<meta name=date content="06 23, 2001 10:34:30 AM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL="StyleSheet" HREF="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Pass Files</h1>
+
+<p>A pass file (also called a rule file), consists of NLP++™ code and rules. 
+ A pass file represents a single pass of a text analyzer over a parse tree. 
+ There are two different algorithms used to traverse the parse tree: PAT 
+ (for pattern) and REC (for recursive).</p>
+
+<p>The PAT algorithm uses rules in a pattern-based way, traversing each 
+ selected phrase in the parse tree only once, while the REC algorithm treats 
+ the rules as a recursive grammar, traversing each selected phrase repeatedly 
+ till no rules match within that phrase.</p>
+
+<h2>Layout</h2>
+
+<p>The pass file, which is used by a single analyzer PAT pass, consists 
+ of sets of nonrepeating and repeating regions, which must be ordered in 
+ a pass file as follows:</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				margin-top: 14pt;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">REGION</span></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">REPEATABLE</span></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">DESCRIPTION</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Code</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">NO</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Interpreted actions that precede the rule 
+ matching process.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Context</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">NO</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Specifies nodes of the parse tree. Rules will 
+ match only against the phrases immediately under those nodes.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Minipass</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">YES</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Recursive minipasses. Each recurse region 
+ is named and can contain repeating rules regions. Rule elements in the 
+ main RULES region (below) can invoke these named rule sets.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Grammar</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">YES</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">The main actions-rules regions for the current 
+ file (i.e., the current pass).</td></tr>
+</table>
+
+<p>A pass file must contain at least a @CODE region or a main @RULES region.</p>
+
+<h2>Code Region</h2>
+
+<p>The CODE region consists of interpreted actions that operate before 
+ the rule matching for the current file, but only once for the current 
+ file. Each action looks like</p>
+
+<p style="margin-left: 40px;"><span style="font-weight: bold;">name(arg1,...argN)</span></p>
+
+<p>which is identical to the syntax for PRE, CHECK, and POST actions. (PRE 
+ actions have an additional bracketed range at the start of each such action.) 
+ See the CODE ACTIONS section below for details about available actions. 
+ For a particular application, the developer can create new code actions 
+ within the application's USER project.</p>
+
+<h2>Select Region</h2>
+
+<p>The Select Region allows the user to specify which nodes of the parse 
+ tree to execute. The region is optional, and the default is to match the 
+ rules of the file against the top-level phrase of the parse tree, that 
+ is, the phrase directly under the <span style="font-weight: bold;">_ROOT</span> 
+ node. The default could be made explicit, as in the following sample Select 
+ Region:</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 0px;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=100%
+		border=1>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 30%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">@SELECT</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"># Start of Select Region</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 30%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">@NODES _ROOT</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"># Specifies nodes whose underlying phrase 
+ will be matched against.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 30%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">@@SELECT</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"># Optional end-marker for Select Region</td></tr>
+</table>
+
+<p>(Note that the region markers @SELECT and @@SELECT are also optional. 
+ The sample Select Region above could be simply @NODES _ROOT.)</p>
+
+<p>If there is more than one<span style="font-style: italic; font-weight: bold;"> 
+ </span><span style="font-style: normal; font-weight: normal;">@NODES</span> 
+ marker, or if more than one name appears after a @NODES marker, those 
+ names are all collected into a single list. <span style="font-weight: normal;">T</span>he 
+ pattern matcher makes a<span style="font-style: normal;"> single pass</span> 
+ through the parse tree, looking for a node from this list. If such a node 
+ is found, the phrase under it is matched against the rules of the file. 
+ <font style="color: #000000;"
+		color=#000000>More than one @NODES is unimplemented.</font></p>
+
+<p>Instead of @NODES, one can specify the <span style="font-style: normal; font-weight: normal;">@MULTI 
+ </span>marker, which also takes a list of node names. This applies the 
+ rules in the file to<font style="color: #000000;"
+							color=#000000> <span style="font-style: normal; font-weight: normal;">every 
+ phrase</span></font> in the subtree of the selected nodes, allowing multiple 
+ matches in the subtree. Needless to say, the rule writer must be careful 
+ in using rules with the singlet and tree keys in conjunction with the 
+ MULTI specifier.</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				margin-top: 14pt;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">SELECT TYPE</span></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">DESCRIPTION</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">@NODES</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Directs the pattern matching algorithm (e.g., 
+ PAT or REC) to nodes in the parse tree. The phrase immediately under such 
+ a node will be traversed to look for rule matches. <span style="font-weight: bold;"><font 
+ style="color: #ff0000;"
+	color=#FF0000>WARNING:</font></span> The pattern matcher will only 
+ find such nodes inside a path with the <span style="font-style: normal; font-weight: normal;">unsealed 
+ </span>attribute set to true in all nodes of the path.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">@MULTI</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Directs the pattern matching algorithm (e.g., 
+ PAT or REC) to nodes in the parse tree. The entire subtree under such 
+ a node will be traversed to look for rule matches.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">@PATH</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Directs the pattern matching algorithm (e.g., 
+ PAT or REC) to a specific path of nodes in the parse tree. The phrase 
+ immediately under the last node in the path list will be traversed to 
+ look for rule matches. The list must always start with the node _ROOT. 
+ The second name in the path must be a direct child of _ROOT, the third, 
+ a child of that, and so on.</td></tr>
+</table>
+
+<p>If one SELECT node is inside the subtree of another SELECT node, then 
+ the one inside will not be <span style="font-style: italic;">seen</span> 
+ by the pattern matcher. @MULTI in combination with [s] or singlet mode 
+ can lead to unexpected behavior, such as matching the same pattern multiple 
+ times. Normally, you will want to avoid using [s] in rule elements when 
+ specifying a @MULTI traversal of a parse subtree.</p>
+
+<h2>Recurse Region</h2>
+
+<p>The Recurse Region allows the user to create several passes within a 
+ single pass file. Each recurse region acts like an independent pass. But 
+ a recurse pass can only be invoked from an element of a rule that has 
+ matched. The phrase that the recurse pass operates on is the set of nodes 
+ that matched the invoking rule element. Here's an example taken from the 
+ RFA (Rules-File Analyzer), which parses the pass files themselves.</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"># Start of recurse region. A name is required.</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">@RECURSE actionpass </p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"># Start of one rules region within the recurse region.</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">@RULES </p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"># The pass converts literals (e.g., &quot;single&quot;) to actions in context.</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">_ACTION &lt;- _LIT @@ </p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"># End of recurse region. (@@RULES marker is optional).</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">@@RECURSE </p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"># ....</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"># A main rules region. </p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">@RULES </p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">_POSTS [base] &lt;- _soPOST</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">_xWILD [matches=(_LIT _ACTION) recurse=(actionpass)]</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">_eoPOST [opt] @@ # Simplified rule for @POST actions region.</p>
+
+<p>In the above example, when the RFA sees a plain word like <span style="font-weight: normal;">&quot;single&quot; 
+ in a file, it doesn't know whether to reduce it to an _ACTION or not. 
+ But within the markers @POST and @@POST, the literal should be treated 
+ as an action. This allows the parentheses in pass file actions to be optional, 
+ when the action takes no arguments. E.g., &quot;single()&quot; and &quot;single&quot; 
+ are equivalent.</span></p>
+
+<p><span style="font-weight: normal;">In general, RECURSE mini-passes enable 
+ a mechanism for &quot;roughing out&quot; a text and then applying the 
+ correct assignments when the context has been determined unambiguously. 
+ They have many other uses, such as traversing nodes that matched a rule 
+ element in order to perform cleanups, data gathering, deletions, and so 
+ on.</span></p>
+
+<p><span style="font-weight: bold;"><font style="color: #000000;"
+											color=#000000>NOTE:</font></span><span 
+ style="font-weight: normal;"><font style="color: #000000;"
+									color=#000000> </font>A Recurse Region 
+ cannot contain a Code Region or a Select Region. A Select Region would 
+ be meaningless, since the recurse region operates on a phrase specified 
+ by the rule element that invokes it. A code region could be implemented 
+ if it proves useful.</span></p>
+
+<h2><span style="font-weight: bold;"><a NAME=RULES_REGION></a>Rules Region</span></h2>
+
+<p>The main Rules Regions (that follow the Code, Select, and Recurse Regions 
+ in a pass file), as well as the Rules Regions nested inside a Recurse 
+ Region, must be laid out as follows:</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				margin-top: 14pt;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">SUBREGION</span></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">DESCRIPTION</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=PRE></a>PRE</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Additional conditions on the matching of individual 
+ rule elements.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=CHECK></a>CHECK</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">When a rule has matched, these actions check 
+ self-consistency and/or build semantic data. These actions can be used 
+ to reject a rule match.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=POST></a>POST</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Actions that operate once a rule match has 
+ been accepted.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=RULES></a>RULES</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Subregion containing the actual rules that 
+ are subject to immediately preceding Pre,Check, and Post subregions.<br>
+If a Rules subregion has no preceding action subregions, then it resets 
+ its actions to the default (single reduce).</td></tr>
+</table>
+
+<p><span style="font-weight: normal;">Each region has a set of markers 
+ for it: @PRE and @@PRE, @CHECK and @@CHECK, @POST and @@POST, @RULES and 
+ @@RULES. The end-markers are optional. Sections below detail the particular 
+ actions available in each category.</span></p>
+
+<h2><span style="font-weight: bold;"><a NAME=RULE_SYNTAX></a>Rule Syntax</span></h2>
+
+<p><span style="font-weight: normal;">Within each Rules Subregion, any 
+ number of rules can occur. The syntax for a rule is</span></p>
+
+<p style="margin-left: 40px;">&nbsp;<span style="font-weight: bold;">_SUGG 
+ &lt;- _PHRASE @@</span></p>
+
+<p>The _SUGG, or <span style="font-style: normal;">suggested</span> rule 
+ element is followed by the rule <span style="font-style: normal;">arrow</span>, 
+ then by a <span style="font-style: normal;">phrase</span> of <span style="font-style: normal;">elements</span>, 
+ and finally the @@ end-mark. Each element, including the suggested element, 
+ consists of a <span style="font-style: normal;">literal</span> or <span 
+ style="font-style: normal;">nonliteral</span>. Literals match tokens, 
+ or &quot;real text&quot;, while nonliterals match nodes with synthetic 
+ names. A nonliteral must begin with an underscore, a literal must not 
+ begin so.</p>
+
+<p>Optionally, each element can be followed by a list of key=values <span 
+ style="font-style: italic;">pairs</span><span style="font-style: normal;"> 
+ enclosed in square brackets. Though called pairs, some keys, such as </span><span 
+ style="font-style: normal; font-weight: bold;">trigger</span><span style="font-style: normal;">, 
+ take no values. Some special rule elements, as well as the key=value pairs 
+ that appear in phrase and suggested elements, are listed in tables below.</span></p>
+
+<h2><a NAME=pass_file_tokens></a>Pass File Tokens</h2>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				margin-top: 14pt;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">ITEM</span></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 82%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">DESCRIPTION</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">#</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 82%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Comment. Text till the end of the line is 
+ ignored.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">AAA or NNN</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 82%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Literal tokens. Completely alphabetic or completely 
+ numeric.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">_AAA</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 82%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Nonliteral tokens must begin with underscore. 
+ All the remaining letters MUST be alphabetic. (May expand to underscore,num,dash 
+ someday.)</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">&quot;XXX&quot;</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 82%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Strings get double quoted. Everything within 
+ string taken literally (except backslashed characters).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">\X</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 82%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Backslash any nonalphanumeric char you want 
+ taken literally.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">\\</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 82%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Literal backslash character.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">\</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 82%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">At end of line, escapes end of line to NOTHING. 
+ [Unimplemented]</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">\X</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 82%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">where X=abnrftv special escapes in C/C++.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">@AAA</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 82%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Reserved start-of-region markers in the pass 
+ file (e.g., @RULES).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">@@AAA</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 82%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Reserved end-of-region markers in the pass 
+ file (e.g., @@RULES).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">&lt;-</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 82%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Rule arrow.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">@@</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 82%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Rule terminator.</td></tr>
+</table>
+
+<h2><span style="font-weight: normal;"><font style="color: #008080;"
+											color=#008080>Punctuation</font></span></h2>
+
+<p>Each punctuation character is treated as a separate entity or &quot;token&quot; 
+ in the rule file, even if there is no separating space. Constructs like 
+ <span style="font-weight: bold;">_xWILD [matches=(_noun)]</span> and <span 
+ style="font-weight: bold;">_xWILD [ matches = ( _noun ) ]</span> are parsed 
+ identically.</p>
+
+<h2>Larger Structures</h2>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				margin-top: 14pt;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 37%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">[AAA=XXX 
+ AAA=(XXX XXX) AAA]</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 63%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">PAIRS. Square brackets enclose the key=value 
+ pairs for a rule element (phrase element or suggested element). A sample 
+ rule with pairs:<span style="font-weight: bold;"><br>
+_np &lt;- _adj _xWILD [match=( a b) ren=&quot;noun&quot; s] _noun [trigger] 
+ @@</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 37%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">AAA(XXX,XXX....)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 63%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">ACTION. check and post action language.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 37%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">&lt;NUM,NUM&gt; 
+ XXX(XXX,XXX...)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 63%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">PRE ACTION. &lt;NUM,NUM&gt; is a range of 
+ rule elements that must execute the action during rule matching.</td></tr>
+</table>
+
+<p>&nbsp;<br>
+ALL MATCHING IS CASE-INSENSITIVE. The rule-writer can add restrictive actions, 
+ like uppercase(), as needed. Currently, wildcard cannot appear as the 
+ start, end, or trigger of a rule. Optional elements cannot be triggers.</p>
+
+<h2><span style="font-weight: bold;"><font style="color: #000080;"
+											color=#000080><a NAME=RULE_ELEMENTS></a></font></span><span 
+ style="font-weight: normal;"><font style="color: #008080;"
+									color=#008080>Rule Elements</font></span></h2>
+
+<p>Special rule elements are given in the following table.</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				margin-top: 14pt;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000><span style="font-weight: bold;">RULE 
+ ELEMENT</span></font></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000><span style="font-weight: bold;">DESCRIPTION</span></font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=xWILD></a>_xWILD</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Unrestricted wildcard. Key-value pairs may 
+ add restrictions on number of nodes matched and on what is matched. (Note: 
+ with a <span style="font-style: italic;">match</span> or <span style="font-style: italic;">fail</span> 
+ list, _xWILD becomes an &quot;OR&quot; matching function.)</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">_xANY</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Matches any single node. (See warning [1] 
+ below.)</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">_xNIL</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Designates a suggested element when the rule 
+ performs a special action, such as removing the matched nodes from the 
+ parse tree. (_xNIL has no special action, but serves as documentation 
+ for the rule writer.)</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=xALPHA></a>_xALPHA</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Matches an alphabetic token, including accented 
+ and other extended ANSI chars.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">_xCTRL</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Matches control and nonalphabetic extended 
+ ANSI characters. (see _xALPHA)</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=xNUM></a>_xNUM</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Matches a numeric token.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">_xPUNCT</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Matches a punctuation token.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=xWHITE></a>_xWHITE</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Matches a whitespace token, <span style="font-style: italic;">including</span> 
+ newline.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">_xBLANK</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Matches a whitespace token, <span style="font-style: italic;">excluding</span> 
+ newline. Equivalent to <span style="font-style: italic; font-weight: bold;">_xWILD 
+ [match=(\ \t)]</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">_xCAP</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Matches an alphabetic with uppercase first 
+ letter.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">_xEOF</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Matches the end of file.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=xSTART></a>_xSTART</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Matches if at the start of a phrase (or &quot;segment&quot;).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">_xEND</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Matches if at the end of a phrase (or &quot;segment&quot;).</td></tr>
+</table>
+
+<h2><span style="font-weight: bold;"><font style="color: #000080;"
+											color=#000080><a NAME=rule_element_conditions></a></font></span><span 
+ style="font-weight: normal;"><font style="color: #008080;"
+									color=#008080>Pairs for a Phrase Element</font></span><span 
+ style="font-weight: bold;"><font style="color: #008080;"
+									color=#008080> </font><font style="color: #000080;"
+	color=#000080><a NAME=PAIRS_FOR_A_PHRASE_ELEMENT></a></font></span></h2>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				margin-top: 14pt;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">KEY</span></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">VALUE</span></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">DESCRIPTION</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">trigger,trig,</span><span 
+ style="font-weight: bold;"><br>
+t</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Match the current element first. E.g.,<br>
+_<span style="font-style: italic; font-weight: normal;">np &lt;- _det _quan 
+ _adj _noun </span><span style="font-style: italic; font-weight: bold;">[t]</span><span 
+ style="font-style: italic; font-weight: normal;"> @@</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">min</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">NUM</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Match a minimum of NUM nodes. 0 means the 
+ current element is optional. E.g., <span style="font-style: italic;">_boys 
+ &lt;- the [</span><span style="font-style: italic; font-weight: bold;">min=0</span><span 
+ style="font-style: italic;"> max=1] boys @@</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">max</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">NUM</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Match a maximum of NUM nodes. 0 means the 
+ current element can match an indefinite number of nodes. E.g., <span style="font-style: italic;">_htmltag 
+ &lt;- \&lt; _xWILD [min=1 </span><span style="font-style: italic; font-weight: bold;">max=100</span><span 
+ style="font-style: italic;">] \&gt; @@</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">optional,option,opt,</span><span 
+ style="font-weight: bold;"><br>
+o</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Optional element. Match a minimum of 0 and 
+ a maximum of 1 node. (Short for min=0 max=1). E.g., <span style="font-style: italic;">_vgroup 
+ &lt;- _modal [</span><span style="font-style: italic; font-weight: bold;">opt</span><span 
+ style="font-style: italic;">] _have [</span><span style="font-style: italic; font-weight: bold;">opt</span><span 
+ style="font-style: italic;">] _be [</span><span style="font-style: italic; font-weight: bold;">opt</span><span 
+ style="font-style: italic;">] _verb @@</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">one</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Match exactly one node. (Short for min=1 max=1).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">star</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Indefinite repetition. Match a minimum of 
+ 0 up to any number of nodes. (Short for min=0 max=0).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">plus</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Indefinite repetition. Match a minimum of 
+ 1 up to any number of nodes. (Short for min=1 max=0).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">group, gp</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">NAME</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Gather nodes that matched elt under a single 
+ node with NAME as its name. Analogous to group post-action.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">rename,ren</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">NAME</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Rename every node that matched the current 
+ element to NAME. E.g., <span style="font-style: italic;">_locfield &lt;- 
+ location \: _xWILD [</span><span style="font-style: italic; font-weight: bold;">ren=_location</span><span 
+ style="font-style: italic;">] \n @@</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">singlet,</span><span style="font-weight: bold;"><br>
+s</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Search a node's descendants for a match. Stop 
+ looking down when a node has more than one child or has the BASE attribute 
+ set (see base below). E.g., <span style="font-style: italic;">_abbr &lt;- 
+ _unk \. </span><span style="font-style: italic; font-weight: bold;">[s]</span><span 
+ style="font-style: italic;"> @@</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">tree</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Search node's entire subtree for a match. 
+ (Overuse of this may degrade analyzer performance.)</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">matches,</span><span 
+ style="font-weight: bold;"><br>
+match</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">LIST</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">For _xWILD element only. Restricted wildcard 
+ succeeds only if one of the list names matches a node. E.g., <span style="font-style: italic;">_james 
+ &lt;- _xWILD [</span><span style="font-style: italic; font-weight: bold;">match=(jim 
+ jimmy james)</span><span style="font-style: italic;"> singlet min=1 max=1] 
+ @@</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">fails,</span><span 
+ style="font-weight: bold;"><br>
+fail</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">LIST</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">For <span style="font-style: italic; font-weight: normal;">ANY</span> 
+ element. Match fails if node matches anything on the list. E.g., <span 
+ style="font-style: italic;">_par &lt;- _xWILD [</span><span style="font-style: italic; font-weight: bold;">fail=(_endofpar 
+ _par)</span><span style="font-style: italic;"> min=1 max=0] @@</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">excepts, 
+ except</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">LIST</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">For ANY element. Must be accompanied by a 
+ single <span style="font-style: italic;">match</span> or <span style="font-style: italic;">fail</span> 
+ list. Matching an item on the except list negates the effect of a match 
+ on the <span style="font-style: italic;">match</span> or fail <span style="font-style: italic;">list</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">lookahead, 
+ look</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Designates the first lookahead element of 
+ a rule. The first node matching the lookahead element or to the right 
+ of it will be the locus where the pattern matcher <span style="font-style: italic;">continues</span> 
+ matching. WARNING: A reduce action such as <span style="font-style: italic;">singler</span> 
+ or <span style="font-style: italic;">noop</span> should be used to ensure 
+ that the lookahead node and nodes to its right are not included in the 
+ current rule reduction.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">layers, layer,</span><span 
+ style="font-weight: bold;"><br>
+attrs, attr</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">LIST</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Layer additional attributes for the element 
+ in the parse tree, as &quot;mini-reductions&quot;. Use the names in the 
+ list to name nodes. Note: each node that matched current rule element 
+ will be layered.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">recurse, 
+ nest,</span><span style="font-weight: bold;"><br>
+passes, pass</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">LIST</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Invoke a recursive rules pass on nodes that 
+ matched the current rule element. E.g., <span style="font-style: italic;">_tag 
+ &lt;- \&lt; _xWILD [</span><span style="font-style: italic; font-weight: bold;">nest=(tagrules)</span><span 
+ style="font-style: italic;">] \&gt; @@. </span><span style="font-style: normal;">(See 
+ the Recurse Region discussion.)</span></td></tr>
+</table>
+
+<p><span style="font-weight: bold;"><font style="color: #ff0000;"
+											color=#FF0000>WARNING:</font></span><br>
+[1] Don't write rules with _xANY [max=0]. They won't work, because _xANY 
+ is not implemented as a wildcard. The nearly equivalent _xANY _xWILD works.<br>
+<br>
+[2] More generally, matching with MIN and MAX is <span style="font-style: italic;">greedy</span>, 
+ and no <span style="font-style: italic;">backup</span> is implemented. 
+ So the rule<br>
+<br>
+&nbsp; _a &lt;- _b [min=1 max=3] _c [s] @@</p>
+
+<p>fails on the phrase <span style="font-weight: bold;">_b _b(subnode _c</span>), 
+ because the repeating _b element greedily gobbles up the second _b node. 
+ The pattern matcher will not back up to find that the rule can be made 
+ to work. Unrestricted _xWILD is the <span style="font-weight: bold;">only</span> 
+ rule element that is &quot;backup-aware&quot;.</p>
+
+<h2><span style="font-weight: bold;"><font style="color: #000080;"
+											color=#000080><a NAME=PAIRS_FOR_A_SUGGESTED_ELEMENT></a></font></span><span 
+ style="font-weight: normal;"><font style="color: #008080;"
+									color=#008080>Pairs for a Suggested 
+ Element</font></span></h2>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				margin-top: 14pt;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">base</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">The suggested node is the bottom-most node 
+ to search when looking down the parse tree for a match (see singlet above). 
+ (Takes no value).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">unsealed</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: normal;">The suggested 
+ node will be searched for select nodes (i.e., nodes specified by @NODES).</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">layers</span><span 
+ style="font-weight: bold;"><br>
+layer</span><span style="font-weight: bold;"><br>
+attrs</span><span style="font-weight: bold;"><br>
+attr</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">LIST</td>
+<td style="x-cell-content-align: TOP;
+			width: 69%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">After normal reduce, perform additional reduces, 
+ naming the nodes as in the list. This enables layering of attributes in 
+ the parse tree.</td></tr>
+</table>
+
+<h2><font style="color: #008080;"
+			color=#008080><span style="font-weight: normal;">NLP++ Functions</span></font></h2>
+
+<p><span style="font-weight: normal;">The code, pre, check, and post actions 
+ listed in subsequent sections are still valid. However, a suite of general 
+ functions that can occur in any region is being implemented, and some 
+ of the old actions may go away or be generalized to work in any region 
+ that allows NLP++ code. Reduction and parse tree manipulation functions 
+ should still go in the post region, because that code executes when a 
+ rule match is deemed to be successful. The check region may be folded 
+ into the post region, since NLP++ functions can be implemented to pronounce 
+ that a rule match has succeeded or failed. The pre region still does not 
+ allow general NLP++ expressions. </span>NLP++ functions are described 
+ in the NLP++ and Knowledge Base help pages.</p>
+
+<p>WARNING: Many of the old-style actions are not recognized by the compiled 
+ analyzer engine. Use NLP++ expressions wherever possible, rather than 
+ the old hard-wired actions. Compiling with MS Visual C++ points out which 
+ functions are invalid. The documentation below also marks old-style actions 
+ slated to be removed from NLP++.</p>
+
+<h2><span style="font-weight: bold;"><font style="color: #000080;"
+											color=#000080><a NAME=OVERVIEW_OF_OUTPUT_ACTIONS></a></font></span><span 
+ style="font-weight: normal;"><font style="color: #008080;"
+									color=#008080>Output Actions</font></span></h2>
+
+<p><span style="font-weight: normal;">Code actions and </span><span style="font-style: normal; font-weight: normal;">rule 
+ actions</span><span style="font-weight: normal;"> (pre, check and post) 
+ are meant to work together in many cases. The code region in a file operates 
+ before any rule-matching is invoked, so that is where the user should 
+ initialize variables and perform other functions, such as printouts that 
+ are independent of any rule.</span></p>
+
+<p><span style="font-weight: normal;">There are three output modes: (1) 
+ output to standard output, (2) output to a file named in the actions themselves, 
+ and (3) output to the &quot;main output file&quot; (default name </span><span 
+ style="font-style: normal; font-weight: bold;">output.txt</span><span 
+ style="font-weight: normal;">) that is set by the environment that calls 
+ the analyzer. Then we throw into the mix actions that print in the code 
+ region as well as actions that print when a rule matches.</span></p>
+
+<p><span style="font-weight: normal;">Rather than have three types of output 
+ (or &quot;print&quot;) actions, we maintain two: actions that take a file 
+ argument and equivalents that do not. By default, output actions that 
+ take no file argument print to standard output. However, when delimited 
+ by the code actions </span><span style="font-weight: bold;">startout()</span><span 
+ style="font-weight: normal;"> and </span><span style="font-weight: bold;">stopout()</span><span 
+ style="font-weight: normal;">, these actions print to the main output 
+ file, rather than standard output. If print actions in the rules are also 
+ to write to the main output file, then the </span><span style="font-weight: bold;">stopout()</span><span 
+ style="font-weight: normal;"> action must be placed in the code region 
+ of a subsequent pass.</span></p>
+
+<p><span style="font-weight: normal;">For output actions with a filename 
+ argument, the file must have been previously declared with a </span><span 
+ style="font-weight: bold;">fileout()</span><span style="font-weight: normal;"> 
+ action.</span></p>
+
+<p><span style="font-weight: normal;">Output is complex, but to allow the 
+ analyzer developer as much flexibility as possible, we must support many 
+ modes.</span></p>
+
+<h2><a NAME=code_actions></a>Code Actions</h2>
+
+<p><span style="font-weight: normal;">Code actions are not tied to any 
+ rule, but execute operations for the entire pass. They are placed within 
+ the @CODE and @@CODE markers at the head of the file, called the </span><span 
+ style="font-style: italic; font-weight: normal;">code region</span><span 
+ style="font-weight: normal;">. There is only one such region per file, 
+ and its actions operate before the pattern matching of the rules in the 
+ file. This region represents an embryonic programming language that enables 
+ the analyzer developer to perform useful tasks without having to write 
+ and compile regular programming language code.</span></p>
+
+<p><span style="font-weight: normal;">Code actions operate </span><span 
+ style="font-style: italic; font-weight: normal;">before</span><span style="font-weight: normal;"> 
+ the rules in the file operate on the parse tree. At present, there is 
+ no &quot;post code&quot; region to execute actions </span><span style="font-style: italic; font-weight: normal;">after</span><span 
+ style="font-weight: normal;"> the rules for a pass have matched. The user 
+ must place such code actions in a subsequent analyzer pass.</span></p>
+
+<p><span style="font-weight: normal;">NLP++ is now valid in the code region.</span></p>
+
+<p><span style="font-weight: normal;">Variable names must be strings, at 
+ present.</span></p>
+
+<p><font style="color: #008080;"
+		color=#008080>A. VARIABLE ACTIONS</font></p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				margin-top: 14pt;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">ACTION(ARG1,ARG2...)</span></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">DESCRIPTION</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">var(varname,str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Create <span style="font-weight: bold;">global</span> 
+ variable with name <span style="font-weight: bold;">varname</span> and 
+ initial value <span style="font-weight: bold;">str</span>. If str2 is 
+ all numeric, then the code action<span style="font-weight: bold;"> inc()</span> 
+ can increment the value of the variable (this implements a counting variable). 
+ <span style="font-weight: bold;">(Old-style. Use NLP++)</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">varstrs(varname)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Create an empty multi-string-valued <span 
+ style="font-weight: bold;">global</span> variable with name <span style="font-weight: bold;">varname</span>. 
+ The post action <span style="font-weight: bold;">addstrs()</span> adds 
+ values to this type of variable.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">sortvals(varname)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Sort the strings in multi-string-valued <span 
+ style="font-weight: bold;">global</span> variable <span style="font-weight: bold;">varname</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">gtolower(varname)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Convert the strings in multi-string valued 
+ <span style="font-weight: bold;">global</span> variable to lower case.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">guniq(varname)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Remove redundancies in a sorted, multi-string 
+ valued <span style="font-weight: bold;">global</span> variable.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">lookup(var,file,flag)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Specialized word lookup. <span style="font-weight: bold;">Global 
+ </span><span style="font-weight: normal;">variable</span> <span style="font-weight: bold;">var</span> 
+ has multiple words as values. <span style="font-weight: bold;">file</span> 
+ is a file of strings, one per line. <span style="font-weight: bold;">flag</span> 
+ tells which bit-flag of the word's symbol table entry to modify. E.g., 
+ <span style="font-weight: bold;">lookup(&quot;Words&quot;, &quot;dict.words&quot;, 
+ &quot;word&quot;)</span> looks up all the values in the <span style="font-weight: bold;">Words</span> 
+ variable in the <span style="font-weight: bold;">dict.words</span> file 
+ and modifies the <span style="font-weight: bold;">word</span> bit-flag 
+ (which says whether the word is a proper English word).</td></tr>
+</table>
+
+<p><font style="color: #008080;"
+		color=#008080>B. PRINT ACTIONS</font></p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				margin-top: 14pt;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">print(str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Print str to the standard output (usually 
+ the console or DOS window). (See <span style="font-style: italic; font-weight: bold;">startout</span> 
+ below).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">printvar(var)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Print the values of the <span style="font-weight: bold;">global</span> 
+ variable named <span style="font-weight: bold;">var</span> to standard 
+ output. (See <span style="font-style: italic; font-weight: bold;">startout</span> 
+ below).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">fprintvar(file, 
+ var)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Print the values of the <span style="font-weight: bold;">global</span> 
+ variable named <span style="font-weight: bold;">var</span> to <span style="font-weight: bold;">file</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">prlit(file, 
+ str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Print the literal string <span style="font-weight: bold;">str</span> 
+ to <span style="font-weight: bold;">file</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">gdump(filename)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Dump the all the global variables and their 
+ values to the given filename.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">fileout(file)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Open <span style="font-weight: bold;">file</span> 
+ for appending. <span style="font-weight: bold;">File</span> becomes a 
+ variable useable in print actions with a file argument, e.g. <span style="font-weight: bold;">prlit()</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">startout(0)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Divert standard output to the main output 
+ file, set by the caller of the analyzer (default is <span style="font-weight: bold;">output.txt</span>).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">stopout(0)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Stop diverting standard output to the main 
+ output file. Subsequent file-less output is to standard output.</td></tr>
+</table>
+
+<p>&nbsp;</p>
+
+<h2><span style="font-weight: bold;"><font style="color: #000080;"
+											color=#000080><a NAME=PRE_ACTIONS></a></font></span><span 
+ style="font-weight: normal;"><font style="color: #008080;"
+									color=#008080>Pre Actions</font></span></h2>
+
+<p><span style="font-weight: normal;">Pre actions extend the pattern matcher's 
+ mechanism for matching each rule element. Unlike other actions, pre actions 
+ have a mandatory range. Their form is</span></p>
+
+<p style="margin-left: 40px;"><span style="font-weight: bold;">&lt;num,num&gt; 
+ pre_action_name(args....)</span></p>
+
+<p><span style="font-weight: normal;">The pre action applies to each rule 
+ element in the &lt;num, num&gt; range individually.</span></p>
+
+<p><span style="font-weight: normal;">Pre actions operate only on tokens, 
+ or leaf nodes of the parse tree, at present. So, if the current node covers 
+ more than a </span><span style="font-style: italic; font-weight: normal;">single</span><span 
+ style="font-weight: normal;"> leaf node, the pre action automatically 
+ </span><span style="font-style: italic; font-weight: normal;">fails</span><span 
+ style="font-weight: normal;">. Another thing to be careful of is that 
+ pre actions disregard the </span><span style="font-weight: bold;">base</span><span 
+ style="font-weight: normal;"> attribute of a node. That is, even if the 
+ current node or a subnode has the </span><span style="font-weight: bold;">base</span><span 
+ style="font-weight: normal;"> attribute set, the pre action will look 
+ under it for the leaf node.</span></p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				margin-top: 14pt;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 21%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">uppercase()</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 79%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Succeed if leaf token is all-uppercase.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 21%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">lowercase()</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 79%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Succeed if leaf token is all-lowercase.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 21%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">cap()</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 79%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Succeed if leaf token has capitalized first 
+ letter.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 21%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">length(num)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 79%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Succeed if leaf token has length exactly equal 
+ to <span style="font-weight: bold;">num</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 21%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">lengthr(num1,num2)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 79%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Succeed if leaf token length is in the range 
+ of lengths (num1,num2), inclusive.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 21%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">numrange(num1,num2)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 79%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Succeed if leaf token is numeric in the given 
+ range.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 21%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">unknown()</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 79%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Succeed if leaf token is an unknown word. 
+ Meaningful only if a prior pass has performed <span style="font-weight: bold;">lookup()</span> 
+ code action.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 21%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">debug()</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 79%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Succeed unconditionally. Used to place a C++ 
+ breakpoint at a particular rule.</td></tr>
+</table>
+
+<h2><a NAME=check_actions></a>Check Actions</h2>
+
+<p><span style="font-weight: normal;">Check actions apply after the pattern 
+ matcher has succeeded in matching a rule. These represent the final opportunity 
+ to reject the rule match based on inconsistencies spanning more than one 
+ rule element. For example, before accepting a noun-phrase rule, we could 
+ check for agreement between the determiner and noun (e.g., accept &quot;this 
+ company&quot; but reject &quot;these company&quot;).</span></p>
+
+<p><span style="font-weight: normal;">See the section on NLP++ for a more 
+ generalized way to express conditions in the Check region.</span></p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				margin-top: 14pt;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">or(num1,num2)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Succeed if any of the rule elements from <span 
+ style="font-weight: bold;">num1</span> to <span style="font-weight: bold;">num2</span> 
+ has matched an actual node. Meaningful only if this is a range of <span 
+ style="font-style: italic;">optional</span> rule elements. (This action 
+ is just a sample. <font style="color: #000000;"
+						color=#000000>As </font><span style="font-weight: normal;"><font 
+ style="color: #000000;"
+	color=#000000>Text Analysis International</font></span><font style="color: #000000;"
+	color=#000000>™ develops its generic analyzer, more check actions will 
+ be implemented.)</font></td></tr>
+</table>
+
+<h2><a NAME=post_actions></a>Post Actions</h2>
+
+<p><span style="font-weight: normal;">Post actions execute after the pattern 
+ matcher has successfully matched a rule and the match is accepted.</span></p>
+
+<h4><font style="color: #008080;"
+			color=#008080><span style="font-weight: bold;">A. PARSE TREE 
+ ACTIONS</span></font></h4>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				margin-top: 14pt;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 27%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">single()</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Single-tier reduce. Reduce the entire set 
+ of nodes that matched a rule phrase.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 27%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">singler(num1,num2)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Single-tier reduce of a range of rule elements. 
+ eg, if finding a period to be end-of-sentence in context, we only want 
+ to reduce the period to end-of-sentence, not the whole context.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 27%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">singlex(num1,num2)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Single-tier reduce of a range of rule elements. 
+ All nodes not in the range are EXCISED. eg, if matching a keyword html 
+ tag, we only want to reduce the keywords and to zap the rest of the tag.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 27%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">singlezap()</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Single-tier reduce. Excise all the nodes in 
+ the matched phrase.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 27%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">merge()</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Single-tier reduce that DISSOLVES each top-level 
+ node in the matched phrase.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 27%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">merger(num1,num2)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Single-tier reduce that DISSOLVES each top-level 
+ node in the matched range.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 27%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">listadd(olist,oitem 
+ [, keep])</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Add a new node to a list node's children. 
+ If the item occurs after the list (<span style="font-style: italic; font-weight: bold;">olist</span> 
+ &lt; <span style="font-style: italic; font-weight: bold;">oitem</span>), 
+ it is added as the last child. If the item occurs before the list, it 
+ is added as the first child. The optional keep arg can be &quot;true&quot; 
+ or &quot;false&quot;. If &quot;true&quot;, it keeps the nodes between 
+ the list and the item as children of list. If &quot;false&quot;, it excises 
+ all the intervening nodes.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 27%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">excise(num1,num2)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Excise the nodes matching the range of elements 
+ from the parse tree. For multiple excise actions, operations must be ordered 
+ such that the highest number is listed first in the operation.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 27%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">splice(num1,num2)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">DISSOLVE the top level nodes of given range. 
+ [NOT TESTED whether a reduce such as single can follow this action.]</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 27%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">xrename(name 
+ [, num])</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Rename the <span style="font-style: italic; font-weight: bold;">num</span>th 
+ context node to <span style="font-style: italic; font-weight: bold;">name</span>. 
+ If <span style="font-style: italic; font-weight: normal;">num</span> is 
+ absent or 0, rename last context node.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 27%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">setbase(num, 
+ bool)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Set the BASE attribute of the <span style="font-style: italic; font-weight: bold;">num</span>th 
+ node to &quot;true&quot; or &quot;false&quot;.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 27%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">setunsealed(num, 
+ bool)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Set the UNSEALED attribute of the <span style="font-style: italic; font-weight: bold;">num</span>th 
+ node to &quot;true&quot; or &quot;false&quot;.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 27%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">group(num1,num2,label_str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Reduce the range of rule elements <span style="font-weight: bold;">(num1,num2)</span> 
+ and name the group node<span style="font-weight: bold;"> label</span>. 
+ Unlike other reduce actions, this one can be repeated. <span style="font-style: italic; font-weight: bold;">WARNING:</span> 
+ The rule element numbers change after each group action, so subsequent 
+ post actions must account for the new numbering of the rule elements. 
+ Reimplemented as an NLP++ function so that args can be NLP++ expressions.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 27%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">noop(0)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Perform no post action. This is a convenience 
+ to disable the default <span style="font-weight: bold;">single()</span> 
+ reduce action.</td></tr>
+</table>
+
+<h4>&nbsp;</h4>
+
+<h4><span style="font-weight: bold;"><font style="color: #008080;"
+											color=#008080>B. <a NAME=post_print_actions></a>PRINT 
+ ACTIONS</font></span></h4>
+
+<p>Code actions and Post actions have distinct sets of printing actions, 
+ though we've made them as similar as possible.</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				margin-top: 14pt;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 23%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">print(str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 77%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Print the literal string <span style="font-weight: bold;">str</span> 
+ to standard output.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 23%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">printr(num1,num2)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 77%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Print the text for the rule element range 
+ from <span style="font-weight: bold;">num1</span> to <span style="font-weight: bold;">num2</span> 
+ to standard output.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 23%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">prchild(file, 
+ num, name)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 77%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Look for <span style="font-weight: bold;">name</span> 
+ immediately under the node matching rule element <span style="font-weight: bold;">num</span>. 
+ Print its text to <span style="font-weight: bold;">file</span>, if found.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 23%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">prtree(file, 
+ num, name)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 77%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Look for <span style="font-weight: bold;">name</span> 
+ anywhere under the node matching rule element <span style="font-weight: bold;">num</span>. 
+ Print its text to <span style="font-weight: bold;">file</span>, if found.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 23%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">prxtree(filename, prestr,</span><span 
+ style="font-weight: bold;"><br>
+&nbsp; ord, name, poststr)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 77%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">To the <span style="font-weight: bold;">filename</span>, 
+ print the first node called <span style="font-weight: bold;">name</span> 
+ found in the <span style="font-weight: bold;">ord</span>th element's tree, 
+ preceded by <span style="font-weight: bold;">prestr</span> and followed 
+ by <span style="font-weight: bold;">poststr</span>. If named node is not 
+ found, nothing is printed out. E.g., prxtree(&quot;out.txt&quot;, &quot;date: 
+ &quot;, 3, &quot;_date&quot;, &quot;\n&quot;) prints out a line like &quot;date: 
+ 3/9/99 &lt;cr&gt;&quot; if a _date node is found within the subtree of 
+ elt 3.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 23%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">prlit(file, 
+ str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 77%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Print the literal string <span style="font-weight: bold;">str</span> 
+ to <span style="font-weight: bold;">file</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 23%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">fprintnvar(file, 
+ var, ord)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 77%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">To the <span style="font-weight: bold;">file</span>, 
+ print the value of the variable <span style="font-weight: bold;">var</span> 
+ in the <span style="font-weight: bold;">ord</span>th element's node.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 23%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">fprintxvar(file, 
+ var, ord)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 77%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">To the <span style="font-weight: bold;">file</span>, 
+ print the value of the variable <span style="font-weight: bold;">var</span> 
+ in the <span style="font-weight: bold;">ord</span>th context node.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 23%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">fprintgvar(file, 
+ var)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 77%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">To the <span style="font-weight: bold;">file</span>, 
+ print the value of the global variable <span style="font-weight: bold;">var.</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 23%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">gdump(file)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 77%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Dump all the global variables and their values 
+ to <span style="font-weight: bold;">file</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 23%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">xdump(file, 
+ ord)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 77%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Dump all the variables in the <span style="font-weight: bold;">ord</span>th 
+ context node and their values to <span style="font-weight: bold;">file</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 23%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">ndump(file, 
+ ord)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 77%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Dump all the variables in the <span style="font-weight: bold;">ord</span>th 
+ phrase element's node and their values to <span style="font-weight: bold;">file</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 23%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">sdump(file)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 77%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Dump all the variables in the suggested node 
+ and their values to <span style="font-weight: bold;">file</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 23%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">prrange(file, 
+ num1,num2)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 77%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Print the text under a range of rule elements 
+ (<span style="font-weight: bold;">num1,num2</span>) to<span style="font-weight: bold;"> 
+ file</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 23%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">pranchor(file,num1,num2)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 77%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Print a web URL to <span style="font-weight: bold;">file</span>. 
+ Treat the range (<span style="font-weight: bold;">num1,num2</span>) as 
+ a URL. Use the global variable named <span style="font-weight: bold;">Base</span> 
+ to resolve and print complete relative URLs. (a prior pass must find the 
+ &lt;base&gt; HTML tag and set <span style="font-weight: bold;">Base</span> 
+ appropriately. NOT yet using the file's URL, so not handling cases where 
+ &lt;base&gt; itself is a relative URL.)</td></tr>
+</table>
+
+<p>&nbsp;</p>
+
+<h4><font style="color: #008080;"
+			color=#008080>C. VARIABLE ACTIONS</font></h4>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				margin-top: 14pt;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 23%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">addstrs(var,num)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 77%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Add a string to the multi-string <span style="font-weight: bold;">global</span> 
+ variable <span style="font-weight: bold;">var</span>. Fetch the string 
+ from the nodes matching rule element <span style="font-weight: bold;">num</span>. 
+ <span style="font-weight: bold;">var</span> should have been declared 
+ using the code action <span style="font-weight: bold;">varstrs()</span>. 
+ (No NLP++ equivalent yet.)</td></tr>
+</table>
+
+<p><span style="font-weight: normal;">A batch of post actions for the RFA 
+ (Rules-File Analyzer) are not described, as they are not relevant to the 
+ VisualText</span>™<span style="font-weight: normal;"> user. Their names 
+ all begin with the prefix </span><span style="font-weight: bold;">RFA</span><span 
+ style="font-weight: normal;">.</span></p>
+
+<p style="margin-bottom: 0;">&nbsp; </p>
+
+</body>
+
+</html>

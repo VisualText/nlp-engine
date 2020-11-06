@@ -1,0 +1,325 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>MetaEvents</title>
+
+<!--(Meta)==========================================================-->
+
+<meta HTTP-EQUIV=Content-Type CONTENT="text/html; charset=windows-1252">
+<meta NAME=Template CONTENT="D:\Program Files\Microsoft Office\Office\html.dot">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=4070>
+<meta name=layout-width content=775>
+<meta name=date content="08 27, 2001 2:37:02 PM">
+
+
+
+<!--(Style Sheet)===================================================-->
+
+<style>
+<!--
+
+A:visited {
+	color: #800080;
+}
+
+A:link {
+	color: #0000ff;
+}
+
+-->
+</style>
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<!--(Table)=========================================================-->
+<!--begin!kadov{{--><div align=center><!--}}end!kadov-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 617px;
+				border-spacing: 0px;
+				float: aligncenter;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=617>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../Events/Events.htm"><img src="Bullet8.gif"
+													style="width: 15px;
+															height: 12px;
+															border-style: none;
+															margin-top: 0px;
+															margin-bottom: 0px;
+															margin-left: 0px;
+															margin-right: 0px;"
+													width=15
+													height=12
+													border=0>&nbsp;Events</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 50%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../Toc/TOC.htm">CORPORATE ANALYZER</a><span style="font-weight: bold;"><font 
+ style="color: #000080;"
+	color=#000080><br>
+MetaEvents</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 26%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../Output/Output.htm">Output <img src="Bullet7.gif"
+															style="width: 15px;
+	height: 12px;
+	border-style: none;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 0px;"
+															width=15
+															height=12
+															border=0></a></td></tr>
+</table>
+<!--begin!kadov{{--></div><!--}}end!kadov-->
+
+<!--(HR)============================================================-->
+<hr style="height: 2px;
+			width: 100%;
+			float: aligncenter;"
+	size=2
+	width=100%
+	align=center>
+
+
+<p><span style="font-weight: bold;">Ana Tab Window: Pass 26-28</span></p>
+
+<p>This section describes the three analyzer passes: eventAttributes, anaphoraEvent, 
+ and events2.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image120.gif"
+						style="border-style: none;
+								width: 137px;
+								height: 51px;"
+						width=137
+						height=51
+						border=0></p>
+
+<p><span style="font-weight: bold;">EventAttributes Pass</span></p>
+
+<p>Some phrases describe entire events. Below is one of them. The phrase 
+ &quot;In 2006 alone,&quot; describes the &quot;acquisition&quot; event 
+ that follows. Notice that it is in green. We will explain below.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image122.gif"
+						style="border-style: none;
+								width: 534px;
+								height: 205px;"
+						width=534
+						height=205
+						border=0></p>
+
+<p>This pass takes care of attaching the date to the &quot;acquire&quot; 
+ event via an attribute. If we look at the resulting information in the 
+ KB, we can see the final format:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image131.gif"
+						style="border-style: none;
+								width: 316px;
+								height: 177px;"
+						width=316
+						height=177
+						border=0></p>
+
+<p>Notice in the rule itself that the _event item is already matched. This 
+ pass (26) must come after pass 25 because the rules in pass 26 expect 
+ that events have already been processed. We create a &quot;date&quot; 
+ concept below the action concept and add a &quot;year&quot; attribute 
+ and value to the new date concept. But we do not gather these items under 
+ a new node. Remember that if we have a @POST area associated with a @RULES 
+ area, we need to specifically call an NLP++ action in order to &quot;reduce&quot; 
+ or create a new node under which all the items are gathered. There is 
+ no &quot;single()&quot; function and the suggested node name is &quot;_xNIL&quot;, 
+ which is a convention telling us that we are not interested in building 
+ a new node for this rule match. That is why VisualText displays the match 
+ for this rule in &quot;<span style="font-weight: bold;"><font style="color: #008000;"
+	color=#008000>green</font></span>&quot; (see text above).</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image121.gif"
+						style="border-style: none;
+								width: 373px;
+								height: 184px;"
+						width=373
+						height=184
+						border=0></p>
+
+<p><span style="font-weight: bold;">AnaphoraEvent Pass</span></p>
+
+<p>Pass 27 is much like pass 23, the anaphoraCompany pass. The purpose 
+ of this pass is to find all the _anaphora concepts and loop back through 
+ the sentences under the &quot;parse&quot; area of our KB to find a match. 
+ Only this time, we are looking for &quot;actions&quot; to match, not &quot;companies&quot;. 
+ Below, you can see that phrases that reference other events in the text 
+ are highlighted:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image125.gif"
+						style="border-style: none;
+								width: 484px;
+								height: 286px;"
+						width=484
+						height=286
+						border=0></p>
+
+<p>Below you can see the rule and the @POST area for this rule. We are 
+ matching _anaphora and creating a new parent node _eventAnaphora. Notice 
+ that since we have a @POST area, we must call the function &quot;single()&quot; 
+ to create the _eventAnaphora node:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image123.gif"
+						style="border-style: none;
+								width: 547px;
+								height: 246px;"
+						width=547
+						height=246
+						border=0></p>
+
+<p>In the above @POST region, we also print out some information to the 
+ dump file &quot;anaphoraEvent.txt&quot; for debugging purposes. This way 
+ we can easily monitor what this pass is choosing as its reference to the 
+ anaphora:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image133.gif"
+						style="border-style: none;
+								width: 371px;
+								height: 269px;"
+						width=371
+						height=269
+						border=0></p>
+
+<p><span style="font-weight: bold;">Looping Through the Sentences &amp; 
+ Objects&nbsp;</span></p>
+
+<p>As in pass 23, we will loop back through the sentence concepts we built 
+ under &quot;parse&quot; in the KB to find the &quot;action&quot; objects 
+ we constructed earlier. In layman's terms, we are looking for &quot;action&quot; 
+ events that match phrases like &quot;The sale&quot;, &quot;this last purchase&quot;, 
+ etc. The code below is almost identical with pass 23 with the exception 
+ of our check for &quot;action&quot; instead of &quot;company&quot;:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image134.gif"
+						style="border-style: none;
+								width: 474px;
+								height: 477px;"
+						width=474
+						height=477
+						border=0></p>
+
+<p><span style="font-weight: bold;">Events2 Pass (28)</span></p>
+
+<p>This pass uses the previous pass in two ways. One, it looks for the 
+ presence of an _eventAnaphora concept in a particular pattern. Two, once 
+ it finds it, it makes a &quot;comment&quot; concept under the object that 
+ _eventAnaphora is pointing to. Remember that in the previous pass (27), 
+ we looped back through the &quot;parse&quot; area until we found an &quot;action&quot;. 
+ In this case, the phrase &quot;The sale&quot; in the 4th sentence ends 
+ up attaching a &quot;comment&quot; concept under the &quot;buy&quot; action 
+ in the second sentence:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image128.gif"
+						style="border-style: none;
+								width: 644px;
+								height: 274px;"
+						width=644
+						height=274
+						border=0></p>
+
+<p>Below is the rule that does this:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image135.gif"
+						style="border-style: none;
+								width: 400px;
+								height: 312px;"
+						width=400
+						height=312
+						border=0></p>
+
+<p>The second rule in pass 28 does something similar:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image129.gif"
+						style="border-style: none;
+								width: 626px;
+								height: 252px;"
+						width=626
+						height=252
+						border=0></p>
+
+
+<!--(HR)============================================================-->
+<hr style="height: 2px;
+			width: 100%;
+			float: aligncenter;"
+	size=2
+	width=100%
+	align=center>
+
+
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><span style="font-weight: bold;">Next Section:</span> 
+ <a HREF="../Output/Output.htm">Output <img src="Bullet7.gif"
+											style="width: 15px;
+													height: 12px;
+													border-style: none;
+													margin-top: 0px;
+													margin-bottom: 0px;
+													margin-left: 0px;
+													margin-right: 0px;"
+											width=15
+											height=12
+											border=0></a> </p>
+
+</body>
+
+</html>

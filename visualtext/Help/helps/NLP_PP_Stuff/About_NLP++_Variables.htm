@@ -1,0 +1,398 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>About NLP++ Variables</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1586>
+<meta name=layout-width content=916>
+<meta name=date content="03 13, 2002 10:44:54 PM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Variables</h1>
+
+<p>There are two broad classes of variables in NLP++:</p>
+
+<ul>
+	
+	<li class=kadov-p><p><span style="font-weight: bold;">general variables</span></p></li>
+	
+	<li class=kadov-p><p><span style="font-weight: bold;">parse tree node 
+ variables</span></p></li>
+</ul>
+
+<p><span style="font-weight: bold;">Global variables </span>and<span style="font-weight: bold;"> 
+ local variables</span> are the only general class implemented to date. 
+ Globals are referenced by the special <span style="font-weight: bold;"><font 
+ style="color: #ff0000;"
+	color=#FF0000>G</font></span> function. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Local 
+ variables are denoted by <span style="color: #ff0000; font-weight: bold;">L</span>, 
+ and currently specify parameter lists and appear within user-defined NLP++ 
+ function definitions in the @DECL region.</p>
+
+<p><span style="font-weight: bold;">Parse tree node variables</span>, or 
+ <span style="font-weight: bold;">node variables</span> for short, are 
+ attached to particular nodes in the parse tree, and serve to decorate 
+ the tree with semantic information. The special functions <span style="font-weight: bold;"><font 
+ style="color: #ff0000;"
+	color=#FF0000>N</font></span>, <span style="font-weight: bold;"><font 
+ style="color: #ff0000;"
+	color=#FF0000>X</font></span>, and <span style="font-weight: bold;"><font 
+ style="color: #ff0000;"
+	color=#FF0000>S</font></span> refer to parse tree nodes in the context 
+ of a matched rule.</p>
+
+<p>The special NLP++ functions that reference variables are tabulated below:</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				margin-top: 14pt;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">VARIABLE</span></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">DESCRIPTION</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">G(varname)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Global variable.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">S(varname)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Variable belonging to the <span style="font-weight: bold;">suggested</span> 
+ concept of a rule.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">X(varname 
+ [,num])</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Variable belonging to the <span style="font-style: italic; font-weight: bold;">num</span>th 
+ <span style="font-weight: bold;">context</span> node starting at the root 
+ of the parse tree. Usually used to refer to the <span style="font-style: italic; font-weight: bold;">num</span>th 
+ node of the @PATH select list. With @NODES, the preferred form is X(varname).</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0; font-weight: bold;">N(varname [,num])</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0; font-weight: normal;">Variable belonging to 
+ a <span style="font-weight: bold;">node</span> that matched the <span 
+ style="font-style: italic; font-weight: bold;">num</span>th element of 
+ a rule phrase.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">L</span><span 
+ style="font-weight: bold;">(varname])</span></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Local variable, specifies user-defined NLP++ 
+ function parameters and appears in function body.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p>&nbsp;</td>
+<td style="x-cell-content-align: TOP;
+			width: 70%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">&nbsp;</td></tr>
+</table>
+
+<p>The shorthand notations <span style="font-weight: bold;">N(varname)</span> 
+ and <span style="font-weight: bold;">X(varname)</span> refer to the last 
+ element of the phrase and the last context node, respectively. The former 
+ is convenient for rules that have only one element in their phrase. The 
+ latter is convenient when using the <span style="font-style: normal;">@NODES</span> 
+ selector. <span style="font-weight: bold;">N(varname, 0)</span> and<span 
+ style="font-weight: bold;"> X(varname, 0)</span> have the identical meaning.</p>
+
+<p>There is no notion of a local variable or pointer, at this time. <span 
+ style="font-weight: bold;">S</span> variables are often used as an idiom 
+ for local variables (the difference is that they &quot;hang around&quot; 
+ if a new node is suggested by the current rule). </p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 90%;
+				border-spacing: 0px;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=90%>
+
+<tr>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 100%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#FFFFD5>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Note</span>: 
+ Variable names must be quoted. E.g., N(&quot;unknown word&quot;, 2)</td></tr>
+</table>
+
+<p><span style="font-weight: bold;"><font style="color: #ff0000;"
+											color=#FF0000>WARNING:</font></span><span 
+ style="font-weight: normal;"> </span><span style="font-weight: bold;">X(varname,num)</span><span 
+ style="font-weight: normal;"> does </span><span style="font-weight: bold;">NOT</span><span 
+ style="font-weight: normal;"> refer to the </span><span style="font-weight: bold;">num</span><span 
+ style="font-weight: normal;">th member of a @NODES list. That list is 
+ not a path in the parse tree. We recommend using </span><span style="font-weight: bold;">X(varname)</span><span 
+ style="font-weight: normal;"> with @NODES, to avoid &quot;blindly&quot; 
+ traversing down the parse tree. Using X(varname,2), for example, implies 
+ that you know what the nodes immediately below the root are. Such a use 
+ should be clearly documented.</span></p>
+
+<h2><a NAME=Special_Variable_Names></a>Special Variable Names</h2>
+
+<p>To get useful information from the parse tree and other sources when 
+ analyzing a text, some special variable names have been provided. All 
+ start with a dollar sign (<span style="font-weight: bold;">$</span>). 
+ No such variable names are usable with suggested (<span style="font-weight: bold;">S</span>) 
+ variables, at present.</p>
+
+<p>Note the following about using special variables:</p>
+
+<ol style="list-style: decimal;"
+	type=1>
+	
+	<li class=kadov-p><p>Special variable names must be quoted. E.g., N(&quot;$text&quot;, 
+ 2).</p></li>
+	
+	<li class=kadov-p><p>You should not assign to or create your own &quot;dollar&quot; 
+ variables. NLP++ reserves all variable names that start with a dollar 
+ sign.</p></li>
+	
+	<li class=kadov-p><p>The $uppercase, $lowercase, $cap, and $unknown 
+ differ from the analogous PRE Actions in that they all traverse down to 
+ the &quot;leafiest&quot; node they can find, in order to perform their 
+ check. The corresponding PRE Actions only chain down if the [s] flag is 
+ present in the associated phrase element(s). Also, the $ variables are 
+ not stopped by a [base] attribute in a node.</p></li>
+</ol>
+
+<p><span style="font-weight: normal;">See<a HREF="Special_Variables.htm"> 
+ Special NLP++ Variables</a> for a listing of the special variables.</span></p>
+
+<h2><a NAME=Special_Node_References></a>Special Node R<span style="font-weight: normal;">eferences</span></h2>
+
+<p><span style="font-weight: bold;"><font style="color: #ff0000;"
+											color=#FF0000>N</font></span>, 
+ <span style="font-weight: bold;"><font style="color: #ff0000;"
+										color=#FF0000>X</font></span>, 
+ and <span style="font-weight: bold;"><font style="color: #ff0000;"
+											color=#FF0000>S</font></span> 
+ can, in addition to referring to a node's variables, refer to the node 
+ itself. Thus <font style="color: #ff0000;"
+					color=#FF0000><span style="font-weight: bold;">N</span></font>(2) 
+ refers to the first node that matched element 2 of the matched rule. <span 
+ style="color: #ff0000; font-weight: bold;">N</span>() and <font style="color: #ff0000;"
+	color=#FF0000><span style="font-weight: bold;">N</span></font>(0) refer 
+ to the last rule element's (first or only) node. Similarly, <font style="color: #ff0000;"
+	color=#FF0000><span style="font-weight: bold;">X</span></font>(2) refers 
+ to the second context node in the @PATH dominating the current rule. <font 
+ style="color: #ff0000;"
+	color=#FF0000><span style="font-weight: bold;">S</span></font>() refers 
+ to the suggested concept.</p>
+
+<h2>Variable Types</h2>
+
+<p>NLP++ is a <span style="font-style: italic;">loosely typed</span> language. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The same 
+ variable can be assigned an integer in one statement and a string in the 
+ next. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Type 
+ is determined by usage -- there are no type declarations for variables.</p>
+
+<p style="margin-bottom: 0pt;"><span style="color: #ff0000; font-weight: bold;">G</span>(<span 
+ style="color: #800080;">&quot;tmp&quot;</span>) = 123;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><span style="color: #ff0000; font-weight: bold;">G</span>(<span 
+ style="color: #800080;">&quot;tmp&quot;</span>) = <span style="color: #800080;">&quot;abc&quot;</span>;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">Variables can take multiple 
+ values, in which case they are called <span style="font-weight: bold;">arrays</span>. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Each value 
+ in an array can be of an arbitrary data type:</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><span style="color: #ff0000; font-weight: bold;">G</span>(<span 
+ style="color: #800080;">&quot;tmp&quot;</span>)[0] = 123;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><span style="color: #ff0000; font-weight: bold;">G</span>(<span 
+ style="color: #800080;">&quot;tmp&quot;</span>)[1] = <span style="color: #800080;">&quot;abc&quot;</span>;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">See the <a href="Variable_types.htm">Data 
+ Types</a> topic for more details about arrays and other data types.</p>
+
+<h2>See Also</h2>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Code_Syntax.htm">Code 
+ Syntax</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Tokens.htm">Tokens</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Variable_types.htm">Data 
+ Types</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Special_Variables.htm">Special 
+ Variables</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Functions_and_Actions.htm">Functions 
+ and Actions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Operators_and_Expressions.htm">Operators 
+ and Expressions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Statements_and_blocks.htm">Statements 
+ and Blocks</a></p>
+
+<p style="margin-bottom: 0;">&nbsp;</p>
+
+</body>
+
+</html>

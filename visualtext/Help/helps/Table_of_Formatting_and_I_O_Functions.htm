@@ -1,0 +1,455 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Table of Formatting and I/O Functions</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=date content="05 13, 2002 6:07:49 AM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=665>
+<meta name=layout-width content=1024>
+
+
+<!--(Links)=========================================================-->
+
+<link rel="StyleSheet" href="default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Table of Formatting and I/O Functions</h1>
+
+<p>The NLP++ functions used formatting and performing input and output 
+ operations are listed here in table form for easy reference. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For 
+ examples of these functions, refer to the individual function pages included 
+ in the Formatting and I/O Functions section. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--></p>
+
+<p>The return types include:<span style="font-weight: bold;"> <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->STR</span> 
+ (string), <span style="font-weight: bold;">OSTREAM</span> (output stream) 
+ and <span style="font-weight: bold;">BOOL</span> (Boolean). <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Boolean 
+ type is currently implemented by integer <span style="font-weight: bold;">1</span> 
+ (or non-zero) for <span style="font-weight: bold;">true</span> and <span 
+ style="font-weight: bold;">0</span> for <span style="font-weight: bold;">false</span>.</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-spacing: 0px;
+				margin-top: 14pt;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=100%
+		border=1>
+
+<tr>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#00FF00
+	width=15%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000><span style="font-weight: bold;">FUNCTION 
+ NAME</span></font></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#00FF00
+	width=9%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000><span style="font-weight: bold;">RETURNS</span></font></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 76%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#00FF00
+	width=76%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000><span style="font-weight: bold;">DESCRIPTION</span></font></td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=15%>
+<p style="margin-bottom: 0; font-weight: bold;">cbuf()</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0; font-weight: bold;">OSTREAM</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 76%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=76%>
+<p style="margin-bottom: 0;">Output to buffer that user supplied for the 
+ current parse (standalone or embedded only).</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=15%>
+<p style="margin-bottom: 0; font-weight: bold;">cout()</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0; font-weight: bold;">OSTREAM</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 76%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=76%>
+<p style="margin-bottom: 0;">Output to standard output or user-supplied 
+ stream (the latter in standalone or embedded only).</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=15%>
+<p style="margin-bottom: 0; font-weight: bold;">coutreset(fileNameStr)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0; font-weight: bold;">OSTREAM</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 76%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=76%>
+<p style="margin-bottom: 0;">Bind cout() stream to the given filename.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=15%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">closefile(fileOstream)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0; font-weight: bold;">BOOL</td>
+<td style="x-cell-content-align: TOP;
+			width: 76%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=76%>
+<p style="margin-bottom: 0;">Close the output file stream.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=15%>
+<p style="margin-bottom: 0; font-weight: bold;">inputrangetofile(start_n,end_n,out_ostr)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0; font-weight: bold;">BOOL</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 76%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=76%>
+<p style="margin-bottom: 0; font-weight: bold;"><span style="font-weight: normal;">Print 
+ a range of chars from the input text to an output stream.</span> <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(Listed 
+ with Parse Tree Functions)</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=15%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">LJ(num, fieldsize_num)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 76%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=76%>
+<p style="margin-bottom: 0;">Left-justify num in given field size.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=15%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">openfile(fileNameStr)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0; font-weight: bold;">OSTREAM</td>
+<td style="x-cell-content-align: TOP;
+			width: 76%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=76%>
+<p style="margin-bottom: 0;">Open output file stream.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=15%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">percentstr(numerator_num, 
+ denominator_num)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">STR (&quot; 
+ 0&quot; to &quot;100&quot;)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 76%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=76%>
+<p style="margin-bottom: 0;">Format a percentage (right-justified in field 
+ of 3 chars).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=15%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">rightjustifynum(num, 
+ fieldsize_num)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 76%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=76%>
+<p style="margin-bottom: 0;">Right-justify num in given field size.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 15%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=15%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">today()</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 9%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=9%>
+<p style="margin-bottom: 0; font-weight: bold;">STR</td>
+<td style="x-cell-content-align: TOP;
+			width: 76%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=76%>
+<p style="margin-bottom: 0;">Format the current date and time as a string.</td></tr>
+</table>
+
+<h2>See Also</h2>
+
+<p style="margin-bottom: 0;"><a href="Table_of_Special_Functions.htm">Special 
+ Functions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Table_of_Knowledge_Base_Functions.htm">Knowledge 
+ Base Functions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Table_of_Parse_Tree_Functions.htm">Parse 
+ Tree Functions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Table_of_String_Functions.htm">String 
+ Functions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Table_of_Spelling_Functions.htm">Spelling 
+ Functions</a></p>
+
+</body>
+
+</html>

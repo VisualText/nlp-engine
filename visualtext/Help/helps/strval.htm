@@ -1,0 +1,138 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>strval</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=date content="01 4, 2002 1:16:54 PM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1098>
+<meta name=layout-width content=775>
+<meta name=x-ignored-words content="Files\TextAI\VisualText\apps\corporate;corporate.ana;Sold.txt;Files\TextAI\VisualText\docs\tutorialN;www.zdnet.com;apps\myAnalyzerFolder\;initKB;findwordpath(;olleh;wordpath(;conceptname(dictfindword(;rmword(;nameString;parentConcept;returnedConcept;findconcept(parentConcept;G(;findroot(;makeconcept(G(;findconcept(G(;down(currentConcept;currentConcept;findhierconcept(;up(G(;conceptname(G(;down(G(;next(G(;prev(G(;prev(currentConcept;attrnameString;returnedStr;strval(concept;attrNameString;if(findconcept(findroot(;strval(G(">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF=default.css>
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>strval</h1>
+
+<h2>Purpose</h2>
+
+<p>Fetch the string-value of kb attribute <span style="font-style: italic;">attrnameString 
+ </span>belonging to the concept <span style="font-style: italic;"><!--kadov_tag{{<ignored>}}-->concept<!--kadov_tag{{</ignored>}}--></span>.</p>
+
+<h2>Syntax</h2>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">returnedStr = strval(concept, attrNameString);</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">returnedStr - type: str<br>
+concept - type: con<br>
+attrNameString - type: attr</p>
+
+<h2>Returns</h2>
+
+<p>String value of attribute named <span style="font-style: italic;">attrNameString</span>. 
+ If there are no attributes of the concept, the function returns NULL. 
+ If the attribute exists, but does not have a value, the function returns 
+ NULL.</p>
+
+<h2>Remarks</h2>
+
+<p>Concepts can have zero or more attributes. Each attribute can have zero 
+ or more values. This function takes a concept and name of an attribute 
+ as argument and returns first the string value associated with the attribute 
+ (if it exists). Different from getstrval, which takes (an already found) 
+ value as input argument, in that strval will find the named value.</p>
+
+<h2>Example</h2>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;"># put attribute and value in the KB<br>
+if(findconcept(findroot(),&quot;apple&quot;)) <br>
+<!--kadov_tag{{<ignored>}}-->rmconcept(findconcept(findroot(<!--kadov_tag{{</ignored>}}-->),&quot;apple&quot;));<br>
+G(&quot;apple&quot;) = <!--kadov_tag{{<ignored>}}-->makeconcept(findroot(<!--kadov_tag{{</ignored>}}-->), &quot;apple&quot;);<br>
+<!--kadov_tag{{<ignored>}}-->addstrval(G(<!--kadov_tag{{</ignored>}}-->&quot;apple&quot;),&quot;color&quot;,&quot;red&quot;); <br>
+<br>
+# access <br>
+&quot;output.txt&quot; &lt;&lt; &quot;getstrval = &quot; &lt;&lt; <br>
+<!--kadov_tag{{<ignored>}}-->getstrval(findvals(G(<!--kadov_tag{{</ignored>}}-->&quot;apple&quot;), &quot;color&quot;)) &lt;&lt; &quot;\n&quot;;<br>
+&quot;output.txt&quot; &lt;&lt; &quot;strval = &quot; &lt;&lt; <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ "><br>
+strval</span>(G(&quot;apple&quot;),&quot;color&quot;) &lt;&lt; &quot;\n&quot;;<br>
+&quot;output.txt&quot; &lt;&lt; &quot;attrwithval = &quot; &lt;&lt; <br>
+<!--kadov_tag{{<ignored>}}-->attrwithval(G(<!--kadov_tag{{</ignored>}}-->&quot;apple&quot;), &quot;color&quot;, &quot;red&quot;) &lt;&lt; &quot;\n&quot;;<br>
+<br>
+# change <br>
+<!--kadov_tag{{<ignored>}}-->attrchange(G(<!--kadov_tag{{</ignored>}}-->&quot;apple&quot;), &quot;color&quot;, &quot;red&quot;, &quot;blue&quot;)<br>
+&quot;output.txt&quot; &lt;&lt; &quot;changing apples' color from red to <!--kadov_tag{{<ignored>}}-->blue\n<!--kadov_tag{{</ignored>}}-->&quot; <br>
+&lt;&lt; &quot;attrwithval = &quot; &lt;&lt;<br>
+<!--kadov_tag{{<ignored>}}-->attrwithval(G(<!--kadov_tag{{</ignored>}}-->&quot;apple&quot;), &quot;color&quot;, &quot;blue&quot;) &lt;&lt; &quot;\n&quot;;<br>
+<br>
+# remove attrs, vals and concept<br>
+<!--kadov_tag{{<ignored>}}-->rmattrval(G(<!--kadov_tag{{</ignored>}}-->&quot;apple&quot;), &quot;color&quot;, &quot;red&quot;); <br>
+<!--kadov_tag{{<ignored>}}-->rmconcept(G(<!--kadov_tag{{</ignored>}}-->&quot;apple&quot;);</p>
+
+<p>Outputs:</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">getstrval = red<br>
+strval = red<br>
+attrwithval = 1<br>
+changing apples' color from red to blue<br>
+attrwithval = 1</p>
+
+<h2>See Also</h2>
+
+<p style="margin-bottom: 0;"><a HREF="getstrval.htm">getstrval</a>, <a 
+ HREF="numval.htm">numval</a>, <a href="conval.htm">conval</a>, <a href="Table_of_Knowledge_Base_Functions.htm">Knowledge 
+ Base Functions</a> </p>
+
+</body>
+
+</html>

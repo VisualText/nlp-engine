@@ -1,0 +1,246 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Format</title>
+
+<!--(Meta)==========================================================-->
+
+<meta HTTP-EQUIV=Content-Type CONTENT="text/html; charset=windows-1252">
+<meta NAME=Template CONTENT="D:\Program Files\Microsoft Office\Office\html.dot">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=2306>
+<meta name=layout-width content=775>
+<meta name=date content="08 27, 2001 2:32:02 PM">
+
+
+
+<!--(Style Sheet)===================================================-->
+
+<style>
+<!--
+
+A:visited {
+	color: #800080;
+}
+
+A:link {
+	color: #0000ff;
+}
+
+-->
+</style>
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<!--(Table)=========================================================-->
+<!--begin!kadov{{--><div align=center><!--}}end!kadov-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 617px;
+				border-spacing: 0px;
+				float: aligncenter;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=617>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../Join/Join.htm"><img src="Bullet8.gif"
+												style="width: 15px;
+														height: 13px;
+														border-style: none;
+														margin-top: 0px;
+														margin-bottom: 0px;
+														margin-left: 0px;
+														margin-right: 0px;"
+												width=15
+												height=13
+												border=0>&nbsp;Join</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 50%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../Toc/TOC.htm">CORPORATE ANALYZER</a><span style="font-weight: bold;"><font 
+ style="color: #000080;"
+	color=#000080><br>
+Formatting</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 26%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../GramTab/GramTab.htm">Rule Generation <img 
+ src="Bullet7.gif"
+	style="width: 15px;
+			height: 13px;
+			border-style: none;
+			margin-top: 0px;
+			margin-bottom: 0px;
+			margin-left: 0px;
+			margin-right: 0px;"
+	width=15
+	height=13
+	border=0></a></td></tr>
+</table>
+<!--begin!kadov{{--></div><!--}}end!kadov-->
+
+<!--(HR)============================================================-->
+<hr style="height: 2px;
+			width: 100%;
+			float: aligncenter;"
+	size=2
+	width=100%
+	align=center>
+
+
+<p><span style="font-weight: bold;">Ana Tab Window: Passes 5, 6, 7</span></p>
+
+<p>This section describes the analyzer passes &quot;sentences&quot;, &quot;paragraphs&quot;, 
+ and &quot;removeWhite&quot;.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image47.gif"
+						style="border-style: none;
+								width: 125px;
+								height: 139px;"
+						width=125
+						height=139
+						border=0></p>
+
+<p><span style="font-weight: bold;">Formatting</span></p>
+
+<p>It is often useful for an analyzer to track the formatting of the input 
+ text as part of characterizing it. Pass 5 groups words into sentences. 
+ It assumes that prior passes, e.g., pass 4 (join), have removed or hidden 
+ periods (and semicolons, question marks, etc.) that are not likely to 
+ be end-of-sentence markers in the current text. The resulting parse tree 
+ is shown below:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image50.gif"
+						style="border-style: none;
+								width: 287px;
+								height: 309px;"
+						width=287
+						height=309
+						border=0></p>
+
+<p>Pass 6 groups the sentences into paragraphs:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image48.gif"
+						style="border-style: none;
+								width: 371px;
+								height: 196px;"
+						width=371
+						height=196
+						border=0></p>
+
+<p>Another convenient step, which helps simplify rules in subsequent passes, 
+ is to excise white space from the parse tree. In this way, subsequent 
+ rules need not consider white space. Below is a display of a tree before 
+ and after spaces are removed. Before:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image51.gif"
+						style="border-style: none;
+								width: 306px;
+								height: 372px;"
+						width=306
+						height=372
+						border=0></p>
+
+<p>The parse tree below results from running Pass 7, called &quot;removeWhite&quot;:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image52.gif"
+						style="border-style: none;
+								width: 262px;
+								height: 340px;"
+						width=262
+						height=340
+						border=0></p>
+
+<p><span style="font-weight: bold;">Precision Processing</span></p>
+
+<p>An advantage of grouping the text into sentences and paragraphs is that 
+ it makes for a more precise and efficient text analyzer. Subsequent passes 
+ can be instructed to process only within particular contexts, such as 
+ sentences or paragraphs. In this way, spurious matches in unintended areas 
+ of the parse tree are minimized.</p>
+
+<p>The @PATH selector, as shown in the pass file for pass 7 below, instructs 
+ the rule matcher to start at the root of the parse tree (named &quot;_ROOT&quot;), 
+ then find children named &quot;_paragraph&quot;, then find their children 
+ named &quot;_sentence&quot;. Only when such a &quot;_sentence&quot; node 
+ is found does the rule matcher attempt to match the rules of the current 
+ pass.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image53.gif"
+						style="border-style: none;
+								width: 251px;
+								height: 142px;"
+						width=251
+						height=142
+						border=0></p>
+
+
+<!--(HR)============================================================-->
+<hr style="height: 2px;
+			width: 100%;
+			float: aligncenter;"
+	size=2
+	width=100%
+	align=center>
+
+
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><span style="font-weight: bold;">Next Section:</span> 
+ <a HREF="../GramTab/GramTab.htm">Rule Generation <img src="Bullet7.gif"
+														style="width: 15px;
+	height: 13px;
+	border-style: none;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 0px;"
+														width=15
+														height=13
+														border=0></a> </p>
+
+</body>
+
+</html>

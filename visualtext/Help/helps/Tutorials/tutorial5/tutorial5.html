@@ -1,0 +1,2476 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>tutorial5</title>
+
+<!--(Meta)==========================================================-->
+
+<meta HTTP-EQUIV=Content-Type CONTENT="text/html; charset=windows-1252">
+<meta NAME=Author CONTENT="Phil Shinn">
+<meta name=date content="04 3, 2002 4:50:36 PM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=10144>
+<meta name=layout-width content=1017>
+
+
+<!--(Links)=========================================================-->
+
+<!-- saved from url=(0022)http://internet.e-mail -->
+ <link REL="StyleSheet" HREF="../../default.css">
+
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1><a NAME=Tutorial_5></a>Tutorial 5 - NLP++</h1>
+
+<p>In the last several tutorials, you have learned how to create pass files 
+ in VisualText™. The pass files you have seen so far contain NLP++™ code 
+ and rules.</p>
+
+<p>NOTE: This tutorial does not discuss NLP++ user-defined functions and 
+ local variables (<span style="color: #ff0000; font-weight: bold;">L</span>). 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The user 
+ can find these in the Help sections dealing with NLP++.</p>
+
+<h2><a name=about></a>About NLP++</h2>
+
+<p>NLP stands for Natural Language Processing. NLP++ is a general purpose 
+ programming language combined with a grammar. Text Analysis International's 
+ NLP++ allows you to concentrate on the conceptual aspects of building 
+ a text analyzer. In other words, it simplifies the programming task involved 
+ in building the analyzer.</p>
+
+<p>NLP++ is tightly bound to the parse tree used in VisualText-style text 
+ analyzers, and also to the Conceptual Grammar™ knowledge base management 
+ system, or KBMS. Conceptual Grammar is a knowledge representation framework 
+ consisting of concepts, attributes and phrases, combined into knowledge 
+ hierarchies and graphs. The hierarchy of samples in the Gram Tab is implemented 
+ as a hierarchy within the Conceptual Grammar KBMS.</p>
+
+<p>A key feature of NLP++ is the ability to access and augment parse tree 
+ information dynamically during text analysis. That is, it creates and 
+ uses information during the text analysis process itself. NLP++ uses a 
+ special syntax for variables that simplifies the manipulation of information 
+ in parse trees. In this tutorial, we introduce five special variable types 
+ and show how they can help us with two classic linguistic parsing problems 
+ common to text analysis: extracting the head noun in a noun phrase, and 
+ determining the subject and object of a sentence.</p>
+
+<h2><a NAME=Four_Variable_Types></a>Five Variable Types</h2>
+
+<p>We'll briefly introduce the five special types of NLP++ variables here. 
+ We'll go into more detail later on as we start to edit our rule files. 
+ (For more information on variables see <a HREF="../../NLP_PP_Stuff/About_NLP++_Variables.htm">About 
+ NLP++ Variables</a>.)</p>
+
+<p>The five types of variables are: <span style="font-weight: bold; color: #ff0000;">G</span> 
+ (global), <span style="font-weight: bold; color: #ff0000;">N</span> (node), 
+ <span style="font-weight: bold; color: #ff0000;">X</span> (context), <span 
+ style="font-weight: bold; color: #ff0000;">S</span> (suggested), and <span 
+ style="font-weight: bold; color: #ff0000;">L</span> (local). The <span 
+ style="color: #ff0000; font-weight: bold;">N</span>, <span style="color: #ff0000; font-weight: bold;">X</span>, 
+ and <span style="color: #ff0000; font-weight: bold;">S</span> variables 
+ assume a rule context (that is, they apply only in regions where a rule 
+ has matched, such as @POST). <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ <span style="color: #ff0000; font-weight: bold;">G</span> and <span style="color: #ff0000; font-weight: bold;">L</span> 
+ variables are independent of the rule matching machinery.</p>
+
+<ul>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;"><span style="x-text-underline: off;
+	x-text-overline: off;
+	x-text-line-through: off;
+	/*begin!kadov{{*/ text-decoration: none none none; /*}}end!kadov*/ "><font 
+ style="color: #ff0000;"
+	color=#FF0000><span style="font-weight: bold;">G</span></font></span><span 
+ style="font-weight: normal;
+		x-text-underline: off;
+		x-text-overline: off;
+		x-text-line-through: off;
+		/*begin!kadov{{*/ text-decoration: none none none; /*}}end!kadov*/ "> 
+ = </span><span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">G</span>lobal 
+ variable: not associated with rules or parse tree nodes.</p></li>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;"><font style="color: #ff0000;"
+														color=#FF0000><span 
+ style="font-weight: bold;">N</span></font><span style="font-weight: normal;
+														x-text-underline: off;
+														x-text-overline: off;
+														x-text-line-through: off;
+														/*begin!kadov{{*/ text-decoration: none none none; /*}}end!kadov*/ "> 
+ = </span><span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">N</span>ode 
+ variable: attached to nodes that match the right-hand-side of a rule, 
+ that is the part of rule to the right of the redirect arrow '&lt;-' .</p></li>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;"><font style="color: #ff0000;"
+														color=#FF0000><span 
+ style="font-weight: bold;">X</span></font> = Conte<span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">x</span>t 
+ variable: attached to nodes that dominate the phrase that matched a rule.</p></li>
+	
+	<li class=kadov-p><p style="margin-bottom: 0pt;"><font style="color: #ff0000;"
+															color=#FF0000><span 
+ style="font-weight: bold;">S</span></font> = <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">S</span>uggested 
+ variable: attached to the rule reduction node built for the left-hand-side 
+ of a rule.</p></li>
+	
+	<li class=kadov-p><p style="margin-top: 0pt;"><font style="color: #ff0000;"
+														color=#FF0000><span 
+ style="font-weight: bold;">L</span></font> = <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">L</span>ocal 
+ variable: local to a function or region such as @POST and @CODE; also 
+ used as function parameters.</p></li>
+</ul>
+
+<p>Some operations on these variables include: assignment, printing, arithmetic 
+ and string manipulation. These operations will also be discussed below.</p>
+
+<p>In this tutorial, we will use the zipped version of the analyzer in 
+ Tutorial 4. If VisualText has myAnalyzer from the myAnalyzerFolder accessed, 
+ you'll have to close the analyzer. (Select <span style="font-weight: bold;">Close 
+ Analyzer</span> from the <span style="font-weight: bold;">File Menu</span>.)</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> First, navigate to:</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">C:\apps\myAnalyzerFolder</p>
+
+<p>and rename the <span style="font-weight: bold;">myAnalyzer</span> folder 
+ <span style="font-weight: bold;">myAnalyzer4</span>.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Unzip the <span style="font-weight: bold;">myAnalyzer4.zip</span> 
+ file located in:</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">C:\Program Files\TextAI\VisualText\docs\tutorial4\myAnalyzer4.zip</p>
+
+<p>and place the <span style="font-weight: bold;">myAnalyzer</span> folder 
+ in the working directory:</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">C:\apps\myAnalyzerFolder</p>
+
+<h2><a NAME=Recent_Analyzers></a>Load with Recent Analyzers</h2>
+
+<p>Here is a shortcut for loading an analyzer.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Double-click the VisualText icon to launch VisualText.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Sel<span style="font-weight: normal;">ect</span><span 
+ style="font-weight: bold;"> File &gt; </span><span style="font-weight: bold;">Recent 
+ Analyzers</span> and open:</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><span style="font-weight: normal;">c:\apps\myanalyzerfolder\myanalyzer</span></p>
+
+<p>This will automatically load the .ana file in the myAnalyzer folder.&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<h2><a NAME=t501></a>Global Variables</h2>
+
+<p>To illustrate the Global variable (<span style="font-weight: bold; color: #ff0000;">G</span>), 
+ we will use the <span style="font-weight: bold;">company2noun</span> pass 
+ file.</p>
+
+<p>In Tutorial 4, you added a POST Region directing your analyzer to create 
+ an output file with the text &quot;Found Company: company name&quot;. 
+ We will add rules to count the total number of companies in a file and 
+ write this information to the output file.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Double click on the <span style="font-weight: bold;">company2noun<span 
+ style="font-weight: normal;"> pass in the </span>Ana Tab<span style="font-weight: normal;">.</span></span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Edit the <span style="font-weight: bold;">company2noun</span> 
+ pass file so that it looks like this:</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			color: #0000ff;
+			font-family: monospace;
+			font-weight: bold;">@CODE</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			color: #0000ff;
+			font-family: monospace;
+			font-weight: bold;
+			margin-left: 0px;"><span style="color: #ff0000;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->G</span><span 
+ style="color: #000000; font-weight: normal;">(</span><span style="color: #ff00ff; font-weight: normal;">&quot;companyCount&quot;</span><span 
+ style="color: #000000; font-weight: normal;">)</span> <span style="font-weight: normal; color: #000000;">= 
+ 0; </span><span style="color: #008000; font-weight: normal;"># Set to 
+ 0 (the default).</span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;"><span style="font-family: monospace;
+											margin-top: 0pt;
+											margin-bottom: 0pt;
+											font-weight: bold;
+											color: #0000ff;">@@CODE</span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;"><span style="font-weight: bold; color: #0000ff;">@NODES</span> 
+ _ROOT</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			color: #0000ff;
+			font-family: monospace;
+			font-weight: bold;">@POST</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: normal;
+			color: #008000;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}--># 
+ Increment count of companies.</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="color: #800080; font-weight: bold;"><!--kadov_tag{{</spaces>}}-->if</span>(<span 
+ style="font-weight: bold; color: #ff0000;">G</span>(<span style="color: #ff00ff;">&quot;companyCount&quot;</span>))</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;<span 
+ style="font-weight: bold; color: #ff0000;"><!--kadov_tag{{</spaces>}}-->G</span>(<span 
+ style="color: #ff00ff;">&quot;companyCount&quot;</span>) = <span style="font-weight: bold; color: #ff0000;">G</span>(<span 
+ style="color: #ff00ff;">&quot;companyCount&quot;</span>) + 1;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="color: #800080; font-weight: bold;"><!--kadov_tag{{</spaces>}}-->else</span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;<span 
+ style="font-weight: bold; color: #ff0000;"><!--kadov_tag{{</spaces>}}-->G</span>(<span 
+ style="color: #ff00ff;">&quot;companyCount&quot;</span>) = 1;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			color: #008000;
+			margin-left: 0in;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			color: #008000;
+			margin-left: 0in;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}--># 
+ Print the text from the last node matched (_companies), and the count.</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="color: #ff00ff;"><!--kadov_tag{{</spaces>}}-->&quot;output.txt&quot;</span> 
+ &lt;&lt; <span style="color: #ff00ff;">&quot;Found company: &quot;</span> 
+ &lt;&lt; <span style="font-weight: bold; color: #ff0000;">N</span>(<span 
+ style="color: #ff00ff;">&quot;$text&quot;</span>) &lt;&lt; <span style="color: #ff00ff;">&quot;. 
+ Found &quot;</span> </p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->&lt;&lt; 
+ <span style="font-weight: bold; color: #ff0000;">G</span>(<span style="color: #ff00ff;">&quot;companyCount&quot;</span>) 
+ &lt;&lt; <span style="color: #ff00ff;">&quot; companies so far\n&quot;</span>;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;"><span style="color: #800080; font-weight: bold;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->single</span>(); 
+ <span style="color: #008000;"># Do the standard rule reduction.</span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">@RULES</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">_noun &lt;- _companies [<span style="font-weight: bold; color: #b298e2;">s</span>] 
+ <span style="color: #0000ff;">@@</span></p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 90%;
+				margin-top: 14pt;
+				border-spacing: 0px;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=90%>
+
+<tr>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 100%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=100%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Note</span>: 
+ Include the extra spaces as they appear in the pass file. This will make 
+ your output file easier to read.</td></tr>
+</table>
+
+<p>Let's take a closer look at the rules you just added.</p>
+
+<p>There are three regions of our pass file, <font style="color: #3366FF;"
+													color=#3366FF>NODES</font>, 
+ <font style="color: #3366FF;"
+		color=#3366FF>POST</font> and <font style="color: #3366FF;"
+											color=#3366FF>RULES</font>. 
+ It is generally easiest to start an analysis of a pass file by looking 
+ at the <font style="color: #3366FF;"
+				color=#3366FF>RULES</font> Region first.</p>
+
+<p>The rule in the <font style="color: #3366FF;"
+						color=#3366FF><span style="color: #000000;">RULES</span> 
+ <span style="color: #000000;">Region</span></font></p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">_noun &lt;- _companies <font style="color: #0000ff;"
+	color=#0000FF>@@</font></p>
+
+<p>tells the analyzer that any node in the parse tree named _<span style="font-weight: bold;">companies<span 
+ style="font-weight: bold;"> </span><span style="font-weight: normal;">is 
+ rewritten with</span></span><span style="font-weight: bold;"> </span>a 
+ new dominating node <span style="font-weight: bold;">_noun</span>. The 
+ new node, <span style="font-weight: bold;">_noun</span> is layered on 
+ top of the existing node within the parse tree. The node <span style="font-weight: bold;">_companies</span> 
+ attached to the company name &quot;Fencetech&quot;, for example, will 
+ have the node <span style="font-weight: bold;">_noun</span> layered on 
+ top of it.</p>
+
+<p>The line <span style="color: #0000ff;
+							font-family: monospace;
+							font-weight: bold;">@</span><span><font style="color: #3366FF;
+	font-family: monospace;
+	font-weight: bold;"
+	color=#3366FF
+	face=monospace>NODES</font></span><span style="font-family: monospace;"> 
+ _ROOT</span> specifies the context in which the rule is applied by the 
+ rule engine. In this case, the rule is applied only to nodes which are 
+ dominated by the node named <span style="font-weight: bold;">_ROOT</span>. 
+ Recall that the nodes dominated by <span style="font-weight: bold;">_ROOT</span> 
+ are underneath and indented to the right of <span style="font-weight: bold;">_ROOT</span> 
+ in the parse tree.</p>
+
+<p>Finally, the POST Region contains code &quot;actions&quot; that will 
+ be applied whenever there is a match in the RULES Region. The first part 
+ of our POST<span style="font-weight: bold;"> </span>Region,</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><span style="font-weight: bold;"><font style="color: #ff0000;"
+	color=#FF0000><span style="font-weight: bold;">G</span></font><span style="font-weight: normal;">(<font style="color: #ff00ff;"
+	color=#FF00FF>&quot;companyCount&quot;</font><font style="color: #000000;"
+														color=#000000>)</font></span></span></p>
+
+<p>creates a new global variable (<span style="font-weight: bold; color: #ff0000;">G</span>) 
+ named <span style="font-weight: bold;">companyCount,</span> if one has 
+ not been previously created.&nbsp; There is no need to declare the variable 
+ in advance.&nbsp;</p>
+
+<p>The first four lines of the <font style="color: #3366FF;"
+									color=#3366FF><span style="font-weight: normal;">POST</span></font> 
+ Region track the count of companies in a file. The global variable <span 
+ style="font-weight: bold;">companyCount</span> is incremented by one for 
+ every company found.</p>
+
+<p>The next part of the <font style="color: #3366FF;"
+								color=#3366FF>POST</font><span style="font-weight: bold;"> 
+ </span>Region specifies printing to an output file. The code prints the 
+ company count to the output file &quot;output.txt&quot;. It also specifies 
+ a format for printing to the output file. Generally, where and how something 
+ should be printed is controlled by the output operator &lt;&lt;. In this 
+ example, we output to the file 'output.txt' in the following format:</p>
+
+<p>&quot;Found Company: Company Name. Found n companies so far.&quot;</p>
+
+<p>Note that expressions to the right of the output operator can be variables 
+ such as <span style="font-weight: bold;"><font style="color: #ff0000;"
+												color=#FF0000>G</font></span>(<font 
+ style="color: #ff00ff;"
+	color=#FF00FF>&quot;companyCount&quot;</font>), literal text surrounded 
+ by double quotes (e.g. <font style="color: #ff00ff;"
+								color=#FF00FF>&quot;Found company: &quot;</font>) 
+ or formatting characters (<font style="color: #ff00ff;"
+								color=#FF00FF>&quot;\n&quot;</font> for 
+ newline or &quot;\t&quot; for a tab space). Note also that it is possible 
+ to chain together a series of operations within a single NLP++ statement, 
+ as we did here using multiple output operators.</p>
+
+<p>The last part of the <font style="color: #3366FF;"
+								color=#3366FF>POST <span style="color: #000000;">Region</span></font>, 
+ <font style="color: #CC66CC; font-family: monospace;"
+		color=#CC66CC
+		face=monospace><span style="font-weight: bold; font-family: monospace;">single</span><span 
+ style="color: #000000; font-family: monospace;">()</span></font>; as we 
+ learned in Tutorial 4, is an instruction to the rule engine to perform 
+ a standard (or &quot;single-tier&quot;) reduction.</p>
+
+<h2><a name=node_variable></a>Node Variables</h2>
+
+<p><span style="font-weight: bold;"><font style="color: #000000;"
+											color=#000000><span style="font-weight: normal;">We 
+ first saw </span></font><span style="font-weight: normal;"><font style="color: #000000;"
+	color=#000000>the</font></span><font style="color: #000000;"
+										color=#000000><span style="font-weight: normal;"> 
+ variable </span></font><span style="font-weight: bold;"><font style="color: #ff0000;"
+	color=#FF0000>N</font></span><font style="color: #000000;"
+										color=#000000><span style="font-weight: normal;"> 
+ in</span></font></span> <a HREF="../tutorial4/tutorial4.html#N__$text__">Tutorial 
+ 4</a>. The node variable is associated with nodes that match elements 
+ on the right hand side of rules and is written in the following way</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><font style="color: #ff0000;"
+											color=#FF0000><span style="font-weight: bold;">N</span></font>(<font style="color: #ff00ff;"
+	color=#FF00FF>&quot;variable-name&quot;</font>, position-on-right-hand-side-of-rule)<font style="color: #000000;"
+	color=#000000><span style="font-weight: normal;">.</span></font></p>
+
+<p>A related form is, for example, <span style="font-weight: bold;"><font 
+ style="color: #ff0000;"
+	color=#FF0000>N</font></span>(3), which evaluates to the first parse 
+ tree node matching rule element 3.</p>
+
+<p>The positions are from 1 to N, and if there is only 1 then the position 
+ reference can be omitted as it has been in our rule statement. The $ prefix 
+ in the argument <font style="color: #ff0000;"
+						color=#FF0000><span style="font-weight: bold; font-family: monospace;">N</span></font><span 
+ style="font-family: monospace;">(</span><span style="font-weight: bold;"><font 
+ style="color: #ff00ff; font-family: monospace;"
+	color=#FF00FF
+	face=monospace>&quot;$text&quot;</font></span><span style="font-family: monospace;">)</span>, 
+ indicates this is a special NLP++ variable name, and is reserved. There 
+ are a number of reserved variables that return useful information. See 
+ the <a HREF="../../NLP_PP_Stuff/Special_Variables.htm">Special NLP++ Variables</a> 
+ for a complete list of special reserved variables.</p>
+
+<p><span style="font-weight: bold;"><font style="color: #ff0000; font-family: monospace;"
+											color=#FF0000
+											face=monospace>N</font></span><span 
+ style="font-family: monospace;">(</span><span style="font-weight: bold;"><font 
+ style="color: #ff00ff; font-family: monospace;"
+	color=#FF00FF
+	face=monospace>&quot;$text&quot;</font></span><span style="font-family: monospace;">)</span> 
+ in our statement extracts the text under the last node of the right hand 
+ side of the rule, i.e., whatever is in <span style="font-weight: bold;">_companies</span>. 
+ In short, the expression</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><font style="color: #ff00ff;"
+											color=#FF00FF>&quot;output.txt&quot;</font> &lt;&lt; <font style="color: #ff0000;"
+	color=#FF0000><span style="font-weight: bold;">N</span></font>(<font style="color: #ff00ff;"
+	color=#FF00FF>&quot;$text&quot;</font>)</p>
+
+<p>extracts whatever is in <span style="font-weight: bold;">_companies</span> 
+ and puts it into the output.txt file.</p>
+
+<p>The text could also be assigned to another variable associated with 
+ the node, such as:</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><font style="color: #ff0000;"
+											color=#FF0000><span style="font-weight: bold;">N</span></font>(<font style="color: #ff00ff;"
+	color=#FF00FF>&quot;string&quot;</font><font style="color: #000000;"
+												color=#000000>,1</font>) = <font style="color: #ff0000;"
+	color=#FF0000><span style="font-weight: bold;">N</span></font>(<font style="color: #ff00ff;"
+	color=#FF00FF>&quot;$text&quot;</font>,1);</p>
+
+<p>and that text could be sent to an output file with the expression:</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><font style="color: #ff00ff;"
+											color=#FF00FF>&quot;output.txt&quot;</font> &lt;&lt; <font style="color: #ff0000;"
+	color=#FF0000><span style="font-weight: bold;">N</span></font>(<font style="color: #ff00ff;"
+	color=#FF00FF>&quot;string&quot;</font>,1);</p>
+
+<p>Note the difference between the node variables <font style="color: #ff0000;"
+														color=#FF0000><span 
+ style="font-weight: bold; font-family: monospace;">N</span></font><span 
+ style="font-family: monospace;">(<font style="color: #ff00ff; font-family: monospace;"
+										color=#FF00FF
+										face=monospace>&quot;string&quot;</font>)</span> 
+ and <font style="color: #ff0000;"
+			color=#FF0000><span style="font-weight: bold; font-family: monospace;">N</span></font><span 
+ style="font-family: monospace;">(<font style="color: #ff00ff; font-family: monospace;"
+										color=#FF00FF
+										face=monospace>&quot;$text&quot;</font>)</span>. 
+ Variables prefixed with the $ are special reserved variables that act 
+ like functions.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Highlight <span style="font-weight: bold;">eg2.txt</span> 
+ in the <span style="font-weight: bold;">Text Tab</span> and run the analyzer. 
+ <img src="../../Toolbar_buttons/run_button.gif"
+		style="width: 24px;
+				height: 26px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=24
+		height=26
+		border=1></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Double click on the <span style="font-weight: bold;">output.txt</span> 
+ file in the examples folder to see the results<span style="font-weight: bold;"><span 
+ style="font-weight: normal;">.</span> <span style="font-weight: normal;">It</span> 
+ </span>should look like this:</p>
+
+<p><img src="Output%201.gif"
+		style="width: 497px;
+				height: 115px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=497
+		height=115
+		border=1></p>
+
+<p>If there are any errors in formatting, for example not enough spaces 
+ between text, open the <span style="font-weight: bold;">company2noun</span> 
+ pass file and edit accordingly. Run the analyzer again until <span style="font-weight: bold;">output.txt</span> 
+ resembles the one above.</p>
+
+<p>Now, let's look at a neat way to simplify the counting code in the <font 
+ style="color: #0000ff;"
+	color=#0000FF>POST</font> Region. We will do this by using the '++' 
+ operator.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Edit the <span style="font-weight: bold;">company2noun</span> 
+ pass file to simplify it as shown here:</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;"><span style="font-family: monospace;
+											font-weight: bold;
+											color: #0000ff;">@CODE</span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;"><span style="font-weight: bold; color: #ff0000;">L</span>(<span 
+ style="color: #ff00ff;">&quot;hello&quot;</span>) = 0;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">@@CODE</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;"><span style="font-weight: bold; color: #0000ff;">@NODES</span> 
+ _ROOT</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">@POST</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 40px;
+			color: #008000;">#increment count of companies</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 40px;"><span style="font-weight: bold;">++</span><span 
+ style="font-weight: bold; color: #ff0000;">G</span>(<span style="color: #ff00ff;">&quot;companyCount&quot;</span>);</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 40px;"><!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 40px;
+			color: #008000;"># print out the text from the node of the 
+ last</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 40px;
+			color: #008000;"># matching rule element and the count</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: normal;
+			color: #000000;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;<span 
+ style="color: #ff00ff;"><!--kadov_tag{{</spaces>}}-->&quot;output.txt&quot;</span> 
+ &lt;&lt; <span style="color: #ff00ff;">&quot;Found company: &quot;</span> 
+ &lt;&lt; <span style="font-weight: bold; color: #ff0000;">N</span>(<span 
+ style="color: #ff00ff;">&quot;$text&quot;</span>) &lt;&lt; <span style="color: #ff00ff;">&quot;. 
+ Found &quot;</span> </p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 40px;"><!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->&lt;&lt; 
+ <span style="font-weight: bold; color: #ff0000;">G</span>(<span style="color: #ff00ff;">&quot;companyCount&quot;</span>) 
+ &lt;&lt; <span style="color: #ff00ff;">&quot; companies so far\n&quot;</span>;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: normal;
+			color: #000000;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}--></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 40px;
+			color: #008000;">#do a single tier reduce</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 40px;"><span style="color: #800080; font-weight: bold;">single</span>();</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">@RULES</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">_noun &lt;- _companies [<span style="font-weight: bold; color: #b298e2;">s</span>] 
+ <span style="color: #0000ff;">@@</span></p>
+
+<p>Notice that the &quot;if&quot; and &quot;else&quot; statements have 
+ been replaced by the single statement: &quot;++<span style="font-weight: bold; color: #ff0000;">G</span>(<span 
+ style="color: #ff00ff;">&quot;companyCount&quot;</span>). The&nbsp; <span 
+ style="font-weight: bold;"><font style="font-family: 'Courier New';"
+									face="Courier New">++</font></span> 
+ operator means 'increment the value of the variable by one'.&nbsp; To 
+ decrement something, you can use the decrement operator, --.&nbsp; When 
+ a variable is first used, its value is set to 0 by default.&nbsp;</p>
+
+<p>In addition to the increment and decrement operators, NLP++ also supports 
+ the standard arithmetic operators, add(+), substract(-), multiply(*), 
+ and divide(/), as well as the logical operators AND(&amp;&amp;), OR(||), 
+ and NOT(!). One of the text operators include the concatenation operator 
+ (+). You'll see how the + operator works in the next section. For a complete 
+ list of NLP++ operators see the <a HREF="../../NLP_PP_Stuff/Operators_and_Expressions.htm">Operators 
+ and Expressions</a> topic.</p>
+
+<p>&nbsp;</p>
+
+<h2><a NAME=Build_list></a>Build A List from the Input</h2>
+
+<p>Suppose we wanted to build a list of the companies that have been mentioned 
+ in our text file. To illustrate one way this can be done, we will make 
+ an output file which concatenates the names of the companies in a file 
+ and puts them together on a single line.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Now edit the <span style="font-weight: bold;">company2noun</span> 
+ file so that it looks like the following:</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;"><span style="font-family: monospace;
+											font-weight: bold;
+											color: #0000ff;">@CODE</span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;"><span style="font-weight: bold; color: #ff0000;">L</span>(<span 
+ style="color: #ff00ff;">&quot;hello&quot;</span>) = 0;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">@@CODE</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;"><span style="font-weight: bold; color: #0000ff;">@NODES</span> 
+ _ROOT</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">@POST</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			color: #008000;
+			margin-left: 0in;"><span style="font-family: monospace; color: #008000;"># 
+ increment count of companies</span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;">++<span style="font-weight: bold; color: #ff0000;">G</span>(<span 
+ style="color: #ff00ff;">&quot;companyCount&quot;</span>);</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;"><span style="color: #008000;"># print out 
+ the text from the node of the last</span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			color: #008000;
+			margin-left: 0in;"># matching rule element and the count</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;"><span style="color: #ff00ff;">&quot;output.txt&quot;</span> 
+ &lt;&lt; <span style="color: #ff00ff;">&quot;Found company: &quot;</span> 
+ &lt;&lt; <span style="font-weight: bold; color: #ff0000;">N</span>(<span 
+ style="color: #ff00ff;">&quot;$text&quot;</span>) &lt;&lt; <span style="color: #ff00ff;">&quot;. 
+ Found &quot;</span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->&lt;&lt; 
+ <span style="font-weight: bold; color: #ff0000;">G</span>(<span style="color: #ff00ff;">&quot;companyCount&quot;</span>) 
+ &lt;&lt; <span style="color: #ff00ff;">&quot; companies so far: &quot;</span>;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			color: #008000;
+			margin-left: 0in;"># concatenate the company names</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;"><span style="color: #800080; font-weight: bold;">if</span> 
+ (<span style="font-weight: bold; color: #ff0000;">G</span>(<span style="color: #ff00ff;">&quot;outputString&quot;</span>))</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;"><span style="font-weight: bold; color: #ff0000;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->G</span>(<span 
+ style="color: #ff00ff;">&quot;outputString&quot;</span>) = <span style="font-weight: bold; color: #ff0000;">G</span>(<span 
+ style="color: #ff00ff;">&quot;outputString&quot;</span>) + <span style="color: #ff00ff;">&quot;, 
+ &quot;</span> + <span style="font-weight: bold; color: #ff0000;">N</span>(<span 
+ style="color: #ff00ff;">&quot;$text&quot;</span>);</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;"><span style="font-weight: bold; color: #800080;">else</span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;"><span style="font-weight: bold; color: #ff0000;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->G</span>(<span 
+ style="color: #ff00ff;">&quot;outputString&quot;</span>) = <span style="font-weight: bold; color: #ff0000;">N</span>(<span 
+ style="color: #ff00ff;">&quot;$text&quot;</span>);</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;"><span style="color: #008000;"># print out 
+ the list of companies found so far</span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;"><span style="color: #ff00ff;">&quot;output.txt&quot;</span> 
+ &lt;&lt; <span style="font-weight: bold; color: #ff0000;">G</span>(<span 
+ style="color: #ff00ff;">&quot;outputString&quot;</span>) &lt;&lt; <span 
+ style="color: #ff00ff;">&quot;\n&quot;</span>;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;"><span style="color: #008000;"># do a single 
+ tier reduce</span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 0in;"><span style="color: #800080; font-weight: bold;">single</span>();</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;
+			margin-left: 0in;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">@RULES</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">_noun &lt;- _companies [<span style="font-weight: bold; color: #b298e2;">s</span>] 
+ <span style="color: #0000ff;">@@</span></p>
+
+<p>&nbsp;</p>
+
+<p>Here's some pseudo code that describes how to concatenate the company 
+ names:</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">If <span><span style="font-weight: normal;">outputString</span></span> has been declared, then<br>
+&nbsp;&nbsp;&nbsp; concatenate it with the text from the first node element<br>
+otherwise, (if it has not been declared)<br>
+&nbsp;&nbsp;&nbsp; initialize it with the text from the first node element</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Select <span style="font-weight: bold;">eg2.txt</span> 
+ and run the analyzer. <img src="../../Toolbar_buttons/run_button.gif"
+							style="width: 24px;
+									height: 26px;
+									border-width: 1px;
+									border-style: solid;
+									margin-top: 0px;
+									margin-bottom: 0px;
+									margin-left: 0px;
+									margin-right: 0px;"
+							width=24
+							height=26
+							border=1></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Open <span style="font-weight: bold;">output.txt</span> 
+ and look at the results. You should get the following:</p>
+
+<p><img src="Output%202.gif"
+		style="width: 556px;
+				height: 112px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=556
+		height=112
+		border=0></p>
+
+<p><font style="color: #000000;"
+		color=#000000>The above output shows the results of applying the 
+ NLP++ string catenation operator (&quot;+&quot;) to build lists</font><font 
+ style="color: #ff0000;"
+	color=#FF0000>.</font><br>&nbsp;</p>
+
+<h2><a NAME=t502></a>Variables of&nbsp; Suggested and Context Nodes</h2>
+
+<p>Now, let's take a look at our third variable <span style="font-weight: bold;"><font 
+ style="color: #ff0000;"
+	color=#FF0000>S</font></span>, the suggested variable. <span style="font-weight: bold;"><font 
+ style="color: #ff0000;"
+	color=#FF0000>S</font></span> denotes a variable associated with the 
+ left hand side of a rule (the element to the left of the &lt;-), the <span 
+ style="font-weight: bold;">suggested</span> node or the structural change. 
+ The suggested node is built if a reduce action such as <span style="font-weight: bold;">single</span> 
+ is<font style="color: #000000;"
+		color=#000000> executed, else it is not built. (If the suggested 
+ node is not built, then its </font><span style="font-weight: bold;"><font 
+ style="color: #ff0000;"
+	color=#FF0000>S</font></span><font style="color: #000000;"
+										color=#000000> variables are removed 
+ when the rule actions have finished executing.)</font></p>
+
+<p>Earlier in this tutorial we said that we would be extracting the 'head' 
+ noun of a noun phrase. The <span style="font-weight: bold;"><font style="color: #ff0000;"
+	color=#FF0000>S</font></span> variable is going to help us do that. 
+ But first, let's review what a head noun is.</p>
+
+<p>A <span style="font-style: italic;">head noun</span> is a technical 
+ linguistic term, like <span style="font-style: italic;">subject</span>, 
+ or <span style="font-style: italic;">indirect object</span>. <span style="font-style: italic;">Head 
+ noun</span> refers to the main, or 'head' word in a noun phrase.&nbsp; 
+ For example, in the phrase 'The man from Philadelphia', 'man' is the head 
+ noun, and determines a number of parameters associated with the noun phrase, 
+ such as whether it is single or plural. Whether a noun phrase is singular 
+ or plural is important for number agreement with the verb. For example, 
+ 'The <span style="x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">man</span> 
+ from Philadelphia <span style="x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">is</span>...' 
+ vs. 'The <span style="x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">men</span> 
+ from Philadelphia <span style="x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">are</span>...' 
+ Since the agreement between the head noun and the verb takes place over 
+ unpredictably long distances, some process is needed to extract the value.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <span style="font-weight: normal;">Double click on the 
+ </span><span style="font-weight: bold;">NP </span><span style="font-weight: normal;">pass 
+ in the </span><span style="font-weight: bold;">Ana Tab.</span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Modify the <span style="font-weight: bold;">NP</span> 
+ pass to look like this:</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			color: #0000ff;
+			font-weight: bold;"><span><span style="font-family: monospace;
+													color: #0000ff;
+													font-weight: bold;">@CODE</span></span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;"><span style="font-weight: bold; color: #ff0000;">L</span>(<span 
+ style="color: #ff00ff;">&quot;hello&quot;</span>) = 0;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">@@CODE</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">@NODES <span style="font-weight: normal; color: #000000;">_ROOT</span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@POST</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="color: #008000;"><!--kadov_tag{{</spaces>}}--># the variable named 
+ &quot;head&quot; in the suggested node</span></p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			color: #008000;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}--># 
+ gets the text of the LAST node matched by a rule below.</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="font-weight: bold; color: #ff0000;"><!--kadov_tag{{</spaces>}}-->S</span>(<span 
+ style="color: #ff00ff;">&quot;head&quot;</span>) = <span style="font-weight: bold; color: #ff0000;">N</span>(<span 
+ style="color: #ff00ff;">&quot;$text&quot;</span>);</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="color: #800080; font-weight: bold;"><!--kadov_tag{{</spaces>}}-->single</span>();</p>
+
+<p style="font-family: monospace;
+			color: #0000ff;
+			font-weight: bold;
+			margin-top: 0px;
+			margin-bottom: 0px;">@RULES</p>
+
+<p style="font-family: monospace;
+			margin-top: 0px;
+			margin-bottom: 0px;">_NP &lt;-</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 40px;">_det</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 40px;
+			color: #ff0000;
+			font-weight: bold;">_xWHITE</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 40px;">_adj</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 40px;
+			color: #ff0000;
+			font-weight: bold;">_xWHITE</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 40px;
+			font-family: monospace;">_adj</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 40px;
+			font-family: monospace;
+			font-weight: bold;
+			color: #ff0000;">_xWHITE</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 40px;
+			font-family: monospace;">_noun</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			margin-left: 40px;
+			font-family: monospace;"><span style="margin-top: 0pt;
+													margin-bottom: 0pt;
+													font-family: monospace;
+													color: #0000ff;
+													margin-left: 80px;">@@</span></p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">_NP &lt;- _det <span style="color: #ff0000; font-weight: bold;">_xWHITE</span> 
+ _adj <span style="color: #ff0000; font-weight: bold;">_xWHITE</span> _noun 
+ <span style="color: #0000ff;">@@</span></p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">_NP &lt;- _det <span style="color: #ff0000; font-weight: bold;">_xWHITE 
+ </span>_noun <span style="color: #0000ff;">@@</span></p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">_NP &lt;- _noun <span style="color: #0000ff;">@@</span></p>
+
+<p>Basically, what we are doing here is extracting the 'head' noun of a 
+ noun phrase and putting it in a variable named &quot;head&quot;. Since 
+ we are using the <font style="color: #ff0000;"
+						color=#FF0000><span style="font-weight: bold;">S</span></font> 
+ variable, 'head' is associated with the left hand side of the rule, the 
+ <span style="font-weight: bold;">_NP</span>.</p>
+
+<p>The POST Region applies to all four rules in the subsequent RULES Region. 
+ Since <font style="color: #ff0000;"
+			color=#FF0000><span style="font-weight: bold; font-family: monospace;">N</span></font><span 
+ style="font-family: monospace;">(<font style="color: #ff00ff; font-family: monospace;"
+										color=#FF00FF
+										face=monospace>&quot;$text&quot;</font>)</span> 
+ without a rule element number fetches the text of the node matching the 
+ LAST element of a rule, this same action can apply to all four rules, 
+ since they all happen to end with a <span style="font-weight: bold;">_noun</span> 
+ element.</p>
+
+<p>The net effect of the rules is to extract the text from the <span style="font-weight: bold;">_noun</span> 
+ element on the right hand side of each rule, and write the text to a variable 
+ named <span style="font-weight: bold;">head</span> which is associated 
+ with the suggested node, named <span style="font-weight: bold;">_NP<span 
+ style="font-weight: normal;">, on the left hand side of each rule</span></span>. 
+ Each parsed noun phrase will now have an associated head noun. A global 
+ variable wouldn't work in this instance, because there would only be one, 
+ and we need a separate variable 'head' for each noun phrase. &nbsp;<span 
+ style="font-weight: bold;"><font style="color: #ff0000;"
+									color=#FF0000>S</font></span> variables 
+ can also serve as &quot;local&quot; variables, since they are visible 
+ only in the context of the current suggested node of a rule. (Whereas 
+ global variables are available anywhere, anytime.)</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Select the <span style="font-weight: bold;">eg1.txt</span> 
+ file in the <span style="font-weight: bold;">Text Tab</span> and run the 
+ analyzer. (Select the <span style="font-weight: bold;">Generate Logs</span> 
+ button, so that you can see the intermediate parse tree information.)</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Open <span style="font-weight: bold;">eg1.txt</span> 
+ in the Workspace and right click on the text to view the resultant parse 
+ tree. Click the <span style="font-weight: bold;">Toggle Node Variables</span> 
+ button <img src="../../Toolbar_buttons/toggle_node_variables.gif"
+			style="width: 24px;
+					height: 26px;
+					border-style: none;
+					margin-top: 0px;
+					margin-bottom: 0px;
+					margin-left: 0px;
+					margin-right: 0px;"
+			width=24
+			height=26
+			border=0> to see the variable name (head) and the value assigned 
+ to the variable for each noun phrase.</p>
+
+<p><img src="tut5_SENT1parsetree0617.gif"
+		style="width: 442px;
+				height: 254px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=442
+		height=254
+		border=1></p>
+
+<p>Now is a good time to present some other labels you will see attached 
+ to nodes in parse tree displays. In addition to <span style="font-weight: bold;">fired</span> 
+ and <span style="font-weight: bold;">blt</span>, you may also see the 
+ labels <span style="font-weight: bold;">dsem</span>, <span style="font-weight: bold;">un</span> 
+ and <span style="font-weight: bold;">b</span> attached to nodes. These 
+ labels are summarized in the following table.</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				margin-top: 14pt;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 0px;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=100%
+		border=1>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 17%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=17%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Label</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 83%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=83%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Description</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 17%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=17%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">dsem</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 83%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=83%>
+<p style="margin-bottom: 0;">The node has some 'semantic' variables set.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 17%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=17%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">un</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 83%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=83%>
+<p style="margin-bottom: 0;">The node is unsealed. A sealed node does not 
+ expose its internal structure to the rule engine, so additional rules 
+ cannot apply and alter it. If a node is set to unsealed, its structure 
+ is available for taking part in later rules.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 17%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=17%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">b</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 83%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=83%>
+<p style="margin-bottom: 0;">&quot;b&quot; is for &quot;base&quot; and 
+ tells the rule matcher to stop looking down singlets in this node. A singlet 
+ is a node label that dominates (contains) another single node. For example, 
+ in <span style="font-style: normal; font-weight: bold;">(NP (N John))</span> 
+ there is only one node, labeled <span style="font-style: normal; font-weight: bold;">N</span>, 
+ having the text <span style="font-style: italic; font-weight: bold;">John</span>, 
+ contained in the node <span style="font-style: normal; font-weight: bold;">NP</span>. 
+ The <span style="font-weight: bold;">NP</span> node is a singlet, and 
+ so is the <span style="font-weight: bold;">N</span>. The <span style="font-weight: bold;">N</span> 
+ is available (exposed) to match the structure description (right hand 
+ side) of later rules. If the <span style="font-weight: bold;">NP</span> 
+ node's base attribute is set, the <span style="font-weight: bold;">N</span> 
+ will not be available to later rules.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 17%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=17%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">sem</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 83%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=83%>
+<p style="margin-bottom: 0;">Used for internal semantic data structures 
+ that the user doesn't have access to.</td></tr>
+</table>
+
+<p>Now that we are extracting the head nouns from noun phrases, let's extract 
+ the head noun of the direct object from the elements of the verb phrase 
+ and associate it with the verb phrase node.&nbsp;</p>
+
+<p><font style="color: #000000;"
+		color=#000000><img src="../GO.gif"
+							style="width: 19px;
+									height: 16px;
+									border-width: 1px;
+									border-style: solid;
+									margin-top: 0px;
+									margin-bottom: 0px;
+									margin-left: 0px;
+									margin-right: 0px;"
+							width=19
+							height=16
+							border=1> Double click the <span style="font-weight: bold;">VP</span> 
+ pass in the <span style="font-weight: bold;">Ana Tab</span> and edit it 
+ so that it looks like this:</font></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			color: #0000ff;
+			font-weight: bold;"><span><span><span style="font-family: monospace;
+															color: #0000ff;
+															font-weight: bold;">@CODE</span></span></span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;"><span style="font-weight: bold; color: #ff0000;">L</span>(<span 
+ style="color: #ff00ff;">&quot;hello&quot;</span>) = 0;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">@@CODE</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">@NODES <span style="font-weight: normal; color: #000000;">_ROOT</span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@POST</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="font-weight: bold; color: #ff0000;"><!--kadov_tag{{</spaces>}}-->S</span>(<span 
+ style="color: #ff00ff;">&quot;directObject&quot;</span>) = <span style="color: #ff0000; font-weight: bold;">N</span>(<span 
+ style="color: #ff00ff;">&quot;head&quot;</span>,5);</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="font-weight: bold; color: #ff0000;"><!--kadov_tag{{</spaces>}}-->S</span>(<span 
+ style="color: #ff00ff;">&quot;indirectObject&quot;</span>) = <span style="color: #ff0000; font-weight: bold;">N</span>(<span 
+ style="color: #ff00ff;">&quot;head&quot;</span>,3);</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="color: #800080; font-weight: bold;"><!--kadov_tag{{</spaces>}}-->single</span>();</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			color: #0000ff;
+			font-weight: bold;">@RULES</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">_VP &lt;- _verb <span style="color: #ff0000; font-weight: bold;">_xWHITE</span> 
+ _NP <span style="font-weight: bold; color: #ff0000;">_xWHITE</span> _NP 
+ <span style="color: #0000ff;">@@</span></p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@POST</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="font-weight: bold; color: #ff0000;"><!--kadov_tag{{</spaces>}}-->S</span>(<span 
+ style="color: #ff00ff;">&quot;directObject&quot;</span>) = <span style="font-weight: bold; color: #ff0000;">N</span>(<span 
+ style="color: #ff00ff;">&quot;head&quot;</span>,3);</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="color: #800080; font-weight: bold;"><!--kadov_tag{{</spaces>}}-->single</span>();</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@RULES</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">_VP &lt;- _verb <span style="font-weight: bold; color: #ff0000;">_xWHITE</span> 
+ _NP <span style="font-weight: bold; color: #ff0000;">_xWHITE</span> _PP 
+ <span style="color: #0000ff;">@@</span></p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@POST</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="font-weight: bold; color: #ff0000;"><!--kadov_tag{{</spaces>}}-->S</span>(<span 
+ style="color: #ff00ff;">&quot;directObject&quot;</span>) = <span style="font-weight: bold; color: #ff0000;">N</span>(<span 
+ style="color: #ff00ff;">&quot;head&quot;</span>,5);</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="color: #800080; font-weight: bold;"><!--kadov_tag{{</spaces>}}-->single</span>();</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@RULES</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">_VP &lt;- _verb <span style="color: #ff0000; font-weight: bold;">_xWHITE</span> 
+ _PP <span style="color: #ff0000; font-weight: bold;">_xWHITE</span> _NP 
+ <span style="color: #0000ff;">@@</span></p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@POST</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="font-weight: bold; color: #ff0000;"><!--kadov_tag{{</spaces>}}-->S</span>(<span 
+ style="color: #ff00ff;">&quot;directObject&quot;</span>) = <span style="color: #ff0000; font-weight: bold;">N</span>(<span 
+ style="color: #ff00ff;">&quot;head&quot;</span>,3);</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="font-weight: bold; color: #800080;"><!--kadov_tag{{</spaces>}}-->single</span>();</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@RULES</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">_VP &lt;- _verb <span style="color: #ff0000;">_</span><span 
+ style="color: #ff0000; font-weight: bold;">xWHITE</span> _NP <span style="color: #0000ff;">@@</span></p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@RULES</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">_VP &lt;- _verb <span style="color: #ff0000; font-weight: bold;">_xWHITE</span> 
+ _PP <span style="color: #0000ff;">@@</span></p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">_VP &lt;- _verb <span style="color: #0000ff;">@@</span></p>
+
+<p>&nbsp;</p>
+
+<p>The line</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><font style="color: #ff0000;"
+											color=#FF0000>S</font>(<font style="color: #CC33CC;"
+	color=#CC33CC>&quot;directObject&quot;</font>) = <font style="color: #ff0000;"
+															color=#FF0000>N</font>(<font style="color: #CC33CC;"
+	color=#CC33CC>&quot;head&quot;</font>, 5);</p>
+
+<p>handles sentences like &quot;John gave Mary the book&quot; where &quot;the 
+ book&quot; is the direct object, i.e. the 5th element, <span style="font-weight: bold;">_NP</span>. 
+ The rule takes the value of a variable named <font style="color: #CC33CC; font-weight: bold;"
+													color=#CC33CC>head</font> 
+ associated with the 5th element (an NP) of the right hand side of the 
+ following syntactic rule, and copies it to a variable named <font style="color: #CC33CC; font-weight: bold;"
+	color=#CC33CC>directObject</font> associated with the suggested node 
+ on the left hand side of the syntactic rule (the VP).&nbsp; The value 
+ of the variable <span style="font-weight: bold;">head</span> was assigned 
+ in the preceding NP pass.</p>
+
+<p>The multiple <font style="color: #0000ff;"
+						color=#0000FF>POST</font> and <font style="color: #0000ff;"
+															color=#0000FF>RULES</font> 
+ sections are matched to extract the correct arguments (5, 3, 5, 3), i.e. 
+ the element corresponding to <span style="font-weight: bold;">_NP</span> 
+ in each rule.&nbsp; The last two rules do not have direct objects, so 
+ the value of the variable <font style="color: #CC66CC; font-weight: bold;"
+								color=#CC66CC>directObject</font> is left 
+ alone (i.e., it will default to zero). Note that the lone <font style="color: #0000ff;"
+	color=#0000FF>@RULES</font> specifier resets the subsequent rules to 
+ have the default <span style="color: #0000ff;">POST</span> Action, i.e. 
+ the implicit <span style="font-weight: bold;">single</span> reduce action.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <font style="color: #000000;"
+						color=#000000>Run the analyzer on the <span style="font-weight: bold;">eg1.txt</span> 
+ and view the resultant parse tree.</font></p>
+
+<p>&nbsp;</p>
+
+<h2><a NAME=Gramm_roles></a>Find Grammatical Roles: X Variables</h2>
+
+<p>Having extracted head nouns and figured out which NPs are direct objects, 
+ we're ready to complete the analysis of major syntactic categories. Also, 
+ we're ready to introduce the last of the five special variable types in 
+ NLP++, the conte<span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">x</span>t, 
+ or <font style="color: #ff0000;"
+			color=#FF0000><span style="font-weight: bold;">X</span></font> 
+ variables. To do this, we need to add another pass to our analyzer sequence.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Click on the <span style="font-weight: bold;">Sentence</span> 
+ pass in the <span style="font-weight: bold;">Ana Tab</span>. Right click 
+ and select <span style="font-weight: bold;">Add &gt; New Pass</span><span 
+ style="font-weight: normal;">.</span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <span style="font-weight: normal;">Name the new pass,</span><span 
+ style="font-weight: bold;"> </span><font style="color: #000000;"
+											color=#000000><span style="font-weight: bold;">roles</span></font><span 
+ style="font-weight: normal;">.</span></p>
+
+<p><span style="font-weight: normal;">&nbsp;</span><img src="../GO.gif"
+														style="width: 19px;
+	height: 16px;
+	border-style: none;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 0px;"
+														width=19
+														height=16
+														border=0> <span 
+ style="font-weight: normal;">Leave </span><span style="font-weight: bold;">Type</span><span 
+ style="font-weight: normal;"> as </span><span style="font-weight: bold;">Pattern</span><span 
+ style="font-weight: normal;"> and click </span><span style="font-weight: bold;">OK</span><span 
+ style="font-weight: normal;">.</span></p>
+
+<p><span style="font-weight: normal;">The purpose of the </span><span style="font-weight: bold;">roles</span><span 
+ style="font-weight: normal;"> pass is to extract the subject and object 
+ of a sentence.</span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <span style="font-weight: normal;">Double-click the </span><span 
+ style="font-weight: bold;">roles </span><span style="font-weight: normal;">pass 
+ and edit so that it looks like this:</span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			color: #0000ff;
+			font-weight: bold;"><span><span style="font-family: monospace;
+													color: #0000ff;
+													font-weight: bold;">@CODE</span></span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;"><span style="font-weight: bold; color: #ff0000;">L</span>(<span 
+ style="color: #ff00ff;">&quot;hello&quot;</span>) = 0;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">@@CODE</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><span style="font-weight: bold; color: #0000ff;">@PATH</span> 
+ _ROOT _S</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@POST</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="color: #ff0000; font-weight: bold;"><!--kadov_tag{{</spaces>}}-->X</span>(<span 
+ style="color: #ff00ff;">&quot;subject&quot;</span>,2) = <span style="font-weight: bold; color: #ff0000;">N</span>(<span 
+ style="color: #ff00ff;">&quot;head&quot;</span>);</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="font-weight: bold; color: #800080;"><!--kadov_tag{{</spaces>}}-->noop</span>();</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@RULES</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><span style="color: #ff0000; font-weight: bold;">_xNIL</span> 
+ &lt;- _NP <span style="color: #0000ff;">@@</span></p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@POST</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="font-weight: bold; color: #ff0000;"><!--kadov_tag{{</spaces>}}-->X</span>(<span 
+ style="color: #ff00ff;">&quot;object&quot;</span>,2) = <span style="font-weight: bold; color: #ff0000;">N</span>(<span 
+ style="color: #ff00ff;">&quot;directObject&quot;</span>);</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="color: #008000;"><!--kadov_tag{{</spaces>}}--># noop();</span></p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			font-weight: bold;
+			color: #0000ff;">@RULES</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><span style="font-weight: bold; color: #ff0000;">_xNIL</span> 
+ &lt;- _VP <span style="color: #0000ff;">@@</span></p>
+
+<p>The structure of this pass file is a little different than the other 
+ pass files we have been editing in this tutorial. Let's take a closer 
+ look at each section of the file.</p>
+
+<h2><a NAME=path></a>@PATH Selector</h2>
+
+<p>The line</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><span style="font-weight: bold;"><font style="color: #3366FF;"
+	color=#3366FF>@PATH </font>_ROOT _S</span> </p>
+
+<p>is different from what we've seen before. Earlier, we only made references 
+ to the SELECT Region</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><span style="font-weight: bold;"><font style="color: #3366FF;"
+	color=#3366FF>@NODES</font> _ROOT</span>&nbsp; </p>
+
+<p>The <font style="color: #0000ff;"
+			color=#0000FF><span style="font-family: monospace;">@PATH</font> 
+ </span><span style="font-weight: bold; font-family: monospace;">_ROOT 
+ _S</span> syntax instructs the rule matching engine to look only at a 
+ path from the root of the parse tree, <span style="font-weight: bold;">_ROOT</span>, 
+ down to its direct child <span style="font-weight: bold;">_S</span> when 
+ trying to match the rules of the current pass.&nbsp; This means that not 
+ any old NP will match, but only NPs that are dominated by <span style="font-weight: bold;">_S</span>, 
+ which in turn are dominated by <span style="font-weight: bold;">_ROOT</span>.&nbsp; 
+ Similarly, not any old VP will match, but only those dominated by <span 
+ style="font-weight: bold;">_S</span> dominated by _<span style="font-weight: bold;">ROOT</span>.</p>
+
+<p><span style="font-weight: bold;"><font style="color: #ff0000;"
+											color=#FF0000>X</font></span>(variable-name,position) 
+ is the prototype of the fourth variable type. The line</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><span style="font-weight: bold;"><font style="color: #ff0000;"
+	color=#FF0000>X</font>(<font style="color: #ff00ff;"
+								color=#FF00FF>&quot;subject&quot;</font>,2) = <font style="color: #ff0000;"
+	color=#FF0000>N</font>(<font style="color: #ff00ff;"
+								color=#FF00FF>&quot;head&quot;</font>);</span></p>
+
+<p>assigns to the second context node in the <span><font style="color: #3366FF;"
+														color=#3366FF><span 
+ style="font-weight: normal;">@PATH</span></font></span> list, that is, 
+ <span style="font-weight: bold;">_S</span>, a variable named <font style="color: #CC33CC;"
+	color=#CC33CC><span style="font-weight: bold;">subject</span></font>. 
+ The rule engine copies into that variable the value of the variable named 
+ <span style="font-weight: bold;"><font style="color: #CC33CC;"
+										color=#CC33CC>head</font></span> 
+ which is associated with the (default) first element of the syntactic 
+ rule (i.e.,<span style="font-weight: bold;"> _NP</span>).&nbsp;</p>
+
+<p>The line <font style="color: #CC33CC;"
+					color=#CC33CC><span style="font-weight: bold; font-family: monospace;">noop()</span></font>;<span 
+ style="font-weight: bold;"> </span>means 'no operation', and means that 
+ no reduction should take place in the syntactic rule.&nbsp; That is, do 
+ not place an <font style="color: #ff0000;"
+					color=#FF0000><span style="font-weight: bold;">_xNIL</span></font> 
+ on top of the <span style="font-weight: bold;">_NP</span>.&nbsp; This 
+ is a method for finding a node to match without modifying the parse tree.&nbsp;</p>
+
+<p>The second rule set matching against a <span style="font-weight: bold;">_VP</span> 
+ extracts the value of <font style="color: #CC33CC;"
+							color=#CC33CC><span style="font-weight: bold;">directObject</span></font> 
+ associated with the <span style="font-weight: bold;">_VP</span> and copies 
+ it into a variable named <font style="color: #CC33CC;"
+								color=#CC33CC><span style="font-weight: bold;">object</span></font> 
+ associated with the context node <span style="font-weight: bold;">_S</span>. 
+ Note that we don't need to explicitly add a <font style="color: #CC33CC;"
+													color=#CC33CC><span 
+ style="font-weight: bold; font-family: monospace;">noop</span></font> 
+ action. Once a POST Region is non-empty, the default <span style="font-weight: bold;">single</span> 
+ action is displaced. The commented <font style="color: #CC33CC;"
+											color=#CC33CC><span style="font-weight: bold; font-family: monospace;">noop</span></font> 
+ action reminds us that there is no implicit reduce action in a non-empty 
+ POST Region.</p>
+
+<p>&nbsp;</p>
+
+<h2><a NAME=print_results></a>Print Out the Results</h2>
+
+<p>Finally, let's create another pass file to print out the subject and 
+ object roles for each of the sentences in <span style="font-weight: normal;">eg1.txt.</span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> In the <span style="font-weight: bold;">Ana Tab</span>, 
+ highlight the <span style="font-weight: bold;">roles</span> <span style="font-weight: normal;">pass.</span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Right click and select <span style="font-weight: bold;">Add 
+ &gt; New Pass</span><span style="font-weight: normal;">.</span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <span style="font-weight: normal;">Name the new pass 
+ </span><span style="font-weight: bold;">printRoles</span><span style="font-weight: normal;">. 
+ Leave </span><span style="font-weight: bold;">Type</span><span style="font-weight: normal;"> 
+ as </span><span style="font-weight: bold;">Pattern</span><span style="font-weight: normal;"> 
+ and click </span><span style="font-weight: bold;">OK</span><span style="font-weight: normal;">.</span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <span style="font-weight: normal;">Double-click the </span><span 
+ style="font-weight: bold;">printRoles </span><span style="font-weight: normal;">pass 
+ and edit so that it looks like this:</span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			color: #0000ff;
+			font-weight: bold;"><span><span style="font-family: monospace;
+													color: #0000ff;
+													font-weight: bold;">@CODE</span></span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;"><span style="font-weight: bold; color: #ff0000;">L</span>(<span 
+ style="color: #ff00ff;">&quot;hello&quot;</span>) = 0;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">@@CODE</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><span style="font-weight: bold; color: #0000ff;">@NODES</span> 
+ _ROOT</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			color: #0000ff;
+			font-weight: bold;">@POST</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="color: #ff00ff;"><!--kadov_tag{{</spaces>}}-->&quot;output.txt&quot;</span> 
+ &lt;&lt; <span style="color: #ff00ff;">&quot;sentence: &quot;</span> &lt;&lt; 
+ <span style="color: #800080; font-weight: bold;">phrasetext</span>() &lt;&lt; 
+ <span style="color: #ff00ff;">&quot;\n&quot;</span>;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="color: #800080; font-weight: bold;"><!--kadov_tag{{</spaces>}}-->if</span> 
+ (<span style="color: #ff0000; font-weight: bold;">N</span>(<span style="color: #ff00ff;">&quot;subject&quot;</span>))</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;<span 
+ style="color: #ff00ff;"><!--kadov_tag{{</spaces>}}-->&quot;output.txt&quot;</span> 
+ &lt;&lt; <span style="color: #ff00ff;">&quot;subject: &quot;</span> &lt;&lt; 
+ <span style="font-weight: bold; color: #ff0000;">N</span>(<span style="color: #ff00ff;">&quot;subject&quot;</span>) 
+ &lt;&lt; <span style="color: #ff00ff;">&quot;\n&quot;</span>;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="color: #800080; font-weight: bold;"><!--kadov_tag{{</spaces>}}-->if</span> 
+ (<span style="color: #ff0000; font-weight: bold;">N</span>(<span style="color: #ff00ff;">&quot;object&quot;</span>))</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;<span 
+ style="color: #ff00ff;"><!--kadov_tag{{</spaces>}}-->&quot;output.txt&quot;</span> 
+ &lt;&lt; <span style="color: #ff00ff;">&quot;object: &quot;</span> &lt;&lt; 
+ <span style="font-weight: bold; color: #ff0000;">N</span>(<span style="color: #ff00ff;">&quot;object&quot;</span>) 
+ &lt;&lt; <span style="color: #ff00ff;">&quot;\n&quot;</span>;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<span 
+ style="color: #ff00ff;"><!--kadov_tag{{</spaces>}}-->&quot;output.txt&quot;</span> 
+ &lt;&lt; <span style="color: #ff00ff;">&quot;\n&quot;</span>;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;
+			color: #0000ff;
+			font-weight: bold;">@RULES</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;"><span style="font-weight: bold; color: #ff0000;">_xNIL</span> 
+ &lt;- _S <span style="color: #0000ff;">@@</span></p>
+
+<p>This pass looks for a node labeled <span style="font-weight: bold;">_S</span> 
+ dominated by <span style="font-weight: bold;">_ROOT</span>. If it finds 
+ one, it prints out the text of all the nodes that matched the right hand 
+ side, using the predefined function <span style="color: #800080;
+													font-weight: bold;
+													font-family: monospace;">phrasetext</span>. 
+ Then it prints the value of <span style="font-weight: bold;">_S</span>'s 
+ variables named <span style="color: #ff00ff; font-weight: bold;">subject</span><span 
+ style="color: #ff00ff;"> </span>and <span style="font-weight: bold; color: #ff00ff;">object</span>. 
+ Finally, it terminates the output for each sentence with a blank line.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <span><span style="font-weight: normal;">Run the analyzer</span></span><span 
+ style="font-weight: normal;"> </span>on <span><span style="font-weight: bold;">eg1.txt</span></span>.&nbsp;</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Open the <span style="font-weight: bold;">output.txt</span> 
+ file located under eg1.txt. <span style="font-weight: bold;">Output.txt</span> 
+ should look like this:</p>
+
+<p><img src="eg1%20output.gif"
+		style="width: 494px;
+				height: 210px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=494
+		height=210
+		border=1></p>
+
+<p>If your results are different, go back to the last three pass files 
+ we edited, <span style="font-weight: bold;">printRoles </span>(pass 17), 
+ <span style="font-weight: bold;">roles </span>(pass 16)<span style="font-weight: bold;"> 
+ </span>and <span style="font-weight: bold;">VP </span>(pass 14)<span style="font-weight: bold;"> 
+ </span>to make sure the code is the same.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Now open the <span style="font-weight: bold;">examples</span> 
+ folder and run the analyzer on <span style="font-weight: bold;">eg2.txt</span>.</p>
+
+<p>The results in the <span style="font-weight: normal;">output.txt</span> 
+ file should look like this:</p>
+
+<p>&nbsp;<br>
+&nbsp;<img src="eg2%20output.gif"
+			style="width: 572px;
+					height: 210px;
+					border-width: 1px;
+					border-style: solid;
+					margin-top: 0px;
+					margin-bottom: 0px;
+					margin-left: 0px;
+					margin-right: 0px;"
+			width=572
+			height=210
+			border=1></p>
+
+<p>Notice that the information generated from the <span style="font-weight: bold;">printRoles</span> 
+ pass has been appended to the output.txt file.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Close the open files in the Workspace.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Exit the analyzer (<span style="font-weight: bold;">File 
+ &gt; Exit</span>.) and save whatever is asked to be saved.</p>
+
+<h2>Summary</h2>
+
+<p>In this tutorial, we introduced five types of NLP++ variables:</p>
+
+<ul>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;"><span style="x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">g</span>lobal 
+ (<span style="font-weight: bold;"><font style="color: #ff0000;"
+										color=#FF0000>G</font></span>) 
+ variables;</p></li>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;">variables attached to 
+ rule element <span style="x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">n</span>odes 
+ (<span style="font-weight: bold;"><font style="color: #ff0000;"
+										color=#FF0000>N</font></span>) 
+ associated with the structural description (right hand side) of a rule;</p></li>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;">variables associated 
+ with conte<span style="x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">x</span>t 
+ (<font style="color: #ff0000;"
+		color=#FF0000><span style="font-weight: bold;">X</span></font>), 
+ or the dominating nodes of the structural description of a rule;</p></li>
+	
+	<li class=kadov-p
+		class=kadov-p>variables associated with the <span style="x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">s</span>uggested 
+ (<font style="color: #ff0000;"
+		color=#FF0000><span style="font-weight: bold;">S</span></font>), 
+ or structural change (left hand side) of rule.</li>
+	
+	<li class=kadov-p
+		class=kadov-p><span style="color: #ff0000; font-weight: bold;">L</span>, 
+ or variables local to a scope or region</li>
+</ul>
+
+<p>One way to think of these four types of variables is to remember that 
+ a global variable can be anywhere, but with only one instance. For the 
+ other three, imagine an abstract NLP++ pass:</p>
+
+<p style="margin-left: 40px; font-family: monospace;"><span style="color: #0000ff;">@NODES</span> 
+ <span style="color: #ff0000; font-weight: bold;">X</span></p>
+
+<p style="margin-left: 40px;
+			font-family: monospace;
+			color: #0000ff;">@RULES</p>
+
+<p style="margin-left: 40px; font-family: monospace;"><span style="color: #ff0000; font-weight: bold;">S</span> 
+ &lt;- <span style="color: #ff0000; font-weight: bold;">N ...</span> <span 
+ style="color: #0000ff;">@@</span></p>
+
+<p>Variables of type <span style="font-weight: bold; color: #ff0000;">X</span> 
+ are associated with the context of a rule, variables of <span style="font-weight: bold; color: #ff0000;">N</span> 
+ are on the right side and variables of type <span style="font-weight: bold; color: #ff0000;">S</span> 
+ on the left.</p>
+
+<p>Operations on the variables introduced were:</p>
+
+<ul>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;">printing;</p></li>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;">arithmetic; and</p></li>
+	
+	<li class=kadov-p
+		class=kadov-p>string manipulation.</li>
+</ul>
+
+<p style="margin-bottom: 0;">We also introduced a new type of context selector, 
+ the <font style="color: #3366FF;"
+			color=#3366FF>PATH</font> selector, which specifies a more 
+ constrained context for the application of rules than the <font style="color: #3366FF;"
+	color=#3366FF>NODES</font> selector introduced earlier.</p>
+
+<p style="margin-bottom: 0;">&nbsp;</p>
+
+</body>
+
+</html>

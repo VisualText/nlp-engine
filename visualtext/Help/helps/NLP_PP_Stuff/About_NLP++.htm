@@ -1,0 +1,130 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>About NLP++</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=date content="07 19, 2001 12:02:47 PM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=898>
+<meta name=layout-width content=775>
+
+
+<!--(Links)=========================================================-->
+
+<link REL="StyleSheet" HREF="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>About NLP++</h1>
+
+<p>NLP++™ is a general purpose programming language that integrates extensions 
+ for natural language processing (NLP). In addition to a C++ -like code 
+ syntax, NLP++ embodies a syntax for pass files, contexts, rules, and actions. 
+ Similar to LISP, NLP++ is a loosely-typed language. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->In 
+ addition to integer, string, and array data types, NLP++ includes parse 
+ tree and knowledge base data types. In this way, the user can naturally 
+ address the rules, parse trees, and the knowledge base, while using C++ 
+ -like code to embed heuristics. Integration with the parse tree makes 
+ it possible to manipulate nodes and to manage semantic information within 
+ them. Integration with the knowledge base makes it possible to dynamically 
+ create and manage complex data structures. Integration with rules makes 
+ it possible to control every aspect of rule matching, to exploit context, 
+ and to elaborate the actions that follow rule matching.</p>
+
+<p>NLP++ supports Concept Oriented Programming (COP), enabling you to focus 
+ on heuristics, the domain, and the task, rather than the underlying data 
+ structures. Because VisualText supports an interpreted environment, you 
+ can modify and test without having to wait for code to compile, which 
+ accelerates the development of text analyzers.</p>
+
+<p>NLP++ is an evolving language but is already rich and robust.</p>
+
+<h2><a name=text_analyzers_and_NLP++></a>Text Analyzers and NLP++</h2>
+
+<p>As implemented in VisualText, a text analyzer consists of:</p>
+
+<ul>
+	
+	<li style="margin-left: 40px;"
+		class=kadov-p><p style="margin-bottom: 0;">the analyzer sequence, 
+ which specifies the order of passes, their types, and their associated 
+ pass files</p></li>
+	
+	<li style="margin-left: 40px;"
+		class=kadov-p><p style="margin-bottom: 0;">the pass files themselves</p></li>
+	
+	<li style="margin-left: 40px;"
+		class=kadov-p><p style="margin-bottom: 0;">the associated knowledge 
+ base</p></li>
+	
+	<li style="margin-left: 40px;"
+		class=kadov-p><p style="margin-bottom: 0;">miscellaneous code and 
+ data</p></li>
+</ul>
+
+<p>NLP++ code and rules occur entirely within pass files. Everything contained 
+ within a pass file is considered to be part of the NLP++ language, including 
+ region markers (e.g., @RULES and @@RULES), specialized regions, code, 
+ actions, rules, and comments.</p>
+
+<h2><a name=about_NLP++_syntax></a>NLP++ Syntax</h2>
+
+<p style="margin-bottom: 0;">NLP++ combines several types of syntax: </p>
+
+<ul style="list-style: disc;"
+	type=disc>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;">Pass file markers such 
+ as @RULES</p></li>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;">Code syntax</p></li>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;">Rule syntax</p></li>
+</ul>
+
+<p style="margin-bottom: 0;">One region of pass files, the PRE Region also 
+ has an element range construct, e.g., &quot;&lt;1, 3&gt;&quot; that is 
+ not found elsewhere. We strive to keep the syntax sets as integrated as 
+ possible. For example, double quoted &quot;abc&quot; is a string in every 
+ context, and C/C++ conventions for backslashed characters are used everywhere. 
+ # is used for comments throughout, and a token starting with an underscore 
+ (e.g., &quot;_noun&quot;) denotes a nonliteral everywhere. </p>
+
+<h2>See Also</h2>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Code_Syntax.htm">Code 
+ Syntax</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Rule_syntax.htm">Rule 
+ Syntax</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="About_Pass_Files.htm">Pass 
+ File Layout</a></p>
+
+<p style="margin-bottom: 0;">&nbsp;</p>
+
+</body>
+
+</html>

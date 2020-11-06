@@ -1,0 +1,198 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>nextval</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1822>
+<meta name=layout-width content=916>
+<meta name=date content="01 4, 2002 1:15:15 PM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF=default.css>
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>nextval</h1>
+
+<h2>Purpose</h2>
+
+<p>Fetch the next value in a list of values.</p>
+
+<h2>Syntax</h2>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">returnedValue = nextval(aValue);</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">returnedValue - type: val<br>
+aValue - type: val</p>
+
+<h2>Returns</h2>
+
+<p>A value.</p>
+
+<h2>Remarks</h2>
+
+<p>Concepts can have zero or more attributes. Each attribute can have zero 
+ or more values. This function takes a value as argument and returns the 
+ next value associated with the input argument value. If there are no next 
+ values of the argument value (i.e., no younger siblings), the function 
+ returns NULL.</p>
+
+<h2>Example</h2>
+
+<p>To demonstrate nextattr, we first need to build a KB:</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;"># if you find apples in the concept hierarchy<br>
+if (findconcept(findroot(),&quot;apple&quot;)) <br>
+# kill them (to start fresh) <br>
+rmconcept(findconcept(findroot(),&quot;apple&quot;));<br>
+# Create the apple concept<br>
+G(&quot;apple&quot;) = makeconcept(findroot(),&quot;apple&quot;);<br>
+# Apples have color<br>
+addstrval(G(&quot;apple&quot;),&quot;have&quot;,&quot;color&quot;);<br>
+# Apple's color is red<br>
+addstrval(G(&quot;apple&quot;),&quot;color&quot;,&quot;red&quot;);<br>
+# Apple's weigh 3 something or others<br>
+addnumval(G(&quot;apple&quot;),&quot;weight&quot;,3);<br>
+# Apple's color is also green and yellow<br>
+addstrval(G(&quot;apple&quot;),&quot;color&quot;,&quot;green and yellow&quot;);</p>
+
+<p>The code creates a KB like this:</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><img src="Image%20Files/attrvals.gif"
+											style="width: 314px;
+													height: 193px;
+													border-width: 1px;
+													border-style: solid;
+													margin-top: 0px;
+													margin-bottom: 0px;
+													margin-left: 0px;
+													margin-right: 0px;"
+											width=314
+											height=193
+											border=1></p>
+
+<p>(To launch Attribute Editor, select the concept in the KB Editor, right 
+ mouse click and select Attributes from the popup menu).</p>
+
+<p>The following code accesses the KB's attributes and values:</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><span style="font-size: 10pt;">&quot;output.txt&quot; &lt;&lt; &quot;Apple's attrs 'n vals:\n&quot;;<br>
+# Find apple's attribute's<br>
+G(&quot;attrList&quot;) = findattrs(G(&quot;apple&quot;));<br>
+# cycle through all of apple's attributes<br>
+G(&quot;attr counter&quot;) = 1;<br>
+while(G(&quot;attrList&quot;)){ <br>
+&quot;output.txt&quot; &lt;&lt; G(&quot;attr counter&quot;) &lt;&lt; &quot;)\t&quot; &lt;&lt; <br>
+attrname(G(&quot;attrList&quot;)) &lt;&lt; &quot;\n&quot;;<br>
+# get the attribute's list of values<br>
+G(&quot;valList&quot;) = attrvals(G(&quot;attrList&quot;));<br>
+# cycle through all the values<br>
+G(&quot;val counter&quot;) = 1;<br>
+while(G(&quot;valList&quot;)) {<br>
+&quot;output.txt&quot; &lt;&lt; &quot;\t&quot; &lt;&lt; G(&quot;val counter&quot;) &lt;&lt; &quot;)\t&quot; &lt;&lt; <br>
+getsval(G(&quot;valList&quot;)) &lt;&lt; &quot;\n&quot;;<br>
+G(&quot;valList&quot;) = </span><span style="font-weight: bold;
+												x-text-underline: normal;
+												font-size: 10pt;
+												/*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">nextval</span><span style="font-size: 10pt;">(G(&quot;valList&quot;));<br>
+G(&quot;val counter&quot;)++;<br>
+}<br>
+# get the next attribute<br>
+G(&quot;attrList&quot;) = nextattr(G(&quot;attrList&quot;));<br>
+G(&quot;attr counter&quot;)++;</span> <br>
+}</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: Arial, sans-serif;
+			font-size: 10pt;">The output looks like this:</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><img src="Image%20Files/attrsnvalsoutput.gif"
+											style="width: 241px;
+													height: 193px;
+													border-width: 1px;
+													border-style: solid;
+													margin-top: 0px;
+													margin-bottom: 0px;
+													margin-left: 0px;
+													margin-right: 0px;"
+											width=241
+											height=193
+											border=1></p>
+
+<h2>See Also</h2>
+
+<p><a href="findvals.htm">findvals</a>, <a href="attrvals.htm">attrvals</a>, 
+ <a href="Table_of_Knowledge_Base_Functions.htm">Knowledge Base Functions</a></p>
+
+<p>&nbsp;</p>
+
+<p style="margin-bottom: 0;">&nbsp; </p>
+
+</body>
+
+</html>
