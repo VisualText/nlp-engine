@@ -1,0 +1,16 @@
+# 
+tokenize	nil	# Gen:   Convert input to token list.
+pat	XML_DTD_BaseElements	# comment
+pat	XML_DTD_Literals	# comment
+pat	XML_DTD_DocType	# comment
+pat	XML_DTD_NotationDeclarations	# comment
+pat	XML_DTD_ExternalID	# comment
+pat	XML_DTD_EntityDefs	# comment
+pat	XML_DTD_Attdefs	# comment
+pat	XML_DTD_Attdefs2	# comment
+pat	XML_DTD_Attdefs3	# comment
+pat	XML_DTD_DeclarationElements	# comment
+pat	XML_DTD_PcData	# comment
+pat	XML_DTD_DeclarationConstructors	# comment
+rec	XML_DTD_DeclarationConstructors2	# comment
+pat	XML_DTD_DeclSep	# comment

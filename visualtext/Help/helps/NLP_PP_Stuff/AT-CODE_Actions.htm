@@ -1,0 +1,468 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>@CODE Actions</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1863>
+<meta name=layout-width content=359>
+<meta name=date content="07 25, 2001 9:18:46 AM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL="StyleSheet" HREF="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>CODE Action</h1>
+
+<p style="margin-bottom: 0;">The CODE Actions in this section predate the 
+ NLP++ language, but are retained because they are still useful. In subsequent 
+ releases, these actions may be modified. </p>
+
+<h2>Types of CODE Actions</h2>
+
+<p>CODE Actions are divided into two groups:</p>
+
+<ul style="list-style: disc;"
+	type=disc>
+	
+	<li class=kadov-p><p style="margin-top: 0pt; margin-bottom: 0pt;">Variable 
+ Actions</p></li>
+	
+	<li class=kadov-p><p style="margin-top: 0pt; margin-bottom: 0pt;">Print 
+ Actions</p></li>
+</ul>
+
+<h2><a name=tables_of_code></a>Tables of CODE Actions</h2>
+
+<p>Actions available in the CODE Region are provided in the tables below. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For examples 
+ on using these actions, refer to the individual action topics in the @CODE 
+ Actions section.</p>
+
+<h2>Variable Actions</h2>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-spacing: 1px;
+				margin-top: 14pt;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">ACTION(ARG1,ARG2...)</span></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">DESCRIPTION</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">varstrs(varname)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Create an empty multi-string-valued <span 
+ style="font-weight: bold;">global</span> variable with name <span style="font-weight: bold;">varname</span>. 
+ The POST Action <span style="font-weight: bold;">addstrs()</span> adds 
+ values to this type of variable.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">sortvals(varname)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Sort the strings in multi-string-valued <span 
+ style="font-weight: bold;">global</span> variable <span style="font-weight: bold;">varname</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">gtolower(varname)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Convert the strings in multi-string valued 
+ <span style="font-weight: bold;">global</span> variable to lower case.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">guniq(varname)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Remove redundancies in a sorted, multi-string 
+ valued <span style="font-weight: bold;">global</span> variable.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 22%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">lookup(var,file,flag)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 78%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Specialized word lookup. <span style="font-weight: bold;">Global 
+ </span><span style="font-weight: normal;">variable</span> <span style="font-weight: bold;">var</span> 
+ has multiple words as values. <span style="font-weight: bold;">file</span> 
+ is a file of strings, one per line. <span style="font-weight: bold;">flag</span> 
+ tells which bit-flag of the word's symbol table entry to modify. E.g., 
+ <span style="font-weight: bold;">lookup(&quot;Words&quot;, &quot;dict.words&quot;, 
+ &quot;word&quot;)</span> looks up all the values in the <span style="font-weight: bold;">Words</span> 
+ variable in the <span style="font-weight: bold;">dict.words</span> file 
+ and modifies the <span style="font-weight: bold;">word</span> bit-flag 
+ (which says whether the word is a proper English word).</td></tr>
+</table>
+
+<h2>Print Actions</h2>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-spacing: 1px;
+				margin-top: 14pt;"
+		cellspacing=1
+		width=100%
+		border=1>
+<col style="width: 28.576%;">
+<col style="width: 71.424%;">
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;
+			background-color: #00ff00;"
+	bgcolor=#00FF00
+	valign=top
+	width=28.576%>
+<p style="margin-bottom: 0; font-weight: bold;">CODE Action</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;
+			background-color: #00ff00;"
+	bgcolor=#00FF00
+	valign=top
+	width=71.424%>
+<p style="margin-bottom: 0; font-weight: bold;">Description</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=28.576%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">print(str)</span></td>
+<td style="x-cell-content-align: TOP;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=71.424%>
+<p style="margin-bottom: 0;">Print str to the standard output (usually 
+ the console or DOS window). (See <span style="font-style: italic; font-weight: bold;">startout</span> 
+ below).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=28.576%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">printvar(var)</span></td>
+<td style="x-cell-content-align: TOP;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=71.424%>
+<p style="margin-bottom: 0;">Print the values of the <span style="font-weight: bold;">global</span> 
+ variable named <span style="font-weight: bold;">var</span> to standard 
+ output. (See <span style="font-style: italic; font-weight: bold;">startout</span> 
+ below).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=28.576%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">fprintvar(file, 
+ var)</span></td>
+<td style="x-cell-content-align: TOP;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=71.424%>
+<p style="margin-bottom: 0;">Print the values of the <span style="font-weight: bold;">global</span> 
+ variable named <span style="font-weight: bold;">var</span> to <span style="font-weight: bold;">file</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=28.576%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">prlit(file, 
+ str)</span></td>
+<td style="x-cell-content-align: TOP;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=71.424%>
+<p style="margin-bottom: 0;">Print the literal string <span style="font-weight: bold;">str</span> 
+ to <span style="font-weight: bold;">file</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=28.576%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">gdump(filename)</span></td>
+<td style="x-cell-content-align: TOP;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=71.424%>
+<p style="margin-bottom: 0;">Dump the all the global variables and their 
+ values to the given filename.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=28.576%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">fileout(file)</span></td>
+<td style="x-cell-content-align: TOP;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=71.424%>
+<p style="margin-bottom: 0;">Open <span style="font-weight: bold;">file</span> 
+ for appending. <span style="font-weight: bold;">File</span> becomes a 
+ variable useable in print actions with a file argument, e.g. <span style="font-weight: bold;">prlit()</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=28.576%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">startout(0)</span></td>
+<td style="x-cell-content-align: TOP;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=71.424%>
+<p style="margin-bottom: 0;">Divert standard output to the main output 
+ file, set by the caller of the analyzer (default is <span style="font-weight: bold;">output.txt</span>).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=28.576%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">stopout(0)</span></td>
+<td style="x-cell-content-align: TOP;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=71.424%>
+<p style="margin-bottom: 0;">Stop diverting standard output to the main 
+ output file. Subsequent file-less output is to standard output.</td></tr>
+</table>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<h2>See Also</h2>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="AT-PRE_Actions.htm">PRE 
+ Action</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="AT-CHECK_Actions.htm">CHECK 
+ Action</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="AT-POST_Actions.htm">POST 
+ Action</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+</body>
+
+</html>

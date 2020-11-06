@@ -1,0 +1,91 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>t</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=645>
+<meta name=layout-width content=916>
+<meta name=date content="05 4, 2002 11:58:57 PM">
+
+
+<!--(Links)=========================================================-->
+
+<link rel=StyleSheet href=default.css>
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>t</h1>
+
+<h2>Purpose</h2>
+
+<p>Match the current element first.</p>
+
+<h2>Remarks</h2>
+
+<p><span style="font-weight: bold;">trig</span> and <span style="font-weight: bold;">trigger 
+ </span>are alternate forms for t.</p>
+
+<p>An _xWILD element or optional element cannot take the trigger element 
+ modifier.</p>
+
+<p>Triggering actually causes the rule matcher to match the trigger element 
+ first, then move left (i.e., backwards), then move right from the trigger 
+ element. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->This 
+ is useful to know in designing rules that combine wildcards with a trigger 
+ element, for example.</p>
+
+<p>Note that triggering can be tricky. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->See 
+ the example below, in which, <span style="font-style: italic;">regardless</span> 
+ of rule ordering in a pass, an unexpected behavior may occur.</p>
+
+<h2>Example</h2>
+
+<p style="font-family: monospace;"># Attempt to match this rule only when 
+ a _noun node is seen.<br>
+_np &lt;- _det _quan _adj _noun [<span style="font-weight: bold;">t</span>] 
+ @@</p>
+
+<p style="font-family: monospace;"># If the following rule is in the same 
+ pass, it will always match first, so that the rule above will never<br>
+# be matched! <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Why? 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Because 
+ the rule matcher will match the rule below whenever an _adj node is found<br>
+# (preceded by _det and _quan).<br>
+# By the time the _noun node is seen, the rule below has already operated. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The presence 
+ or absence of [t]<br>
+# below makes no difference to this behavior.<span style="font-family: monospace;"><br>
+_np &lt;- _det _quan _adj [t] @@</span></p>
+
+<h2>See Also</h2>
+
+<p style="margin-bottom: 0;"><a href="optional.htm">optional</a>, <a href="lookahead.htm">lookahead</a>, 
+ <a href="NLP_PP_Stuff/Phrase_element_modifiers.htm">Phrase Element Modifiers</a>.</p>
+
+<p>&nbsp;</p>
+
+</body>
+
+</html>

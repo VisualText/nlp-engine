@@ -1,0 +1,201 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>@RECURSE Region</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1094>
+<meta name=layout-width content=525>
+<meta name=date content="07 26, 2001 9:24:14 AM">
+<meta name=x-ignored-words content="RECURSE;recurse;minipasses">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF=default.css>
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>RECURSE Region</h1>
+
+<p>The RECURSE Region is a nested &quot;minipass&quot; within a pass file. 
+ It can only be invoked from an element of a rule that has matched. The 
+ phrase that the recurse minipass operates on is the set of nodes that 
+ matched the invoking rule element. Each RECURSE Region contains within 
+ it a Grammar Region.</p>
+
+<h2>Example of RECURSE Region</h2>
+
+<p>Here's an example taken from the RFA (Rules-File Analyzer), which parses 
+ the pass files themselves.</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">@RECURSE actionpass # Start of a RECURSE Region. A name, e.g. &quot;actionpass&quot;, is required.</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">@RULES # Start of one RULES Regions within the RECURSE minipass.</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"># The minipass converts literals (e.g., &quot;single&quot;) to actions in context.</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">_ACTION &lt;- _LIT @@ </p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">@@RECURSE # End of the RECURSE minipass. Note that @@RULES is optional. </p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"># .... # Additional RECURSE minipasses may be specified here.</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"># The GRAMMAR ZONE (i.e., the main Grammar Region of the pass file) starts here. It has no marker.<br>
+# Note that in this case, the @@RECURSE terminator is required, so that the main Grammar Region is not<br>
+# taken to be part of the previous RECURSE minipass.</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">@RULES </p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">_POSTS [base] &lt;- # Simplified rule for identifying a @POST Region.</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">_soPOST # @POST<br>
+_xWILD [matches=(_LIT _ACTION) recurse=(actionpass)]<br>
+_eoPOST [opt] # @@POST is optional.</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">@@</p>
+
+<p>In the above example, when the NLP++ parser (RFA or RFB) sees a plain 
+ word like <span style="font-weight: normal;">&quot;single&quot; in a file, 
+ it doesn't know whether to reduce it to an _ACTION or not. But within 
+ the markers @POST and @@POST, the literal should be treated as an action. 
+ This allows the parentheses in pass file actions to be optional, when 
+ the action takes no arguments. E.g., &quot;single()&quot; and &quot;single&quot; 
+ are equivalent.</span></p>
+
+<p>In general, RECURSE mini-passes enable a mechanism for &quot;roughing 
+ out&quot; a text and then applying the correct assignments when the context 
+ has been determined unambiguously. They have many other uses, such as 
+ traversing nodes that matched a rule element in order to perform cleanups, 
+ data gathering, deletions, and so on.</p>
+
+<p style="font-weight: normal;">For a phrase element modifier that invokes 
+ a recursive rules pass, see the <a href="NLP_PP_Stuff/Phrase_element_modifiers.htm#recurse">recurse</a> 
+ modifier. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--></p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 90%;
+				border-spacing: 0px;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=90%>
+
+<tr>
+<td style="background-color: #FFFFD5;
+			x-cell-content-align: TOP;
+			width: 100%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#FFFFD5>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Note</span>: 
+ A RECURSE Region cannot contain a CODE Region or a SELECT Region. A SELECT 
+ Region would be meaningless, since the RECURSE Region operates on a phrase 
+ specified by the rule element that invokes it.</td></tr>
+</table>
+
+<h2>See Also</h2>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a HREF="NLP_PP_Stuff/Minipass_Zone.htm">Minipass 
+ Zone</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a HREF="NLP_PP_Stuff/About_Pass_Files.htm">About 
+ Pass Files</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a HREF="NLP_PP_Stuff/Grammar_Region.htm">Grammar 
+ Region</a></p>
+
+</body>
+
+</html>

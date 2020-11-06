@@ -1,0 +1,1767 @@
+ind attr
+"concept"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"cg_CONCEPT"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "x" "xu" "xwhite"
+pst
+"true"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "c" "co" "constrain"
+pst
+"true"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "c" "cl" "closed"
+pst
+"false"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "l" "li" "lit"
+pst
+"false"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "s" "sp" "split"
+pst
+"false"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "g" "ge" "gen"
+pst
+"false"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "l" "lo" "locked"
+pst
+"false"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "d" "di" "dirty"
+pst
+"true"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "q" "qu" "quicksem"
+pst
+"false"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "c" "co" "counter"
+pst
+"false"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "n" "no" "notrig"
+pst
+"false"
+end ind
+
+
+ind attr
+"concept" "sys"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"con_SYS"
+end ind
+
+
+ind attr
+"concept" "sys" "attrs"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"sys_ATTRS"
+end ind
+
+
+ind attr
+"concept" "sys" "attrs" "proxy"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"attrs_PROXY"
+end ind
+
+
+ind attr
+"concept" "sys" "attrs" "proxy" "atom"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"cg_ATOM"
+end ind
+
+
+ind attr
+"concept" "sys" "attrs" "pproxy"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"attrs_PPROXY"
+end ind
+
+
+ind attr
+"concept" "sys" "attrs" "pproxy" "phrase"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"cg_PHRASE"
+end ind
+
+
+ind attr
+"concept" "sys" "attrs" "common"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"attrs_COMMON"
+end ind
+
+
+ind attr
+"concept" "sys" "attrs" "common" "var"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"cg_VAR"
+end ind
+
+
+ind attr
+"concept" "sys" "nlp"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"sys_NLP"
+end ind
+
+
+ind attr
+"concept" "sys" "nlp" "lex" "slot" "cases"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"id_CASES"
+end ind
+
+
+ind attr
+"concept" "sys" "mean" "slot" "case"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"id_mslot_CASE"
+end ind
+
+
+ind attr
+"concept" "sys" "mean" "slot" "case" "cap"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"id_CAP"
+end ind
+
+
+ind attr
+"concept" "sys" "mean" "slot" "case" "allcap"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"id_ALLCAP"
+end ind
+
+
+ind attr
+"concept" "sys" "mean" "slot" "case" "mixed"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"id_MIXED"
+end ind
+
+
+ind attr
+"concept" "sys" "mean" "slot" "mixed"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"id_mslot_MIXED"
+end ind
+
+
+ind attr
+"concept" "sys" "dict"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"sys_DICT"
+end ind
+
+
+ind attr
+"concept" "sys" "dict" "a"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"dict_ALPHA"
+end ind
+
+
+ind attr
+"concept" "sys" "dict" "unknown"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"dict_UNKNOWN"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "tokenize"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"tokenize"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "tokenize"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"nil"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "tokenize"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"Gen:   Convert input to token list."
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "tokenize"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "tokenize"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "tokenize"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+2
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLbaseElements"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLbaseElements"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLbaseElements"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLbaseElements"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLbaseElements"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLbaseElements"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+2
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLbaseElements"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLLiterals"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLLiterals"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLLiterals"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLLiterals"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLLiterals"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLLiterals"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+3
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLLiterals"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLbaseDefs"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLbaseDefs"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLbaseDefs"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLbaseDefs"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLbaseDefs"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLbaseDefs"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLbaseDefs"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLDecl"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLDecl"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLDecl"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLDecl"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLDecl"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLDecl"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+5
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLDecl"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLDOCTYPE"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLDOCTYPE"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLDOCTYPE"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLDOCTYPE"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLDOCTYPE"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLDOCTYPE"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+6
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLDOCTYPE"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLNotationDeclarations"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLNotationDeclarations"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLNotationDeclarations"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLNotationDeclarations"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLNotationDeclarations"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLNotationDeclarations"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+7
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLNotationDeclarations"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLExternalID"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLExternalID"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLExternalID"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLExternalID"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLExternalID"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLExternalID"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+8
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLExternalID"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLEntityDefs"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLEntityDefs"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLEntityDefs"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLEntityDefs"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLEntityDefs"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLEntityDefs"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+9
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLEntityDefs"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLattdefs"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLattdefs"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLattdefs"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLattdefs"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLattdefs"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLattdefs"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+10
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLattdefs"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLattdefs2"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLattdefs2"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLattdefs2"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLattdefs2"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLattdefs2"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLattdefs2"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+11
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLattdefs2"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLattdefs3"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLattdefs3"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLattdefs3"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLattdefs3"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLattdefs3"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLattdefs3"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+12
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLattdefs3"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclarationElements"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLdeclarationElements"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclarationElements"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclarationElements"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+13
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclarationElements"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"rec"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclarationElements"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclarationElements"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+5
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLPCDATA"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLPCDATA"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLPCDATA"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLPCDATA"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLPCDATA"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLPCDATA"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+14
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLPCDATA"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclarationConstructors"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclarationConstructors"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLdeclarationConstructors"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclarationConstructors"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclarationConstructors"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclarationConstructors"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+15
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclarationConstructors"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclarationConstructors2"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLdeclarationConstructors2"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclarationConstructors2"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclarationConstructors2"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+16
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclarationConstructors2"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"rec"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclarationConstructors2"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclarationConstructors2"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+5
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclSep"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclSep"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLdeclSep"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclSep"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclSep"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclSep"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+17
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclSep"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclSep2"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclSep2"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLdeclSep2"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclSep2"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclSep2"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclSep2"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+18
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLdeclSep2"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLtagElements"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLtagElements"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLtagElements"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLtagElements"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLtagElements"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLtagElements"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+19
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLtagElements"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLStartingTag"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLStartingTag"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLStartingTag"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLStartingTag"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLStartingTag"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLStartingTag"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+20
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLStartingTag"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLtagStructure"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLtagStructure"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLtagStructure"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLtagStructure"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+21
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLtagStructure"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"rec"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLtagStructure"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLtagStructure"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+5
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLSubschema"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLSubschema"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLSubschema"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLSubschema"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLSubschema"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLSubschema"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+22
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLSubschema"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLOverallSchema"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLOverallSchema"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"XMLOverallSchema"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLOverallSchema"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLOverallSchema"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLOverallSchema"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+23
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "XMLOverallSchema"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+2
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana001.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana002.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana003.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana004.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana005.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana006.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana007.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana008.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana009.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana010.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana011.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana012.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana013.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana014.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana015.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana016.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana017.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana018.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana019.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana020.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana021.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana022.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "ana023.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "err.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "final.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "plant_catalog.xml" "init.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "tmp"
+0
+"concept" "sys" "dict" "a" "d" "di" "dirty"
+pst
+"true"
+end ind
+
+
+
+quit
+

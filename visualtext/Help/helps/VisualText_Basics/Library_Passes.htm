@@ -1,0 +1,401 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Library Passes</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=date content="08 29, 2001 10:20:02 AM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1138>
+<meta name=layout-width content=1027>
+
+
+<!--(Links)=========================================================-->
+
+<link rel="StyleSheet" href="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Library Passes</h1>
+
+<p>To help you get started building your text analyzer, VisualText comes 
+ with several pre-built pass files. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->These 
+ pre-built pass files are called <span style="font-weight: bold;">library 
+ passes</span>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->They 
+ are available within <a href="../Ana_Tab_Popup.htm#Add_Submenu">Add menu 
+ item</a> of the Ana Tab popup menu.</p>
+
+<p>Library passes contain NLP++ rules and code to recognize common or generic 
+ types of data. Generic data includes telephone numbers, email addresses, 
+ different types of money formats, dates, etc. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->VisualText 
+ also provides library passes for importing existing databases into the 
+ knowledge base. </p>
+
+<h2><a name=lib_pass_types></a>Types of Library Passes</h2>
+
+<p>There are two types of library passes: <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->those 
+ that are used by themselves and those that are part of a series of passes. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--></p>
+
+<p>Below is a summary of available library passes. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Where 
+ library passes are part of a series of passes, the total number of passes 
+ is indicated next to the library pass name.</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-spacing: 0px;
+				margin-top: 14pt;
+				width: 92.796%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=92.796%
+		border=1>
+<col style="width: 41.654%;">
+<col style="width: 58.346%;">
+
+<tr>
+<td style="width: 41.654%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=41.654%>
+<p style="font-weight: bold;">Library Pass Name</td>
+<td style="width: 58.346%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=58.346%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">Description</span></td></tr>
+
+<tr>
+<td style="width: 41.654%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=41.654%>
+<p style="margin-bottom: 0; font-weight: bold;">Database (10)</td>
+<td style="width: 58.346%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=58.346%>
+<p style="margin-bottom: 0;">Import a database into the KB hierarchy. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Passes 
+ can import database with both text and numeric fields. <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}--></p>
+<p style="margin-bottom: 0;">Assumes first line of database file is a list 
+ of field names. <!--kadov_tag{{<spaces>}}-->&nbsp;<span style="margin-bottom: 0;"><!--kadov_tag{{</spaces>}}-->To 
+ add a large database, it is more efficient to split up the database file 
+ into smaller files. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->If 
+ splitting large database into smaller files, the first line of each file 
+ should include the list of field names.</span></td></tr>
+
+<tr>
+<td style="width: 41.654%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=41.654%>
+<p style="margin-bottom: 0; font-weight: bold;">Date Plus Numerics (9)</td>
+<td style="width: 58.346%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=58.346%>
+<p style="margin-bottom: 0;">Recognize simple and compound numeric words, 
+ numeric sequences and lists, various character formatting such as punctuation 
+ and contractions, telephone numbers, and dates.</td></tr>
+
+<tr>
+<td style="width: 41.654%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=41.654%>
+<p style="margin-bottom: 0; font-weight: bold;">Emails</td>
+<td style="width: 58.346%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=58.346%>
+<p style="margin-bottom: 0;">Recognize email addresses.</td></tr>
+
+<tr>
+<td style="width: 41.654%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=41.654%>
+<p style="margin-bottom: 0; font-weight: bold;">HTML (5)</td>
+<td style="width: 58.346%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=58.346%>
+<p style="margin-bottom: 0;">Recognize HTML formatting elements, text tagging, 
+ special HTML characters, and tagging structures.</td></tr>
+
+<tr>
+<td style="width: 41.654%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=41.654%>
+<p style="margin-bottom: 0; font-weight: bold;">Lines</td>
+<td style="width: 58.346%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=58.346%>
+<p style="margin-bottom: 0;">&nbsp;</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="width: 41.654%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=41.654%>
+<p style="margin-bottom: 0; font-weight: bold;">Numerics (7)</td>
+<td colspan=1
+	rowspan=1
+	style="width: 58.346%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=58.346%>
+<p style="margin-bottom: 0;">Recognize simple and compound numeric words, 
+ numeric sequences and lists, various character formatting such as punctuation 
+ and contractions, and telephone numbers.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="width: 41.654%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=41.654%>
+<p style="margin-bottom: 0; font-weight: bold;">Remove Blank Lines</td>
+<td colspan=1
+	rowspan=1
+	style="width: 58.346%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=58.346%>
+<p style="margin-bottom: 0;">Remove blank lines.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="width: 41.654%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=41.654%>
+<p style="margin-bottom: 0; font-weight: bold;">Remove White Space</td>
+<td colspan=1
+	rowspan=1
+	style="width: 58.346%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=58.346%>
+<p style="margin-bottom: 0;">Remove white spaces.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="width: 41.654%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=41.654%>
+<p style="margin-bottom: 0; font-weight: bold;">Trends</td>
+<td colspan=1
+	rowspan=1
+	style="width: 58.346%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=58.346%>
+<p style="margin-bottom: 0;">Count the occurrence of words and phrases 
+ in a text.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="width: 41.654%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=41.654%>
+<p style="margin-bottom: 0; font-weight: bold;">XML DTD (14)</td>
+<td colspan=1
+	rowspan=1
+	style="width: 58.346%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=58.346%>
+<p style="margin-bottom: 0;">XML document type definition. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->DTD 
+ is used to define the XML document structure. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--></p>
+<p style="margin-bottom: 0;">DTDs can be contained in the XML document, 
+ or can be referenced from an external document.</td></tr>
+
+<tr>
+<td style="width: 41.654%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=41.654%>
+<p style="margin-bottom: 0; font-weight: bold;">Xml (21)</td>
+<td style="width: 58.346%;
+			x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=58.346%>
+<p style="margin-bottom: 0;">Process XML files.</td></tr>
+</table>
+
+<h2>Using Library Passes</h2>
+
+<p>Library passes can be added to any part of your analyzer sequence. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Note 
+ however, that they may not be inserted before the system pass, tokenize. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->When a 
+ library pass is composed of a series of passes, all of the passes in the 
+ sequence are added.</p>
+
+<p>The insertion of library passes into an existing analyzer may not be 
+ completely &quot;seamless.&quot; <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->That 
+ is, the developer may need to reorder passes and edit contexts within 
+ pass files (e.g., the list within a <span style="color: #0000ff; font-weight: bold;">@NODES</span> 
+ context selector) in order to get the analyzer working properly with the 
+ added library passes.</p>
+
+<h2>Location of Library Passes</h2>
+
+<p>The set of library passes that accompanies VisualText is stored in the 
+ spec folder of the installation directory. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->If 
+ you installed the VisualText software on your c drive for example, the 
+ library passes are contained in the following directory:</p>
+
+<p style="margin-left: 40px; font-family: monospace;">c:\Program Files\TextAI\VisualText\data\spec</p>
+
+<p>You can create your own library passes and add them to the spec directory. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->They will 
+ automatically appear in the Library Passes submenu of the Ana Tab popup 
+ menu.</p>
+
+<h2>See Also</h2>
+
+<p><a href="../Using_VisualText/Analyzer_Sequence/Hand-Built_Pass_Files/Adding_passes.htm">Adding 
+ passes to the analyzer sequence</a></p>
+
+</body>
+
+</html>

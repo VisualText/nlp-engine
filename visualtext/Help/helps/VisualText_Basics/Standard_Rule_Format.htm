@@ -1,0 +1,190 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Standard Rule Format</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=2291>
+<meta name=layout-width content=775>
+<meta name=date content="08 28, 2001 10:46:44 PM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Standard Rule Format</h1>
+
+<p>To facilitate the editing of rules in pass files, we've developed a 
+ convention called the <span style="font-weight: bold;">standard rule format</span>. 
+ Its main requirement is that each element of a rule occupy a separate 
+ line of text. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->If 
+ is possible to write rules such that all rule elements are on the same 
+ line. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->When 
+ referencing nodes however, it is often helpful to have elements written 
+ on separate lines. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--></p>
+
+<p>The rules below are not in standard rule format. Notice that the elements 
+ (_VP, _verb, _xWHITE, etc.) in each rule are all on the same line.</p>
+
+<p><img src="FIGURE1.GIF"
+		style="width: 279px;
+				height: 164px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=279
+		height=164
+		border=1></p>
+
+<h2>Converting to Standard Form</h2>
+
+<p>Rules written on a single line can be converted using the Pass File 
+ Popup Menu item <a HREF="../VisualText_Interface/Popups/Pass_File_Popup.htm#pass_file_popup_convert_line_to_srf">One 
+ Line to Standard Rule Format</a>:</p>
+
+<p><img src="FIGURE2.GIF"
+		style="width: 447px;
+				height: 156px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=447
+		height=156
+		border=1></p>
+
+<p>&nbsp;</p>
+
+<p>This results in a rule in standard rule format:</p>
+
+<p><img src="FIGURE3.GIF"
+		style="width: 285px;
+				height: 257px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=285
+		height=257
+		border=1></p>
+
+<p>where each rule element (_VP, _verb, <font style="color: #ff0000;"
+												color=#FF0000>_xWHITE</font>, 
+ _NP, <font style="color: #ff0000;"
+			color=#FF0000>_xWHITE</font>, _PP) appears on its own line.</p>
+
+<p>Standard rule format has three distinctive features. Rule elements are 
+ indented by a tab space, numbered with comments and displayed one per 
+ line.</p>
+
+<h2>Indentation</h2>
+
+<p>Indentation is for readability.</p>
+
+<h2>Rule Element Numbering</h2>
+
+<p>Numbering rule elements with comments makes for a convenient reference 
+ when using NLP++™ node functions or functions that reference individual 
+ elements in a rule. To see how this works, some NLP++ functions have been 
+ added to the rule given above:</p>
+
+<p><img src="Figure4b.gif"
+		style="width: 252px;
+				height: 276px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=252
+		height=276
+		border=1></p>
+
+<p>The NLP++ node function N(&quot;$text&quot;,1) refers to the text for 
+ rule element 1, N(&quot;$text&quot;,3) the text for rule element 3, and 
+ N(&quot;$text&quot;,5) the text for rule element 5. In standard rule format, 
+ if a person deletes a rule element with the right-click menu, the rule 
+ elements will be renumbered automatically to facilitate the user in renumbering 
+ of the NLP++ node function &quot;N&quot; by hand. In the future, node 
+ function renumbering will be automatic with such edits.</p>
+
+<h2>One-Per-Line and Element Editing</h2>
+
+<p>Having one rule element per line allows for the use of right-click menu 
+ items for quick editing. In standard rule format, users can quickly change, 
+ convert, and delete rule elements and rule element attributes. In the 
+ example below, a rule element is made optional by clicking anywhere on 
+ the rule element of interest, and selecting the Add/Remove attribute &quot;optional&quot;.</p>
+
+<p><img src="FIGURE5.GIF"
+		style="width: 356px;
+				height: 258px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=356
+		height=258
+		border=1></p>
+
+<p>&nbsp;</p>
+
+<p>Doing the above yields:</p>
+
+<p style="margin-bottom: 0;"><img src="FIGURE6.GIF"
+									style="width: 185px;
+											height: 111px;
+											border-width: 1px;
+											border-style: solid;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=185
+									height=111
+									border=1> </p>
+
+<h2>See Also</h2>
+
+<p style="margin-bottom: 0;"><a href="../NLP_PP_Stuff/Rule_syntax.htm">Rule 
+ Syntax</a></p>
+
+<p style="margin-bottom: 0;">&nbsp;</p>
+
+</body>
+
+</html>

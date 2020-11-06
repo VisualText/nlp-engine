@@ -1,0 +1,219 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Rule Syntax</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1790>
+<meta name=layout-width content=460>
+<meta name=date content="07 31, 2001 5:35:05 PM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Rule Syntax</h1>
+
+<p><span style="font-weight: normal;">All rules are written in the RULES 
+ Region of a pass file. Within each RULES Region, any number of rules can 
+ occur.</span></p>
+
+<p><span style="font-weight: normal;">The syntax for a rule is</span></p>
+
+<p style="margin-left: 40px;">&nbsp;<span style="font-weight: bold;">_SUGG 
+ &lt;- _PHRASE @@</span></p>
+
+<h2><a name=rule_elements></a>Rule Elements</h2>
+
+<p><span style="font-weight: bold;">_SUGG</span>, is referred to as the 
+ <span style="font-weight: bold;">suggested</span><span style="font-weight: bold;"> 
+ rule element</span>. It is the node that is created if a rule matches. 
+ _SUGG is often referred to as the left-hand side of the rule.</p>
+
+<p><span style="font-weight: bold;">_PHRASE</span> is the <span style="font-weight: bold;">phrase 
+ of elements</span> that the rule matcher is trying to match. If the rule 
+ matcher finds a match for the listed phrase, the node will <span style="font-weight: bold;">suggest</span> 
+ or <span style="font-weight: bold;">reduce</span> to what is specified 
+ in _SUGG. _PHRASE is referred to as the right-hand side of the rule.</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 90%;
+				border-spacing: 0px;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=90%>
+
+<tr>
+<td style="background-color: #FFFFD5;
+			x-cell-content-align: TOP;
+			width: 100%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#FFFFD5>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Note</span>: 
+ Rule elements that make up the phrase of elements do not have to be written 
+ on the same line. That is, the rule can extend over several lines with 
+ each rule element in _PHRASE occupying its own line. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ two rules below are equivalent:</p>
+<p style="margin-left: 18pt; margin-bottom: 0pt;">_XYZ &lt;- _ABC _DEF 
+ @@</p>
+<p style="margin-left: 18pt; margin-bottom: 0pt;">&nbsp;</p>
+<p style="margin-left: 18pt;
+			margin-bottom: 0pt;
+			margin-top: 0pt;">_XYZ &lt;-</p>
+<p style="margin-bottom: 0pt;
+			margin-left: 54pt;
+			margin-top: 0pt;">_ABC</p>
+<p style="margin-bottom: 0pt;
+			margin-left: 54pt;
+			margin-top: 0pt;">_DEF</p>
+<p style="margin-bottom: 0pt;
+			margin-left: 54pt;
+			margin-top: 0pt;">@@</p>
+<p style="margin-bottom: 0;">When each rule element in the phrase is written 
+ on its own line, the rule is said to be written in <span style="font-weight: bold;">standard 
+ rule format</span>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For 
+ more information on rule formats, see <a href="../VisualText_Basics/Standard_Rule_Format.htm">Standard 
+ Rule Format</a>.</td></tr>
+</table>
+
+<p><span style="font-weight: bold;">&lt;- </span>is the rule arrow. It 
+ divides the rule between the suggested element and the phrase of rule 
+ elements.</p>
+
+<p><span style="font-weight: bold;">@@</span> indicates the end of a rule. 
+ Rules must always end in the @@ marker.</p>
+
+<h2><a name=rule_element_types></a>Rule Element Types</h2>
+
+<p>Each rule element, including the suggested element, consists of a <span 
+ style="font-style: normal; font-weight: bold;">literal</span> or <span 
+ style="font-style: normal; font-weight: normal;">a </span><span style="font-style: normal; font-weight: bold;">nonliteral</span>. 
+ What gets matched for each is different:</p>
+
+<ul>
+	
+	<li class=kadov-p><p><span style="font-weight: bold;">Literals</span> 
+ match tokens, or &quot;real text&quot;.</p></li>
+	
+	<li class=kadov-p><p><span style="font-weight: bold;">Nonliterals</span> 
+ match nodes which begin with an underscore.</p></li>
+</ul>
+
+<p>A literal is a <span style="font-weight: bold;">terminal node</span> 
+ (or leaf node) in the parse tree. It represents words, numbers and punctuation.</p>
+
+<p>A nonliteral is a <span style="font-weight: bold;">nonterminal node</span> 
+ (also called an internal node). It represents a node which dominates other 
+ nodes.</p>
+
+<p>The initial underscore character &quot;_&quot; is an NLP++ convention 
+ marking nonterminal or internal nodes. A terminal node cannot begin with 
+ an underscore character.</p>
+
+<h2><a name=special_rule_elements></a>Special Rule Elements</h2>
+
+<p>NLP++ has a set of predefined rule elements called <span style="font-weight: bold;">special 
+ rule elements</span>. These rule elements match various types of tokens 
+ such as alpha characters, punctuation, wildcards, etc.. They have properties 
+ that make writing rules easier. For a list of these predefined rule elements, 
+ see <a HREF="Special_rule_elements.htm">Special Rule Elements</a>.</p>
+
+<h2><a name=rule_element_modifiers></a>Rule Element Modifiers</h2>
+
+<p>Each rule element can be followed by <span style="font-weight: bold;">optional</span> 
+ <span style="font-weight: bold;">element modifiers</span>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->This 
+ includes the <span style="font-weight: bold;">suggested element</span> 
+ and <span style="font-weight: bold;">phrase of elements</span> on a rules 
+ right-hand side. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--></p>
+
+<p>Element modifiers place constraints on how elements in a rule are matched. 
+ For example, if you want to specify that the rule matcher should match 
+ a specific element in the phrase of elements on a rule's right-hand side 
+ first, you would use the <span style="font-weight: bold;">trigger</span> 
+ element modifier with the rule element. Element modifiers can be used 
+ for <span style="font-weight: bold;">both</span> the suggested element 
+ and the phrase of elements on the right-hand side of a rule.</p>
+
+<p><span style="font-style: normal;">The modifier must be enclosed in square 
+ brackets </span><span style="font-style: normal; font-weight: bold;">[ 
+ ]</span><span style="font-style: normal;"> </span><span style="font-style: normal; font-weight: bold;">after</span><span 
+ style="font-style: normal;"> the element. The element modifier is made 
+ up of a </span><span style="font-style: normal; font-weight: bold;">key</span><span 
+ style="font-style: normal;"> (the modifier name itself) and sometimes 
+ a </span><span style="font-style: normal; font-weight: bold;">value</span><span 
+ style="font-style: normal;">. A value can be a parenthesized list, a name 
+ or number. Some element modifiers do not have values. Some examples follow:</span></p>
+
+<p><span style="font-style: normal;">_xWILD [s one match=(_adj _noun \n)]</span></p>
+
+<p><span style="font-style: normal;">hello [rename=_hello]</span></p>
+
+<p><span style="font-style: normal;">For a list of element modifiers used 
+ with the suggest rule element, see <a HREF="Suggested_element_modifiers.htm">Suggested 
+ Element Modifiers</a>. For a list of element modifiers for the phrase 
+ of elements, see <a HREF="Phrase_element_modifiers.htm">Phrase Element 
+ Modifiers</a>.</span></p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 90%;
+				border-spacing: 0px;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=90%>
+
+<tr>
+<td style="background-color: #FFFFD5;
+			x-cell-content-align: TOP;
+			width: 100%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#FFFFD5>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><font style="color: #008080;"
+	color=#008080>WARNING</font></span>: <span style="color: #008080;">When 
+ writing lists for an element modifier, we recommend not enclosing them 
+ in double quotes, since they are not treated as strings. E.g., write </span><span 
+ style="font-weight: bold; color: #008080;">[match=(_adj _adv)] </span><span 
+ style="color: #008080;">rather than </span><span style="font-weight: bold; color: #008080;">[match=(&quot;_adj&quot; 
+ &quot;_adv&quot;)]</span><span style="color: #008080;">.</span> </td></tr>
+</table>
+
+<p style="margin-bottom: 0;">&nbsp;</p>
+
+</body>
+
+</html>

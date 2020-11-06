@@ -1,0 +1,69 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>tree</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=date content="05 5, 2002 0:03:16 AM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=663>
+<meta name=layout-width content=1024>
+
+
+<!--(Links)=========================================================-->
+
+<link rel="StyleSheet" href="default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>tree</h1>
+
+<h2>Purpose</h2>
+
+<p>Search node's entire subtree for a match. </p>
+
+<h2>Remarks</h2>
+
+<p>Overuse of this may degrade analyzer performance.</p>
+
+<p>Note that &quot;t&quot; is short for &quot;trigger&quot;, not &quot;tree&quot;.</p>
+
+<h2>Example</h2>
+
+<p># If a node labeled _det is followed by a node with a thousand child 
+ nodes, that subtree<br>
+# will be searched for a node with a _noun label. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->So 
+ tree can be costly and wildly inaccurate,<br>
+# and must be used with caution.<br>
+@RULES<br>
+_np &lt;- _det _noun [tree] @@</p>
+
+<h2>See Also</h2>
+
+<p><a href="singlet.htm">singlet</a>, <a href="NLP_PP_Stuff/Phrase_element_modifiers.htm">Phrase 
+ Element Modifiers</a>.</p>
+
+</body>
+
+</html>

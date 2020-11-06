@@ -1,0 +1,255 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Tab</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=3049>
+<meta name=layout-width content=430>
+<meta name=date content="08 14, 2001 10:05:09 AM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Tab Window</h1>
+
+<p>There are three tabs in the <span style="font-weight: bold;">Tab Window</span>, 
+ <a HREF="#Ana_Tab">Ana</a>, <a HREF="#Gram_Tab">Gram</a>, and <a HREF="#Text_Tab">Text</a></p>
+
+<p><img src="Windows/tab_window.gif"
+		style="width: 227px;
+				height: 223px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=227
+		height=223
+		border=1></p>
+
+<h2><a NAME=Ana_Tab></a>Ana Tab</h2>
+
+<p>The Ana Tab shows the analyzer sequence. This is where you control the 
+ text analyzer sequence, passes, and pass files. You can operate on the 
+ objects in the Ana Tab with buttons on the <a HREF="Toolbars/Tab_Toolbar.htm">Tab 
+ Toolbar</a> and with the <a HREF="../Ana_Tab_Popup.htm">Ana Tab Popup 
+ Menu.</a></p>
+
+<p><img src="Windows/ana_tab.gif"
+		x-maintain-ratio=TRUE
+		style="width: 230px;
+				height: 303px;
+				border-left-style: Solid;
+				border-left-width: 1px;
+				border-right-style: Solid;
+				border-right-width: 1px;
+				border-top-style: Solid;
+				border-top-width: 1px;
+				border-bottom-style: Solid;
+				border-bottom-width: 1px;
+				float: none;"
+		width=230
+		height=303
+		border=1></p>
+
+<p>There are two types of passes:</p>
+
+<p style="margin-left: 40px;"><span style="font-weight: normal;"><a HREF="#system_pass">system 
+ pass</a></span><span style="font-weight: normal;"><a HREF="#user_created_pass"><br>
+user created pass</a></span></p>
+
+<p><a NAME=system_pass></a><span style="font-weight: bold;">System Pass</span></p>
+
+<p>Currently, the only system pass available is the <span style="font-weight: bold;">tokenize</span> 
+ pass. System passes are identified by the rectangle icon. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->System 
+ passes cannot be modified. <span style="font-weight: normal;">The </span><span 
+ style="font-weight: bold;">tokenize</span> executes first, traversing 
+ the input text to convert it to a structure called a <span style="font-weight: bold;">parse 
+ tree</span>. Unlike user created passes, the tokenize and pass does not 
+ have an associated pass file.</p>
+
+<p><a NAME=user_created_pass></a><span style="font-weight: bold;">User 
+ Created Pass</span></p>
+
+<p>User created passes are added after the default system pass. User created 
+ passes can be identified by the DNA chain icon. The two types of user 
+ created passes are <span style="font-weight: bold;">Pattern</span> and 
+ <span style="font-weight: bold;">Recursive</span>. A pass in the analyzer 
+ sequence that is recursive is indicated by an <span style="font-weight: bold;">R</span> 
+ in the analyzer sequence.</p>
+
+<p>A region of passes that have been generated automatically is called 
+ a <span style="font-weight: bold;">stub region</span>. The stub region 
+ is delimited by two red markers (labeled stub_NAME and end_NAME) in the 
+ analyzer sequence.</p>
+
+<p>&nbsp;</p>
+
+<h2><a NAME=Gram_Tab></a>Gram Tab</h2>
+
+<p>The Gram Tab is used to construct a concept (or sample) hierarchy and 
+ to sample data from input files to the concept hierarchy. You can operate 
+ on the objects in the Gram Tab by selecting them and using toolbar buttons 
+ and the <a HREF="../Gram_Tab_Popup.htm">Gram Tab Popup Menu</a>.</p>
+
+<h2><img src="Windows/gram_tab.gif"
+		style="width: 244px;
+				height: 330px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=244
+		height=330
+		border=1></h2>
+
+<p><a name=Gram_Tab_concepts></a>The Gram Tab can have five types of concepts:</p>
+
+<ul>
+	
+	<li style="/*begin!kadov{{*/ color: #000000; /*}}end!kadov*/ "
+		class=kadov-p><p style="margin-bottom: 0;"><font style="color: #000000;"
+														color=#000000><a 
+ HREF="#stub_concept">stub concept</a></font></p></li>
+	
+	<li style="/*begin!kadov{{*/ color: #000000; /*}}end!kadov*/ "
+		class=kadov-p><p style="margin-bottom: 0;"><font style="color: #000000;"
+														color=#000000><a 
+ HREF="#folder_concept">folder concept</a></font></p></li>
+	
+	<li style="/*begin!kadov{{*/ color: #000000; /*}}end!kadov*/ "
+		class=kadov-p><p style="margin-bottom: 0;"><font style="color: #000000;"
+														color=#000000><a 
+ HREF="#rule_concept">rule concept</a></font></p></li>
+	
+	<li style="/*begin!kadov{{*/ color: #000000; /*}}end!kadov*/ "
+		class=kadov-p><p style="margin-bottom: 0;"><font style="color: #000000;"
+														color=#000000><a 
+ HREF="#label_concept">label concept</a></font></p></li>
+	
+	<li class=kadov-p
+		style="/*begin!kadov{{*/ color: #000000; /*}}end!kadov*/ "
+		class=kadov-p><font style="color: #000000;"
+							color=#000000><a HREF="#sample_concept">sample 
+ concept</a></font></li>
+</ul>
+
+<p><font style="color: #000000;"
+		color=#000000><a NAME=stub_concept></a><span style="font-weight: bold;">Stub 
+ Concept</span></font></p>
+
+<p>The top level concept is the stub concept. It is identified by the DNA 
+ chain icon. The stub concept is associated with a region of automatically 
+ generated passes in the analyzer sequence. Folder and rule concepts can 
+ be direct descendants of stub concepts.</p>
+
+<p><font style="color: #000000;"
+		color=#000000><a NAME=folder_concept></a><span style="font-weight: bold;">Folder 
+ Concept</span></font></p>
+
+<p><font style="color: #000000;"
+		color=#000000>The second level concept is the folder concept. This 
+ concept uses the folder icon. </font>Folder concepts help organize related 
+ sets of samples. <font style="color: #000000;"
+						color=#000000>Folder and rule concepts can be direct 
+ descendants of folder concepts.</font></p>
+
+<p><font style="color: #000000;"
+		color=#000000><span style="font-weight: bold;"><a NAME=rule_concept></a>Rule 
+ Concept</span></font></p>
+
+<p><font style="color: #000000;"
+		color=#000000>The third level concept is the rule concept. Rule 
+ concepts are identified by the right-pointing arrow. </font>Rule concepts 
+ own a set of related samples, from which the rule generator will generalize, 
+ merge, and generate rules<font style="color: #000000;"
+								color=#000000>. Label concepts and sample 
+ concepts can be direct descendants of rule concepts.</font></p>
+
+<p><font style="color: #000000;"
+		color=#000000><span style="font-weight: bold;"><a NAME=label_concept></a>Label 
+ Concept</span></font></p>
+
+<p><font style="color: #000000;"
+		color=#000000>The fourth concept type is the label concept. Label 
+ concepts are identified by the triangle icon. Label concepts </font>hold 
+ subsamples of larger samples. Label concepts can only be direct descendants 
+ of rule concepts.</p>
+
+<p><font style="color: #000000;"
+		color=#000000><span style="font-weight: bold;"><a NAME=sample_concept></a>Sample 
+ Concept</span></font></p>
+
+<p><font style="color: #000000;"
+		color=#000000>The final concept type is the sample concept. Samples 
+ are identified by a box icon. A sample </font>concept stores a single 
+ sample or subsample. Sample concepts are placed under rule concepts and 
+ label concepts. (Note: in the KB, sample concepts are not directly in 
+ the hierarchy, but are implemented as phrase nodes owned by rule concepts 
+ and label concepts.)</p>
+
+<p>&nbsp;</p>
+
+<h2><a NAME=Text_Tab></a>Text Tab</h2>
+
+<p>The Text Tab is where you organize and view input and output text data 
+ files. You can operate on the objects in the Text Tab by selecting them 
+ and using the <a HREF="../Text_Tab_Popup.htm">Text Tab Popup Menu</a><span 
+ style="x-text-underline: off;
+		x-text-overline: off;
+		x-text-line-through: off;
+		/*begin!kadov{{*/ text-decoration: none none none; /*}}end!kadov*/ ">,<font 
+ style="color: #000000;"
+	color=#000000> and with various toolbar buttons.</font></span></p>
+
+<p><img src="Windows/text_tab.gif"
+		style="width: 238px;
+				height: 282px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=238
+		height=282
+		border=1></p>
+
+<p>The Text Tab contains folders and files. When a text file has been analyzed, 
+ it will have a checkmark on it. Html files can be distinguished from the 
+ other text files by the globe icon.</p>
+
+<p style="margin-bottom: 0;">&nbsp; </p>
+
+</body>
+
+</html>

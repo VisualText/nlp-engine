@@ -1,0 +1,109 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>urlbase</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=692>
+<meta name=layout-width content=1024>
+
+
+<!--(Links)=========================================================-->
+
+<link rel="StyleSheet" href="default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>urlbase</h1>
+
+<h2>Purpose</h2>
+
+<p>Extract a normalized directory path from a URL.</p>
+
+<h2>Syntax</h2>
+
+<p style="line-height: normal;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">returnedStr = urlbase(urlStr)</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">returnedStr - type: str</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">urlStr - type: str</p>
+
+<h2>Returns</h2>
+
+<p>The normalized URL ending in directory path.</p>
+
+<h2>Remarks</h2>
+
+<p>As an aid to converting relative URLs to absolute URLs when processing 
+ a web page.</p>
+
+<h2>Example</h2>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">@CODE</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&quot;output.txt&quot; 
+ &lt;&lt; urlbase(&quot;http://www.x.com/pqr/a.txt&quot;) &lt;&lt; &quot;\n&quot;;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&quot;output.txt&quot; 
+ &lt;&lt; urlbase(&quot;http://www.abc.com/&quot;) &lt;&lt; &quot;\n&quot;;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&quot;output.txt&quot; 
+ &lt;&lt; urlbase(&quot;http://www.x.com/pqr/&quot;) &lt;&lt; &quot;\n&quot;;</p>
+
+<p>prints out:</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">http://www.x.com/pqr</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">http://www.abc.com</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">http://www.x.com/pqr</p>
+
+<h2>See Also</h2>
+
+<p style="margin-bottom: 0;"><a href="Table_of_Web_Functions.htm">Web Functions</a></p>
+
+</body>
+
+</html>

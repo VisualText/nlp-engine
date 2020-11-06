@@ -1,0 +1,220 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>replaceval</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1678>
+<meta name=layout-width content=916>
+<meta name=date content="01 4, 2002 12:58:48 PM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF=default.css>
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>replaceval</h1>
+
+<h2>Purpose</h2>
+
+<p>Replace the values of an attribute. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->There 
+ are three variants of <span style="font-family: monospace;">replaceval</span>, 
+ one each for replacing the value of <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->a 
+ concept <span style="font-style: italic;">concept'</span>s attribute named 
+ <span style="font-style: italic;">attrNameStr</span> with either integer 
+ <span style="font-style: italic;">valueInt</span>, string <span style="font-style: italic;">valueString</span> 
+ or concept values <span style="font-style: italic;">valueConcept</span>.</p>
+
+<h2>Syntax</h2>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">None = replaceval(concept, attrNameStr, valueInt)</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">concept - type: con<br>
+attrNameString - type: str<br>
+valueInt - type: int</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">None = replaceval(concept, attrNameStr, valueString)</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">concept - type: con<br>
+attrNameString - type: str<br>
+valueString - type: str</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">None = replaceval(concept, attrNameStr, valueConcept)</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">concept - type: con<br>
+attrNameString - type: str<br>
+valueConcept - type: con</p>
+
+<h2>Returns</h2>
+
+<p>Nothing</p>
+
+<h2>Remarks</h2>
+
+<p>If the attr-val pair arguments do not exist under the concept, <span 
+ style="font-family: monospace;">replaceval</span> creates new ones. If 
+ passed a bad <span style="font-style: italic;">concept</span> argument, 
+ a warning is written to the output log. If passed a value like G(&quot;foo&quot;) 
+ that does not refer to a concept, the value is written as a string.</p>
+
+<p>Differs from <span style="font-family: monospace;">addnumval</span>, 
+ <span style="font-family: monospace;">addstrval</span> and <span style="font-family: monospace;">addconval</span> 
+ in that <span style="font-family: monospace;">replaceval</span> replaces 
+ existing values, while <span style="font-family: monospace;">add*</span> 
+ adds new attr-val pairs. If the attr-val pairs do not exist already, <span 
+ style="font-family: monospace;">replaceval</span><span style="font-family: monospace; font-style: italic;"> 
+ </span>acts like the <span style="font-family: monospace;">add*</span> 
+ functions.</p>
+
+<p>Differs from <span style="font-family: monospace;">attrchange</span> 
+ in a number of respects. First, <span style="font-family: monospace;">attrchange</span> 
+ takes four arguments (e.g., <span style="font-family: monospace;">attrchange(concept, 
+ attrNameString, oldValString, newValString)</span>) while <span style="font-family: monospace;">replaceval</span><span 
+ style="font-family: monospace; font-style: italic;"> </span>takes three. 
+ Second, <span style="font-family: monospace;">attrchange</span><span style="font-family: monospace; font-style: italic;"> 
+ </span>only operates on strings, while <span style="font-family: monospace;">replaceval</span><span 
+ style="font-family: monospace; font-style: italic;"> </span>operates on 
+ strings, integers or concepts as values. Third, recall a concept can have 
+ zero or more attributes, and each attribute can have zero or more values. 
+ If there is more than one concept listed as values of an attribute (e.g., 
+ apples having many colors, each color being a concept unto itself) then 
+ <span style="font-family: monospace;">replaceval</span><span style="font-family: monospace; font-style: italic;"> 
+ </span>will replace them all with the new one (i.e., delete the existing 
+ old concept values). <span style="font-family: monospace;">attrchange</span>, 
+ on the other hand, is able to 'hone in' on a specific value. However, 
+ <span style="font-family: monospace;">attrchange</span><span style="font-family: monospace; font-style: italic;"> 
+ </span>only operates on strings as values of attributes, not concepts 
+ as values of attributes.</p>
+
+<h2>Example</h2>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;"><font style="color: #0000ff;"
+									color=#0000FF>@CODE</font><br>
+if(findconcept(findroot(),&quot;apples&quot;))<br>
+rmconcept(findconcept(findroot(),&quot;apples&quot;));<br>
+G(&quot;apples&quot;) = makeconcept(findroot(),&quot;apples&quot;);<br>
+<br>
+if(findconcept(findroot(),&quot;color&quot;))<br>
+rmconcept(findconcept(findroot(),&quot;color&quot;));<br>
+G(&quot;color&quot;) = makeconcept(findroot(),&quot;color&quot;);<br>
+G(&quot;red&quot;) = makeconcept(G(&quot;color&quot;),&quot;red&quot;);<br>
+G(&quot;blue&quot;) = makeconcept(G(&quot;color&quot;),&quot;blue&quot;);<br>
+<br>
+addnumval(G(&quot;apples&quot;),&quot;weight&quot;, 3);<br>
+addstrval(G(&quot;apples&quot;),&quot;name&quot;, &quot;MacIntosh&quot;);<br>
+addconval(G(&quot;apples&quot;),&quot;color&quot;, G(&quot;red&quot;));<br>
+<br>
+&quot;output.txt&quot; &lt;&lt; &quot;apples weight = &quot; <br>
+&lt;&lt; numval(G(&quot;apples&quot;),&quot;weight&quot;) &lt;&lt; &quot;\n&quot;;<br>
+&quot;output.txt&quot; &lt;&lt; &quot;apples name = &quot;<br>
+&lt;&lt; strval(G(&quot;apples&quot;),&quot;name&quot;) &lt;&lt; &quot;\n&quot;;<br>
+&quot;output.txt&quot; &lt;&lt; &quot;apples color = &quot; <br>
+&lt;&lt; conceptname(conval(G(&quot;apples&quot;),&quot;color&quot;)) &lt;&lt; &quot;\n&quot;;<br>
+<br>
+&quot;output.txt&quot; &lt;&lt; &quot;Replacing apple's attr vals:\n&quot;;<span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ "><br>
+replaceval</span>(G(&quot;apples&quot;),&quot;weight&quot;, 4);<span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ "><br>
+replaceval</span>(G(&quot;apples&quot;),&quot;name&quot;, &quot;Granny Smith&quot;);<span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ "><br>
+replaceval</span>(G(&quot;apples&quot;),&quot;color&quot;, G(&quot;blue&quot;));<br>
+<br>
+&quot;output.txt&quot; &lt;&lt; &quot;apples weight = &quot; <br>
+&lt;&lt; numval(G(&quot;apples&quot;),&quot;weight&quot;) &lt;&lt; &quot;\n&quot;;<br>
+&quot;output.txt&quot; &lt;&lt; &quot;apples name = &quot; <br>
+&lt;&lt; strval(G(&quot;apples&quot;),&quot;name&quot;) &lt;&lt; &quot;\n&quot;;<br>
+&quot;output.txt&quot; &lt;&lt; &quot;apples color = &quot;<br>
+&lt;&lt; conceptname(conval(G(&quot;apples&quot;),&quot;color&quot;)) &lt;&lt; &quot;\n&quot;;</p>
+
+<p>The code above should print out:</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">apples weight = 3<br>
+apples name = MacIntosh<br>
+apples color = red<br>
+Replacing apple's attr vals:<br>
+apples weight = 4<br>
+apples name = Granny Smith<br>
+apples color = blue</p>
+
+<h2>See Also</h2>
+
+<p><a href="attrchange.htm">attrchange</a>, <a HREF="rmval.htm">rmval</a>, 
+ <a HREF="rmvals.htm">rmvals</a>, <a HREF="rmattr.htm">rmattr</a>, <a HREF="rmattrs.htm">rmattrs</a>, 
+ <a href="Table_of_Knowledge_Base_Functions.htm">Knowledge Base Functions</a></p>
+
+<p style="margin-bottom: 0;">&nbsp; </p>
+
+</body>
+
+</html>

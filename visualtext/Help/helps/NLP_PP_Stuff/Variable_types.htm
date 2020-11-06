@@ -1,0 +1,545 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Variable Types</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1562>
+<meta name=layout-width content=775>
+<meta name=date content="09 24, 2001 11:35:42 AM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Data Types</h1>
+
+<p>NLP++ data types are shown in the following table.</p>
+
+<p>Numeric overflow and underflow are not flagged. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For 
+ example, the maximum <span style="font-weight: bold;">int</span> is 2147483647 
+ in Windows and must be checked by the programmer as needed. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For 
+ large numbers, the <span style="font-weight: bold;">float</span> type 
+ should be used.</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 0px;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=100%
+		border=1>
+
+<tr>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 14%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000><span style="font-weight: bold;">NAME</span></font></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000><span style="font-weight: bold;">ABBREVIATION</span></font></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#00FF00>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000><span style="font-weight: bold;">CHARACTERISTICS</span></font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 14%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=string></a>string</td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Sequence of characters: e.g., <span style="font-weight: bold;">G(&quot;name&quot;) 
+ = &quot;w3c&quot;;</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 14%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=int></a>integer</td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">INT</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">32-bit integers: e.g., <span style="font-weight: bold;">G(&quot;num&quot;) 
+ = 32776;</span></td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 14%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=float></a>float</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0; font-weight: bold;">FLOAT</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">32-bit floating point numbers: e.g., <span 
+ style="font-weight: bold;">G(&quot;flt&quot;) = 123.456;</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 14%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=bool></a>boolean</td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">BOOL</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">1 or 0. (Boolean implemented as a numeric 
+ nonzero for true and the numeric 0 for false.)</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 14%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=ostream></a>ostream</td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><font style="color: #000000;"
+	color=#000000>OSTREAM</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Output stream. <span style="font-weight: bold;">G(</span><span 
+ style="font-style: italic; font-weight: bold;">filename) &lt;&lt; expr;</span> 
+ prints by referring to the ostream value of <span style="font-style: italic; font-weight: bold;">G(filename)</span>. 
+ See the <span style="font-weight: bold;"><a href="../openfile.htm">openfile</a></span> 
+ NLP++ function.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 14%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=con></a>concept</td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Concepts are the main object in the knowledge 
+ base. They have string names, and optionally have one or more attributes. 
+ e.g. <span style="font-weight: bold;">G(&quot;myConcept&quot;) = makeconcept(G(&quot;root&quot;),&quot;My 
+ Name&quot;);</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 14%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=attr></a>attribute</td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">ATTR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Attributes are associated with concepts and 
+ KB nodes. They have string names, and optionally have one or more values. 
+ e.g. <span style="font-weight: bold;">G(&quot;myAttribute&quot;) = addattr(G(&quot;myConcept&quot;),&quot;is&quot;);</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 14%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=val></a>value</td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">VAL</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Values are the values of KB attributes. They 
+ can be strings, numerics, or concepts: e.g. <span style="font-weight: bold;">addconval(G(&quot;myConcept&quot;), 
+ &quot;is&quot;, &quot;John Smith&quot;);</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 14%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=phr></a>phrase</td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">PHR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">A phrase is a sequence of nodes owned by a 
+ single concept. E.g., create the first node of a phrase: <span style="font-weight: bold;">G(&quot;USPhrase&quot;) 
+ = makephrase(G(&quot;US&quot;),&quot;United&quot;); </span><span style="font-weight: normal;">Add 
+ the last node of the phrase:</span><span style="font-weight: bold;"> addcnode(G(&quot;US&quot;), 
+ &quot;States&quot;);</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 14%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=node></a>node</td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">NODE</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Node in the KB. Differs from a concept in 
+ that it is not in the KB hierarchy, but rather in a concept's phrase. 
+ A node serves as a &quot;proxy&quot; or &quot;instance&quot; of a concept.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 14%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=array></a>array</td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">ARRAY</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">The values of an array, or multi-valued variable, 
+ can be any simple values. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Note 
+ that nested ARRAY types are not currently supported.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 14%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=pnode></a>pnode</td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">PNODE</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 73%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Parse tree node. Unrelated to a KB node.</td></tr>
+</table>
+
+<h2><a NAME=NODES></a>Parse Tree Nodes</h2>
+
+<p>NLP++ can also reference the nodes of a parse tree directly. For example, 
+ <span style="font-weight: bold;">N(2)</span> refers to the (first) node 
+ that matched the 2nd element of a rule's right-hand-side phrase. <span 
+ style="font-weight: bold;">X(3)</span> refers to the 3rd node in the current 
+ context path as specified by @PATH. These constructs are used in functions 
+ that deal with the parse tree. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For 
+ more information on parse tree functions, see <a href="../Table_of_Parse_Tree_Functions.htm">Parse 
+ Tree Functions</a>. </p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 90%;
+				border-spacing: 0px;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=90%>
+
+<tr>
+<td style="background-color: #FFFFD5;
+			x-cell-content-align: TOP;
+			width: 100%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#FFFFD5>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Note</span>: 
+ Knowledge base nodes are unrelated to parse tree nodes. The former are 
+ called NODE and the latter PNODE.</td></tr>
+</table>
+
+<p>See <a HREF="About_NLP++_Variables.htm#Special_Node_References">Special 
+ Node References</a> for more on referencing parse tree nodes.</p>
+
+<h2><a NAME=Arrays></a>Arrays</h2>
+
+<p>Arrays can consist of combinations of simple types. Nested array types 
+ are not implemented. An example follows.</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;"># Create an array and step through it.<br>
+G(&quot;counter&quot;) = 0;<br>
+G(&quot;array_size&quot;) = 10;<br>
+# Arrays can optionally be &quot;declared&quot; by padding them with 0.<br>
+G(&quot;int_array&quot;)[G(&quot;array_size&quot;) - 1] = 0;<br>
+<br>
+while ( G(&quot;counter&quot;) &lt; G(&quot;array_size&quot;) ) { <br>
+G(&quot;int_array&quot;)[G(&quot;counter&quot;)] = G(&quot;counter&quot;); <br>
+&quot;output.txt&quot; &lt;&lt; G(&quot;int_array&quot;)[G(&quot;counter&quot;)] &lt;&lt; &quot;\n&quot;; <br>
+G(&quot;counter&quot;) ++;<br>
+}<br>
+# print it out all at once<br>
+&quot;output.txt&quot; &lt;&lt; G(&quot;int_array&quot;) &lt;&lt; &quot;\n&quot;;.<br>
+# copy it all at once:<br>
+G(&quot;another_array&quot;) = G(&quot;int_array&quot;);</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<h2>See Also</h2>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Code_Syntax.htm">Code 
+ Syntax</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Tokens.htm">Tokens</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="About_NLP++_Variables.htm">Variables</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Special_Variables.htm">Special 
+ Variables</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Functions_and_Actions.htm">Functions 
+ and Actions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Operators_and_Expressions.htm">Operators 
+ and Expressions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Statements_and_blocks.htm">Statements 
+ and Blocks</a></p>
+
+<p style="margin-bottom: 0;">&nbsp;</p>
+
+<p style="margin-bottom: 0;">&nbsp;</p>
+
+<p style="margin-bottom: 0;">&nbsp;</p>
+
+<p style="margin-bottom: 0;">&nbsp;</p>
+
+<p style="margin-bottom: 0;">&nbsp;</p>
+
+<p style="margin-bottom: 0;">&nbsp;</p>
+
+</body>
+
+</html>

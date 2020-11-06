@@ -1,0 +1,2639 @@
+<html>
+<!-- Sitemap 1.0 -->
+<object type="text/site properties">
+  <param name="FrameName" value="_blank">
+  <param name="SiteType" value="toc">
+  <param name="Window Styles" value="0x800422">
+  <param name="ExWindow Styles" value="0x100">
+</object>
+<ul>
+  <li><object type="text/sitemap">
+    <param name="Name" value="Text Analysis International">
+    <param name="Local" value="Text_Analysis_International/About_Text_Analysis_International.htm">
+  </object>
+  <ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="About Text Analysis International">
+      <param name="Local" value="Text_Analysis_International/About_Text_Analysis_International.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Contact Information">
+      <param name="Local" value="Text_Analysis_International/Contact_Information.htm">
+    </object>
+    </ul>
+  <li><object type="text/sitemap">
+    <param name="Name" value="Introduction">
+  </object>
+  <ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="What is VisualText?">
+      <param name="Local" value="Introduction/What_is_VisualText.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Why Use It?">
+      <param name="Local" value="Introduction/Why_Use_It_.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Deployment">
+      <param name="Local" value="Deployment.htm">
+      <param name="New" value="1">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="VisualText Quick Tour">
+      <param name="Local" value="Introduction/VisualText_Quick_Tour.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="System Requirements">
+      <param name="Local" value="Introduction/System_Requirements.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Intellectual Property Notices">
+      <param name="Local" value="Introduction/Intellectual_Property_Notices.htm">
+    </object>
+    </ul>
+  <li><object type="text/sitemap">
+    <param name="Name" value="Getting Help">
+  </object>
+  <ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="VisualText Help">
+      <param name="Local" value="Getting_Help/VisualText_Help.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Tours and Tutorials">
+      <param name="Local" value="Getting_Help/Tours_and_Tutorials.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Customer Support">
+      <param name="Local" value="Getting_Help/Customer_Support.htm">
+    </object>
+    </ul>
+  <li><object type="text/sitemap">
+    <param name="Name" value="Getting Started">
+    <param name="New" value="1">
+  </object>
+  <ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Installation">
+      <param name="Local" value="Getting_Started/Installation.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="New in Current Version">
+      <param name="Local" value="New_in_Current_Version.htm">
+      <param name="New" value="1">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Updating Analyzers and KBs">
+      <param name="Local" value="Updating_Analyzers_and_KBs.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Programming Notes and Issues">
+      <param name="Local" value="Getting_Started/Caveats_and_Limitations.htm">
+    </object>
+    </ul>
+  <li><object type="text/sitemap">
+    <param name="Name" value="VisualText Basics">
+    <param name="New" value="1">
+  </object>
+  <ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Writing Analyzers with VisualText">
+      <param name="Local" value="VisualText_Basics/Writing_Analyzers_with_VisualText.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="About the Analyzer Sequence">
+      <param name="Local" value="VisualText_Basics/About_the_analyzer_sequence.htm">
+      <param name="New" value="1">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="About the Knowledge Base">
+      <param name="Local" value="VisualText_Basics/About_the_Knowledge_Base.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="About Automated Rule Generation">
+      <param name="Local" value="VisualText_Basics/About_Automated_Rule_Generation.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Setting Rule Generation Properties">
+      <param name="Local" value="Setting_Rule_Generation_Properties.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="About KB Command Files">
+      <param name="Local" value="VisualText_Basics/About_KB_Command_Files.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="About Parse Trees">
+      <param name="Local" value="VisualText_Basics/About_Parse_Trees.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Standard Rule Format">
+      <param name="Local" value="VisualText_Basics/Standard_Rule_Format.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Structure of Analyzer Projects">
+      <param name="Local" value="VisualText_Basics/Structure_of_Analyzer_Projects.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Working with Debugging Tools">
+      <param name="Local" value="VisualText_Basics/DebuggingOverview.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Compiled and Standalone Analyzers">
+      <param name="Local" value="VisualText_Basics/Compiled_and_Standalone_Analyzers.htm">
+      <param name="New" value="1">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Working with Unicode">
+      <param name="Local" value="Working_with_Unicode.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Library Passes">
+      <param name="Local" value="VisualText_Basics/Library_Passes.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Analyzer Templates">
+      <param name="Local" value="Analyzer_Templates.htm">
+    </object>
+    </ul>
+  <li><object type="text/sitemap">
+    <param name="Name" value="VisualText Interface">
+    <param name="Local" value="VisualText_Interface/Interface_Intro.htm">
+  </object>
+  <ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Overview">
+      <param name="Local" value="VisualText_Interface/Interface_Intro.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Dialog Boxes">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Find in Files">
+        <param name="Local" value="VisualText_Interface/Windows/Find_in_Files_Dialog.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Pass Properties Dialog">
+        <param name="Local" value="Dialog_boxes/Pass_Properties_Dialog.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Replace in Files">
+        <param name="Local" value="VisualText_Interface/Windows/Replace_in_Files_Dialog.htm">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Log Messages">
+      <param name="Local" value="VisualText_Interface/Log_Window_Messages.htm">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Informational Messages">
+        <param name="Local" value="VisualText_Interface/Log_Window_Messages.htm#info_messages">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Error Messages">
+        <param name="Local" value="VisualText_Interface/Log_Window_Messages.htm#error_messages">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Main Menus">
+      <param name="Local" value="VisualText_Interface/Main_File_Menu.htm">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="File Menu">
+        <param name="Local" value="VisualText_Interface/Main_File_Menu.htm#File_Menu">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Edit Menu">
+        <param name="Local" value="VisualText_Interface/Main_Edit_Menu.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Analyzer Menu">
+        <param name="Local" value="VisualText_Interface/Main_Analyzer_Menu.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="KB Menu">
+        <param name="Local" value="VisualText_Interface/Main_KB_Menu.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="View Menu">
+        <param name="Local" value="VisualText_Interface/Main_View_Menu.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Browser Menu">
+        <param name="Local" value="VisualText_Interface/Main_Browser_Menu.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Parse Tree Menu">
+        <param name="Local" value="VisualText_Interface/Main_Parse_Tree_Menu.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Tools Menu">
+        <param name="Local" value="VisualText_Interface/Main_Tools_Menu.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Window Menu">
+        <param name="Local" value="VisualText_Interface/Main_Window_Menu.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Help Menu">
+        <param name="Local" value="VisualText_Interface/Main_Help_Menu.htm">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Popup Menus">
+      <param name="Local" value="VisualText_Interface/Popups/Popup_Menus.htm">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Popup Menus">
+        <param name="Local" value="VisualText_Interface/Popups/Popup_Menus.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Ana Tab Popup">
+        <param name="Local" value="Ana_Tab_Popup.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Gram Tab Popup">
+        <param name="Local" value="Gram_Tab_Popup.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Text Tab Popup">
+        <param name="Local" value="Text_Tab_Popup.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Parse Tree Popup">
+        <param name="Local" value="VisualText_Interface/Popups/Parse_Tree_Popup.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Pass File Popup">
+        <param name="Local" value="VisualText_Interface/Popups/Pass_File_Popup.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Text File Popup">
+        <param name="Local" value="VisualText_Interface/Popups/Text_File_Popup.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="KB Editor Popup">
+        <param name="Local" value="VisualText_Interface/Tools/KB_Editor.htm#using_kb_editor">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Toolbars">
+      <param name="Local" value="VisualText_Interface/Toolbars/Toolbar.htm">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Toolbar Intro">
+        <param name="Local" value="VisualText_Interface/Toolbars/Toolbar.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Main Toolbar">
+        <param name="Local" value="VisualText_Interface/Toolbars/Main_Toolbar.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Tab Toolbar">
+        <param name="Local" value="VisualText_Interface/Toolbars/Tab_Toolbar.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Browser Toolbar">
+        <param name="Local" value="VisualText_Interface/Toolbars/Browser_Toolbar.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Workspace Toolbar">
+        <param name="Local" value="VisualText_Interface/Toolbars/Workspace_Toolbar.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Debug Toolbar">
+        <param name="Local" value="VisualText_Interface/Toolbars/Debug_Toolbar.htm">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Tools">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="ASCII Table">
+        <param name="Local" value="VisualText_Interface/Tools/Tools_ASCII_Table.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Attribute Editor">
+        <param name="Local" value="VisualText_Interface/Tools/Attribute_Editor.htm">
+        <param name="New" value="1">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Character Viewer">
+        <param name="Local" value="VisualText_Interface/Tools/Tools_Character_Viewer.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Dictionary Lookup">
+        <param name="Local" value="VisualText_Interface/Tools/Tools_DictionaryLookup.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Dictionize">
+        <param name="Local" value="VisualText_Interface/Tools/Tools_Dictionize.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Email Tool">
+        <param name="Local" value="VisualText_Interface/Tools/Tools_Email_Tool.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Hex Viewer">
+        <param name="Local" value="VisualText_Interface/Tools/Tools_Hex_Viewer.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Jumble Tool">
+        <param name="Local" value="VisualText_Interface/Tools/Tools_Jumble.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="KB Editor">
+        <param name="Local" value="VisualText_Interface/Tools/KB_Editor.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Mask Tool">
+        <param name="Local" value="VisualText_Interface/Tools/Tools_Mask_Tool.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Text File Info">
+        <param name="Local" value="VisualText_Interface/Tools/Tools_Text_File_Info.htm">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Windows">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Tab Window">
+        <param name="Local" value="VisualText_Interface/Tab.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Log Window">
+        <param name="Local" value="Log_Window.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Find Window">
+        <param name="Local" value="Find_Window.htm">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Workspace Windows">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Parse Tree">
+        <param name="Local" value="Parse_Tree.htm">
+      </object>
+      </ul>
+    </ul>
+  <li><object type="text/sitemap">
+    <param name="Name" value="Using VisualText">
+  </object>
+  <ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Creating Analyzer Projects">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Creating Analyzers">
+        <param name="Local" value="Using_VisualText/Analyzers/Creating_analyzers.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Opening Analyzers">
+        <param name="Local" value="Using_VisualText/Analyzers/Opening_analyzers.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Saving Analyzers">
+        <param name="Local" value="Using_VisualText/Analyzers/Saving_analyzers.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Closing Analyzers">
+        <param name="Local" value="Using_VisualText/Analyzers/Closing_analyzers.htm">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Hand Building Pass Files">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Adding Passes">
+        <param name="Local" value="Using_VisualText/Analyzer_Sequence/Hand-Built_Pass_Files/Adding_passes.htm">
+        <param name="New" value="1">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Editing Pass Files">
+        <param name="Local" value="Using_VisualText/Analyzer_Sequence/Hand-Built_Pass_Files/Editing_pass_files.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Moving Passes">
+        <param name="Local" value="Using_VisualText/Analyzer_Sequence/Hand-Built_Pass_Files/Moving_passes.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Opening Pass Files">
+        <param name="Local" value="Using_VisualText/Analyzer_Sequence/Opening_Pass_Files.htm">
+        <param name="New" value="1">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Inactivating Passes">
+        <param name="Local" value="Using_VisualText/Hand_Building_Pass_Files/Inactivating_a_pass.htm">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Automatically Generating Pass Files">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Adding Stub Concepts">
+        <param name="Local" value="Using_VisualText/Automatically_Generating_Pass_Files/Adding_stub_regions.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Adding Rule Concepts">
+        <param name="Local" value="Using_VisualText/Automatically_Generating_Pass_Files/Adding_rule_concepts.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Adding Folder Concepts">
+        <param name="Local" value="Using_VisualText/Automatically_Generating_Pass_Files/Adding_folders.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Adding Samples to Rule Concepts">
+        <param name="Local" value="Using_VisualText/Automatically_Generating_Pass_Files/Adding_samples_to_rule_concepts.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Adding Label Concepts">
+        <param name="Local" value="Using_VisualText/Automatically_Generating_Pass_Files/Adding_Label_Concepts.htm">
+        <param name="New" value="1">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Setting Concept Properties">
+        <param name="Local" value="Using_VisualText/Automatically_Generating_Pass_Files/Setting_concept_properties.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Running the Rule Generator">
+        <param name="Local" value="Using_VisualText/Automatically_Generating_Pass_Files/Running_the_Rule_Generator.htm">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Working with Text Files">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="About Text Files">
+        <param name="Local" value="Using_VisualText/Text_Files/About_Text_Files.htm">
+        <param name="New" value="1">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Adding New Files">
+        <param name="Local" value="Using_VisualText/Text_Files/Adding_new_text_files_to_a_project.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Adding Existing Files">
+        <param name="Local" value="Using_VisualText/Text_Files/Adding_existing_text_files_to_a_project.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Opening Files">
+        <param name="Local" value="Using_VisualText/Text_Files/Opening_Text_Tab_Files.htm">
+        <param name="New" value="1">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Deleting Files">
+        <param name="Local" value="Using_VisualText/Text_Files/Deleting_text_files.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Navigating Among Files">
+        <param name="Local" value="Using_VisualText/Text_Files/Navigating_Among_Text_Files.htm">
+        <param name="New" value="1">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Running Analyzers">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Running Analyzers">
+        <param name="Local" value="Using_VisualText/Running_Analyzers/Running_Analyzer_on_Single_File.htm">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Viewing Parse Trees">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Viewing Parse Trees">
+        <param name="Local" value="Using_VisualText/ParseTrees/ViewingParseTree.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Viewing Final Trees">
+        <param name="Local" value="Using_VisualText/ParseTrees/ViewingFinalTrees.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Viewing Concept Trees">
+        <param name="Local" value="Using_VisualText/ParseTrees/ViewingConceptTree.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Viewing Intermediate Trees">
+        <param name="Local" value="Using_VisualText/ParseTrees/ViewingIntermediateTrees.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Viewing Partial Trees">
+        <param name="Local" value="Using_VisualText/ParseTrees/ViewingPartialTrees.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Viewing Parse Tree Matches">
+        <param name="Local" value="Using_VisualText/ParseTrees/ViewingParseTreeMatches.htm">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Working with Debugging Tools">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Using Highlighting">
+        <param name="Local" value="Using_VisualText/Working_with_Debugging_Tools/Using_highlighting.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Using Page Mode">
+        <param name="Local" value="Using_VisualText/Working_with_Debugging_Tools/PageMode.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Using Dump Files">
+        <param name="Local" value="Using_VisualText/Working_with_Debugging_Tools/DumpFiles.htm">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Working with the Knowledge Base">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Using the KB Editor">
+        <param name="Local" value="Using_VisualText/Working_with_Knowledge_Base/Using_the_KB_Editor.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Using the Phrase Tool">
+        <param name="Local" value="Using_VisualText/Working_with_Knowledge_Base/Opening_the_Phrase_Tool.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Using the Attribute Editor">
+        <param name="Local" value="Using_the_Attribute_Editor.htm">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Importing Databases">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Importing Word Lists to the Dictionary Hierarchy">
+        <param name="Local" value="Using_VisualText/Importing_Databases_to_KB/Importing_Word_Lists_to_the_Dictionary_Hierarchy.htm">
+      </object>
+      </ul>
+    </ul>
+  <li><object type="text/sitemap">
+    <param name="Name" value="NLP++">
+    <param name="Local" value="NLP_PP_Stuff/About_NLP++.htm">
+  </object>
+  <ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="About NLP++">
+      <param name="Local" value="NLP_PP_Stuff/About_NLP++.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Pass Files">
+      <param name="Local" value="NLP_PP_Stuff/About_Pass_Files.htm">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="About Pass Files">
+        <param name="Local" value="NLP_PP_Stuff/About_Pass_Files.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Pass File Zones">
+      </object>
+      <ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Declare Zone">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Declare Zone">
+            <param name="Local" value="Declare.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="DECL Region">
+            <param name="Local" value="DECL.htm">
+          </object>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Code Zone">
+          <param name="Local" value="NLP_PP_Stuff/Code_Zone.htm">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Code Zone">
+            <param name="Local" value="NLP_PP_Stuff/Code_Zone.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="CODE Region">
+            <param name="Local" value="CODE.htm">
+          </object>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Context Zone">
+          <param name="Local" value="NLP_PP_Stuff/Context_Zone.htm">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Context Zone">
+            <param name="Local" value="NLP_PP_Stuff/Context_Zone.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="SELECT Region">
+            <param name="Local" value="SELECT.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="NODES Selector">
+            <param name="Local" value="NODES.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="PATH Selector">
+            <param name="Local" value="PATH.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="MULTI Selector">
+            <param name="Local" value="MULTI.htm">
+          </object>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Minipass Zone">
+          <param name="Local" value="NLP_PP_Stuff/Minipass_Zone.htm">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Minipass Zone">
+            <param name="Local" value="NLP_PP_Stuff/Minipass_Zone.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="RECURSE Region">
+            <param name="Local" value="RECURSE.htm">
+          </object>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Grammar Zone">
+          <param name="Local" value="NLP_PP_Stuff/Grammar_Zone.htm">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Grammar Zone">
+            <param name="Local" value="NLP_PP_Stuff/Grammar_Zone.htm">
+          </object>
+          </ul>
+        </ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Grammar Region">
+        <param name="Local" value="NLP_PP_Stuff/Grammar_Region.htm">
+      </object>
+      <ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Grammar Region">
+          <param name="Local" value="NLP_PP_Stuff/Grammar_Region.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="PRE Region">
+          <param name="Local" value="PRE.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="CHECK Region">
+          <param name="Local" value="CHECK.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="POST Region">
+          <param name="Local" value="POST.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="RULES Region">
+          <param name="Local" value="RULES.htm">
+        </object>
+        </ul>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Code Syntax">
+      <param name="Local" value="NLP_PP_Stuff/Code_Syntax.htm">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Code Syntax">
+        <param name="Local" value="NLP_PP_Stuff/Code_Syntax.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Tokens">
+        <param name="Local" value="NLP_PP_Stuff/Tokens.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Variables">
+        <param name="Local" value="NLP_PP_Stuff/About_NLP++_Variables.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Data Types">
+        <param name="Local" value="NLP_PP_Stuff/Variable_types.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Special Variables">
+        <param name="Local" value="NLP_PP_Stuff/Special_Variables.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Functions and Actions">
+        <param name="Local" value="NLP_PP_Stuff/Functions_and_Actions.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Operators and Expressions">
+        <param name="Local" value="NLP_PP_Stuff/Operators_and_Expressions.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Statements and Blocks">
+        <param name="Local" value="NLP_PP_Stuff/Statements_and_blocks.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Special Variables">
+      </object>
+      <ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="File Variables">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$apppath">
+            <param name="Local" value="$apppath.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$input">
+            <param name="Local" value="$input.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$inputhead">
+            <param name="Local" value="$inputhead.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$inputname">
+            <param name="Local" value="$inputname.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$inputpath">
+            <param name="Local" value="$inputpath.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$inputtail">
+            <param name="Local" value="$inputtail.htm">
+          </object>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Letter Case Variables">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$allcaps">
+            <param name="Local" value="$allcaps.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$cap">
+            <param name="Local" value="$cap.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$lowercase">
+            <param name="Local" value="$lowercase.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$mixcap">
+            <param name="Local" value="$mixcap.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$uppercase">
+            <param name="Local" value="$uppercase.htm">
+          </object>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Parser Variables">
+          <param name="New" value="1">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$passnum">
+            <param name="Local" value="$passnum.htm">
+            <param name="New" value="1">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$rulenum">
+            <param name="Local" value="$rulenum.htm">
+            <param name="New" value="1">
+          </object>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Test Variables">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$end">
+            <param name="Local" value="$end.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$exists">
+            <param name="Local" value="$exists.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$start">
+            <param name="Local" value="$start.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$unknown">
+            <param name="Local" value="$unknown.htm">
+          </object>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Text Variables">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$length">
+            <param name="Local" value="$length.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$oend">
+            <param name="Local" value="$oend.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$ostart">
+            <param name="Local" value="$ostart.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$raw">
+            <param name="Local" value="$raw.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$text">
+            <param name="Local" value="$text.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$treeraw">
+            <param name="Local" value="$treeraw.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$treetext">
+            <param name="Local" value="$treetext.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="$xmltext">
+            <param name="Local" value="$xmltext.htm">
+          </object>
+          </ul>
+        </ul>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Rule Syntax">
+      <param name="Local" value="NLP_PP_Stuff/Rule_syntax.htm">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Rule Syntax">
+        <param name="Local" value="NLP_PP_Stuff/Rule_syntax.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Special Rule Elements">
+        <param name="Local" value="NLP_PP_Stuff/Special_rule_elements.htm">
+      </object>
+      <ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Special Rule Elements">
+          <param name="Local" value="NLP_PP_Stuff/Special_rule_elements.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="_xALPHA">
+          <param name="Local" value="_xALPHA.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="_xANY">
+          <param name="Local" value="_xANY.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="_xBLANK">
+          <param name="Local" value="_xBLANK.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="_xCAP">
+          <param name="Local" value="_xCAP.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="_xCTRL">
+          <param name="Local" value="_xCTRL.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="_xCAPLET">
+          <param name="Local" value="_xCAPLET.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="_xEND">
+          <param name="Local" value="_xEND.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="_xEOF">
+          <param name="Local" value="_xEOF.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="_xLET">
+          <param name="Local" value="_xLET.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="_xNIL">
+          <param name="Local" value="_xNIL.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="_xNUM">
+          <param name="Local" value="_xNUM.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="_xPUNCT">
+          <param name="Local" value="_xPUNCT.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="_xSTART">
+          <param name="Local" value="_xSTART.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="_xWHITE">
+          <param name="Local" value="_xWHITE.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="_xWILD">
+          <param name="Local" value="_xWILD.htm">
+        </object>
+        </ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Rule Element Modifiers">
+      </object>
+      <ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Rule Element Modifiers">
+          <param name="Local" value="NLP_PP_Stuff/Rule_Element_Modifiers.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Phrase Element Modifiers">
+          <param name="Local" value="NLP_PP_Stuff/Phrase_element_modifiers.htm">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Phrase Element Modifiers">
+            <param name="Local" value="NLP_PP_Stuff/Phrase_element_modifiers.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="except">
+            <param name="Local" value="except.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="fails">
+            <param name="Local" value="fails.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="gp">
+            <param name="Local" value="gp.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="layer">
+            <param name="Local" value="layer.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="lookahead">
+            <param name="Local" value="lookahead.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="max">
+            <param name="Local" value="max.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="match">
+            <param name="Local" value="match.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="min">
+            <param name="Local" value="min.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="nest">
+            <param name="Local" value="nest.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="one">
+            <param name="Local" value="one.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="optional">
+            <param name="Local" value="optional.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="plus">
+            <param name="Local" value="plus.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="rename">
+            <param name="Local" value="rename.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="singlet">
+            <param name="Local" value="singlet.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="star">
+            <param name="Local" value="star.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="t">
+            <param name="Local" value="t.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="tree">
+            <param name="Local" value="tree.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="trig">
+            <param name="Local" value="trig.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="trigger">
+            <param name="Local" value="trigger.htm">
+          </object>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Suggested Element Modifier">
+          <param name="Local" value="NLP_PP_Stuff/Suggested_element_modifiers.htm">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Suggested Element Modifiers">
+            <param name="Local" value="NLP_PP_Stuff/Suggested_element_modifiers.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="base">
+            <param name="Local" value="base.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="layer">
+            <param name="Local" value="layer.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="unsealed">
+            <param name="Local" value="unsealed.htm">
+          </object>
+          </ul>
+        </ul>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Predefined Functions">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Actions">
+        <param name="Local" value="NLP_PP_Stuff/Actions.htm">
+      </object>
+      <ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Actions">
+          <param name="Local" value="NLP_PP_Stuff/Actions.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="CODE Action">
+          <param name="Local" value="NLP_PP_Stuff/AT-CODE_Actions.htm">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="CODE Action">
+            <param name="Local" value="NLP_PP_Stuff/AT-CODE_Actions.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Variable Actions">
+          </object>
+          <ul>
+            <li><object type="text/sitemap">
+              <param name="Name" value="gtolower">
+              <param name="Local" value="gtolower.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="guniq">
+              <param name="Local" value="guniq.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="lookup">
+              <param name="Local" value="lookup.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="sortvals">
+              <param name="Local" value="sortvals.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="varstrs">
+              <param name="Local" value="varstrs.htm">
+            </object>
+            </ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Print Actions">
+          </object>
+          <ul>
+            <li><object type="text/sitemap">
+              <param name="Name" value="fileout">
+              <param name="Local" value="fileout.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="fprintvar">
+              <param name="Local" value="fprintvar.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="gdump">
+              <param name="Local" value="gdump.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="print">
+              <param name="Local" value="print.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="printvar">
+              <param name="Local" value="printvar.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="prlit">
+              <param name="Local" value="prlit.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="startout">
+              <param name="Local" value="startout.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="stopout">
+              <param name="Local" value="stopout.htm">
+            </object>
+            </ul>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="PRE Action">
+          <param name="Local" value="NLP_PP_Stuff/AT-PRE_Actions.htm">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="PRE Action">
+            <param name="Local" value="NLP_PP_Stuff/AT-PRE_Actions.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="cap">
+            <param name="Local" value="cap.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="debug">
+            <param name="Local" value="Functions/Regions_and_Rule_Actions/Pre_Actions/debug.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="length">
+            <param name="Local" value="length.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="lengthr">
+            <param name="Local" value="lengthr.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="lowercase">
+            <param name="Local" value="lowercase.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="regexp">
+            <param name="Local" value="regexp.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="regexpi">
+            <param name="Local" value="regexpi.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="numrange">
+            <param name="Local" value="numrange.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="unknown">
+            <param name="Local" value="unknown.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="uppercase">
+            <param name="Local" value="uppercase.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="var">
+            <param name="Local" value="var.htm">
+            <param name="New" value="1">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="vareq">
+            <param name="Local" value="vareq.htm">
+            <param name="New" value="1">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="varne">
+            <param name="Local" value="varne.htm">
+            <param name="New" value="1">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="varz">
+            <param name="Local" value="varz.htm">
+            <param name="New" value="1">
+          </object>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="CHECK Action">
+          <param name="Local" value="NLP_PP_Stuff/AT-CHECK_Actions.htm">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="CHECK Action">
+            <param name="Local" value="NLP_PP_Stuff/AT-CHECK_Actions.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="or">
+            <param name="Local" value="or.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="fail">
+            <param name="Local" value="Functions/Miscellaneous_Functions/fail.htm">
+          </object>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="POST Action">
+          <param name="Local" value="NLP_PP_Stuff/AT-POST_Actions.htm">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="POST Action">
+            <param name="Local" value="NLP_PP_Stuff/AT-POST_Actions.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Node Actions">
+          </object>
+          <ul>
+            <li><object type="text/sitemap">
+              <param name="Name" value="pncopyvars">
+              <param name="Local" value="NLP_PP_Stuff/pncopyvars_action.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="setbase">
+              <param name="Local" value="setbase.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="setunsealed">
+              <param name="Local" value="setunsealed.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="xrename">
+              <param name="Local" value="xrename.htm">
+            </object>
+            </ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Reduce Actions">
+          </object>
+          <ul>
+            <li><object type="text/sitemap">
+              <param name="Name" value="excise">
+              <param name="Local" value="excise.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="group">
+              <param name="Local" value="group_action.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="listadd">
+              <param name="Local" value="listadd.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="merge">
+              <param name="Local" value="merge.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="merger">
+              <param name="Local" value="merger.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="noop">
+              <param name="Local" value="noop.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="setlookahead">
+              <param name="Local" value="setlookahead.htm">
+              <param name="New" value="1">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="single">
+              <param name="Local" value="single.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="singler">
+              <param name="Local" value="singler.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="singlex">
+              <param name="Local" value="singlex.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="singlezap">
+              <param name="Local" value="singlezap.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="splice">
+              <param name="Local" value="splice.htm">
+            </object>
+            </ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Print Actions">
+          </object>
+          <ul>
+            <li><object type="text/sitemap">
+              <param name="Name" value="fprintgvar">
+              <param name="Local" value="fprintgvar.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="fprintnvar">
+              <param name="Local" value="fprintnvar.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="fprintxvar">
+              <param name="Local" value="fprintxvar.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="gdump">
+              <param name="Local" value="gdump.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="ndump">
+              <param name="Local" value="ndump.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="pranchor">
+              <param name="Local" value="pranchor.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="prchild">
+              <param name="Local" value="prchild.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="print">
+              <param name="Local" value="print.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="printr">
+              <param name="Local" value="printr.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="prlit">
+              <param name="Local" value="prlit.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="prrange">
+              <param name="Local" value="prrange.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="prtree">
+              <param name="Local" value="prtree.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="prxtree">
+              <param name="Local" value="prxtree.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="sdump">
+              <param name="Local" value="sdump.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="xdump">
+              <param name="Local" value="xdump.htm">
+            </object>
+            </ul>
+          </ul>
+        </ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Functions">
+        <param name="Local" value="NLP_PP_Stuff/Functions.htm">
+      </object>
+      <ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Functions">
+          <param name="Local" value="NLP_PP_Stuff/Functions.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Array Functions">
+          <param name="New" value="1">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Table of Array Functions">
+            <param name="Local" value="Table_of_Array_Functions.htm">
+            <param name="New" value="1">
+          </object>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Database Functions">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Table of Database Functions">
+            <param name="Local" value="Table_of_Database_Functions.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="dballocstmt">
+            <param name="Local" value="dballocstmt.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="dbbindcol">
+            <param name="Local" value="dbbindcol.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="dbclose">
+            <param name="Local" value="dbclose.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="dbexec">
+            <param name="Local" value="dbexec.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="dbexecstmt">
+            <param name="Local" value="dbexecstmt.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="dbfetch">
+            <param name="Local" value="dbfetch.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="dbfreestmt">
+            <param name="Local" value="dbfreestmt.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="dbopen">
+            <param name="Local" value="dbopen.htm">
+          </object>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Formatting and I/O Functions">
+          <param name="Local" value="Table_of_Formatting_and_I_O_Functions.htm">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Table of Formatting and I/O Functions">
+            <param name="Local" value="Table_of_Formatting_and_I_O_Functions.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="cbuf">
+            <param name="Local" value="cbuf.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="closefile">
+            <param name="Local" value="closefile.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="cout">
+            <param name="Local" value="cout.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="coutreset">
+            <param name="Local" value="coutreset.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="LJ">
+            <param name="Local" value="LJ.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="openfile">
+            <param name="Local" value="openfile.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="percentstr">
+            <param name="Local" value="percentstr.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="rightjustifynum">
+            <param name="Local" value="rightjustifynum.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="today">
+            <param name="Local" value="NLP_PP_Stuff/today_format.htm">
+          </object>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Knowledge Base Functions">
+          <param name="Local" value="Table_of_Knowledge_Base_Functions.htm">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Table of KB Functions">
+            <param name="Local" value="Table_of_Knowledge_Base_Functions.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Change">
+          </object>
+          <ul>
+            <li><object type="text/sitemap">
+              <param name="Name" value="attrchange">
+              <param name="Local" value="attrchange.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="movecleft">
+              <param name="Local" value="movecleft.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="movecright">
+              <param name="Local" value="movecright.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="renameattr">
+              <param name="Local" value="renameattr.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="renamechild">
+              <param name="Local" value="renamechild.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="renameconcept">
+              <param name="Local" value="renameconcept.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="replaceval">
+              <param name="Local" value="replaceval.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="sortchilds">
+              <param name="Local" value="sortchilds.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="sorthier">
+              <param name="Local" value="sorthier.htm">
+            </object>
+            </ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Command File">
+          </object>
+          <ul>
+            <li><object type="text/sitemap">
+              <param name="Name" value="kbdumptree">
+              <param name="Local" value="kbdumptree.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="take">
+              <param name="Local" value="take.htm">
+            </object>
+            </ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Dictionary">
+          </object>
+          <ul>
+            <li><object type="text/sitemap">
+              <param name="Name" value="addword">
+              <param name="Local" value="addword.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="dictfindword">
+              <param name="Local" value="dictfindword.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="dictgetword">
+              <param name="Local" value="dictgetword.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="dictfirst">
+              <param name="Local" value="dictfirst.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="dictnext">
+              <param name="Local" value="dictnext.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="findwordpath">
+              <param name="Local" value="findwordpath.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="wordindex">
+              <param name="Local" value="wordindex.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="wordpath">
+              <param name="Local" value="wordpath.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="rmword">
+              <param name="Local" value="rmword.htm">
+            </object>
+            </ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Find">
+          </object>
+          <ul>
+            <li><object type="text/sitemap">
+              <param name="Name" value="attrexists">
+              <param name="Local" value="attrexists.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="attrname">
+              <param name="Local" value="attrname.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="attrvals">
+              <param name="Local" value="attrvals.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="attrwithval">
+              <param name="Local" value="attrwithval.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="conceptname">
+              <param name="Local" value="conceptname.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="conceptpath">
+              <param name="Local" value="conceptpath.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="conval">
+              <param name="Local" value="conval.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="dictfindword">
+              <param name="Local" value="dictfindword.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="down">
+              <param name="Local" value="down.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="findattr">
+              <param name="Local" value="findattr.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="findattrs">
+              <param name="Local" value="findattrs.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="findconcept">
+              <param name="Local" value="findconcept.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="findhierconcept">
+              <param name="Local" value="findhierconcept.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="findroot">
+              <param name="Local" value="findroot.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="findvals">
+              <param name="Local" value="findvals.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="findwordpath">
+              <param name="Local" value="findwordpath.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="getconcept">
+              <param name="Local" value="getconcept.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="getconval">
+              <param name="Local" value="getconval.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="getnumval">
+              <param name="Local" value="getnumval.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="getstrval">
+              <param name="Local" value="getstrval.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="getsval">
+              <param name="Local" value="getsval.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="inheritval">
+              <param name="Local" value="inheritval.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="next">
+              <param name="Local" value="next.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="nextattr">
+              <param name="Local" value="nextattr.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="nextval">
+              <param name="Local" value="nextval.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="numval">
+              <param name="Local" value="numval.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="pathconcept">
+              <param name="Local" value="pathconcept.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="prev">
+              <param name="Local" value="prev.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="strval">
+              <param name="Local" value="strval.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="up">
+              <param name="Local" value="up.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="wordindex">
+              <param name="Local" value="wordindex.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="wordpath">
+              <param name="Local" value="wordpath.htm">
+            </object>
+            </ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Make">
+          </object>
+          <ul>
+            <li><object type="text/sitemap">
+              <param name="Name" value="addattr">
+              <param name="Local" value="addattr.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="addconval">
+              <param name="Local" value="addconval.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="addnumval">
+              <param name="Local" value="addnumval.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="addstrval">
+              <param name="Local" value="addstrval.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="addsval">
+              <param name="Local" value="addsval.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="addword">
+              <param name="Local" value="addword.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="getconcept">
+              <param name="Local" value="getconcept.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="makeconcept">
+              <param name="Local" value="makeconcept.htm">
+            </object>
+            </ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Phrase and Node">
+          </object>
+          <ul>
+            <li><object type="text/sitemap">
+              <param name="Name" value="addcnode">
+              <param name="Local" value="addcnode.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="addnode">
+              <param name="Local" value="addnode.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="findnode">
+              <param name="Local" value="findnode.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="findphrase">
+              <param name="Local" value="findphrase.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="firstnode">
+              <param name="Local" value="firstnode.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="lastnode">
+              <param name="Local" value="lastnode.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="listnode">
+              <param name="Local" value="listnode.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="makephrase">
+              <param name="Local" value="makephrase.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="nodeconcept">
+              <param name="Local" value="nodeconcept.htm">
+              <param name="New" value="1">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="nodeowner">
+              <param name="Local" value="nodeowner.htm">
+              <param name="New" value="1">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="phraselength">
+              <param name="Local" value="phraselength.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="renamenode">
+              <param name="Local" value="renamenode.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="rmcphrase">
+              <param name="Local" value="rmcphrase.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="rmnode">
+              <param name="Local" value="rmnode.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="rmphrase">
+              <param name="Local" value="rmphrase.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="sortphrase">
+              <param name="Local" value="sortphrase.htm">
+            </object>
+            </ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Remove">
+          </object>
+          <ul>
+            <li><object type="text/sitemap">
+              <param name="Name" value="prunephrases">
+              <param name="Local" value="prunephrases.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="rmattr">
+              <param name="Local" value="rmattr.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="rmattrs">
+              <param name="Local" value="rmattrs.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="rmattrval">
+              <param name="Local" value="rmattrval.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="rmchild">
+              <param name="Local" value="rmchild.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="rmchildren">
+              <param name="Local" value="rmchildren.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="rmconcept">
+              <param name="Local" value="rmconcept.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="rmval">
+              <param name="Local" value="rmval.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="rmvals">
+              <param name="Local" value="rmvals.htm">
+            </object>
+            <li><object type="text/sitemap">
+              <param name="Name" value="rmword">
+              <param name="Local" value="rmword.htm">
+            </object>
+            </ul>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Math Functions">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Table of Math Functions">
+            <param name="Local" value="Table_of_Math_Functions.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="logten">
+            <param name="Local" value="logten.htm">
+          </object>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Parse Tree Functions">
+          <param name="Local" value="Table_of_Parse_Tree_Functions.htm">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Table of Parse Tree Functions">
+            <param name="Local" value="Table_of_Parse_Tree_Functions.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="arraylength">
+            <param name="Local" value="arraylength.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="eltnode">
+            <param name="Local" value="eltnode.htm">
+            <param name="New" value="1">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="group">
+            <param name="Local" value="group.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="inputrange">
+            <param name="Local" value="inputrange.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="inputrangetofile">
+            <param name="Local" value="inputrangetofile.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="lasteltnode">
+            <param name="Local" value="lasteltnode.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="phraseraw">
+            <param name="Local" value="phraseraw.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="phrasetext">
+            <param name="Local" value="phrasetext.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="pncopyvars">
+            <param name="Local" value="pncopyvars.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="pndeletechilds">
+            <param name="Local" value="pndeletechilds.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="pndown">
+            <param name="Local" value="pndown.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="pninsert">
+            <param name="Local" value="pninsert.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="pnmakevar">
+            <param name="Local" value="pnmakevar.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="pnmove">
+            <param name="Local" value="pnmove.htm">
+            <param name="New" value="1">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="pnname">
+            <param name="Local" value="pnname.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="pnnext">
+            <param name="Local" value="pnnext.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="pnprev">
+            <param name="Local" value="pnprev.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="pnrename">
+            <param name="Local" value="pnrename.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="pnreplaceval">
+            <param name="Local" value="pnreplaceval.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="pnroot">
+            <param name="Local" value="pnroot.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="pnsingletdown">
+            <param name="Local" value="pnsingletdown.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="pnup">
+            <param name="Local" value="pnup.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="pnvar">
+            <param name="Local" value="pnvar.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="pnvarnames">
+            <param name="Local" value="pnvarnames.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="varinlist">
+            <param name="Local" value="varinlist.htm">
+          </object>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Special Functions">
+          <param name="Local" value="Table_of_Special_Functions.htm">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Table of Special Functions">
+            <param name="Local" value="Table_of_Special_Functions.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="batchstart">
+            <param name="Local" value="batchstart.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="debug">
+            <param name="Local" value="debug.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="exitpass">
+            <param name="Local" value="exitpass.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="exittopopup">
+            <param name="Local" value="exittopopup.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="fail">
+            <param name="Local" value="fail.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="findana">
+            <param name="Local" value="findana.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="getpopupdata">
+            <param name="Local" value="getpopupdata.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="hitconf">
+            <param name="Local" value="hitconf.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="interactive">
+            <param name="Local" value="interactive.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="mkdir">
+            <param name="Local" value="mkdir.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="permuten">
+            <param name="Local" value="permuten.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="sortconsbyattr">
+            <param name="Local" value="sortconsbyattr.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="succeed">
+            <param name="Local" value="succeed.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="system">
+            <param name="Local" value="system.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="today">
+            <param name="Local" value="today.htm">
+          </object>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Spelling Functions">
+          <param name="Local" value="Table_of_Spelling_Functions.htm">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Table of Spelling Functions">
+            <param name="Local" value="Table_of_Spelling_Functions.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="spellcandidates">
+            <param name="Local" value="spellcandidates.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="spellcorrect">
+            <param name="Local" value="spellcorrect.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="spellword">
+            <param name="Local" value="spellword.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strspellcandidate">
+            <param name="Local" value="strspellcandidate.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strspellcompare">
+            <param name="Local" value="strspellcompare.htm">
+          </object>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="String Functions">
+          <param name="Local" value="Table_of_String_Functions.htm">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Table of String Functions">
+            <param name="Local" value="Table_of_String_Functions.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="dejunk">
+            <param name="Local" value="dejunk.htm">
+            <param name="New" value="1">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="deaccent">
+            <param name="Local" value="deaccent.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="flt">
+            <param name="Local" value="flt.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="levenshtein">
+            <param name="Local" value="levenshtein.htm">
+            <param name="New" value="1">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="num">
+            <param name="Local" value="num.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="split">
+            <param name="Local" value="split.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="sqlstr">
+            <param name="Local" value="sqlstr.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="stem">
+            <param name="Local" value="stem.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="str">
+            <param name="Local" value="str.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strchar">
+            <param name="Local" value="strchar.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strchr">
+            <param name="Local" value="strchr.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strchrcount">
+            <param name="Local" value="strchrcount.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strclean">
+            <param name="Local" value="strclean.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strcontains">
+            <param name="Local" value="strcontains.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strcontainsnocase">
+            <param name="Local" value="strcontainsnocase.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strendswith">
+            <param name="Local" value="strendswith.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strequal">
+            <param name="Local" value="strequal.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strequalnocase">
+            <param name="Local" value="strequalnocase.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strescape">
+            <param name="Local" value="strescape.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strgreaterthan">
+            <param name="Local" value="strgreaterthan.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strisalpha">
+            <param name="Local" value="strisalpha.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strisdigit">
+            <param name="Local" value="strisdigit.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strislower">
+            <param name="Local" value="strislower.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strisupper">
+            <param name="Local" value="strisupper.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strlength">
+            <param name="Local" value="strlength.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strlessthan">
+            <param name="Local" value="strlessthan.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strnotequal">
+            <param name="Local" value="strnotequal.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strnotequalnocase">
+            <param name="Local" value="strnotequalnocase.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strpiece">
+            <param name="Local" value="strpiece.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strrchr">
+            <param name="Local" value="strrchr.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strsubst">
+            <param name="Local" value="strsubst.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strtolower">
+            <param name="Local" value="strtolower.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strtotitle">
+            <param name="Local" value="strtotitle.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strtoupper">
+            <param name="Local" value="strtoupper.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strtrim">
+            <param name="Local" value="strtrim.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strunescape">
+            <param name="Local" value="strunescape.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="strwrap">
+            <param name="Local" value="strwrap.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="suffix">
+            <param name="Local" value="suffix.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="unpackdirs">
+            <param name="Local" value="unpackdirs.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="xmlstr">
+            <param name="Local" value="xmlstr.htm">
+          </object>
+          </ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Web Functions">
+        </object>
+        <ul>
+          <li><object type="text/sitemap">
+            <param name="Name" value="Table_of_Web_Functions">
+            <param name="Local" value="Table_of_Web_Functions.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="resolveurl">
+            <param name="Local" value="resolveurl.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="urlbase">
+            <param name="Local" value="urlbase.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="urltofile">
+            <param name="Local" value="urltofile.htm">
+          </object>
+          </ul>
+        </ul>
+      </ul>
+    </ul>
+  <li><object type="text/sitemap">
+    <param name="Name" value="Tutorials">
+    <param name="Local" value="Tutorials/Tutorial_Introduction.htm">
+  </object>
+  <ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Tutorial Introduction">
+      <param name="Local" value="Tutorials/Tutorial_Introduction.htm">
+      <param name="New" value="1">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Tutorial 1 - Creating a New Analyzer">
+      <param name="Local" value="Tutorials/tutorial1/tutorial.html">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Startup">
+        <param name="Local" value="Tutorials/tutorial1/tutorial.html#startup">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Create Analyzer">
+        <param name="Local" value="Tutorials/tutorial1/tutorial.html#create_analyzer">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Main Windows">
+        <param name="Local" value="Tutorials/tutorial1/tutorial.html#Main_windows">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Log Window">
+        <param name="Local" value="Tutorials/tutorial1/tutorial.html#log_window">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Tab Window">
+        <param name="Local" value="Tutorials/tutorial1/tutorial.html#tabs_window">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Add Text File">
+        <param name="Local" value="Tutorials/tutorial1/tutorial.html#add_text">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Run Analyzer">
+        <param name="Local" value="Tutorials/tutorial1/tutorial.html#run_analyzer">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="View Parse Tree">
+        <param name="Local" value="Tutorials/tutorial1/tutorial.html#view_parse_tree">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Tutorial 2 - Rules from Sample Data">
+      <param name="Local" value="Tutorials/tutorial2/tutorial2.html">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Create a Stub">
+        <param name="Local" value="Tutorials/tutorial2/tutorial2.html#t201">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Add Rule Concepts">
+        <param name="Local" value="Tutorials/tutorial2/tutorial2.html#t203">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Add Folder Concept">
+        <param name="Local" value="Tutorials/tutorial2/tutorial2.html#t2025">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Sample the Data">
+        <param name="Local" value="Tutorials/tutorial2/tutorial2.html#t204">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Set Concept Properties">
+        <param name="Local" value="Tutorials/tutorial2/tutorial2.html#t202">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Generate Rules">
+        <param name="Local" value="Tutorials/tutorial2/tutorial2.html#t205">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Run Analyzer &amp; Inspect Parse Tree">
+        <param name="Local" value="Tutorials/tutorial2/tutorial2.html#t208">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Tutorial 3 - Rules by Hand">
+      <param name="Local" value="Tutorials/tutorial3/tutorial3.html">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Create New Pass in Analyzer Sequence">
+        <param name="Local" value="Tutorials/tutorial3/tutorial3.html#Create_New_Pass">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Edit Default Rules">
+        <param name="Local" value="Tutorials/tutorial3/tutorial3.html#Edit_Default_Rule">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Run Analyzer">
+        <param name="Local" value="Tutorials/tutorial3/tutorial3.html#Run_New_Rule">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Inspect Log Window">
+        <param name="Local" value="Tutorials/tutorial3/tutorial3.html#inspect_log_window">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="View Parse Tree">
+        <param name="Local" value="Tutorials/tutorial3/tutorial3.html#View_Parse_Tree">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Adding Multiple Rules to a Pass">
+        <param name="Local" value="Tutorials/tutorial3/tutorial3.html#Adding_Multiple_Rules">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Create a Possessive Pass (Escape Characters)">
+        <param name="Local" value="Tutorials/tutorial3/tutorial3.html#Create_Possessive">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Inspect Final and Intermediate Parses">
+        <param name="Local" value="Tutorials/tutorial3/tutorial3.html#Final_Intermediate">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Tutorial 4 - Input/Output">
+      <param name="Local" value="Tutorials/tutorial4/tutorial4.html">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Add Top Level Folder">
+        <param name="Local" value="Tutorials/tutorial4/tutorial4.html#Add_Top_Folder">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Create Input File for Storing Lists">
+        <param name="Local" value="Tutorials/tutorial4/tutorial4.html#t401">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Create New Concept for Input Data">
+        <param name="Local" value="Tutorials/tutorial4/tutorial4.html#t402">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Associate File with Concept">
+        <param name="Local" value="Tutorials/tutorial4/tutorial4.html#t403">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Generate Rules">
+        <param name="Local" value="Tutorials/tutorial4/tutorial4.html#t404">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="More on Rule Syntax">
+        <param name="Local" value="Tutorials/tutorial4/tutorial4.html#t405">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Create Another Input Example">
+        <param name="Local" value="Tutorials/tutorial4/tutorial4.html#t406">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Alter Existing Rules to Handle New Concept">
+        <param name="Local" value="Tutorials/tutorial4/tutorial4.html#t407">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Print Something To Output File">
+        <param name="Local" value="Tutorials/tutorial4/tutorial4.html#t408">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Inspect Output File">
+        <param name="Local" value="Tutorials/tutorial4/tutorial4.html#t409">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Navigate Input Files">
+        <param name="Local" value="Tutorials/tutorial4/tutorial4.html#Navigate_the_Input_Files">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Highlight Matched Concepts">
+        <param name="Local" value="Tutorials/tutorial4/tutorial4.html#Highlight_Toggle">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Tutorial 5 - NLP++">
+      <param name="Local" value="Tutorials/tutorial5/tutorial5.html">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="About NLP++">
+        <param name="Local" value="Tutorials/tutorial5/tutorial5.html#about">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Five Variable Types">
+        <param name="Local" value="Tutorials/tutorial5/tutorial5.html#Four_Variable_Types">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Load with Recent Analyzers">
+        <param name="Local" value="Tutorials/tutorial5/tutorial5.html#Recent_Analyzers">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Global Variables">
+        <param name="Local" value="Tutorials/tutorial5/tutorial5.html#t501">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Nodes Variables">
+        <param name="Local" value="Tutorials/tutorial5/tutorial5.html#node_variable">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Build A List from the Input">
+        <param name="Local" value="Tutorials/tutorial5/tutorial5.html#Build_list">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Variables of  Suggested and Context Nodes">
+        <param name="Local" value="Tutorials/tutorial5/tutorial5.html#t502">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Find Grammatical Roles: X Variables">
+        <param name="Local" value="Tutorials/tutorial5/tutorial5.html#Gramm_roles">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="@PATH Selector">
+        <param name="Local" value="Tutorials/tutorial5/tutorial5.html#path">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Print Out the Results">
+        <param name="Local" value="Tutorials/tutorial5/tutorial5.html#print_results">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Tutorial 6 - More on Rules">
+      <param name="Local" value="Tutorials/tutorial6/tutorial6.html">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Recursion">
+        <param name="Local" value="Tutorials/tutorial6/tutorial6.html#Recursion">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Set Pass Properties">
+        <param name="Local" value="Tutorials/tutorial6/tutorial6.html#Set_pass_properties">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Simplify NP Rule">
+        <param name="Local" value="Tutorials/tutorial6/tutorial6.html#simplify_np">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="A Better List">
+        <param name="Local" value="Tutorials/tutorial6/tutorial6.html#better_list">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Optional Rule Elements">
+        <param name="Local" value="Tutorials/tutorial6/tutorial6.html#optional_elements">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Special Rule Elements - Variables">
+        <param name="Local" value="Tutorials/tutorial6/tutorial6.html#xwild">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Pass Regions">
+        <param name="Local" value="Tutorials/tutorial6/tutorial6.html#pass_regions">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Finding Unknown Acronyms - PRE Region">
+        <param name="Local" value="Tutorials/tutorial6/tutorial6.html#acrobyms">
+      </object>
+      </ul>
+    </ul>
+  <li><object type="text/sitemap">
+    <param name="Name" value="Sample Analyzers">
+    <param name="Local" value="Sample_Analyzers/Corporate_Analyzer.htm">
+  </object>
+  <ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Corporate Analyzer">
+      <param name="Local" value="Sample_Analyzers/Corporate_Analyzer.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Database1 Analyzer">
+      <param name="Local" value="Sample_Analyzers/Database1_Analyzer.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="DictTok_Sample">
+      <param name="Local" value="DictTok_Sample.htm">
+      <param name="New" value="1">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="DotNetTest">
+      <param name="Local" value="DotNetTest.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="GenTxt General Analyzer">
+      <param name="Local" value="GenTxt.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="POStagger">
+      <param name="Local" value="POStagger.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="PROG_C++_Analyzer">
+      <param name="Local" value="PROG_Analyzer.htm">
+      <param name="New" value="1">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Resume_Analyzer">
+      <param name="Local" value="Resume_Analyzer.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="TAIParse">
+      <param name="Local" value="TAIParse.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Unicode_Test">
+      <param name="Local" value="Unicode_Test.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="VB_to_VT">
+      <param name="Local" value="VB_to_VT.htm">
+    </object>
+    </ul>
+</ul>
+</html>

@@ -1,0 +1,151 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>openfile</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=837>
+<meta name=layout-width content=461>
+<meta name=date content="08 10, 2001 11:55:34 AM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF=default.css>
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>openfile</h1>
+
+<h2>Purpose</h2>
+
+<p>Open output file stream.</p>
+
+<h2>Syntax</h2>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">returnedOstream = openfile(path_str [, mode_str [, mode_str [, mode_str]]] )</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">returnedOstream - type: ostream<br>
+path_str - type: str</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">mode_str - type: str</p>
+
+<h2>Returns</h2>
+
+<h2>Remarks</h2>
+
+<p>Zero to three mode strings selected from: 1) &quot;app&quot; = append; 
+ 2) &quot;ate&quot; = special C++ append; 3) &quot;binary&quot; = open 
+ in binary mode (text is default).</p>
+
+<p><span style="font-family: monospace;">openfile</span> is analogous to 
+ C++ open file function. </p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 90%;
+				border-spacing: 0px;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=90%>
+
+<tr>
+<td COLSPAN=2
+	style="background-color: #FFFFD5;
+			x-cell-content-align: TOP;
+			width: 97%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#FFFFD5>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #008080;"
+														color=#008080>WARNING:</font><font 
+ style="color: #800000;"
+	color=#800000> </font></span><span style="color: #008080;">Default 
+ mode is OVERWRITE, not APPEND. Unlike </span><span style="font-family: monospace; color: #008080;">fileout()</span><span 
+ style="color: #008080;">, does not create a global variable for the file 
+ stream.</span> </td>
+<td_null></tr>
+</table>
+
+<p>In specifying file names, double slashes should be used. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->To 
+ specify output.txt use <span style="font-family: monospace;">c:\\output.txt</span>, 
+ not <span style="font-family: monospace;">c:\output.txt</span>. </p>
+
+<p>Files should not be placed in the application's input folder since VisualText 
+ wipes out the files after each text analysis. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For 
+ example, a file called blob.txt in the folder c:\\apps\input\\eg1.txt_log 
+ will get deleted each time the text gets analyzed.</p>
+
+<h2>Example</h2>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">@CODE <br>
+G(&quot;file&quot;) = <span style="font-weight: bold;">openfile</span>(&quot;c:\\tmp.txt&quot;);<span style="font-weight: normal;
+	x-text-underline: off;
+	x-text-overline: off;
+	x-text-line-through: off;
+	/*begin!kadov{{*/ text-decoration: none none none; /*}}end!kadov*/ "><br>
+closefile</span>(G(&quot;file&quot;));<br>
+@@CODE</p>
+
+<h2>See Also</h2>
+
+<p><a href="closefile.htm">closefile</a>, <a href="Table_of_Formatting_and_I_O_Functions.htm">Formatting 
+ and I/O Functions</a></p>
+
+<p style="margin-bottom: 0;">&nbsp; </p>
+
+</body>
+
+</html>

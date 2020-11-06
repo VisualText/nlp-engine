@@ -1,0 +1,1480 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>tutorial2</title>
+
+<!--(Meta)==========================================================-->
+
+<meta HTTP-EQUIV=Content-Type CONTENT="text/html; charset=windows-1252">
+<meta NAME=Author CONTENT="Phil Shinn">
+<meta name=date content="11 17, 2001 0:40:09 AM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=11678>
+<meta name=layout-width content=1027>
+
+
+<!--(Links)=========================================================-->
+
+<!-- saved from url=(0022)http://internet.e-mail -->
+ <link REL="StyleSheet" HREF="../../default.css">
+
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Tutorial 2 - Rules From Sample Data</h1>
+
+<p>In Tutorial 1, you saw an analyzer with a single pass, the tokenize 
+ pass. Recall that the tokenize pass is nothing more than a set of rules 
+ and instructions that tell the analyzer what to do. In Tutorial 2, we 
+ will learn more about generating rules in VisualText™ to create passes 
+ in the analyzer sequence.</p>
+
+<p>VisualText supports two basic ways of generating rules in pass files: 
+ hand-built and automatic.&nbsp; In this tutorial, we introduce automatic 
+ rule generation. Automatic rule generation results in the automatic creation 
+ of passes in the analyzer sequence. In order to do this, we will also 
+ learn about adding and sampling texts. Any text analyzer can be easily 
+ enhanced by adding samples as shown in this tutorial. Here are the steps 
+ for setting up this capability:</p>
+
+<ul>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;">Create <span style="font-weight: bold;"><span 
+ style="font-weight: normal;">a placeholder, or </span><span style="font-weight: bold;">stub</span><span 
+ style="font-weight: normal;">, for the automatically generated passes</span></span></p></li>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;">Create a set of <span 
+ style="font-weight: bold;">concepts</span>, each representing a set of 
+ rules</p></li>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;">Populate the concepts 
+ with <span style="font-weight: bold;">samples</span></p></li>
+	
+	<li class=kadov-p
+		class=kadov-p><span style="font-weight: bold;">Generate</span> 
+ rules from the sample data</li>
+</ul>
+
+<p>After we have VisualText generate our rules, we will analyze our text 
+ and inspect the results.</p>
+
+<p>Let's start with the analyzer we finished in Tutorial 1.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Double click on the VisualText icon on your desktop.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Load the analyzer you built in Tutorial 1, this time 
+ by selecting <span style="font-weight: bold;">File &gt; Recent Analyzers</span> 
+ and selecting</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">C:\apps\myanalyzerfolder\myanalyzer</p>
+
+<p>If you want to start with the ready-made analyzer in the docs folder, 
+ unzip the contents of:</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">C:\Program Files\TextAI\VisualText\docs\tutorial1\myAnalyzer1.zip</p>
+
+<p>and place the <span style="font-weight: bold;">myAnalyzer</span> folder 
+ in the working directory:</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">C:\apps\myAnalyzerFolder</p>
+
+<h2><a NAME=t201></a>Create a Stub</h2>
+
+<p>Our first step is to create a <span style="font-weight: bold;">stub</span>. 
+ A <span style="font-weight: bold;">stub</span> is a placeholder for a 
+ sequence of passes that will be generated automatically. You are setting 
+ aside an area for the automatic rule generator to create the rules for 
+ you.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> In the <span><a HREF="../../VisualText_Interface/Tab.htm">Tab 
+ Window</a></span>, click on the <span style="font-weight: bold;">Ana Tab 
+ </span><span>and select the </span><span style="font-weight: bold;">tokenize 
+ </span><span>pass. (The stub will be inserted after the pass you select 
+ in this step.)</span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Now go the <span style="font-weight: bold;">Gram Tab</span>, 
+ move cursor into the window and right mouse click to bring up the <a HREF="../../Gram_Tab_Popup.htm">Gram 
+ Tab Popup Menu</a>.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Select <span style="font-weight: bold;">Add &gt; Stub</span>.</p>
+
+<p>This will create a new <span>stub</span> in the sequence of passes after 
+ <span>tokenize</span>. (You have to select the <span style="font-weight: bold;">tokenize</span> 
+ pass in the Ana Tab to make sure the stub will be inserted in the correct 
+ place.)</p>
+
+<p><img src="add_stub_tut2.gif"
+		style="width: 254px;
+				height: 340px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=254
+		height=340
+		border=1></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> In the dialog box, name the stub <span style="font-weight: bold;">words</span>.</p>
+
+<p><img src="add_stub_dialog.gif"
+		x-maintain-ratio=TRUE
+		style="border-style: none;
+				border: none;
+				width: 285px;
+				height: 178px;
+				float: none;"
+		width=285
+		height=178
+		border=0></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Click <span style="font-weight: bold;">OK</span>.</p>
+
+<p>The stub <span style="font-weight: bold;">words</span> has been created 
+ in the <span style="font-weight: bold;">Gram Tab</span>.</p>
+
+<p>When a stub is selected in the <span style="font-weight: bold;">Gram 
+ Tab</span>, it will appear in blue. Stubs which are not selected will 
+ appear in green.</p>
+
+<p><img src="gram_words_stub_tut2.gif"
+		style="width: 255px;
+				height: 217px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=255
+		height=217
+		border=1></p>
+
+<p>When you create analyzers, you can choose whatever name you like for 
+ a stub. We called our stub <span style="font-weight: bold;">words</span> 
+ because we are going to take the <span style="font-style: italic;">words</span> 
+ from the sentences in our eg1.txt file and use them as samples to generate 
+ our rules.</p>
+
+<h2><a NAME=t203></a>Add Rule Concepts</h2>
+
+<p>Now that we have a <span style="font-weight: bold;">words</span> stub, 
+ our next step is to create a set of <span style="font-weight: bold;">rule 
+ concepts</span> under <span style="font-weight: bold;">words</span>. <font 
+ style="color: #000000;"
+	color=#000000>A rule concept is a concept that &quot;owns&quot; a set 
+ of related samples, from which the rule generator will generalize, merge, 
+ and generate rules.</font></p>
+
+<p><font style="color: #000000;"
+		color=#000000>T</font>he <span style="font-weight: bold;">rule 
+ concepts</span> we will create correspond to the classic syntactic categories 
+ of noun, verb, determiner, adjective, etc.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> (Make sure the words concept selected.) Right click In 
+ the <span style="font-weight: bold;">Gram Tab</span>, to bring up the 
+ <a HREF="../../Gram_Tab_Popup.htm">Gram Tab Popup Menu</a>.&nbsp;</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Select <span style="font-weight: bold;">Add &gt; Rule<span 
+ style="font-weight: normal;">.</span></span></p>
+
+<p><img src="gram_pos_rule_tut2.gif"
+		style="width: 295px;
+				height: 342px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=295
+		height=342
+		border=1></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> In the Dialog box, add the rule names <span style="font-weight: bold;">det</span>, 
+ <span style="font-weight: bold;">adj</span>, <span style="font-weight: bold;">noun</span>, 
+ <span style="font-weight: bold;">verb</span>, <span style="font-weight: bold;">prep 
+ </span><span style="font-weight: normal;">like the image below</span>:</p>
+
+<p><img src="gram_rule_names_tut2.gif"
+		style="width: 283px;
+				height: 175px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=283
+		height=175
+		border=1></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Click <span style="font-weight: bold;">OK</span>.</p>
+
+<p>Your Gram Tab should look like this:</p>
+
+<p><img src="gram_words_rules_tut2.gif"
+		style="width: 226px;
+				height: 225px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=226
+		height=225
+		border=1></p>
+
+<p>When you create analyzers, you can create any type of rule concept you 
+ want or need.&nbsp; For example, if you have text that contains urls or 
+ email addresses and you want your analyzer to recognize them, you could 
+ create a rule concept for urls and another one for email addresses. Being 
+ able to create rule concepts as they are needed is one of the nice features 
+ of VisualText.</p>
+
+<h2><a NAME=t2025></a>Add Folder Concept</h2>
+
+<p><span style="font-size: 10.0pt;"><font style="color: #000000;"
+											color=#000000>We only have 
+ five rule concepts in this example. But as you begin to create analyzers, 
+ your analyzer may require many more rules.</font></span></p>
+
+<p><span style="font-size: 10.0pt;"><font style="color: #000000;"
+											color=#000000>In order to organize 
+ rule concepts, VisualText uses a special concept called a <span style="font-weight: bold;">folder 
+ concept</span>. <span style="font-weight: bold;">Folder concepts</span> 
+ allow you to organize collections of rule concepts.</font></span></p>
+
+<p><span style="font-size: 10.0pt;"><font style="color: #000000;"
+											color=#000000>Our rule concepts, 
+ det, adj, noun, verb and prep can be classified as parts of speech. We'll 
+ create a folder to organize our rule concepts.</font></span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <span style="font-size: 10.0pt;"><font style="color: #000000;"
+														color=#000000>In 
+ the</font></span><span style="font-weight: normal; font-size: 10.0pt;"><font 
+ style="color: #000000;"
+	color=#000000> </font></span><span style="font-size: 10.0pt;"><font 
+ style="color: #000000;"
+	color=#000000><span style="font-weight: bold;">Gram Tab</span></font></span><span 
+ style="font-weight: normal; font-size: 10.0pt;"><font style="color: #000000;"
+														color=#000000>, 
+ click on the </font></span><span style="font-size: 10.0pt;"><font style="color: #000000;"
+	color=#000000><span style="font-weight: bold;">words</span></font></span><span 
+ style="font-weight: normal; font-size: 10.0pt;"><font style="color: #000000;"
+														color=#000000> 
+ stub to highlight it.</font></span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0><span style="font-weight: normal; font-size: 10.0pt;"><font 
+ style="color: #000000;"
+	color=#000000> R</font></span><span style="font-size: 10.0pt;"><font 
+ style="color: #000000;"
+	color=#000000><span style="font-weight: normal;">ight-click</span></font></span><span 
+ style="font-weight: normal; font-size: 10.0pt;"><font style="color: #000000;"
+														color=#000000> 
+ to bring up the Gram Tab Popup Menu and select</font></span><span style="font-size: 10.0pt;"><font 
+ style="color: #000000;"
+	color=#000000><span style="font-weight: bold;"> Add &gt; Folder</span></font></span><span 
+ style="font-weight: normal; font-size: 10.0pt;"><font style="color: #000000;"
+														color=#000000>:</font></span></p>
+
+<p><span style="font-size: 10.0pt;"><font style="color: #000000;"
+											color=#000000><span style="font-weight: normal;"><img 
+ src="words_add_folder_tut2.gif"
+	style="width: 310px;
+			height: 340px;
+			border-width: 1px;
+			border-style: solid;
+			margin-top: 0px;
+			margin-bottom: 0px;
+			margin-left: 0px;
+			margin-right: 0px;"
+	width=310
+	height=340
+	border=1></span></font></span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <span style="font-weight: normal; font-size: 10.0pt;"><font 
+ style="color: #000000;"
+	color=#000000>Name the folder </font></span><span style="font-size: 10.0pt;"><font 
+ style="color: #000000;"
+	color=#000000><span style="font-weight: bold;">pos</span></font></span><span 
+ style="font-weight: normal; font-size: 10.0pt;"><font style="color: #000000;"
+														color=#000000> 
+ (for part of speech).</font></span></p>
+
+<p><span style="font-weight: normal; font-size: 10.0pt;"><font style="color: #000000;"
+	color=#000000><img src="pos_folder_tut2.gif"
+						style="width: 284px;
+								height: 175px;
+								border-width: 1px;
+								border-style: solid;
+								margin-top: 0px;
+								margin-bottom: 0px;
+								margin-left: 0px;
+								margin-right: 0px;"
+						width=284
+						height=175
+						border=1></font></span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <span style="font-weight: normal; font-size: 10.0pt;"><font 
+ style="color: #000000;"
+	color=#000000>Click </font></span><span style="font-size: 10.0pt;"><font 
+ style="color: #000000;"
+	color=#000000><span style="font-weight: bold;">OK.</span></font></span></p>
+
+<p><span style="font-size: 10.0pt;"><font style="color: #000000;"
+											color=#000000><span style="font-weight: normal;">You 
+ should see the following structure:</span></font></span></p>
+
+<p><span style="font-weight: normal; font-size: 10.0pt;"><font style="color: #000000;"
+	color=#000000><img src="gram_after_pos_add_tut2.gif"
+						style="width: 231px;
+								height: 241px;
+								border-width: 1px;
+								border-style: solid;
+								margin-top: 0px;
+								margin-bottom: 0px;
+								margin-left: 0px;
+								margin-right: 0px;"
+						width=231
+						height=241
+						border=1></font></span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Select each <span style="font-weight: bold;">rule concept</span> 
+ one by one and drag it into the <span style="font-weight: bold;">pos</span> 
+ folder. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(Easiest 
+ to drag the bottom rule concept first, starting with <span style="font-weight: bold;">prep</span>.)</p>
+
+<p>The rule concepts should be under the&nbsp;<span style="font-weight: bold;">pos</span> 
+ folder (<span style="font-style: italic;">under</span> meaning <span style="font-style: italic;">below 
+ and indented</span> with respect to <span style="font-weight: bold;">pos</span>) 
+ as in the image below.</p>
+
+<p><img src="gram_tab_words_pos_conc_tut2.gif"
+		style="width: 232px;
+				height: 261px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=232
+		height=261
+		border=1></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Use the yellow up and down arrows on the Tab Toolbar 
+ to move the concepts in the pos folder so that they look like the image 
+ here.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> You can save your work with <span style="font-weight: bold;">File 
+ &gt; Save Analyzer</span>...</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> ...and answer <span style="font-weight: bold;">Yes </span>at 
+ the confirmation prompt.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Also <span style="font-weight: bold;">Yes</span> to save 
+ the knowledge base, as the Gram Tab information resides in the knowledge 
+ base.</p>
+
+<h2><a NAME=t204></a>Sample the Data</h2>
+
+<p>Now we are ready to start populating our concepts with samples from 
+ eg1.txt. By &quot;populate&quot; we mean &quot;fill in&quot; or provide 
+ each of the rule concepts with example text (&quot;samples&quot;) of what 
+ each rule concept is. The samples you add are called <span style="font-weight: bold;">sample 
+ concepts</span>.</p>
+
+<p><span style="font-weight: bold; color: #ff0000;">CAVEAT!</span> <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->It 
+ is a good time to make sure your text file doesn't have any errors in 
+ it. <span style="font-weight: bold; color: #ff0000;">ONCE YOU START SAMPLING 
+ DATA FROM A FILE, DO NOT EDIT THAT FILE</span>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ Gram Tab depends on the offsets of text samples in files, so that it can 
+ use the context of the samples to build proper rules. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Even 
+ adding a blank line will invalidate the samples following it. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(Adding 
+ material to the very end of such a file, or editing so as to preserve 
+ exactly the same number of characters, are doable if needed.) <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->In 
+ a &quot;real&quot; analyzer, we recommend putting files to be sampled 
+ in specially designated folders and making them READ-ONLY.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Once you have created eg1.txt, <span style="font-weight: bold; color: #ff0000;">CLOSE 
+ THE FILE</span>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->VisualText 
+ strips linefeed characters from text files when it reads them, and this 
+ needs to happen <span style="font-style: italic;">before</span> you start 
+ highlighting samples.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> In the Text Tab, double click on the <span style="font-weight: bold;">eg1.txt</span> 
+ file to open it in the Workspace. Make sure everything is correct in the 
+ file.</p>
+
+<p><img src="text_eg1_workspace_tut.gif"
+		style="width: 636px;
+				height: 265px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=636
+		height=265
+		border=1></p>
+
+<p>First we'll add samples of <span style="font-weight: bold;">nouns</span> 
+ to populate the noun rule concept.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> In the <span style="font-weight: bold;">Gram Tab</span>, 
+ select the <span style="font-weight: bold;">noun</span> rule concept. 
+ Notice that the arrow turns blue.&nbsp;</p>
+
+<p>The first noun in our text file, is <span><span style="font-weight: normal;">fox.</span></span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <span style="font-weight: bold;"><span style="font-weight: normal;">Highlight 
+ </span><span style="font-weight: bold;">fox</span><span style="font-weight: normal;"> 
+ and right click to bring up the popup menu.</span></span></p>
+
+<p><span><span style="font-weight: normal;">Notice how the noun rule concept 
+ has been added to the bottom of the popup menu. It </span></span>appears 
+ in the popup menu because <span style="font-weight: normal;">noun</span> 
+ has been selected in the <span style="font-weight: normal;">Gram Tab</span> 
+ Window.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Select <span style="font-weight: bold;">noun</span>.</p>
+
+<p><img src="pos_fox_noun_tut2.gif"
+		style="width: 638px;
+				height: 265px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=638
+		height=265
+		border=1></p>
+
+<p>Look at the noun rule concept in the <span style="font-weight: bold;">Gram 
+ Tab</span>. <span style="font-weight: bold;"><span style="font-weight: normal;">The</span> 
+ </span>noun <span style="font-weight: bold;">fox</span> has been added 
+ as a <span style="font-weight: bold;">sample concept</span> <span style="font-style: italic;">under</span> 
+ the noun rule concept. Sample concepts are indicated by the little square 
+ icon.</p>
+
+<p><img src="gram_pos_noun_fox_tut2.gif"
+		style="width: 231px;
+				height: 262px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=231
+		height=262
+		border=1></p>
+
+<p>To add samples to the other rule concepts in the <span style="font-weight: bold;">pos</span> 
+ folder, simply select the rule concept in the <span style="font-weight: bold;">Gram 
+ Tab</span> and follow the same procedure.</p>
+
+<p>There is an alternative to selecting samples by selecting individual 
+ rule concepts in the <span style="font-weight: bold;">Gram Tab</span>. 
+ By selecting the <span style="font-weight: bold;">pos folder</span> instead, 
+ all of the rule concepts in the pos folder will be listed when you right 
+ click after highlighting a word in the text.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Select the <span style="font-weight: bold;">pos</span> 
+ folder in the <span style="font-weight: bold;">Gram Tab</span>.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Select <span style="font-weight: bold;">dog</span> in 
+ the text and right click to bring up the menu.</p>
+
+<p>Notice that all of the rule concepts, <span style="font-weight: bold;">det</span>, 
+ <span style="font-weight: bold;">adj</span>, <span style="font-weight: bold;">noun</span>, 
+ <span style="font-weight: bold;">verb</span> and <span style="font-weight: bold;">prep</span> 
+ appear in the popup menu. It may be easier for you to sample text this 
+ way.</p>
+
+<p><img src="gram_pos_all_rules_tut2.gif"
+		style="width: 578px;
+				height: 263px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=578
+		height=263
+		border=1></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Select <span style="font-weight: bold;">noun</span>.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Continue adding samples to the rule concepts until all 
+ the words in eg1.txt have been added to the appropriate rule concept.</p>
+
+<p><img src="gram_pos_all_words_tut2.gif"
+		style="width: 189px;
+				height: 493px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=189
+		height=493
+		border=1></p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 90%;
+				margin-top: 14pt;
+				border-spacing: 0px;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=90%>
+
+<tr>
+<td style="background-color: #FFFFD5;
+			x-cell-content-align: TOP;
+			width: 100%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=100%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Note: <!--kadov_tag{{<spaces>}}-->&nbsp;</span><!--kadov_tag{{</spaces>}}-->Make 
+ sure you select <span style="font-weight: bold;">baby</span> and not <span 
+ style="font-weight: bold;">baby's</span>.</td></tr>
+</table>
+
+<p>You have just created a <span style="font-weight: bold;">sample hierarchy</span>. 
+ (This is also referred to as the <span style="font-weight: bold;">Gram 
+ hierarchy</span> since you can view it in the Gram Tab.) The sample hierarchy 
+ organizes our rule concept samples.</p>
+
+<p>It is a good idea to get in the habit of saving your analyzer often. 
+ Now in particular, since the creation of the <span style="font-weight: bold;">words</span> 
+ stub has modified the analyzer sequence, is a good time to save the analyzer.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> To save the analyzer, select <span style="font-weight: bold;">File 
+ &gt; Save Analyzer</span>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(And/or 
+ <span style="font-weight: bold;">KB &gt; Save KB</span>, as available.)</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Answer <span style="font-weight: bold;">Yes </span>at 
+ the confirmation prompt.</p>
+
+<p>Since data has been added to the concepts in the Gram Tab, our Knowledge 
+ Base (KB) has changed. When you save the analyzer, you are also saving 
+ the Knowledge Base.</p>
+
+<h2><a NAME=t202></a>Set Concept Properties</h2>
+
+<p>In VisualText you can control the way rules are generated. You do this 
+ by setting certain properties for rule concepts in the Gram Tab.&nbsp;</p>
+
+<p>In this tutorial, we are concerned with setting only one of the properties, 
+ the <span style="font-weight: bold;">Closed</span> attribute. The <span 
+ style="font-weight: bold;">Closed </span>attribute specifies that automatically 
+ generated rules will consist of a closed set of words, as collected from 
+ the samples you, the user, provided. By setting this attribute you are 
+ controlling the way rules get generalized.</p>
+
+<p>(For more information about Gram concept properties, see <a HREF="../../Setting_Rule_Generation_Properties.htm">Setting 
+ Rule Generation Properties</a>.)</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Select the <span style="font-weight: bold;">words</span> 
+ stub in the <span style="font-weight: bold;">Gram Tab</span>.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Right click to bring up the <a HREF="../../Gram_Tab_Popup.htm">Gram 
+ Tab Popup Menu</a>.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Choose<span style="font-weight: bold;"> Properties</span>.</p>
+
+<p><img src="words_properties_tut2.gif"
+		style="width: 291px;
+				height: 349px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=291
+		height=349
+		border=1></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> In the Gram Concept Properties dialog, uncheck<span style="font-weight: normal;"> 
+ the </span><span style="font-weight: bold;">Inherited</span> box <span 
+ style="font-weight: bold;"><span style="font-weight: normal;">for the 
+ </span>Closed</span> attribute.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Now place a check in the <span style="font-weight: bold;">On/Off</span> 
+ box.</p>
+
+<p><img src="gramConProp.gif"
+		x-maintain-ratio=TRUE
+		style="border-width: 1px;
+				border-style: solid;
+				width: 335px;
+				height: 359px;
+				border-left-style: Solid;
+				border-left-width: 1px;
+				border-right-style: Solid;
+				border-right-width: 1px;
+				border-top-style: Solid;
+				border-top-width: 1px;
+				border-bottom-style: Solid;
+				border-bottom-width: 1px;
+				float: none;"
+		width=335
+		height=359
+		border=1></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Click <span style="font-weight: bold;">Done</span> when 
+ you are finished.</p>
+
+<p>&nbsp;</p>
+
+<h2><a NAME=t205></a>Generate Rules</h2>
+
+<p>Now let's have VisualText automatically generate some rules for us from 
+ the sampled data.</p>
+
+<p>If we take a look at our analyzer sequence in the <span style="font-weight: bold;">Ana 
+ Tab</span>, you will see the following:</p>
+
+<p><img src="anaStub.gif"
+		x-maintain-ratio=TRUE
+		style="border-width: 1px;
+				border-style: solid;
+				width: 225px;
+				height: 248px;
+				float: none;
+				border-left-width: 1px;
+				border-left-style: Solid;
+				border-top-width: 1px;
+				border-top-style: Solid;
+				border-right-width: 1px;
+				border-right-style: Solid;
+				border-bottom-width: 1px;
+				border-bottom-style: Solid;"
+		width=225
+		height=248
+		border=1></p>
+
+<p>Notice that our stub concept <span style="font-weight: bold;">words</span> 
+ has a start, <span style="font-weight: bold;">stub_words</span> and an 
+ end point, <span style="font-weight: bold;">end_words</span>. This is 
+ called the <span style="font-weight: bold;">stub region</span>. We would 
+ call this stub region the <span style="font-weight: bold;">words stub 
+ region</span>. Remember that we created the stub region because we needed 
+ a place for the automatically generated passes to be inserted. Once we 
+ generate rules, the stub region will get filled in.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> From the <span style="font-weight: bold;">Analyzer </span><span 
+ style="font-weight: normal;">Menu, select </span><span style="font-weight: bold;">Generate 
+ Rules &gt; All</span>.</p>
+
+<p><img src="anaGenRules.gif"
+		x-maintain-ratio=TRUE
+		style="border-width: 1px;
+				border-style: solid;
+				width: 356px;
+				height: 297px;
+				border-left-style: Solid;
+				border-left-width: 1px;
+				border-right-style: Solid;
+				border-right-width: 1px;
+				border-top-style: Solid;
+				border-top-width: 1px;
+				border-bottom-style: Solid;
+				border-bottom-width: 1px;
+				float: none;"
+		width=356
+		height=297
+		border=1></p>
+
+<p>Now look at the <span style="font-weight: bold;">stub region</span>.</p>
+
+<p>Additional passes appear in our analyzer sequence. Each of the new passes 
+ contains rules generated from the rule concepts we created earlier in 
+ this tutorial. VisualText did this by taking the samples we provided in 
+ each of the rule concepts.</p>
+
+<p><img src="anaStubrules.gif"
+		x-maintain-ratio=TRUE
+		style="border-width: 1px;
+				border-style: solid;
+				width: 233px;
+				height: 275px;
+				border-left-style: Solid;
+				border-left-width: 1px;
+				border-right-style: Solid;
+				border-right-width: 1px;
+				border-top-style: Solid;
+				border-top-width: 1px;
+				border-bottom-style: Solid;
+				border-bottom-width: 1px;
+				float: none;"
+		width=233
+		height=275
+		border=1></p>
+
+<p>Notice that the <a HREF="../../Log_Window.htm">Log Window</a> has also 
+ changed.&nbsp; It says <span style="font-weight: bold;">Generating rules: 
+ start</span> then<span style="font-weight: bold;"> Generating rules: done</span>. 
+ <span style="font-weight: normal;">This window is just telling you that 
+ VisualText has started and completed the task of generating rules. If 
+ there had been problems generating the rules, error messages would have 
+ been displayed here.</span></p>
+
+<p><span style="font-weight: normal;"><font style="color: #000000;"
+											color=#000000>Let's take a 
+ look at the rules VisualText created.</font></span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Select the <span style="font-weight: bold;">noun</span> 
+ pass.</p>
+
+<p>The link in front of <span style="font-weight: bold;">5 noun</span> 
+ turns blue and the text gets a grey box indicating that it is selected.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Double click on the <span style="font-weight: bold;">noun</span> 
+ pass to open the pass file.</p>
+
+<p>The noun pass file, automatically generated from the samples you added 
+ to the Gram Tab, is displayed in the Workspace. This pass file (also called 
+ <span style="font-weight: bold;">rule file</span> since it contains rules) 
+ is stored in the spec folder of the myAnalyzer directory. The name of 
+ the pass file is <span style="font-weight: bold;">noun.pat</span>. You'll 
+ learn more about pass file names in Tutorial 3.</p>
+
+<p><img src="nounPass.gif"
+		x-maintain-ratio=TRUE
+		style="border-width: 1px;
+				border-style: solid;
+				width: 634px;
+				height: 260px;
+				border-left-style: Solid;
+				border-left-width: 1px;
+				border-right-style: Solid;
+				border-right-width: 1px;
+				border-top-style: Solid;
+				border-top-width: 1px;
+				border-bottom-style: Solid;
+				border-bottom-width: 1px;
+				float: none;"
+		width=634
+		height=260
+		border=1></p>
+
+<p>The form of the pass file is discussed in a later tutorial, too. But 
+ generally what the above rule &quot;says&quot; is that every time the 
+ analyzer runs across one of the words listed in parentheses (e.g. &quot;dog&quot;, 
+ &quot;John&quot;, etc.), these words should be classified as &quot;noun&quot;. 
+ In Tutorial 3, you'll see how this automatically-generated rule can be 
+ helpful.</p>
+
+<h2><a NAME=t208></a>Run Analyzer &amp; Inspect Parse Tree</h2>
+
+<p>Now that we have some extra passes in our analyzer sequence, let's run 
+ the analyzer to see how our parse tree changes.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Double click <span style="font-weight: bold;">eg1.txt</span> 
+ in the <span style="font-weight: bold;">Text Tab</span> to bring the file 
+ to the front of the Workspace.</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 90%;
+				margin-top: 14pt;
+				border-spacing: 0px;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=90%>
+
+<tr>
+<td style="background-color: #FFFFD5;
+			x-cell-content-align: TOP;
+			width: 100%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=100%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Note: <!--kadov_tag{{<spaces>}}-->&nbsp;</span><!--kadov_tag{{</spaces>}}-->This 
+ step is optional if eg1.txt appears in the current text panel within the 
+ Tab Toolbar. This will let you know what text will be analyzed.</td></tr>
+</table>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Start the analyzer by either clicking on the <span style="font-weight: bold;">Run<span 
+ style="font-weight: normal;"> button <img src="../../Toolbar_buttons/run_button.gif"
+											style="width: 24px;
+													height: 26px;
+													border-width: 1px;
+													border-style: solid;
+													margin-top: 0px;
+													margin-bottom: 0px;
+													margin-left: 0px;
+													margin-right: 0px;"
+											width=24
+											height=26
+											border=1> or </span></span>by 
+ selecting <span style="font-weight: bold;">Analyzer &gt;</span> <span 
+ style="font-weight: bold;">Run</span><span style="font-weight: normal;"> 
+ from the Main Menu.</span></p>
+
+<p><span style="font-weight: normal;"><img src="analyzer_run_tut2.gif"
+											style="width: 259px;
+													height: 202px;
+													border-width: 1px;
+													border-style: solid;
+													margin-top: 0px;
+													margin-bottom: 0px;
+													margin-left: 0px;
+													margin-right: 0px;"
+											width=259
+											height=202
+											border=1></span></p>
+
+<p>Now that we have run the analyzer, let's view the resulting parse tree.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Click on the <span style="font-weight: bold;">View Parse 
+ Tree</span> button. <img src="../../Toolbar_buttons/view_entire_tree_button.gif"
+							style="width: 25px;
+									height: 24px;
+									border-width: 1px;
+									border-style: solid;
+									margin-top: 0px;
+									margin-bottom: 0px;
+									margin-left: 0px;
+									margin-right: 0px;"
+							width=25
+							height=24
+							border=1> or select<span style="font-weight: bold;"> 
+ </span><span style="font-weight: bold;"><span style="font-weight: normal;">the 
+ </span>eg1.txt <span style="font-weight: normal;">in the Workspace, </span></span>right 
+ mouse click, and select <span style="font-weight: bold;">View &gt; Parse 
+ Tree</span> from the<span style="font-weight: bold;"><a HREF="../../VisualText_Interface/Popups/Text_File_Popup.htm"><span 
+ style="x-text-underline: off;
+		x-text-overline: off;
+		x-text-line-through: off;
+		/*begin!kadov{{*/ text-decoration: none none none; /*}}end!kadov*/ "> 
+ </span>Text File Popup Menu<span style="font-weight: bold;">.</span></a></span></p>
+
+<p>Your parse tree should look like this:</p>
+
+<p><img src="tut2_parsetree0617.gif"
+		style="width: 467px;
+				height: 324px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=467
+		height=324
+		border=1></p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 90%;
+				margin-top: 14pt;
+				border-spacing: 0px;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=90%>
+
+<tr>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 100%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=100%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Note</span>: 
+ If you ran the analyzer with Generate Logs on, the title bar in your parse 
+ tree may not match the image. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ title bar will show the name of the selected pass in the Ana Tab. </td></tr>
+</table>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> You can expand nodes labeled with a + by selecting them.&nbsp; 
+ Note that node labels (<span style="font-weight: bold;">_noun</span>, 
+ <span style="font-weight: bold;">_adj</span>, etc.) have been added to 
+ most lexical items in the file.&nbsp; All non-terminal node labels start 
+ with an underscore ('_'). 'fired' indicates that a rule matched and 'blt' 
+ indicates that a node was built.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Close the open files in the Workspace by selecting the 
+ <span style="font-weight: bold;">X</span> in the upper right-hand corner 
+ of the file.</p>
+
+<p>Exit the analyzer. </p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <font style="color: #000000;"
+						color=#000000>From the <span style="font-weight: normal;">Main 
+ Menu</span>, select <span style="font-weight: bold;">File &gt; </span></font><span 
+ style="font-weight: bold;"><font style="color: #000000;"
+									color=#000000>Exit</font></span><font 
+ style="color: #000000;"
+	color=#000000>.</font></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Answer <span style="font-weight: bold;">Yes </span>at 
+ the confirmation prompt for <span style="font-style: italic;">both</span> 
+ saving the analyzer and the knowledge base.</p>
+
+<h2><a NAME=t209></a>Summary</h2>
+
+<p style="margin-bottom: 0;">In this tutorial, we added sample data to 
+ VisualText in order to generate rules automatically.&nbsp; We created 
+ a<span style="font-weight: bold;"> <span style="font-weight: normal;">stub</span></span><span 
+ style="font-weight: normal;"> </span>concept named <span><span style="font-weight: normal;">words</span></span><span 
+ style="font-weight: normal;">, some rule concepts for the classical syntactic 
+ categories, and a folder concept to organize the rule concepts. </span><span><span 
+ style="font-weight: normal;">We sampled</span></span> text data for these 
+ concepts and<span style="font-weight: bold;"> <span style="font-weight: normal;">generated</span></span> 
+ rules. Finally, we <span><span style="font-weight: normal;">ran</span></span> 
+ the analyzer against a text file and inspected the resulting <span><span 
+ style="font-weight: normal;">parse tree</span></span>. Adding samples 
+ and automatically generating rules demonstrate a simple way to maintain 
+ and enhance text analyzers with VisualText.&nbsp; In Tutorial 3, we'll 
+ show you how to create simple hand-built rules to parse the sentences 
+ in the text we worked with in tutorials 1 and 2.<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp; </p>
+
+</body>
+
+</html>

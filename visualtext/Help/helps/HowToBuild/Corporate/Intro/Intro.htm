@@ -1,0 +1,429 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Intro</title>
+
+<!--(Meta)==========================================================-->
+
+<meta HTTP-EQUIV=Content-Type CONTENT="text/html; charset=windows-1252">
+<meta NAME=Version CONTENT=8.0.3410>
+<meta NAME=Template CONTENT="D:\Program Files\Microsoft Office\Office\html.dot">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=2787>
+<meta name=layout-width content=775>
+<meta name=date content="08 27, 2001 2:30:42 PM">
+
+
+
+<!--(Style Sheet)===================================================-->
+
+<style>
+<!--
+
+body {
+	background-color: #ffffff;
+}
+
+A:visited {
+	color: #800080;
+}
+
+A:link {
+	color: #0000ff;
+}
+
+-->
+</style>
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body style="color: #000000;">
+
+<!--(Table)=========================================================-->
+<!--begin!kadov{{--><div align=center><!--}}end!kadov-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 617px;
+				border-spacing: 0px;
+				float: aligncenter;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=617>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a href="../Toc/TOC.htm"><img src="Bullet8.gif"
+												style="width: 15px;
+														height: 13px;
+														border-style: none;
+														margin-top: 0px;
+														margin-bottom: 0px;
+														margin-left: 0px;
+														margin-right: 0px;"
+												width=15
+												height=13
+												border=0>&nbsp;TOC</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 50%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a href="../Toc/TOC.htm">CORPORATE ANALYZER</a><span style="font-weight: bold;"><font 
+ style="color: #000080;"
+	color=#000080><br>
+Intro</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 26%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a href="../InitKB/InitKB.htm">Initial KB <img src="Bullet7.gif"
+	style="width: 15px;
+			height: 13px;
+			border-style: none;
+			margin-top: 0px;
+			margin-bottom: 0px;
+			margin-left: 0px;
+			margin-right: 0px;"
+	width=15
+	height=13
+	border=0></a></td></tr>
+</table>
+<!--begin!kadov{{--></div><!--}}end!kadov-->
+
+<!--(HR)============================================================-->
+<hr style="height: 2px;
+			width: 100%;
+			float: aligncenter;"
+	size=2
+	width=100%
+	align=center>
+
+
+<p><span style="font-weight: bold;">Intro</span></p>
+
+<p>Although VisualText may be the most powerful text processing tool around, 
+ it may not be obvious to the first time user how to build an analyzer. 
+ You may know what you want to do, but how do you go about doing it? This 
+ demonstration analyzer gives a first-time user of VisualText an idea of 
+ exactly how an analyzer is built.</p>
+
+<p><span style="font-weight: bold;"><font style="color: #ff0000;"
+											color=#FF0000>Notes:</font></span> 
+ This demonstration analyzer is meant to stimulate ideas in the VisualText 
+ user. It does not represent in any way a complete or exemplary example 
+ of analyzer building. We expect that you've at a minimum studied the <a href="Intro.htm">Quick Tour</a> and the <a HREF="../../../Tutorials/Tutorial_Introduction.htm">Tutorials</a> 
+ in order to follow the Corporate tour.</p>
+
+<p><img src="../../../Tutorials/GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Now is a good time to open the corporate analyzer, as 
+ described in the Quick Tour, and examine the input file named &quot;Sold.txt&quot; 
+ in the Dev folder of the Text Tab.</p>
+
+<p><span style="font-weight: bold;">Our Analyzer</span></p>
+
+<p>Before we can build an analyzer, we must have a task in mind. In our 
+ corporate analyzer, we want to pull out information about companies from 
+ newswires. We can pull out information like &quot;who bought whom for 
+ how much&quot;, &quot;who's stock changed and by how much&quot;, and other 
+ information about companies such as current CEO, founding date, and contact 
+ information.</p>
+
+<p>Our corporate analyzer will build records that could be used to feed 
+ a database. This type of analyzer is called an &quot;information extraction&quot; 
+ system. Here is a peek at the corporate analyzer's first output record 
+ for our sample text:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image30.gif"
+						style="border-width: 1px;
+								border-style: solid;
+								width: 448px;
+								height: 220px;"
+						width=448
+						height=220
+						border=1></p>
+
+<p><span style="font-weight: bold;">VisualText Features and Tips</span></p>
+
+<p>Key features that make VisualText powerful, flexible, and easy to use 
+ and debug are tabulated in the <a href="Intro.htm">Quick Tour Introduction</a>. 
+ Some areas we'll focus on in this deeper tour of the Corporate analyzer 
+ are:</p>
+
+<ol>
+	
+	<p><img src="Bullet7.gif"
+			style="width: 15px;
+					height: 12px;
+					border-style: none;
+					margin-top: 0px;
+					margin-bottom: 0px;
+					margin-left: 0px;
+					margin-right: 0px;"
+			width=15
+			height=12
+			border=0>&nbsp;<span style="font-weight: bold;"><font style="font-family: Arial;"
+	face=arial><font style="font-size: x-small;"
+					size=2><font style="color: #008000;"
+								color=#008000>Multi-Pass Processing</font></font></font></span></p>
+	
+	<p><img src="Bullet7.gif"
+			style="width: 15px;
+					height: 12px;
+					border-style: none;
+					margin-top: 0px;
+					margin-bottom: 0px;
+					margin-left: 0px;
+					margin-right: 0px;"
+			width=15
+			height=12
+			border=0><span style="font-weight: bold;"><font style="font-family: Arial;"
+															face=arial><font 
+ style="font-size: x-small;"
+	size=2><font style="color: #008000;"
+				color=#008000>&nbsp;Knowledge Base</font></font></font></span></p>
+	
+	<p><img src="Bullet7.gif"
+			style="width: 15px;
+					height: 12px;
+					border-style: none;
+					margin-top: 0px;
+					margin-bottom: 0px;
+					margin-left: 0px;
+					margin-right: 0px;"
+			width=15
+			height=12
+			border=0><span style="font-weight: bold;"><font style="font-family: Arial;"
+															face=arial><font 
+ style="font-size: x-small;"
+	size=2><font style="color: #008000;"
+				color=#008000>&nbsp;Automatic Rule Generation</font></font></font></span></p>
+</ol>
+
+<p>Some useful guidelines gleaned from building information extraction 
+ systems are:</p>
+
+<ol>
+	
+	<p><img src="Bullet7.gif"
+			style="width: 15px;
+					height: 12px;
+					border-style: none;
+					margin-top: 0px;
+					margin-bottom: 0px;
+					margin-left: 0px;
+					margin-right: 0px;"
+			width=15
+			height=12
+			border=0>&nbsp;<span style="font-weight: bold;"><font style="font-family: Arial;"
+	face=arial><font style="font-size: x-small;"
+					size=2><font style="color: #008000;"
+								color=#008000>Do high confidence work first</font></font></font></span></p>
+	
+	<p><img src="Bullet7.gif"
+			style="width: 15px;
+					height: 12px;
+					border-style: none;
+					margin-top: 0px;
+					margin-bottom: 0px;
+					margin-left: 0px;
+					margin-right: 0px;"
+			width=15
+			height=12
+			border=0><span style="font-weight: bold;"><font style="font-family: Arial;"
+															face=arial><font 
+ style="font-size: x-small;"
+	size=2><font style="color: #008000;"
+				color=#008000>&nbsp;Group text into chunks to process</font></font></font></span></p>
+	
+	<p><img src="Bullet7.gif"
+			style="width: 15px;
+					height: 12px;
+					border-style: none;
+					margin-top: 0px;
+					margin-bottom: 0px;
+					margin-left: 0px;
+					margin-right: 0px;"
+			width=15
+			height=12
+			border=0><span style="font-weight: bold;"><font style="font-family: Arial;"
+															face=arial><font 
+ style="font-size: x-small;"
+	size=2><font style="color: #008000;"
+				color=#008000>&nbsp;Don't process everything</font></font></font></span></p>
+	
+	<p><img src="Bullet7.gif"
+			style="width: 15px;
+					height: 12px;
+					border-style: none;
+					margin-top: 0px;
+					margin-bottom: 0px;
+					margin-left: 0px;
+					margin-right: 0px;"
+			width=15
+			height=12
+			border=0><span style="font-weight: bold;"><font style="font-family: Arial;"
+															face=arial><font 
+ style="font-size: x-small;"
+	size=2><font style="color: #008000;"
+				color=#008000>&nbsp;Don't worry about mistakes if they 
+ don't hurt you</font></font></font></span></p>
+</ol>
+
+<p>We will see examples of these ideas at work in our corporate analyzer 
+ example.</p>
+
+<p><span style="font-weight: bold;">Plan of Attack</span></p>
+
+<p>The next step is to sketch a way to build this analyzer. Building a 
+ text analyzer is art, not science, and every developer will write a unique 
+ analyzer.</p>
+
+<p>An initial decision to make is whether your analyzer will gather localized 
+ information only (i.e., do &quot;shallow&quot; processing), or correlate 
+ information from various parts of a text (or multiple texts). The deeper 
+ and more accurate the analyzer, the more correlation you will need to 
+ do, and the more you will rely on the knowledge base (KB) to store information 
+ about the domain (e.g., &quot;corporate events&quot;) and the current 
+ text.</p>
+
+<p>The corporate analyzer will utilize the KB in order to demonstrate &quot;going 
+ deep.&quot;</p>
+
+<p><span style="font-weight: bold;">Knowledge Based Analyzers</span></p>
+
+<p>The first step in building our analyzer is to create a dedicated area 
+ for it within the KB. We start by making a concept named <span style="font-weight: normal;">&quot;corporate&quot;</span>, 
+ as below. Under that, we create two concepts: &quot;companies&quot; and 
+ &quot;parse&quot;. The &quot;companies&quot; concept holds the companies 
+ we are interested in and their alternative wordings, as reference knowledge 
+ for the analyzer. The &quot;parse&quot; concept stores information that 
+ the analyzer creates and uses dynamically.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image36.gif"
+						style="border-width: 1px;
+								border-style: solid;
+								width: 146px;
+								height: 181px;"
+						width=146
+						height=181
+						border=1></p>
+
+<p><span style="font-weight: bold;">KB Lookup and Normalization</span></p>
+
+<p>The knowledge base can support looking up and normalizing words and 
+ phrases. For example, to store the fact that &quot;Text Analysis International, 
+ Inc.&quot; and &quot;TAI&quot; are synonyms, you can construct a hierarchy 
+ with &quot;TAI&quot; as parent and place its alternative phrasings below 
+ it. Under the &quot;companies&quot; concept, we'll place a normalized 
+ form of a company name, e.g., its abbreviation when it's unique. Under 
+ the normalized form, we place major textual variants. To explicitly specify 
+ the relationship between concepts, we add a &quot;synonym&quot; attribute 
+ to each variant. The screen shot of the KB and Attribute Editor below 
+ depicts this scheme.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image37.gif"
+						style="border-width: 1px;
+								border-style: solid;
+								width: 375px;
+								height: 198px;"
+						width=375
+						height=198
+						border=1></p>
+
+<p>The &quot;companies&quot; area under our &quot;corporate&quot; concept 
+ is one we construct beforehand, either by hand or by writing another VisualText 
+ analyzer to populate the knowledge base for us from a file. The &quot;parse&quot; 
+ area, on the other hand, is managed dynamically by the corporate analyzer 
+ while it is processing an input article. We assume, for our demo system, 
+ that TAI and AMRP are the only companies the analyzer needs to know about!</p>
+
+<p><span style="font-weight: bold;">Parse Concept</span></p>
+
+<p>In the corporate analyzer, we need to gather information across sentences, 
+ because information about a given company may be spread throughout the 
+ article. For instance, &quot;TAI buys AMRP&quot; occurs in the first sentence, 
+ while the phrase &quot;The sale&quot; in the fourth sentence&quot; refers 
+ back to the first sentence. If the fourth sentence adds useful information, 
+ we need to relate the two. Therefore, we use the knowledge base to build 
+ a model of the article as we process it, enabling correlations across 
+ sentences. Below is a screen shot of the parse area built by the final 
+ version of the analyzer for our sample input article.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image33.gif"
+						style="border-style: none;
+								width: 285px;
+								height: 329px;"
+						width=285
+						height=329
+						border=0></p>
+
+
+<!--(HR)============================================================-->
+<hr style="height: 2px;
+			width: 100%;
+			float: aligncenter;"
+	size=2
+	width=100%
+	align=center>
+
+
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><span style="font-weight: bold;">Next Section:</span> 
+ <a href="../InitKB/InitKB.htm">Initial KB <img src="Bullet7.gif"
+												style="width: 15px;
+														height: 12px;
+														border-style: none;
+														margin-top: 0px;
+														margin-bottom: 0px;
+														margin-left: 0px;
+														margin-right: 0px;"
+												width=15
+												height=12
+												border=0></a> </p>
+
+</body>
+
+</html>

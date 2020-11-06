@@ -1,0 +1,91 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>@PRE Region</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=639>
+<meta name=layout-width content=359>
+<meta name=date content="07 25, 2001 9:20:47 AM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF=default.css>
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>PRE Region</h1>
+
+<p>The PRE Region is used to extend the pattern matcher's mechanism for 
+ matching each rule element. <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->Currently, 
+ the PRE Region does not support general NLP++ expressions and statements.</p>
+
+<h2>PRE Action Syntax</h2>
+
+<p>The actions used in the PRE Region have a mandatory range. Their form 
+ is</p>
+
+<p style="margin-left: 40px;"><span style="font-weight: bold;">&lt;num,num&gt; 
+ pre_action_name(args....)</span></p>
+
+<p><span style="font-weight: normal;">The PRE Action applies to each rule 
+ element in the &lt;num, num&gt; range individually.</span></p>
+
+<p><span style="font-weight: normal;">PRE Actions operate only on tokens, 
+ or leaf nodes of the parse tree, at present. So, if the current node covers 
+ more than a </span><span style="font-style: italic; font-weight: normal;">single</span><span 
+ style="font-weight: normal;"> leaf node, the PRE Action automatically 
+ </span><span style="font-style: italic; font-weight: normal;">fails</span><span 
+ style="font-weight: normal;">. Another thing to be careful of is that 
+ PRE Actions disregard the </span><span style="font-weight: bold;">base</span><span 
+ style="font-weight: normal;"> attribute of a node. That is, even if the 
+ current node or a subnode has the </span><span style="font-weight: bold;">base</span><span 
+ style="font-weight: normal;"> attribute set, the PRE Action will look 
+ under it for the leaf node.</span></p>
+
+<h2>See Also</h2>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a HREF="NLP_PP_Stuff/Grammar_Region.htm">Grammar 
+ Region</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a HREF="NLP_PP_Stuff/AT-PRE_Actions.htm">PRE 
+ Action</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="CHECK.htm">CHECK 
+ Region</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="POST.htm">POST 
+ Region</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="RULES.htm">RULES 
+ Region</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-bottom: 0;">&nbsp; </p>
+
+</body>
+
+</html>

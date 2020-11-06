@@ -1,0 +1,772 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Phrase Element Modifiers</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=date content="05 4, 2002 11:13:29 PM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1164>
+<meta name=layout-width content=1024>
+
+
+<!--(Links)=========================================================-->
+
+<link REL="StyleSheet" HREF="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Phrase Element Modifiers</h1>
+
+<p>Element modifiers that can be used in a rule's phrase are listed in 
+ the table below. The element modifier must be enclosed in square brackets<span 
+ style="font-weight: bold;"> [ ] </span>and placed <span style="font-weight: bold;">after</span> 
+ the element. Some element modifiers have synonyms. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ modifier trigger, for example can be written as <span style="font-weight: bold;">[trigger]</span>, 
+ <span style="font-weight: bold;">[trig]</span>, or <span style="font-weight: bold;">[t]</span>. 
+ </p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				margin-top: 14pt;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00
+	width=18%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">KEY</span></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00
+	width=16%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">VALUE TYPE</span></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 60%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00
+	width=60%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">DESCRIPTION</span></td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="margin-bottom: 0; font-weight: bold;">deaccent, deacc, da</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=16%>
+<p style="margin-bottom: 0;">NONE</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 60%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=60%>
+<p style="margin-bottom: 0;">Match alphabetic, ignoring presence or absence 
+ of accent marks on characters. <span style="color: #ff0000; font-weight: bold;">NEW 
+ IN VERSION 2</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=trigger></a>trigger,trig,</span><span 
+ style="font-weight: bold;"><br>
+t</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=16%>
+<p style="margin-bottom: 0;">NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 60%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=60%>
+<p style="margin-bottom: 0;">Match the current element first. E.g.,<br>
+_<span style="font-style: italic; font-weight: normal;">np &lt;- _det _quan 
+ _adj _noun </span><span style="font-style: italic; font-weight: bold;">[t]</span><span 
+ style="font-style: italic; font-weight: normal;"> @@</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=min></a>min</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=16%>
+<p style="margin-bottom: 0;">NUM</td>
+<td style="x-cell-content-align: TOP;
+			width: 60%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=60%>
+<p style="margin-bottom: 0;">Specify the minimum number of nodes to match. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->0 means 
+ the current element is optional. E.g., <span style="font-style: italic;">_boys 
+ &lt;- the [</span><span style="font-style: italic; font-weight: bold;">min=0</span><span 
+ style="font-style: italic;"> max=1] boys @@</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=max></a>max</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=16%>
+<p style="margin-bottom: 0;">NUM</td>
+<td style="x-cell-content-align: TOP;
+			width: 60%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=60%>
+<p style="margin-bottom: 0;">Specify the maximum number of nodes to match. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->0 means 
+ the current element can match an indefinite number of nodes. E.g., <span 
+ style="font-style: italic;">_htmltag &lt;- \&lt; _xWILD [min=1 </span><span 
+ style="font-style: italic; font-weight: bold;">max=100</span><span style="font-style: italic;">] 
+ \&gt; @@</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=opt></a>opt,option,optional,</span><span 
+ style="font-weight: bold;"><br>
+o</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=16%>
+<p style="margin-bottom: 0;">NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 60%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=60%>
+<p style="margin-bottom: 0;">Match a minimum of 0 and a maximum of 1 node. 
+ (Short for min=0 max=1). E.g., <span style="font-style: italic;">_vgroup 
+ &lt;- _modal [</span><span style="font-style: italic; font-weight: bold;">opt</span><span 
+ style="font-style: italic;">] _have [</span><span style="font-style: italic; font-weight: bold;">opt</span><span 
+ style="font-style: italic;">] _be [</span><span style="font-style: italic; font-weight: bold;">opt</span><span 
+ style="font-style: italic;">] _verb @@</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=one></a>one</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=16%>
+<p style="margin-bottom: 0;">NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 60%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=60%>
+<p style="margin-bottom: 0;">Match exactly one node. (Short for min=1 max=1).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=star></a>star</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=16%>
+<p style="margin-bottom: 0;">NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 60%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=60%>
+<p style="margin-bottom: 0;">Indefinite repetition. Match a minimum of 
+ 0 up to any number of nodes. (Short for min=0 max=0).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=plus></a>plus</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=16%>
+<p style="margin-bottom: 0;">NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 60%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=60%>
+<p style="margin-bottom: 0;">Indefinite repetition. Match a minimum of 
+ 1 up to any number of nodes. (Short for min=1 max=0).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=group></a>group, 
+ gp</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=16%>
+<p style="margin-bottom: 0;">NAME</td>
+<td style="x-cell-content-align: TOP;
+			width: 60%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=60%>
+<p style="margin-bottom: 0;">Gather nodes that matched the current element 
+ under a single node with NAME as its name. Analogous to POST Action <span 
+ style="font-weight: bold;">group</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=rename></a>rename,ren</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=16%>
+<p style="margin-bottom: 0;">NAME</td>
+<td style="x-cell-content-align: TOP;
+			width: 60%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=60%>
+<p style="margin-bottom: 0;">Rename every node that matched the current 
+ element to NAME. E.g., <span style="font-style: italic;">_locfield &lt;- 
+ location \: _xWILD [</span><span style="font-style: italic; font-weight: bold;">ren=_location</span><span 
+ style="font-style: italic;">] \n @@</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><a NAME=singlet></a>singlet,</span><span 
+ style="font-weight: bold;"><br>
+<a NAME=s></a>s</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=16%>
+<p style="margin-bottom: 0;">NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 60%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=60%>
+<p style="margin-bottom: 0;">Search a node's descendants for a match. Stop 
+ looking down when a node has more than one child or has the BASE attribute 
+ set. E.g., <span style="font-style: italic;">_abbr &lt;- _unk \. </span><span 
+ style="font-style: italic; font-weight: bold;">[s]</span><span style="font-style: italic;"> 
+ @@ <!--kadov_tag{{<spaces>}}-->&nbsp;</span><!--kadov_tag{{</spaces>}}-->See 
+ <a href="../base.htm">BASE</a>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=tree></a>tree</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=16%>
+<p style="margin-bottom: 0;">NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 60%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=60%>
+<p style="margin-bottom: 0;">Search node's entire subtree for a match. 
+ (Overuse of this may degrade analyzer performance.)</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=match></a>matches,</span><span 
+ style="font-weight: bold;"><br>
+match</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=16%>
+<p style="margin-bottom: 0;">LIST</td>
+<td style="x-cell-content-align: TOP;
+			width: 60%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=60%>
+<p style="margin-bottom: 0;">For _xWILD element only. Match if element 
+ is in a match list. Used as a restricted wildcard and succeeds only if 
+ one of the list names matches a node. E.g., <span style="font-style: italic;">_james 
+ &lt;- _xWILD [</span><span style="font-style: italic; font-weight: bold;">match=(jim 
+ jimmy james)</span><span style="font-style: italic;"> singlet min=1 max=1] 
+ @@</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=fail></a>fails,</span><span 
+ style="font-weight: bold;"><br>
+fail</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=16%>
+<p style="margin-bottom: 0;">LIST</td>
+<td style="x-cell-content-align: TOP;
+			width: 60%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=60%>
+<p style="margin-bottom: 0;">For <span style="font-style: italic; font-weight: normal;">ANY</span> 
+ element. Fail to match if node matches anything on the list. E.g., <span 
+ style="font-style: italic;">_par &lt;- _xWILD [</span><span style="font-style: italic; font-weight: bold;">fail=(_endofpar 
+ _par)</span><span style="font-style: italic;"> min=1 max=0] @@</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=except></a>excepts, 
+ except</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=16%>
+<p style="margin-bottom: 0;">LIST</td>
+<td style="x-cell-content-align: TOP;
+			width: 60%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=60%>
+<p style="margin-bottom: 0;">For _xWILD only. Matching an item on the except 
+ list negates the effect of a match on the <span style="font-style: italic;">match</span> 
+ or fail <span style="font-style: italic;">list</span>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Must 
+ be accompanied by a single <span style="font-style: italic;">match</span> 
+ or <span style="font-style: italic;">fail</span> list. </td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=lookahead></a>lookahead, 
+ look</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=16%>
+<p style="margin-bottom: 0;">NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 60%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=60%>
+<p style="margin-bottom: 0;">Designate the first lookahead element of a 
+ rule. The first node matching the lookahead element or to the right of 
+ it will be the locus where the rule matcher <span style="font-style: italic;">continues</span> 
+ matching. WARNING: A reduce action such as <span style="font-style: italic;">singler</span> 
+ or <span style="font-style: italic;">noop</span> should be used to ensure 
+ that the lookahead node and nodes to its right are not included in the 
+ current rule reduction.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=layer></a>layers, 
+ layer,</span><span style="font-weight: bold;"><br>
+attrs, attr</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=16%>
+<p style="margin-bottom: 0;">LIST</td>
+<td style="x-cell-content-align: TOP;
+			width: 60%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=60%>
+<p style="margin-bottom: 0;">Layer additional attributes for the element 
+ in the parse tree, as &quot;mini-reductions&quot;. Use the names in the 
+ list to name nodes. Note: each node that matched current rule element 
+ will be layered. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(These 
+ modifiers can also be used as suggested element modifiers.)</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=18%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=recurse></a>recurse, 
+ nest,</span><span style="font-weight: bold;"><br>
+passes, pass</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=16%>
+<p style="margin-bottom: 0;">LIST</td>
+<td style="x-cell-content-align: TOP;
+			width: 60%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=60%>
+<p style="margin-bottom: 0;">Invoke a recursive rules pass on nodes that 
+ matched the current rule element. E.g., <span style="font-style: italic;">_tag 
+ &lt;- \&lt; _xWILD [</span><span style="font-style: italic; font-weight: bold;">nest=(tagrules)</span><span 
+ style="font-style: italic;">] \&gt; @@. </span>(See <a href="../RECURSE.htm">RECURSE 
+ Region</a>.)</td></tr>
+</table>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 90%;
+				border-spacing: 0px;
+				margin-top: 14pt;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=90%>
+
+<tr>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 100%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=100%>
+<p style="margin-bottom: 0; color: #008080;"><span style="font-weight: bold;">WARNING</span>: 
+ </p>
+<ol style="list-style: decimal;"
+	type=1>
+	
+	<li style="/*begin!kadov{{*/ color: #008080; /*}}end!kadov*/ "
+		class=kadov-p><p style="margin-bottom: 0; color: #008080;">Don't 
+ write rules with _xANY [max=0]. They won't work, because _xANY is not 
+ implemented as a wildcard. The nearly equivalent _xANY _xWILD works.</p></li>
+	
+	<li style="/*begin!kadov{{*/ color: #008080; /*}}end!kadov*/ "
+		class=kadov-p><p style="color: #008080;">More generally, matching 
+ with MIN and MAX is <span style="font-style: italic;">greedy</span>, and 
+ no <span style="font-style: italic;">backup</span> is implemented. So 
+ the rule<br>
+	<br>
+	&nbsp; _a &lt;- _b [min=1 max=3] _c [s] @@</p></li>
+</ol>
+<p style="color: #008080; margin-left: 40px;">fails on the phrase <span 
+ style="font-weight: bold;">_b _b(subnode _c</span>), because the repeating 
+ _b element greedily gobbles up the second _b node. The rule matcher will 
+ not back up to find that the rule can be made to work. Unrestricted _xWILD 
+ is the <span style="font-weight: bold;">only</span> rule element that 
+ is &quot;backup-aware&quot;.</td></tr>
+</table>
+
+<h2><!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->See 
+ Also</h2>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Special_rule_elements.htm">Special 
+ Rule Elements</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Suggested_element_modifiers.htm">Suggested 
+ Element Modifiers</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Rule_syntax.htm">Rule 
+ Syntax&nbsp; </a></p>
+
+</body>
+
+</html>

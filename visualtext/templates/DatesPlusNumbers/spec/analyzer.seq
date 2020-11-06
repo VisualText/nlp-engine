@@ -1,0 +1,11 @@
+# 
+tokenize	nil	# Gen:   Convert input to token list.
+pat	SIMPLE_NUMERICS	# comment
+rec	COMPOUND_NUMERICS	# comment
+pat	COMPOUND_NUMERICS_2	# comment
+pat	PhoneNumbersetc	# comment
+rec	TimeofDayplusAbbrevsandAcronyms	# comment
+pat	NumericSequences	# comment
+rec	NumericLists	# comment
+pat	DATE_PATTERNS	# comment
+pat	DATE_PATTERNS_NO_YEAR	# comment

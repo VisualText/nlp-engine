@@ -1,0 +1,187 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Output</title>
+
+<!--(Meta)==========================================================-->
+
+<meta HTTP-EQUIV=Content-Type CONTENT="text/html; charset=windows-1252">
+<meta NAME=Template CONTENT="D:\Program Files\Microsoft Office\Office\html.dot">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1862>
+<meta name=layout-width content=775>
+<meta name=date content="08 27, 2001 2:37:26 PM">
+
+
+
+<!--(Style Sheet)===================================================-->
+
+<style>
+<!--
+
+A:visited {
+	color: #800080;
+}
+
+A:link {
+	color: #0000ff;
+}
+
+-->
+</style>
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<!--(Table)=========================================================-->
+<!--begin!kadov{{--><div align=center><!--}}end!kadov-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 623px;
+				border-spacing: 0px;
+				float: aligncenter;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=623>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../MetaEvents/MetaEvents.htm"><img src="Bullet8.gif"
+															style="width: 15px;
+	height: 12px;
+	border-style: none;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 0px;"
+															width=15
+															height=12
+															border=0>&nbsp;Meta 
+ Events</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 50%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../Toc/TOC.htm">CORPORATE ANALYZER</a><span style="font-weight: bold;"><font 
+ style="color: #000080;"
+	color=#000080><br>
+Output</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 26%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="margin-bottom: 0;">&nbsp;</td></tr>
+</table>
+<!--begin!kadov{{--></div><!--}}end!kadov-->
+
+<!--(HR)============================================================-->
+<hr style="height: 2px;
+			width: 100%;
+			float: aligncenter;"
+	size=2
+	width=100%
+	align=center>
+
+
+<p><span style="font-weight: bold;">Ana Tab Window: Pass 29</span></p>
+
+<p>This section describes the last analyzer pass, &quot;output&quot;. (The 
+ complete Corporate Analyzer sequence is shown below.)</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image116full.gif"
+						style="border-style: none;
+								width: 155px;
+								height: 471px;"
+						width=155
+						height=471
+						border=0></p>
+
+<p><span style="font-weight: bold;">Output</span></p>
+
+<p>One of the beauties of using a KB-based text analyzer is that once you 
+ have everything processed, the output is a simple matter of looping through 
+ the &quot;sentence&quot; concepts in the &quot;parse&quot; area in the 
+ KB and printing out the results. If we open up the sentences under the 
+ &quot;parse&quot; concept, we can easily see what we want to output to 
+ the file. The rule is, if there is a child concept of the object under 
+ the sentences, print it out. If not, don't output anything. Below, this 
+ is clearly illustrated by looking at the concept for &quot;TAI&quot;. 
+ Those with a &quot;+&quot; have something to output, those without do 
+ not:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image137.gif"
+						style="border-style: none;
+								width: 274px;
+								height: 490px;"
+						width=274
+						height=490
+						border=0></p>
+
+<p>We leave it to you to look at the details of the code for this pass. 
+ Please note, however, that there is no rule for this pass, just a @CODE 
+ area. The last rule-matching pass was pass 28, and all that remains is 
+ to output our results. Notice, when inspecting the output file, that information 
+ from later sentences has been copied back to earlier sentences. This is 
+ due to our analyzer's treatment of &quot;anaphora&quot;. Namely, information 
+ later in the text has been correlated to references earlier in the text. 
+ Below is one of the more interesting outputs, taken from sentence 5:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image138.gif"
+						style="border-style: none;
+								width: 434px;
+								height: 337px;"
+						width=434
+						height=337
+						border=0></p>
+
+
+<!--(HR)============================================================-->
+<hr style="height: 2px;
+			width: 100%;
+			float: aligncenter;"
+	size=2
+	width=100%
+	align=center>
+
+
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><span style="font-weight: bold;">Go forth and build better 
+ analyzers!</span> </p>
+
+</body>
+
+</html>

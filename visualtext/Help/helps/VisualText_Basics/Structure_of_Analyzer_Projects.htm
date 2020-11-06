@@ -1,0 +1,497 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Structure_of_Analyzer Projects</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=date content="08 28, 2001 11:00:20 PM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=789>
+<meta name=layout-width content=1024>
+
+
+<!--(Links)=========================================================-->
+
+<link REL="StyleSheet" HREF="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Structure of Analyzer Projects</h1>
+
+<p>When an analyzer is created and saved in VisualText™, a directory structure 
+ is created in the working directory (e.g. C:\apps). This structure is 
+ referred to as the <span style="font-weight: bold;">analyzer</span> <span 
+ style="font-weight: bold;">project</span>. The analyzer project stores 
+ the analyzer and its related files.</p>
+
+<p>An analyzer project is organized by a single <span style="font-weight: bold;">analyzer 
+ project file</span>. The analyzer project file is automatically created 
+ when you create an analyzer. The name of the analyzer project file is 
+ the name you give the analyzer project appended with a <span style="font-weight: bold;">.ana</span> 
+ extension. The analyzer project file, also called the .ana (pronounced 
+ &quot;dot ana&quot;) file, is used to load the analyzer.</p>
+
+<p style="color: #ff0000;"><span style="font-weight: bold;">NOTE 2.0.1.x 
+ and later:</span> Run, KB, and user DLL files are now renamed and moved 
+ to the \bin folder when they are compiled. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(And 
+ these must be compiled manually.)</p>
+
+<p>The folders and files in the analyzer project are outlined below.</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 0px;
+				margin-top: 14pt;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=100%
+		border=1>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 34%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;
+			background-color: #00ff00;"
+	bgcolor=#00FF00
+	valign=top
+	width=34%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Folder or 
+ File</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;
+			background-color: #00ff00;"
+	bgcolor=#00FF00
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Description</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 34%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=34%>
+<p style="margin-bottom: 0;">bin</td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Executables and libraries. Stores the kb.dll 
+ compiled knowledge base library.<br>
+<span style="color: #ff0000; font-weight: bold;">NEW in 2.0.1.x and later:</span><span 
+ style="color: #ff0000;"> DLLs have been renamed and moved to bin: kb.dll, 
+ kbu.dll, run.dll, runu.dll, user.dll, useru.dll</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 34%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=34%>
+<p style="margin-bottom: 0;">data</td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Miscellaneous data files created or used by 
+ the app.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 34%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=34%>
+<p style="margin-bottom: 0;">logs</td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Directory for the analyzer log file.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 34%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=34%>
+<p style="margin-bottom: 0;">input</td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Input file tree.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 34%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=34%>
+<p style="margin-bottom: 0;">kb</td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">The interpreted and compiled KBs (<span style="font-weight: bold;">kb.dll</span>) 
+ are stored here.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 34%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=34%>
+<p style="margin-bottom: 0;">output</td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Directory for output files, dump files, log 
+ files, intermediate output files, and so on.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 34%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=34%>
+<p style="margin-bottom: 0;">rfa</td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Output for the RFA, which parses the RFB analyzer 
+ definition.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 34%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=34%>
+<p style="margin-bottom: 0;">rfb</td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Output for the RFB, which parses pass files.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 34%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=34%>
+<p style="margin-bottom: 0;">run</td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Directory for the compiled analyzer library, 
+ <span style="font-weight: bold;">run.dll</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 34%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=34%>
+<p style="margin-bottom: 0;">spec</td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Directory for the analyzer sequence file and 
+ pass files.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 34%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=34%>
+<p style="margin-bottom: 0;">user</td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Directory for the <span style="font-weight: bold;">user</span> 
+ MS Visual C++ project. Can be used to write new NLP++ functions and passes.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 34%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=34%>
+<p style="margin-bottom: 0;">&nbsp;</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">&nbsp;</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 34%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=34%>
+<p style="margin-bottom: 0;">cgerr.log</td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">KB error log file.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 34%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=34%>
+<p style="margin-bottom: 0;">gui.kb</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">KB command file that stores analyzer sequence 
+ and input folder hierarchy.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 34%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=34%>
+<p style="margin-bottom: 0;">main.cpp</td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Code file for a standalone driver program 
+ to call the analyzer.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 34%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=34%>
+<p style="margin-bottom: 0;">NAME.ana</td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">The project file for the current analyzer 
+ app.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 34%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=34%>
+<p style="margin-bottom: 0;">Uanalyze.cpp</td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Code file for standalone driver program.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 34%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=34%>
+<p style="margin-bottom: 0;">Uanalyze.h</td>
+<td style="x-cell-content-align: TOP;
+			width: 66%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=66%>
+<p style="margin-bottom: 0;">Code file for standalone driver program.</td></tr>
+</table>
+
+<p style="margin-bottom: 0;">This folder structure houses all the information 
+ needed to run the analyzer, including folders for input and output, a 
+ folder for the knowledge base, etc. </p>
+
+</body>
+
+</html>

@@ -1,0 +1,939 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Main Analyzer Menu</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=2530>
+<meta name=layout-width content=468>
+<meta name=date content="08 14, 2001 6:47:43 PM">
+<meta name=x-ignored-words content="RUN.DLL;prototyping;pulldown;output.txt">
+
+
+<!--(Links)=========================================================-->
+
+<link rel=StyleSheet href="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1><a name=Analyzer_Menu></a>Analyzer Menu</h1>
+
+<p>The Analyzer Menu controls the actions of an analyzer. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->It 
+ is also used in generating rules.</p>
+
+<p><img src="Menus/analyzer_menu.gif"
+		style="width: 165px;
+				height: 168px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=165
+		height=168
+		border=1></p>
+
+<p><font style="color: #000000;"
+		color=#000000>The Analyzer Menu corresponds to some elements in 
+ the <a href="Toolbars/Workspace_Toolbar.htm">Workspace Toolbar</a>.</font></p>
+
+<p style="color: #ff0000;"><img src="Toolbars/workspaceToolbar.gif"
+								x-maintain-ratio=TRUE
+								style="border: none;
+										width: 390px;
+										height: 26px;
+										float: none;"
+								width=390
+								height=26
+								border=0></p>
+
+<p>When there is a corresponding element, the toolbar button is shown in 
+ the following table:</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 0px;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=100%
+		border=1>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Button</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 30%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Menu Item</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 57%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Description</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><img src="../Toolbar_buttons/compile_analyzer_button.gif"
+						style="width: 24px;
+								height: 25px;
+								border-width: 1px;
+								border-style: solid;
+								margin-top: 0px;
+								margin-bottom: 0px;
+								margin-left: 0px;
+								margin-right: 0px;"
+						width=24
+						height=25
+						border=1></td>
+<td style="x-cell-content-align: TOP;
+			width: 30%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Compile Analyzer</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 57%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Turning on this toggle, followed by loading 
+ an analyzer, results in compiling the analyzer while it is being loaded. 
+ This results in the creation of a RUN.DLL library, which can be called 
+ from an external program. Currently, VisualText does not load the compiled 
+ analyzer library. The Compile Analyzer toggle is turned off after an analyzer 
+ is loaded.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p>&nbsp;</td>
+<td style="x-cell-content-align: TOP;
+			width: 30%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0; font-weight: bold;"><a HREF="#Generate_Rules_Submenu"
+													style="font-weight: bold;"><span 
+ style="font-weight: bold;">Generate Rules</span></a></td>
+<td style="x-cell-content-align: TOP;
+			width: 57%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Submenu for generating rules. (See below.)</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><img src="../Toolbar_buttons/run_button.gif"
+						ALT=Run
+						style="width: 24px;
+								height: 26px;
+								border-width: 1px;
+								border-style: solid;
+								margin-top: 0px;
+								margin-bottom: 0px;
+								margin-left: 0px;
+								margin-right: 0px;"
+						width=24
+						height=26
+						border=1></td>
+<td style="x-cell-content-align: TOP;
+			width: 30%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=Run></a>Run</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 57%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Runs the analyzer on the currently selected 
+ input file. (Analyzers cannot be run on files with a .log extension.)</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><img src="../Toolbar_buttons/run_next_button.gif"
+						ALT="Run Next"
+						style="width: 24px;
+								height: 26px;
+								border-width: 1px;
+								border-style: solid;
+								margin-top: 0px;
+								margin-bottom: 0px;
+								margin-left: 0px;
+								margin-right: 0px;"
+						width=24
+						height=26
+						border=1></td>
+<td style="x-cell-content-align: TOP;
+			width: 30%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><a NAME=Run_Next></a>Run 
+ Next</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 57%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Runs the analyzer on the next file in the 
+ directory after the currently selected file.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><img src="../Toolbar_buttons/slog_button.gif"
+						ALT=Slog
+						style="width: 23px;
+								height: 25px;
+								border-width: 1px;
+								border-style: solid;
+								margin-top: 0px;
+								margin-bottom: 0px;
+								margin-left: 0px;
+								margin-right: 0px;"
+						width=23
+						height=25
+						border=1></td>
+<td style="x-cell-content-align: TOP;
+			width: 30%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=slog></a>Slog</td>
+<td style="x-cell-content-align: TOP;
+			width: 57%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Does a Generate Rules All, followed by a Run 
+ on the currently selected input.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><img src="../Toolbar_buttons/stop_analyzer_button.gif"
+						ALT="Stop Analyzer"
+						style="width: 21px;
+								height: 24px;
+								border-width: 1px;
+								border-style: solid;
+								margin-top: 0px;
+								margin-bottom: 0px;
+								margin-left: 0px;
+								margin-right: 0px;"
+						width=21
+						height=24
+						border=1></td>
+<td style="x-cell-content-align: TOP;
+			width: 30%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Stop</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 57%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Stops the current analyzer.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><img src="../Toolbar_buttons/toggle_gen_logs_button.gif"
+						ALT="Toggle Generate Logs"
+						style="width: 24px;
+								height: 25px;
+								border-width: 1px;
+								border-style: solid;
+								margin-top: 0px;
+								margin-bottom: 0px;
+								margin-left: 0px;
+								margin-right: 0px;"
+						width=24
+						height=25
+						border=1></td>
+<td style="x-cell-content-align: TOP;
+			width: 30%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=gen_log></a>Generate 
+ Logs</td>
+<td style="x-cell-content-align: TOP;
+			width: 57%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">When selected, enables generation of intermediate 
+ logs for each pass in the analyzer sequence. Must be enabled before an 
+ analyzer is run over text. This function gives you the ability to display 
+ and inspect the intermediate parse trees, one for each pass, and the final 
+ tree. It may slow the parse substantially in many-pass analyzers, since 
+ all intermediate trees are written to disk. If the function is not enabled, 
+ only the final tree is available for display.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p>&nbsp;</td>
+<td style="x-cell-content-align: TOP;
+			width: 30%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0; font-weight: bold;"><font style="color: #0000ff;"
+														color=#0000FF><a 
+ HREF="#View_Submenu"
+	style="font-weight: bold;"><span style="font-weight: bold;">View</span></a></font></td>
+<td style="x-cell-content-align: TOP;
+			width: 57%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Submenu for viewing text analyzer information 
+ such as input files, output files, pass files, and parse trees. (See below.)</td></tr>
+</table>
+
+<h2><a NAME=Generate_Rules_Submenu></a>Generate Rules Submenu</h2>
+
+<p><img src="Menus/analyzer_menu_genrules.gif"
+		style="width: 288px;
+				height: 169px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=288
+		height=169
+		border=1></p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 0px;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=100%
+		border=1>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Button</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Menu Item</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 72%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Description</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p>&nbsp;</td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">All</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 76%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Exhaustively generates all rules as specified 
+ by samples in the <span style="font-weight: normal;">Gram Tab</span>. 
+ Depending on the number of samples in the <span style="font-weight: normal;">Gram 
+ Tab</span>, this can be slow. However, to assure that rule generation 
+ is correct and complete, this option should be used whenever feasible.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><img src="../Toolbar_buttons/generate_dirty_button.gif"
+						ALT="Generate Dirty"
+						style="width: 24px;
+								height: 25px;
+								border-width: 1px;
+								border-style: solid;
+								margin-top: 0px;
+								margin-bottom: 0px;
+								margin-left: 0px;
+								margin-right: 0px;"
+						width=24
+						height=25
+						border=1></td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Dirty</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 76%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Generates rules only for those rule concepts 
+ in the <span style="font-weight: normal;">Gram Tab</span> that have the 
+ <span style="font-weight: bold;">Dirty</span> attribute set. This attribute 
+ is set by the system, for example, when new sample data is added to the 
+ concept. This is a &quot;quick-and-dirty&quot; rule generation that most 
+ often works well, but may not always agree with the Generate Rules &gt; 
+ All option. It is used for rapid prototyping. See <a href="../Gram_Tab_Popup.htm#Mark_for_Generation">Mark 
+ for Generation</a> in the Gram Tab Popup Menu, where the Dirty attribute 
+ can be set.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p>&nbsp;</td>
+<td style="x-cell-content-align: TOP;
+			width: 13%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Unlocked</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 76%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Generates rules only for those concepts in 
+ the Gram Tab that have the <span style="font-weight: bold;">unlocked</span> 
+ attribute set. Locking concepts should only be done by the expert user. 
+ A concept's attributes can be viewed and hand edited via the <a href="Tools/Attribute_Editor.htm">Attribute 
+ Editor</a>.</td></tr>
+</table>
+
+<h2><a NAME=View_Submenu></a>Analyzer View Submenu</h2>
+
+<p><img src="Menus/analyzer_view_menu.gif"
+		style="width: 255px;
+				height: 272px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=255
+		height=272
+		border=1></p>
+
+<p>&nbsp;</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 0px;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=100%
+		border=1>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Button</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Menu Item</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 55%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Description</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><img src="../Toolbar_buttons/view_concept_tree_button.gif"
+						ALT="View Concept Tree"
+						style="width: 24px;
+								height: 24px;
+								border-width: 1px;
+								border-style: solid;
+								margin-top: 0px;
+								margin-bottom: 0px;
+								margin-left: 0px;
+								margin-right: 0px;"
+						width=24
+						height=24
+						border=1></td>
+<td style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">Concept Tree</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 55%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Displays the <a href="../VisualText_Basics/About_Parse_Trees.htm#concept_tree">concept 
+ tree</a> of a parsed document in the Workspace.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><img src="../Toolbar_buttons/view_current_text_button.gif"
+						ALT="View Current Text"
+						style="width: 24px;
+								height: 24px;
+								border-width: 1px;
+								border-style: solid;
+								margin-top: 0px;
+								margin-bottom: 0px;
+								margin-left: 0px;
+								margin-right: 0px;"
+						width=24
+						height=24
+						border=1></td>
+<td style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">Current Text</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 55%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Displays the currently selected input data 
+ file in the Workspace.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><img src="../Toolbar_buttons/view_dump_files_button.gif"
+						ALT="View Dump Files"
+						style="width: 24px;
+								height: 23px;
+								border-width: 1px;
+								border-style: solid;
+								margin-top: 0px;
+								margin-bottom: 0px;
+								margin-left: 0px;
+								margin-right: 0px;"
+						width=24
+						height=23
+						border=1></td>
+<td style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">Dump Files</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 55%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Displays the <span style="font-weight: normal;">output</span> 
+ files associated with a parsed document in the Workspace. When there are 
+ multiple files, a pulldown tab to the right of the button lists available 
+ files.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><img src="../Toolbar_buttons/view_output_file_button.gif"
+						ALT="View Output File"
+						style="width: 24px;
+								height: 23px;
+								border-width: 1px;
+								border-style: solid;
+								margin-top: 0px;
+								margin-bottom: 0px;
+								margin-left: 0px;
+								margin-right: 0px;"
+						width=24
+						height=23
+						border=1></td>
+<td style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">Output File</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 55%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Displays output.txt file associated with parsed 
+ input document in the Workspace. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->This 
+ icon is reserved for files with the name output.txt only.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><img src="../Toolbar_buttons/view_entire_tree_button.gif"
+						ALT="View Parse Tree"
+						style="width: 25px;
+								height: 24px;
+								border-width: 1px;
+								border-style: solid;
+								margin-top: 0px;
+								margin-bottom: 0px;
+								margin-left: 0px;
+								margin-right: 0px;"
+						width=25
+						height=24
+						border=1></td>
+<td style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">Parse Tree</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 55%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Displays the full <a href="../VisualText_Basics/About_Parse_Trees.htm">parse 
+ tree</a> of a parsed document in the Workspace. </td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><img src="../Toolbar_buttons/view_pass_file.gif"
+						ALT="View Pass File"
+						style="width: 24px;
+								height: 23px;
+								border-width: 1px;
+								border-style: solid;
+								margin-top: 0px;
+								margin-bottom: 0px;
+								margin-left: 0px;
+								margin-right: 0px;"
+						width=24
+						height=23
+						border=1></td>
+<td style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">Pass File</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 55%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Displays selected <a href="../NLP_PP_Stuff/About_Pass_Files.htm">pass 
+ file</a> in the Workspace.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 16%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><img src="../Toolbar_buttons/view_web_page_button.gif"
+						ALT="View Web Page"
+						style="width: 23px;
+								height: 23px;
+								border-width: 1px;
+								border-style: solid;
+								margin-top: 0px;
+								margin-bottom: 0px;
+								margin-left: 0px;
+								margin-right: 0px;"
+						width=23
+						height=23
+						border=1></td>
+<td style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">Web Page</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 55%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top>
+<p style="margin-bottom: 0;">Displays selected html page in a browser window 
+ in the Workspace.</td></tr>
+</table>
+
+</body>
+
+</html>

@@ -1,0 +1,142 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>rmchild</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=949>
+<meta name=layout-width content=916>
+<meta name=date content="01 4, 2002 1:44:10 PM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF=default.css>
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>rmchild</h1>
+
+<h2>Purpose</h2>
+
+<p>Remove a concept's child by name or by number.</p>
+
+<h2>Syntax</h2>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">returnedBoolean = rmchild(parentCon, childConceptNameStr)</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">returnedBoolean - type: bool<br>
+parentCon - type: con<br>
+childConceptNameStr - type: str</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">returnedBoolean = rmchild(parentCon, childConceptNumber)</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">returnedBoolean - type: bool<br>
+parentCon - type: con<br>
+childConceptNumber - type: int</p>
+
+<h2>Returns</h2>
+
+<p>1 if parentCon has the child concept and it is removed, 0 otherwise.</p>
+
+<h2>Remarks</h2>
+
+<p>This is a dangerous function in that you can <font style="color: #ff0000;"
+														color=#FF0000>inadvertently</font> 
+ remove pieces of your brain with it. Be very careful not to delete parts 
+ of the KB you didn't mean to, because this will lead to loss of analyzer 
+ integrity. For example, you could remove the gram or sys concepts.</p>
+
+<p>Child concepts are rank ordered by birth order, unless re-arranged. 
+ Indexing starts at 1. Passing numerical argument 0 selects the last child 
+ concept. If you try to index outside of the range of children concepts, 
+ a warning is written to the output log and the function returns 0. If 
+ a bad concept is passed (e.g., a string, not a handle to a concept), an 
+ NLP++ error is thrown and is written to the output log.</p>
+
+<p>Differs from <span style="font-family: monospace;">rmchildren</span> 
+ in that <span style="font-family: monospace;">rmchild</span> <font style="color: #ff0000;"
+	color=#FF0000>deletes</font> a named child, while <span style="font-family: monospace;">rmchildren</span> 
+ deletes all children.</p>
+
+<h2>Example</h2>
+
+<p>This example creates and deletes a child concept by name:</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">G(&quot;myConcept&quot;) = makeconcept(findroot(),&quot;a concept&quot;);<br>
+G(&quot;result&quot;) = <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">rmchild</span>(G(&quot;myConcept&quot;),&quot;a concept&quot;);</p>
+
+<p>This one does it by number:</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><span style="font-size: 10pt;">G(&quot;aParent&quot;)= makeconcept(findroot(),&quot;a concept&quot;)<br>
+G(&quot;aChild&quot;) = makeconcept(G(&quot;aParent&quot;),&quot;a child&quot;); <br>
+G(&quot;result&quot;) = rmchild(G(&quot;aParent&quot;),1);</span> </p>
+
+<h2>See Also</h2>
+
+<p style="margin-bottom: 0;"><a HREF="rmchildren.htm">rmchildren</a>, <a 
+ HREF="rmconcept.htm">rmconcept</a>, <a href="Table_of_Knowledge_Base_Functions.htm">Knowledge 
+ Base Functions</a> </p>
+
+</body>
+
+</html>

@@ -1,0 +1,2261 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>tutorial4</title>
+
+<!--(Meta)==========================================================-->
+
+<meta HTTP-EQUIV=Content-Type CONTENT="text/html; charset=windows-1252">
+<meta NAME=Author CONTENT="Phil Shinn">
+<meta name=date content="11 17, 2001 10:30:58 PM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=14187>
+<meta name=layout-width content=1027>
+
+
+<!--(Links)=========================================================-->
+
+<!-- saved from url=(0022)http://internet.e-mail -->
+ <link REL="StyleSheet" HREF="../../default.css">
+
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Tutorial 4 - Input/Output</h1>
+
+<p>In this tutorial we create and read input files, add more rule concepts 
+ and associate concepts with the input files. We extract text from specific 
+ parts of the parse tree and write such information to an output file.&nbsp; 
+ We also take a closer look at rule syntax. Finally, we introduce some 
+ navigation shortcuts and a useful debugging tool in VisualText<span style="vertical-align: Super; font-size: 8pt;">®</span>.</p>
+
+<p>We'll start with the analyzer from Tutorial 3.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Launch VisualText.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> From the Main Menu, select <span style="font-weight: bold;">File 
+ &gt; Recent Analyzers</span> and then select <span style="font-weight: bold;">c:\apps\myanalyzerfolder\myanalyzer</span>.</p>
+
+<p>If you want to start with the ready-made analyzer in the docs folder, 
+ unzip the contents of:</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">C:\Program Files\TextAI\VisualText\docs\tutorial3\myAnalyzer.zip</p>
+
+<p>and place the <span style="font-weight: bold;">myAnalyzer</span> folder 
+ in the working directory:</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">C:\apps\myAnalyzerFolder</p>
+
+<h2><a NAME=Add_Top_Folder></a>Add Top Level Folder</h2>
+
+<p>In Tutorial 2, you learned how to sample words in a file in order to 
+ generate rules. You took each word individually and manually placed it 
+ in the appropriate concept, noun, verb, adjective, etc.</p>
+
+<p>Sometimes it is more convenient to add sample data to the rule generation 
+ component of VisualText by importing a text file with data that is already 
+ of a certain type. For example, suppose you had a list of company names 
+ that you wanted to train an analyzer to recognize. To do this, you need 
+ to tell the system where the input file is and then give it a label.</p>
+
+<p>To keep things organized, we'll store files containing our lists to 
+ be sampled in a new folder called <span style="font-weight: bold;">dictionary</span>.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Create a folder in the <span style="font-weight: bold;">Text 
+ Tab</span> by right-clicking in the window and selecting <span style="font-weight: bold;">Add 
+ &gt; Top Level &gt; Folder</span>:</p>
+
+<p><img src="add_top_level_folder_tut4.gif"
+		style="width: 470px;
+				height: 394px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=470
+		height=394
+		border=1></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Name the folder <span style="font-weight: bold;">dictionary</span> 
+ and click <span style="font-weight: bold;">OK</span>.</p>
+
+<p>This is where we'll store the file containing our company names.</p>
+
+<p>Your <span style="font-weight: bold;">Text Tab</span> should look like 
+ this:</p>
+
+<p><font style="color: #ff0000;"
+		color=#FF0000><img src="dictionary_folder_tut4.gif"
+							style="width: 205px;
+									height: 216px;
+									border-width: 1px;
+									border-style: solid;
+									margin-top: 0px;
+									margin-bottom: 0px;
+									margin-left: 0px;
+									margin-right: 0px;"
+							width=205
+							height=216
+							border=1>.</font></p>
+
+<h2><a NAME=t401></a>Create Input Files for Storing Lists</h2>
+
+<p>Since we don't have a text file of company names created yet, we will 
+ have to generate one now.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> In the<span style="font-weight: bold;"> Text Tab</span>, 
+ select the new folder you just created,<span style="font-weight: bold;"> 
+ dictionary</span>.&nbsp;&nbsp;</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Right click to bring up the popup menu, and select <span 
+ style="font-weight: bold;">Add &gt; &nbsp;New Text File<span style="font-weight: normal;">.</span></span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <span style="font-weight: bold;"><span style="font-weight: normal;">Name 
+ the new file </span><span style="font-weight: bold;">companies</span><span 
+ style="font-weight: normal;"> and click </span><span style="font-weight: bold;">OK</span><span 
+ style="font-weight: normal;">.</span></span></p>
+
+<p><span style="font-weight: bold;"><span style="font-weight: normal;">A 
+ blank text file with the titlebar '</span><span style="font-weight: bold;">companies.txt 
+ (dictionary)</span><span style="font-weight: normal;">' will pop up in 
+ your workspace. &quot;dictionary&quot; appears in the titlebar of the 
+ file to indicate that your text file, companies</span><span style="font-weight: bold;"> 
+ </span><span style="font-weight: normal;">is part of the dictionary folder.</span></span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Enter the following company names into your file:</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">Lambsoft</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">Fencetech</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">IBM</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">Cisco</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">GM</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: monospace;">GE</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Save the file by right-clicking on <span style="font-weight: bold;">companies.txt</span> 
+ and selecting <span style="font-weight: bold;">Save </span>from the menu.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <span style="font-weight: bold;">Close and double-click 
+ on the file to open it</span>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(VisualText 
+ converts carriage return plus line feed to carriage return, which will 
+ affect the offsets and automated rule generation, so this step needs to 
+ be done for each new or saved file.)</p>
+
+<p><span style="font-weight: bold;"><span style="font-weight: normal;">The 
+ file companies.txt</span> </span>is now contained in the <span><span style="font-weight: normal;">dictionary</span></span> 
+ directory. (If you don't see it in the <span style="font-weight: bold;">Text 
+ Tab</span>, choose <span style="font-weight: bold;">Refresh</span> from 
+ the <a HREF="../../Text_Tab_Popup.htm">Text Tab Popup Menu)</a></p>
+
+<p><img src="file_in_dict_folder.gif"
+		style="width: 231px;
+				height: 78px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=231
+		height=78
+		border=1><br>&nbsp;</p>
+
+<p>Rather than creating and typing in the contents of the file in VisualText, 
+ we could also have copied an existing file from some other source directly 
+ into the dictionary folder:</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">C:\apps\myAnalyzerFolder\myAnalyzer\input\dictionary</p>
+
+<h2><a NAME=t402></a>Create New Concept for Input Data</h2>
+
+<p>Now that we have this data saved in our dictionary folder, we're going 
+ to create a new rule concept and read the data into the concept from this 
+ new file. We'll follow the same procedure we used in Tutorial 2 when we 
+ created the rule concepts for det, adj, noun etc. This time however, we 
+ will populate the concepts with the data contained in the <span style="font-weight: normal;">companies.txt</span> 
+ you just created.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> In the <span style="font-weight: bold;">Gram</span> <span 
+ style="font-weight: bold;">Tab</span>, select the <span style="font-weight: bold;">pos</span> 
+ folder. (Make sure the <span style="font-weight: bold;">pos</span> folder 
+ opens up.)</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Right click, and select <span style="font-weight: bold;">Add 
+ &gt; Rule</span>:</p>
+
+<p><img src="add_companies_concept_tut4.gif"
+		style="width: 346px;
+				height: 161px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=346
+		height=161
+		border=1></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Type in the concept name <span style="font-weight: bold;">companies</span> 
+ and click <span style="font-weight: bold;">OK</span>.</p>
+
+<p>The new rule concept is added to the <span style="font-weight: bold;">pos</span> 
+ folder. (If the rule concepts in your pos folder are expanded, scroll 
+ down to see the newly added rule concept, companies.)</p>
+
+<p>Your <span style="font-weight: bold;">Gram Tab</span> should look like 
+ this:</p>
+
+<p><img src="pos_companies_tut4.gif"
+		style="width: 205px;
+				height: 273px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=205
+		height=273
+		border=1></p>
+
+<h2><a NAME=t403></a>Associate File with Concept</h2>
+
+<p>Now we are ready to import the content of our <span style="font-weight: normal;">companies.txt 
+ </span>file into our new concept <span style="font-weight: normal;">companies</span>.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> In the Gram Tab, select <span style="font-weight: bold;">companies</span>, 
+ then right click and select<span style="font-weight: bold;"> Sample File</span><span 
+ style="font-weight: bold;"> &gt; Import</span> from the menu.</p>
+
+<p><img src="import_sample_tut4.gif"
+		style="width: 365px;
+				height: 251px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=365
+		height=251
+		border=1></p>
+
+<p>VisualText will warn you that importing samples will delete whatever 
+ sample data you have in the concept rule.</p>
+
+<p><img src="Import%20Warning.gif"
+		style="width: 450px;
+				height: 117px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=450
+		height=117
+		border=1></p>
+
+<p>Since we don't have any sample data that can be deleted, we don't have 
+ anything to worry about.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Click <span style="font-weight: bold;">Yes</span><span 
+ style="font-weight: normal;"> to the warning popup.</span></p>
+
+<p>The Open dialog box will take us to the analyzer input directory.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Open the <span style="font-weight: bold;">dictionary</span> 
+ directory and select the <span style="font-weight: bold;">companies.txt 
+ </span><span style="font-weight: normal;">file.</span></p>
+
+<p><img src="Find%20Sample%20File.gif"
+		style="width: 426px;
+				height: 264px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=426
+		height=264
+		border=0></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Click <span style="font-weight: bold;">Open</span>.</p>
+
+<p>The samples in <span><span style="font-weight: normal;">companies.txt</span></span> 
+ have been added to our new concept.</p>
+
+<p><img src="import_results_tut4.gif"
+		style="width: 203px;
+				height: 300px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=203
+		height=300
+		border=1></p>
+
+<p>While we built the <span style="font-weight: normal;">companies.txt</span> 
+ file by hand, any list of phrases can be used in this manner, as long 
+ as there is one phrase per line in the text file. Although we named the 
+ concept <span style="font-weight: normal;">companies</span> and the input 
+ text file <span style="font-weight: normal;">companies.txt,</span><span 
+ style="font-weight: bold;"> </span><span style="font-weight: normal;">this 
+ name matchup is not required.</span></p>
+
+<h2><a NAME=t404></a>Generate Rules</h2>
+
+<p>Now we are ready to have VisualText generate our new rule.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> From the Main Menu, select <span style="font-weight: bold;">Analyzer 
+ &gt;</span> <span style="font-weight: bold;">Generate Rules &gt; All</span>.</p>
+
+<p><img src="gen_rules_all_tut4_new.gif"
+		style="width: 284px;
+				height: 169px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=284
+		height=169
+		border=1></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Click on the <span style="font-weight: bold;">Ana Tab</span> 
+ and look at the analyzer sequence. A new 'bead' or link has been added 
+ to our analyzer sequence as the last item in the <span style="font-weight: bold;">words</span> 
+ stub region. The pass <span style="font-weight: bold;">companies</span> 
+ has been added.</p>
+
+<p><img src="anaWcompanies.gif"
+		x-maintain-ratio=TRUE
+		style="border-width: 1px;
+				border-style: solid;
+				width: 209px;
+				height: 308px;
+				border-left-style: Solid;
+				border-left-width: 1px;
+				border-right-style: Solid;
+				border-right-width: 1px;
+				border-top-style: Solid;
+				border-top-width: 1px;
+				border-bottom-style: Solid;
+				border-bottom-width: 1px;
+				float: none;"
+		width=209
+		height=308
+		border=1></p>
+
+<p>Now let's take a look at the rule in our new pass file.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Double-click on the <span style="font-weight: bold;">companies</span> 
+ pass to display the automatically generated rule:</p>
+
+<p><img src="companiesPass.gif"
+		x-maintain-ratio=TRUE
+		style="border-width: 1px;
+				border-style: solid;
+				width: 496px;
+				height: 296px;
+				border-left-style: Solid;
+				border-left-width: 1px;
+				border-right-style: Solid;
+				border-right-width: 1px;
+				border-top-style: Solid;
+				border-top-width: 1px;
+				border-bottom-style: Solid;
+				border-bottom-width: 1px;
+				float: none;"
+		width=496
+		height=296
+		border=1></p>
+
+<p>Since <span style="font-weight: bold;">companies</span> was the last 
+ &quot;child&quot; concept of <span style="font-weight: bold;">pos</span> 
+ in the <span style="font-weight: bold;">Gram Hierarchy</span>, its pass 
+ becomes the last pass in the <span style="font-weight: bold;">words</span> 
+ stub.&nbsp;</p>
+
+<p>If you didn't make <span style="font-weight: bold;">companies</span> 
+ the last child concept when you created it, you can move it around in 
+ the <span style="font-weight: bold;">Gram Tab</span> using the yellow 
+ arrows. If you do move the pass around however, remember that you'll need 
+ to regenerate the rules in order to update the analyzer sequence. (From 
+ the Main Menu, select <span style="font-weight: bold;">Analyzer &gt; Generate 
+ Rules &gt; All</span>). </p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 90%;
+				margin-top: 14pt;
+				border-spacing: 0px;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=90%>
+
+<tr>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 100%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=100%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Note</span>: 
+ The order of generated passes should not be changed via the Ana Tab.</td></tr>
+</table>
+
+<p>&nbsp;</p>
+
+<h2><a NAME=t405></a>More on Rule Syntax</h2>
+
+<p>Let's take a closer look at the structure of the <span style="font-weight: bold;">companies</span> 
+ pass file.</p>
+
+<p>First, look at the first line that has been commented out. It reads: 
+ <font style="color: #00CC00;"
+		color=#00CC00>AUTOMATICALLY GENERATED! EDITS WILL BE LOST!</font>. 
+ This warning is letting you know that any edits you make to an automatically 
+ generated pass will not 'stick' the next time you try to automatically 
+ generate the rule. For example, you can't edit your <span style="font-weight: bold;">companies 
+ </span>pass file and then try to automatically regenerate the file. Your 
+ edits will be lost. <span><span style="font-weight: normal;">The only 
+ way to modify the automatically generated files is</span></span><span 
+ style="font-weight: normal;"> </span>to add or edit samples in the <span><span 
+ style="font-weight: normal;">Gram Tab</span></span> and regenerate the 
+ passes. You can, of course, copy the contents of a pass into a hand-built 
+ pass (outside of a stub region) -- this is a way to have VisualText build 
+ rules for you. Our other type of pass, the hand-built type, can always 
+ be hand-edited.</p>
+
+<p>The next line in the comment section of the pass file, tells you where 
+ the .pat file 'resides':</p>
+
+<p><span style="font-weight: bold;">c:\apps\myAnalyzerFolder\myAnalyzer\spec</span> 
+ is the directory, and the file name is <span style="font-weight: bold;">companies.pat</span>.&nbsp; 
+ All pass (.pat) files reside in the spec directory.&nbsp;</p>
+
+<p>The last line in the comment section of our automatically generated 
+ pass file contains a timestamp indicating when the pass file was created.</p>
+
+<p>Now let's take a look at the rest our pass file.</p>
+
+<p>Again, <font style="color: #3366FF;"
+				color=#3366FF><span style="font-weight: bold; font-family: monospace;">@NODES</span></font><span 
+ style="font-family: monospace;"> _ROOT</span> means that the rules in 
+ the pass file are applied to the list of nodes directly dominated by a 
+ node named _ROOT.</p>
+
+<p>The line starting with the <font style="color: #3366FF;"
+									color=#3366FF><span style="font-weight: bold;">@PRE</span></font> 
+ marker indicates a region of constraints (or PRE Actions) that parts of 
+ a rule (or rule elements) must satisfy in order to match. In this case, 
+ the condition requires that the first element of each subsequent rule 
+ match a capitalized word. Here you can see how VisualText performed some 
+ rule generalization.&nbsp; It looked at all the samples and deduced a 
+ pattern in the text, that is, that all the words in the samples started 
+ with capital letters and added this condition to the rule file.</p>
+
+<p>The &lt;1,1&gt; syntax means that the PRE action applies from element 
+ 1 through element 1 of the phrase on the rule's right hand side.&nbsp; 
+ The first element of our rule is <font style="color: #ff0000;
+												font-weight: bold;
+												font-family: monospace;"
+										color=#FF0000
+										face=monospace>_xWILD</font>. The 
+ condition placed on this rule, is that whatever <font style="color: #ff0000;
+	font-weight: bold;
+	font-family: monospace;"
+														color=#FF0000
+														face=monospace>_xWILD</font> 
+ turns out to be, it must be a capitalized word. If we had &lt;1,2&gt; 
+ instead of &lt;1,1&gt; then both the first and second elements in the 
+ rule's phrase would need to be capitalized, and so on.</p>
+
+<p>The region marker <font style="color: #3366FF;"
+							color=#3366FF><span style="font-weight: bold;">@RULES</span></font> 
+ indicates where rules occur. We've introduced the basic syntax of a rule 
+ earlier in this set of tutorials.</p>
+
+<p><font style="color: #000000;"
+		color=#000000>Now, let's take a look at the rest of our pass file.</font></p>
+
+<p><a name=xWILDex></a>The 'variable' <font style="color: #ff0000;
+													font-weight: bold;
+													font-family: monospace;"
+											color=#FF0000
+											face=monospace>_xWILD</font> 
+ is a wildcard match and matches anything within the constraints placed 
+ on it.&nbsp; In this case, the conditions of the wildcard match are given 
+ following the wildcard in square brackets [ ].&nbsp; The conditions min=1 
+ max =1 mean that<span style="font-family: monospace;"> <font style="color: #ff0000;
+	font-weight: bold;
+	font-family: monospace;"
+	color=#FF0000
+	face=monospace>_xWILD</font></span> must match a minimum of one node 
+ and a maximum of one node.&nbsp; If max = 2, then the rule will match 
+ one or two nodes of the parse tree. (max=0 means an unconstrained maximum. 
+ min=0 means that the wildcard can optionally match zero elements.)</p>
+
+<p>The <font style="color: #ff00ff;"
+			color=#FF00FF><span style="font-weight: bold;">s</span></font> 
+ modifier stands for singlet.&nbsp; It tells the rule matching engine to 
+ search a node's descendants for a match, but stop looking 'down' in the 
+ tree when a node has more than one child (i.e., it branches into more 
+ than one node) or when a node has its BASE attribute set.&nbsp; Singlet 
+ and base allow syntactic and semantic features to be layered into the 
+ parse tree. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->If 
+ a series of passes had applied that only operated on single elements, 
+ building up a 'stack' of node labels for that element, this rule could 
+ still match against a lower node in the stack of labels. In brief, the 
+ singlet mechanism allows attributes to be placed and matched directly 
+ within the parse tree. The subtree of attribute nodes is called a <span 
+ style="font-weight: bold;">singlet chain</span>.</p>
+
+<p>The final section of the conditions is the match list of tokens that 
+ <font style="color: #ff0000; font-weight: bold;"
+		color=#FF0000>_xWILD</font> must match, corresponding to the items 
+ in the input sample file.</p>
+
+<h2><a NAME=t406></a>Create Another Input Example</h2>
+
+<p>Now, let's create some text that exercises the new <span style="font-weight: bold;">companies</span> 
+ pass. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->First, 
+ let's create a new folder in the <span style="font-weight: bold;">Text 
+ Tab</span> to hold our example file. Again, folders are used to help you 
+ organize your text files.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <font style="color: #000000;"
+						color=#000000>In the <span style="font-weight: bold;">Text 
+ Tab</span> window, right click and select <span style="font-weight: bold;">Add 
+ &gt; Top Level &gt; Folder</span>:</font></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Name<span style="font-weight: bold;"> <span style="font-weight: normal;">the 
+ folder </span>examples</span>.&nbsp;</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Select the <span style="font-weight: bold;">examples</span> 
+ folder.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> To create a new file<span style="font-weight: bold;">, 
+ <span style="font-weight: normal;">right click and select </span><span 
+ style="font-weight: bold;">A</span>dd &gt; New Text File<span style="font-weight: normal;">.</span></span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Name <span style="font-weight: bold;">the file eg2</span> 
+ (again omitting the .txt extension).</p>
+
+<p><span><span style="font-weight: normal;">Notice that the folder name 
+ &quot;examples&quot; is part of the titlebar of the eg2.txt file.</span></span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Now, type the following text in the body of the text 
+ file:</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">Lambsoft jumped over Fencetech.<br>
+Cisco gave GE the yellow book.</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: Arial;
+			font-size: 10pt;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> Close and open the file to make sure VisualText converts it.</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: Arial;
+			font-size: 10pt;">Now let's run the analyzer on <span style="font-weight: bold;">eg2.txt</span>. </p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: Arial;
+			font-size: 10pt;">Since the eg2.txt file is already selected in the Text Tab:</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> <font style="font-family: Arial;"
+													face=Arial>Click the <span style="font-weight: bold;">Run</span> button. <img src="../../Toolbar_buttons/run_button.gif"
+	style="width: 24px;
+			height: 26px;
+			border-width: 1px;
+			border-style: solid;
+			margin-top: 0px;
+			margin-bottom: 0px;
+			margin-left: 0px;
+			margin-right: 0px;"
+	width=24
+	height=26
+	border=1> </font></p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;"><img src="../GO.gif"
+									style="width: 19px;
+											height: 16px;
+											border-style: none;
+											margin-top: 0px;
+											margin-bottom: 0px;
+											margin-left: 0px;
+											margin-right: 0px;"
+									width=19
+									height=16
+									border=0> <font style="font-family: Arial;"
+													face=Arial>View the parse tree, by right clicking on <span style="font-weight: bold;">eg2.txt</span> in the Workspace, and selecting <span style="font-weight: bold;">View &gt; Parse Tree</span>.</font></p>
+
+<p><img src="tut4_COparsetree0617.gif"
+		style="width: 314px;
+				height: 351px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=314
+		height=351
+		border=1></p>
+
+<p>At first glance, it may look like our Sentence pass is not working here, 
+ since we don't have any <span style="font-weight: bold;">_S</span> nodes. 
+ (Remember that the rule in our Sentence pass says, if you find a NP followed 
+ by a whitespace and then a VP, reduce them to the new node <span style="font-weight: bold;">_S</span>.) 
+ In fact, the Sentence pass is working fine. It is just that the rules 
+ in the Sentence pass file require a noun phrase before a verb phrase and 
+ since the names in companies file are reduced to <span style="font-weight: bold;">_companies</span> 
+ and not <span style="font-weight: bold;">_noun</span>, the conditions 
+ set in the <span style="font-weight: bold;">Sentence</span> pass are not 
+ met. We'll have to go in and create a new concept to get this done.</p>
+
+<h2><a NAME=t407></a>Alter Existing Rules to Handle New Concept</h2>
+
+<p>Now let's create a new pass in our analyzer sequence that will rename 
+ a <span style="font-weight: bold;">_companies</span> node to be a <span 
+ style="font-weight: bold;">_noun</span> node. (<span style="font-style: italic;">Developer's 
+ note</span>: another way, not shown here, uses the Properties dialog in 
+ the Gram Tab to add the layered label _noun when automatically generating 
+ the rules for _companies.)</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> In the <span style="font-weight: bold;">Ana Tab</span>, 
+ select <span style="font-weight: bold;">end_words</span>. We want our 
+ pass to be inserted <span style="font-weight: bold;">before</span> the 
+ <span style="font-weight: bold;">POSS</span> pass.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Right click and select <span style="font-weight: bold;">Add 
+ &gt; New Pass</span>.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <span style="font-style: normal; font-weight: normal;">Name 
+ the new pass </span><span style="font-style: normal; font-weight: bold;">company2noun</span>.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <span style="font-weight: normal;">Leave </span><span 
+ style="font-weight: bold;">Type</span> as <span style="font-weight: bold;">Pattern</span>.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Double-click the newly created <span style="font-weight: bold;">company2noun</span> 
+ pass, and edit the RULES Region so that it looks like the following:</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">@CODE</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;"><span style="font-weight: bold; color: #ff0000;">L</span>(<span 
+ style="color: #ff00ff;">&quot;hello&quot;</span>) = 0;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">@@CODE</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;"><span style="font-weight: bold; color: #0000ff;">@NODES</span> 
+ _ROOT</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">@RULES</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">_noun &lt;- _companies [<span style="font-weight: bold; color: #b298e2;">s</span>] 
+ <span style="color: #0000ff;">@@</span></p>
+
+<p>Now that we have this pass in our analyzer sequence, company names can 
+ be treated as regular nouns.&nbsp;</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Run the analyzer on <span style="font-weight: bold;">eg2.txt</span>. 
+ <img src="../../Toolbar_buttons/run_button.gif"
+		style="width: 24px;
+				height: 26px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=24
+		height=26
+		border=1></p>
+
+<p>Now, let's take a look at the new parse tree.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> (Select the <span style="font-weight: bold;">Sentence</span> 
+ pass in the <span style="font-weight: bold;">Ana Tab</span> if the Generate 
+ Logs toggle is on.)</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Select <span style="font-weight: bold;">eg2.txt </span>in 
+ the workspace, right click and select <span style="font-weight: bold;">View 
+ &gt; Parse Tree</span>. Expand the first <span style="font-weight: bold;">_S</span> 
+ and look at the parse tree.</p>
+
+<p><img src="tut4_SENT1parsetree0617.gif"
+		style="width: 610px;
+				height: 325px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=610
+		height=325
+		border=1></p>
+
+<p>That worked pretty well, except notice that in the second sentence, 
+ the second noun phrase wasn't included. Instead of the sentence, 'Cisco 
+ gave GE the yellow book.', our analyzer parsed 'Cisco gave GE' as a complete 
+ sentence.&nbsp; The structure of the sentence, 'Cisco gave GE the yellow 
+ book.' is a noun phrase (Cisco) followed by a verb phrase (gave) followed 
+ by two noun phrases, 'Cisco' and 'the yellow book.' It appears as if our 
+ VP pass file does not account for &quot;verb + NP + NP&quot;.</p>
+
+<p>Let's take a look at the <span style="font-weight: normal;">VP</span> 
+ pass file.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Double click on the <span style="font-weight: bold;">VP 
+ </span><span style="font-weight: normal;">pass in the analyzer sequence. 
+ Notice that our rules do not cover this case.</span></p>
+
+<p><img src="vpPass.gif"
+		x-maintain-ratio=TRUE
+		style="border-width: 1px;
+				border-style: solid;
+				width: 426px;
+				height: 267px;
+				border-left-style: Solid;
+				border-left-width: 1px;
+				border-right-style: Solid;
+				border-right-width: 1px;
+				border-top-style: Solid;
+				border-top-width: 1px;
+				border-bottom-style: Solid;
+				border-bottom-width: 1px;
+				float: none;"
+		width=426
+		height=267
+		border=1></p>
+
+<p>Let's edit the VP pass file to allow a verb phrase to be formed from 
+ a &quot;verb + NP + NP&quot;.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Add the following rule as the first rule in the <font 
+ style="color: #0000ff;"
+	color=#0000FF><span style="color: #000000;">RULES</span> <span style="color: #000000;">Region</span></font>:</p>
+
+<p><font style="font-family: 'Courier New';"
+		face="Courier New">&nbsp; _VP &lt;- _verb <font style="color: #ff0000;"
+														color=#FF0000><span 
+ style="font-weight: bold;">_xWHITE</span></font> _NP <font style="color: #ff0000;"
+															color=#FF0000><span 
+ style="font-weight: bold;">_xWHITE</span></font> _NP <font style="color: #0000ff;"
+															color=#0000FF><span 
+ style="font-weight: bold;">@@</span></font></font></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Run the analyzer again on <font style="color: #000000;"
+													color=#000000><span 
+ style="font-weight: bold;">eg2.txt</span></font><span style="font-weight: normal;"> 
+ </span>with the <span style="font-weight: bold;">Generate Logs</span> 
+ button on.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Select <span style="font-weight: bold;">eg2.txt</span> 
+ and view the parse tree.</p>
+
+<p>The parse tree should look like this:</p>
+
+<p><font style="color: #ff0000;"
+		color=#FF0000><img src="tut4_SENT2parsetree0617.gif"
+							style="width: 484px;
+									height: 198px;
+									border-width: 1px;
+									border-style: solid;
+									margin-top: 0px;
+									margin-bottom: 0px;
+									margin-left: 0px;
+									margin-right: 0px;"
+							width=484
+							height=198
+							border=1></font></p>
+
+<p>(Select the <span style="font-weight: bold;">Sentence</span> pass in 
+ the Ana Tab to see the parse tree.)</p>
+
+<h2><a NAME=t408></a>Print Something To Output File</h2>
+
+<p>One of the helpful features of VisualText, is the ability to extract 
+ specific parts of the parse tree and write the extracted information out 
+ to a file. Up until now, we have viewed our results using the parse tree. 
+ Now we will learn how to direct the results to an output file. We can 
+ do this by adding a POST Region to the relevant pass file.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Double click on the <span style="font-weight: bold;">company2noun 
+ </span>pass in the <span style="font-weight: bold;">Ana Tab</span> to 
+ open up the pass file.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Add the POST Region to the file so that it looks like 
+ this:</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;"><span style="font-family: monospace;
+											font-weight: bold;
+											color: #0000ff;">@CODE</span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;"><span style="font-weight: bold; color: #ff0000;">G</span>(<span 
+ style="color: #ff00ff;">&quot;hello&quot;</span>) = 0;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">@@CODE</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;"><span style="font-weight: bold; color: #0000ff;">@NODES</span> 
+ _ROOT</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;"><span style="font-family: monospace;
+											font-weight: bold;
+											color: #0000ff;">@POST</span></p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			color: #000000;
+			font-weight: normal;"><!--kadov_tag{{<spaces>}}-->&nbsp;<span 
+ style="color: #ff00ff;"><!--kadov_tag{{</spaces>}}-->&quot;output.txt&quot;</span> 
+ &lt;&lt; <span style="color: #ff00ff;">&quot;Found company: &quot;</span> 
+ &lt;&lt; <span style="color: #ff0000; font-weight: bold;">N</span>(<span 
+ style="color: #ff00ff;">&quot;$text&quot;</span>) &lt;&lt; <span style="color: #ff00ff;">&quot;\n&quot;</span>;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			color: #000000;
+			font-weight: normal;"><!--kadov_tag{{<spaces>}}-->&nbsp;<span 
+ style="color: #800080; font-weight: bold;"><!--kadov_tag{{</spaces>}}-->single</span>();</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">&nbsp;</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;
+			color: #0000ff;">@RULES</p>
+
+<p style="font-family: monospace;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">_noun &lt;- _companies [<span style="font-weight: bold; color: #b298e2;">s</span>] 
+ <span style="color: #0000ff;">@@</span></p>
+
+<p>You are already familiar with the <font style="color: #0000ff;"
+											color=#0000FF>NODES</font> 
+ and <font style="color: #0000ff;"
+			color=#0000FF>RULES</font> part of the rule file. <font style="color: #0000ff;"
+	color=#0000FF>@POST</font><font style="color: #3366FF;"
+									color=#3366FF> </font>is the marker 
+ for the <span style="color: #0000ff;">POST</span> Region. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->This 
+ region contains code (the two lines between <font style="color: #0000ff;"
+													color=#0000FF>@POST</font> 
+ and <font style="color: #0000ff;"
+			color=#0000FF>@RULES</font>) that will be executed if a rule 
+ in the subsequent RULES Region matches.</p>
+
+<p>Let's take a closer look at the code in the POST Region.</p>
+
+<p>If you are familiar with C++ programming, you'll notice that the code 
+ to write to an output file is similar.</p>
+
+<p>The first line of code can be broken down into two parts: what is to 
+ the left of the output operator (&lt;&lt;) and what is to the right of 
+ the operator. The left side of the operator specifies the name of the 
+ output file, in this case 'output.txt', and the right side specifies what 
+ should be written to the output file and how. We'll go over the code in 
+ more detail below.</p>
+
+<p>The first item to the right of the output operator is &quot;Found company: 
+ &quot;. This basically says, print the text &quot;Found company: &quot; 
+ in the output file. Material enclosed in double quotes is printed literally.</p>
+
+<p>The next thing that gets printed to the output.txt is indicated by <a 
+ NAME="N__$text__"></a><span style="font-weight: bold; font-family: monospace;"><font 
+ style="color: #ff0000; font-family: monospace;"
+	color=#FF0000
+	face=monospace>N</font>(<font style="color: #ff00ff; font-family: monospace;"
+									color=#FF00FF
+									face=monospace>&quot;$text&quot;</font>)</span>. 
+ This means 'get the text in the last node element' (i.e., the text contained 
+ in <span style="font-weight: bold;">_companies</span>) and append it to 
+ the output file.&nbsp; (If there were more than one element in the right 
+ hand side of the rule, you could specify which element to extract the 
+ text from with a second argument to <span style="font-weight: bold;"><font 
+ style="color: #ff0000;"
+	color=#FF0000>N</font></span>, for example, the second element's text 
+ could be extracted with the expression <span style="font-weight: bold; font-family: monospace;"><font 
+ style="color: #ff0000; font-family: monospace;"
+	color=#FF0000
+	face=monospace>N</font>(<font style="color: #ff00ff; font-family: monospace;"
+									color=#FF00FF
+									face=monospace>&quot;$text&quot;</font>,2)</span>.)&nbsp;</p>
+
+<p>Our last item, is <font style="color: #ff00ff;"
+							color=#FF00FF><span style="font-family: monospace;">&quot;</span></font><span 
+ style="font-weight: bold;"><font style="color: #ff00ff; font-family: monospace;"
+									color=#FF00FF
+									face=monospace>\n</font></span><span><font 
+ style="color: #ff00ff; font-family: monospace;"
+	color=#FF00FF
+	face=monospace>&quot;</font></span>. This adds a newline.&nbsp;</p>
+
+<p>The last item on our first line of code is the semicolon, analogous 
+ to the statement terminator of other programming languages.</p>
+
+<p>The second line, <font style="color: #CC33CC;"
+							color=#CC33CC><span style="font-weight: bold; font-family: monospace;">single</span><span 
+ style="font-family: monospace; color: #000000;">()</span><span style="color: #000000;">;</span></font>, 
+ instructs the rule engine to perform a single-tier, or default, reduction. 
+ This is described below.</p>
+
+<h2><a NAME=single></a>Single</h2>
+
+<p><span style="font-style: italic;">(Advanced section. Primarily for the 
+ programmer or computational linguist.)</span></p>
+
+<p>A reduction rule is one which takes one or more elements, such as the 
+ sequence <span style="font-weight: bold;">_NP _VP, </span>and reduces 
+ the matched phrase of nodes to one node, such as <span style="font-weight: bold;">_S</span>. 
+ For historical reasons, the default reduce action is called a single-tier 
+ reduction.&nbsp; The default reduction can be superseded in the<span style="font-weight: bold;"> 
+ </span><font style="color: #0000ff;"
+				color=#0000FF>POST</font> Region.&nbsp; That is, the rule 
+ <span style="font-weight: bold;">_S</span> &lt;- <span style="font-weight: bold;">_NP</span> 
+ <span style="font-weight: bold;">_VP</span> will perform a <font style="color: #CC33CC;"
+	color=#CC33CC><span style="font-weight: bold; font-family: monospace;">single</span><span 
+ style="font-family: monospace; color: #000000;">()</span><span style="color: #000000;">;</span></font> 
+ reduction by default.&nbsp; If you do write a non-empty POST Region, however, 
+ you must specify the type of reduction you want, <font style="color: #ff0000;"
+														color=#FF0000><span 
+ style="color: #000000; font-style: italic;">else the default is</span><span 
+ style="font-style: italic;"> </span></font><font style="color: #CC33CC;"
+													color=#CC33CC><span 
+ style="font-weight: bold; font-family: monospace;">noop</span></font>.&nbsp; 
+ <font style="color: #CC33CC;"
+		color=#CC33CC><span style="font-weight: bold; font-family: monospace;">noop</span></font> 
+ is an action that does nothing (i.e., &quot;no op&quot; or &quot;no operation&quot;). 
+ Two other reduction types include <span style="font-weight: bold; font-family: monospace;"><font 
+ style="color: #CC33CC;"
+	color=#CC33CC>group</font></span> and <font style="color: #CC33CC;"
+												color=#CC33CC><span style="font-weight: bold; font-family: monospace;">excise</span></font>.</p>
+
+<p><font style="color: #CC33CC;"
+		color=#CC33CC><span style="font-weight: bold; font-family: monospace;">group</span></font> 
+ is used when you have a structural description such as 'A B C D' but you 
+ only want to create a node from B and C, leaving A and D alone. A pass 
+ such as</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: x-small;"><font style="color: #0000ff;"
+										color=#0000FF><span style="font-weight: bold;">@POST</span></font><font style="color: #CC33CC;"
+	color=#CC33CC><span style="font-weight: bold;"><br>
+group</span></font>(2,3,<font style="color: #ff00ff;"
+								color=#FF00FF><span style="font-weight: bold;">&quot;_foobar&quot;</span></font>);<font style="color: #0000ff;"
+	color=#0000FF><span style="font-weight: bold;"><br>
+@RULES</span></font><font style="color: #ff0000;"
+							color=#FF0000><span style="font-weight: bold;"><br>
+_xNIL</span></font> &lt;- A B C D <font style="color: #0000ff;"
+										color=#0000FF><span style="font-weight: bold;">@@</span></font></p>
+
+<p>creates a structure like A _foobar(B C) D.</p>
+
+<p><font style="color: #CC33CC;"
+		color=#CC33CC><span style="font-weight: bold; font-family: monospace;">excise</span></font> 
+ deletes structure from the parse tree, and <font style="color: #CC33CC;"
+													color=#CC33CC><span 
+ style="font-weight: bold; font-family: monospace;">noop</span></font> 
+ causes no reduction to be performed. For a summary of the different types 
+ of Post Actions available, see <a HREF="../../NLP_PP_Stuff/AT-POST_Actions.htm">POST 
+ Actions</a>. For now, we need to include the default reduction type for 
+ the purposes of the current example.</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 90%;
+				margin-top: 14pt;
+				border-spacing: 0px;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=90%>
+
+<tr>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 100%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=100%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Note</span>: 
+ Omitting <font style="color: #CC33CC;"
+				color=#CC33CC><span style="font-weight: bold; font-family: monospace;">single</span><span 
+ style="font-family: monospace; color: #000000;">()</span><span style="color: #000000;">;</span></font>in 
+ the POST Region is a common error.&nbsp;</td></tr>
+</table>
+
+<h2>&nbsp;</h2>
+
+<h2><a NAME=t409></a>Inspect Output File</h2>
+
+<p>Now that we have edited our <span style="font-weight: bold;">company2nouns</span> 
+ pass file to print information to an output file, we are ready to run 
+ the analyzer.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Click on the <span style="font-weight: bold;">Run</span> 
+ button. (You can also run the analyzer by right clicking on <span style="font-weight: bold;">eg2.txt</span> 
+ in the Workspace and selecting, <span style="font-weight: bold;">Run</span>.)</p>
+
+<p>There are a couple of methods to view output files. The easiest is:</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Select the <span style="font-weight: bold;">View Output 
+ File</span> button <img src="../../Toolbar_buttons/view_output_file_button.gif"
+						style="width: 24px;
+								height: 23px;
+								border-width: 1px;
+								border-style: solid;
+								margin-top: 0px;
+								margin-bottom: 0px;
+								margin-left: 0px;
+								margin-right: 0px;"
+						width=24
+						height=23
+						border=1> located on the <a HREF="../../VisualText_Interface/Toolbars/Toolbar.htm#Debug_Toolbar">Debug 
+ Toolbar</a>. </p>
+
+<p>The output.txt file will open up in the Workspace. The result looks 
+ like this:</p>
+
+<p><img src="Output%202.gif"
+		style="width: 263px;
+				height: 114px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=263
+		height=114
+		border=1></p>
+
+<p>The output file <span style="font-weight: bold;">output.txt</span> is 
+ written to a system-created direct<span style="font-weight: normal;">ory</span><span><span 
+ style="font-weight: normal;">. The path to the file is:</span></span></p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;">C:\apps\myAnalyzerFolder\myAnalyzer\input\examples\eg2.txt_log\<span style="font-weight: normal;">output.txt</span></p>
+
+<p>Another way to view the output file is from the <span style="font-weight: bold;">Text 
+ Tab Window</span>.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> In the <span style="font-weight: bold;">Text Tab</span><span 
+ style="font-weight: bold;"><span style="font-weight: normal;">, open the</span> 
+ examples <span style="font-weight: normal;">folder</span></span>. Expand 
+ <span style="font-weight: bold;">eg2.txt</span>. </p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Double click on the <span style="font-weight: bold;">output.txt</span> 
+ file.</p>
+
+<p><img src="Eg2_Output.gif"
+		style="width: 520px;
+				height: 449px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=520
+		height=449
+		border=0></p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 90%;
+				margin-top: 14pt;
+				border-spacing: 0px;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=90%>
+
+<tr>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 100%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=100%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Note</span>: 
+ The ana~.log files here let you know the analyzer was run with the Generate 
+ Logs button on.</td></tr>
+</table>
+
+<p>Notice that the output file is placed into directories created by the 
+ system corresponding to the input file name.&nbsp; You can see this in 
+ the titlebar of the output file. This makes working with multiple input 
+ files convenient. (The other files in the folder are the intermediate 
+ log files.)</p>
+
+<p>Note that the main output file, named <span style="font-weight: bold;">output.txt</span> 
+ by default, is special and is bound to the View Output File button. If 
+ you had named the output file something like <span style="font-weight: bold;">foo.txt</span>, 
+ with a print statement like</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><font style="color: #ff00ff;"
+											color=#FF00FF><span style="font-weight: normal;">&quot;foo.txt&quot;</span></font> &lt;&lt; <font style="color: #ff00ff;"
+	color=#FF00FF><span style="font-weight: normal;">&quot;found companies : &quot;</span></font> &lt;&lt; <font style="color: #ff0000;"
+	color=#FF0000><span style="font-weight: bold;">N</span></font>(<font style="color: #ff00ff;"
+	color=#FF00FF><span style="font-weight: normal;">&quot;$text&quot;</span></font>) &lt;&lt; <font style="color: #ff00ff;"
+	color=#FF00FF><span style="font-weight: normal;">&quot;\n&quot;</span></font>;</p>
+
+<p>then the View Output File button would not display the file <span style="font-weight: normal;">foo.txt</span>.</p>
+
+<p>To view such an output file, use the <span style="font-weight: bold;">View 
+ Dump Files</span> button. <img src="../../Toolbar_buttons/view_dump_files_button.gif"
+								style="width: 24px;
+										height: 23px;
+										border-width: 1px;
+										border-style: solid;
+										margin-top: 0px;
+										margin-bottom: 0px;
+										margin-left: 0px;
+										margin-right: 0px;"
+								width=24
+								height=23
+								border=1></p>
+
+<p>This will list all the files with a .txt extension in the current <span 
+ style="font-weight: bold;">log folder</span><span style="font-weight: normal;">, 
+ or default output folder associated with an input file</span>. If you 
+ were to have two output files created by:</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><font style="color: #ff00ff;"
+											color=#FF00FF>&quot;foo.txt&quot;</font> &lt;&lt; <font style="color: #ff00ff;"
+	color=#FF00FF>&quot;found companies : &quot;</font> &lt;&lt; <font style="color: #ff0000;"
+	color=#FF0000><span style="font-weight: bold;">N</span></font>(<font style="color: #ff00ff;"
+	color=#FF00FF>&quot;$text&quot;</font>) &lt;&lt; <font style="color: #ff00ff;"
+															color=#FF00FF>&quot;\n&quot;</font>;<font style="color: #ff00ff;"
+	color=#FF00FF><br>
+&quot;foo2.txt&quot;</font> &lt;&lt; <font style="color: #ff00ff;"
+											color=#FF00FF>&quot;found companies : &quot;</font> &lt;&lt; <font style="color: #ff0000;"
+	color=#FF0000><span style="font-weight: bold;">N</span></font>(<font style="color: #ff00ff;"
+	color=#FF00FF>&quot;$text&quot;</font>) &lt;&lt; <font style="color: #ff00ff;"
+															color=#FF00FF>&quot;\n&quot;</font>;</p>
+
+<p>then you could use the <span style="font-weight: bold;">View Dump Files 
+ </span><span style="font-weight: normal;">pulldown list</span> to choose 
+ between them:</p>
+
+<h2><img src="view_foo_tut4.gif"
+		style="width: 119px;
+				height: 74px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=119
+		height=74
+		border=1></h2>
+
+<h2><a NAME=Navigate_the_Input_Files></a><span style="font-weight: normal;">Navigate 
+ Input Files</span></h2>
+
+<p>There are many shortcuts in VisualText to help you navigate among files. 
+ One of these navigation shortcuts uses the <span style="font-weight: bold;">Previous 
+ Text</span> and <span style="font-weight: bold;">Next Text </span>buttons 
+ on the Debug Toolbar.</p>
+
+<p><img src="next_previous_text_tut4.gif"
+		style="width: 46px;
+				height: 23px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=46
+		height=23
+		border=0></p>
+
+<p>For example, if you want to run the analyzer on the next file in the 
+ currently selected folder in the Text Tab, you can use these buttons to 
+ quickly get the file.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> First close all the open files in the Workspace. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(You 
+ can use <span style="font-weight: bold;">Window &gt; Close All</span> 
+ in the main menu).</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Create another file in the <span style="font-weight: bold;">examples</span> 
+ folder. (Double click to open the <span style="font-weight: bold;"><font 
+ style="color: #000000;"
+	color=#000000>examples</font></span> folder, right click and select, 
+ <span style="font-weight: bold;">Add &gt; New Text File</span>.)</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Name the file <span style="font-weight: bold;">eg3.txt</span><span 
+ style="font-weight: normal;">. In the eg3.txt file, add the following 
+ text:</span></p>
+
+<p style="margin-left: 40px; font-family: monospace;">John kissed the dog.<br>
+Mary gave the book to John.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Save <span style="font-weight: bold;">eg3.txt</span>.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Select the <span style="font-weight: bold;">Page Mode 
+ Toggle</span> button <img src="../../Toolbar_buttons/toggle_page_mode_button.gif"
+							style="width: 24px;
+									height: 23px;
+									border-width: 1px;
+									border-style: solid;
+									margin-top: 0px;
+									margin-bottom: 0px;
+									margin-left: 0px;
+									margin-right: 0px;"
+							width=24
+							height=23
+							border=1> in order to enable the <span style="font-weight: bold;">Next 
+ Text</span> and <span style="font-weight: bold;">Previous Text</span> 
+ buttons.</p>
+
+<p>Notice how the two horizontal arrows to the right on the toolbar are 
+ enabled:</p>
+
+<p><span style="font-weight: bold;">Next Text</span></p>
+
+<p><img src="next_text_tut4.gif"
+		style="width: 126px;
+				height: 67px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=126
+		height=67
+		border=1></p>
+
+<p><span style="font-weight: bold;">Previous Text</span></p>
+
+<p><img src="previous_text_tut4.gif"
+		style="width: 125px;
+				height: 64px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=125
+		height=64
+		border=1>&nbsp;</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Click on the <span style="font-weight: bold;">Previous 
+ Text</span> button. Notice <span style="font-weight: bold;">eg2.txt</span> 
+ is yellow in the<span style="font-weight: bold;"> Text Tab</span>, and 
+ that <span style="font-weight: bold;">eg2.txt</span> is the name of the 
+ file displayed in the <span style="font-weight: normal;">workspace</span>.</p>
+
+<p><img src="prevText.gif"
+		x-maintain-ratio=TRUE
+		style="border-width: 1px;
+				border-style: solid;
+				width: 527px;
+				height: 193px;
+				border-left-style: Solid;
+				border-left-width: 1px;
+				border-right-style: Solid;
+				border-right-width: 1px;
+				border-top-style: Solid;
+				border-top-width: 1px;
+				border-bottom-style: Solid;
+				border-bottom-width: 1px;
+				float: none;"
+		width=527
+		height=193
+		border=1></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Now click on the<span style="font-weight: bold;"> Next 
+ Text </span>button. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Notice 
+ that <span style="font-weight: bold;">eg3.txt</span> in the <span style="font-weight: bold;">Text 
+ Tab</span> is now selected (it turned yellow), and the file displayed 
+ in the Workspace is <span style="font-weight: bold;">eg3.txt</span>.</p>
+
+<p><img src="nextText.gif"
+		x-maintain-ratio=TRUE
+		style="border-width: 1px;
+				border-style: solid;
+				width: 528px;
+				height: 192px;
+				border-left-style: Solid;
+				border-left-width: 1px;
+				border-right-style: Solid;
+				border-right-width: 1px;
+				border-top-style: Solid;
+				border-top-width: 1px;
+				border-bottom-style: Solid;
+				border-bottom-width: 1px;
+				float: none;"
+		width=528
+		height=192
+		border=1></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Clicking the <span style="font-weight: bold;">Previous 
+ Text</span> button operates the selection display in reverse.</p>
+
+<h2><a NAME=Highlight_Toggle></a>Highlight Matched Concepts</h2>
+
+<p>Another one of VisualText's many shortcuts is a debugging tool used 
+ to highlight concepts.</p>
+
+<p>The <span style="font-weight: bold;">Toggle Highlight Mode</span> button 
+ <img src="displayConceptsToolbarButton.gif"
+		style="width: 27px;
+				height: 32px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=27
+		height=32
+		border=1> highlights regions of text in an analyzed file that match 
+ rules in a selected pass of the analyzer. This tool lets you quickly see 
+ whether and where a pass has a rule that has applied.</p>
+
+<p>An alternative to using <span style="font-weight: bold;">Toggle Highlight 
+ Mode, </span>is to inspect the parse tree, but this can be a slower process 
+ (although it gives you more information). To use this highlighting feature, 
+ you must have the <span style="font-weight: bold;">Toggle Generate Logs</span> 
+ button selected. (Information on the Toggle Generate Logs button is given 
+ below.)</p>
+
+<p>Let's see how the <span style="font-weight: bold;">Toggle Highlight 
+ Mode </span>works.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Select the <span style="font-weight: bold;">Toggle Generate 
+ Logs</span> button. <img src="../../Toolbar_buttons/toggle_gen_logs_button.gif"
+							style="width: 24px;
+									height: 25px;
+									border-width: 1px;
+									border-style: solid;
+									margin-top: 0px;
+									margin-bottom: 0px;
+									margin-left: 0px;
+									margin-right: 0px;"
+							width=24
+							height=25
+							border=1> (<span style="font-weight: bold;">Toggle 
+ Generate Logs </span>is next to <span style="font-weight: bold;">Toggle 
+ Highlight Mode</span> on the toolbar.)</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Double click on the <span style="font-weight: bold;">eg1.txt</span> 
+ to open it in the Workspace.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Run the analyzer on <span style="font-weight: bold;">eg1.txt</span>. 
+ <span style="font-weight: normal;"><img src="../../Toolbar_buttons/run_button.gif"
+										style="width: 24px;
+												height: 26px;
+												border-width: 1px;
+												border-style: solid;
+												margin-top: 0px;
+												margin-bottom: 0px;
+												margin-left: 0px;
+												margin-right: 0px;"
+										width=24
+										height=26
+										border=1></span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Select the <span style="font-weight: bold;">det</span> 
+ pass in the <span style="font-weight: bold;">Ana Tab</span>, then click 
+ on the <span style="font-weight: bold;">Toggle Highlight Mode</span> button 
+ <img src="../../Toolbar_buttons/toggle_highlight_mode_button.gif"
+		style="width: 25px;
+				height: 25px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=25
+		height=25
+		border=1>:</p>
+
+<p><img src="highlightDet.gif"
+		x-maintain-ratio=TRUE
+		style="border-width: 1px;
+				border-style: solid;
+				width: 606px;
+				height: 310px;
+				border-left-style: Solid;
+				border-left-width: 1px;
+				border-right-style: Solid;
+				border-right-width: 1px;
+				border-top-style: Solid;
+				border-top-width: 1px;
+				border-bottom-style: Solid;
+				border-bottom-width: 1px;
+				float: none;"
+		width=606
+		height=310
+		border=1></p>
+
+<p>Notice how the text matching the <span style="font-weight: bold;">det 
+ </span>pass turns blue.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Now select a later pass in the analyzer sequence, for 
+ example the <span style="font-weight: bold;">noun</span> pass. Notice 
+ how the text changes to now match the <span style="font-weight: bold;">noun</span> 
+ pass file.</p>
+
+<p>If you prefer using pulldown menus, the same function can be accessed 
+ by selecting <span style="font-weight: bold;">Highlight Matches</span><span 
+ style="font-weight: normal;"> from either the Gram Tab or the Ana Tab 
+ popup menus.</span></p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Close the open files in the Workspace.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> (If available) save your analyzer. (<span style="font-weight: bold;">File 
+ &gt; Save Analyzer</span>.)</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> (If available) answer <span style="font-weight: bold;">Yes 
+ </span>at the confirmation prompt. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->And 
+ the same for saving the knowledge base.</p>
+
+<p><img src="../GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> <font style="color: #000000;"
+						color=#000000>Exit the analyzer. From the <span 
+ style="font-weight: normal;">Main Menu</span>, select <span style="font-weight: bold;">File 
+ &gt; </span></font><span style="font-weight: bold;"><font style="color: #000000;"
+															color=#000000>Exit</font></span><font 
+ style="color: #000000;"
+	color=#000000>.</font></p>
+
+<h2>Summary</h2>
+
+<p style="margin-bottom: 0;">In this tutorial we created an input file 
+ to store lists of items in a concept, created a new top concept for the 
+ item and imported the file's samples into the concept.&nbsp;&nbsp; We 
+ generated the rules and ran the analyzer against the input data.&nbsp; 
+ We discussed some features of the automatically generated rules, then 
+ created another hand-built rule to utilize the automatically generated 
+ rules in the analyzer logic.&nbsp; Finally, we printed some data to an 
+ output file and explored some navigation and debug tools. </p>
+
+</body>
+
+</html>

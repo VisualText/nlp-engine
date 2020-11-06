@@ -1,0 +1,317 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Updating Analyzers and KBs</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1410>
+<meta name=layout-width content=1024>
+
+
+<!--(Links)=========================================================-->
+
+<link rel="StyleSheet" href="default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Updating Analyzers and KBs</h1>
+
+<p>This topic applies to the latest version of VisualText. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->You 
+ may want to read the topic <a href="VisualText_Basics/Compiled_and_Standalone_Analyzers.htm">Compiled 
+ and Standalone Analyzers</a> for background.</p>
+
+<p>In case you need to merge code from your old analyzers, we recommend 
+ using <span style="font-weight: bold;">WinDiff</span> (available with 
+ MS Visual Studio 6.0). <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Also, 
+ note the new include files referenced in the prog and user projects, as 
+ well as code changes that compile with both Unicode and non-Unicode configurations 
+ (see the API header file <span style="font-weight: bold;">Program Files\TextAI\include\Api\my_tchar.h</span> 
+ as well as studying the new code files). <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Finally, 
+ note that the prog, kb, run, and user projects now all include Unicode_Release 
+ configurations which may need to be compiled for Unicode VisualText.</p>
+
+<p><span style="font-weight: bold; color: #ff0000;">WARNING: BEFORE</span> 
+ uninstalling an older VisualText and installing a later version, one should 
+ do steps [1] and [2] below.</p>
+
+<p><span style="font-weight: bold; color: #ff0000;">LIMITATION:</span> 
+ At present, we have no simple method for converting a Unicode KB to an 
+ ANSI KB. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->You 
+ may need to manually edit out all Unicode characters.</p>
+
+<p>[1] <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">Get 
+ interpreted KB.</span> <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For 
+ each analyzer you want to update, you'll need to make sure it has an up-to-date 
+ INTERPRETED form of the knowledge base. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->This 
+ is because compiled KBs (kb.dll) will not load with the new VisualText.</p>
+
+<p><img src="Tutorials/GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Simplest is to click the Save KB button (or select Save 
+ KB from the KB menu). <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->This 
+ assures that you generate the latest interpreted version of a knowledge 
+ base, whether you use a compiled analyzer or not.</p>
+
+<p>[2] <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">Back 
+ up analyzers.</span> <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Prior 
+ to upgrading the VisualText version, make a safe copy of your analyzers. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->This will 
+ give you a fallback in case something goes wrong during the update process.</p>
+
+<p>[3] <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">Install 
+ new VisualText.</span> </p>
+
+<p><img src="Tutorials/GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Follow the instructions provided to you with the latest 
+ version of VisualText.</p>
+
+<p>[4] <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">Create 
+ new analyzer.</span> <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->In 
+ general, the best way to update an analyzer is to create a new version 
+ from scratch, then merge parts of the old analyzer into the new.</p>
+
+<p><img src="Tutorials/GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Rename the old analyzer, e.g. c:\apps\myAnalyzer to c:\apps\myAnalyzer_saf</p>
+
+<p><img src="Tutorials/GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Create a new analyzer of the same name by invoking VisualText, 
+ selecting File &gt; New Analyzer, and selecting the Bare template.</p>
+
+<p><img src="Tutorials/GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> If you will use a compiled KB, check the box at File 
+ &gt; Preferences &gt; Analyzer Dependent &gt; Load Compiled KB. (Don't 
+ worry, if the analyzer doesn't find a compiled KB it will still load the 
+ interpreted KB.)</p>
+
+<p><img src="Tutorials/GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Exit VisualText.</p>
+
+<p>Next we'll merge the old analyzer into the new, one piece at a time.</p>
+
+<p>[5] <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">Merge 
+ KB.</span> <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--></p>
+
+<p><img src="Tutorials/GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Copy the interpreted kb from your old analyzer, e.g., 
+ at <span style="font-weight: bold;">myAnalyzer_saf\kb\user</span>.</p>
+
+<p><img src="Tutorials/GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Paste this user folder into the new analyzer at <span 
+ style="font-weight: bold;">myAnalyzer\kb</span>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(Yes 
+ to overwrite everything).</p>
+
+<p>[6] <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">Merge 
+ Run.</span> <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ analyzer's <span style="font-weight: bold;">\run</span> folder is automatically 
+ managed by VisualText, so don't muck around in here! <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Once 
+ it's updated, you can manually compile the analyzer in here. (Professional 
+ version only.)</p>
+
+<p>[7] <span style="font-weight: bold;">Merge Prog</span>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Prog 
+ is a sample driver program that comes with an analyzer. (Usable in Professional 
+ version only.)</p>
+
+<p><img src="Tutorials/GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> If you use the Prog driver, then follow instructions 
+ in the <a href="VisualText_Basics/Compiled_and_Standalone_Analyzers.htm">Compiled 
+ and Standalone Analyzers</a> topic.</p>
+
+<p><img src="Tutorials/GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> If you've made your own modifications, you'll need to 
+ manually merge <span style="font-weight: bold;">\myAnalyzer_saf</span> 
+ files into <span style="font-weight: bold;">\myAnalyzer</span>.</p>
+
+<p><img src="Tutorials/GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Compile the Release or Unicode_Release configuration, 
+ as appropriate.</p>
+
+<p>[8] <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">Merge 
+ User Project</span>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->An 
+ analyzer's user project is where extensions to the NLP++ language can 
+ be added, third party code can be integrated, and so on.</p>
+
+<p><img src="Tutorials/GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> If you haven't modified the user proejct, then you're 
+ done.</p>
+
+<p><img src="Tutorials/GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> If you have modified the user project, you'll need to 
+ merge your code from <span style="font-weight: bold;">myAnalyzer_saf\user</span> 
+ with <span style="font-weight: bold;">myAnalyze\user</span>.</p>
+
+<p><img src="Tutorials/GO.gif"
+		style="width: 19px;
+				height: 16px;
+				border-style: none;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=19
+		height=16
+		border=0> Compile the Release or Unicode_Release configuration, 
+ as appropriate.</p>
+
+<h2>NOTES:</h2>
+
+<p>[1] In 2.0.1.x and later, various analyzer DLLs have been moved and 
+ renamed. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->In 
+ most cases, you'll find them in the <span style="font-weight: bold;">\bin</span> 
+ folder of a project, with names to distinguish Unicode from non-Unicode 
+ versions.</p>
+
+<p>[2] Non-Unicode analyzers should be amenable to loading in the Unicode 
+ VisualText. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->However, 
+ Unicode analyzers will not load correctly in the ANSI VisualText.</p>
+
+<p>[3] We recommend using a particular analyzer with either ANSI VisualText 
+ or Unicode VisualText, not both. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Once 
+ you start placing Unicode characters in analyzers and knowledge bases, 
+ you can't then run them in the ANSI VisualText.</p>
+
+<p>[4] We recommend naming analyzers according to whether they are Unicode 
+ or ANSI.</p>
+
+<p>&nbsp;</p>
+
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>sorthier</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=708>
+<meta name=layout-width content=1027>
+
+
+<!--(Links)=========================================================-->
+
+<link rel="StyleSheet" href="default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>sorthier</h1>
+
+<h2>Purpose</h2>
+
+<p>Sort concept's subhierarchy in alphabetic order. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Each 
+ concept's children in the subhierarchy are ordered alphabetically.</p>
+
+<h2>Syntax</h2>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">None = sorthier(aConcept);</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">aConcept - type: con</p>
+
+<h2>Returns</h2>
+
+<h2>Remarks</h2>
+
+<h2>Example</h2>
+
+<p>L(&quot;con&quot;) = getconcept(findroot(),&quot;top&quot;);<br>
+getconcept(L(&quot;con&quot;),&quot;32&quot;);<br>
+getconcept(L(&quot;con&quot;),&quot;3&quot;);<br>
+getconcept(L(&quot;con&quot;),&quot;33&quot;);</p>
+
+<p># Another layer.<br>
+getconcept(L(&quot;33&quot;),&quot;c&quot;);<br>
+getconcept(L(&quot;33&quot;),&quot;b&quot;);<br>
+getconcept(L(&quot;33&quot;),&quot;a&quot;);<br>
+sortchilds(L(&quot;con&quot;));</p>
+
+<p>sorthier(L(&quot;con&quot;));</p>
+
+<p>Before sorting, the children of &quot;top&quot; are ordered 32, 3, 33. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The children 
+ of 33 are ordered c b a.<br>
+After sorting, the order is changed to 3, 32, 33 under top, and a b c under 
+ 33.</p>
+
+<h2 style="margin-bottom: 0;">See Also</h2>
+
+<p><!--kadov_tag{{<spaces>}}-->&nbsp;<a href="sortchilds.htm"><!--kadov_tag{{</spaces>}}-->sortchilds</a>, 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<a href="Table_of_Knowledge_Base_Functions.htm"><!--kadov_tag{{</spaces>}}-->Knowledge 
+ Base Functions</a></p>
+
+</body>
+
+</html>

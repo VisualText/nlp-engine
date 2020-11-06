@@ -1,0 +1,249 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Anaphora</title>
+
+<!--(Meta)==========================================================-->
+
+<meta HTTP-EQUIV=Content-Type CONTENT="text/html; charset=windows-1252">
+<meta NAME=Template CONTENT="D:\Program Files\Microsoft Office\Office\html.dot">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=2618>
+<meta name=layout-width content=775>
+<meta name=date content="08 27, 2001 2:35:16 PM">
+
+
+
+<!--(Style Sheet)===================================================-->
+
+<style>
+<!--
+
+A:visited {
+	color: #800080;
+}
+
+A:link {
+	color: #0000ff;
+}
+
+-->
+</style>
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<!--(Table)=========================================================-->
+<!--begin!kadov{{--><div align=center><!--}}end!kadov-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 617px;
+				border-spacing: 0px;
+				float: aligncenter;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=617>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../Companies/Companies.htm"><img src="Bullet8.gif"
+															style="width: 15px;
+	height: 12px;
+	border-style: none;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 0px;"
+															width=15
+															height=12
+															border=0>&nbsp;Companies</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 50%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../Toc/TOC.htm">CORPORATE ANALYZER</a><span style="font-weight: bold;"><font 
+ style="color: #000080;"
+	color=#000080><br>
+Anaphora</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 26%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../CompConj/CompConj.htm">Company Conj <img src="Bullet7.gif"
+	style="width: 15px;
+			height: 12px;
+			border-style: none;
+			margin-top: 0px;
+			margin-bottom: 0px;
+			margin-left: 0px;
+			margin-right: 0px;"
+	width=15
+	height=12
+	border=0></a></td></tr>
+</table>
+<!--begin!kadov{{--></div><!--}}end!kadov-->
+
+<!--(HR)============================================================-->
+<hr style="height: 2px;
+			width: 100%;
+			float: aligncenter;"
+	size=2
+	width=100%
+	align=center>
+
+
+<p><span style="font-weight: bold;">Ana Tab Window: Passes 22 &amp; 23</span></p>
+
+<p>This section describes the analyzer passes &quot;anaphora&quot; and 
+ &quot;anaphoraCompany&quot;.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image93.gif"
+						style="border-style: none;
+								width: 147px;
+								height: 36px;"
+						width=147
+						height=36
+						border=0></p>
+
+<p><span style="font-weight: bold;">Anaphora Pass</span></p>
+
+<p>Anaphora is a fancy linguistic word for words and phrases that refer 
+ to other words and phrases in a text. One common anaphora relates to pronouns 
+ such as &quot;they&quot; and &quot;its&quot;. Other phrases include words 
+ that reference actions such as &quot;the sale&quot;, &quot;this last purchase&quot;, 
+ etc. Below are highlights from the &quot;anaphora&quot; pass:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image94.gif"
+						style="border-style: none;
+								width: 470px;
+								height: 593px;"
+						width=470
+						height=593
+						border=0></p>
+
+<p><span style="font-weight: bold;">AnaphoraCompany Pass</span></p>
+
+<p>First, we simply match an _anaphora node. If we find a suitable company 
+ candidate in previous sentences (shown further below), then we change 
+ our _anaphora to be a _company and point to the company found previously 
+ in the text.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image96.gif"
+						style="border-style: none;
+								width: 515px;
+								height: 264px;"
+						width=515
+						height=264
+						border=0></p>
+
+<p>For debugging purposes, we write the results to a dump file called &quot;anaphora.txt&quot;. 
+ Here is the final output of this pass:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image97.gif"
+						style="border-width: 1px;
+								border-style: solid;
+								width: 621px;
+								height: 288px;"
+						width=621
+						height=288
+						border=1></p>
+
+<p><span style="font-weight: bold;">Searching Through Sentences</span></p>
+
+<p>Once the rule finds an _anaphora node, we can now use our &quot;parse&quot; 
+ concept in the KB to search backward for the company being referred to. 
+ This finally shows the power behind our KB-based analyzer design.</p>
+
+<p>Let us remember where we are. We are matching this rule in the context 
+ of the @PATH, which is set to match in sentences and therefore we can 
+ directly access the sentence object we have created under the &quot;parse&quot; 
+ concept of the KB. In our @CHECK area, we will loop through the previous 
+ sentences in the KB, and through the objects we created under those sentences, 
+ in order to find the first object that matches the desired type of anaphora.</p>
+
+<p>For example, if the anaphora is &quot;it&quot;, then we will look backward 
+ for the first &quot;company&quot; type. If the anaphora is an &quot;action&quot; 
+ type such as &quot;this last purchase&quot;, then we will back up to find 
+ the first &quot;action&quot; type. Although this example is simplified, 
+ it can be designed to deal with much more complicated and subtle linguistic 
+ constructions.</p>
+
+<p>We loop through the sentences and through the objects within each sentence. 
+ We know by design that there will only be two types of objects: &quot;company&quot; 
+ and &quot;action&quot; so we search for a match accordingly. When we find 
+ a match, we set S(&quot;exit&quot;) to 1 and that exits our while loops. 
+ If we find no object, we call <span style="font-weight: bold;">fail</span>, 
+ a special function for the @CHECK area that aborts the rule match altogether.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image98.gif"
+						style="border-style: none;
+								width: 419px;
+								height: 494px;"
+						width=419
+						height=494
+						border=0></p>
+
+
+<!--(HR)============================================================-->
+<hr style="height: 2px;
+			width: 100%;
+			float: aligncenter;"
+	size=2
+	width=100%
+	align=center>
+
+
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><span style="font-weight: bold;">Next Section:</span> 
+ <a HREF="../CompConj/CompConj.htm">Company Conj <img src="Bullet7.gif"
+														style="width: 15px;
+	height: 12px;
+	border-style: none;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 0px;"
+														width=15
+														height=12
+														border=0></a> </p>
+
+</body>
+
+</html>

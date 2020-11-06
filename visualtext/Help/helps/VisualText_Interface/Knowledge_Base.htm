@@ -1,0 +1,357 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Knowledge Base</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=2971>
+<meta name=layout-width content=636>
+<meta name=date content="08 6, 2001 6:26:10 PM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Introduction to the Knowledge Base</h1>
+
+<p>The Conceptual Grammar (CG) Knowledge Base Management System (KBMS) 
+ provides a permanent store for linguistic, conceptual, and domain knowledge. 
+ The KBMS serves as a flexible &quot;vanilla&quot; framework in which users 
+ may implement arbitrary representation schemes. Users can manage the KB 
+ manually, while text analyzers can automatically access and update information 
+ in the KB. The KB can be used to collect information across multiple texts, 
+ for example, in training a categorizer or in managing an electronic chat.</p>
+
+<h2><a name=concepts_in_kb></a>Concepts and Attributes in the Knowledge 
+ Base</h2>
+
+<p>The basic unit of knowledge in the KB is called a <span style="font-weight: bold;">concept</span>, 
+ which is analogous to an <span style="font-weight: bold;">object</span> 
+ in an object-oriented representation. A concept has <span style="font-weight: bold;">attributes</span>, 
+ which consist of a <span style="font-weight: bold;">key</span> (or <span 
+ style="font-weight: bold;">slot</span>) and zero or more <span style="font-weight: bold;">values</span>. 
+ The major organizing principle in the KB is a <span style="font-weight: bold;">hierarchy</span> 
+ of concepts. Concepts can also refer to other concepts via attributes, 
+ yielding a rich graph of knowledge.</p>
+
+<p><!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--><a name=phrases_and_nodes></a>A 
+ unique feature of our Conceptual Grammar KBMS is that each concept may 
+ optionally &quot;own&quot; a <span style="font-weight: bold;">phrase</span>, 
+ which is a data structure that represents sequential information in a 
+ convenient way. A phrase is composed of <span style="font-weight: bold;">nodes</span>, 
+ which differ from concepts in that they are not attached to the hierarchy. 
+ A node is a <span style="font-weight: bold;">proxy</span> or <span style="font-weight: bold;">instance</span> 
+ of a concept in the hierarchy. Most NLP++™ functions that operate on concepts 
+ also operate on nodes. The main data structures in the KB are:</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				border-spacing: 0px;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=100%>
+<col style="width: 22.027%;">
+<col style="width: 77.973%;">
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=22.027%>
+<p style="margin-bottom: 0; font-weight: bold;">Data Structure</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=77.973%>
+<p style="margin-bottom: 0; font-weight: bold;">Description</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=22.027%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">CONCEPT</span></td>
+<td style="x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=77.973%>
+<p style="margin-bottom: 0;">Organizing unit of knowledge in the KB.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=22.027%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">ATTR</span></td>
+<td style="x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=77.973%>
+<p style="margin-bottom: 0;">Attribute key or slot.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=22.027%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">VAL</span></td>
+<td style="x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=77.973%>
+<p style="margin-bottom: 0;">Value of an attribute.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=22.027%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">PHRASE</span></td>
+<td style="x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=77.973%>
+<p style="margin-bottom: 0;">Sequence of nodes attached to a concept.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=22.027%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">NODE</span></td>
+<td style="x-cell-content-align: TOP;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=77.973%>
+<p style="margin-bottom: 0;">A proxy or instance of a concept.</td></tr>
+</table>
+
+<p>Attributes may take on three types of values: integer, string, or concept. 
+ A single attribute may mix values with any or all of these types, as desired.</p>
+
+<p>Phrases can be used to implement idioms, patterns, samples, rules, and 
+ other sequential information. In the Gram Tab, the phrase associated with 
+ a rule concept is used to represent user-highlighted samples. Each node 
+ represents a single sample, with the name of the node doubling as the 
+ sample's text.</p>
+
+<h2>NLP++ Functions for the Knowledge Base</h2>
+
+<p>See <a HREF="../Table_of_Knowledge_Base_Functions.htm">Table of KB Functions</a> 
+ for a listing of the available NLP++ functions for managing the KB. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->These 
+ functions are also treated individually in the Knowledge Base Functions 
+ section.</p>
+
+<h2><a NAME=Concept_Hierarchy></a>Concept Hierarchy</h2>
+
+<p>The backbone of the KB is a knowledge hierarchy. Each concept therefore 
+ has hard-coded parent and child links for efficiency.</p>
+
+<p>VisualText utilizes part of the concept hierarchy to implement the <a 
+ HREF="Tab.htm#Gram_Tab">Gram Tab</a>. The <span style="font-weight: bold;">Gram 
+ hierarchy</span> (also called the <span style="font-weight: bold;">sample 
+ hierarchy</span>) displayed in the Gram Tab is embedded directly in the 
+ concept hierarchy. The KB as a whole is accessible in the <a HREF="Tools/KB_Editor.htm">KB 
+ Editor</a>:</p>
+
+<p><img src="Tools/kb_editor_gramtab.gif"
+		style="width: 421px;
+				height: 460px;
+				border-width: 1px;
+				border-style: solid;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				margin-right: 0px;"
+		width=421
+		height=460
+		border=1></p>
+
+<p><font style="color: #000000;"
+		color=#000000>When users highlight samples and add them to the 
+ Gram Tab, they are modifying the KB. The left panel above shows the sample 
+ hierarchy within the Gram Tab, while the right panel shows the same hierarchy 
+ as it appears within the KB. In the KB Editor, a concept that contains 
+ a phrase is colored yellow. For example, the adj concept contains a phrase, 
+ where each node of the phrase represents one of the samples &quot;quick&quot;, 
+ &quot;brown&quot;, etc. Therefore det, adj, noun, verb, and prep are all 
+ colored yellow. To view a concept's phrase from the KB Editor, right click 
+ on the concept and select <span style="font-weight: bold;">Phrase Tool</span><span 
+ style="font-weight: normal;"> from the menu.</span></font></p>
+
+<h2><a NAME=phrases></a>Phrases</h2>
+
+<p>A phrase is a sequence of nodes &quot;owned&quot; by a concept, and 
+ is not visible from the concept hierarchy. For example, the concept &quot;noun&quot; 
+ has the phrase shown below, consisting of the nodes &quot;fox&quot;, &quot;dog&quot;, 
+ &quot;John&quot;, and so on. (In the present example, the ordering of 
+ nodes in the sequence is not important. But, in other uses of phrases, 
+ for example to represent grammar rules, ordering is important.) A concept 
+ can only have one phrase, with no restriction on the number of nodes. 
+ The Phrase Tool, shown below, enables you to view a concept's phrase. 
+ Each line in the Phrase Tool displays the name of one node, which can 
+ be an arbitrary string.</p>
+
+<h2><a name=phrase_tool></a>Phrase Tool</h2>
+
+<p><font style="color: #000000;"
+		color=#000000>The phrase belonging to a concept can be viewed in 
+ the KB Editor by highlighting a <span style="font-style: italic; font-weight: bold;">yellow</span> 
+ concept in the hierarchy, right clicking and selecting Phrase Tool from 
+ the Popup Menu. This displays the nodes of the phrase, one per line. In 
+ the example below, we selected the concept 'noun' and then selected Phrase 
+ Tool in the menu to display the phrase associated with 'noun'. In this 
+ example, each node in the phrase represents a noun sample in the Gram 
+ Tab.</font></p>
+
+<p><font style="color: #000000;"
+		color=#000000><img src="Tools/concept_phrase_tool_combo.gif"
+							style="width: 614px;
+									height: 306px;
+									border-width: 1px;
+									border-style: solid;
+									margin-top: 0px;
+									margin-bottom: 0px;
+									margin-left: 0px;
+									margin-right: 0px;"
+							width=614
+							height=306
+							border=1></font></p>
+
+<h2><a name=kb_node></a>Nodes</h2>
+
+<p><font style="color: #000000;"
+		color=#000000>A node is an instance of a concept, and does not 
+ appear in the concept hierarchy. Nodes occur only as components of phrases 
+ in the KB. The nodes belonging to the noun concept happen to be instances 
+ of the KB dictionary concepts for &quot;fox&quot;, &quot;dog&quot;, etc.</font></p>
+
+<p><font style="color: #000000;"
+		color=#000000>You can access the attributes for a particular node 
+ by highlighting the node in the Phrase Tool and selecting Attributes, 
+ or by double clicking on a line. This launches the <a HREF="Tools/Attribute_Editor.htm">Attribute 
+ Editor</a>, where the attributes and values for the node can be viewed 
+ and edited. In the graphic below, the attributes for the selected node, 
+ 'fox', are displayed.</font></p>
+
+<p><font style="color: #000000;"
+		color=#000000><img src="Tools/phrase_tool_attribute_combo.gif"
+							style="width: 337px;
+									height: 317px;
+									border-width: 1px;
+									border-style: solid;
+									margin-top: 0px;
+									margin-bottom: 0px;
+									margin-left: 0px;
+									margin-right: 0px;"
+							width=337
+							height=317
+							border=1></font></p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 90%;
+				border-spacing: 0px;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=90%>
+
+<tr>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 100%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#FFFFD5>
+<p style="margin-bottom: 0; color: #008080;"><span style="font-weight: bold;">WARNING</span>: 
+ The Gram Tab is the only safe way to edit the Gram hierarchy. Editing 
+ the <span style="font-weight: bold;">gram</span> or <span style="font-weight: bold;">sys</span> 
+ hierarchies manually can easily corrupt the KB, so please make a backup 
+ copy of your analyzer project before experimenting.</td></tr>
+</table>
+
+<p>&nbsp;</p>
+
+<h2>Accessing the Knowledge Base</h2>
+
+<p style="margin-bottom: 0;">The KB may be managed in many ways. The <a HREF="Tools/KB_Editor.htm">KB Editor,</a> Gram Tab, Attribute Editor, 
+ and Phrase Tool provide interactive means for accessing the KB. NLP++ 
+ function calls and C++ API function calls provide more direct access to 
+ the internals of the knowledge base. (For more information on accessing 
+ the KB, see the <a HREF="../Table_of_Knowledge_Base_Functions.htm">Table 
+ of KB Functions</a> and the page-per-functions in the Knowledge Base Functions 
+ section .) </p>
+
+</body>
+
+</html>

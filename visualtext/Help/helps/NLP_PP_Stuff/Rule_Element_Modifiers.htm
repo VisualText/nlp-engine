@@ -1,0 +1,109 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Rule Element Modifiers</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=641>
+<meta name=layout-width content=460>
+<meta name=date content="07 31, 2001 5:35:32 PM">
+
+
+<!--(Links)=========================================================-->
+
+<link rel=StyleSheet href="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Rule Element Modifiers</h1>
+
+<p>Each rule element can be followed by <span style="font-weight: bold;">optional</span> 
+ <span style="font-weight: bold;">element modifiers</span>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Element 
+ modifiers can be used for <span style="font-weight: bold;">both</span> 
+ the <span style="font-weight: bold;">suggested element</span> (_SUGG) 
+ and the <span style="font-weight: bold;">phrase of elements</span> (_PHRASE) 
+ on the right-hand side of a rule. </p>
+
+<p>Element modifiers place constraints on how elements in a rule are matched. 
+ For example, if you want to specify that the rule matcher should match 
+ a specific element in the phrase of elements on a rule's right-hand side 
+ first, you would use the <span style="font-weight: bold;">trigger</span> 
+ element modifier with the rule element. </p>
+
+<p><span style="font-style: normal;">The modifier must be enclosed in square 
+ brackets </span><span style="font-style: normal; font-weight: bold;">[ 
+ ]</span><span style="font-style: normal;"> </span><span style="font-style: normal; font-weight: bold;">after</span><span 
+ style="font-style: normal;"> the element. The element modifier is made 
+ up of a </span><span style="font-style: normal; font-weight: bold;">key</span><span 
+ style="font-style: normal;"> (the modifier name itself) and sometimes 
+ a </span><span style="font-style: normal; font-weight: bold;">value</span><span 
+ style="font-style: normal;">. A value can be a parenthesized list, a name 
+ or number. Some element modifiers do not have values. Some examples follow:</span></p>
+
+<p><span style="font-style: normal;">_xWILD [s one match=(_adj _noun \n)]</span></p>
+
+<p>hello [rename=_hello]</p>
+
+<p>For a list of element modifiers used with the suggest rule element, 
+ see <a href="Suggested_element_modifiers.htm">Suggested Element Modifiers</a>. 
+ For a list of element modifiers for the phrase of elements, see <a href="Phrase_element_modifiers.htm">Phrase 
+ Element Modifiers</a>.</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 90%;
+				border-spacing: 0px;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=90%>
+
+<tr>
+<td style="background-color: #FFFFD5;
+			x-cell-content-align: TOP;
+			width: 100%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#FFFFD5>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><font style="color: #008080;"
+	color=#008080>WARNING</font></span>: <span style="color: #008080;">When 
+ writing lists for an element modifier, we recommend not enclosing them 
+ in double quotes, since they are not treated as strings. E.g., write </span><span 
+ style="font-weight: bold; color: #008080;">[match=(_adj _adv)] </span><span 
+ style="color: #008080;">rather than </span><span style="font-weight: bold; color: #008080;">[match=(&quot;_adj&quot; 
+ &quot;_adv&quot;)]</span><span style="color: #008080;">.</span> </td></tr>
+</table>
+
+<h2>See Also</h2>
+
+<p><a href="Rule_syntax.htm">Rule Syntax</a></p>
+
+<p>&nbsp;</p>
+
+</body>
+
+</html>

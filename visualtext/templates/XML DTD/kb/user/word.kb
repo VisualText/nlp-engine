@@ -1,0 +1,67 @@
+add word " "
+add word "	"
+add word "
+"
+add word ";"
+add word "."
+add word ","
+add word ":"
+add word "'"
+add word "\""
+add word "!"
+add word "?"
+add word "~"
+add word "`"
+add word "@"
+add word "#"
+add word "$"
+add word "%"
+add word "^"
+add word "&"
+add word "*"
+add word "("
+add word ")"
+add word "-"
+add word "_"
+add word "="
+add word "+"
+add word "{"
+add word "}"
+add word "["
+add word "]"
+add word "|"
+add word "\\"
+add word "/"
+add word "<"
+add word ">"
+add word "Grammar"
+add word "URI"
+add word "closed"
+add word "constrain"
+add word "counter"
+add word "dirty"
+add word "gen"
+add word "internal"
+add word "lit"
+add word "locked"
+add word "notrig"
+add word "parameter"
+add word "quicksem"
+add word "sortedYet"
+add word "split"
+add word "textValue"
+add word "value"
+add word "valueType"
+add word "xwhite"
+add word active
+add word algo
+add word building
+add word comment
+add word data
+add word pass
+add word passnum
+add word state
+add word type
+
+quit
+

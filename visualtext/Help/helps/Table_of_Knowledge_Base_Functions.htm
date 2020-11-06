@@ -1,0 +1,3209 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Table of Knowledge Base Functions</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=date content="08 14, 2001 10:34:18 AM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=2737>
+<meta name=layout-width content=1027>
+
+
+<!--(Links)=========================================================-->
+
+<link REL="StyleSheet" HREF="default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Table of Knowledge Base Functions</h1>
+
+<p>The functions used to operate on objects in the Knowledge Base have 
+ been listed here in table form for easy reference. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For 
+ examples of these functions, please refer to the individual function pages 
+ within the subsections of the current Help section, Knowledge Base Functions.</p>
+
+<p>The names of KB objects are abbreviated as follows: concept (<span style="font-weight: bold;">CON</span>), 
+ attribute (<span style="font-weight: bold;">ATTR</span>), value (<span 
+ style="font-weight: bold;">VAL</span>), and phrase (<span style="font-weight: bold;">PHR</span>). 
+ </p>
+
+<p>The return types include: <span style="font-weight: bold;">CON</span>, 
+ <span style="font-weight: bold;">ATTR</span>, <span style="font-weight: bold;">VAL</span>, 
+ <span style="font-weight: bold;">PHR</span>, <span style="font-weight: bold;">INT</span> 
+ (integer), <!--kadov_tag{{<spaces>}}-->&nbsp;<span style="font-weight: bold;"><!--kadov_tag{{</spaces>}}-->FLT</span> 
+ (float), <span style="font-weight: bold;">STR</span> (string), <span style="font-weight: bold;">BOOL</span> 
+ (Boolean). <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Boolean 
+ type is currently implemented by integer <span style="font-weight: bold;">1</span> 
+ (or non-zero) for <span style="font-weight: bold;">true</span> and <span 
+ style="font-weight: bold;">0</span> for <span style="font-weight: bold;">false</span>.) 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<span style="font-weight: bold;"><!--kadov_tag{{</spaces>}}-->NONE</span> 
+ indicates nothing is returned.</p>
+
+<p>In the table below, a <span style="font-weight: bold;">name</span> must 
+ be a STR, <span style="font-weight: bold;">parent</span> is a CON, <span 
+ style="font-weight: bold;">attr_str</span> is a STR, <span style="font-weight: bold;">hier</span> 
+ is a CON. </p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				margin-top: 14pt;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">FUNCTION(ARG1,ARG2...)</span></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00
+	width=12%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">RETURN TYPE</span></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00
+	width=56%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">DESCRIPTION</span></td></tr>
+
+<tr>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=31%>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><font style="color: #ff00ff;"
+						color=#FF00FF><span style="font-weight: bold;">Command 
+ File Functions</span></font></td>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=12%>
+<p>&nbsp;</td>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=56%>
+<p>&nbsp;</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0; font-weight: bold;">kbdumptree(root_con, file_str)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>BOOL</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Create a dump file of knowledge base concept.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">take(file_str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="font-weight: bold;">BOOL</td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Execute commands in a knowledge base command 
+ file (.KB file)</td></tr>
+
+<tr>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=31%>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><span style="font-weight: bold;"><font style="color: #ff00ff;"
+														color=#FF00FF>Functions 
+ that Find and Fetch</font></span></td>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=12%>
+<p>&nbsp;</td>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=56%>
+<p>&nbsp;</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">findroot()</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><span>Find the root concept of the knowledge 
+ base (named </span><span style="font-weight: bold;">concept</span><span>).</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">findconcept(con, 
+ str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><span style="font-weight: normal;">Find and 
+ return the concept with name </span><span style="font-weight: bold;">str</span><span 
+ style="font-weight: normal;"> under the parent concept </span><span style="font-weight: bold;">con</span><span 
+ style="font-weight: normal;">.</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">findconcept(con, 
+ num)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><span style="font-weight: normal;">Find concept 
+ number </span><span style="font-weight: bold;">num</span><span style="font-weight: normal;"> 
+ under the parent concept </span><span style="font-weight: bold;">con</span><span 
+ style="font-weight: normal;">.</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">findattr(con, 
+ str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">ATTR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch attribute named <span style="font-weight: bold;">str</span> 
+ belonging to concept <span style="font-weight: bold;">con</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">findattrs(con)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">ATTR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch concept's list of attributes.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">attrname(attr)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch attribute's name.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">attrvals(attr)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">VAL</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch attribute's list of values.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">findvals(con, 
+ name)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">VAL</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch list of values for a concept's attribute.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">numval(con, 
+ name)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">NUM</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch numeric-value of attribute (must be 
+ first).</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0; font-weight: bold;">fltval(con, name)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>FLT</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch float value of attribute (must be first).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">strval(con, 
+ name)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch string-value of attribute (must be first).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">conval(con, 
+ name)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch concept-value of attribute (must be 
+ first).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><font style="color: #000000;"
+	color=#000000>attrwithval(con, attr_str, val_str)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>BOOL</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><span>Check if concept's attribute has given 
+ value (multiple-value aware). Note that second two arguments must be STR.</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">inheritval(con, 
+ name, topCon)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Find string attribute's value up the hierarchy. 
+ <span style="font-weight: bold;">con</span> is the current concept, <span 
+ style="font-weight: bold;">topCon</span> is the root to be searched up 
+ to, and <span style="font-weight: bold;">name</span> is the name of the 
+ attribute. If hier==0, goes to root of KB.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">conceptname(con)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch name of given concept.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">conceptpath(con)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch entire path of given concept as a string.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><font style="color: #000000;"
+	color=#000000>pathconcept(str)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>CON</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch concept, given the path <span style="font-weight: bold;">str</span>.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">wordpath(str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Get entire path of dictionary concept for 
+ the given string.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><font style="color: #000000;"
+	color=#000000>findwordpath(str</font></span><font style="color: #000000;"
+														color=#000000>)</font></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>STR</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000>Find entire path of dictionary 
+ concept for the given string. (If not present, don't add the word.)</font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><font style="color: #000000;"
+	color=#000000>wordindex(str)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>CON</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch index entry for dictionary concept. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Gets index 
+ concept that str would be added under.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">findhierconcept(name, 
+ hier)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Find a concept in the subhierarchy of a given 
+ concept. e.g.: G(&quot;returnedConcept&quot;) = findhierconcept(&quot;child&quot;,G(&quot;ancestor&quot;)); 
+ finds the concept named &quot;child&quot; anywhere under the concept pointed 
+ to by G(&quot;ancestor&quot;).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><font style="color: #000000;"
+	color=#000000>dictfindword(str)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>CON</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000>Find dictionary concept 
+ in dictionary hierarchy of KB.</font></td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0; font-weight: bold;">dictfirst()</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>CON</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch the first word-concept in the KB dictionary 
+ hierarchy.<span style="color: #ff0000; font-weight: bold;"> (New in 1.6)</span></td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0; font-weight: bold;">dictnext(con)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>CON</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch the word following the given word in 
+ the KB dictionary hierarchy.<span style="font-weight: bold; color: #ff0000;"> 
+ (New in 1.6)</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">attrexists(hier, 
+ attr_s, val_s)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">BOOL</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Find attribute and value pair in the subhierarchy 
+ of a concept.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">attrchange(hier, 
+ attr_s, val_s, new_s)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">BOOL</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Replace all matching attribute-value pairs 
+ in the given hierarchy to have the new string value, new_s.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">down(con)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch the first child of given concept.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">up(con)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch the parent of the given concept.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">prev(con)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch the left or previous sibling of concept.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">next(con)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch the right or next sibling of concept.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">nextattr(attr)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">ATTR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch the next attribute in a list of attributes</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">nextval(val)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">VAL</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch the next value in a list of values.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">getsval(val)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch value as a string from a numeric or 
+ string-valued KB value object. </td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">getstrval(val)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">STR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch the string value from a KB value object.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">getnumval(val)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">INT</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch number from numeric VAL.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">getconval(val)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch concept from value.</td></tr>
+
+<tr>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=31%>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><font style="color: #ff00ff;"
+						color=#FF00FF><span style="font-weight: bold;">Functions 
+ that Create</span></font></td>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=12%>
+<p>&nbsp;</td>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=56%>
+<p>&nbsp;</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">makeconcept(parent, 
+ name [, num] )</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Make concept under given parent concept. Optionally 
+ as the numth child of the parent. num==0 or absent places concept at end 
+ of list of children. name is the name of new concept.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">addattr(con, 
+ attr_s)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">ATTR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Add an attribute with no value to given concept.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">addsval(con, 
+ name, num)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">NONE</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><span style="font-weight: normal;">Add numeric 
+ value num as a </span><span style="font-weight: normal; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">string</span><span 
+ style="font-weight: normal;"> to concept con's attribute called name.</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">addstrval(con, 
+ name, str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">NONE</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><span style="font-weight: normal;">Add str 
+ as string value to concept con's attribute called name.</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">addnumval(con, 
+ name, num)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">NONE</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><span style="font-weight: normal;">Add num 
+ as numeric value to concept con's attribute called name.</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">addconval(con, 
+ name, con_val)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">NONE</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><span style="font-weight: normal;">Add concept 
+ value con_val to concept's name attribute.</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">getconcept(parent, 
+ name)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><span style="font-weight: normal;">Get or 
+ make named concept under parent.</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><font style="color: #000000;"
+	color=#000000>addword(str)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>CON</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000><span style="font-weight: normal;">Add 
+ dictionary concept to the dictionary within the KB, if not present. In 
+ either case, fetch the dictionary concept for the word.</span></font></td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;
+			background-color: Transparent;"
+	valign=top
+	width=31%>
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;">dictgetword(str)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;
+			background-color: Transparent;"
+	valign=top
+	width=12%>
+<p style="font-weight: bold;">CON</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;
+			background-color: Transparent;"
+	valign=top
+	width=56%>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">Same as <span style="font-style: italic;">addword</span>; 
+ more principled function name.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;
+			background-color: Transparent;"
+	valign=top
+	width=31%>
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-weight: bold;"><span style="font-weight: bold;">sortconsbyattr(arr_c, 
+ attr_s, numeric_b, </span><span style="margin-top: 0pt;
+										margin-bottom: 0pt;
+										font-weight: bold;">descending_b)</span></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;
+			background-color: Transparent;"
+	valign=top
+	width=12%>
+<p style="font-weight: bold;">ARR</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;
+			background-color: Transparent;"
+	valign=top
+	width=56%>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">Given an array (multi-valued 
+ variable) of KB concepts, sort the concepts by the given attribute. numeric_b 
+ = 1 if num, 0 if string type attribute. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->descending_b 
+ = 1 if descending order, 0 if ascending. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->E.g.,</p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><span style="font-style: italic;">G(&quot;sorted&quot;) 
+ = sortconsbyattr(G(&quot;cons&quot;),&quot;count&quot;,1,0);</span></p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">will sort an array of KB 
+ concepts by their &quot;count&quot; attribute in ascending order, assigning 
+ a new sorted array to G(&quot;sorted&quot;). <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ given array in G(&quot;cons&quot;) is left unaltered. <span style="font-weight: bold; color: #ff0000;">New 
+ in 1.6</span></td></tr>
+
+<tr>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=31%>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><font style="color: #ff00ff;"
+						color=#FF00FF><span style="font-weight: bold;">Functions 
+ that Move and Remove</span></font></td>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=12%>
+<p>&nbsp;</td>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=56%>
+<p>&nbsp;</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><font style="color: #000000;"
+	color=#000000>rmconcept(con)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>BOOL</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000>Remove concept <span 
+ style="font-weight: bold;">con</span> from Knowledge Base.<span style="font-weight: normal;"> 
+ Removes entire subhierarchy.</span></font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><font style="color: #000000;"
+	color=#000000>rmchild(con, str)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>BOOL</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000>Remove child named <span 
+ style="font-weight: bold;">str</span> from parent concept <span style="font-weight: bold;">con</span>.</font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><font style="color: #000000;"
+	color=#000000>rmchild(con, num)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>BOOL</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000>Remove number <span style="font-weight: bold;">num</span> 
+ child of parent concept <span style="font-weight: bold;">con</span>.</font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><font style="color: #000000;"
+	color=#000000>rmvals(con, str)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>BOOL</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000>Remove attributes and 
+ values of concept <span style="font-weight: bold;">con</span>'s attribute 
+ named <span style="font-weight: bold;">str</span>.</font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><font style="color: #000000;"
+	color=#000000>rmval(attr, val)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>BOOL</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000>Remove value <span style="font-weight: bold;">val</span> 
+ from attribute <span style="font-weight: bold;">attr</span>.</font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><font style="color: #000000;"
+	color=#000000>rmattrval(con, str1, str2)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>BOOL</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><span style="font-weight: normal;"><font style="color: #000000;"
+	color=#000000>Remove value named </font></span><font style="color: #000000;"
+														color=#000000><span 
+ style="font-weight: bold;">str2</span></font><span style="font-weight: normal;"><font 
+ style="color: #000000;"
+	color=#000000> from attribute named </font></span><font style="color: #000000;"
+															color=#000000><span 
+ style="font-weight: bold;">str1</span></font><span style="font-weight: normal;"><font 
+ style="color: #000000;"
+	color=#000000> under concept </font></span><font style="color: #000000;"
+													color=#000000><span 
+ style="font-weight: bold;">con</span></font><span style="font-weight: normal;"><font 
+ style="color: #000000;"
+	color=#000000>. Also removes the attribute.</font></span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">rmattrs(con)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">BOOL</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Remove concept's attributes (except for system 
+ internal ones).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><font style="color: #000000;"
+	color=#000000>rmattr(con,name)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>BOOL</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000>Remove concept's named 
+ attr and values.</font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><font style="color: #000000;"
+	color=#000000>rmchildren(con)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>BOOL</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000>Remove concept's children 
+ and phrase.</font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">rmword(str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">BOOL</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Remove dictionary concept from KB.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;"><font style="color: #000000;"
+	color=#000000>prunephrases(hier)</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;"><font style="color: #000000;"
+														color=#000000>BOOL</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000>Remove all phrases from 
+ given subhierarchy.</font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">replaceval(con, 
+ name, str)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">NONE</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Replace named attribute's value(s) with str.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">replaceval(con, 
+ name, num)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><span style="font-weight: normal;">Replace 
+ named attribute's value(s) with num.</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">replaceval(con, 
+ name, con_val)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><span style="font-weight: normal;">Replace 
+ named attribute's value(s) with concept con_val</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">renameconcept(con, 
+ name)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><span style="font-weight: normal;">Rename 
+ given concept to name.</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">renamechild(con, 
+ num, name)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><span style="font-weight: normal;">Rename 
+ con's numth child concept to name.</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">renameattr(con, 
+ name, new)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><span style="font-weight: normal;">Rename 
+ con's named attribute to new.</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">movecleft(con)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Move concept before previous sibling. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(Moves 
+ concept to the left in its list.)</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">movecright(con)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Move concept after next sibling. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(Moves 
+ concept to the right in its list.)</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;
+			background-color: Transparent;"
+	valign=top
+	width=31%>
+<p style="font-weight: bold;">sortchilds(con)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;
+			background-color: Transparent;"
+	valign=top
+	width=12%>
+<p style="font-weight: bold;">NONE</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;
+			background-color: Transparent;"
+	valign=top
+	width=56%>
+<p>Sort concept's immediate children alphabetically.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;
+			background-color: Transparent;"
+	valign=top
+	width=31%>
+<p style="font-weight: bold;">sorthier(con)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;
+			background-color: Transparent;"
+	valign=top
+	width=12%>
+<p style="font-weight: bold;">NONE</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;
+			background-color: Transparent;"
+	valign=top
+	width=56%>
+<p>Sort concept's subhierarchy alphabetically.</td></tr>
+
+<tr>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=31%>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><font style="color: #ff00ff;"
+						color=#FF00FF><span style="font-weight: bold;">Phrase 
+ and Node Functions</span></font></td>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=12%>
+<p>&nbsp;</td>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=56%>
+<p>&nbsp;</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">findphrase(con)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">PHR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch concept's phrase.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">sortphrase(con)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Sort concept's phrase nodes alphabetically.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">phraselength(con)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">INT</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Get number of nodes in concept's phrase.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">nodeconcept(node)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch the concept that node is a proxy for. 
+ <span style="color: #ff0000; font-weight: bold;">(Changed in 1.6)</span></td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">nodeowner(node)</span></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>CON</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch the concept that owns the node's phrase.<span 
+ style="color: #ff0000; font-weight: bold;"> (NEW in 1.6)</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">findnode(phrase, 
+ name)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Find first named node in phrase.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">findnode(phrase, 
+ num)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Find the numth node in phrase.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">listnode(node)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch the first node in given node's list.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">firstnode(phrase)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch the first node in phrase.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">lastnode(phrase)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Fetch the last node in phrase.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">makephrase(con, 
+ name)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">PHR</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><span>Make a phrase in con by creating named 
+ node.</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">addcnode(con, 
+ name)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><span style="font-weight: normal;">Add named 
+ node at end of con's phrase.</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">addnode(phrase, 
+ name, num)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left; margin-bottom: 0;"
+	align=left><span style="font-weight: bold;">CON</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><span style="font-weight: normal;">Add named 
+ node as numth in phrase.</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">rmnode(con)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;"><span style="font-weight: normal;">Remove 
+ node from concept's phrase.</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">rmphrase(phrase)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Remove phrase from its concept.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">rmcphrase(con)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Remove a concept's phrase.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">renamenode(phrase, 
+ name, new)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Rename phrase's named node to new.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 31%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=31%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">renamenode(phrase, 
+ num, new)</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 12%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=12%>
+<p style="text-align: left;
+			margin-bottom: 0;
+			font-weight: bold;"
+	align=left>NONE</td>
+<td style="x-cell-content-align: TOP;
+			width: 56%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=56%>
+<p style="margin-bottom: 0;">Rename phrase's numth node to new.</td></tr>
+</table>
+
+<h2>See Also</h2>
+
+<p style="margin-bottom: 0;"><a href="Table_of_Special_Functions.htm">Special 
+ Functions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Table_of_Formatting_and_I_O_Functions.htm">Formatting 
+ and I/O Functions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Table_of_Parse_Tree_Functions.htm">Parse 
+ Tree Functions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Table_of_String_Functions.htm">String 
+ Functions</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Table_of_Spelling_Functions.htm">Spelling 
+ Functions</a></p>
+
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>singler</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=657>
+<meta name=layout-width content=916>
+<meta name=date content="03 23, 2002 4:57:19 AM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF=default.css>
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>singler</h1>
+
+<h2>Purpose</h2>
+
+<p>Perform a single tier reduction of a range of rule elements. eg. If 
+ finding a period to be end-of-sentence in context, we only want to reduce 
+ the period to end-of-sentence, not the whole context.</p>
+
+<h2>Syntax</h2>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">singler(number1, number2)</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">number1 - type: int<br>
+number2 - type: int</p>
+
+<h2>Returns</h2>
+
+<h2>Remarks</h2>
+
+<h2>Example</h2>
+
+<p># Reduce the _det and _noun to an _np, but<br>
+# not the node that matched element 3.<br>
+@POST<br>
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->singler(1,2);<br>
+@RULES<br>
+_np &lt;- _det _noun _xWILD [one fail=(_noun)] @@</p>
+
+<h2>See Also</h2>
+
+<p><a HREF="single.htm">single</a>, <a HREF="singlex.htm">singlex</a>, 
+ <a HREF="singlezap.htm">singlezap</a>, <a href="noop.htm">noop</a>, <a 
+ href="NLP_PP_Stuff/AT-POST_Actions.htm#table_of_@POST_Actions">POST Actions</a></p>
+
+<p>&nbsp;</p>
+
+<p style="margin-bottom: 0;">&nbsp; </p>
+
+</body>
+
+</html>

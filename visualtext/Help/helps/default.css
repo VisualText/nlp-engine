@@ -1,0 +1,205 @@
+/*=(===============================================================)*/
+
+/*=(===============================================================)*/
+/*=(Created with RoboEditor.)=======================================*/
+/*=(===============================================================)*/
+
+BODY {
+	font-family: Arial;
+	background-color: #ffffff;
+}
+
+H1 {
+	font-family: Arial;
+	font-size: 18.0pt;
+	color: #008080;
+}
+
+/*=(Generated Code)=================================================*/
+/*=(WARNING: DO NOT EDIT OR DELETE THIS SECTION!)===================*/
+/*begin!kadov{{=====================================================*/ 
+LI.kadov-H1 {
+	font-family: Arial;
+	font-size: 18.0pt;
+	color: #008080;
+}
+/*}}end!kadov=======================================================*/ 
+
+
+
+H2 {
+	font-family: Arial;
+	font-weight: normal;
+	font-size: 14.0pt;
+	color: #008080;
+}
+
+/*=(Generated Code)=================================================*/
+/*=(WARNING: DO NOT EDIT OR DELETE THIS SECTION!)===================*/
+/*begin!kadov{{=====================================================*/ 
+LI.kadov-H2 {
+	font-family: Arial;
+	font-weight: normal;
+	font-size: 14.0pt;
+	color: #008080;
+}
+/*}}end!kadov=======================================================*/ 
+
+
+
+H3 {
+	font-weight: bold;
+	font-size: 14.0pt;
+}
+
+/*=(Generated Code)=================================================*/
+/*=(WARNING: DO NOT EDIT OR DELETE THIS SECTION!)===================*/
+/*begin!kadov{{=====================================================*/ 
+LI.kadov-H3 {
+	font-weight: bold;
+	font-size: 14.0pt;
+}
+/*}}end!kadov=======================================================*/ 
+
+
+
+H4 {
+	font-weight: bold;
+	font-size: 12.0pt;
+}
+
+/*=(Generated Code)=================================================*/
+/*=(WARNING: DO NOT EDIT OR DELETE THIS SECTION!)===================*/
+/*begin!kadov{{=====================================================*/ 
+LI.kadov-H4 {
+	font-weight: bold;
+	font-size: 12.0pt;
+}
+/*}}end!kadov=======================================================*/ 
+
+
+
+H5 {
+	font-size: 12.0pt;
+}
+
+/*=(Generated Code)=================================================*/
+/*=(WARNING: DO NOT EDIT OR DELETE THIS SECTION!)===================*/
+/*begin!kadov{{=====================================================*/ 
+LI.kadov-H5 {
+	font-size: 12.0pt;
+}
+/*}}end!kadov=======================================================*/ 
+
+
+
+H6 {
+	font-size: 12.0pt;
+}
+
+/*=(Generated Code)=================================================*/
+/*=(WARNING: DO NOT EDIT OR DELETE THIS SECTION!)===================*/
+/*begin!kadov{{=====================================================*/ 
+LI.kadov-H6 {
+	font-size: 12.0pt;
+}
+/*}}end!kadov=======================================================*/ 
+
+
+
+P {
+	font-size: 10.0pt;
+}
+
+/*=(Generated Code)=================================================*/
+/*=(WARNING: DO NOT EDIT OR DELETE THIS SECTION!)===================*/
+/*begin!kadov{{=====================================================*/ 
+LI.kadov-P {
+	font-size: 10.0pt;
+}
+/*}}end!kadov=======================================================*/ 
+
+
+
+P.Description {
+	font-family: Arial;
+	font-size: 8.0pt;
+	text-transform: none;
+	color: #000000;
+	vertical-align: baseline;
+	word-spacing: normal;
+	letter-spacing: normal;
+}
+
+/*=(Generated Code)=================================================*/
+/*=(WARNING: DO NOT EDIT OR DELETE THIS SECTION!)===================*/
+/*begin!kadov{{=====================================================*/ 
+LI.kadov-P-CDescription {
+	font-family: Arial;
+	font-size: 8.0pt;
+	text-transform: none;
+	color: #000000;
+	word-spacing: normal;
+	letter-spacing: normal;
+}
+/*}}end!kadov=======================================================*/ 
+
+
+
+P.color-bullets {
+	list-style-type: disc;
+	color: #0000ff;
+}
+
+/*=(Generated Code)=================================================*/
+/*=(WARNING: DO NOT EDIT OR DELETE THIS SECTION!)===================*/
+/*begin!kadov{{=====================================================*/ 
+LI.kadov-P-Ccolor-bullets {
+	list-style-type: disc;
+	color: #0000ff;
+}
+/*}}end!kadov=======================================================*/ 
+
+
+
+A.expandspot {
+	cursor: hand;
+	color: #008000;
+	font-style: normal;
+}
+
+SPAN.expandtext {
+	color: #ff0000;
+	font-weight: normal;
+	font-style: italic;
+}
+
+A.dropspot {
+	cursor: hand;
+	font-size: 10pt;
+	font-weight: bold;
+	font-style: normal;
+	color: #0000ff;
+}
+
+A.glossterm {
+	cursor: hand;
+	color: #800000;
+	font-style: normal;
+}
+
+SPAN.glosstext {
+	color: #0000ff;
+	font-weight: normal;
+	font-style: italic;
+}
+
+DIV.droptext {
+	font-size: 8pt;
+	color: #000000;
+	margin-left: 0.25in;
+	margin-right: 0in;
+}
+
+
+/*=(===============================================================)*/

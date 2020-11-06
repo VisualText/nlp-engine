@@ -1,0 +1,1010 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>New in Current Version</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=date content="06 19, 2002 11:37:51 PM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=8974>
+<meta name=layout-width content=1027>
+
+
+<!--(Links)=========================================================-->
+
+<link rel="StyleSheet" href="default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>MAJOR RELEASE (2.0 NON-UNICODE + UNICODE BETA)</h1>
+
+<p>[1] <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">VisualText 
+ executables.</span> Version 2.0.1.X and later include both Unicode and 
+ non-Unicode (or ANSI) executables.</p>
+
+<p>bin\VisualText.exe <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->Non-Unicode 
+ ANSI version<br>
+bin\VisualTextU.exe <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->Unicode 
+ BETA version (only works with Unicode input files)</p>
+
+<p>With 2.1.0.0 and later, the following is also supplied:</p>
+
+<p style="text-indent: -150px; margin-left: 150px;">bin\VisualTextQ.exe 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->Non-Unicode 
+ ANSI version that uses QDBM database manager under the hood. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Note 
+ that this is a beta version for growing arbitrarily large knowledge bases, 
+ but is not yet optimized for speed.</p>
+
+<p>The ANSI version shares the same source code with the Unicode version, 
+ but replicates the same basic functionality as earlier versions of VisualText.</p>
+
+<p>[2] <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">Upgrading.</span> 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->As always, 
+ care must be taken to upgrade or update existing analyzers and their knowledge 
+ bases. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->We 
+ have added the topic <a href="Updating_Analyzers_and_KBs.htm">Updating 
+ Analyzers and KBs</a>, which you should read and follow <span style="font-weight: bold; color: #ff0000;">BEFORE</span> 
+ uninstalling an older VisualText and installing the latest. <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->Also, 
+ analyzer project structure has changed slightly. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->See 
+ <a href="VisualText_Basics/Structure_of_Analyzer_Projects.htm">Structure 
+ of Analyzer Projects</a>.</p>
+
+<p>[3] <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">Unicode 
+ hints.</span> <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->We've 
+ added the topic<a href="Working_with_Unicode.htm"> Working with Unicode</a> 
+ to help here.</p>
+
+<p><span style="color: #ff0000; font-weight: bold;">Linux and Gnu C++.</span> 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Analyzers 
+ built with VisualText can be configured to run on Linux with Gnu C++. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->TAI periodically 
+ upgrades the port to the VisualText runtime libraries. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ libraries are not currently bundled with the VisualText release, and you 
+ may inquire about them by contacting us at info@textanalysis.com .</p>
+
+<h2>Miscellaneous</h2>
+
+<p>(2.7.2.0) Rework of crawling functions eg <a href="urltofile.htm">urltofile</a>, 
+ to handle HTTPS as well as HTTP.<br>
+(2.7.0.9) New function <a href="pnmove.htm">pnmove</a> to enable moving 
+ nodes within the parse tree.<br>
+(2.7.0.0) Overhauls, optimizations, and bug fixes focusing on the recursive 
+ NLP++ pass algorithm.<br>
+(2.6.0.3) New function <a href="dejunk.htm">dejunk</a> to clean out non-ASCII 
+ and extended ASCII characters (sometimes replacing with a question mark 
+ character).<br>
+(2.6.0.0) Important fix to NLP++ pattern matcher re feature-based match 
+ with wildcards. <!--kadov_tag{{<spaces>}}-->&nbsp;<span style="font-weight: bold;"><!--kadov_tag{{</spaces>}}-->dicttokz</span> 
+ pass, a variant of dicttok that removes whitespace from parse tree at 
+ the outset, puts in attributes NOSP (no space before), NL (new line before). 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Adds capitalization 
+ attributes to parse tree as well. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(This 
+ will be an ongoing development in 2.6.x.x).<br>
+(2.5.0.0) New <a href="VisualText_Basics/About_the_analyzer_sequence.htm">dicttok 
+ black-box tokenization pass</a> that uses KB from TAIParse to put part-of-speech 
+ tags on parse tree automatically. See <a href="DictTok_Sample.htm">DictTok_Sample</a> 
+ analyzer.<br>
+(2.4.x.x) Maintenance releases, various fixes in feature-based matching, 
+ compiled analyzers, etc.<br>
+(2.3.2.0) In text windows ctrl-A now is Select All. ctrl-G is Find Again.<br>
+(2.3.1.9) Maintenance release. Fixes to error reporting and recovery, compiled 
+ vs interpreted analyzers.. <a href="group.htm">group</a> now returns the 
+ new &quot;reduce&quot; node that it creates, an important convenience. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<a href="group.htm"><!--kadov_tag{{</spaces>}}-->group</a> 
+ also reports when it is including the <a href="lookahead.htm">lookahead</a> 
+ node -- an error. <!--kadov_tag{{<spaces>}}-->&nbsp;<a href="listadd.htm"><!--kadov_tag{{</spaces>}}-->listadd</a> 
+ no longer treats the list node as the &quot;reduce&quot; node.<br>
+(2.3.1.8) <a href="xmlstr.htm">xmlstr</a> now converts characters to &amp;#123; 
+ where 123 is a character number, rather than to strings such as &amp;frac14;.<br>
+(2.3.1.6) Added special rule elements <span style="font-weight: bold; color: #ff0000;"><a 
+ href="_xLET.htm">_xLET</a></span> and <span style="font-weight: bold; color: #ff0000;"><a 
+ href="_xCAPLET.htm">_xCAPLET</a></span> to conveniently match single-character 
+ words.<br>
+(2.3.1.0) <span style="color: #ff0000;">VISUAL BASIC .NET API</span> for 
+ calling VisualText analyzers. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->See 
+ the sample program called <a href="VB_to_VT.htm">VB_to_VT</a>, which also 
+ lists the API functions.<br>
+(2.3.0.0) Compiling analyzers now generates separate code files for each 
+ pass, enabling large analyzers to be compiled into C++. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For 
+ example, the latest versions of TAIParse should now compile. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Note 
+ that a Microsoft Visual Studio project may now need to have files added 
+ to it, within an analyzer's RUN folder.<br>
+(2.2.2.13) New PRE actions called <a href="regexp.htm">regexp</a> for matching 
+ using regular expressions, with <a href="regexpi.htm">regexpi</a> case 
+ insensitive version.<br>
+(2.2.2.11) New function for sorting a knowledge base concept's hierarchy 
+ and children: <a href="sorthier.htm">sorthier</a> and <a href="sortchilds.htm">sortchilds</a>.<br>
+(2.2.2.8) Compiling analyzers once again generates PRETTY, or human-readable, 
+ code. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->We 
+ tried very long lines to circumvent the 65K file line limit of some compilers, 
+ but too-long lines are an issue as well. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->In 
+ subsequent versions, we'll be splitting files as needed. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For 
+ now, huge analyzers may need their generated C++ code (in the RUN folder) 
+ to be tweaked manually in order to compile.<br>
+(2.2.2.5) EXITPASS, SUCCEED, and FAIL. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->These 
+ functions have been restored in that they are allowed in practically any 
+ context without triggering error messages. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ compiled analyzer version uses C++ exception handling mechanisms in order 
+ to instantly handle these in deeply embedded contexts (function within 
+ a function, etc.) <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Parse 
+ tree display (&quot;yellow box&quot;) now places node variables in two 
+ columns for convenient viewing of long variable lists. Parse tree nodes 
+ now point back to rules that renamed them via <a href="xrename.htm">xrename</a> 
+ and <a href="pnrename.htm">pnrename</a>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Compile-during-analyzer-load 
+ popup of MS DOS window has been removed. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Interpreted 
+ user functions improperly returned a non-zero value in the absence of 
+ a return statement.<br>
+(2.2.2.4) Incorrect VisualText TAB SIZE in Vista has been fixed. SAVE KB 
+ and COMPILE KB default popup answer is now NO. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(Unless 
+ you are explicitly trying to build a KB, then you don't want to save the 
+ KB.) <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Parse 
+ tree for lone underscore character is now a terminal punctuation char. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Listadd 
+ in recursive passes when building a list right-to-left now fixed (compiled 
+ version hang fixed). <a href="excise.htm">excise</a> forbids deleting 
+ a lookahead node.<br>
+(2.2.2.2) The functions <a href="exitpass.htm">exitpass</a>, <a href="succeed.htm">succeed</a>, 
+ <a href="fail.htm">fail</a>, can appear only at the top level of code 
+ regions in compiled analyzers (<span style="font-weight: bold; color: #ff0000;">FIXED</span>. 
+ See 2.2.2.5 above). <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Fixes 
+ to NLP++ syntax relating to negation. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->A 
+ fix to float conversion. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Further 
+ fixes to optimized recursive pass algorithm.<br>
+(2.2.2.1) Further fixes to align compiled and interpreted analyzers (fixes 
+ to zeroed items in relational operators and others). <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Fix 
+ of an annoying VisualText crash when brought into focus from the background. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->A substantial 
+ fix to the optimized recursive NLP++ pass algorithm in both the interpreted 
+ and compiled analyzer frameworks.<br>
+(2.2.1.1) New function <a href="pninsert.htm">pninsert</a> for programmatically 
+ inserting nonliteral nodes into the parse tree.<br>
+(2.2.1.0) NEW. A parse tree view mode that reflects items removed from 
+ the parse tree, such as HTML tags. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->See 
+ <a href="VisualText_Interface/Main_View_Menu.htm">Tree Text Mode in the 
+ View Menu</a>.<br>
+Fix to some NLP++ compiled functions to enable zero (0) as a null string. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->E.g., strsubst(&quot;ab,c&quot;,&quot;,&quot;,0); 
+ will replace commas by empty string in a compiled analyzer.<br>
+Note that this behavior already works as expected in interpreted analyzers, 
+ e.g., those that run inside VisualText.<br>
+(2.2.0.0) A substantially cleaned up VisualText release (see 2.1.0.9 notes 
+ below). <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Tree 
+ Text view does not leave everything expanded on reentering VisualText, 
+ but remembers what folders have been closed up in the view. The RUN NEXT 
+ button behaves better.<br>
+(2.1.0.9) A CLEANUP RELEASE. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->ALIGNED 
+ INTERPRETED AND COMPILED ANALYZERS, FIXED MISC BUGS AND LEAKS. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Fixed 
+ a substantial bug that hobbled compiled analyzers. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Memory 
+ leaks plugged in eltnode and lasteltnode. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ PROG project or sample driver for analyzers now sets the BATCHSTART flag 
+ at the start of a run, to enable a compiled analyzer to test the NLP++ 
+ batchstart() function/flag. (So that an analyzer can perform initializations 
+ when it runs the first file of a batch of files.)<br>
+DEFAULT configuration of VisualText is now full screen, kb safe mode off, 
+ toolbars in a standard configuration. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->TIP 
+ OF THE DAY offers real suggestions.<br>
+Fixed bugs in the PROG driver of each analyzer, for the analysis of multiple 
+ files and folders.<br>
+(2.1.0.8) Fix to functions like resolveurl, strchr, strrchr. Fix to parse 
+ tree nodes with large string-valued variables. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Fixes 
+ to Tab Window and Find Window show/hide bugs. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Change 
+ to VisualText naming in the Windows registry. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Fixed 
+ a memory leak in rmattrs.<br>
+(2.1.0.6) Fixes to file and directory handling. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(See 
+ the PROG project of a newly created analyzer project.)<br>
+(2.1.0.3) Misc fixes, including parse tree display and return of arrays 
+ in NLP++ user-defined functions.<br>
+(2.1.0.0) In order to support huge knowledge bases, a VisualTextQ version 
+ is provided that utilizes the QDBM database management freeware under 
+ the hood. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For 
+ backward compatibility, one can treat the knowledge base built in this 
+ way as the &quot;compiled&quot; knowledge base. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Loading 
+ the interpreted knowledge base will read kb command files into a QDBM 
+ file system. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->&quot;Compiling&quot; 
+ the kb will save the latest version of the QDBM files -- not compiling 
+ the changes will discard the latest modifications to the kb.<br>
+<br>
+Other notes: Removed the Windows MS-DOS Command Prompt popups from most 
+ system calls.<br>
+<br>
+(2.0.2.9) The <a href="levenshtein.htm">levenshtein</a> edit-distance computation 
+ is provided.<br>
+(2.0.2.8) Optimizations to string manipulation using L (local) variables. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->These are 
+ not interned, as with S,X,G,N variables. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Locally 
+ assigned strings are completely<br>
+freed when a scope (function, @CODE, @CHECK) is exited, while globally 
+ assigned strings are interned and persist throughout a text analysis. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Analyzers 
+ can<br>
+be optimized by using local L variables wherever feasible.<br>
+(2.0.2.7) <a href="fltval.htm">fltval</a> knowledge base value fetch.<br>
+(2.0.2.5) Linux upgrade.<br>
+(2.0.2.4) New variables <span style="font-weight: bold; color: #ff0000;"><a 
+ href="%24passnum.htm">G</span>(<span style="color: #ff00ff;">&quot;$passnum&quot;</span>)</a> 
+ and <span style="font-weight: bold; color: #ff0000;"><a href="%24rulenum.htm">G</span>(<span 
+ style="color: #ff00ff;">&quot;$rulenum&quot;</span>)</a> e.g. to track 
+ rule context and performance.<br>
+(2.0.2.3) New NLP++ function <a href="eltnode.htm">eltnode</a>, analogous 
+ to lasteltnode.<br>
+(2.0.2.2) Recovery from very long tokens.<br>
+(2.0.2.1) Refix of an infrequent crash in using $treetext.<br>
+(2.0.2.0) Optimization to recursive passes.<br>
+(2.0.1.1) Fixes to the <span style="font-weight: bold;">Find in Files</span> 
+ popup menu. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Bugs 
+ were introduced in VisualText 2.0: (a) missing patterns that start at 
+ the beginning of a line, (b) incorrect display of capitalization in found 
+ patterns.</p>
+
+<h1>NEW IN CURRENT VERSION (2.0 NON-UNICODE BETA)</h1>
+
+<p>VisualText 2.0 is the first to be compiled with Microsoft Visual Studio 
+ .NET. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Within 
+ a few releases, Unicode support will be featured as well.</p>
+
+<p>Professional version: While code generation is still automated, compiling 
+ analyzers and KBs will need to be done manually for version 2. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Similarly, 
+ user projects and other code will need to be upgraded to .NET and compiled, 
+ in order to work properly. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->See 
+ the topic <a href="VisualText_Basics/Compiled_and_Standalone_Analyzers.htm">VisualText 
+ Basics &gt; Compiled and Standalone Analyzers</a> for further guidelines. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Similarly 
+ for updating existing analyzers to version 2.</p>
+
+<p>A new feature is the deaccent element modifier, which allows alphabetics 
+ to be matched without regard to accents on characters. <!--kadov_tag{{<spaces>}}-->&nbsp;<span 
+ style="font-weight: bold; color: #ff0000;"><!--kadov_tag{{</spaces>}}-->NOTE:</span> 
+ Within a rule element, the deaccent keyword must precede any match, fail, 
+ and except lists, in order to work correctly.</p>
+
+<p style="font-weight: bold;">Miscellaneous</p>
+
+<p>(beta) The analyzer sequence can include folders, for organization and 
+ readability. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Passes 
+ can be dragged into the folders.</p>
+
+<p>Fix to NOOP rule matches in recursive pass. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Matching 
+ continues after last node matched by such a rule.</p>
+
+<p>Better infinite loop tracking in recursive passes, to catch A -&gt; 
+ B and B -&gt; A grammar loops (&quot;2-state tracking&quot;).</p>
+
+<p>FEATURE-BASED PATTERN MATCHING. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ functions below enable matching based on whether a node has a variable 
+ with a particular value.</p>
+
+<p><a href="var.htm">var</a>(var_name) <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}--># 
+ If var has nonzero value.<a href="varz.htm"><br>
+varz</a>(var_name) <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--># 
+ If zero or no var.<a href="vareq.htm"><br>
+vareq</a>(var_name,str) <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--># 
+ If var equals str.<a href="vareq.htm"><br>
+vareq</a>(var_name,num) <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--># 
+ If var equals num.<a href="varne.htm"><br>
+varne</a>(var_name,str) <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--># 
+ If var not equal str.<a href="varne.htm"><br>
+varne</a>(var_name,num) <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--># 
+ If var not equal num.</p>
+
+<h1>NEW IN CURRENT VERSION (1.8)</h1>
+
+<p>NLP++ now features initial <a href="Table_of_Math_Functions.htm">mathematical 
+ functions</a>.</p>
+
+<h1>NEW IN CURRENT VERSION (1.7)</h1>
+
+<p>The 1.7 release includes various enhancements to VisualText. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Attention 
+ has been given to compiling and running analyzers within the Microsoft 
+ .NET environment. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Also, 
+ enhancements have been made to scalability: for example, the analysis 
+ of each text now uses and frees up local tables, so that analyzers should 
+ not grow as new texts are successively analyzed. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(Of 
+ course, an analyzer may save things to the KB, in which case overall memory 
+ size will increase.)</p>
+
+<p>The knowledge base files in the kb\user directory are now managed in 
+ a new way, to better support scale up in the interpreted KB. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->A 
+ main.kb top-level file invokes the other command files in that directory 
+ in order to load the interpreted knowledge base. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Also, 
+ the attr.kb file has been replaced by multiple files named attr1.kb, attr2.kb, 
+ and so on, depending on the size of the interpreted knowledge base. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Old-style 
+ knowledge base directories will automatically be upgraded whenever a knowledge 
+ base is saved.</p>
+
+<p>See <a href="POStagger.htm">Sample Analyzers &gt; POStagger</a> for 
+ an example analyzer that integrates a 3rd party part-of-speech tagger.</p>
+
+<p><span style="font-weight: bold; color: #ff0000;">Important:</span> See 
+ the Analyzer Upgrade Note for 1.6, below, regarding upgrading existing 
+ analyzers.</p>
+
+<h2>Miscellaneous GUI</h2>
+
+<p>GUI behaviors have been changed. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Questions 
+ about compiling and saving the KB will be encountered as appropriate. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Also, when 
+ the analyzer sequence or properties are changed, a popup will ask to save 
+ those changes.</p>
+
+<p>The GUI no longer uses the gui.kb file to record the analyzer sequence 
+ and the input file hierarchy. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Rather, 
+ the input file hierarchy is obtained from the file system, and the analyzer 
+ sequence definition is fetched from the analyzer's spec\analyzer.seq human-readable 
+ file. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ GUI still uses the KB to store this information on a temporary basis when 
+ the analyzer is loaded.</p>
+
+<p>Some log files accessible in the Text Tab are now tracked by the Page 
+ Mode mechanism. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->That 
+ is, their display will automatically update in tandem with the input file 
+ selected in the Text Tab.</p>
+
+<p>Timing data for each pass of an analyzer is available in the dbg.log 
+ file.</p>
+
+<p>The Finder Window now presents matches using the order of files in the 
+ current analyzer sequence.</p>
+
+<p>Browser and input text type-in windows can now accept up to 1024 characters.</p>
+
+<p>Some stale or broken pointers to VisualText Help topics have been fixed.</p>
+
+<p>By default, new analyzers have the Verbose and Logs Toggle turned off.</p>
+
+<h2>Miscellaneous NLP++</h2>
+
+<p>Scalability enhancement: Separate information tables are built and removed 
+ for the analysis of each input text. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->This 
+ enables analyzers to run large numbers of texts without slowing down and 
+ without consuming extra memory (depending on whether the analyzer updates 
+ the KB).</p>
+
+<p>Incompatible changes to API header files, User project, and standalone 
+ sample code. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Existing 
+ analyzers must be upgraded and recompiled. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Standalone 
+ code upgraded to recursively process directories of input files. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->user::loadanalyzer 
+ fixed to create globally managed knowledge base. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->NLP, 
+ CG, and VTRUN objects created and deleted only within the runtime libraries 
+ via API calls in VisualText\include\Api\lite\vtrun.h.</p>
+
+<p>Storage tables in NLP++ and the Conceptual Grammar KBMS have been enlarged 
+ and their performance has been enhanced. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ differences can be substantial for larger input files.</p>
+
+<p>Some automatic infinite loop monitoring is performed in passes with 
+ the <span style="font-style: italic; font-weight: bold;">recursive</span> 
+ algorithm type set.</p>
+
+<p>A bug in the <span style="font-style: italic; font-weight: bold;">fail</span> 
+ plus <span style="font-style: italic; font-weight: bold;">except</span> 
+ keyword logic has been fixed, within rule element modifiers.</p>
+
+<p>Missing KB functions for floating point data type have been installed, 
+ as well as some missing compiled variants of NLP++ functions.</p>
+
+<p>Some table sizes have been increased, e.g., for buffers returned by 
+ an analyzer called with <span style="font-weight: bold;">user::analyzefile</span> 
+ and <span style="font-weight: bold;">user::analyzebuf</span>.</p>
+
+<p>Enhancements to analyzer error statements. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->More 
+ warnings are issued if an NLP++ function is called with too many arguments. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Correct 
+ pass and line numbers have been added to many error messages.</p>
+
+<p>The <a href="dictgetword.htm">dictgetword</a> function finds a dictionary 
+ word-concept, else makes a new one. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->A 
+ renaming of <a href="addword.htm">addword</a>.</p>
+
+<p>The <a href="VisualText_Basics/About_KB_Command_Files.htm">take</a> 
+ command now handles relative paths.</p>
+
+<p>The <a href="sqlstr.htm">sqlstr</a> function converts strings to a format 
+ for SQL entry into a database. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(Merely 
+ converts single quote to two single quotes.)</p>
+
+<p>Bug fixes in compiled versions, string catenation and string functions, 
+ both in scaled up string sizes and 0 as a string. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Removed 
+ some null string warnings.</p>
+
+<p>A compiled vs interpreted issue is that C/C++ conditional evaluation 
+ works in compiled but not interpreted. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->So 
+ in expressions like A &amp;&amp; B, assume that both the A and the B sides 
+ will always be evaluated.</p>
+
+<p>(1.7.4) New analyzers now come with a prebuilt Microsoft Visual C++ 
+ user project, including the files <span style="font-weight: bold;">prog.dsw</span> 
+ and <span style="font-weight: bold;">prog.dsp</span>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For 
+ professional version users, these enable convenient setup of a standalone 
+ sample analyzer. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->See 
+ the Help topic <a href="VisualText_Basics/Compiled_and_Standalone_Analyzers.htm">VisualText 
+ Basics &gt; Compiled and Standalone Analyzers</a>.</p>
+
+<p>(1.7.4.5)</p>
+
+<p>Fixed <span style="font-weight: bold; color: #ff0000;">_xSTART</span> 
+ rule element modifier within a match list.</p>
+
+<p>Fixed rare race condition in opting to not save knowledge base when 
+ exiting VisualText.</p>
+
+<p>Fixed handling of inactive passes and changing active/inactive pass 
+ property.</p>
+
+<p>Fixed <a href="split.htm">split</a> function to handle large string, 
+ added compiled variant of function.</p>
+
+<p>Better handling of &quot;composite&quot; literals formed by rules such 
+ as: <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->redo 
+ &lt;- re \- do @@</p>
+
+<p>Fixed returns of some string processing functions. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Fixed 
+ crash on catenating null strings.</p>
+
+<p>New function: <a href="deaccent.htm">deaccent</a> replaces accented 
+ characters in strings with unaccented characters.</p>
+
+<p>Improved error checking in the @DECL region.</p>
+
+<p>Fixed parse tree display for analyzing binary files.</p>
+
+<p>GUI convenience: When logs turned off, clicking passes in Ana Tab will 
+ not redraw the parse tree. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Nicer 
+ to work with large input files now.</p>
+
+<p>Fixed display of parse tree view for binary input files.</p>
+
+<p>(1.7.4.6)</p>
+
+<p>Fixed parse tree display of variables in yellow node popup when Node 
+ Variables toggle is off.</p>
+
+<p>(1.7.5)</p>
+
+<p>Added a new sample analyzer called POStagger (in VisualText\apps), which 
+ invokes an external part-of-speech tagger. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->This 
+ analyzer shows how one can extend VisualText with 3rd party software. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->See the 
+ <a href="POStagger.htm">Sample Analyzers &gt; POStagger</a> description 
+ for more details.</p>
+
+<p>Implemented the <a href="setlookahead.htm">setlookahead</a> action, 
+ allowing dynamic setting of the lookahead node after a rule match.</p>
+
+<p>(1.7.6)</p>
+
+<p>Housekeeping: Further alignment of compiled and interpreted. Fixed compiled-version 
+ of splice action and _xSTART in a match list. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Fixed 
+ Save KB crashes due to long concept names. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Fixed 
+ infinite loop on some optional rules with lookahead.</p>
+
+<p>Added error messages for fully optional rules, range errors in NLP++ 
+ actions.</p>
+
+<p>(1.7.7)</p>
+
+<p>Fixed crashes with catenating empty strings.</p>
+
+<p>Some fixes to the third party POS tagging handshake, handles paths with 
+ space characters.</p>
+
+<p>The <a href="permuten.htm">permuten</a> function is useful for permuting 
+ lists of values.</p>
+
+<h1>NEW IN VERSION (1.6)</h1>
+
+<p><span style="font-weight: bold; color: #ff0000;">Analyzer Upgrade Note:</span> 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Analyzers 
+ built with prior versions of VisualText will not load properly with the 
+ 1.6 version. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->To 
+ upgrade existing analyzers, you'll want to compare and merge your existing 
+ analyzer project files with those within the VisualText\Templates\Bare 
+ analyzer template. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(If 
+ an analyzer was built using another template, best to compare with that 
+ one.) <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->After 
+ merge, you'll want to recompile the analyzer, knowledge base, user projects, 
+ and stand-alone driver program, if any. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Important 
+ places to look for mergeable files are:</p>
+
+<ul style="list-style: disc;"
+	type=disc>
+	
+	<li class=kadov-p><p style="margin-bottom: 0pt;">Files in the top level 
+ folder of the analyzer project (e.g., main.cpp)</p></li>
+	
+	<li class=kadov-p><p style="margin-top: 0px; margin-bottom: 0px;">Kb 
+ folder code files (but do not overwrite your knowledge base files in Kb\user).</p></li>
+	
+	<li class=kadov-p><p style="margin-top: 0px; margin-bottom: 0px;">Run 
+ folder</p></li>
+	
+	<li class=kadov-p><p style="margin-top: 0px; margin-bottom: 0px;">User 
+ folder (not Kb\user).</p></li>
+</ul>
+
+<p style="margin-top: 0px; margin-bottom: 0px;"><span style="font-weight: bold; color: #ff0000;">Warning:</span> 
+ Prior to any merge, we strongly recommend (1) making a safe copy of all 
+ your existing analyzers; (2) doing Save KB for analyzers that have a compiled 
+ knowledge base, in order to save the interpreted form of the KB; (3) making 
+ a comparison with each existing analyzer and the Bare template (or other 
+ template that you started with), using a tool such as WinDiff that comes 
+ with Microsoft Visual C++.</p>
+
+<p style="margin-top: 0px; margin-bottom: 0px;">&nbsp;</p>
+
+<p style="margin-top: 0px; margin-bottom: 0px;"><span style="font-weight: bold; color: #ff0000;">Simple 
+ merge:</span> If you have only modified the analyzer sequence and pass 
+ files, then the merge is simple. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Copy 
+ everything in VisualText\Templates\Bare <span style="font-weight: bold; font-style: italic;">EXCEPT</span> 
+ the <span style="font-weight: bold;">spec</span> folder, <span style="font-weight: bold;">kb</span> 
+ folder and <span style="font-weight: bold;">.ana</span> file, if any, 
+ to your existing analyzer project. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Then 
+ copy the top-level files in the Bare <span style="font-weight: bold;">kb</span> 
+ folder, <span style="font-weight: bold; font-style: italic;">EXCLUDING</span> 
+ the <span style="font-weight: bold;">user</span> sub-folder, to your existing 
+ analyzer project.</p>
+
+<h2>External and Multiple Analyzers</h2>
+
+<p>The NLP++ runtime system now enables analyzers to invoke other analyzers 
+ and allows multiple analyzers and knowledge bases to cleanly operate within 
+ the same executable program.</p>
+
+<p>In the User project of an analyzer, the sample function User\Ucode.cpp\useranalyzefile 
+ may be called from an analyzer, e.g.,</p>
+
+<p style="margin-left: 40px;">G(&quot;buffer for result from analyzer&quot;) 
+ = user::analyzefile(&quot;analyzername&quot;,&quot;c:\\forexample\\inputfile.txt&quot;, 
+ &quot;data to pass to analyzer via $datum variable&quot;, G(&quot;ostream&quot;));</p>
+
+<p style="margin-left: 0px;">to invoke another analyzer (assumed to be 
+ in the area defined by the APPS environment variable). The called analyzer 
+ may grab the data from the 3rd argument via the special variable G(&quot;$datum&quot;). 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Writing 
+ to the cbuf() stream enables the called analyzer to return data to the 
+ calling analyzer.</p>
+
+<p style="margin-left: 0px;">Another function, user::useranalyzebuf(), 
+ illustrates calling a second analyzer, as follows</p>
+
+<p style="margin-left: 40px;">G(&quot;result&quot;) = user::analyzebuf(&quot;analyzername&quot;, 
+ &quot;input buffer...&quot;, &quot;info for $datum special variable&quot;, 
+ G(&quot;ostream&quot;))</p>
+
+<p style="margin-left: 0px;">so that a buffer can be processed by a called 
+ analyzer, which returns a buffer result to the calling analyzer.</p>
+
+<p style="margin-left: 0px;">The VisualText programmer's API has been enhanced 
+ to enable multiple analyzers to be loaded into memory once, while invoking 
+ each other multiple times. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Creating 
+ an NLP() object now takes an optional name string, so that analyzers may 
+ register themselves in memory and call each other by name. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ function <a href="findana.htm">findana</a> will help load once and run 
+ many times within VisualText itself. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(This 
+ capability is still under development.)</p>
+
+<p style="margin-left: 0px;">In order to enable load one and run many times 
+ for an analyzer, we also supply the function user::loadanalyzer(analyzername_str). 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Thus one 
+ can set up to call a second analyzer as follows:</p>
+
+<p style="margin-left: 0px;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">G(&quot;analyzer handle&quot;) = user::loadanalyzer(&quot;myanalyzer&quot;);</p>
+
+<p style="margin-left: 0px;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">G(&quot;result&quot;) = user:analyzefile(G(&quot;analyzer 
+ handle&quot;), G(&quot;input file&quot;), G(&quot;stuff to pass down to 
+ $datum variable&quot;), G(&quot;ostream&quot;));</p>
+
+<p style="margin-left: 0px;">The second statement could be placed in a 
+ loop in order to analyze a set of input files, thereby saving on analyzer 
+ and knowledge base load time.</p>
+
+<p style="margin-left: 0px;">Note that the first argument to analyzefile 
+ and analyzebuf can be the analyzer name or the &quot;handle&quot;, which 
+ currently are equivalent. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->In 
+ anticipation of VisualText allowing multiple instances of the same analyzer, 
+ we recommend using the &quot;handle&quot; returned by loadanalyzer.</p>
+
+<p style="margin-left: 0px;">New: analyzefile and analyzebuf now also take 
+ an ostream argument (which can be 0), enabling the calling analyzer to 
+ specify an output stream for the called analyzer.</p>
+
+<p style="margin-left: 0px;"><span style="font-weight: bold; color: #ff0000;">Caveats:</span> 
+ Recursive calls to the same analyzer are not supported in the current 
+ version. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->They 
+ may clobber some working areas such as the knowledge base and the output 
+ folder of an analyzer project. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Infinite 
+ calling loops must be guarded against (e.g., by passing down a counter). 
+ </p>
+
+<h2>Compiling Knowledge Base</h2>
+
+<p>If automated compilation of an analyzer's knowledge base is failing, 
+ we recommend defining the user environment variable (in Start Button &gt; 
+ Control Panels &gt; System &gt; Advanced &gt; Environment Variables):</p>
+
+<p>VCBIN = C:\Program Files\Microsoft Visual Studio\VC98\bin</p>
+
+<p>This assures that the correct linker (named LINK.EXE) will be invoked 
+ by the makefile that compiles an analyzer's knowledge base. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(If 
+ your computer has several development programs on it, such as Visual Basic 
+ or Symantec Visual Cafe, then the wrong program named LINK.EXE may be 
+ found inadvertently by the system when linking C++ programs. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ above environment variable is used by VisualText to eliminate this conflict.)</p>
+
+<h2>Miscellaneous</h2>
+
+<p><span style="color: #ff0000;">HOURGLASS CURSOR BUG</span> - On some 
+ machines, especially new or fast machines, analyzing a file in VisualText 
+ may have led to a hung VisualText session. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->This 
+ bug, due to a race condition between two threads, has been fixed.</p>
+
+<p>Runtime Library Upgrades - Knowledge base and runtime libraries have 
+ been upgraded to remove global variables and install object-oriented programming 
+ constructs.</p>
+
+<p>Compilation of larger analyzers has been enhanced by changes to the 
+ C++ code generated from pass files. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Some 
+ internal table sizes also have been enlarged.</p>
+
+<p>Global string and hash tables used by the analyzer have been enlarged.</p>
+
+<p>For display purposes, the new menu item Edit &gt; Change Fonts... allows 
+ a user to bring up a standard font selection popup window. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->In 
+ this way, text files may be displayed using fonts loaded in the computer 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(e.g., 
+ Japanese fonts).</p>
+
+<p>Some important fixes to problems with multi-valued NLP++ variables, 
+ e.g., going into and out of user-defined functions.</p>
+
+<p>Deployment - The /silent command line option for standalone analyzers 
+ now eliminates extraneous outputs to the console.</p>
+
+<p>Some fixes have been made to the error messages printed in the VisualText 
+ log window. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->This 
+ overhaul is still in progress, and so some error messages may still not 
+ point to the file and line of code that led to a syntax or runtime error.</p>
+
+<p>The <a href="exitpass.htm">exitpass</a> function has been upgraded to 
+ work in the @POST region. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->It 
+ also works within if-else statements, lists of statements, and while-statements. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->It should 
+ not be used within user-defined NLP++ functions, however.</p>
+
+<p>Compiled variants of NLP++ code have been fixed, including <span style="font-style: italic;">exitpass</span> 
+ and assignment statements (where an OSTREAM is being assigned to a variable). 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<span style="font-style: italic;"><!--kadov_tag{{</spaces>}}-->rightjustifynum</span> 
+ was fixed to handle null values identically in compiled and interpreted 
+ variants.</p>
+
+<p><span style="font-weight: bold; color: #ff0000;">L</span> local variables 
+ may now be used in the @CODE, @POST, and @CHECK regions. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->They 
+ go out of scope when execution of code in a region is completed.</p>
+
+<p>A bug has been fixed in matching rules that contained a triggered element 
+ along with wildcard elements to its left. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(Appeared 
+ only in compiled analyzers.)</p>
+
+<p>When a browser window with a local HTML file was left open on exiting 
+ VisualText, the file could not be found when reloading the analyzer in 
+ VisualText. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->This 
+ bug has been fixed.</p>
+
+<p>The new function <a href="nodeowner.htm">nodeowner</a> has been implemented, 
+ usurping the functionality of of <a href="nodeconcept.htm">nodeconcept</a>. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The former 
+ fetches the concept that owns the current phrase, while the latter fetches 
+ the concept that the given node is a proxy for.</p>
+
+<p>The new function <a href="sortconsbyattr.htm">sortconsbyattr</a> sorts 
+ an array of KB concepts by comparing one of their attributes.</p>
+
+<p>The new function <a href="inputrange.htm">inputrange</a> conveniently 
+ fetches substrings of the input text. For efficient printing of such ranges, 
+ <a href="inputrangetofile.htm">inputrangetofile</a> is provided.</p>
+
+<p>The new function <a href="strchrcount.htm">strchrcount</a> counts the 
+ occurrences of a character in a string.</p>
+
+<p>The new functions <a href="dictfirst.htm">dictfirst</a> and <a href="dictnext.htm">dictnext</a> 
+ enable convenient traversal of the words in the KB dictionary hierarchy.</p>
+
+<p>The new Perl-like function <a href="split.htm">split</a> enables splitting 
+ a string into a multi-valued variable (i.e., an NLP++ array) using a given 
+ character as a separator.</p>
+
+<p>New functions in support of web page processing: <a href="urltofile.htm">urltofile</a> 
+ fetches a web page as a file and <a href="resolveurl.htm">resolveurl</a> 
+ converts a relative URL to an absolute URL. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->In 
+ conjunction with analyzers calling analyzers, these functions support 
+ web navigation (crawling, spidering, searching) within VisualText. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->urltofile 
+ now has reasonable timeouts set for fetching a page from the web (but 
+ user cannot modify the timeout setting).</p>
+
+<p>The new function <a href="xmlstr.htm">xmlstr</a> converts characters 
+ in a string appropriately for outputting XML or HTML files (e.g., converts 
+ &quot;hello&amp;bye&quot; to &quot;hello&amp;amp;bye&quot;).</p>
+
+<p>Fix to the <a href="splice.htm">splice</a> NLP++ action. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Developers 
+ should avoid addressing rule elements after actions such as <span style="font-style: italic;">splice</span> 
+ and <span style="font-style: italic;">merge,</span> because numbering 
+ is element numbering is unpredictable after such actions.</p>
+
+<p>Variants of the NLP++ <a href="strpiece.htm">strpiece</a> function have 
+ been fixed.</p>
+
+<p>Fixes to NLP++ expressions that compare non-numeric types with 0. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->E.g. 
+ &quot;G(&quot;str&quot;) == 0&quot;. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->String 
+ catenation with one empty argument has been fixed (e.g., &quot;hello&quot; 
+ + 0).</p>
+
+<p>Assignments involving OSTREAM data types have been fixed in the compiled 
+ version.</p>
+
+<p>Many error messages have been fixed, but due to overhauls, the pass 
+ and line number are not always available to an error message.</p>
+
+<p>Compiled rules with a trigger element and wildcards to its left have 
+ been fixed. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Compiled 
+ versions of Boolean testing for knowledge base data types, e.g., in an 
+ if-statement, have been fixed.</p>
+
+<p>Local files in the Browser window now display properly when loading 
+ an analyzer.</p>
+
+<p>Some enhancements have been made to &quot;retokenization&quot;. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For 
+ example, one can write rules like</p>
+
+<p>oversight &lt;- over sight @@</p>
+
+<p>in which the suggested concept is a literal, and have the new &quot;oversight&quot; 
+ node in the parse tree matched by _xALPHA. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Getting 
+ the text from N(&quot;$treeraw&quot;) will also work (though not from 
+ N(&quot;$text&quot;)).</p>
+
+<p>In some 1.6 versions, cout() does not work. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->This 
+ has been fixed.</p>
+
+<h1>NEW IN VERSION (1.5)</h1>
+
+<p>Version 1.5 is primarily concerned with housekeeping.</p>
+
+<p>Changes to the VisualText user interface behaviors make it more convenient 
+ to work with analyzers. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->When 
+ you click the Run button, the cursor immediately changes to an hourglass. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->In viewing 
+ parse trees regardless of settings, the yellow popup box for a node always 
+ displays its variables and values. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->When 
+ Logs are turned off, the parse tree always displays the final parse tree. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->When commenting 
+ text in the Editor, only highlighted lines get commented (fixing the &quot;extra 
+ line commented&quot; feature).</p>
+
+<p>The runtime system for compiled analyzers has received major treatment. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For example, 
+ the compiled and interpreted versions of the latest TAIParse can have 
+ their intermediate log files and output files compared on a file-by-file 
+ basis using a program such as WinDiff. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Because 
+ interpreted/compiled analyzers are now well-aligned, it is easy to find 
+ any differences between the versions, as a debugging aid. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Missing 
+ compiled variants of NLP++ functions have been added and debugged.</p>
+
+<h1>NEW IN VERSION (1.4)</h1>
+
+<h2>Database Connectivity</h2>
+
+<p>NLP++ now features database connectivity functions, more or less mirroring 
+ the standard set of ODBC functions. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->All 
+ database types other than BLOBS are handled. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Values 
+ returned from a database are mapped to string, numeric, and float NLP++ 
+ types, as appropriate. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->See 
+ <a href="Table_of_Database_Functions.htm">Database Functions.</a></p>
+
+<p>A sample analyzer illustrating connection to a database and other new 
+ features is in <span style="font-weight: bold;">Samples\database1</span>. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->See also 
+ <a href="Sample_Analyzers/Database1_Analyzer.htm">Database1 Analyzer</a>.</p>
+
+<h2>Attribute Editor Enhancements</h2>
+
+<p>The <a href="VisualText_Interface/Tools/Attribute_Editor.htm">Attribute 
+ Editor</a> has been substantially overhauled. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Management 
+ of the knowledge base value types (string, concept, and numeric) is more 
+ coherent. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Methods 
+ have been introduced for specifying and viewing a concept as the value 
+ of an attribute. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Up 
+ and down navigation arrows have been added, enabling convenient perusal 
+ of the knowledge base while staying within the Attribute Editor.</p>
+
+<h2>Miscellaneous</h2>
+
+<p>An analyzer may now cause the creation of a popup window within VisualText, 
+ with the new functions <span style="font-weight: bold;"><a href="exittopopup.htm">exittopopup</a></span>() 
+ and <span style="font-weight: bold;"><a href="getpopupdata.htm">getpopupdata</a></span>().</p>
+
+<p>The built-in database function <span style="font-weight: bold;"><a href="dbbindcol.htm">dbbindcol</a></span>() 
+ is the first to employ call-by-reference within NLP++. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->User-defined 
+ functions may not use call-by-reference at this time.</p>
+
+<p>A <span style="font-weight: bold;">silent</span> flag in standalone 
+ analyzer API calls minimizes the amount of debugging and logging output 
+ produced during the operation of a text analyzer.</p>
+
+<p>A function for gathering command line arguments has been placed within 
+ the sample standalone code, e.g., in <span style="font-weight: bold;">Bare\main.cpp</span>.</p>
+
+<h1>NEW IN VERSION 1.3.1</h1>
+
+<h2>Miscellaneous</h2>
+
+<p>The VisualText GUI now highlights contiguous text regions with alternating 
+ dark and light colors. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->That 
+ is, dark blue and light blue alternate to display new nodes built in a 
+ pass, while dark and light green alternate to show nodes matched in a 
+ pass.</p>
+
+<p>The conversion functions <a href="num.htm"
+								style="font-weight: bold;">num()</a> and 
+ <a href="str.htm"
+	style="font-weight: bold;">str()</a> now handle floating point.</p>
+
+<p>A call-by-reference capability has been implemented for NLP++ builtin 
+ functions. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Not 
+ yet available to user-defined NLP++ functions.</p>
+
+<p><span style="font-weight: bold;">ind wattr</span>, a command for more 
+ conveniently adding knowledge to the kb via command files. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->See 
+ <a href="VisualText_Basics/About_KB_Command_Files.htm">About KB Command 
+ Files</a>.</p>
+
+<p>Fixed an overflow buf in spelling functions.</p>
+
+<h1>NEW IN VERSION 1.3</h1>
+
+<h2>Output to User-Supplied Stream and Buffer</h2>
+
+<p>In standalone/embedded analyzers, users may now provide an output stream 
+ and an output buffer to the analyzer. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Output 
+ to these is enabled by the new NLP++ functions <span><a href="cout.htm"
+														style="font-weight: bold;">cout()</a></span> 
+ and <a href="cbuf.htm"
+		style="font-weight: bold;">cbuf()</a>. <!--kadov_tag{{<spaces>}}-->&nbsp;<a 
+ href="coutreset.htm"
+	style="font-weight: bold;"><!--kadov_tag{{</spaces>}}-->coutreset()</a> 
+ enables rebinding the output stream to a file, while <a href="interactive.htm"
+														style="font-weight: bold;">interactive()</a> 
+ checks to see if the analyzer is running in an interactive environment, 
+ e.g., within VisualText. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Further 
+ documentation is available in the topic <a href="VisualText_Basics/Compiled_and_Standalone_Analyzers.htm">Compiled 
+ and Standalone Analyzers</a>.</p>
+
+<h1>NEW IN VERSION 1.2</h1>
+
+<h2>Enhanced User-Defined NLP++ Functions</h2>
+
+<p>In version 1.1, we introduced the @DECL region and user-defined function 
+ definitions within NLP++. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->With 
+ Version 1.2, support for NLP++ functions is much improved, including parameter 
+ lists, arguments, return statements, recursive function calls, and compilation 
+ of all the above. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->To 
+ implement parameters, we introduce the local variable reference <span 
+ style="font-weight: bold; color: #ff0000;">L</span>, similar to the <span 
+ style="color: #ff0000; font-weight: bold;">S</span>, <span style="color: #ff0000; font-weight: bold;">X</span>, 
+ <span style="color: #ff0000; font-weight: bold;">N</span>, and <span style="color: #ff0000; font-weight: bold;">G</span> 
+ variable references that are key to NLP++. <!--kadov_tag{{<spaces>}}-->&nbsp;<span 
+ style="color: #ff0000; font-weight: bold;"><!--kadov_tag{{</spaces>}}-->L</span> 
+ is used not only for parameters, but can define variables local to the 
+ function body.</p>
+
+<h1>NEW IN VERSION 1.1.2</h1>
+
+<h2>Event-Based Functions in User Project</h2>
+
+<p>The functions <span style="font-weight: bold;">ucodeIni()</span> and 
+ <span style="font-weight: bold;">ucodeFin()</span> are available in the 
+ User project of an analyzer. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ analyzer developer may place initializations in ucodeIni that operate 
+ immediately after the analyzer is loaded. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Analogously, 
+ cleanups may be placed in ucodeFin, which operates immediately before 
+ the analyzer is closed.</p>
+
+<h2>Improved Checking on Overly Large Input Texts</h2>
+
+<p>Enhancements are in progress that check against an overly large input 
+ text file. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->More 
+ generally, when the analyzer has expended all available space resources, 
+ then the system will degrade more gracefully rather than crashing. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->It 
+ is recommended that an input file of about 1MB maximum be run through 
+ a typical text analyzer.</p>
+
+<p>As always, huge texts will need to be split up into buffers or multiple 
+ files before presentation to a text analyzer, in general. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ VisualText knowledge base can serve to manage information across multiple 
+ segments of a huge document.</p>
+
+<p>&nbsp;</p>
+
+<h1>NEW IN VERSION 1.1</h1>
+
+<h2>User-Defined NLP++ Functions</h2>
+
+<p><!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->VisualText 
+ 1.1 introduces user-defined NLP++ functions. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Up 
+ to now, users could only add functions via the C++ <span style="font-weight: bold;">user 
+ </span>project associated with each analyzer project, or by requesting 
+ that a function be added by TAI to the NLP++ builtin functions.</p>
+
+<p>The current version is a pre-release of the user-defined function capability. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->No return 
+ statements and no parameter lists can be written in functions yet. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Nor 
+ are there templates that define the inputs and outputs to a function, 
+ nor is overloading of function names allowed. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Even 
+ so, the new capability substantially enhances the power of NLP++ for complex 
+ tasks. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Rather 
+ than repeating the same code in many places, functions enable the code 
+ to be written in a single centralized location.</p>
+
+<p>Functions are placed in the new @DECL region, which must be the first 
+ region in a pass file, when present. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Functions 
+ may be called from passes that precede the function definition (i.e., 
+ forward reference). <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->A 
+ sample is</p>
+
+<p style="font-weight: bold; color: #0000ff;">@DECL</p>
+
+<p># User-defined function definitions.</p>
+
+<p>myfunction()<br>
+{<br>
+&quot;output.txt&quot; &lt;&lt; &quot;Entering myfunction.&quot; &lt;&lt; 
+ &quot;\n&quot;;<span style="font-weight: bold; color: #ff0000;"><br>
+G</span>(<span style="color: #ff00ff;">&quot;tmp&quot;</span>) = 3;<br>
+}</p>
+
+<p style="font-weight: bold; color: #0000ff;">@CODE<span style="font-weight: normal; color: #000000;"><br>
+myfunction(); <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}--># 
+ A call to user-defined function.</span></p>
+
+<p>An interesting feature of NLP++ functions is that their operation can 
+ optionally depend on the region they are called from. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For 
+ example, in functions called from a @POST region, the user may use the 
+ <span style="font-weight: bold; color: #ff0000;">S</span>, <span style="font-weight: bold; color: #ff0000;">N</span>, 
+ and <span style="color: #ff0000; font-weight: bold;">X</span> variable 
+ references as though the function's code were placed directly within the 
+ region.</p>
+
+<h2>Double-Click Parse Tree Node</h2>
+
+<p>A new backtrace and debugging capability is the following. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->In 
+ a Parse Tree window, double-click on a node, and the pass file that created 
+ that node will open in the Workspace. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Further, 
+ the cursor will be placed at the start of the precise rule that created 
+ the node.</p>
+
+</body>
+
+</html>

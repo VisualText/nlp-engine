@@ -1,0 +1,882 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Compiled and Stanalone Analyzers</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=date content="05 31, 2002 8:24:32 AM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=4046>
+<meta name=layout-width content=1027>
+
+
+<!--(Links)=========================================================-->
+
+<link REL="StyleSheet" HREF="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Compiled and Standalone Analyzers</h1>
+
+<p>This section is concerned with configuring and using text analyzers 
+ outside the VisualText™ environment. It covers:</p>
+
+<ul>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;">Standalone analyzer</p></li>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;">Command-line arguments 
+ for an analyzer</p></li>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;">Analyzer and knowledge 
+ base APIs</p></li>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;">Compiling the analyzer</p></li>
+	
+	<li class=kadov-p><p style="margin-bottom: 0;">Compiling the knowledge 
+ base</p></li>
+	
+	<li class=kadov-p
+		class=kadov-p>Extending NLP++ functionality</li>
+	
+	<li class=kadov-p
+		class=kadov-p>UPDATING ANALYZERS</li>
+</ul>
+
+<p>We assume that an analyzer has been built using VisualText, and that 
+ Microsoft Visual C++ is available to the developer.</p>
+
+<p><span style="color: #ff0000; font-weight: bold;">Linux and Gnu C++.</span> 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Analyzers 
+ built with VisualText can be configured to run on Linux with Gnu C++. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->TAI periodically 
+ upgrades the port to the VisualText runtime libraries. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ libraries are not currently bundled with the VisualText release, and you 
+ may inquire about them by contacting us at info@textanalysis.com .</p>
+
+<h2>Overview</h2>
+
+<p>The <span style="font-style: italic;">interpreted</span> text analyzer 
+ constructed with VisualText consists partly of the definition files within 
+ the application's <span style="font-weight: bold;">spec</span> folder. 
+ The spec folder contains the analyzer sequence file (<span style="font-weight: bold;">analyzer.seq</span>) 
+ that defines the order of text-analysis passes, as well as the pass files 
+ (<span style="font-weight: bold;">.pat</span> files) that specify the 
+ rules and code to be executed at each pass. The analyzer engine and knowledge 
+ base management system (KBMS) are implemented as DLLs that execute the 
+ interpreted knowledge within the spec folder and within the <span style="font-weight: bold;">kb</span> 
+ folder, respectively. In addition, the app's <span style="font-weight: bold;">user</span> 
+ project is available for adding new NLP++ functionality to the core functions 
+ provided with VisualText.</p>
+
+<p>When the user compiles the analyzer, C++ code is generated, placed in 
+ the app's <span style="font-weight: bold;">run</span> folder, and compiled 
+ using MS Visual C++. When the user compiles the knowledge base, the app's 
+ <span style="font-weight: bold;">kb</span> folder is similarly updated.</p>
+
+<p>C++ code files are also provided for a default standalone analyzer. 
+ The user creates an empty project and adds the C++ files at the application's 
+ top level folder (<span style="font-weight: bold;">main.cpp</span> and 
+ so on). The default standalone analyzer exemplifies the way in which a 
+ VisualText application can be embedded in larger programs.</p>
+
+<p>The following sections provide further details about these topics.</p>
+
+<h2>Standalone Analyzer</h2>
+
+<p>Analyzer templates (such as Bare) come with prebuilt Microsoft Visual 
+ C++ project files <span style="font-weight: bold;">prog.dsw</span> and 
+ <span style="font-weight: bold;">prog.dsp</span>, which contain most of 
+ the project settings described below. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->You 
+ should be able to just modify the line in main.cpp and compile this project 
+ to have a standalone version of your analyzer.</p>
+
+<p>Instructions for creating and running the standalone analyzer:</p>
+
+<p>1. Make sure that your app folder (e.g., C:\apps\chatter) has the latest 
+ versions of the code files, by comparing with the files in the directory 
+ VisualText\Templates\Bare. The files include main.cpp, Uanalyze.cpp, Uanalyze.h, 
+ and possibly others.</p>
+
+<p>2. Use MS Visual C++ to create a standalone application in the app folder 
+ (e.g., an empty Win32 Console Application). Use the name of the app folder 
+ to name the project and create the project within the app folder.</p>
+
+<p>3. Add the code files in the app folder to the project.</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">4. Edit the Project 
+ Settings:<br>
+<br>
+In <span style="font-style: italic;">Project Settings &gt; C/C++ tab &gt; 
+ Category: Preprocessor &gt; Additional include directories:</span> add 
+ the filler <span style="font-style: italic; font-weight: bold;">$(VISUALTEXT)\include\Api</span></p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">In <span style="font-style: italic;">Project 
+ Settings &gt; C/C++ tab &gt; Category: Code Generation &gt; Use run-time 
+ library:</span> select</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->(in 
+ Release config) <span style="font-style: italic; font-weight: bold;">Multithreaded</span></p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><span style="font-style: italic;
+	font-weight: bold;
+	margin-top: 0.5pt;
+	margin-bottom: 0.5pt;"><!--kadov_tag{{<spaces>}}-->&nbsp;</span>&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->(in 
+ Debug config) <span style="font-style: italic; font-weight: bold;">Debug 
+ Multithreaded</span></p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">In <span style="font-style: italic;">Project 
+ Settings &gt; C/C++ tab &gt; Category: General &gt; Debug info:</span> 
+ select</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->(in 
+ Release config) <span style="font-weight: bold; font-style: italic;">None</span></p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->(in 
+ Debug config) <span style="font-style: italic; font-weight: bold;">Program 
+ Database</span></p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp;</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">In <span style="font-style: italic;">Project 
+ Settings &gt; Link tab &gt; Category: Input &gt; Additional library path:</span> 
+ add the filler <span style="font-style: italic; font-weight: bold;">$(VISUALTEXT)\lib</span></p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">In <span style="font-style: italic;">Project 
+ Settings &gt; Link tab &gt; Object/library modules:</span> append the 
+ text<br>
+&nbsp; (in release config:) <span style="font-style: italic; font-weight: bold;">libconsh.lib 
+ lite.lib libprim.lib</span></p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp; (<span style="font-style: italic;">if 
+ available</span>: in debug config:) <span style="font-style: italic; font-weight: bold;">libconshd.lib 
+ lited.lib libprimd.lib</span></p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp;</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">In <span style="font-style: italic;">Project 
+ Settings &gt; Debug tab</span>: you may want to set up an input text file 
+ to process for testing purposes.</p>
+
+<p>5. In main.cpp, edit the name of the application. e.g., <span style="font-weight: bold;">appname 
+ = &quot;chatter&quot;; <!--kadov_tag{{<spaces>}}-->&nbsp;</span><!--kadov_tag{{</spaces>}}-->This 
+ name must conform to the name of the top-level folder of the analyzer 
+ project.</p>
+
+<p><span style="font-weight: normal;">6. Build the program in the standard 
+ fashion within the MS Visual C++ environment.</span></p>
+
+<h2>Command Line Arguments</h2>
+
+<p>Invoking a standalone analyzer (built as above) looks like</p>
+
+<p><span style="font-style: italic;">analyzer-executable</span> [/INTERP][/COMPILED][/IN 
+ <span style="font-style: italic;">infile</span>] [/OUT <span style="font-style: italic;">outfile</span>] 
+ [/DEV] [<span style="font-style: italic;">infile</span> [<span style="font-style: italic;">outfile</span>]]</p>
+
+<p>The various arguments are</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		style="x-cell-content-align: top;
+				width: 100%;
+				border-spacing: 0px;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=100%>
+<col style="width: 50%;">
+<col style="width: 50%;">
+
+<tr style="x-cell-content-align: top;"
+	valign=top>
+<td style="width: 50%;
+			padding-right: 10px;
+			padding-left: 10px;
+			background-color: #ffff00;
+			border-left-style: Solid;
+			border-top-style: Solid;
+			border-right-style: Solid;
+			border-bottom-style: Solid;
+			border-right-width: 1px;
+			border-left-width: 1px;
+			border-top-width: 1px;
+			border-bottom-width: 1px;"
+	bgcolor=#FFFF00
+	width=50%>
+<p style="font-weight: bold;">ARGUMENT</td>
+<td style="width: 50%;
+			padding-right: 10px;
+			padding-left: 10px;
+			background-color: #ffff00;
+			border-top-style: Solid;
+			border-right-style: Solid;
+			border-bottom-style: Solid;
+			border-top-width: 1px;
+			border-bottom-width: 1px;
+			border-right-width: 1px;"
+	bgcolor=#FFFF00
+	width=50%>
+<p style="font-weight: bold;">DESCRIPTION</td></tr>
+
+<tr style="x-cell-content-align: top;"
+	valign=top>
+<td style="width: 50%;
+			padding-right: 10px;
+			padding-left: 10px;
+			border-left-style: Solid;
+			border-left-color: #000000;
+			border-left-width: 1px;
+			border-right-style: Solid;
+			border-right-color: #000000;
+			border-right-width: 1px;
+			border-bottom-width: 1px;
+			border-bottom-color: #000000;
+			border-bottom-style: Solid;"
+	width=50%>
+<p>/INTERP</td>
+<td style="width: 50%;
+			padding-right: 10px;
+			padding-left: 10px;
+			border-right-style: Solid;
+			border-right-color: #000000;
+			border-right-width: 1px;
+			border-bottom-width: 1px;
+			border-bottom-color: #000000;
+			border-bottom-style: Solid;"
+	width=50%>
+<p>Run the interpreted analyzer (this is the default).</td></tr>
+
+<tr style="x-cell-content-align: top;"
+	valign=top>
+<td style="width: 50%;
+			border-left-width: 1px;
+			border-left-color: #000000;
+			border-left-style: Solid;
+			border-right-width: 1px;
+			border-right-color: #000000;
+			border-right-style: Solid;
+			border-bottom-style: Solid;
+			border-bottom-color: #000000;
+			border-bottom-width: 1px;
+			padding-right: 10px;
+			padding-left: 10px;"
+	width=50%>
+<p>/COMPILED</td>
+<td style="width: 50%;
+			border-right-width: 1px;
+			border-right-color: #000000;
+			border-right-style: Solid;
+			border-bottom-style: Solid;
+			border-bottom-color: #000000;
+			border-bottom-width: 1px;
+			padding-right: 10px;
+			padding-left: 10px;"
+	width=50%>
+<p>Run the compiled analyzer (run.dll).</td></tr>
+
+<tr style="x-cell-content-align: top;"
+	valign=top>
+<td style="width: 50%;
+			border-left-width: 1px;
+			border-left-color: #000000;
+			border-left-style: Solid;
+			border-right-width: 1px;
+			border-right-color: #000000;
+			border-right-style: Solid;
+			border-bottom-style: Solid;
+			border-bottom-color: #000000;
+			border-bottom-width: 1px;
+			padding-right: 10px;
+			padding-left: 10px;"
+	width=50%>
+<p>/IN <span style="font-style: italic;">infile</span></td>
+<td style="width: 50%;
+			border-right-width: 1px;
+			border-right-color: #000000;
+			border-right-style: Solid;
+			border-bottom-style: Solid;
+			border-bottom-color: #000000;
+			border-bottom-width: 1px;
+			padding-right: 10px;
+			padding-left: 10px;"
+	width=50%>
+<p>Specify the input file to be analyzed</td></tr>
+
+<tr style="x-cell-content-align: top;"
+	valign=top>
+<td style="width: 50%;
+			border-left-width: 1px;
+			border-left-color: #000000;
+			border-left-style: Solid;
+			border-right-width: 1px;
+			border-right-color: #000000;
+			border-right-style: Solid;
+			border-bottom-style: Solid;
+			border-bottom-color: #000000;
+			border-bottom-width: 1px;
+			padding-right: 10px;
+			padding-left: 10px;"
+	width=50%>
+<p>/OUT <span style="font-style: italic;">outfile</span></td>
+<td style="width: 50%;
+			border-right-width: 1px;
+			border-right-color: #000000;
+			border-right-style: Solid;
+			border-bottom-style: Solid;
+			border-bottom-color: #000000;
+			border-bottom-width: 1px;
+			padding-right: 10px;
+			padding-left: 10px;"
+	width=50%>
+<p>Specify the output file <span style="color: #ff0000;">[SEE NOTES]</span></td></tr>
+
+<tr style="x-cell-content-align: top;"
+	valign=top>
+<td colspan=1
+	rowspan=1
+	style="width: 50%;
+			border-left-width: 1px;
+			border-left-color: #000000;
+			border-left-style: Solid;
+			border-right-width: 1px;
+			border-right-color: #000000;
+			border-right-style: Solid;
+			border-bottom-style: Solid;
+			border-bottom-color: #000000;
+			border-bottom-width: 1px;
+			padding-right: 10px;
+			padding-left: 10px;"
+	width=50%>
+<p>/DEV</td>
+<td colspan=1
+	rowspan=1
+	style="width: 50%;
+			border-right-width: 1px;
+			border-right-color: #000000;
+			border-right-style: Solid;
+			border-bottom-style: Solid;
+			border-bottom-color: #000000;
+			border-bottom-width: 1px;
+			padding-right: 10px;
+			padding-left: 10px;"
+	width=50%>
+<p>Developer's verbose mode (e.g., output intermediate logs).</td></tr>
+
+<tr style="x-cell-content-align: top;"
+	valign=top>
+<td style="width: 50%;
+			border-left-width: 1px;
+			border-left-color: #000000;
+			border-left-style: Solid;
+			border-right-width: 1px;
+			border-right-color: #000000;
+			border-right-style: Solid;
+			border-bottom-style: Solid;
+			border-bottom-color: #000000;
+			border-bottom-width: 1px;
+			padding-right: 10px;
+			padding-left: 10px;"
+	width=50%>
+<p>[<span style="font-style: italic;">infile</span> [<span style="font-style: italic;">outfile</span>]]</td>
+<td style="width: 50%;
+			border-right-width: 1px;
+			border-right-color: #000000;
+			border-right-style: Solid;
+			border-bottom-style: Solid;
+			border-bottom-color: #000000;
+			border-bottom-width: 1px;
+			padding-right: 10px;
+			padding-left: 10px;"
+	width=50%>
+<p>Unmarked args are input file followed by output file.</td></tr>
+
+<tr style="x-cell-content-align: top;"
+	valign=top>
+<td style="width: 50%;
+			border-left-width: 1px;
+			border-left-color: #000000;
+			border-left-style: Solid;
+			border-right-width: 1px;
+			border-right-color: #000000;
+			border-right-style: Solid;
+			border-bottom-style: Solid;
+			border-bottom-color: #000000;
+			border-bottom-width: 1px;
+			padding-right: 10px;
+			padding-left: 10px;"
+	width=50%>
+<p>&nbsp;</td>
+<td style="width: 50%;
+			border-right-width: 1px;
+			border-right-color: #000000;
+			border-right-style: Solid;
+			border-bottom-style: Solid;
+			border-bottom-color: #000000;
+			border-bottom-width: 1px;
+			padding-right: 10px;
+			padding-left: 10px;"
+	width=50%>
+<p>&nbsp;</td></tr>
+</table>
+
+<h2>Analyzer and Knowledge Base APIs</h2>
+
+<p>The code files in the top level folder of an analyzer project demonstrate 
+ API calls to load and run the analyzer and knowledge base. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ API header files are located by default in</p>
+
+<p style="font-weight: bold;">C:\Program Files\TextAI\VisualText\include\API</p>
+
+<p>and its subfolders. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ main API header files are</p>
+
+<p><span style="font-weight: bold;">API\lite\nlp.h</span>, which specifies 
+ function calls for creating an NLP object to manage an analyzer and run 
+ it on input text files or buffers, and</p>
+
+<p><span style="font-weight: bold;">API\consh\cg.h</span>, which specifies 
+ function calls for creating a CG object to manage, access, and modify 
+ the knowledge base.</p>
+
+<p>The header documentation in nlp.h is repeated here for reference.</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">THE MAIN API FUNCTIONS 
+ ARE:</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">NLP <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->= 
+ Create the NLP object to manage analyzer.</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">make_analyzer <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->= 
+ Create and load a text analyzer.</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">API CALLS FOR NORMAL 
+ RUNNING OF ANALYZER ON A TEXT:</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">analyze <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->= 
+ Run analyzer on a single text.</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">API CALLS FOR STEPPING 
+ THROUGH ONE PASS AT A TIME:</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">apiInitAnalyzer <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->= 
+ Initialize stepwise interp analysis of a text.</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">apiStepAnalyzer <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->= 
+ Execute next pass in the analysis of a text.</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">apiCleanAnalyzer = 
+ Clean up stepwise analysis of a text.</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">&nbsp;</p>
+
+<p>We describe the call to analyze(), which is the main function that you'll 
+ call outside VisualText to analyze a text. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Note 
+ that an example of the use of the API calls <span style="font-style: italic;">NLP</span>, 
+ <span style="font-style: italic;">make_analyzer</span>, and <span style="font-style: italic;">analyze</span> 
+ is found in the main.cpp file of any analyzer project.</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;"><span style="font-family: 'Courier New', monospace;">void 
+ analyze(</span></p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->char 
+ *input, <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->// 
+ INPUT FILE PATH.</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->char 
+ *output, <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->// 
+ OUTPUT FILE PATH.</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->char 
+ *appdir, <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->// 
+ ANALYZER APPLICATION TOP DIR.</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->bool 
+ flogfiles, <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->// 
+ OUTPUT INTERMEDIATE LOGS.</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->char 
+ *outdir = 0, <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->// 
+ DIRECTORY FOR OUTPUT.</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->char 
+ *inbuf = 0, <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->// 
+ IF ANALYZING A BUFFER, SUPPLY IT HERE</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->long 
+ len = 0, <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->// 
+ LENGTH OF INPUT BUFFER</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->bool 
+ compiled=false, // RUN COMPILED ANALYZER</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->ostream 
+ *os = 0, <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->// 
+ STANDARD OUTPUT STREAM</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->char 
+ *outbuf = 0, <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->// 
+ OUTPUT BUFFER TO BIND TO cbuf STREAM</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->long 
+ outlen = 0, <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->// 
+ MAXIMUM LENGTH OF cbuf OUTPUT BUFFER</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;"><span style="margin-top: 0pt;
+	margin-bottom: 0pt;
+	font-family: 'Courier New', monospace;
+	margin-left: 40px;
+	color: #ff0000;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->char 
+ *datum <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->// 
+ STRING OF PARAMETERS TO ANALYZER [NEWLY DOCUMENTED 2.4.0.1]</span></p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->);</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">You have a choice of 
+ specifying input from a file or a buffer. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->If 
+ <span style="font-style: italic;">inbuf</span> and <span style="font-style: italic;">len</span> 
+ are zero, then analyze() assumes that input comes from the <span style="font-style: italic;">input</span> 
+ file argument.</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">Output is more flexible 
+ in that during the analysis of a text, you can send output to a file, 
+ a user-supplied stream, and a user-supplied buffer. <!--kadov_tag{{<spaces>}}-->&nbsp;<span 
+ style="font-style: italic;"><!--kadov_tag{{</spaces>}}-->output</span> 
+ specifies the default output file, <span style="font-style: italic;">outbuf</span> 
+ and its length <span style="font-style: italic;">outlen</span> specify 
+ an output buffer, and <span style="font-style: italic;">os</span> specifies 
+ an output stream. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->In 
+ NLP++, you may also send outputs to additional files (see discussion of 
+ output statements).</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">The <span style="font-style: italic;">compiled</span> 
+ flag, if true, specifies that you are running a compiled version of the 
+ analyzer (run.dll, see below). <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->If 
+ false, then you are running the same interpreted analyzer definition that 
+ you have developed within VisualText.</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;
+			color: #ff0000;"><span style="x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">OUTPUT 
+ FILE</span>. The output argument leads nowhere in current-day NLP++. (That 
+ is, there's no built-in NLP++ function such as cbuf() that writes to it.) 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->But you 
+ can manually add it to the DATUM argument to pass it to the analyzer.</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;
+			color: #ff0000;
+			x-text-underline: normal;
+			/*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">&nbsp;</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;
+			color: #ff0000;"><span style="x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">DATUM 
+ STRING</span>. This arg has been available for many 2.x VisualText versions, 
+ but hasn't been documented prior to 2.4.0.1. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->It 
+ is a string that gets passed to the G(&quot;$datum&quot;) global variable 
+ of the called analyzer. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Typically, 
+ one can separate values with a pipe character ('|') in the datum string, 
+ and use something like</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;
+			color: #ff0000;"><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->L(&quot;arr&quot;) 
+ = split(G(&quot;$datum&quot;),&quot;|&quot;);</p>
+
+<p style="margin-top: 0pt;
+			margin-bottom: 0pt;
+			font-family: 'Courier New', monospace;
+			color: #ff0000;">to read each parameter into an array element. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->One can 
+ use the parameters to set up output files, assign tasks, and pass information 
+ to the called analyzer.</p>
+
+<h2>Compiling the Analyzer</h2>
+
+<p>Instructions for compiling the analyzer and running compiled vs interpreted 
+ mode in the standalone analyzer. (Currently VisualText doesn't provide 
+ a way to run the compiled analyzer.) Can only compile the analyzer during 
+ load of VisualText, at present. (Could also compile it from a C++ program, 
+ if desired.)</p>
+
+<p>1. Invoke VisualText.</p>
+
+<p>2. Depress the toggle for compiling the analyzer: <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--><img 
+ src="../Toolbar_buttons/compile_analyzer_button.gif"
+	ALT="Compile Analyzer"
+	style="width: 24px;
+			height: 25px;
+			border-width: 1px;
+			border-style: solid;
+			margin-top: 0px;
+			margin-bottom: 0px;
+			margin-left: 0px;
+			margin-right: 0px;"
+	width=24
+	height=25
+	border=1></p>
+
+<p>3. Load the analyzer to be compiled. C++ code gets generated and compiled 
+ (in the app\run folder) during analyzer load. <span style="color: #ff0000;">NOTE: 
+ In version 2, you will need to go to the run folder of your analyzer and 
+ manually upgrade and compile the project. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For 
+ example, in version 2.3 and later, files are generated for each pass of 
+ an analyzer.</span></p>
+
+<p><span style="x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">Running 
+ the compiled analyzer</span></p>
+
+<p>Examine the API call for creating an analyzer, in main.cpp of the current 
+ application folder:</p>
+
+<p>nlp-&gt;make_analyzer(seqfile, appdir, develop, 0, compile-on-load, 
+ <span style="font-weight: bold;">compiled</span>);</p>
+
+<p>The <span style="font-weight: bold;">compiled</span> flag will load 
+ the compiled analyzer if true. (Note: the interpreted analyzer is ALWAYS 
+ loaded as well.) You can also specify that code be generated when making 
+ the analyzer, by setting the compile-on-load argument to true.</p>
+
+<p>To run the compiled analyzer, set <span style="font-weight: bold;">compiled</span> 
+ to true in the call to analyze, as below.</p>
+
+<p>nlp-&gt;analyze(infile,outfile,appdir,true,0,line,0,<span style="font-weight: bold;">compiled</span>);</p>
+
+<p>&nbsp;</p>
+
+<h2>Compiling the KB</h2>
+
+<p>Unlike the analyzer, which can only be compiled during load, the knowledge 
+ base can be compiled at any time by clicking the compile kb button: <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--><img 
+ src="../Toolbar_buttons/compile_kb_button.gif"
+	ALT="Compile KB"
+	style="width: 24px;
+			height: 24px;
+			border-width: 1px;
+			border-style: solid;
+			margin-top: 0px;
+			margin-bottom: 0px;
+			margin-left: 0px;
+			margin-right: 0px;"
+	width=24
+	height=24
+	border=1></p>
+
+<p style="color: #ff0000;">NOTE: In version 2, you will need to go to the 
+ kb folder of your analyzer and manually upgrade and compile the project, 
+ after the above. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->You 
+ may also need to add all the .cpp and .h files in that folder to the kb 
+ project in order for it to compile.</p>
+
+<p>The user can save an interpreted version of the KB with the Save KB 
+ button at anytime as well: <img src="../Toolbar_buttons/save_kb_button.gif"
+								ALT="Save KB"
+								style="width: 25px;
+										height: 24px;
+										border-width: 1px;
+										border-style: solid;
+										margin-top: 0px;
+										margin-bottom: 0px;
+										margin-left: 0px;
+										margin-right: 0px;"
+								width=25
+								height=24
+								border=1></p>
+
+<p>Compiling very large KBs or loading interpreted KBs can take a long 
+ time. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->A 
+ hint for managing very large KBs is to load the compiled version, an option 
+ that can be set in the File &gt; Preferences menu item. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Then, 
+ the NLP++ functions <span style="font-weight: bold;"><a href="../kbdumptree.htm">kbdumptree</a></span> 
+ and <span style="font-weight: bold;"><a href="../take.htm">take</a></span> 
+ can be used to dump and load subhierarchies of the kb that are being worked 
+ on. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(Also 
+ available is: in the KB Editor window, select a concept whose tree is 
+ to be dumped or reloaded. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Right-click 
+ and select Modular &gt; Dump to dump the subtree to a .kb command file, 
+ or Modular &gt; Load to browse to a .kb file to be loaded.)</p>
+
+<p>The knowledge base can also be compiled from a C++ program. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->In 
+ the main.cpp file of the standalone app, add the API call</p>
+
+<p><span style="font-style: italic; font-weight: bold;">cg-&gt;genKb();</span></p>
+
+<p>This will generate and compile C++ code for the knowledge base, creating 
+ a kb.dll file in kb\Debug or kb\Release, as appropriate.</p>
+
+<h2>Extending NLP++ with the User Project</h2>
+
+<p>The <span style="font-weight: bold;">user</span> C++ project created 
+ with a new analyzer provides an example of a user-defined NLP++ function, 
+ in the Ucode.cpp file. An interpreted as well as compiled variant of the 
+ function is exemplified. Methods for processing the function's arguments, 
+ as well as accessing the parse tree and knowledge base, are illustrated.</p>
+
+<p>One way to define a new NLP++ function is within the @DECL region, which 
+ must be first in a pass file, if present. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Another 
+ way is to create a C++ function in the User project, as exemplified with 
+ the function called <span style="font-weight: bold;">testfn</span> in 
+ the file user\Ucode.cpp. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ assumption is that a user-defined function must participate in NLP++ expressions, 
+ and so it must process arguments in the same way that other NLP++ functions 
+ process arguments. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->It 
+ must also return values by a special mechanism involving a <span style="font-weight: bold;">retVal</span> 
+ object, as exemplified in the testfn example. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->From 
+ a pass file, the function must be called with a user:: prefix. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->E.g., 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<span style="font-weight: bold;"><!--kadov_tag{{</spaces>}}-->user::testfn()</span>.</p>
+
+<p>Just after an analyzer is loaded, the function <span style="font-weight: bold;">ucodeIni()</span> 
+ is called, and just before an analyzer is closed, <span style="font-weight: bold;">ucodeFin()</span> 
+ is called. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->These 
+ functions are available in the User project and may be filled with user-defined 
+ initializations and cleanups.</p>
+
+<h2>UPDATING ANALYZERS</h2>
+
+<p style="margin-bottom: 0;">To update your analyzers to Version 2.0, you 
+ will mainly need to regenerate and recompile the code in your projects. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->First, 
+ compare your code with that in the top level, kb folder, run folder, and 
+ user folder of the Bare analyzer in c:\Program Files\TextAI\VisualText\Templates\Bare. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->You may 
+ need to add the code lines</p>
+
+<p style="margin-bottom: 0;"><span style="margin-bottom: 0;">#</span>include 
+ &lt;windows.h&gt;<span style="margin-bottom: 0;"><br>
+#include &lt;tchar.h&gt;<br>
+#include &lt;my_tchar.h&gt;<br>
+#include &lt;streamclasses.h&gt;</span></p>
+
+<p style="margin-bottom: 0;">to your StdAfx.h file, or</p>
+
+<p style="margin-bottom: 0;">#include &quot;vtapi.h&quot;</p>
+
+<p style="margin-bottom: 0;">as appropriate, in order to succesfully compile. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Then, regenerate 
+ run and kb code, if you're using the compile version of the analyzer and 
+ kb. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Similarly, 
+ recompile the user project for your analyzer, especially if you are using 
+ functions there or adding new ones to extend NLP++.</p>
+
+</body>
+
+</html>

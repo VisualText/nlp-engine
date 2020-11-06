@@ -1,0 +1,79 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>base</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=636>
+<meta name=layout-width content=916>
+<meta name=date content="05 5, 2002 0:14:06 AM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF=default.css>
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>base</h1>
+
+<h2>Purpose</h2>
+
+<p>The base suggested-element modifier specifies that the reduce node will 
+ be the bottom-most node in a <span style="font-style: italic;">singlet 
+ chain</span>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->That 
+ is, subsequent rules using the singlet element modifier will not look 
+ &quot;down&quot; past a node labeled with the base attribute.</p>
+
+<h2>Remarks</h2>
+
+<p>Base and singlet provide a mechanism for layering multiple attributes 
+ and syntactic and semantic ambiguities directly into the parse tree.</p>
+
+<p>The example will help clarify the use of the base modifier.</p>
+
+<h2>Example</h2>
+
+<p># The rule below reduces a node labeled _noun to an _np. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->It 
+ places an internal flag called &quot;base&quot; on the _np node.<br>
+# Subsequent rules (e.g., in subsequent passes) that are searching for 
+ _noun will not find it under an _np created with the current rule.<br>
+@RULES<br>
+_np [base] &lt;- _noun @@</p>
+
+<p># Say a subsequent pass has this rule. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Even 
+ though the s (or singlet) modifier says to look &quot;within&quot; a node 
+ for _noun, it won't find it within an _np<br>
+# labeled with a base flag, as created by the rule above.<br>
+@RULES<br>
+_np &lt;- _adj _noun [s] @@</p>
+
+<p>&nbsp;</p>
+
+<p style="margin-bottom: 0;"><a href="NLP_PP_Stuff/Suggested_element_modifiers.htm">Suggested 
+ Element Modifiers</a>.</p>
+
+</body>
+
+</html>

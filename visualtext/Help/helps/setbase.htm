@@ -1,0 +1,102 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>setbase</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=764>
+<meta name=layout-width content=916>
+<meta name=date content="01 4, 2002 11:39:16 AM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF=default.css>
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>setbase</h1>
+
+<h2>Purpose</h2>
+
+<p>Set the BASE attribute of the <span style="font-style: italic; font-weight: bold;">num</span>th 
+ node to &quot;true&quot; or &quot;false&quot;.</p>
+
+<h2>Syntax</h2>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">setbase(num, bool_str)</p>
+
+<h2>Returns</h2>
+
+<h2>Remarks</h2>
+
+<p>The <span style="font-weight: bold;">base</span> attribute is equivalent 
+ to using setbase. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->But 
+ setbase lets you access any element in the rhs phrase of a rule.</p>
+
+<p style="font-family: monospace;">@RULES<br>
+_np [base] &lt;- _noun @@</p>
+
+<p style="font-family: Arial, sans-serif;">This example and the one below 
+ &quot;hide&quot; the _noun node and any node under it, so that subsequent 
+ rules such as</p>
+
+<p style="font-family: Arial, sans-serif;">_np &lt;- _det [opt s] _noun 
+ [s] @@</p>
+
+<p style="font-family: Arial, sans-serif;">won't find a singleton _noun 
+ that has already been reduced to an _np.</p>
+
+<h2>Example</h2>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">@POST<br>
+setbase(1,&quot;true&quot;);<br>
+single(); <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--># Need to put the default reduce in manually, since POST is not empty.<br>
+@RULES<br>
+_np &lt;- _noun @@</p>
+
+<h2>See Also</h2>
+
+<p><a href="setunsealed.htm">setunsealed</a>, <a href="NLP_PP_Stuff/AT-POST_Actions.htm#table_of_@POST_Actions">POST 
+ Actions</a></p>
+
+<p>&nbsp;</p>
+
+<p style="margin-bottom: 0;">&nbsp; </p>
+
+</body>
+
+</html>

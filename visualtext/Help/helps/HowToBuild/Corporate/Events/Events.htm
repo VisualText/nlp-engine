@@ -1,0 +1,404 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Events</title>
+
+<!--(Meta)==========================================================-->
+
+<meta HTTP-EQUIV=Content-Type CONTENT="text/html; charset=windows-1252">
+<meta NAME=Template CONTENT="D:\Program Files\Microsoft Office\Office\html.dot">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=5610>
+<meta name=layout-width content=775>
+<meta name=date content="08 27, 2001 2:36:22 PM">
+
+
+
+<!--(Style Sheet)===================================================-->
+
+<style>
+<!--
+
+A:visited {
+	color: #800080;
+}
+
+A:link {
+	color: #0000ff;
+}
+
+-->
+</style>
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<!--(Table)=========================================================-->
+<!--begin!kadov{{--><div align=center><!--}}end!kadov-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 617px;
+				border-spacing: 0px;
+				float: aligncenter;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=617>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../CompConj/CompConj.htm"><img src="Bullet8.gif"
+														style="width: 15px;
+	height: 12px;
+	border-style: none;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 0px;"
+														width=15
+														height=12
+														border=0>&nbsp;Company 
+ Conj</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 50%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../Toc/TOC.htm">CORPORATE ANALYZER</a><span style="font-weight: bold;"><font 
+ style="color: #000080;"
+	color=#000080><br>
+Events</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 26%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../MetaEvents/MetaEvents.htm">Meta Events <img 
+ src="Bullet7.gif"
+	style="width: 15px;
+			height: 12px;
+			border-style: none;
+			margin-top: 0px;
+			margin-bottom: 0px;
+			margin-left: 0px;
+			margin-right: 0px;"
+	width=15
+	height=12
+	border=0></a></td></tr>
+</table>
+<!--begin!kadov{{--></div><!--}}end!kadov-->
+
+<!--(HR)============================================================-->
+<hr style="height: 2px;
+			width: 100%;
+			float: aligncenter;"
+	size=2
+	width=100%
+	align=center>
+
+
+<p><span style="font-weight: bold;">Ana Tab Window: Pass 25</span></p>
+
+<p>This section describes the analyzer pass &quot;events&quot;.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image102.gif"
+						style="border-style: none;
+								width: 132px;
+								height: 64px;"
+						width=132
+						height=64
+						border=0></p>
+
+<p><span style="font-weight: bold;"><font style="color: #ff0000;"
+											color=#FF0000>Important:</font></span></p>
+
+<p>This is by far the most important section of our corporate analyzer 
+ tour. Here, everything we have done so far will come together.</p>
+
+<p><span style="font-weight: bold;">Events</span></p>
+
+<p>In language, it is usual to have some kind of action as the center of 
+ meaning within a sentence. John <span style="font-style: italic;">kicked</span> 
+ the ball. The ball was <span style="font-style: italic;">kicked</span> 
+ by John. Actions are associated with verbs. The corporate world deals 
+ with sales, mergers, acquisitions, and statements of fact about a company, 
+ e.g., &quot;Founded in 1972&quot;. Below, we can see the events that our 
+ analyzer recognizes in pass 25:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image103.gif"
+						style="border-style: none;
+								width: 490px;
+								height: 477px;"
+						width=490
+						height=477
+						border=0></p>
+
+<p><span style="font-weight: bold;">Event Rule 1</span></p>
+
+<p>Our &quot;events&quot; pass 25 contains two rules. One is for a stock 
+ &quot;event&quot;, the second for &quot;buy&quot; and &quot;acquire&quot; 
+ events. The second rule is :</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image105.gif"
+						style="border-style: none;
+								width: 342px;
+								height: 153px;"
+						width=342
+						height=153
+						border=0></p>
+
+<p>There are several remarkable things going on here. First, if you look 
+ at the graphic above containing the highlighting, you will see that many 
+ events are highlighted, yet there are only two rules in this pass. The 
+ second rule is generic enough to match three quite distinct sentences.</p>
+
+<p>This follows from the way in which the analyzer is constructed up to 
+ the current pass. Remember that we gathered not only company names and 
+ money values, but also the attributes in the text surrounding these constructs. 
+ That is, we gathered complex noun phrases to distill the domain-critical 
+ objects from the text. Once we gather all the subphrases into one neat 
+ concept such as _company or _money, we can build abstract rules for events, 
+ as in the second rule above. The idea that &quot;companies buy companies 
+ for money&quot; is clearly expressed by rules at the event level of abstraction.</p>
+
+<p>In this way, an information extraction system can become a powerful 
+ tool for accurately and deeply extracting critical content from a text.</p>
+
+<p><span style="font-weight: bold;">Generate Rule</span></p>
+
+<p>The &quot;Generate Rule&quot; menu item is a super-accelerator for building 
+ rules by hand. You invoke it from the right-click popup menu of a text 
+ window. It automatically generates rules from text in much the same way 
+ that RUG generates rules.</p>
+
+<p><span style="font-weight: bold;"><font style="color: #ff0000;"
+											color=#FF0000>NOTE:</font></span> 
+ Generate Rule only works if you have previously run the analyzer on the 
+ text with the &quot;Generate Logs&quot; toggle turned on:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image119.gif"
+						style="border-style: none;
+								width: 210px;
+								height: 61px;"
+						width=210
+						height=61
+						border=0></p>
+
+<p>Using our other handy function &quot;View&gt;Tree of Selected&quot;, 
+ we can take a look at the tree for pass 25 for sentence 5:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image110.gif"
+						style="border-style: none;
+								width: 535px;
+								height: 549px;"
+						width=535
+						height=549
+						border=0></p>
+
+<p>Examining the top-level nodes of the parse tree above, you will see 
+ your rule! I.e., &quot;_company have _acquire _company for _money&quot;. 
+ This is what Generate Rule does for you automatically, as follows.</p>
+
+<p>Below, choose the same text and instead of viewing the tree, select 
+ &quot;Generate Rule&quot;. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(Note 
+ that the period is not included in the selected text.) <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Generate 
+ Rule goes to the events pass, opens it up, and places a new rule at the 
+ bottom of the file. You can see the new rule on the left, in the image 
+ below:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image106.gif"
+						style="border-width: 1px;
+								border-style: solid;
+								width: 690px;
+								height: 312px;"
+						width=690
+						height=312
+						border=1></p>
+
+<p>We can also use Generate Rule to generate another rule for a second 
+ sentence, with an interesting result in this case:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image107.gif"
+						style="border-width: 1px;
+								border-style: solid;
+								width: 649px;
+								height: 340px;"
+						width=649
+						height=340
+						border=1></p>
+
+<p>Note that the two generated rules differ only by the concept &quot;_have&quot;, 
+ even though the sentences appear to be very different. Also, notice that 
+ we have left in the &quot;real&quot; rule above the generated rule to 
+ show you the final form. The final rule shows that &quot;_have&quot; is 
+ &quot;optional&quot; and that the verb or action for the event is a list 
+ that matches either _buy or _acquire concepts. In fact, this rule matches 
+ three sentences that on the surface appear to be very different, but linguistically, 
+ turn out to be very similar in structure. And the corporate analyzer has 
+ helped uncover the similarity!</p>
+
+<p><span style="font-weight: bold;">Action Concept</span></p>
+
+<p>When the event rules fire, we want to create an action object in the 
+ sentence under the &quot;parse&quot; concept. In the first part of our 
+ @POST area for the above rule, we add the object in the same way we added 
+ our object for company in a previous section. The following code in the 
+ @POST area creates the object in the KB &quot;parse&quot; area:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image112.gif"
+						style="border-style: none;
+								width: 402px;
+								height: 119px;"
+						width=402
+						height=119
+						border=0></p>
+
+<p>You can see the resulting KB structure below after the @POST action 
+ code has executed:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image111.gif"
+						style="border-style: none;
+								width: 231px;
+								height: 362px;"
+						width=231
+						height=362
+						border=0></p>
+
+<p><span style="font-weight: bold;">Conjunctions</span></p>
+
+<p>The second part of the @POST area for the second rule is where we recover 
+ our company and money conjunctions. Again, conjunctions are groupings 
+ of similar items in a list and are normally tedious to deal with in text 
+ analysis systems. Remembering that we gathered up _money and _company 
+ concepts into arrays, we can now easily loop through those arrays to create 
+ the concepts in our &quot;parse&quot; area of the Knowledge Base. Below, 
+ you can see the two &quot;while&quot; loops where we loop through the 
+ arrays for company and money. The functions <span style="font-weight: bold;">addstrval</span> 
+ and <span style="font-weight: bold;">addnumval</span> add multiple values 
+ to a concept's attribute. The first adds a string value and the second 
+ an integer value.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image113.gif"
+						style="border-style: none;
+								width: 509px;
+								height: 328px;"
+						width=509
+						height=328
+						border=0></p>
+
+<p>One important note here is the use of the special NLP++ function <font 
+ style="color: #ff0000;"
+	color=#FF0000><span style="font-weight: bold;">N</span></font>. Notice 
+ that in the first conjunction area for companies, we are using N(&quot;conj 
+ count&quot;,4) and in the second, for money, we are using N(&quot;conj 
+ count&quot;,6). The reason for this is that the _company concept is the 
+ 4th matching element of the rule, and the _money concept is the 6th. We 
+ repeat the rule here for convenience:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image105.gif"
+						style="border-style: none;
+								width: 342px;
+								height: 153px;"
+						width=342
+						height=153
+						border=0></p>
+
+<p><span style="font-weight: bold;">Stock Event</span></p>
+
+<p>The stock event is found as the first rule in the &quot;events&quot; 
+ pass file and keys off the word &quot;stock&quot; and the verb &quot;to 
+ be&quot;. It works just like the &quot;buy&quot; and &quot;acquire&quot; 
+ rule described above, but does not process conjunctions. It creates a 
+ &quot;stock&quot; event in the sentence.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image104.gif"
+						style="border-style: none;
+								width: 372px;
+								height: 322px;"
+						width=372
+						height=322
+						border=0></p>
+
+<p>This rule constructs a slightly different structure in the KB than the 
+ &quot;buy&quot; or &quot;acquire&quot; event. Whereas the second rule 
+ constructs an event concept under its sentence, the first rule constructs 
+ a &quot;stock&quot; concept under the associated company and adds related 
+ information as attributes under the &quot;stock&quot; concept:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image114.gif"
+						style="border-style: none;
+								width: 321px;
+								height: 236px;"
+						width=321
+						height=236
+						border=0></p>
+
+
+<!--(HR)============================================================-->
+<hr style="height: 2px;
+			width: 100%;
+			float: aligncenter;"
+	size=2
+	width=100%
+	align=center>
+
+
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><span style="font-weight: bold;">Next Section:</span> 
+ <a HREF="../MetaEvents/MetaEvents.htm">Meta Events <img src="Bullet7.gif"
+														style="width: 15px;
+	height: 12px;
+	border-style: none;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 0px;"
+														width=15
+														height=12
+														border=0></a> </p>
+
+</body>
+
+</html>

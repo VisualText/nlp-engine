@@ -1,0 +1,439 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Special Rule Elements</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=date content="07 30, 2001 5:12:17 PM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=754>
+<meta name=layout-width content=1027>
+
+
+<!--(Links)=========================================================-->
+
+<link REL="StyleSheet" HREF="../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Special Rule Elements</h1>
+
+<p>NLP++ has a set of predefined rule elements that make writing rules 
+ easier. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->These 
+ <span style="font-weight: bold;">special rule elements</span> match various 
+ types of tokens such as alpha characters, punctuation, wildcards, etc. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->For examples 
+ of these special rule elements, refer to the individual pages included 
+ in the Special Rule Elements section. </p>
+
+<p>Special rule elements are given in the following table.</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				margin-top: 14pt;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 1px;"
+		cellspacing=1
+		width=100%
+		border=1>
+
+<tr>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00
+	width=25%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000><span style="font-weight: bold;">RULE 
+ ELEMENT</span></font></td>
+<td style="background-color: #00ff00;
+			x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	bgcolor=#00FF00
+	width=75%>
+<p style="margin-bottom: 0;"><font style="color: #000000;"
+									color=#000000><span style="font-weight: bold;">DESCRIPTION</span></font></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;"><a NAME=xWILD></a><a href="../_xWILD.htm">_xWILD</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=75%>
+<p style="margin-bottom: 0;">Match anything. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->_xWILD 
+ is an unrestricted wildcard. Key-value pairs may add restrictions on number 
+ of nodes matched and on what is matched. (Note: with a <span style="font-style: italic;">match</span> 
+ or <span style="font-style: italic;">fail</span> list, _xWILD becomes 
+ an &quot;OR&quot; matching function.)</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=xANY></a><a href="../_xANY.htm">_xANY</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=75%>
+<p style="margin-bottom: 0;">Match any single node. (WARNING: <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->A 
+ rule written with _xANY [max=0] will not work. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->_xANY 
+ is not implemented as a wildcard. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Instead, 
+ the near equivalent _xANY _xWILD should be used.)</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=xNIL></a><a href="../_xNIL.htm">_xNIL</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=75%>
+<p style="margin-bottom: 0;">Match nothing. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->_xNIL 
+ designates a suggested element when the rule performs a special action, 
+ such as removing the matched nodes from the parse tree. (_xNIL has no 
+ special action, but serves as documentation for the rule writer.)</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;"><a NAME=xALPHA></a><a href="../_xALPHA.htm">_xALPHA</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=75%>
+<p style="margin-bottom: 0;">Match an alphabetic token, including accented 
+ and other extended ANSI chars.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=xCTRL></a><a href="../_xCTRL.htm">_xCTRL</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=75%>
+<p style="margin-bottom: 0;">Match control and nonalphabetic extended ANSI 
+ characters. (See _xALPHA.)</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;"><a NAME=xNUM></a><a href="../_xNUM.htm">_xNUM</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=75%>
+<p style="margin-bottom: 0;">Match a numeric token.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=xPUNCT></a><a href="../_xPUNCT.htm">_xPUNCT</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=75%>
+<p style="margin-bottom: 0;">Match a punctuation token.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;"><a NAME=xWHITE></a><a href="../_xWHITE.htm">_xWHITE</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=75%>
+<p style="margin-bottom: 0;">Match a whitespace token, <span style="font-style: italic;">including</span> 
+ newline.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=xBLANK></a><a href="../_xBLANK.htm">_xBLANK</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=75%>
+<p style="margin-bottom: 0;">Match a whitespace token, <span style="font-style: italic;">excluding</span> 
+ newline. Equivalent to <span style="font-style: italic; font-weight: bold;">_xWILD 
+ [match=(\ \t)]</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=xCAP></a><a href="../_xCAP.htm">_xCAP</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=75%>
+<p style="margin-bottom: 0;">Match an alphabetic with uppercase first letter.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=25%>
+<p style="font-weight: bold;"><a href="../_xCAPLET.htm">_xCAPLET</a></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=75%>
+<p style="margin-bottom: 0;">Match an alphabetic consisting of a single 
+ capitalized letter. <span style="font-weight: bold; color: #ff0000;">NEW</span></td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;"><a href="../_xLET.htm">_xLET</a></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=75%>
+<p style="margin-bottom: 0;">Match an alphabetic consisting of a single 
+ letter. <span style="font-weight: bold; color: #ff0000;">NEW</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=xEOF></a><a href="../_xEOF.htm">_xEOF</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=75%>
+<p style="margin-bottom: 0;">Match the end of file.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;"><a NAME=xSTART></a><a href="../_xSTART.htm">_xSTART</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=75%>
+<p style="margin-bottom: 0;">Match if at the start of a phrase (or &quot;segment&quot;).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=25%>
+<p style="margin-bottom: 0; font-weight: bold;"><a name=xEND></a><a href="../_xEND.htm">_xEND</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 75%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top
+	width=75%>
+<p style="margin-bottom: 0;">Match if at the end of a phrase (or &quot;segment&quot;).</td></tr>
+</table>
+
+<h2>See Also</h2>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a HREF="Phrase_element_modifiers.htm">Phrase 
+ Element Modifiers</a><a HREF="Suggested_element_modifiers.htm"><br>
+Suggested Element Modifiers</a></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><a href="Rule_syntax.htm">Rule 
+ Syntax</a></p>
+
+<p style="margin-bottom: 0;">&nbsp; </p>
+
+</body>
+
+</html>

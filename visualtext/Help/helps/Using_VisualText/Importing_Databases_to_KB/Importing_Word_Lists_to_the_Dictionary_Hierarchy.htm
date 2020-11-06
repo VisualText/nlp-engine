@@ -1,0 +1,81 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Importing Word Lists to the Dictionary Hierarchy</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=date content="08 8, 2001 12:58:33 PM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=663>
+<meta name=layout-width content=1024>
+
+
+<!--(Links)=========================================================-->
+
+<link rel="StyleSheet" href="../../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Importing Word Lists to the Dictionary Hierarchy</h1>
+
+<p>The Knowledge Base comes with a specialized concept called <span style="font-weight: bold;">dict</span> 
+ (for dictionary) which stores information about words. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--></p>
+
+<p>There are several ways to incorporate a word list into the dict hierarchy. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->One is 
+ to create a simple analyzer to read in and add the list of words to the 
+ hierarchy. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->You 
+ can also add a pass to an existing analyzer project in order to add the 
+ word list. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ pass can look like</p>
+
+<p>@POST<br>
+ L(&quot;text&quot;) = strtolower(N(&quot;$text&quot;));<br>
+ addword(L(&quot;text&quot;));<br>
+@RULES<br>
+_xNIL &lt;-<br>
+ _xALPHA<br>
+ @@<br>&nbsp;</p>
+
+<p>Note that you can copy a knowledge base folder to a minimal analyzer 
+ having the pass above, run the analyzer on your word file, then Save KB. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Then you 
+ can copy the KB folder back to your main analyzer. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->In 
+ this way, knowledge bases can be conveniently moved around and modified 
+ with data sources as they become available. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Some 
+ analyzers can thus be dedicated to building or augmenting knowledge bases. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(Things 
+ are somewhat more complex with a compiled knowledge base. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Mainly, 
+ you want to modify the analyzer preferences to load the interpreted knowledge 
+ base, when making upgrades as described here.)</p>
+
+<p>&nbsp;</p>
+
+<p style="font-weight: normal;">&nbsp;</p>
+
+<p>&nbsp;</p>
+
+</body>
+
+</html>

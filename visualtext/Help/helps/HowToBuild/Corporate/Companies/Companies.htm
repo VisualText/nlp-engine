@@ -1,0 +1,315 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Companies</title>
+
+<!--(Meta)==========================================================-->
+
+<meta HTTP-EQUIV=Content-Type CONTENT="text/html; charset=windows-1252">
+<meta NAME=Template CONTENT="D:\Program Files\Microsoft Office\Office\html.dot">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=3566>
+<meta name=layout-width content=775>
+<meta name=date content="08 27, 2001 2:34:50 PM">
+
+
+
+<!--(Style Sheet)===================================================-->
+
+<style>
+<!--
+
+A:visited {
+	color: #800080;
+}
+
+A:link {
+	color: #0000ff;
+}
+
+-->
+</style>
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<!--(Table)=========================================================-->
+<!--begin!kadov{{--><div align=center><!--}}end!kadov-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 617px;
+				border-spacing: 0px;
+				float: aligncenter;
+				margin-top: 14pt;"
+		cellspacing=0
+		width=617>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 25%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../Money/Money.htm"><img src="Bullet8.gif"
+													style="width: 15px;
+															height: 12px;
+															border-style: none;
+															margin-top: 0px;
+															margin-bottom: 0px;
+															margin-left: 0px;
+															margin-right: 0px;"
+													width=15
+													height=12
+													border=0>&nbsp;Money</a></td>
+<td style="x-cell-content-align: TOP;
+			width: 50%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../Toc/TOC.htm">CORPORATE ANALYZER</a><span style="font-weight: bold;"><font 
+ style="color: #000080;"
+	color=#000080><br>
+Companies</font></span></td>
+<td style="x-cell-content-align: TOP;
+			width: 26%;
+			padding-left: 5px;
+			padding-top: 5px;
+			padding-right: 5px;
+			padding-bottom: 5px;"
+	valign=top>
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><a HREF="../Anaphora/Anaphora.htm">Anaphora <img src="Bullet7.gif"
+	style="width: 15px;
+			height: 12px;
+			border-style: none;
+			margin-top: 0px;
+			margin-bottom: 0px;
+			margin-left: 0px;
+			margin-right: 0px;"
+	width=15
+	height=12
+	border=0></a></td></tr>
+</table>
+<!--begin!kadov{{--></div><!--}}end!kadov-->
+
+<!--(HR)============================================================-->
+<hr style="height: 2px;
+			width: 100%;
+			float: aligncenter;"
+	size=2
+	width=100%
+	align=center>
+
+
+<p><span style="font-weight: bold;">Ana Tab Window: Passes 19 - 21</span></p>
+
+<p>This section describes the analyzer passes &quot;companies&quot;, &quot;companyAttributes&quot;, 
+ and &quot;companyDet&quot;.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image83.gif"
+						style="border-style: none;
+								width: 143px;
+								height: 52px;"
+						width=143
+						height=52
+						border=0></p>
+
+<p><span style="font-weight: bold;">Seeing Green</span></p>
+
+<p>There are currently two colors that appear when highlighting rule matches 
+ in the input text: blue and green. Usually, the text will highlight in 
+ blue, representing newly built nodes. When a rule matches without building 
+ new nodes, the text corresponding to the rule match is highlighted in 
+ green.</p>
+
+<p><span style="font-weight: bold;">Companies Pass</span></p>
+
+<p>Below is the highlighting for the company pass in our corporate analyzer, 
+ pass 19:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image84.gif"
+						style="border-style: none;
+								width: 460px;
+								height: 294px;"
+						width=460
+						height=294
+						border=0></p>
+
+<p>The rule in this pass finds company nodes, but does not alter the parse 
+ tree. Rather, it updates the KB &quot;parse&quot; area's tracking of company 
+ instances found in the text, within each sentence of the text. The &quot;parse&quot; 
+ area was introduced in the initKB pass.</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image88.gif"
+						style="border-style: none;
+								width: 332px;
+								height: 413px;"
+						width=332
+						height=413
+						border=0></p>
+
+<p>Also, the &quot;sentences&quot; pass creates a numbered sentence concept 
+ (e.g., &quot;sentence1&quot;) for every sentence that it detects in the 
+ parse tree, as well as having the &quot;_sentence&quot; node in the parse 
+ tree refer to its corresponding name in the &quot;parse&quot; area. We 
+ can see this using our handy &quot;View&gt;Tree of Selected&quot; and 
+ displaying any portion of the text as seen below. The sentence object 
+ is written as (&quot;name&quot; &quot;sentence1&quot;) (&quot;object&quot; 
+ concept &quot;&lt;name&gt;&quot;):</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image90.gif"
+						style="border-style: none;
+								width: 554px;
+								height: 264px;"
+						width=554
+						height=264
+						border=0></p>
+
+<p>With this in mind, we now want to create &quot;company objects&quot; 
+ and attach them to the sentence object in the &quot;parse&quot; area of 
+ the KB. Notice below the @PATH command. This directs the rule matcher 
+ to search for matches only in &quot;_sentence&quot; nodes. In addition, 
+ we can access the &quot;_sentence&quot; context node from a matched rule 
+ with the special NLP++ <font style="color: #ff0000;"
+								color=#FF0000><span style="font-weight: bold;">X</span></font> 
+ function. X(varname) and X(varname, 3) refer to a variable in the last 
+ and third component of the @PATH, respectively. Below, we create a new 
+ company concept with the <span style="font-weight: bold;">makeconcept</span> 
+ function and attach it to the sentence &quot;object&quot;. We also add 
+ the attributes &quot;type&quot; and &quot;normal&quot; to the new company 
+ concept:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image89.gif"
+						style="border-style: none;
+								width: 386px;
+								height: 217px;"
+						width=386
+						height=217
+						border=0></p>
+
+<p><span style="font-weight: bold;">Green Highlighting</span></p>
+
+<p>Now that we understand this pass better, let us look at why the company 
+ rule displays its matches in green.</p>
+
+<p>In the above rule, note two things: the use of _xNIL and the absence 
+ of tree building functions in the @POST area. </p>
+
+<p>(1) _xNIL is not really a special nonliteral, but it is a convention 
+ that documents when a rule is intended NOT to create a new, or suggested, 
+ node.</p>
+
+<p>(2) In NLP++, an empty @POST region uses the <span style="font-weight: bold;">single</span> 
+ reduction by default. But as soon as any code is placed in a @POST region, 
+ that default is overridden. To get a rule to create a new node, an action 
+ such as <span style="font-weight: bold;">single</span> must be specified 
+ explicitly in that case.</p>
+
+<p>With a non-empty @POST area that lacks a reduce action, this rule fires, 
+ but does not change the structure of the parse tree. Because the rule 
+ fired without modifying the tree, the highlighting appears in green.</p>
+
+<p><span style="font-weight: bold;">CompanyAttributes Pass</span></p>
+
+<p>Remembering the money pass discussion involving noun phrases, we use 
+ the same technique to gather attributes in the text surrounding companies. 
+ Below are the rules that matched company attribute phrases such as &quot;TAI 
+ (Text Analysis Int'l)&quot;, &quot;Founded in 1998, TAI&quot;, &quot;California 
+ company&quot;, etc. We leave it to you to investigate the companyAttributes 
+ pass:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image86.gif"
+						style="border-style: none;
+								width: 474px;
+								height: 353px;"
+						width=474
+						height=353
+						border=0></p>
+
+<p><span style="font-weight: bold;">CompanyDet Pass</span></p>
+
+<p>The companyDet pass stands for company &quot;determiner&quot; pass. 
+ Determiner is a linguistic term for those function words we put in front 
+ of nouns and their adjectives, e.g., &quot;the&quot;, &quot;a&quot;, &quot;this&quot;, 
+ &quot;that&quot;. In keeping with our idea of grabbing the entire company 
+ phrase, we add this pass to simply attach the determiner to the company 
+ phrase we are building in our passes 19-21.</p>
+
+<p>One interesting function you may have noticed in the previous pass (pass 
+ 20) is <span style="font-weight: bold;">pncopyvars</span>. This function 
+ is a handy function that copies all the variables from a matched node 
+ to the newly created node. In this case, we can think of it as passing 
+ all the meaning or semantic information from the _company item in the 
+ rule below, to the new _company tree node being constructed by this rule. 
+ Also notice the presence of the <span style="font-weight: bold;">single</span> 
+ action. This builds the new node for the rule. We also include the partial 
+ parse tree for the phrase &quot;the Los Angeles-based AMRP&quot;. The 
+ tree shows the semantic information passed up from the _company node below 
+ to the _company node above:</p>
+
+<p style="text-align: center;"
+	align=center><img src="Image92.gif"
+						style="border-width: 1px;
+								border-style: solid;
+								width: 507px;
+								height: 463px;"
+						width=507
+						height=463
+						border=1></p>
+
+
+<!--(HR)============================================================-->
+<hr style="height: 2px;
+			width: 100%;
+			float: aligncenter;"
+	size=2
+	width=100%
+	align=center>
+
+
+<p style="text-align: center; margin-bottom: 0;"
+	align=center><span style="font-weight: bold;">Next Section:</span> 
+ <a HREF="../Anaphora/Anaphora.htm">Anaphora <img src="Bullet7.gif"
+													style="width: 15px;
+															height: 12px;
+															border-style: none;
+															margin-top: 0px;
+															margin-bottom: 0px;
+															margin-left: 0px;
+															margin-right: 0px;"
+													width=15
+													height=12
+													border=0></a> </p>
+
+</body>
+
+</html>

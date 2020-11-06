@@ -1,0 +1,132 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>makeconcept</title>
+
+<!--(Meta)==========================================================-->
+
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=741>
+<meta name=layout-width content=916>
+<meta name=date content="01 4, 2002 1:19:38 PM">
+
+
+<!--(Links)=========================================================-->
+
+<link REL=StyleSheet HREF=default.css>
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>makeconcept</h1>
+
+<h2>Purpose</h2>
+
+<p>Make a new concept with name <span style="font-style: italic; font-weight: normal;">conNameStr</span> 
+ and attach it under the parent concept <span style="font-style: italic;
+														font-weight: normal;
+														x-text-underline: off;
+														x-text-overline: off;
+														x-text-line-through: off;
+														/*begin!kadov{{*/ text-decoration: none none none; /*}}end!kadov*/ ">parentCon</span>. 
+ <span style="font-style: italic; font-weight: normal;">positionInt</span> 
+ is an optional argument for specifying the 'birth order' (where the concept 
+ is attached vis a vis siblings) of the new child. <span style="font-style: italic; font-weight: normal;">positionInt</span> 
+ of 0 or absent places the new concept at the end of the list of children.</p>
+
+<h2>Syntax</h2>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">returnCon = makeConcept(parentCon, conNameStr, [positionInt])</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">returnCon - type: con<br>
+parentCon - type: con<br>
+conNameStr - type: str<br>
+positionInt - type: int (optional)</p>
+
+<h2>Returns</h2>
+
+<p>A handle to the newly created concept.</p>
+
+<h2>Remarks</h2>
+
+<p>If a bad concept is passed (e.g., a string, not a handle to a concept), 
+ an NLP++ error is thrown and is written to the output log starting with 
+ &quot;arg must be sem object&quot; then processing aborts. If the second 
+ argument is not a string (e.g., an integer), an NLP++ error is thrown 
+ and written to the output log starting with &quot;arg must be string&quot; 
+ and processing aborts. If the third argument is greater than the number 
+ of existing children plus 1, nothing happens.</p>
+
+<h2>Example</h2>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">G(&quot;myConcept&quot;) = <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">makeconcept</span>(findroot(),&quot;a concept&quot;); </p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">or</p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">G(&quot;myConcept&quot;) = <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">makeconcept</span>(findroot(),&quot;a concept&quot;, 3);</p>
+
+<h2>See Also</h2>
+
+<p><a href="getconcept.htm">getconcept</a>, <a href="conceptname.htm">conceptname</a>, 
+ <a href="Table_of_Knowledge_Base_Functions.htm">Knowledge Base Functions</a></p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><span style="margin-bottom: 0;">&nbsp; </span></p>
+
+</body>
+
+</html>

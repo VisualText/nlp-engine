@@ -1,0 +1,25 @@
+The page cannot be displayed.
+
+The page you are looking for is currently unavailable.
+The Web site might be experiencing technical difficulties,
+or you may need to adjust your browser settings.		
+ Please try the following: Click the  Refresh button, or
+try again later. If you typed the page address in the
+Address bar, make sure that it is spelled correctly.
+To check your connection settings, click the Tools
+menu, and then click Internet Options. On the
+Connections tab, click Settings. The settings should
+match those provided by your local area network
+(LAN) administrator or Internet service provider (ISP). 
+If your Network Administrator has enabled it, Microsoft
+Windows can examine your network and automatically
+discover network connection settings. If you would like
+Windows to try and discover them,  click 
+Detect Network Settings  Some sites require 128-bit
+connection security. Click the Help menu and then
+click About Internet Explorer to determine what 
+strength security you have installed.  If you are trying to
+reach a secure site, make sure your Security settings
+can support it. Click the Tools menu, and then click
+Internet Options. On the Advanced tab, scroll to the
+Security section and check settings for SSL 2.0, SSL

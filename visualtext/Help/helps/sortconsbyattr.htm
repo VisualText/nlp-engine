@@ -1,0 +1,164 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>sortconsbyattr</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=688>
+<meta name=layout-width content=775>
+
+
+<!--(Links)=========================================================-->
+
+<link rel="StyleSheet" href="default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>sortconsbyattr</h1>
+
+<h2>Purpose</h2>
+
+<p>Sort an array of knowledge base concepts by the value of one of their 
+ attributes.</p>
+
+<h2>Syntax</h2>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;">returnArray_con = sortconsbyattr(array_con, attr_str, numeric_num, descending_num)</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">returnArray_con - type: array (multi-valued variable) of sorted KB concepts</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;
+			margin-top: 0pt;
+			margin-bottom: 0pt;"><span style="margin-left: 40px;
+												margin-bottom: 14pt;
+												margin-top: 14pt;
+												line-height: normal;
+												x-text-tab-stops: repeat 1in;
+												white-space: nowrap;
+												font-family: monospace;
+												font-size: 10pt;">array_con <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->- type: array of KB concepts</span></p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">attr_str <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->- type: str. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The attribute name.</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">numeric_num <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->- type: num. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->If 1, attr is numeric. If 0, attr is string.</p>
+
+<p style="margin-left: 40px;
+			line-height: normal;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;
+			margin-top: 0pt;
+			margin-bottom: 0pt;"><span>descending_num <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->- type: num. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->If 1, sort in descending order. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->If 0, ascending.</span></p>
+
+<h2>Returns</h2>
+
+<p>A new array of sorted concepts. </p>
+
+<h2>Remarks</h2>
+
+<p>The given unsorted array is unchanged.</p>
+
+<h2>Example</h2>
+
+<p style="line-height: normal;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;
+			margin-top: 0pt;
+			margin-bottom: 0pt;"># Sort an array of concepts by comparing an attribute named &quot;count&quot;, of numeric type,</p>
+
+<p style="line-height: normal;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;
+			margin-top: 0pt;
+			margin-bottom: 0pt;"># in ascending order.</p>
+
+<p style="line-height: normal;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">G(&quot;sorted concepts&quot;) = <span style="font-weight: bold; x-text-underline: normal; /*begin!kadov{{*/ text-decoration: underline; /*}}end!kadov*/ ">sortconsbyattr</span>(G(&quot;unsorted concepts&quot;),&quot;count&quot;,1,0);</p>
+
+<p style="line-height: normal;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-family: monospace;
+			font-size: 10pt;
+			margin-top: 0pt;
+			margin-bottom: 0pt;">G(&quot;unsorted concepts&quot;) = 0; # Explicitly remove the unsorted array.</p>
+
+<h2>See Also</h2>
+
+<p><a href="Table_of_Knowledge_Base_Functions.htm">Knowledge Base Functions</a></p>
+
+<p style="line-height: normal;
+			margin-bottom: 14pt;
+			margin-top: 14pt;
+			x-text-tab-stops: repeat 1in;
+			white-space: nowrap;
+			font-size: smaller;
+			font-family: monospace;"><span style="margin-bottom: 0;">&nbsp; </span></p>
+
+</body>
+
+</html>

@@ -1,0 +1,309 @@
+###############################################
+# FILE: num.pat
+# SUBJ:	Number lexicon.
+# AUTH:	AM
+# CR:	15/Nov/01 23:21:07
+# NOTE:	06/05/03 AM. Taken from TAIParse.
+###############################################
+
+@PATH _ROOT
+
+@POST
+  S("x-coordinate") = num(N("$text",2));
+  S("y-coordinate") = num(N("$text",4));
+  S("sem") = "location";
+  single();
+@RULES
+_coord [layer=_noun] <-
+	\( [s]
+	_xNUM [s]
+	\, [s]
+	_xNUM [s]
+	\) [s]
+	@@
+
+@CHECK
+  if (N(5) && N("$length",5) != 3)
+    fail();
+  if (N("$length",3) != 3)
+    fail();
+@POST
+  S("val") = num(N("$text",1)) * 1000.0
+    + num(N("$text",3));
+  if (N(5))
+    S("val") = S("val") * 1000.0
+	 + num(N("$text",5));
+  single();
+@RULES
+_num <-
+	_xNUM [s]
+	\, [s]
+	_xNUM [s]
+	\, [s opt]
+	_xNUM [s opt]
+	@@
+
+@RULES
+_num <-
+	_xWILD [s min=4 match=(_xNUM)]
+	@@
+
+_num <-
+	_xNUM [s]
+	\. [s]
+	_xNUM [s]
+	@@
+
+@POST
+  S("num") = num(N("$text",1));
+  # Need float for the larger ones. Need MAXINT test...
+  single();
+@RULES
+_num <-
+	_xNUM [s]
+	th [s]
+	@@
+
+_noun <-
+	_xNUM [s]
+	\' [s]
+	s [s]
+	@@
+
+@POST
+  S("num") = 1;
+  pncopyvars(1);
+  single();
+@RULES
+_num <- one [s] @@
+_num <- first [s] @@
+_num <- 1 [s] st [s] @@
+
+@POST
+  S("num") = 2;
+  pncopyvars(1);
+  single();
+@RULES
+_num <- two [s] @@
+_num <- second [s] @@
+_num <- 2 [s] nd [s] @@
+
+@POST
+  S("num") = 3;
+  pncopyvars(1);
+  single();
+@RULES
+_num <- three [s] @@
+_num <- third [s] @@
+_num <- 3 [s] rd [s] @@
+
+@POST
+  pncopyvars(1);
+  S("num") = 4;
+  single();
+@RULES
+_num <- four [s] @@
+_num <- fourth [s] @@
+
+@POST
+  pncopyvars(1);
+  S("num") = 5;
+  single();
+@RULES
+_num <- five [s] @@
+_num <- fifth [s] @@
+
+@POST
+  pncopyvars(1);
+  S("num") = 6;
+  single();
+@RULES
+_num <- six [s] @@
+_num <- sixth [s] @@
+
+@POST
+  pncopyvars(1);
+  S("num") = 7;
+  single();
+@RULES
+_num <- seven [s] @@
+_num <- seventh [s] @@
+
+@POST
+  pncopyvars(1);
+  S("num") = 8;
+  single();
+@RULES
+_num <- eight [s] @@
+_num <- eighth [s] @@
+
+@POST
+  pncopyvars(1);
+  S("num") = 9;
+  single();
+@RULES
+_num <- nine [s] @@
+_num <- ninth [s] @@
+
+@POST
+  S("num") = 10;
+  single();
+@RULES
+_num <- ten [s] @@
+_num <- tenth [s] @@
+
+@POST
+  S("num") = 11;
+  single();
+@RULES
+_num <- eleven [s] @@
+_num <- eleventh [s] @@
+
+@POST
+  S("num") = 12;
+  single();
+@RULES
+_num <- twelve [s] @@
+_num <- twelfth [s] @@
+
+@POST
+  S("num") = 13;
+  single();
+@RULES
+_num <- thirteen [s] @@
+_num <- thirteenth [s] @@
+
+@POST
+  S("num") = 14;
+  single();
+@RULES
+_num <- fourteen [s] @@
+_num <- fourteenth [s] @@
+
+@POST
+  S("num") = 15;
+  single();
+@RULES
+_num <- fifteen [s] @@
+_num <- fifteenth [s] @@
+
+@POST
+  S("num") = 16;
+  single();
+@RULES
+_num <- sixteen [s] @@
+_num <- sixteenth [s] @@
+
+@POST
+  S("num") = 17;
+  single();
+@RULES
+_num <- seventeen [s] @@
+_num <- seventeenth [s] @@
+
+@POST
+  S("num") = 18;
+  single();
+@RULES
+_num <- eighteen [s] @@
+_num <- eighteenth [s] @@
+
+@POST
+  S("num") = 19;
+  single();
+@RULES
+_num <- nineteen [s] @@
+_num <- nineteenth [s] @@
+
+@POST
+  S("num") = 20;
+  single();
+@RULES
+_num <- twenty [s] @@
+_num <- twentieth [s] @@
+
+@POST
+  S("num") = 30;
+  single();
+@RULES
+_num <- thirty [s] @@
+_num <- thirtieth [s] @@
+
+@POST
+  S("num") = 40;
+  single();
+@RULES
+_num <- forty [s] @@
+_num <- fortieth [s] @@
+
+@POST
+  S("num") = 50;
+  single();
+@RULES
+_num <- fifty [s] @@
+_num <- fiftieth [s] @@
+
+@POST
+  S("num") = 60;
+  single();
+@RULES
+_num <- sixty [s] @@
+_num <- sixtieth [s] @@
+
+@POST
+  S("num") = 70;
+  single();
+@RULES
+_num <- seventy [s] @@
+_num <- seventieth [s] @@
+
+@POST
+  S("num") = 80;
+  single();
+@RULES
+_num <- eighty [s] @@
+_num <- eightieth [s] @@
+
+@POST
+  S("num") = 90;
+  single();
+@RULES
+_num <- ninety [s] @@
+_num <- ninetieth [s] @@
+
+@POST
+  S("num") = 100;
+  single();
+@RULES
+_num <- hundred [s] @@
+_num <- hundredth [s] @@
+
+@POST
+  S("num") = 1000;
+  single();
+@RULES
+_num <- thousand [s] @@
+_num <- thousandth [s] @@
+
+@POST
+  S("num") = 1000000;
+  single();
+@RULES
+_num <- million [s] @@
+_num <- millionth [s] @@
+
+@POST
+  S("num") = 1000000000;
+  single();
+@RULES
+_num <- billion [s] @@
+_num <- billionth [s] @@
+
+@POST
+  S("num") = 1000000000000.0;
+  single();
+@RULES
+_num <- trillion [s] @@
+_num <- trillionth [s] @@
+
+

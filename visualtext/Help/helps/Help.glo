@@ -1,0 +1,344 @@
+NAME=.ana file
+Analyzer project definition file. Used by the VisualText GUI to load an analyzer.
+NAME=.pat file
+A file associated with a user pass in the analyzer sequence which holds NLP++ rules and code.
+NAME=action
+An NLP++ function specialized for a particular region in a pass file. For example, the single action only works in the @POST region, after a rule has matched.
+NAME=action region
+A region related to rule matching. Includes the @PRE, @CHECK, and @POST regions.
+NAME=algorithm
+In general programming, a method or procedure for accomplishing a task. In VisualText, sometimes short for a pass algorithm.
+NAME=Ana Tab
+The part of the VisualText interface in which you control the text analyzer sequence, passes and pass files.
+NAME=analyzer
+A text analyzer, i.e., a program that takes text as input and processes it in some way. Text analyzers typically transform, critique, or extract information from text.
+NAME=analyzer project
+The full set of folders and files associated with a text analyzer. Includes files that define the analyzer, input files, and other data files used by the analyzer.
+NAME=analyzer project file
+The file that is used by the VisualText GUI to load an analyzer. Also called a .ana file.
+NAME=ASCII Table
+A table that displays the decimal and hexadecimal numbers and their corresponding ASCII characters.
+NAME=attr
+(1) Abbreviation for attribute. (2) a rule element modifier.
+NAME=attribute
+A knowledge base object attached to a concept and representing a property of the concept. Consists of a key (or name) and one or more values. A concept may have multiple attributes.
+NAME=Attribute Editor
+A VisualText tool that allows you to change, add and edit the attributes and/or values of a concept (or node) in the knowledge base.
+NAME=backup aware
+Refers to rule elements that don't overrun an adjacent rule element. Only an _xWILD with no lists (match, fail, except) is "backup aware".
+NAME=Bare
+Refers to the absolute basic or minimal analyzer. The Bare template comes with the system passes tokenize and lines.
+NAME=batch
+Refers to running a group of input files non-interactively.
+NAME=Bison
+Gnu freeware for writing grammars with associated code. Similar to YACC (Yet Another Compiler Compiler).
+NAME=blank space
+A single whitespace character.
+NAME=bleeding
+When a matched rule keeps another rule from matching.
+NAME=C file
+A C Programming Language code file.
+NAME=CG
+Abbreviation for Conceptual Grammar.
+NAME=Character Viewer
+a VisualText tool that shows a count of characters in a line of text and the ASCII characters for each line of text.
+NAME=CHECK Action
+A function restricted to operate in the @CHECK region, i.e., after a rule's right-hand-side phrase has matched.
+NAME=CHECK Region
+An action region of a pass file. NLP++ code in this region apply after the matcher has succeeded in matching a rule.
+NAME=child concept
+A concept that is the child of another concept.
+NAME=CODE Action
+A function that operates in the @CODE region. Some code actions are retained because they are still useful, but they may be overhauled in future VisualText releases.
+NAME=CODE Region
+The region delimited by @CODE and optionally @@CODE. Executes NLP++ code prior to any rule matching in the pass file.
+NAME=Code Zone
+The part of a pass file where NLP++ code that is independent of rule matching is written.
+NAME=command file
+A batch file containing commands that edit or add to the knowledge base.
+NAME=concept
+A knowledge base object. The VisualText knowledge base consists of a hierarchy of concepts.
+NAME=Concept Oriented Programming
+A method of programming that deals with the concepts underlying a task.
+NAME=concept tree
+A parse tree containing only nodes that have been built in the selected analyzer pass.
+NAME=Conceptual Grammar
+A knowledge representation framework consisting of concepts, attributes, and phrases combined into knowledge hierarchies and graphs
+NAME=context node
+
+NAME=Context Zone
+The part of a pass file where methods for selecting nodes of the parse tree are specified.
+NAME=COP
+Abbreviation for Concept Oriented Programming
+NAME=DECL Region
+Region for user-defined NLP++ functions; delimited by @DECL and (optionally) @@DECL.
+NAME=dictionary concept
+A concept in the dict hierarchy of the knowledge base. Also called word concept.
+NAME=Dictionary Editor
+A VisualText tool that allows you to make, add and edit a dictionary database. [Currently unavailable.]
+NAME=dissolve
+Remove a top-level node and more (or splice) its children to the top-level.
+NAME=element action
+An element modifier that specifies an action to be performed when the current rule has matched. For example, "rename=noun" specifies that the node matching the current element is to be renamed "noun."
+NAME=element modifier
+A keyword or keyword and value pair that affects the matching or follow-on actions of a rule element. For example, "plus" specifies that one or more nodes must match the current element.
+NAME=escape
+(1) to prefix a character with an escape character. (2) a character used as an escape character.
+NAME=escape character
+A character that indicates the succeeding characters should be taken literally rather than interpreted as a special character
+NAME=except list
+A list of elements that are exceptions to a match or fail list. For example, _xWILD [fail=( A B C ) except=( D )] will fail on A, B, or C except in the case that it also matches D. For example, could be used to fail on nouns except for humanNouns.
+NAME=excise
+Remove a sequence of nodes from a parse tree.
+NAME=fail list
+A list of elements that will cause a match to fail. For example, _xWILD [fail=( A B C )] will match nodes until it encounters one named A, B, or C.
+NAME=feeding
+When a rule match causes another rule to succeed.
+NAME=file path
+
+NAME=folder concept
+A concept to help organize related sets of samples in the Gram Tab. folder concepts contain other folder concepts and/or rule concepts.
+NAME=Gram hierarchy
+The hierarchy of concepts visible in the Gram Tab, and used to manage concepts for stubs, folders, rules, labels, and samples.
+NAME=Gram Tab
+The part of the VisualText interface in which you manage samples taken from input texts.
+NAME=Grammar Region
+The part of the pass file where rules and actions are written.
+NAME=Grammar Zone
+The part of a pass file where the main rules of the pass file are written.
+NAME=Hex Viewer
+Views text files as hexadecimal characters.
+NAME=IDE
+Abbreviation for integrated development environment. Refers to a user interface (GUI) program with tools that work in concert to support developers.
+NAME=index concept
+
+NAME=integrated development environment
+A user interface (GUI) program with tools that work in concert to support developers.
+NAME=intermediate parse tree
+A parse tree as modified by a selected pass in the Ana Tab.
+NAME=internal node
+A node that is not a leaf of the parse tree. See nonterminal node.
+NAME=KB
+Abbreviation for knowledge base
+NAME=KB Editor
+A VisualText tool that allows you to edit the knowledge base.
+NAME=KB.DLL
+
+NAME=KBMS
+Abbreviation for knowledge base management system
+NAME=key-value pair
+
+NAME=keyword density
+
+NAME=knowledge base
+(1) A hierarchical database. (2) A repository for concepts, relationships, and other knowledge, typically organized in a meaningful way.
+NAME=knowledge base child concept
+
+NAME=knowledge base concept
+A basic unit of knowledge in the Knowledge Base.
+NAME=knowledge base management system
+A software system for managing a knowledge base. Analogous to a database management system.
+NAME=knowledge base node
+A member of a list of nodes called a phrase. Each concept in the knowledge base may own one phrase. A node is very similar to a concept, except that it is not attached to the hierarchy. A node is often treated as an instance of a concept in the hierarchy.
+NAME=label concept
+A concept in the Gram Tab hierarchy that holds subsamples of larger samples. Label concepts can occur only under rule concepts. For example, a label concept called "AreaCode" might be placed under a rule concept named "PhoneNumer".
+NAME=leaf
+Same as leaf node.
+NAME=leaf node
+A token node of the parse tree. A leaf token has no children. Also called a terminal node.
+NAME=leaf token
+Same as leaf node.
+NAME=lhs
+(1) The lefthand side element of a rule, also called the suggested element. (2) The suggested node built for the lefthand side of a rule.
+NAME=library pass
+A prebuilt pass that may be copied into the current analyzer sequence.
+NAME=list node
+A parse tree node that collects a list of related nodes.
+NAME=literal
+A node or token that represents a literal string in the input text.
+NAME=match list
+A list of elements that must be matched. For example, _xWILD [match=( A B C )] will match nodes as long as they are named A, B, or C.
+NAME=Minipass Zone
+The part of a pass file where nested minipasses can be specified.
+NAME=MULTI Selector
+A selector used in the SELECT Region of a pass file which specifies a list of node names for the rule matcher. The whole subtree under the specified node is searched.
+NAME=natural language engineering
+Principled method for constructing NLP systems.
+NAME=NLE
+Abbreviation for natural language engineering
+NAME=NLP
+Abbreviation for natural language processing, a subfield of Artificial Intelligence concerned with human languages.
+NAME=NLP++
+Proprietary programming language of Text Analysis International. A general programming language with specializations for natural language processing.
+NAME=node
+(1) A parse tree node. (2) A knowledge base node.
+NAME=node variable
+See parse tree node variable
+NAME=NODES Selector
+A selector used in the SELECT Region of a pass file which specifies a list of node names for the rule matcher. The phrase immediately under the specified node is searched.
+NAME=nonliteral
+A parse tree node that may represent more than one token. The name of a nonliteral always starts with an underscore character.
+NAME=nonterminal node
+A node that dominates another node in a parse tree. That is, it has children.
+NAME=noop
+A reduce action in the @POST region that does nothing. Used to override the default action of an empty @POST region. (When a @POST region is non-empty, noop becomes the default action.)
+NAME=offset
+A number that indicates character position of a node in text.
+NAME=ontology
+A hierarchy of concepts, typically used to categorize the world.
+NAME=operator
+Part of an NLP++ expression that performs a mathematical, logical, or other function. For example, "+" is an operator used to add two numbers or catenate two strings.
+NAME=opt
+Element modifier denoting an optional element.
+NAME=optional
+Element modifier denoting an optional rule element.
+NAME=output action
+An action that causes output to be written to a file. For example, ndump writes all the variables and values for a node out to a file.
+NAME=parse
+(1) To ascribe structure to a linear sequence of words or symbols according to the rules of a grammar. (2) To create a parse tree representing a text. (3) A parse tree or interpretation of a text.
+NAME=parse tree
+A data structure that tracks patterns matched in an input text.
+NAME=parse tree node
+A unit or data structure representing a piece of text or an idea that the text represents. Nodes are combined to form a parse tree.
+NAME=parse tree node variable
+
+NAME=parser
+A program that takes a text as input and produces a parse tree as output.
+NAME=pass
+A discrete step in the text analyzer with its own pass algorithm.
+NAME=pass algorithm
+The method to be executed for a pass in the analyzer. Examples are: tokenize, pattern, and recursive algorithms.
+NAME=pass file
+A file of NLP++ code and rules associated with a pass of the text analyzer. Pattern and Recursive pass algorithms make use of pass files.
+NAME=pat algorithm
+See Pattern algorithm.
+NAME=PATH Selector
+A selector used in the SELECT Region of a pass file which specifies a path of node names for the rule matcher.
+NAME=Pattern algorithm
+A pass algorithm that executes the rules in a pass file by traversing the parse tree once.
+NAME=PNODE
+Name for the parse tree node data type.
+NAME=POST Action
+An action that occurs in the @POST region. For example, single tells the rule matcher to build a new node for a matched rule.
+NAME=POST Region
+An action region of a pass file. NLP++ code in this region apply after a rule match has been accepted.
+NAME=PRE Action
+Action that occurs in the @PRE region. Further constrains the matching of a rule element.
+NAME=PRE Region
+An action region of a pass file. Actions in this region represent additional conditions on the matching of individual rule elements.
+NAME=print action
+An action that prints to a file.
+NAME=rec algorithm
+See Recursive algorithm.
+NAME=recurse region
+A named region that is marked by an initial @RECURSE and specifies a minipass within a pass file. The minipass is invoked by a recurse element modifier in a rule element, e.g., in the main Grammar Zone.
+NAME=recursion
+An algorithm whereby the same action is taken repeatedly until some condition or goal is achieved.
+NAME=recursive algorithm
+A pass algorithm that executes the rules in a pass file by traversing the parse tree multiple times, till no rules match.
+NAME=recursive grammar
+A set of rules that is executed repeatedly, till no rules match.
+NAME=recursive pass
+See Recursive algorithm.
+NAME=reduce
+(1) Place a sequence of one or more nodes under a new node. Often refers to placing the nodes that match the righthand side of a rule under a new node named with the lefthand side of a rule. (2) A reduce action.
+NAME=reduce action
+An action in the @POST region that builds a new node for a matched list of nodes.
+NAME=reduction
+A reduce action.
+NAME=rewrite grammar
+Same as recursive grammar.
+NAME=RFA
+Rule File Analyzer. A VisualText analyzer that reads the pass files for a text analyzer. A bootstrapping parser that reads a simplified dialect of NLP++.
+NAME=RFB
+Similar to the RFA, but parses the full NLP++ language.
+NAME=rhs
+(1) The righthand side phrase of a rule. (2) The nodes that matched the righthand side.
+NAME=root
+The top-level node of the parse tree. A node with no parent.
+NAME=RUG
+Abbreviation for the automated Rule Generation machinery.
+NAME=rule
+An NLP++ construct consisting of a phrase of elements and a suggested element. Actions for a matched rule are governed by preceding @PRE, @CHECK, and @POST regions, if present.
+NAME=rule action
+A specialized NLP++ function that knows about particular contexts.
+NAME=rule concept
+A Gram hierarchy concept that owns a set of related samples, from which the rule generator will generalize, merge, and generate rules. A rule concept may have label concepts under it and may own a set of samples.
+NAME=rule element
+A literal or nonliteral unit in the phrase of a rule.
+NAME=rule file
+Synonym for pass file.
+NAME=rule matcher
+
+NAME=Rules File Analyzer
+See RFA and RFB.
+NAME=rules region
+A region delimited by @RULES and optionally @@RULES, for holding NLP++ rules.
+NAME=sample
+A piece of a larger text, representing a discrete idea. For example, a "310-555-1212" is a sample telephone number.
+NAME=sample concept
+A concept that stores a single sample or subsample in the Gram Tab. Sample concepts are placed under rule concepts and label concepts.
+NAME=sample hierarchy
+Same as Gram hierarchy.
+NAME=select region
+A region optionally delimited by @SELECT and @@SELECT that specifies how context nodes are to be selected in the parse tree.
+NAME=selector
+A marker such as @NODES which specifies which nodes will be subjected to rule matching.
+NAME=single-tier reduction
+The standard reduce action in the @POST region. Specifies that a new node is to be built, with the matched phrase of nodes to be placed underneath the new node.
+NAME=singlet
+A phrase element modifier.
+NAME=singlet chain
+
+NAME=spider
+A program that automatically searches the World Wide Web and retrieves documents and links to those documents.
+NAME=spidering
+The process of searching the World Wide Web and automatically retrieving documents and links to those documents.
+NAME=string
+
+NAME=structural description
+Same as parse tree.
+NAME=stub
+A placeholder for a sequence of passes that will be generated automatically.
+NAME=stub concept
+A Gram Tab concept that is associated with a region of automatically generated passes in the analyzer sequence.
+NAME=stub region
+A sequence of automatically generated passes within the overall analyzer sequence.
+NAME=subhierarchy
+
+NAME=subtree
+
+NAME=suggested element
+A node to which matched elements of a rule are reduced.
+NAME=suggested node
+
+NAME=system attribute
+An attribute assigned by the system to a concept in the knowledge base. System attributes include algo, type, active, passnum etc. Altering system attributes of a concept is not recommended.
+NAME=system pass
+A pass in the analyzer sequence that is defined by the system not the user. The tokenize pass is an example of a system pass.
+NAME=template
+A starter or skeletal analyzer that can be copied and modified.
+NAME=terminal node
+A node that does not dominate another node in a parse tree. Also called a leaf node.
+NAME=Text Tab
+the part of the VisualText interface where you manage input and output files.
+NAME=token
+A node representing a literal text string.
+NAME=tokenize
+(1) Pass algorithm for converting an input text to an initial parse tree. (2) The default system and first pass in an analyzer sequence.
+NAME=top-level node
+A node being traversed by the rule matcher.
+NAME=trigger
+An element modifier that causes a rule to be matched by first matching the associated rule element.
+NAME=uninterned
+
+NAME=variable
+See node variable.
+NAME=variable action
+An action that operates on a node variable.
+NAME=white space
+also whitespace; any of space, tab, carriage return or newline
+NAME=word concept
+See dictionary concept.
+NAME=YACC
+Yet Another Compiler Compiler. See Bison.

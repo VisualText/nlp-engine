@@ -1,0 +1,914 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>Attribute Editor</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=date content="06 21, 2002 3:15:04 PM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=2585>
+<meta name=layout-width content=1024>
+
+
+<!--(Links)=========================================================-->
+
+<link REL="StyleSheet" HREF="../../default.css">
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<h1>Attribute Editor</h1>
+
+<h2>Function</h2>
+
+<p>The Attribute Editor allows the user to edit the attributes of a concept 
+ or node in the Knowledge Base. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->An 
+ attribute consists of a <span style="font-weight: bold;">key</span> (or 
+ <span style="font-weight: bold;">slot</span>, or less accurately, a <span 
+ style="font-weight: bold;">name</span>) and zero or more <span style="font-weight: bold;">values</span>. 
+ A value can be a string, an integer, or another concept. Each attribute 
+ can have multiple values, each with a distinct type.</p>
+
+<p>Version 1.4 of VisualText introduces enhancements to the Attribute Editor. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Concepts 
+ can now be viewed and edited, as values of attributes. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Navigation 
+ of the knowledge base from within the Attribute Editor has been made more 
+ convenient. </p>
+
+<h2><a name=accessing></a>Accessing</h2>
+
+<p>The Attribute Editor can be launched from several places within VisualText™. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ easiest is to use the Attribute Editor button <img src="../../Toolbar_buttons/attr_edit_button.gif"
+													x-maintain-ratio=TRUE
+													style="border-style: none;
+															border: none;
+															width: 24px;
+															height: 23px;
+															float: none;"
+													width=24
+													height=23
+													border=0> on the Workspace 
+ Toolbar.</p>
+
+<p>Selecting Attributes from the <a href="../../Gram_Tab_Popup.htm">Gram 
+ Tab Popup Menu</a>, the <a href="../../Ana_Tab_Popup.htm">Ana Tab Popup 
+ Menu</a>, the <a href="KB_Editor.htm#phrase_tool_dialog">Phrase Tool</a>, 
+ and the <a href="../../Text_Tab_Popup.htm">Text Tab Popup Menu</a> will 
+ launch the Attribute Editor. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->You 
+ can also access the Attribute Editor from the <a href="../Main_KB_Menu.htm">KB 
+ Menu</a>.</p>
+
+<p><img src="attr_editor_020619.gif"
+		x-maintain-ratio=TRUE
+		style="border-style: none;
+				width: 568px;
+				height: 514px;
+				border-left-style: none;
+				border-top-style: none;
+				border-right-style: none;
+				border-bottom-style: none;
+				float: none;"
+		width=568
+		height=514
+		border=0></p>
+
+<h2><a name=function></a>Attribute Editor Description</h2>
+
+<p>The Attribute Editor is used to select attributes and/or values for 
+ the selected concept or node. Here is a list of the options in the Attribute 
+ Editor.</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 0px;
+				margin-top: 14pt;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=100%
+		border=1>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Item</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Description</span></td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0; font-weight: bold;">(combo box)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p style="margin-bottom: 0;">The combo box determines the data type of 
+ the attribute value to be added or edited. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Selecting 
+ an existing attribute and value will automatically update the combo box 
+ to the type of the value already present. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Three 
+ knowledge base data types are currently supported: string (A), concept 
+ (C), and numeric (N).</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Add Attribute</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p style="margin-bottom: 0;">Create a new line in the display in which 
+ you can enter the name for the attribute. You must enter the first value 
+ for the attribute or it defaults to &quot;New Value&quot;.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Add Value</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p style="margin-bottom: 0;">Create a new line which represents an additional 
+ value for the selected attribute.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Delete</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p style="margin-bottom: 0;">If there is only one value, delete the value 
+ and attribute pair. If there are multiple values, delete the value on 
+ the selected line.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0; font-weight: bold;">no attrs</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p style="margin-bottom: 0;">Move to a concept having no attributes.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0; font-weight: bold;">Browse</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p style="margin-bottom: 0;">(1) If a concept-valued attribute line is 
+ selected, checking the Browse box highlights the concept within the KB 
+ Editor window. (2) <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->If 
+ the Browse button is checked, then clicking on a value field and then 
+ on a concept in the KB Editor selects that concept as the new value of 
+ the attribute. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->This 
+ enables convenient selection of a concept as the value of an attribute.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0; font-weight: bold;"><a href="#quick_edit_table">Quick 
+ Edit</a> &gt;&gt;</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p style="margin-bottom: 0;">Expand the Attribute Editor to include the 
+ Quick Edit Table. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Commonly 
+ used attribute-value pairs can be listed in the Quick Edit Table to make 
+ adding and/or deleting attributes and attribute-value pairs easier. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->When 
+ Quick Edit Table is open, selecting button closes the Quick Edit Table 
+ display. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(See 
+ below.)</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0;"><img src="../../Tutorials/tutorial4/next_previous_text_tut4.gif"
+									x-maintain-ratio=TRUE
+									style="border-style: none;
+											border: none;
+											width: 46px;
+											height: 23px;
+											float: none;"
+									width=46
+									height=23
+									border=0></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p style="margin-bottom: 0;">Select previous or next concept. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--></td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0;">(up down arrows)</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p>Select the parent or child concept.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0;"><img src="../../Toolbar_buttons/kb_editor_button.gif"
+									x-maintain-ratio=TRUE
+									style="border-style: none;
+											border: none;
+											width: 25px;
+											height: 26px;
+											float: none;"
+									width=25
+									height=26
+									border=0></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p>Launch the <a href="KB_Editor.htm">KB Editor</a> if it is not already 
+ open.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0;"><img src="dict_w_panel.gif"
+									x-maintain-ratio=TRUE
+									style="border-style: none;
+											border: none;
+											width: 141px;
+											height: 26px;
+											float: none;"
+									width=141
+									height=26
+									border=0></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p style="margin-bottom: 0;">Search an online dictionary for the concept 
+ currently being viewed in the Attribute Editor. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ panel next to the dictionary icon can be used to specify which online 
+ dictionary to access. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(For 
+ more information on setting dictionary access preferences, see the <a 
+ href="../Main_File_Menu.htm#dictionaryLookup_pref">Dictionary Lookup</a> 
+ preferences tab which can be accessed from the File Menu under Preferences.)</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0;"><img src="../../Toolbar_buttons/attr_edit_input.gif"
+									x-maintain-ratio=TRUE
+									style="border-style: none;
+											border: none;
+											width: 122px;
+											height: 26px;
+											float: none;"
+									width=122
+									height=26
+									border=0></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p style="margin-bottom: 0;">Search input panel. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Searches 
+ for word in the dict hierarchy. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->If 
+ item exists in the dict hierarchy, the attributes for word are displayed. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The search 
+ input panel locates <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->words 
+ in the concept:sys:dict hierarchy only. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}--></td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0; font-weight: bold;">Add</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p>Add a word concept to the dict hierarchy.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0;"><img src="../../Buttons/attribEditorDel.gif"
+									x-maintain-ratio=TRUE
+									style="border-style: none;
+											border: none;
+											width: 21px;
+											height: 19px;
+											float: none;"
+									width=21
+									height=19
+									border=0></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p>Delete a word concept from the dict hierarchy.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0;"><img src="../../Toolbar_buttons/attr_edit_search.gif"
+									x-maintain-ratio=TRUE
+									style="border-style: none;
+											border: none;
+											width: 61px;
+											height: 25px;
+											float: none;"
+									width=61
+									height=25
+									border=0></td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p>Search button. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Start 
+ search for item entered in input panel.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Done</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p style="margin-bottom: 0;">Close the Attribute Editor.</td></tr>
+</table>
+
+<p>An attribute may have multiple values. For example, the attribute named 
+ &quot;algo&quot; may have values &quot;pat&quot;, &quot;hello there&quot;, 
+ and &quot;170224929.&quot; By selecting a line and clicking Add Value, 
+ successive values can be added. One can even mix the types of values (numeric, 
+ &quot;N&quot;, and string, &quot;A&quot;) arbitrarily.</p>
+
+<p>The Attribute Editor is now smart enough to be able to treat &quot;123&quot; 
+ as both a string or numeric type, depending on the type chosen in the 
+ combo box. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Similarly, 
+ &quot;concept:gram&quot; may represent a concept in the KB or a string, 
+ depending on the type chosen in the combo box.</p>
+
+<p>Concept naming in the attribute editor looks like <span style="font-style: italic;">concept:child:grandchild:greatgrandchild</span> 
+ and so on. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ concept named &quot;concept&quot; specifies the root of the KB hierarchy, 
+ and colons (':') separate each successive child.</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 90%;
+				border-spacing: 0px;
+				margin-top: 14pt;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=90%>
+
+<tr>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 100%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=100%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Notes</span>: 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(1) The 
+ &quot;name&quot; of an attribute is actually a concept in the KB, not 
+ merely a string. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->(2) 
+ There is currently no way to specify a colon as part of the name of a 
+ concept, in the attribute editor.</td></tr>
+</table>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 90%;
+				border-spacing: 0px;
+				margin-top: 14pt;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=90%>
+
+<tr>
+<td style="background-color: #ffffd5;
+			x-cell-content-align: TOP;
+			width: 100%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	bgcolor=#FFFFD5
+	width=100%>
+<p style="margin-bottom: 0; color: #008080;"><span style="font-weight: bold;">WARNING</span>: 
+ Editing the <span style="font-weight: bold;">gram</span> or <span style="font-weight: bold;">sys</span> 
+ hierarchies manually can easily corrupt the KB, so please make a backup 
+ copy of your analyzer project before experimenting. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The 
+ Gram Tab is the safest way to edit the Gram hierarchy.</td></tr>
+</table>
+
+<h2><a name=quick_edit_table></a>Quick Edit Table</h2>
+
+<p>The Quick Edit Table is used to store commonly used attribute-value 
+ pairs. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Attributes 
+ can be added to the selected concept by double-clicking the attribute-value 
+ line in the Quick Edit Table or by selecting the line in the table and 
+ clicking on the <span style="font-weight: bold;">&lt;&lt; KB Edit</span> 
+ button. <!--kadov_tag{{<spaces>}}-->&nbsp;<span style="font-weight: bold;"><!--kadov_tag{{</spaces>}}-->Add</span> 
+ in the Action column indicates the attribute-value pair will be added 
+ to the concept. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Once 
+ a concept is added, the Action column changes to Del (for delete). <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Double-clicking 
+ on a Del line will delete the attribute-value pair from the concept.</p>
+
+<p><img src="attrib_edit0724_table.gif"
+		x-maintain-ratio=TRUE
+		style="border-style: none;
+				border: none;
+				width: 309px;
+				height: 336px;
+				float: none;"
+		width=309
+		height=336
+		border=0></p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		wrapperparagraphselector=P
+		style="width: 100%;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-spacing: 0px;
+				margin-top: 14pt;
+				x-border-left: 1px table-solid;
+				x-border-top: 1px table-solid;
+				x-border-right: 1px table-solid;
+				x-border-bottom: 1px table-solid;
+				border-collapse: separate;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=100%
+		border=1>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Item</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Description</span></td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Attribute</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p style="margin-bottom: 0;">Input box to add attribute to Quick Edit Table. 
+ <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Added attribute 
+ appears in the <span style="font-weight: bold;">Attribute</span> column.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Value</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p style="margin-bottom: 0;">Input box to add value for given attribute 
+ to Quick Edit Table. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Added 
+ value appears in the <span style="font-weight: bold;">Value</span> column.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">Add</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p style="margin-bottom: 0;">Adds attribute-value pair to the Quick Edit 
+ Table.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="font-weight: bold;">Remove</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p style="margin-bottom: 0;">Removes selected attribute-value pair from 
+ the Quick Edit Table. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->To 
+ remove multiple attribute-value pairs at the same time, hold down the 
+ shift key and select the attribute-value lines in the Quick Edit Table 
+ you want to delete.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0; font-weight: bold;">Update</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p style="margin-bottom: 0;">Updates changes made to attribute-value pair 
+ in the Quick Edit Table.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0; font-weight: bold;">Help</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p style="margin-bottom: 0;">Launches instructions on using the Quick Edit 
+ Table.</td></tr>
+
+<tr>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 29%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=29%>
+<p style="margin-bottom: 0; font-weight: bold;">&lt;&lt; KB Edit</td>
+<td colspan=1
+	rowspan=1
+	style="x-cell-content-align: TOP;
+			width: 71%;
+			padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"
+	valign=top
+	width=71%>
+<p>Assigns selected attribute-value pair to the selected concept. To assign 
+ multiple attribute-value pairs at the same time, hold down the shift key 
+ and select the appropriate attribute-value lines in the Quick Edit Table.</td></tr>
+</table>
+
+<p>&nbsp;</p>
+
+</body>
+
+</html>

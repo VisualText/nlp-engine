@@ -1,0 +1,6393 @@
+ind attr
+"concept"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"cg_CONCEPT"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "x" "xu" "xwhite"
+pst
+"true"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "c" "co" "constrain"
+pst
+"true"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "c" "cl" "closed"
+pst
+"false"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "l" "li" "lit"
+pst
+"false"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "s" "sp" "split"
+pst
+"false"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "g" "ge" "gen"
+pst
+"false"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "l" "lo" "locked"
+pst
+"false"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "d" "di" "dirty"
+pst
+"true"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "q" "qu" "quicksem"
+pst
+"false"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "c" "co" "counter"
+pst
+"false"
+end ind
+
+
+ind attr
+"concept" "gram"
+0
+"concept" "sys" "dict" "a" "n" "no" "notrig"
+pst
+"false"
+end ind
+
+
+ind attr
+"concept" "sys"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"con_SYS"
+end ind
+
+
+ind attr
+"concept" "sys" "attrs"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"sys_ATTRS"
+end ind
+
+
+ind attr
+"concept" "sys" "attrs" "proxy"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"attrs_PROXY"
+end ind
+
+
+ind attr
+"concept" "sys" "attrs" "proxy" "atom"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"cg_ATOM"
+end ind
+
+
+ind attr
+"concept" "sys" "attrs" "pproxy"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"attrs_PPROXY"
+end ind
+
+
+ind attr
+"concept" "sys" "attrs" "pproxy" "phrase"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"cg_PHRASE"
+end ind
+
+
+ind attr
+"concept" "sys" "attrs" "common"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"attrs_COMMON"
+end ind
+
+
+ind attr
+"concept" "sys" "attrs" "common" "var"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"cg_VAR"
+end ind
+
+
+ind attr
+"concept" "sys" "nlp"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"sys_NLP"
+end ind
+
+
+ind attr
+"concept" "sys" "nlp" "lex" "slot" "cases"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"id_CASES"
+end ind
+
+
+ind attr
+"concept" "sys" "mean" "slot" "case"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"id_mslot_CASE"
+end ind
+
+
+ind attr
+"concept" "sys" "mean" "slot" "case" "cap"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"id_CAP"
+end ind
+
+
+ind attr
+"concept" "sys" "mean" "slot" "case" "allcap"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"id_ALLCAP"
+end ind
+
+
+ind attr
+"concept" "sys" "mean" "slot" "case" "mixed"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"id_MIXED"
+end ind
+
+
+ind attr
+"concept" "sys" "mean" "slot" "mixed"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"id_mslot_MIXED"
+end ind
+
+
+ind attr
+"concept" "sys" "dict"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"sys_DICT"
+end ind
+
+
+ind attr
+"concept" "sys" "dict" "a"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"dict_ALPHA"
+end ind
+
+
+ind attr
+"concept" "sys" "dict" "unknown"
+0
+"concept" "sys" "attrs" "common" "var"
+psym
+"dict_UNKNOWN"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "tokenize"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"tokenize"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "tokenize"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"nil"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "tokenize"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"Gen:   Convert input to token list."
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "tokenize"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "tokenize"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "tokenize"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+2
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "SetupVariables"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "SetupVariables"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"SetupVariables"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "SetupVariables"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "SetupVariables"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "SetupVariables"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+2
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "SetupVariables"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "SetupKB"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "SetupKB"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"SetupKB"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "SetupKB"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "SetupKB"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "SetupKB"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+3
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "SetupKB"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "EmptyItems"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "EmptyItems"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"EmptyItems"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "EmptyItems"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "EmptyItems"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "EmptyItems"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "EmptyItems"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "Items"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "Items"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"Items"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "Items"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "Items"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "Items"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+5
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "Items"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "Fields"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "Fields"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"Fields"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "Fields"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "Fields"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "Fields"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+6
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "Fields"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "FieldItems"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "FieldItems"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"FieldItems"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "FieldItems"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "FieldItems"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "FieldItems"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+7
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "FieldItems"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "Records"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "Records"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"Records"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "Records"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "Records"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "Records"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+8
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "Records"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "ItemsToKB"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "ItemsToKB"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"ItemsToKB"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "ItemsToKB"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "ItemsToKB"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "ItemsToKB"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+9
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "ItemsToKB"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "FillRemainingItems"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "FillRemainingItems"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"FillRemainingItems"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "FillRemainingItems"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "FillRemainingItems"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "FillRemainingItems"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+10
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "FillRemainingItems"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "KBOutput"
+0
+"concept" "sys" "dict" "a" "a" "al" "algo"
+pst
+"pat"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "KBOutput"
+0
+"concept" "sys" "dict" "a" "d" "da" "data"
+pst
+"KBOutput"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "KBOutput"
+0
+"concept" "sys" "dict" "a" "c" "co" "comment"
+pst
+"comment"
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "KBOutput"
+0
+"concept" "sys" "dict" "a" "a" "ac" "active"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "KBOutput"
+0
+"concept" "sys" "dict" "a" "p" "pa" "pass"
+pnum
+11
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "spec" "KBOutput"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+1
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "SampleGlosses.txt"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+2
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "SampleGlosses.txt" "ana001.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "SampleGlosses.txt" "ana002.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "SampleGlosses.txt" "ana003.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "SampleGlosses.txt" "ana004.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "SampleGlosses.txt" "ana005.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "SampleGlosses.txt" "ana006.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "SampleGlosses.txt" "ana007.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "SampleGlosses.txt" "ana008.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "SampleGlosses.txt" "ana009.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "SampleGlosses.txt" "ana010.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "SampleGlosses.txt" "ana011.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "SampleGlosses.txt" "err.log"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+4
+end ind
+
+
+ind attr
+"concept" "sys" "gui" "text" "SampleGlosses.txt" "output.txt"
+0
+"concept" "sys" "dict" "a" "t" "ty" "type"
+pnum
+2
+end ind
+
+
+ind attr
+"concept" "database" "records" "record1"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"1"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record1"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100001740"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record1"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(anything having existence (living or nonliving))"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record2"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"2"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record2"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100002086"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record2"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(any living entity)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record3"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"3"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record3"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100002880"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record3"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(living things collectively; \"the oceans are teeming with life\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record4"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"4"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record4"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100003011"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record4"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a discrete unit of living matter)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record5"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"5"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record5"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100003095"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record5"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the basic structural and functional unit of all organisms; cells may exist as independent units of life (as in monads) or may form colonies or tissues as in higher plants and animals)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record6"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"6"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record6"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100003731"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record6"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(any entity that causes events to happen)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record7"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"7"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record7"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100004123"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record7"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a human being; \"there was too much for one person to do\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record8"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"8"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record8"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100008019"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record8"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a living organism characterized by voluntary movement)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record9"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"9"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record9"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100008864"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record9"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a living organism lacking the power of locomotion)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record10"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"10"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record10"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100009457"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record10"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a physical (tangible and visible) entity; \"it was full of rackets, balls and other objects\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record11"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"11"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record11"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100010123"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record11"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an object occurring naturally; not made by man)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record12"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"12"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record12"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100010572"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record12"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(that which has mass and occupies space; \"an atom is the smallest indivisible unit of matter\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record13"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"13"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record13"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100011575"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record13"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(any substance that can be metabolized by an organism to give energy and build tissue)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record14"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"14"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record14"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100011937"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record14"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a man-made object)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record15"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"15"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record15"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100012704"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record15"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(one of a class of artifacts; \"an article of clothing\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record16"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"16"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record16"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100012865"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record16"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a feature of the mental life of a living organism)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record17"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"17"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record17"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100013018"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record17"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a general concept formed by extracting common features from specific examples)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record18"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"18"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record18"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100013243"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record18"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the psychological result of perception and learning and reasoning)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record19"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"19"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record19"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100013700"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record19"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the psychological feature that arouses an organism to action; the reason for the action; \"we did not understand his motivation\"; \"he acted with the best of motives\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record20"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"20"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record20"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100014045"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record20"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the psychological feature of experiencing affective and emotional states; \"he had a feeling of euphoria\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record21"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"21"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record21"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100014887"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record21"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a point or extent in space)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record22"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"22"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record22"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100015185"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record22"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the spatial arrangement of something as distinct from its substance; \"geometry is the mathematical science of shape\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record23"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"23"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record23"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100015594"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record23"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the continuum of experience in which events pass from the future through the present to the past)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record24"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"24"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record24"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100015975"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record24"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the unlimited 3-dimensional expanse in which everything is located; \"they tested his ability to locate objects in space\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record25"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"25"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record25"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100016185"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record25"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the way something is with respect to its main attributes; \"the current state of knowledge\"; \"his state of health\"; \"in a weak financial state\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record26"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"26"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record26"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100017297"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record26"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(something that happens at a given place and time)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record27"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"27"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record27"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100017487"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record27"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(something that people do or cause to happen)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record28"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"28"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record28"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100017954"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record28"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(any number of entities (members) considered as a unit)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record29"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"29"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record29"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100018376"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record29"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(anything owned or possessed)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record30"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"30"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record30"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100018604"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record30"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an abstraction belonging to or characteristic of an entity)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record31"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"31"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record31"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100018916"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record31"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an abstraction belonging to or characteristic of two entities or parts together)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record32"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"32"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record32"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100019464"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record32"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a relation between living organisms; esp between people)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record33"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"33"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record33"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100019671"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record33"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(something that is communicated between people or groups)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record34"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"34"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record34"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100020056"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record34"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(how much there is of something that you can measure)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record35"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"35"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record35"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100020461"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record35"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(any state or process known through the senses rather than by intuition or reasoning)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record36"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"36"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record36"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100020709"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record36"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an action; \"how could you do such a thing?\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record37"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"37"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record37"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100020804"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record37"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a kind act)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record38"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"38"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record38"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100020977"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record38"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of accomplishing something)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record39"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"39"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record39"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100021392"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record39"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a notable achievement: \"the book was her finest effort\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record40"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"40"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record40"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100021866"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record40"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an outstanding achievement)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record41"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"41"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record41"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100021950"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record41"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an achievement demonstrating great skill or mastery)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record42"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"42"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record42"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100022060"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record42"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(used in the phrase \"to your credit\" to indicate an achievement deserving praise; \"she already had several performances to her credit\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record43"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"43"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record43"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100022246"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record43"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(something done (usually as opposed to something said); \"there were stories of murders and other unnatural actions\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record44"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"44"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record44"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100022737"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record44"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a mode of action; \"if you persist in that course you will surely fail\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record45"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"45"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record45"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100022878"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record45"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a mutual or reciprocal action; interacting)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record46"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"46"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record46"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100023032"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record46"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(reciprocal action and reaction)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record47"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"47"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record47"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100023118"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record47"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(close interaction: \"they kept in daily contact\"; \"they claimed that they had been in contact with extraterrestrial beings\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record48"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"48"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record48"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100023330"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record48"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(contact that occurs when two people look directly at each other; \"a teacher should make eye contact with the students\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record49"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"49"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record49"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100023506"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record49"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(contact established between applicants and prospective employees; \"the agency provided placement services\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record50"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"50"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record50"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100023668"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record50"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(mutual interaction; the activity of interchanging or reciprocating)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record51"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"51"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record51"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100023860"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record51"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(mutual exchange of commercial or other privileges)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record52"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"52"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record52"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100023967"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record52"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(social or verbal interchange (usually followed by `with''))"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record53"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"53"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record53"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100024107"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record53"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"((usually plural) mutual dealings or connections among persons or groups: \"international relations\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record54"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"54"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record54"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100024260"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record54"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(taking part in a game or sport or other recreation)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record55"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"55"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record55"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100024436"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record55"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act using a sword (or other weapon) vigorously and skillfully)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record56"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"56"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record56"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100024570"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record56"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the playing of a game of tenpins or duckpins etc)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record57"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"57"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record57"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100024710"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record57"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(brave and heroic deeds)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record58"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"58"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record58"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100024789"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record58"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a masterly or brilliant feat)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record59"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"59"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record59"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100024877"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record59"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(any recognized accomplishment; \"they admired his performance under stress\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record60"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"60"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record60"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100025045"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record60"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(better than expected performance (better than might have been predicted from intelligence tests))"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record61"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"61"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record61"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100025221"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record61"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(poorer than expected performance (poorer than might have been predicted from intelligence tests))"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record62"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"62"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record62"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100025398"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record62"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the sum of recognized accomplishments; \"the lawyer has a good record\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record63"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"63"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record63"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100025520"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record63"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an irreversible accomplishment)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record64"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"64"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record64"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100025630"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record64"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(advancing toward a goal; \"persuading him was easy going\" or \"the proposal faces tough sledding\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record65"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"65"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record65"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100025788"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record65"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(accomplishment of an objective)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record66"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"66"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record66"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100025919"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record66"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of arriving at a certain place; \"they awaited her arrival\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record67"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"67"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record67"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100026147"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record67"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(arrival at a new stage; \"his attainment of puberty was delayed by malnutrition\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record68"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"68"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record68"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100026283"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record68"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(esp. of something momentous; \"the advent of the computer\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record69"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"69"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record69"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100026402"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record69"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of entering; \"she made a grand entrance\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record70"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"70"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record70"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100026689"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record70"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of entering some territory or domain (often in large numbers); \"the incursion of television into the American livingroom\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record71"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"71"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record71"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100026874"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record71"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(entrance by force or without permission or welcome)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record72"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"72"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record72"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100026980"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record72"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a sudden violent entrance; a bursting in; \"the recent irruption of bad manners\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record73"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"73"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record73"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100027115"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record73"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of entering; \"she made a graceful entree into the ballroom\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record74"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"74"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record74"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100027235"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record74"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of enrolling)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record75"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"75"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record75"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100027339"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record75"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of appearing in public view; \"the rookie made a brief appearance in the first period\"; \"it was Bernhardt''s last appearance in America\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record76"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"76"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record76"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100027592"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record76"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of emerging)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record77"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"77"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record77"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100027678"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record77"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of appearing again)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record78"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"78"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record78"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100027781"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record78"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"((astronomy) the reappearance of a celestial body after an eclipse)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record79"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"79"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record79"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100027910"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record79"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a coming to or returning home; \"on the eve of his return to Australia we gave him a goodbye party\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record80"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"80"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record80"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100028092"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record80"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of returning to the country of origin)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record81"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"81"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record81"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100028196"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record81"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of forcing a way into or through something; \"the penetration of upper management by women\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record82"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"82"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record82"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100028352"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record82"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a act of securing an arriving vessel with ropes or anchors)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record83"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"83"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record83"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100028503"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record83"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of coming to land after a voyage)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record84"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"84"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record84"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100028670"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record84"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of coming down to the earth (or other surface); \"the plane made a smoothe landing\"; \"his landing on his feet was catlike\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record85"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"85"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record85"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100028871"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record85"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an unscheduled airplane landing that is made under circumstances (engine failure or adverse weather) not under the pilot''s control)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record86"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"86"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record86"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100029100"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record86"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(act of departing)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record87"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"87"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record87"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100029365"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record87"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(departing hastily)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record88"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"88"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record88"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100029442"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record88"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of departing politely; \"he disliked long farewells\"; \"he took his leave\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record89"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"89"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record89"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100029628"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record89"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of saying farewell)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record90"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"90"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record90"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100029712"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record90"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of leaving secretly or without explanation)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record91"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"91"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record91"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100029873"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record91"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(suddenly disappearing from sight)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record92"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"92"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record92"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100029961"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record92"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of withdrawing)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record93"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"93"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record93"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100030184"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record93"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(withdrawing into the background; making yourself inconspicuous)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record94"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"94"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record94"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100030321"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record94"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(withdrawal for prayer and study and meditation; \"a religous retreat\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record95"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"95"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record95"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100030456"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record95"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of evacuating; leaving a place in an orderly fashion; esp. for protection)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record96"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"96"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record96"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100030612"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record96"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(breaking camp)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record97"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"97"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record97"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100030682"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record97"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(withdrawing support or help despite allegiance or responsibility; \"his abandonment of his wife and children left them penniless\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record98"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"98"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record98"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100030946"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record98"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of running away secretly (as to avoid arrest))"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record99"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"99"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record99"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100031070"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record99"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(unauthorized military absence)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record100"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"100"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record100"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100031190"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record100"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(ideological defection from the party line (especially from orthodox communism))"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record101"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"101"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record101"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100031327"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record101"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(migration into a place)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record102"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"102"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record102"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100031422"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record102"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(migration out of a place)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record103"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"103"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record103"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100031519"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record103"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"((military) withdrawal to a more favorable position)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record104"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"104"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record104"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100031641"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record104"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"((military) withdrawal of a military presence)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record105"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"105"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record105"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100031741"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record105"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(to break off a military action with an enemy)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record106"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"106"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record106"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100031866"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record106"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a act of becoming more distant)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record107"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"107"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record107"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100031963"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record107"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the departure of a vessel from a port)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record108"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"108"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record108"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100032054"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record108"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of passengers and crew getting off of a ship or aircraft)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record109"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"109"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record109"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100032245"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record109"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(debarkation from a boat or ship)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record110"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"110"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record110"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100032335"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record110"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of passengers and crew getting aboard a ship or aircraft)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record111"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"111"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record111"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100032499"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record111"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of going out)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record112"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"112"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record112"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100032570"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record112"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of running away with a lover (usually to get married))"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record113"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"113"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record113"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100032687"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record113"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of escaping physically; \"he made his escape from the mental hospital\"; \"the canary escaped from its cage\"; \"his flight was an indication of his guilt\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record114"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"114"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record114"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100032997"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record114"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(leaving (without permission) the place you are expected to be)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record115"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"115"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record115"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100033153"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record115"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of physically escaping from something (an opponent or a pursuer or an unpleasant situation) by some adroit maneuver)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record116"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"116"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record116"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100033384"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record116"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of avoiding capture (especially by cunning))"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record117"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"117"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record117"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100033506"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record117"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an action aimed at evading an enemy)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record118"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"118"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record118"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100033679"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record118"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"((in boxing) the act of one boxer holding onto the other to avoid being hit and to rest momentarily)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record119"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"119"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record119"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100033830"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record119"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a quick evasive movement)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record120"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"120"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record120"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100033906"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record120"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an escape from jail; \"the breakout was carefully planned\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record121"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"121"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record121"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100034082"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record121"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a rapid escape (as by criminals); \"the thieves made a clean getaway\"; \"after the expose he had to take it on the lam\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record122"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"122"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record122"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100034259"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record122"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a journey by a large group to escape from a hostile environment)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record123"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"123"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record123"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100034393"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record123"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(abolitionists secret aid to escaping slaves; pre-Civil War in US)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record124"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"124"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record124"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100034546"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record124"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(something achieved (or escaped) by a narrow margin)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record125"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"125"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record125"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100034703"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record125"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of coming (or going) out; becoming apparent)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record126"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"126"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record126"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100034867"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record126"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(emerging to the surface and becoming apparent)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record127"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"127"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record127"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100034968"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record127"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of sending off something)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record128"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"128"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record128"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100035095"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record128"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of shipping again (especially by transferring to another ship))"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record129"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"129"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record129"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100035222"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record129"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of becoming or making complete: \"her work is still far from completion\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record130"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"130"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record130"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100035376"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record130"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of bringing to completion or fruition)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record131"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"131"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record131"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100035534"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record131"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(something that is realized; \"the victory was the realization of a whole year''s work\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record132"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"132"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record132"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100035701"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record132"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the moment of most intense pleasure in sexual intercourse)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record133"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"133"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record133"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100035863"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record133"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an orgasm accompanied by the ejaculation of semen)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record134"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"134"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record134"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100035970"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record134"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of consummating something (a desire or promise etc))"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record135"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"135"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record135"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100036136"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record135"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the fulfillment of your capacities)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record136"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"136"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record136"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100036271"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record136"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of achieving an aim; \"the attainment of independence\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record137"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"137"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record137"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100036443"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record137"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the best performance ever attained in a sport; \"he broke the Olympic record\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record138"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"138"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record138"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100036590"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record138"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the best record in the whole world)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record139"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"139"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record139"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100036683"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record139"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an attainment that is successful; \"his success in the marathon was unexpected\"; \"his new play was a great success\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record140"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"140"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record140"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100037013"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record140"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(succeeding with great difficulty; \"just winning the shore exhausted him\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record141"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"141"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record141"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100037139"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record141"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a conspicuous success; \"that song was his first hit and marked the beginning of his career\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record142"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"142"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record142"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100037304"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record142"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(something that exactly succeeds in achieving its goal; \"the new advertising campaign was a bell ringer\"; \"scored a bull''s_eye\"; \"hit the mark\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record143"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"143"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record143"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100037524"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record143"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of raising someone to the nobility)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record144"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"144"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record144"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100037624"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record144"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(success in mastering something difficult; \"the conquest of space\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record145"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"145"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record145"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100037744"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record145"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a brilliant and notable success)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record146"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"146"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record146"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100037826"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record146"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(success in satisfying a test or requirement; \"his future depended on his passing that test\"; \"he got a pass in introductory chemistry\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record147"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"147"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record147"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100038052"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record147"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(educational recognition that a course of studies has been successfully completed)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record148"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"148"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record148"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100038219"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record148"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a unit of academic credit; one hour a week for an academic semester)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record149"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"149"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record149"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100038346"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record149"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an act that does not achieve its intended goal)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record150"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"150"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record150"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100038527"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record150"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an unexpected omission; \"he resented my failure to return his call\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record151"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"151"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record151"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100038702"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record151"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an act that fails)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record152"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"152"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record152"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100038917"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record152"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(failure to reach a minimum required performance; \"his failing the course led to his disqualification\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record153"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"153"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record153"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100039090"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record153"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(complete failure; \"all my efforts led to naught\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record154"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"154"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record154"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100039191"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record154"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an unexcused absence from class; \"he was punished for taking too many cuts in his math class\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record155"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"155"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record155"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100039334"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record155"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(loss due to not showing up; \"he lost the game by default\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record156"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"156"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record156"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100039445"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record156"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an informal word for any attempt or effort; \"he gave it his best shot\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record157"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"157"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record157"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100039566"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record157"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an attempt to score in a game)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record158"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"158"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record158"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100039700"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record158"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of losing; \"everyone expected him to win so his loss was a shock\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record159"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"159"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record159"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100039842"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record159"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of surrendering (under agreed conditions); \"they were protected until the capitulation of the fort\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record160"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"160"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record160"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100040027"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record160"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an act of hindering someone''s plans or efforts)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record161"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"161"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record161"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100040167"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record161"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an improbable and unexpected victory; \"the biggest upset since David beat Goliath\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record162"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"162"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record162"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100040312"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record162"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a failure to maintain a higher state)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record163"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"163"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record163"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100040483"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record163"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of disappointing someone)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record164"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"164"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record164"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100040608"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record164"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a failure to perform some promised act or obligation)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record165"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"165"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record165"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100040749"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record165"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a failure to face some difficulty squarely)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record166"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"166"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record166"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100040844"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record166"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a breach of a legal duty)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record167"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"167"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record167"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100041059"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record167"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a breach of contract committed prior to the time of required performance)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record168"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"168"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record168"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100041219"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record168"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a breach of due care)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record169"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"169"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record169"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100041300"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record169"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a failure of the seller''s guarantee of good title)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record170"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"170"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record170"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100041430"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record170"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(failure to keep a promise (of marriage))"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record171"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"171"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record171"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100041533"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record171"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(violation (either through fraud or negligence) by a trustee of a duty that equity requires of him)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record172"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"172"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record172"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100041692"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record172"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(larceny after trust rather than after unlawful taking)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record173"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"173"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record173"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100041830"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record173"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a breach that occurs when an item is deficient according to the terms of a warranty)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record174"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"174"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record174"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100041978"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record174"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act deviating from a vertical position)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record175"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"175"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record175"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100042074"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record175"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a breach serious enough to destroy the value of the contract and to give a basis for an action for breach of contract)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record176"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"176"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record176"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100042253"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record176"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a breach that does not destroy the value of the contract but can give rise to a claim for damages)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record177"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"177"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record177"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100042411"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record177"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a wrong action attributable to bad judgment or ignorance or inattention; \"the fault was all mine\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record178"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"178"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record178"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100042794"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record178"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a mistake that occurs when the server in tennis fails to keep both feet behind the baseline)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record179"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"179"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record179"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100042960"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record179"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"((baseball) a failure of a defensive player to make an out when normal play would have sufficed)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record180"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"180"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record180"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100043135"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record180"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an act that brings discredit to the person who does it; \"he made a huge blot on his copybook\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record181"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"181"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record181"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100043311"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record181"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a mistake that results from taking one thing to be another; \"he changed his name in order to avoid confusion with the notorious outlaw\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record182"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"182"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record182"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100043525"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record182"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a mistake in calculating)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record183"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"183"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record183"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100043659"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record183"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a miscalculation that recoils on its maker)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record184"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"184"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record184"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100043768"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record184"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the mistake of misrepresenting the facts)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record185"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"185"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record185"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100043865"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record185"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an inadvertent mistake)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record186"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"186"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record186"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100043956"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record186"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a mistake resulting from inattention)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record187"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"187"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record187"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100044056"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record187"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a mistake resulting from neglect)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record188"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"188"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record188"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100044168"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record188"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an embarrassing mistake)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record189"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"189"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record189"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100044471"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record189"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an acronym often used by soldiers in World War II: Situation Normal All Fucked Up)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record190"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"190"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record190"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100044604"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record190"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a blunder that makes you look ridiculous; used in the phrase \"make a spectacle of\" yourself)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record191"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"191"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record191"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100044751"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record191"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"((British) something badly botched or muddled)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record192"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"192"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record192"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100044878"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record192"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a serious and ludicrous blunder; \"he made a bad bull of the assignment\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record193"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"193"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record193"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100045000"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record193"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(dropping the ball (in baseball or football))"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record194"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"194"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record194"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100045103"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record194"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a blunder (especially an actor''s forgetting the lines))"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record195"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"195"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record195"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100045209"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record195"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a socially awkward or tactless act)"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record196"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"196"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record196"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100045336"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record196"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"((British) a conspicuous mistake whose effects seem to reverberate; \"he dropped a clanger\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record197"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"197"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record197"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100045479"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record197"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(an unintentional but embarrassing blunder; \"he recited the whole poem without a single trip\"; \"confusion caused his unfortunate misstep\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record198"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"198"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record198"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100045686"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record198"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(a sudden drop from an upright position; \"he had a nasty spill on the ice\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record199"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"199"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record199"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100045827"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record199"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of contracting or assuming or acquiring possession of something; \"the acquisition of wealth\"; \"the acquisition of one company by another\")"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record200"
+0
+"concept" "sys" "dict" "a" "I" "I" "ID"
+pst
+"200"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record200"
+0
+"concept" "sys" "dict" "a" "S" "Sy" "Synset"
+pst
+"100046246"
+end ind
+
+
+ind attr
+"concept" "database" "records" "record200"
+0
+"concept" "sys" "dict" "a" "G" "Gl" "Gloss"
+pst
+"(the act of acquiring something; \"I envied his talent for acquiring new friends\"; \"did you hear about his getting a car?\")"
+end ind
+
+
+
+quit
+
