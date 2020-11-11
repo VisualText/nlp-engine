@@ -256,8 +256,8 @@ _t_cout << endl
 	<< _T("           [-IN infile] input text file path") << endl
 	<< _T("           [-OUT outdir] output directory") << endl
 	<< _T("           [-WORK workdir] working directory") << endl
-	<< _T("           [-DEV][-SILENT] /DEV generates logs, -SILENT (default) does not") << endl
-	<< _T("           [infile [outfile]] when no /IN or -OUT specified") << endl
+	<< _T("           [-DEV][-SILENT] -DEV generates logs, -SILENT (default) does not") << endl
+	<< _T("           [infile [outfile]] when no -IN or -OUT specified") << endl
 	<< endl
 	<< _T("Directories in the nlp.exe files:") << endl
 	<< _T("   data        nlp engine bootstrap grammar") << endl
