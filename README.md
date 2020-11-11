@@ -35,7 +35,7 @@ Switch | Function
 -OUT | Output directory
 -WORK | Working director where the library and executable files are
 -DEV / -SILENT | -DEV generates logs, -SILENT (default) does not
-[infile [outfile]] | when no /IN or -OUT specified
+[infile [outfile]] | when no -IN or -OUT specified
 
 # Calling NLP++ Analyzers from C++
 
