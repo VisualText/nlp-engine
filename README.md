@@ -40,3 +40,23 @@ Switch | Function
 # Calling NLP++ Analyzers from C++
 
 There is a test directory in the repository that builds a test.exe that calls analyzers using c++ code.
+
+## Test directory
+The test directory contains a call to the nlp engine using buffers.
+
+# Development and Compiling the NLP-ENGINE
+
+## Linux
+
+In order to compile the NLP Engine on linux, you will need to install the following packages:
+
+* git clone https://github.com/VisualText/nlp-engine.git
+* cd nlp-engine
+* mkdir build
+* cd build
+* cmake ../
+* make
+
+## Windows
+
+Too be done
