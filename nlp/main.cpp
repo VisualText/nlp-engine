@@ -262,5 +262,6 @@ _t_cout << endl
 	<< _T("Directories in the nlp.exe files:") << endl
 	<< _T("   data        nlp engine bootstrap grammar") << endl
 	<< _T("   analyzers   default location for nlp++ analyzer folders") << endl
+	<< _T("   visualtext  common files for the VisualText IDE") << endl
 	<< endl;
 }
