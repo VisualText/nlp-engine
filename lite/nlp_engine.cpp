@@ -46,8 +46,8 @@ NLP_ENGINE::NLP_ENGINE(
     static _TCHAR logfile[MAXSTR];
     static _TCHAR rfbdir[MAXSTR];
     if (workingFolder) {
-        _stprintf(logfile,"%s%s",workingFolder,_T("vtrun_logfile.out"));
-        _stprintf(rfbdir,"%sdata/rfb/spec",workingFolder);
+        _stprintf(logfile,"%s%s%s",workingFolder,DIR_STR,_T("vtrun_logfile.out"));
+        _stprintf(rfbdir,"%s%sdata/rfb/spec",workingFolder,DIR_STR);
     } else {
         _stprintf(logfile,"%s",_T("vtrun_logfile.out"));
         _stprintf(rfbdir,"data/rfb/spec");
