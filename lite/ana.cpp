@@ -336,6 +336,10 @@ while (*buf)	// For each line of file.
 	if (!token) goto line;
 
 	/* If it's numeric, ignore. */
+	if (!strcmp_i(_T("folder"),token) || !strcmp_i(_T("stub"),token || !strcmp_i(_T("end"),token)) {
+		goto skip;
+	}
+
 	if (_istdigit((_TUCHAR)*token))
 		{
 		if (eol) goto line;		// Lone number on line.
@@ -359,7 +363,7 @@ while (*buf)	// For each line of file.
 	data = next_token(/*DU*/ buf, eol, comm);
 	if (eol)
 		goto line;
-
+skip:
 	while (next_token(/*DU*/ buf, eol, comm) && !eol)
 		{
 		// Ignore tokens at end of line.
