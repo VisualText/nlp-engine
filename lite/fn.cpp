@@ -2697,7 +2697,7 @@ if (!val)
 // Need to get the current KB.
 CG *cg = parse->getAna()->getCG();
 
-_TCHAR buf[MAXSTR];
+_TCHAR buf[MAXLINE];
 cg->popVal(val, /*UP*/ buf);
 if (!buf || !*buf)												// FIX.	// 02/09/01 AM.
 	return true;													// FIX.	// 02/09/01 AM.
