@@ -71,13 +71,15 @@ OutputAttributes(L("file"),L("con"),L("full")) {
 			if (L("con")) {
 				L("file") << conceptpath(L("con"));
 			} else if (!L("full") && strlength(L("val")) > 20) {
-				L("val") = strpiece(L("val"),0,20);
-				L("file") << L("val");
+				L("shorty") = strpiece(L("val"),0,20);
+				L("file") << L("shorty");
 				L("file") << "...";
-			} else if (strlength(L("val")) > 1) {
-				L("file") << L("val");
-			} else {
+				if (strendswith(L("val"),"\""))
+					L("file") << "\"";
+			} else if (L("num") > -1) {
 				L("file") << str(L("num"));
+			} else {
+				L("file") << L("val");
 			}
 			L("first") = 0;
 			L("vals") = nextval(L("vals"));
@@ -89,9 +91,11 @@ OutputAttributes(L("file"),L("con"),L("full")) {
 	}
 }
 
+# Because NLP++ doesn't allow for empty strings,
+# this function can only be called with "num" >= 1
 SpacesStr(L("num")) {
-    L("n") = 0;
-	L("spaces") = " ";
+    L("n") = 1;
+	L("spaces") = "  ";
 	while (L("n") < L("num")) {
 		L("spaces") = L("spaces") + "  ";
 		L("n")++;
