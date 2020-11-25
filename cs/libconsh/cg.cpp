@@ -2901,7 +2901,7 @@ delete f_dump;
 #else
 _TCHAR cmd[4096];
 _TCHAR *cp = _T("cat");
-_stprintf(cmd, _T("%s %s %s %s %s %s"),
+_stprintf(cmd, _T("%s %s %s %s %s > %s"),
 	cp, o_hier, o_word, o_attr, o_phr, file);
 _tsystem(cmd);
 #endif
