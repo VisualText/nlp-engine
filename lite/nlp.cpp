@@ -13,7 +13,9 @@ All rights reserved.
 *
 *******************************************************************************/
 
+#ifdef WINDOWS
 #include "StdAfx.h"
+#endif
 #include <iostream>	// 09/27/19 AM.
 #include <strstream>	// 09/27/19 AM.
 #include <time.h>
@@ -1446,6 +1448,132 @@ return parse;
 }
 
 
+
+/********************************************
+* FN:		INITANALYZE (VARIANT)
+* CR:		11/17/20 AM.
+* SUBJ:	Initialize the analysis of a single text (with strstream io).
+* RET:	Return handle to current parse.
+* NOTE:	
+********************************************/
+
+Parse *NLP::initAnalyze(
+	istrstream *iss,
+	ostrstream *oss,
+	_TCHAR *appdir,
+	Eana *eana,
+	_TCHAR *outdir,
+	_t_ostream *os,	// Rebinding of output stream.
+	bool retain		// If retaining hash,sym tables.
+	)
+{
+// BUG: cbufv is already an ostrstream at this point.	// 06/30/05 AM.
+// WINDOWS:
+
+#ifndef LINUX
+//_t_ostrstream *cbuf = (_t_ostrstream *) cbufv;
+#else
+// BUFFER/ARRAY STREAM ALREADY CREATED!!!	// 09/28/19 AM.
+//ostrstream *cbuf = (ostrstream *) cbufv;			// 06/30/05 AM.	// 09/28/19 AM.
+
+// cerr << "initAnalyze in: " << ends;
+// cerr << "cbufv: *" << cbuf->str() << "*" << endl;
+#endif
+
+// ANCIENT STUFF HERE...	// 09/28/19 AM.
+#ifdef UNICODE
+//_t_ostrstream *cbuf = new _t_ostrstream((char*)cbufv,ios::out);			// 03/29/05 AM.
+#else
+//_t_ostrstream *cbuf = new _t_ostrstream((char*)cbufv,outlen,ios::out);	// 03/29/05 AM.
+#endif
+//_t_ostrstream *cbuf = (_t_ostrstream *) cbufv;								// 10/10/03 AM.
+
+_t_ostream* sout = 0;
+_t_ofstream* fout = 0;
+_t_ostream *sdbg=0;																// 02/21/02 AM.
+
+if (!appdir || !*appdir)													// 03/10/99 AM.
+	{
+	_t_strstream gerrStr;
+	gerrStr << _T("[initAnalyze: Given no appdir.]") << ends;
+	errOut(&gerrStr,false);
+	return 0;
+	}
+
+_TCHAR tmp[MAXSTR];
+if (!outdir || !*outdir)													// 03/10/99 AM.
+	{
+	_stprintf(tmp, _T("%s%coutput"), appdir, DIR_CH);
+	outdir = tmp;
+	}
+
+if (!dir_exists(outdir))
+	make_dir(outdir);
+
+// Setting up ERROR OUTPUT FILE.											// 03/22/99 AM.
+_TCHAR errout[MAXSTR];															// 03/22/99 AM.
+
+//if (!eana->getFsilent())													// 06/16/02 AM.
+	{
+	_stprintf(errout, _T("%s%cerr.log"), outdir,								// 03/22/99 AM.
+				DIR_CH);															// 03/08/00 AM.
+	fileErr(errout, /*DU*/ fout, sout);
+
+	// Set up a debug,verbose,timing,etc. log file.					// 02/21/02 AM.
+	fileDbg(outdir,sdbg);													// 02/21/02 AM.
+	}
+
+
+// Now current analyzer instance gets a LOCAL hash and string table.
+// Caller may also fill in with global, or decide not to delete, etc.
+if (!stab_)																		// 06/25/03 AM.
+	stab_ = new Stab();														// 06/25/03 AM.
+if (!htab_)																		// 06/25/03 AM.
+	htab_ = new Htab(stab_);												// 06/25/03 AM.
+
+
+Parse *parse;					// The current text analysis instance.
+parse = new Parse();															// 05/13/99 AM.
+parse->nlp_ = this;															// 06/25/03 AM.
+parse->htab_ = this->htab_;												// 06/25/03 AM.
+
+parse->setEana(eana);														// 10/13/99 AM.
+
+parse->setFout(fout);														// 05/13/99 AM.
+parse->setSout(sout);														// 05/13/99 AM.
+parse->setAna(ana_);			// Analyzer that the parse will use.
+parse->setAppdir(appdir);	// Where the app runs from.			// 12/03/98 AM.
+parse->setOutdir(outdir);	// Intermed output files.				// 03/10/99 AM.
+#ifndef LINUX
+parse->setHdll(hdll_);		// Handle to user.dll.					// 01/29/99 AM.
+#endif
+
+// Set up output to buffer.
+parse->setCbuf((ostrstream*)oss);			// Try this.	// 11/17/20 AM.
+//parse->setCbufmax(INFINITY);	// Try this.	// 11/17/20 AM.
+
+//parse->setVerbose(false);												// 10/13/99 AM.
+parse->setVerbose(eana->getFverbose());								// 10/13/99 AM.
+
+// Get user or default setting for batch start.		// FIX		// 05/19/08 AM.
+parse->setFbatchstart(fbatchstart_);					// FIX		// 05/19/08 AM.
+
+// (TODO: Check into file mapping.)
+// Set up to parse given buffer.						// 02/06/00 AM.
+
+// Copy buffer into parse object.
+parse->copyBuffer(iss->str(), 0);	// Try this.	// 11/17/20 AM.
+
+// New manager for cout ostream.											// 05/04/03 AM.
+if (os)																			// 05/05/03 AM.
+	parse->setCout(os);														// 05/04/03 AM.
+
+parse->setLogfile(this->logfile_);	// VTLOG	// 05/06/13 AM.
+
+//parse->setVerbose(verbose);												// 10/13/99 AM.
+return parse;
+}
+
 /********************************************
 * FN:		CLEANANALYZE
 * CR:		05/13/99 AM.
@@ -1737,6 +1865,126 @@ if (flogfiles)																	// 02/21/02 AM.
 
 
 /********************************************
+* FN:		ANALYZE
+* CR:		11/17/20 AM.
+* SUBJ:	Analyze a single text. STRSTREAM VARIANT.
+* NOTE:	Attempt to use cout() for strstream output within NLP++ analyzer.
+********************************************/
+
+void NLP::analyze(
+	istrstream *iss,	// Input strstream.
+	ostrstream *oss,	// Output strstream.
+	_TCHAR *appdir,		// Directory holding analyzer.
+	bool flogfiles,		// Changing the meaning of this.
+	bool silent,		// Silent run mode.
+	_TCHAR *outdir,		// Intermed files.
+	bool compiled,		// If running compiled analyzer.
+	_t_ostream *os,		// Rebinding of output stream.				// 05/05/02 AM.
+	_TCHAR *datum		// Pass info to G("$datum").
+	)
+{
+if (!iss || !oss)
+	return;
+
+
+
+if (compiled)																	// 07/05/00 AM.
+	{
+	runAnalyzer(iss,oss,appdir,flogfiles,silent,outdir,os,datum);	// 11/17/20 AM.
+	return;
+	}
+#ifdef UNICODE
+#endif
+
+clock_t   s_time, e_time;
+
+if (flogfiles)																	// 02/21/02 AM.
+	s_time = clock();															// 12/28/98 AM.
+
+// Set up runtime config for current parse.							// 10/13/99 AM.
+enum Eanaconf conf = conf_ZILCH;											// 06/16/02 AM.
+if (!silent)														// FIX	// 07/02/02 AM.
+	{
+	if (flogfiles)																// 07/02/02 AM.
+		conf = conf_DEV;														// 07/02/02 AM.
+	else
+		conf = conf_REG;														// 07/02/02 AM.
+	}
+Eana *eana = new Eana(conf);												// 06/16/02 AM.
+eana->setFsilent(silent);													// 06/16/02 AM.
+
+Parse *parse = 0;																// 05/13/99 AM.
+
+if (!(parse = initAnalyze(iss,oss,appdir,eana,outdir)))	// 11/17/20 AM.
+	{
+	_t_strstream gerrStr;
+	gerrStr << _T("[Analyze: Couldn't create parse instance.]") << ends;
+	errOut(&gerrStr,false);
+	delete eana;																// 07/23/01 AM.
+	return;
+	}
+
+// Pass the batch start flag to analyzer (from VisualText).		// 10/19/00 AM.
+// Used for running folders or other multi-file runs, as a
+// handshake to say when the first file is being processed.
+parse->setFbatchstart(fbatchstart_);									// 10/19/00 AM.
+
+
+
+// Pass arbitrary information to the analyzer.						// 03/13/03 AM.
+parse->setDatum(datum);														// 03/13/03 AM.
+
+/////////////////////////////////////////////////
+// EXECUTE THE ANALYZER
+/////////////////////////////////////////////////
+// Execute steps as described in analyzer sequence.
+// Each pass traverses parse tree, applying rules and actions.
+
+
+if (parse->getText())
+	{
+	parse->execute();					// PERFORM TEXT ANALYSIS.
+	}
+
+cleanAnalyze(parse);
+delete eana;			// MOVED AFTER CLEANANALYZE.					// 07/19/03 AM.
+
+// Set batch start to false after analysis of any file.			// 05/19/08 AM.
+fbatchstart_ = false;										// FIX		// 05/19/08 AM.
+
+// Terminate buffer.	// 11/17/20 AM.
+
+#ifdef UNICODE
+// No Unicode analog to ostrstream, so copy buffer.				// 04/14/06 AM.
+long siz = ocbuf.str().size();											// 04/15/06 AM.
+if (siz >= outlen)	// Overflow.										// 04/15/06 AM.
+	siz = outlen - 1;															// 04/15/06 AM.
+ocbuf.str().copy(outbuf,siz); // Hacked this together.			// 04/14/06 AM.
+outbuf[siz] = '\0';															// 04/15/06 AM.
+#endif
+
+if (flogfiles)																	// 02/21/02 AM.
+	{
+	e_time = clock();
+	_t_strstream gerrStr;
+	gerrStr << _T("[Exec analyzer time=")
+		  << (double) (e_time - s_time)/CLOCKS_PER_SEC
+		  << _T(" sec]") << ends;
+	errOut(&gerrStr,false);
+	s_time = e_time;
+	}
+
+#ifdef PERFORM_
+//*gout << "SYSTEM HASH" << endl;
+//Htab *htab = (Htab *)vtrun_->htab_;	// 06/24/03 AM.	// [DEGLOB]	// 10/15/20 AM.
+//htab->pretty(gout);															// 06/24/03 AM.
+//*gout << "\n\nLOCAL HASH" << endl;
+//htab_->pretty(gout);
+#endif
+}
+
+
+/********************************************
 * FN:		APIINITANALYZE
 * CR:		07/23/01 AM.
 * RET:	parse - Handle.  Internally = Parse object.
@@ -1975,6 +2223,112 @@ if (!(parse = initAnalyze(input,output,appdir,&eana,outdir,
 									inbuf, len,
 									os, cbuf, outlen							// 05/13/02 AM.
 									)))
+	{
+	_t_strstream gerrStr;
+	gerrStr << _T("[Analyze: Couldn't create parse instance.]") << ends;
+	errOut(&gerrStr,false);
+	return;
+	}
+
+// Pass arbitrary information to the analyzer.						// 03/13/03 AM.
+parse->setDatum(datum);														// 03/13/03 AM.
+
+// Compiled analyzer gets batchstart flag.							// 05/16/08 AM.
+parse->setFbatchstart(fbatchstart_);									// 05/16/08 AM.
+
+/////////////////////////////////////////////////
+// EXECUTE THE ANALYZER
+/////////////////////////////////////////////////
+// Execute steps as described in analyzer sequence.
+// Each pass traverses parse tree, applying rules and actions.
+
+
+if (parse->getText())
+	{
+#ifdef RUNEMBED_
+  cout << "runAnalyzer: RUNEMBED_ calling run_analyzer(parse)" << endl;
+  run_analyzer(parse);
+#else
+#ifndef LINUX
+	if (!hrundll_)
+		parse->execute();
+	else
+		call_runAnalyzer(hrundll_,parse);
+#else
+	parse->execute();
+#endif
+#endif
+	}
+
+//_t_ostream *cbf = parse->getCbuf();										// 04/25/05 AM.
+ostrstream *cbf = parse->getCbuf();										// 09/28/19 AM.
+if (cbf)																			// 05/13/02 AM.
+	*cbf << ends;		// Terminate buffer.								// 05/13/02 AM.
+
+e_time = clock();
+
+parse->finExecute(ana_->getNpasses(),s_time,e_time);				// 06/13/00 AM.
+
+cleanAnalyze(parse);
+
+// Compiled analyzer turns off batchstart by default after processing
+// each file.  Caller can restart a new batch at any point, as desired.
+fbatchstart_ = false;														// 05/16/08 AM.
+
+if (flogfiles)																	// 02/21/02 AM.
+	{
+	_t_strstream gerrStr;
+	gerrStr << _T("[Exec analyzer time=")
+		  << (double) (e_time - s_time)/CLOCKS_PER_SEC
+		  << _T(" sec]") << ends;
+	errOut(&gerrStr,false);
+	s_time = e_time;
+	}
+}
+
+
+
+
+/********************************************
+* FN:		RUNANALYZER (VARIANT)
+* CR:		11/17/20 AM.
+* SUBJ:	Analyze a single text with compiled runtime analyzer.
+********************************************/
+
+void NLP::runAnalyzer(
+	istrstream *iss,
+	ostrstream *oss,
+	_TCHAR *appdir,
+	bool flogfiles,	// Changing the meaning of this.
+	bool silent,		// Silent run mode.
+	_TCHAR *outdir,		// Interned files.
+	_t_ostream *os,		// Rebinding of output stream.
+	_TCHAR *datum			// Pass info to G("$datum").
+	)
+{
+
+_t_ostrstream *cbuf = (_t_ostrstream *) oss;	// 11/17/20 AM.
+
+clock_t   s_time, e_time;
+
+//if (flogfiles)							// 02/21/02 AM.	// 03/29/05 AM.
+	s_time = clock();
+
+// Set up runtime config for current parse.
+enum Eanaconf conf = conf_ZILCH;											// 06/16/02 AM.
+if (!silent)														// FIX	// 07/03/02 AM.
+	{
+	if (flogfiles)																// 07/03/02 AM.
+		conf = conf_DEV;														// 07/03/02 AM.
+	else
+		conf = conf_REG;														// 07/03/02 AM.
+	}
+Eana eana(conf);																// 06/16/02 AM.
+eana.setFlogfiles(flogfiles);
+
+Parse *parse = 0;
+
+if (!(parse = initAnalyze(iss,oss,appdir,&eana,outdir,os)))
 	{
 	_t_strstream gerrStr;
 	gerrStr << _T("[Analyze: Couldn't create parse instance.]") << ends;

@@ -383,6 +383,49 @@ int NLP_ENGINE::analyze(
     return 0;
 }
 
+// ANALYZE VARIANT FOR STRSTREAM I/O.  11/24/20 AM.
+int NLP_ENGINE::analyze(
+    _TCHAR *analyzer,
+    istrstream *iss,
+    ostrstream *oss,
+	bool develop,
+	bool silent,
+    bool compiled
+	)
+{
+ 
+    NLP_ENGINE::init(analyzer,develop,silent,compiled);
+
+    // Analyzer can output to a stream.
+    _TCHAR ofstr[MAXSTR];
+    #ifdef LINUX
+    _stprintf(ofstr,_T("./dummy.txt"));
+    #else
+    _stprintf(ofstr,_T("e:\\dummy.txt"));
+    #endif
+    _t_ofstream os(TCHAR2CA(ofstr), ios::out);
+
+//_t_cout << _T("BEFORE ANALYSIS: ") << endl; // 09/27/20 AM.
+//object_counts();    // TESTING analysis cleanup.    // 09/27/20 AM.
+
+    m_nlp->analyze(
+        iss,
+        oss,
+        m_anadir, // appdir
+        m_develop, // flogfiles
+        m_silent,
+        m_outdir,
+        m_compiled,      // If running compiled analyzer.
+        &os,	   // Rebind cout output stream in analyzer    // 08/07/02 AM.
+        NULL   // datum
+        );
+
+
+//_t_cout << _T("AFTER ANALYSIS: ") << endl; // 09/27/20 AM.
+//object_counts();    // TESTING analysis cleanup.    // 09/27/20 AM.
+    return 0;
+}
+
 int NLP_ENGINE::close()
 {
     /////////////////////////////////////////////////

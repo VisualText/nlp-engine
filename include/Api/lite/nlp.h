@@ -40,10 +40,15 @@ All rights reserved.
 *
 *******************************************************************************/
 
+#include <string>
+#include <iostream>
+#include <strstream>
+#include <sstream>
 
 #ifndef NLP_H_
 #define NLP_H_
 #include <assert.h>
+
 #include "Aseq.h"			// 05/17/99 AM.
 #include "lite.h"
 #include "global.h"		// 02/05/00 AM. (for FNAME_SIZE).
@@ -167,6 +172,18 @@ public:
 		_TCHAR *datum = 0   // PASS INFO TO G("$datum").             // 03/13/03 AM.
 		);
 
+	void analyze(
+		istrstream *iss,	// Input strstream.
+		ostrstream *oss,	// Output strstream.
+		_TCHAR *appdir = 0,		// Directory holding analyzer.
+		bool flogfiles = false,	// Changing the meaning of this.
+		bool silent = false,	// Silent run mode.
+		_TCHAR *outdir = 0,		// Intermed files.
+		bool compiled = false,	// If running compiled analyzer.
+		_t_ostream *os = 0,		// Rebinding of output stream.				// 05/05/02 AM.
+		_TCHAR *datum = 0		// Pass info to G("$datum").
+		);
+
 	// Create an internalized version of a string, so you don't have to
 	// worry about deleting it
 	bool internStr(_TCHAR *, /*UP*/ _TCHAR* &); // FIX					// 12/11/99 AM.
@@ -246,6 +263,18 @@ public:
 		_TCHAR *datum = 0   // PASS INFO TO G("$datum").             // 03/13/03 AM.
 		);
 
+	void runAnalyzer(
+		istrstream *iss,
+		ostrstream *oss,
+		_TCHAR *appdir,
+		bool flogfiles,			// Changing the meaning of this.
+		bool silent = false,	// Silent run mode.
+		_TCHAR *outdir = 0,		// Interned files.
+		_t_ostream *os = 0,		// Rebinding of output stream.
+		_TCHAR *datum = 0		// Pass info to G("$datum").
+		);
+
+
 	// Create the RFB (NLP++ compiler/interpreter).
 	static                // MAKING THIS STATIC.                  // 08/27/02 AM.
 	void *                // CHANGING TYPE.                       // 08/27/02 AM.
@@ -273,6 +302,16 @@ public:
 	   void * = 0,          // For .NET compatibility.               // 10/10/03 AM.
 		long = 0,            // Output buffer length, if any.         // 05/11/02 AM.
 		bool retain = false  // If retaining hash,sym tables.         // 05/21/09 AM.
+		);
+
+	Parse *initAnalyze(
+		istrstream *iss,
+		ostrstream *oss,
+		_TCHAR *appdir,
+		Eana *eana,
+		_TCHAR *outdir = 0,
+		_t_ostream *os = 0,	// Rebinding of output stream.
+		bool retain = false		// If retaining hash,sym tables.
 		);
 
 	// CLEAN UP ANALYSIS OF A SINGLE TEXT.

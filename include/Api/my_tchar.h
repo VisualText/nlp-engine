@@ -3,6 +3,9 @@ Copyright (c) 2006-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 // my_tchar.h
+#include <string>
+#include <iostream>
+#include <sstream>
 
 #ifdef  _UNICODE
 
@@ -53,7 +56,8 @@ All rights reserved.
 //#define _t_ostrstream		ostringstream
 // THIS IS THE WINDOWS SIDE.  KEEP IT	// 09/27/19 AM.
 #define _t_strstream		ostringstream
-#define _t_ostrstream		ostringstream
+#define _t_ostrstream		ostringstream  // 11/17/20 AM.
+#define _t_istrstream       istringstream  // 11/17/20 AM.
 
 
 #define CP_UTF8	65001
@@ -100,7 +104,8 @@ All rights reserved.
 
 #else
 #define _t_strstream		strstream
-#define _t_ostrstream		ostrstream // 09/27/19 AM>
+#define _t_ostrstream		ostringstream  // 09/27/19 AM.
+#define _t_istrstream       istringstream  // 11/17/20 AM.
 
 #endif
 

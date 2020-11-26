@@ -115,6 +115,15 @@ public:
         bool compiled=false
     );
 
+    int analyze(
+        _TCHAR *analyzer,
+        istrstream *iss,
+        ostrstream *oss,
+        bool develop=false,
+        bool silent=false,
+        bool compiled=false
+    );
+
     int close();
     int close(_TCHAR *analyzer);
 
