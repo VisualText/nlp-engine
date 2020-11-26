@@ -336,7 +336,7 @@ while (*buf)	// For each line of file.
 	if (!token) goto line;
 
 	/* If it's numeric, ignore. */
-	if (!strcmp_i(_T("folder"),token) || !strcmp_i(_T("stub"),token || !strcmp_i(_T("end"),token)) {
+	if (!strcmp_i(_T("folder"),token) || !strcmp_i(_T("stub"),token) || !strcmp_i(_T("end"),token)) {
 		goto skip;
 	}
 
