@@ -41,6 +41,11 @@ L("qqo") << "QQQ openfile ok" << "\n";
 @NODES _ROOT
 
 @POST
+  cbuf() << N("$text") << "\n";
+@RULES
+_xNIL <- _xALPHA @@
+
+@POST
   "output.txt" << "Found Linux system" << "\n";
   N("var",1) = "zzz";
   L("red") = group(1,3,"_RED");
