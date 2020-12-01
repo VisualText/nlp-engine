@@ -1,4 +1,3 @@
-# 
 tokenize	nil	# Gen:   Convert input to token list.
 pat	initKB	# comment
 pat	join	# Copy of join

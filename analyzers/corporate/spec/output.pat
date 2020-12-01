@@ -7,15 +7,17 @@
 ###############################################
 
 @CODE
-"output.txt" << "[" << today() << "]" << "\n";
+
+G("out") = cbuf();
+G("out") << "[zzz " << today() << "]" << "\n";
 
 G("sentence") = down(G("parse"));
 
 while (G("sentence"))
 	{
 	G("object") = down(G("sentence"));
-	"output.txt" << "-------------------------------------------------------------\n";
-	"output.txt" << "\"" << strwrap(strval(G("sentence"),"text"),60) << "\"\n\n";
+	G("out") << "-------------------------------------------------------------\n";
+	G("out") << "\"" << strwrap(strval(G("sentence"),"text"),60) << "\"\n\n";
 	
 	while (G("object"))
 		{
@@ -25,10 +27,10 @@ while (G("sentence"))
 		if (strval(G("object"),"type") == "company")
 			{
 			if (G("subobject"))
-				"output.txt" << "Company: " << conceptname(G("object")) << "\n";
+				G("out") << "Company: " << conceptname(G("object")) << "\n";
 			}
 		else
-			"output.txt" << "Action: " << conceptname(G("object")) << "\n";
+			G("out") << "Action: " << conceptname(G("object")) << "\n";
 		
 		G("last subobject") = " ";
 		while (G("subobject"))
@@ -39,12 +41,12 @@ while (G("sentence"))
 				G("values") = attrvals(G("attributes"));
 				while (G("values"))
 					{
-					"output.txt" << "   " << conceptname(G("subobject")) << ": ";
-					"output.txt" << "(" << attrname(G("attributes")) << ") ";
+					G("out") << "   " << conceptname(G("subobject")) << ": ";
+					G("out") << "(" << attrname(G("attributes")) << ") ";
 					if (getstrval(G("values")))
-						"output.txt" << getstrval(G("values")) << "\n";
+						G("out") << getstrval(G("values")) << "\n";
 					else
-						"output.txt" << getnumval(G("values")) << "\n";
+						G("out") << getnumval(G("values")) << "\n";
 					G("printed") = 1;
 					G("values") = nextval(G("values"));
 					}
@@ -53,7 +55,7 @@ while (G("sentence"))
 
 			if (G("last subobject") != conceptname(G("subobject")))
 				{
-				"output.txt" << "\n";
+				G("out") << "\n";
 				G("printed") = 0;
 				}
 			G("last subobject") = conceptname(G("subobject"));
@@ -61,7 +63,7 @@ while (G("sentence"))
 			}
 			
 		if (G("printed"))
-			"output.txt" << "\n";
+			G("out") << "\n";
 			
 		G("object") = next(G("object"));
 		}
