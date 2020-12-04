@@ -1,5 +1,5 @@
 ###############################################
-# FILE: KBDump.pat
+# FILE: KBDisplay.pat
 # SUBJ: Call the DumpKB function on a concept
 # AUTH: Your Name
 # CREATED: 2020-11-19 8:40:53
@@ -10,6 +10,6 @@
 
 # Change the passed argument to the concept you are wanting to Dump
 
-DumpKB(G("Concept"));
+DisplayKB(G("Concept"));
 
 @@CODE

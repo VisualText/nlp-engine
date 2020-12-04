@@ -1,5 +1,5 @@
 ###############################################
-# FILE: KBDumpFuncs.pat
+# FILE: KBFuncs.pat
 # SUBJ: Call the DumpKB function
 # AUTH: Your Name
 # CREATED: 2020-11-19 8:40:53
@@ -9,10 +9,64 @@
 @DECL
 
 ###############################################
-# KB DUMP FUNCTIONS
+# General functions
 ###############################################
 
-DumpKB(L("top"),L("full")) {
+AddUniqueCon(L("concept"),L("name")) {
+	L("con") = findconcept(L("concept"),L("name"));
+	if (!L("con")) L("con") = makeconcept(L("concept"),L("name"));
+	return L("con");
+}
+
+###############################################
+# KB Dump Functins
+###############################################
+
+DumpKB(L("con"),L("file")) {
+	L("dir") = G("$apppath") + "/kb/";
+	L("filename") = L("dir") + L("file") + ".kb";
+	if (!kbdumptree(L("con"),L("filename"))) {
+		"kb.txt" << "FAILED dump: " << L("filename") << "\n";
+	} else {
+		"kb.txt" << "DUMPED: " << L("filename") << "\n";
+	}
+}
+
+IncrementCount(L("con"),L("countname")) {
+	L("count") = numval(L("con"),L("countname"));
+	if (L("count")) {
+		L("count") = L("count") + 1;
+		replaceval(L("con"),L("countname"),L("count"));
+	} else {
+		addnumval(L("con"),L("countname"),1);
+	}
+}
+
+TakeKB(L("filename")) {
+	L("path") = G("$apppath") + "/kb/" + L("filename") + ".kb";
+	"kb.txt" << "Taking: " << L("path") << "\n";
+	if (take(L("path"))) {
+		"kb.txt" << "  Taken successfully: " << L("path") << "\n";
+	} else {
+		"kb.txt" << "  Taken FAILED: " << L("path") << "\n";		
+	}
+} 
+
+ChildCount(L("con")) {
+	L("count") = 0;
+	L("child") = down(L("con"));
+	while (L("child")) {
+		L("count")++;
+		L("child") = next(L("child"));
+	}
+	return L("count");
+}
+
+###############################################
+# KBB DISPLAY FUNCTIONS
+###############################################
+
+DisplayKB(L("top"),L("full")) {
 	if (num(G("$passnum")) < 10) {
 		L("file") = "ana00" + str(G("$passnum"));
 	}else if (num(G("$passnum")) < 100) {
@@ -20,31 +74,30 @@ DumpKB(L("top"),L("full")) {
 	} else {
 		L("file") = "ana0" + str(G("$passnum"));
 	}
-	L("file") = L("file") + ".kb";
-	DumpKBRecurse(L("file"),L("top"),0,L("full"));
+	L("file") = L("file") + ".kbb";
+	DisplayKBRecurse(L("file"),L("top"),0,L("full"));
 	L("file") << "\n";
 }
 
-DumpKBRecurse(L("file"),L("top"),L("level"),L("full")) {
+DisplayKBRecurse(L("file"),L("top"),L("level"),L("full")) {
 	if (L("level") == 0) {
 		L("file") << conceptname(L("top")) << "\n";
 	}
 	L("con") = down(L("top"));
 	while (L("con")) {
 		L("file") << SpacesStr(L("level")+1) << conceptname(L("con"));
-		OutputAttributes(L("file"),L("con"),L("full"));
+		DisplayAttributes(L("file"),L("con"),L("full"));
 		L("file") << "\n";
 		if (down(L("con"))) {
 			L("lev") = 1;
-			if (L("full")) L("lev") = 2;
-			DumpKBRecurse(L("file"),L("con"),L("level")+L("lev"),L("full"));
+			DisplayKBRecurse(L("file"),L("con"),L("level")+L("lev"),L("full"));
 		}
 
 		L("con") = next(L("con"));
 	}
 }
 
-OutputAttributes(L("file"),L("con"),L("full")) {
+DisplayAttributes(L("file"),L("con"),L("full")) {
 	L("attrs") = findattrs(L("con"));
 	if (L("attrs")) L("file") << ": ";
 	if (L("full") && L("attrs")) L("file") << "\n";
