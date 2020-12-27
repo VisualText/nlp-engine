@@ -15,4 +15,3 @@ add_executable(nlp.exe ${nlp_src})
 
 target_link_libraries(nlp.exe PUBLIC prim kbm consh words lite)
 #target_link_libraries(nlp.exe PUBLIC prim kbm consh words lite odbc)
-

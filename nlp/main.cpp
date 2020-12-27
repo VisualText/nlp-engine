@@ -20,7 +20,7 @@ void cmdHelpargs(_TCHAR*);
 #ifdef LINUX
 main(
 #else
-_tmain(
+int _tmain(
 #endif
    int argc,
    _TCHAR *argv[],
@@ -37,8 +37,6 @@ bool develop = false;    	// Development mode.
 _TCHAR *sequence=0;
 bool compiled=false;       	// Run compiled/interp analyzer.
 bool silent=false;			// No log/debug output files.
-
-struct stat st;
 
 /////////////////////////////////////////////////
 // GET APP INFORMATION

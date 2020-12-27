@@ -44,6 +44,8 @@ typedef double HINSTANCE;
 #endif
 #if MSVC_VERSION >= 1900
 	typedef HINSTANCE HINSTANCE;
+#else
+	typedef HINSTANCE HINSTANCE;
 #endif
 }
 

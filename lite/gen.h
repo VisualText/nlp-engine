@@ -83,7 +83,7 @@ public:
 #ifdef LINUX
 	virtual void copy(const Gen *orig);
 #else
-	virtual void copy(const Gen *orig);
+	virtual void Gen::copy(const Gen *orig);
 #endif
 
 	const Gen &operator=(const Gen &);	// Assignment.

@@ -20,10 +20,9 @@ All rights reserved.
 #include "node.h"				// 07/07/03 AM.
 #include "tree.h"	// 07/07/03 AM.
 #include "nlppp.h"	// 07/07/03 AM.
-#include "gen.h"							// 05/10/00 AM.
 #include "irule.h"
 //#include "lite/delt.h"
-//#include "gen.h"							// 05/10/00 AM.
+#include "gen.h"							// 05/10/00 AM.
 #include "ifile.h"						// 11/25/98 AM.
 #include "seqn.h"
 
@@ -281,11 +280,11 @@ _TCHAR fname[MAXSTR];
 #ifdef UNICODE
 wsprintf(fname, _T("%s%c%s%s"), dir, DIR_CH, rules_file_name_, _T(".pat"));
 #elif LINUX
-//sprintf_s(fname, _T("%s%c%s%s"), dir, DIR_CH, rules_file_name_, _T(".pat"));
 sprintf(fname, _T("%s%c%s%s"), dir, DIR_CH, rules_file_name_, _T(".pat"));
 #else
-_t_ostrstream outStr(fname, MAXSTR, ios::out);							// 03/08/00 AM.
-outStr << dir << DIR_CH << rules_file_name_ << _T(".pat") << ends; // 03/08/00 AM.
+sprintf_s(fname, _T("%s%c%s%s"), dir, DIR_CH, rules_file_name_, _T(".pat"));
+//_t_ostrstream outStr(fname, MAXSTR, ios::out);							// 03/08/00 AM.
+//outStr << dir << DIR_CH << rules_file_name_ << _T(".pat") << ends; // 03/08/00 AM.
 #endif
 _t_ofstream fout(TCHAR2CA(fname), ios::out);											// 03/08/00 AM.
 

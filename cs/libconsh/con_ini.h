@@ -2,8 +2,11 @@
 /*** CONSH: HAND-EDITING OK ***/
 
 // Rename to distinguish hardwired kb loads from auto-generated kb load fns. // 02/20/19 AM.
+#ifdef LINUX
 extern bool ccx_con_ini(void*);	// 02/20/19 AM.
-//extern bool cc_con_ini(void*);	// 08/16/02 AM.
+#else
+extern bool cc_con_ini(void*);	// 08/16/02 AM.
+#endif
 
 //extern CON Con0[];
 

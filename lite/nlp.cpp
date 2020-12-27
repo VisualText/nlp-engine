@@ -13,7 +13,7 @@ All rights reserved.
 *
 *******************************************************************************/
 
-#ifdef WINDOWS
+#ifdef _WINDOWS
 #include "StdAfx.h"
 #endif
 #include <iostream>	// 09/27/19 AM.
@@ -1549,7 +1549,11 @@ parse->setHdll(hdll_);		// Handle to user.dll.					// 01/29/99 AM.
 #endif
 
 // Set up output to buffer.
+#ifdef LINUX
 parse->setCbuf((ostrstream*)oss);			// Try this.	// 11/17/20 AM.
+#else
+parse->setCbuf((_t_ostrstream*)oss);			// Try this.	// 11/17/20 AM.
+#endif
 //parse->setCbufmax(INFINITY);	// Try this.	// 11/17/20 AM.
 
 //parse->setVerbose(false);												// 10/13/99 AM.
@@ -1744,7 +1748,7 @@ if (outbuf && outlen > 1)													// 05/13/02 AM.	// 09/28/19 AM.
 	pbuf = &ocbuf;																// 05/13/02 AM.	// 09/28/19 AM.
 #else
 //_t_ostrstream ocbuf(outbuf, outlen, ios::out);							// 05/11/02 AM.
-_t_ostrstream ocbuf(outbuf, outlen, ios::app);							// 09/28/19 AM.
+_t_ostrstream ocbuf(outbuf, ios::app);							// 09/28/19 AM.
 _t_ostrstream *pbuf = 0;														// 05/13/02 AM.
 if (outbuf && outlen > 1)													// 05/13/02 AM.
 	pbuf = &ocbuf;																// 05/13/02 AM.
@@ -2029,7 +2033,7 @@ if (outbuf && outlen > 1)													// 05/13/02 AM.
 #elif LINUX
 	pbuf = new _t_ostrstream;
 #else
-	pbuf = new _t_ostrstream(outbuf,outlen,ios::out);				// 02/20/05 AM.
+	pbuf = new _t_ostrstream(outbuf,ios::out);				// 02/20/05 AM.
 #endif
 
 Parse *parse = 0;																// 05/13/99 AM.
@@ -2135,8 +2139,12 @@ Parse *prs = (Parse *) parse;
 
 Eana *eana = prs->getEana();
 
-//_t_ostream *cbuf = prs->getCbuf();											// 05/13/02 AM.
-ostrstream *cbuf = prs->getCbuf();											// 09/28/19 AM.
+#ifdef LINUX
+ostrstream* cbuf = prs->getCbuf();											// 09/28/19 AM.
+#else
+_t_ostream *cbuf = prs->getCbuf();											// 05/13/02 AM.
+#endif
+
 if (cbuf)																		// 05/13/02 AM.
 	*cbuf << ends;		// Terminate buffer.								// 05/13/02 AM.
 
@@ -2260,8 +2268,11 @@ if (parse->getText())
 #endif
 	}
 
-//_t_ostream *cbf = parse->getCbuf();										// 04/25/05 AM.
+#ifdef LINUX
 ostrstream *cbf = parse->getCbuf();										// 09/28/19 AM.
+#else
+_t_ostream *cbf = parse->getCbuf();										// 04/25/05 AM.
+#endif
 if (cbf)																			// 05/13/02 AM.
 	*cbf << ends;		// Terminate buffer.								// 05/13/02 AM.
 
@@ -2365,9 +2376,11 @@ if (parse->getText())
 #endif
 #endif
 	}
-
-//_t_ostream *cbf = parse->getCbuf();										// 04/25/05 AM.
+#ifdef LINUX
 ostrstream *cbf = parse->getCbuf();										// 09/28/19 AM.
+#else
+_t_ostream *cbf = parse->getCbuf();										// 04/25/05 AM.
+#endif
 if (cbf)																			// 05/13/02 AM.
 	*cbf << ends;		// Terminate buffer.								// 05/13/02 AM.
 

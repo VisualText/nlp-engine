@@ -14,8 +14,6 @@ int _tmain( // 09/23/20 AM.
     _TCHAR anaNoop[1001];
     _TCHAR anaCorporate[1001];
     _TCHAR workingFolder[1001];
-    _TCHAR input[1001];
-    _TCHAR output[1001];
 
     _stprintf(anaParse,"%s",_T("taiparse"));
     _stprintf(anaCorporate,"%s",_T("corporate"));
