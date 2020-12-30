@@ -14,7 +14,82 @@ L("hello") = 0;
 #"metric.txt" << G("$passnum") << "\n";
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+#@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
+
+
+# dqa alpha alpha
+@PRE
+<5,5> var("noun");
+
+@CHECK
+  if (!N(1) && !N(2))
+ 	fail();
+  if (!N("adj",4) && !N("noun",4))
+	fail();
+@POST
+  fixnphead(5);
+  fixnpnonhead(4);
+  if (pnname(N(4)) == "_adj")
+	L("nn") = 5;
+  else
+	L("nn") = 4;
+  if (pnname(N(4)) == "_adj" && !N(3))
+	L("jj") = 4;
+  else
+	L("jj") = 3;
+  dqaninfo(1,2,L("jj"),L("nn"));
+  groupnp();
+@RULES
+_xNIL <-
+	_xWILD [star match=(_det _pro)]
+	_xWILD [star match=(_quan _num _xNUM)]
+	_adj [star]
+	_xALPHA
+	_xALPHA
+	_xWILD [one lookahead match=(_verb _vg)]
+	@@
+
+# those alpha to
+@POST
+  if (N("noun",2) && plural(N(2)))
+    fixnphead(2);
+  else if (N("verb",2))
+    alphatoverb(2,0,"VBP");
+  else if (N("noun",2))
+  	fixnphead(2);
+  else if (N("adj",2))
+  	alphatoadj(2);
+  else if (N("adv",2))
+    alphatoadv(2);
+@RULES
+_xNIL <-
+	those [s]
+	_xALPHA
+	to [s lookahead]
+	@@
+
+# det alpha
+@CHECK
+  if (!N("noun",2) && !N("unknown",2))
+    fail();
+@POST
+  L("tmp2") = N(2);
+  group(2,2,"_noun");
+  L("num") = number(L("tmp2"));
+  if (L("num"))
+    N("number",2) = L("num");
+  L("n") = N(2);
+  pncopyvars(L("tmp2"),N(2));
+  group(1,2,"_np");
+  pncopyvars(L("n"),N(1));
+  clearpos(N(1),1,1);
+@RULES
+_xNIL <-
+	_det
+	_xALPHA
+	_xWILD [one lookahead match=(_xEND _qEOS)]
+	@@
 
 # det alpha
 # NIBBLE.
@@ -28,15 +103,19 @@ L("hello") = 0;
   if (N("pos num",3) < 2)
     fail();
 @POST
-
+  N("pos25 det-a-a") = 1;
   if (N("unknown",3))
     alphatonoun(3);
   else
     {
-	N("verb",3) = 0;
+	if (vconjq(N(3),"-en") && !N("noun",3) && !N("adj",3))
+		L("pos") = "VBN";
+	N("verb",3) = 0;	# verb = 0
 	--N("pos num",3);
 	if (N("noun",3) && N("pos num",3) == 1)
  		alphatonoun(3);	# 04/21/07 AM.
+	if (L("pos"))
+		N("mypos",3) = L("pos");
 	}
 @RULES
 _xNIL <-
@@ -65,8 +144,9 @@ _xNIL <-
     fixnpnonhead(2);
   else
     {
-	N("verb",2) = 0;
+	N("verb",2) = 0;	# verb = 0
 	--N("pos num",2);
+	alphaunambigred(2);
 	}
 @RULES
 _xNIL <-
@@ -99,10 +179,7 @@ _xNIL <-
   group(3,3,"_noun");
   pncopyvars(L("tmp3"),N(3));
   fixnoun(N(3));
-  L("tmp3") = N(3);
-  group(3,3,"_np");
-  pncopyvars(L("tmp3"),N(3));
-  clearpos(N(3),1,1);
+  nountonp(3,1);
 #  semcomposenp(N(3),L("tmp3"),L("tmp3"));
 @RULES
 _xNIL <-
@@ -112,14 +189,67 @@ _xNIL <-
 	_xWILD [one lookahead match=(_modal _have _be _verb)]
 	@@
 
+# mhbv conj alpha
+@PRE
+<11,11> var("verb");
+@CHECK
+  if (!N(1) && !N(3) && !N(5) && !N(7))
+  	fail();
+  # Agreement...
+  L("arr") = vgagree(N(1),N(3),N(5),N(7),N(9));
+  if (!L("arr")[0])
+    fail();
+  L("arr") = vgagree(N(1),N(3),N(5),N(7),N(11));
+  if (!L("arr")[0])
+    fail();
+@POST
+  L("m") = N(1);
+  L("h") = N(3);
+  L("b") = N(5);
+  L("being") = N(7);
+  L("v") = N(9);
+
+  if (N(7))
+    {
+    N("sem",7) = N("stem",7) = "be";
+    chpos(N(7),"VBG");
+    }
+
+  alphatovg(11,0,0);
+  L("neg") = mhbvadv(2,4,6,8);
+  group(1,9,"_vg");
+  mhbv(N(1),L("neg"),L("m"),L("h"),L("b"),L("being"),L("v"));
+
+  # Note: everything renumbered, vg conj vg ...
+  L("v2") = N("verb node",3);
+  mhbv(N(3),L("neg"),L("m"),L("h"),L("b"),L("being"),L("v2"));
+@RULES
+_xNIL <-
+    _xWILD [s star match=(_modal _do)]						### (1)
+    _xWILD [star match=(_adv _advl)]						### (2)
+    _have [s opt]											### (3)
+    _xWILD [star match=(_adv _advl)]						### (4)
+    _be [s opt]												### (5)
+    _xWILD [star match=(_adv _advl)]						### (6)
+    being [s opt]											### (7)
+    _xWILD [star match=(_adv _advl)]						### (8)
+    _xWILD [s one match=(_verb) except=(_modal _have _be _vg)]	### (9)
+    _conj													### (10)
+    _xALPHA													### (11)
+    @@
+
 # mhbv
 # Complete vg.
 @CHECK
+  if (pnname(N(9)) != "_verb" && !N("verb",9))
+	fail();
   # Agreement...
   L("arr") = vgagree(N(1),N(3),N(5),N(7),N(9));
   if (!L("arr")[0])
     fail();
 @POST
+  if (pnname(N(9)) != "_verb")
+ 	alphatoverb(9,0,0);
   L("m") = N(1);
   L("h") = N(3);
   L("b") = N(5);
@@ -137,35 +267,123 @@ _xNIL <-
   mhbv(N(1),L("neg"),L("m"),L("h"),L("b"),L("being"),L("v"));
 @RULES
 _xNIL <-
-	_xWILD [s one match=(_modal _do)]
-	_xWILD [star match=(_adv _advl)]
-	_have [s opt]
+    _xWILD [s one match=(_modal)]								### (1)
+    _xWILD [star match=(_adv _advl)]							### (2)
+    _have [s opt]												### (3)
+    _xWILD [star match=(_adv _advl)]							### (4)
+    _be [s opt]													### (5)
+    _xWILD [star match=(_adv _advl)]							### (6)
+    being [s opt]												### (7)
+    _xWILD [star match=(_adv _advl)]							### (8)
+    _xWILD [s one match=(_verb _xALPHA) except=(_modal _have _be _vg)]	### (9)
+    @@
+
+# mhbv
+@CHECK
+  if (pnname(N(7)) != "_verb" && !N("verb",7))
+	fail();
+  # Agreement...
+  L("arr") = vgagree(0,N(1),N(3),N(5),N(7));
+  if (!L("arr")[0])
+    fail();
+@POST
+  if (pnname(N(7)) != "_verb")
+	alphatoverb(7,0,0);
+  L("m") = 0;
+  L("h") = N(1);
+  L("b") = N(3);
+  L("being") = N(5);
+  L("v") = N(7);
+
+  if (N(5))
+    {
+    N("sem",5) = N("stem",5) = "be";
+    chpos(N(5),"VBG");
+    }
+
+  L("neg") = mhbvadv(2,4,6,0);
+  group(1,7,"_vg");
+  mhbv(N(1),L("neg"),L("m"),L("h"),L("b"),L("being"),L("v"));
+@RULES
+_xNIL <-
+	_have [s]
 	_xWILD [star match=(_adv _advl)]
 	_be [s opt]
 	_xWILD [star match=(_adv _advl)]
 	being [s opt]
 	_xWILD [star match=(_adv _advl)]
-	_xWILD [s one match=(_verb) except=(_modal _have _be _vg)]
+	_xWILD [s one match=(_verb _xALPHA) except=(_modal _have _be _vg)]
+	@@
+
+# mhbv
+@CHECK
+  if (pnname(N(5)) != "_verb" && !N("verb",5))
+	fail();
+  # Agreement...
+  L("arr") = vgagree(0,0,N(1),N(3),N(5));
+  if (!L("arr")[0])
+    fail();
+@POST
+  if (pnname(N(5)) != "_verb")
+	alphatoverb(5,0,0);
+  L("m") = 0;
+  L("h") = 0;
+  L("b") = N(1);
+  L("being") = N(3);
+  L("v") = N(5);
+
+  if (N(3))
+    {
+    N("sem",3) = N("stem",3) = "be";
+    chpos(N(3),"VBG");
+    }
+
+  L("neg") = mhbvadv(2,4,0,0);
+  group(1,5,"_vg");
+  mhbv(N(1),L("neg"),L("m"),L("h"),L("b"),L("being"),L("v"));
+@RULES
+_xNIL <-
+    _be [s]														### (1)
+    _xWILD [star match=(_adv _advl)]							### (2)
+    being [s opt]												### (3)
+    _xWILD [star match=(_adv _advl)]							### (4)
+    _xWILD [s one match=(_verb _xALPHA) except=(_modal _have _be _vg _adj _adjc)]	### (5)
+    @@
+
+# verb damn [verb alpha]
+# vg damn [vg alpha]
+@POST
+  alphatoadv(3);
+@RULES
+_xNIL <-
+	_xWILD [one match=(_verb _vg)]
+	_adv [star]
+	damn
+	@@
+
+# prep damn [prep alpha]
+@PRE
+<1,1> varne("stem","to");
+@POST
+  alphatoadv(3);
+@RULES
+_xNIL <-
+	_prep
+	_adv [star]
+	damn
 	@@
 
 # prep alpha dqan
 # prep ving dqan
+@PRE
+<1,1> varne("stem","of");
 @CHECK
   if (!N("verb",3))
     fail();
   if (!vconjq(N(3),"-ing"))
     fail();
 @POST
-  L("tmp3") = N(3);
-  group(3,3,"_verb");
-  pncopyvars(L("tmp3"),N(3));
-  L("v") = N(3);
-  group(3,3,"_vg");
-  mhbv(N(3),L("neg"),0,0,0,0,L("v"));
-  pncopyvars(L("tmp3"),N(3));
-  N("verb node",3) = L("v");
-  clearpos(N(3),1,0);
-  fixvg(N(3),"active",0);
+  alphatovg(3,"active",0);	# Replace old code. # 05/22/07 AM.
 @RULES
 _xNIL <-
 	_prep
@@ -213,18 +431,26 @@ _xNIL <-
 
 # prep alpha ,
 @CHECK
-  if (!N("noun",2))
+  if (!N("noun",2) && !N("unknown",2))
     fail();
   if (N("verb",2))
+	{
     if (vconjq(N(2),"-ing"))
 	  fail();
+	}
 @POST
   alphatonoun(2);
 @RULES
 _xNIL <-
 	_xWILD [s one match=(_prep) except=(to)]
 	_xALPHA
-	_xWILD [one lookahead match=(\, _clausesep)]
+	_xWILD [one lookahead match=(\, _conj)]
+	_xWILD [one fail=(_xALPHA _adj)]
+	@@
+_xNIL <-
+	_xWILD [s one match=(_prep) except=(to)]
+	_xALPHA
+	_xWILD [one lookahead match=(_clausesep)]
 	@@
 
 # prep alpha [NIBBLE]
@@ -235,21 +461,14 @@ _xNIL <-
     fail();
 @POST
   --N("pos num",2);
-  N("verb",2) = 0;
-  if (N("pos num",2) == 1)
-    {
-	if (N("noun",2))
-	  alphatonoun(2);
-	else if (N("adj",2))
-	  alphatoadj(2);
-	else if (N("adv",2))
-	  alphatoadv(2);
-	}
+  N("verb",2) = 0;	# verb = 0
+  alphaunambigred(2);
 @RULES
 _xNIL <-
 	_xWILD [s one match=(_prep) except=(to)]
 	_xALPHA
 	@@
+
 
 # det alpha alpha noun
 # 's alpha alpha noun
@@ -276,28 +495,6 @@ _xNIL <-
 	_xALPHA
 	_noun
 	_xWILD [one lookahead match=(_qEOS _xEND _prep)]
-	@@
-
-# det alpha
-@CHECK
-  if (!N("noun",2) && !N("unknown",2))
-    fail();
-@POST
-  L("tmp2") = N(2);
-  group(2,2,"_noun");
-  L("num") = number(L("tmp2"));
-  if (L("num"))
-    N("number",2) = L("num");
-  L("n") = N(2);
-  pncopyvars(L("tmp2"),N(2));
-  group(1,2,"_np");
-  pncopyvars(L("n"),N(1));
-  clearpos(N(1),1,1);
-@RULES
-_xNIL <-
-	_det
-	_xALPHA
-	_xWILD [one lookahead match=(_xEND _qEOS)]
 	@@
 
 # Equation stuff.
@@ -366,15 +563,32 @@ _xNIL <-
 	@@
 
 # cap prep
+@CHECK
+  if (N("verb",2))
+	{
+	if (N("noun",2)
+     && (vconjq(N(2),"inf") || vconjq(N(2),"-ing")) )
+	  fail();
+	}
 @POST
-  L("tmp2") = N(2);
-  group(2,2,"_noun");
-  pncopyvars(L("tmp2"),N(2));
-  N("cap",2) = 1;
-  fixnoun(N(2));
-  group(2,2,"_np");
-  pncopyvars(L("tmp2"),N(2));
-  clearpos(N(2),1,1);
+  if (N("noun",2) && plural(N(2)))
+	fixnphead(2);
+  else if (N("verb",2))
+	{
+	if (N("stem",4) == "by" && vconjq(N(2),"-en"))
+	  alphatovg(2,"passive","VBN");
+	else
+	  alphatovg(2,0,"VB");
+	}
+  else if (N("noun",2))
+	{
+	fixnphead(2);
+    nountonp(2,1);
+	}
+  else if (N("adj",2))
+	alphatoadj(2);
+  else if (N("adv",2))
+	alphatoadv(2);
 @RULES
 _xNIL <-
 	_xSTART
@@ -399,9 +613,8 @@ _xNIL <-
 	_xWILD [star match=(_advl _adv)]
 	_xALPHA
 	_xWILD [star lookahead match=(_advl _adv)]
-	_xWILD [one match=(_det _pro _quan _num _xNUM)]
+	_xWILD [one match=(_det _pro _quan _num _xNUM _fnword)]
 	@@
-
 
 # verb alpha
 @CHECK
@@ -414,9 +627,7 @@ _xNIL <-
     fail();
 @POST
   L("tmp3") = N(3);
-  group(3,3,"_adj");
-  pncopyvars(L("tmp3"),N(3));
-  fixadj(N(3));
+  alphatoadj(3);
   group(3,3,"_adjc");
   pncopyvars(L("tmp3"),N(3));
   clearpos(N(3),1,0);
@@ -444,34 +655,23 @@ _xNIL <-
 _xNIL <-
 	_xSTART
 	that [s]
-	_xWILD [one lookahead match=(_verb _vg)]
+	_xWILD [one lookahead match=(_modal _verb _vg)]
 	@@
 
 # , said
 @POST
-  L("tmp3") = N(3);
-  L("txt") = strtolower(N("$text",3));
-  group(3,3,"_verb");
-  L("v") = N(3);
-  pncopyvars(L("tmp3"),N(3));
-  if (L("txt") == "said")
-    chpos(N(3),"VBD");
-  else if (L("txt") == "says")
-    chpos(N(3),"VBZ");
-  group(3,3,"_vg");
-  mhbv(N(3),L("neg"),0,0,0,0,L("v"));
-  pncopyvars(L("tmp3"),N(3));
-  N("verb node",3) = L("v");
-  N("voice",3) = "active";
+  L("t") = strtolower(N("$text",3));
+  alphatovg(3,"active","VBP");
   N("glom",3) = "left";
   clearpos(N(3),1,0);
   if (L("next") = pnnext(N(3)))
     pnreplaceval(L("next"),"glom","right");
+  N("inverted-verb-noun",3) = 1;
 @RULES
 _xNIL <-
 	_xWILD [one match=( \, _dblquote _qEOS _xSTART _conj _clause _noun _np)]
 	_xWILD [star match=(_advl _adv)]
-	_xWILD [one match=(say says said)]
+	_xWILD [one match=(say says said quip quips quipped recalls recalled)]
 	@@
 
 # X said
@@ -508,7 +708,8 @@ _xNIL <-
 @RULES
 _xNIL <-
 	_xCAP
-	_xWILD [one match=(_verb say says saying said)]
+	_xWILD [one match=(_verb say says saying said
+ 		quip quips quipping quipped recalls recalled)]
 	@@
 
 # last noun
@@ -592,7 +793,7 @@ _xNIL <-
 _xNIL <-	# 04/20/07 AM.
 	_xWILD [s one match=(since _det)]
 	_xALPHA
- 	_noun
+ 	_noun [lookahead]
 	@@
 
 # alpha date
@@ -613,9 +814,7 @@ _xNIL <-	# 04/20/07 AM.
    }
   else
     {
-  group(2,2,"_np");
-  pncopyvars(L("tmp2"),N(2));
-  clearpos(N(2),1,1);
+	nountonp(2,1);
     }
 @RULES
 _xNIL <-
@@ -642,9 +841,12 @@ _xNIL <-
 
 # including
 # note: as prepositional construct.
+@PRE
+<2,2> varz("pos25 including");
 @POST
+  N("pos25 including",2) = 1;
   if (pnname(N(2)) == "_verb")
-    pnrename(N(2),"_prep");
+    pnrename(N(2),"_prep");	# including -> prep
 # chpos(N(2),"IN");
   chpos(N(2),"VBG");	# Conform to Treebank.
 @RULES
@@ -707,7 +909,10 @@ _xNIL <-
 	@@
 
 # Some default tagging.
+@PRE
+<3,3> varz("done");
 @POST
+  N("done",3) = 1;
   chpos(N(3),"VB");
 @RULES
 _xNIL <-
@@ -796,7 +1001,7 @@ _xNIL <-
   pncopyvars(L("tmp5"),N(5));
   group(2,2,"_verb");
   pncopyvars(L("tmp2"),N(2));
-  fixverb(N(2),"active","VBD");
+  fixverb(N(2),"active","VBP");
   if (!N("mypos",1))
     chpos(N(1),"IN");	# that/IN
 @RULES
@@ -823,15 +1028,8 @@ _xNIL <-
 @POST
   pnrename(N(2),"_det");
   chpos(N(2),"DT");	# that/DT
-  L("tmp2") = N(2);
-  group(2,2,"_np");
-  pncopyvars(L("tmp2"),N(2));
-  clearpos(N(2),1,1);
-
-  L("tmp1") = N(1);
-  group(1,1,"_np");
-  pncopyvars(L("tmp1"),N(1));
-  clearpos(N(1),1,1);
+  nountonp(2,1);
+  nountonp(1,1);
 @RULES
 _xNIL <-
 	_det
@@ -901,11 +1099,14 @@ _xNIL <-
     if (!N("mypos",1))
       chpos(N(1),"RBR");
 	}
+ chpos(N(1),"RBR");	# more/RBR.
+ pnrename(N(1),"_adj");
 @RULES
 _xNIL <-
 	_xWILD [s one match=(more less)]
 	_xALPHA
 	@@
+
 
 # most alpha
 @CHECK
@@ -917,9 +1118,61 @@ _xNIL <-
   pncopyvars(L("tmp2"),N(2));
   fixadj(N(2));
   if (!N("mypos",1))
-    chpos(N(1),"RBS");
+    chpos(N(1),"RB");	# most/RJS
+  if (pnname(N(1)) == "_fnword")
+	pnrename(N(1),"_adv");
 @RULES
 _xNIL <-
+	most [s]
+	_xALPHA
+	\, [lookahead]
+	_xWILD [one fail=(_xALPHA _adj)]
+	@@
+
+# det most adj
+# pro most adj
+@POST
+  chpos(N(2),"RBS");	# most/RBS
+  pnrename(N(2),"_premod");
+  group(2,3,"_adj");
+@RULES
+_xNIL <-
+	_xWILD [one match=(_det _pro)]
+	most [s]
+	_adj
+	@@
+
+# most adj
+# Note: If the above not matched, then most is adj.
+@PRE
+<1,1> varz("pos25 most-adj");
+@POST
+  N("pos25 most-adj",1) = 1;
+  chpos(N(1),"JJS");	# most/JJS
+  pnrename(N(1),"_adj");
+@RULES
+_xNIL <-
+	most [s]
+	_adj [lookahead]
+	@@
+
+# most alpha
+@CHECK
+  if (!N("adj",3))
+    fail();
+@POST
+  alphatoadj(3);
+  if (!N("mypos",2))
+  	{
+	if (N(1))
+		chpos(N(2),"RBS");	# most/RBS
+	else
+		chpos(N(2),"JJS");	# most/JJS
+	}
+  pnrename(N(2),"_adj");	# most -> adj
+@RULES
+_xNIL <-
+	_xWILD [opt match=(_det _pro)]
 	most [s]
 	_xALPHA
 	@@
@@ -941,6 +1194,30 @@ _xNIL <-
 	_xWILD [s one lookahead match=(up down)]
 	@@
 
+# verb prep prep
+@PRE
+<2,2> varz("mypos");
+@CHECK
+  if (pnname(N(1)) == "_vg")
+	{
+	L("v") = N("verb node",1);
+	if (N("voice",1) != "active" && vconjq(L("v"),"-en"))
+	  fail();
+	}
+  else
+	{
+	if (!N("mypos",1) || N("mypos",1) == "VBN")
+	  fail();
+	}
+@POST
+  if (!N("mypos",2))
+    chpos(N(2),"IN");	# prep/IN
+@RULES
+_xNIL <-
+	_xWILD [one match=(_verb _vg)]
+ 	_prep [lookahead]
+	_prep
+	@@
 
 # be up
 # be down
@@ -967,6 +1244,13 @@ _xNIL <-
     chpos(N(3),"IN");
   else # Must be copula case.
     chpos(N(3),"RB");	# up/RB down/RB out/RB off/RB
+
+  # Reduce verb+particle to vg.
+  if (pnname(N(1)) == "_vg" && S("rp/in"))
+    {
+	N("particle",1) = N(3);
+    listadd(1,3,"true");	# Glom it together.
+	}
 @RULES
 _xNIL <-
 	_xWILD [one match=(_verb _vg)]
@@ -1096,6 +1380,34 @@ _xNIL <-
 	yet [s]
 	@@
 
+# as adj as
+# as adj det
+@PRE
+<1,1> varz("mypos");
+@POST
+  pnrename(N(1),"_adv");	# as -> adv.
+  chpos(N(1),"RB");	# as/RB
+@RULES
+_xNIL <-
+	as [s]
+	_adj
+	_xWILD [s one lookahead match=(_det as)]
+	@@
+
+# as dqan verb
+@PRE
+<1,1> varz("mypos");
+@POST
+  chpos(N(1),"IN");
+@RULES
+_xNIL <-
+	as [s]
+	_xWILD [plus lookahead match=(_det _pro _quan _num _xNUM
+		_adj _noun _np _xALPHA)]
+	_xWILD [one match=(_verb _vg)]
+	@@
+
+# as
 @CHECK
   if (N("mypos"))
     fail();
@@ -1164,9 +1476,9 @@ _xNIL <-
 	@@
 
 # once dqan
-@CHECK
-  if (N("mypos",1))
-    fail();
+#@CHECK
+#  if (N("mypos",1))
+#    fail();
 @POST
   chpos(N(1),"IN");	# once/IN
 @RULES
@@ -1199,6 +1511,7 @@ _xNIL <-
   group(2,2,"_verb");
   pncopyvars(L("tmp2"),N(2));
   chpos(N(2),"VBZ");	# 's/VBZ
+  N("copula",2) = 1;
 @RULES
 _xNIL <-
 	_xWILD [one match=(_noun _np _xALPHA)]
@@ -1214,6 +1527,7 @@ _xNIL <-
   group(2,2,"_verb");
   pncopyvars(L("tmp2"),N(2));
   chpos(N(2),"VBZ");
+  N("apos-s",2) = 1;
 @RULES
 _xNIL <-
 	_xWILD [one match=(_noun _np _xALPHA)]
@@ -1332,7 +1646,24 @@ _xNIL <-
 	_xWILD [one lookahead match=(_verb _vg)]
 	@@
 
+# adj alpha
+@PRE
+<2,2> var("noun");
+<2,2> var("verb");
+@CHECK
+  if (N("pos num",2) != 2)
+	fail();
+@POST
+  alphatonoun(2);
+@RULES
+_xNIL <-
+	_adj
+	_xALPHA
+	@@
+
 # conj alpha prep
+@PRE
+<2,2> varz("noun");
 @CHECK
   if (!N("verb",2))
     fail();
@@ -1348,6 +1679,26 @@ _xNIL <-
 	_conj
 	_xALPHA
 	_xWILD [one lookahead match=(_prep)]
+	@@
+
+# conj alpha noun
+@POST
+  L("done") = 0; # If found something.
+  if (N("noun",2) || N("adj",2))
+	{
+	if (singular(N(3)) && !N("cap",3))
+	  {
+	  fixnpnonhead(2);
+	  L("done") = 1;
+	  }
+	}
+  noop();
+@RULES
+_xNIL <-
+	_conj
+	_xALPHA
+	_noun [lookahead]
+	_xWILD [one match=(_prep)]
 	@@
 
 # fnword alpha verb
@@ -1369,6 +1720,23 @@ _xNIL <-
 	_xWILD [one lookahead match=(_verb _vg _modal)]
 	@@
 
+# fnword alpha alpha
+@PRE
+<3,3> var("verb");
+<5,5> var("adv");
+@POST
+  alphatoadv(5);
+  alphatovg(3,0,0);
+@RULES
+_xNIL <-
+ 	but [s]
+ 	_adv [star]
+	_xALPHA
+ 	_adv [star]
+	_xALPHA
+	_xWILD [one match=(_np _pro _det _quan _num _xNUM)]
+	@@
+
 # noun alpha verb
 @CHECK
   if (!N("noun",2) && !N("unknown",2))
@@ -1386,6 +1754,7 @@ _xNIL <-
 	@@
 
 # idiom: pretty much
+# much
 @POST
   L("tmp1") = N(1);
   L("tmp2") = N(2);
@@ -1471,10 +1840,11 @@ _xNIL <-
 	@@
 
 # noun adj noun
-@PRE
-<2,2> var("cap");
+@CHECK
+  if (!N("cap",2) && !N("num",2) && !N("possessive",3))
+  	fail();
 @POST
-  pnrename(N(2),"_adj");
+  pnrename(N(2),"_adj");	# noun -> adj
 @RULES
 _xNIL <-
 	_xWILD [one match=(_det _prep _pro _conj)]
@@ -1616,8 +1986,7 @@ _xNIL <-
 
 # verb num
 @POST
-  group(2,2,"_np");
-  clearpos(N(2),1,1);
+  nountonp(2,1);
 @RULES
 _xNIL <-
 	_xWILD [one match=(_verb _vg)]
@@ -1633,33 +2002,69 @@ _xNIL <-
    fail();
 @POST
   group(1,1,"_noun");
-  group(1,1,"_np");
+  nountonp(1,1);
 @RULES
 _xNIL <-
 	this [s]
 	_adv [star]
-	_xWILD [one match=(_advl _np _vg
+	_xWILD [one lookahead match=(_advl _np _vg
 		_pro _modal _verb _fnword _prep _conj
 		)]
 	@@
 
 # to alpha
+@CHECK
+  if (!N("verb",3))
+    fail();
+  if (!vconjq(N(3),"inf")) # New function. # 06/15/06 AM.
+    fail();
 @POST
+  alphatovg(3,"active","VB");
+@RULES
+_xNIL <-
+	to [s]
+	_xWILD [star match=(_adv _advl)]
+	_xALPHA
+	_xWILD [star match=(_adv _advl)]
+	_xWILD [lookahead one match=(
+		_det _quan _num _xNUM _adj _np _pro)]
+	@@
+
+# to alpha
+@PRE
+<1,1> varz("pos25 to-alph");
+@CHECK
+  if (N("adj",2) && N("verb",2) && vconjq(N(2),"-ing"))
+	fail();
+@POST
+  N("pos25 to-alph",1) = 1;
   if (N("unknown",2))
     alphatonoun(2);
+  else if (vconjq(N(2),"-ing"))
+	{
+	if (N("adj",2))
+		alphatoadj(2);
+	else
+		alphatoverb(2,"active","VBG");
+	}
   else if (N("verb",2))
     {
-	if (vconjq(N(2),"-en")
-	 || vconjq(N(2),"-ing"))
-	  alphatoadj(2);
-	else if (vconjq(N(2),"inf")
+	if (vconjq(N(2),"inf")
 	 && !plural(N(2)) )
 	  {
 	  # Still ambiguous.	# 04/23/07 AM.
 #	  alphatoverb(2,"active","VB");	# 04/23/07 AM.
 	  }
+	else if (vconjq(N(2),"-en")
+	 || vconjq(N(2),"-ing"))
+	  alphatoadj(2);
 	else if (N("noun",2))
 	  alphatonoun(2);
+	else
+		{
+	"err.txt" << "pos50 to-alpha: " << phrasetext() << "\n";
+    alphatoverb(2,"active","VB");	# verb/VB [DEFAULT]	
+		}
 	}
   else if (N("adj",2))
     alphatoadj(2);
@@ -1667,6 +2072,12 @@ _xNIL <-
     alphatonoun(2);
   else if (N("adv",2))
     alphatoadv(2);
+  else # [DEFAULT]
+    {
+	"err.txt" << "pos50 to-alpha: " << phrasetext() << "\n";
+    alphatoverb(2,"active","VB");	# verb/VB [DEFAULT]
+	}
+
 @RULES
 _xNIL <-
 	to [s]
@@ -1702,7 +2113,11 @@ _xNIL <-
 	_xWILD [one lookahead match=(_xALPHA _verb)]
 	@@
 
+# have
+@PRE
+<1,1> varz("done");
 @POST
+  N("done",1) = 1;
   chpos(N(1),"VBP");
 @RULES
 _xNIL <-
@@ -1728,24 +2143,49 @@ _xNIL <-
 # dqan alpha
 # NIBBLE.
 @CHECK
-  if (N("sem",2) != "date"
-   && !N("cap",2))
+  if (N("sem",3) != "date"
+   && !N("cap",3))
     fail();
-  if (!N("noun",3))
+  if (!N("noun",4))
     fail();
-  if (N("verb",3))
+  if (N("verb",4))
     {
-    if (singular(N(2)) && singular(N(3)))
+	if (vconjq(N(4),"-ed") || vconjq(N(4),"-ing"))
+	  fail();
+    if (singular(N(3)) && singular(N(4)))
       succeed();
 	fail();
 	}
 @POST
-  alphatonoun(3); # adjnoun thingy.
+  alphatonoun(4); # adjnoun thingy.
+  # Fix some caps from context.
+  if (N("mypos",3) == "NPS" && N("unknown",3) && singular(N(4)))
+	N("mypos",4) = "NP";	# noun(pl) -> noun(s)
 @RULES
 _xNIL <-
 	_xWILD [one match=(_det _pro)]
+	_adj [star]
 	_xWILD [one match=(_noun _np)]
 	_xALPHA
+	_xWILD [one lookahead fail=(_pro _noun _np)]
+	@@
+
+# det noun alpha $
+@PRE
+<3,3> var("noun");
+@CHECK
+  if (N("unknown",2) && N("cap",2) && N("mypos",2) == "NPS")
+	succeed();
+  fail();
+@POST
+  N("mypos",2) = "NP";
+  fixnphead(3);
+@RULES
+_xNIL <-
+	_det
+	_noun
+	_xALPHA
+	_xEND
 	@@
 
 # alpha modal
@@ -1791,11 +2231,11 @@ _xNIL <-
 # det verb
 # the verb
 @POST
-  pnrename(N(2),"_adj");
+  pnrename(N(2),"_adj");	# verb -> adj
   chpos(N(2),"JJ");
 @RULES
 _xNIL <-
-	_xWILD [s one match=(a the)]
+	_xWILD [s one match=(a the _premod)]
 	_verb
 	@@
 
@@ -1848,20 +2288,10 @@ _xNIL <-
 @POST
   if (N("verb",2))
     {
-	N("verb",2) = 0;
+	N("verb",2) = 0;	# verb = 0
 	--N("pos num",2);
 	}
-  if (N("pos num",2) == 1)
-    {
-	if (N("noun",2))
-	  alphatonoun(2);
-	else if (N("adj",2))
-	  alphatoadj(2);
-	else if (N("adv",2))
-	  alphatoadv(2);
-	else
-	  "err.txt" << "POS? for=" << N("$text",2) << "\n";
-	}
+  alphaunambigred(2);
 @RULES
 _xNIL <-
 	whose [s]
@@ -1903,13 +2333,13 @@ _xNIL <-
 _xNIL <-
 	_xWILD [plus match=(_det _pro _quan _num _xNUM _adj _noun)]
 	_xALPHA
-	_adj [lookahead]
-	_xWILD [one fail=(_xALPHA _adj _noun)]
+	_adj	# 04/25/10 AM.
+	_xWILD [one lookahead fail=(_xALPHA _adj _noun)]
 	@@
 _xNIL <-
 	_xWILD [plus match=(_det _pro _quan _num _xNUM _adj _noun)]
 	_xALPHA
-	_adj [lookahead]
+	_adj	# 04/25/10 AM.
 	_xEND
 	@@
 
@@ -1920,7 +2350,7 @@ _xNIL <-
 	if (N("verb",2))
 	  {
 	  --N("pos num",2);
-	  N("verb",2) = 0;
+	  N("verb",2) = 0;	# verb = 0
 	  }
 	}
   else if (N("noun",2))
@@ -1934,7 +2364,10 @@ _xNIL <-
 	@@
 
 # when alpha
+@PRE
+<1,1> varz("pos25 when");
 @CHECK
+ N("pos25 when",1) = 1;
  if (N("verb",2))
    {
    if (vconjq(N(2),"-ing")
@@ -1945,17 +2378,9 @@ _xNIL <-
   if (N("verb",2))
     {
 	--N("pos num",2);
-	N("verb",2) = 0;
+	N("verb",2) = 0;	# verb = 0
 	}
-  if (N("pos num",2) == 1)
-    {
-	if (N("noun",2))
-	  alphatonoun(2);
-	else if (N("adj",2))
-	  alphatoadj(2);
-	else if (N("adv",2))
-	  alphatoadv(2);
-	}
+  alphaunambigred(2);
 @RULES
 _xNIL <-
 	when [s]
@@ -1991,20 +2416,20 @@ _xNIL <-
 	@@
 
 # alpha $
-@POST
-  if (N("verb",1))
-    {
-	if (vconjq(N(1),"-edn"))
-	  alphatoverb(1,0,0);
-	}
-  else if (N("pos num",1) == 2
-   && N("noun",1) && N("adj",1))
-     fixnphead(1);
-@RULES
-_xNIL <-
-	_xALPHA
-	_xWILD [one match=(_xEND)]
-	@@
+#@POST
+#  if (N("verb",1))
+#    {
+#	if (vconjq(N(1),"-edn"))
+#	  alphatoverb(1,0,0);
+#	}
+#  else if (N("pos num",1) == 2
+#   && N("noun",1) && N("adj",1))
+#     fixnphead(1);
+#@RULES
+#_xNIL <-
+#	_xALPHA
+#	_xWILD [one match=(_xEND)]
+#	@@
 
 # alpha alpha
 @CHECK
@@ -2174,7 +2599,7 @@ _xNIL <-
 	_noun
 	\,
 	_xALPHA
-	_xEND
+	_xWILD [one lookahead match=(_dbldash _xEND)]
 	@@
 
 # alpha to be
@@ -2224,4 +2649,911 @@ _xNIL <-
 	_noun
 	_xALPHA
 	of [s lookahead]
+	@@
+
+# noun alpha prep
+@PRE
+<2,2> var("adj");
+<2,2> var("adv");
+<2,2> vareq("pos num",2);
+@CHECK
+  if (!plural(N(1)))
+	fail();
+@POST
+  # Prefer adv, but may need some list of preferences
+  # for post-np cases like these.
+  alphatoadv(2);
+@RULES
+_xNIL <-
+	_noun
+	_xALPHA
+	_prep [lookahead]
+	@@
+
+# alpha of
+@PRE
+<1,1> var("noun");
+<1,1> var("verb");
+<1,1> varz("adj");
+@CHECK
+  if (phrprepverbq(N(1),N(2)))
+	fail();
+@POST
+  fixnphead(1);
+@RULES
+_xNIL <-
+ 	_xALPHA
+	of [s lookahead]
+	@@
+ 
+# det num
+@POST
+  if (N("num",2) == 1)
+    N("mypos",2) = "NN";
+  else
+	N("mypos",2) = "NNS";
+  pnrename(N(2),"_noun");	# num -> noun
+@RULES
+_xNIL <-
+	_det
+	_num
+	_xWILD [one lookahead fail=(_xALPHA _det _quan _num _xNUM
+		_adj _adjc _noun _fnword)]
+	@@
+
+# one alpha
+# num alpha
+@PRE
+<3,3> var("verb");
+@POST
+  alphatoverb(3,0,0);
+@RULES
+_xNIL <-
+	_xWILD [one match=(_dbldash)]
+	_num
+	_xALPHA
+	_xWILD [one lookahead match=(_det _pro)]
+	@@
+
+# num that
+# one that
+@PRE
+<1,1> varz("mypos");
+@POST
+  pnrename(N(1),"_np");	# one -> np
+  chpos(N(1),"NN");	# one/NN
+@RULES
+_xNIL <-
+	one [s]
+	that [s lookahead]
+	@@
+
+
+# if alpha
+@CHECK
+  if (!N("verb",2))
+	fail();
+  if (!vconjq(N(2),"inf"))
+	fail();
+@POST
+  --N("pos num",2);
+  N("verb",2) = 0;	# verb = 0
+  alphaunambigred(2);
+@RULES
+_xNIL <-
+	if [s]
+	_xALPHA
+	@@
+
+# , alpha adj
+# , alpha noun
+@PRE
+<2,2> var("noun");
+<2,2> var("adj");
+<2,2> vareq("pos num",2);
+@POST
+  fixnpnonhead(2);
+@RULES
+_xNIL <-
+	\,
+	_xALPHA
+	_xWILD [one lookahead match=(_adj _noun)]
+	@@
+
+# noun , alpha adj
+# dqan , alpha adj
+@PRE
+<3,3> var("verb");
+<3,3> varz("adj");
+@POST
+  alphatovg(3,0,0);
+@RULES
+_xNIL <-
+    _xWILD [one match=(_noun _np)]	### (1)
+    \,								### (2)
+    _xALPHA							### (3)
+    _adj [lookahead]				### (4)
+    @@
+
+# conj alpha adj
+@PRE
+<3,3> var("noun");
+<3,3> var("verb");
+<3,3> vareq("pos num",2);
+@POST
+  alphatoverb(3,0,0);
+@RULES
+_xNIL <-
+	_conj
+	_adv [star]
+	_xALPHA
+	_adj [lookahead]
+	@@
+
+# num alpha $
+@CHECK
+  if (!N("noun",2))
+	fail();
+  if (!singular(N(2)))
+	fail();
+  if (N("num",1) > 1900 && N("num",1) < 2015)
+    succeed();
+  fail();
+@POST
+  fixnphead(2);
+@RULES
+_xNIL <-
+	_xNUM
+	_xALPHA
+	_xEND
+	@@
+
+# get verb
+@PRE
+<1,1> vareq("stem","get");
+@CHECK
+  if (!vconjq(N(2),"-en"))
+	fail();
+@POST
+  pnrename(N(1),"_be");
+  L("tmp1") = N(1);
+  group(1,1,"_verb");
+  pncopyvars(L("tmp1"),N(1));
+@RULES
+_xNIL <-
+	_verb
+	_verb
+	@@
+
+# get alpha
+@PRE
+<1,1> vareq("stem","get");
+<2,2> var("verb");
+@CHECK
+  if (!vconjq(N(2),"-en"))
+	fail();
+@POST
+  alphatoverb(2,"passive","VBN");
+  pnrename(N(1),"_be");
+  L("tmp1") = N(1);
+  group(1,1,"_verb");
+  pncopyvars(L("tmp1"),N(1));
+@RULES
+_xNIL <-
+	_verb
+	_xALPHA
+	@@
+
+# det adj verb alpha
+@PRE
+<2,2> var("cap");
+<5,5> var("noun");
+@CHECK
+  if (!vconjq(N(4),"-en"))
+	fail();
+  if (N("mass",5))
+	fail();
+  if (plural(N(5)))
+	fail();
+@POST
+  pnrename(N(4),"_adj");	# verb -> adj
+  fixnphead(5);
+
+@RULES
+_xNIL <-
+	_det
+	_noun [opt]
+	_adj
+	_verb
+	_xALPHA
+	_xWILD [one lookahead match=(_dbldash _xEND)]
+	@@
+
+# verb so alpha
+@PRE
+<3,3> var("adj");
+@CHECK
+  if (!copulaq(N(1)))
+	fail();
+@POST
+  pnrename(N(2),"_adv");
+  chpos(N(2),"RB");	# so/RB
+  alphatoadj(3);
+@RULES
+_xNIL <-
+	_verb
+	so [s]
+	_xALPHA
+	@@
+
+# before $
+@PRE
+<1,1> varz("pos25 before $");
+@POST
+  N("pos25 before $",1) = 1;
+  chpos(N(1),"RB");	# before/RB
+  pnrename(N(1),"_adv");
+@RULES
+_xNIL <-
+	before [s]
+	_xWILD [one match=(_qEOS _xEND _dbldash \, )]
+	@@
+
+# unworkable by ...
+# , adj by
+@POST
+  group(2,2,"_adjc");
+  N("ellipted-copula",2) = 1;
+@RULES
+_xNIL <-
+	\,
+	_adj
+	by [s lookahead]
+	@@
+
+# pro alpha $
+@POST
+  if (N("verb",2) && vconjq(N(2),"inf"))
+	alphatovg(2,"active","VBP");
+@RULES
+_xNIL <-
+	us [s]
+	_xALPHA
+	_xEND
+	@@
+
+# , adj ,
+@POST
+  excise(3,3);
+  excise(1,1);
+@RULES
+_xNIL <-
+	\,
+	_adj
+	\,
+	@@
+
+
+# who noun verb
+@PRE
+<3,3> varz("mypos");
+@CHECK
+  if (!vconjq(N(3),"-ed"))
+	fail();
+@POST
+  chpos(N(3),"VBD");
+@RULES
+_xNIL <-
+	_whword [s]
+	_xWILD [one match=(_noun _np)]
+	_verb
+	@@
+
+# Note: Too simple and stupid.  Need more context.	# 05/31/07 AM.
+# noun verb
+#@PRE
+#<2,2> varz("mypos");
+#@CHECK
+#  if (!vconjq(N(2),"inf"))
+#	fail();
+#@POST
+#  chpos(N(2),"VBP");
+#@RULES
+#_xNIL <-
+#	_noun
+#	_verb
+#	@@
+
+# prep both alpha
+@CHECK
+  if (!N("noun",3) && !N("adj",3))
+	fail();
+@POST
+  if (N("noun",3) && plural(N(3)))
+	fixnphead(3);
+  else if (N("adj",3))
+	alphatoadj(3);
+@RULES
+_xNIL <-
+	of [s]
+	both [s]
+	_xALPHA
+	@@
+
+# before alpha noun
+@PRE
+<2,2> var("verb");
+@CHECK
+  if (!vconjq(N(2),"-ing"))
+	fail();
+@POST
+  alphatovg(2,"active","VBG");
+@RULES
+_xNIL <-
+	before [s]
+ 	_xALPHA
+	_xWILD [one lookahead match=(_noun _np _det _quan _adj
+		_num _xNUM )]
+	@@
+
+# before
+# Note: Try simple approach here.
+@PRE
+<1,1> varz("mypos");
+@POST
+ chpos(N(1),"IN");	# before/IN
+# pnrename(N(1),"_prep");
+@RULES
+_xNIL <- before [s] @@
+
+# verb alpha alpha prep
+# Ex: was still well above
+@CHECK
+  if (N(2))
+	{
+	if (!N("adv",2))
+		fail();
+	}
+@POST
+  alphatoadv(3);
+  alphatoadv(2);
+@RULES
+_xNIL <-
+	_verb
+	_xALPHA [opt]
+	well
+	_prep [lookahead]
+	@@
+
+# alpha alpha dqan
+# ving ving dqan
+@PRE
+<1,1> var("noun");
+<2,2> var("verb");
+@CHECK
+  if (!N("verb",1))
+	fail();
+  if (!vconjq(N(1),"-ing") || !vconjq(N(2),"-ing"))
+	fail();
+@POST
+  alphatoverb(2,"active","VBG");
+@RULES
+_xNIL <-
+	_xALPHA
+	_xALPHA
+	_xWILD [one match=(_det _pro _quan _num _xNUM _np)]
+	@@
+
+# conj alpha , modal $
+@PRE
+<3,3> var("noun");
+@POST
+  fixnphead(3);
+@RULES
+_xNIL <-
+	_conj
+	_adv [star]
+	_xALPHA
+	\,
+	_modal
+	_xEND
+	@@
+
+# alpha pro
+@PRE
+<2,2> var("noun");
+<3,3> var("prosubj");
+@POST
+  fixnphead(2);
+@RULES
+_xNIL <-
+	_xSTART
+	_xALPHA
+	_pro [lookahead]
+	@@
+_xNIL <-
+	_xWILD [one match=(_dbldash)]
+	_xALPHA
+	_pro [lookahead]
+	@@
+
+# alpha pro
+@PRE
+<1,1> var("verb");
+<1,1> varz("adj");
+@POST
+  alphatoverb(1,0,0);
+@RULES
+_xNIL <-
+	_xALPHA
+	_adv [star]
+	_xWILD [s one match=(me him them us)] # Some _proObj
+	@@
+
+# prep num alpha _conj
+@CHECK
+  N("num") = num(N("$text",2));
+  if (N("num") < 1900 || N("num") > 2015)
+	fail();
+  if (N("noun",2) && plural(N(2)))
+  	fail();
+  if (N("verb",2) && vconjq(N(2),"-s"))
+  	fail();
+@POST
+  alphatonoun(2);
+  chpos(N(2),"CD");	# num/CD.
+  L("tmp2") = N(2);
+  nountonp(2,1);
+@RULES
+_xNIL <-
+	_prep
+	_xNUM
+	_xALPHA [lookahead]
+	_conj
+	@@
+
+# prep num alpha
+@PRE
+<4,4> var("adj");
+@POST
+ alphatoadj(4);
+@RULES
+_xNIL <-
+	_prep
+	_xWILD [star match=(_det _pro)]
+ 	_xWILD [plus match=(_quan _num _xNUM)]
+	_xALPHA
+	_xWILD [one lookahead match=(_adj _noun)]
+ 	@@
+
+# noun verb to alpha alpha
+# np vg to alpha alpha
+@PRE
+<4,4> var("verb");
+<5,5> varz("verb");
+@CHECK
+  if (!vconjq(N(4),"inf"))
+	fail();
+@POST
+  alphatovg(4,"active","VB");
+@RULES
+_xNIL <-
+	_xWILD [one match=(_noun _np)]
+	_xWILD [one match=(_verb _vg)]
+	to [s]
+	_xALPHA
+	_xALPHA [lookahead]
+	@@
+
+# noun alpha to verb
+# np alpha to vg
+@PRE
+<2,2> var("verb");
+@CHECK
+  if (!verbfeat(N(2),"T3"))
+	fail();
+@POST
+  alphatoverb(2,0,"VBP");
+@RULES
+_xNIL <-
+	_xWILD [one match=(_noun _np _pro)]
+	_xALPHA
+	to [s lookahead]
+	_xWILD [one match=(_verb _vg _modal)]
+	@@
+
+# noun alpha to alpha
+@PRE
+<2,2> var("verb");
+<4,4> var("verb");
+@CHECK
+  if (!verbfeat(N(2),"T3"))
+	fail();
+  if (!vconjq(N(4),"inf"))
+	fail();
+@POST
+  alphatoverb(4,"active","VB");
+  alphatoverb(2,"active","VBP");
+@RULES
+_xNIL <-
+	_xWILD [one match=(_noun _np)]
+	_xALPHA
+	to [s]
+	_xALPHA
+	@@
+
+# det alpha , alpha
+@PRE
+<2,2> var("adj");
+<4,4> var("adj");
+@POST
+  fixnpnonhead(2);
+@RULES
+_xNIL <-
+	_det
+	_xALPHA
+	\, [lookahead]
+	_xALPHA
+	@@
+
+# verb prep dqa alpha alpha by
+# vg prep dqa alpha alpha by
+@PRE
+<7,7> var("noun");
+@CHECK
+  if (!N("noun",6) && !N("adj",6))
+	fail();
+  if (!vconjq(N(1),"-en"))
+	fail();
+@POST
+  if (!N("voice",1))
+	{
+	if (pnname(N(1)) == "_vg")
+	  fixvg(N(1),"passive","VBN");
+	else
+	  fixverb(N(1),"passive","VBN");
+	}
+  fixnphead(7);
+  fixnpnonhead(6);
+@RULES
+_xNIL <-
+	_xWILD [one match=(_verb _vg)]
+	_prep
+	_xWILD [star match=(_det _pro)]
+	_xWILD [star match=(_quan _num _xNUM)]
+	_adj [star]
+	_xALPHA
+	_xALPHA
+	by [s lookahead]
+	@@
+
+# verb by alpha alpha alpha conj
+# vg by alpha alpha alpha conj
+# verb prep alpha alpha alpha conj
+@PRE
+<2,2> vareq("stem","by");
+@POST
+  if (N("noun",3) && plural(N(3)))
+	fixnphead(3);
+  else if (!N(4))	# One alpha
+	{
+	}
+  else if (!N(5))	# Two alphas
+	{
+	if (N("noun",4) && plural(N(4)))
+	  fixnphead(4);
+ 	}
+  else	# Three alphas
+ 	{
+	if (N("noun",4) && plural(N(4)))
+	  fixnphead(4);
+	else if (N("noun",5) && plural(N(5)))
+	  {
+	  fixnphead(5);
+	  if (N("adj",4) || N("noun",4))
+		fixnpnonhead(4);
+	  }
+ 	}
+@RULES
+_xNIL <-
+	_xWILD [one match=(_verb _vg)]
+	_prep
+	_xALPHA
+	_xALPHA [opt]
+	_xALPHA [opt]
+	_xWILD [one lookahead match=(_conj)]
+	@@
+
+
+# conj alpha alpha alpha ,
+@PRE
+<2,2> var("noun");
+<3,3> var("verb");
+@CHECK
+  if (!plural(N(2)))
+  	fail();
+  if (!vconjq(N(3),"-ing"))
+  	fail();
+@POST
+  alphatovg(3,"active","VBG");
+  fixnphead(2);
+@RULES
+_xNIL <-
+	_xWILD [plus match=(_conj \, )]
+	_xALPHA
+	_xALPHA
+	_xALPHA [star]
+	_xWILD [one lookahead match=( \, _conj)]
+	@@
+
+# alpha prep
+# Note: Looks too broad.	# 05/22/07 AM.
+@PRE
+<1,1> varz("proposs");
+<2,2> var("verb");
+@CHECK
+  S("num") = phrprepverbq(N(2),N(3));
+  if (!S("num"))
+	fail();
+  if (vconjq(N(2),"inf") || vconjq(N(3),"-s"))
+  	fail();
+@POST
+  if (vconjq(N(2),"-edn"))	# ambig
+  	L("pos") = 0;
+  else if (vconjq(N(2),"-ed"))
+	L("pos") = "VBD";
+  else if (vconjq(N(2),"-en"))
+	L("pos") = "VBD";
+  else
+	L("pos") = "VBP";
+  alphatoverb(2,0,L("pos"));
+  if (!N("mypos",3))
+    {
+    if (N(4))
+      chpos(N(3),"IN");	# prep/IN
+    else if (S("num") == 1 # PHRASAL.
+     || S("num") == 3)
+      chpos(N(3),"RP");	# prep/RP
+    else
+	  chpos(N(3),"IN");	# prep/IN
+	}
+@RULES
+_xNIL <-
+	_xWILD [one fail=( \, _det )]
+	_xALPHA
+	_prep [lookahead]
+	_prep [opt]
+	@@
+
+# dqan time
+# Note: Idiom
+@PRE
+<6,6> var("cap");
+@POST
+  N("ellipted-that",6) = 1;
+  if (literal(N(5)))
+    fixnphead(5);
+  L("tmp5") = N(5);
+  group(1,5,"_np");
+  pncopyvars(L("tmp5"),N(1));
+  clearpos(N(1),1,1);
+  # Really it's equivalent to "when"!
+  group(1,1,"_whword");
+  N("stem",1) = "when";
+  group(1,1,"_fnword");
+@RULES
+_xNIL <-
+    _xWILD [plus match=(_det _pro)]			### (1)
+    _xWILD [star match=(_quan _num _xNUM)]	### (2)
+    _adj [star]								### (3)
+    _noun [star]							### (4)
+    time [s]								### (5)
+    _noun [lookahead]						### (6)
+    @@
+
+# dqan
+# Note: plain dqan
+@PRE
+<1,1> varz("prosubj");
+<1,1> varz("proobj");
+# Only possessive pronoun, if _pro.
+@POST
+  dqaninfo(1,2,3,4);
+  groupnp();
+@RULES
+_xNIL <-
+	_xWILD [plus match=(_det _pro)]
+ 	_xWILD [star match=(_quan _num _xNUM)]
+	_adj [star]
+	_noun [plus]
+	_xWILD [one lookahead fail=(_xALPHA _noun _conj \, _aposS _aposX _adj)]
+	@@
+
+# prep alpha conj
+@PRE
+<1,1> varne("stem","to");
+<2,2> var("noun");
+@CHECK
+  if (N("verb",2))
+	{
+    if (vconjq(N(2),"-ing"))
+	  fail();	# Ambig.
+	}
+@POST
+  fixnphead(2);
+@RULES
+_xNIL <-
+	_prep
+	_xALPHA
+	_conj [lookahead]
+	@@
+
+# to dqan alpha $
+@PRE
+<1,1> vareq("stem","to");
+@CHECK
+  dqaninfo(2,3,4,5);
+  if (!numbersagree(S("first"),N(6)))
+	fail();
+@POST
+  fixnphead(6);
+@RULES
+_xNIL <-
+	_prep
+	_xWILD [opt match=(_det _pro)]
+ 	_xWILD [star match=(_quan _num _xNUM)]
+	_adj [star]
+	_noun [plus]
+	_xALPHA
+	_xWILD [one lookahead match=(_dbldash _xEND)]
+	@@
+
+# where noun alpha*
+@PRE
+<3,3> var("verb");
+@CHECK
+# Todo: nvagree.
+  if (plural(N(2)))
+  	{
+	if (!vconjq(N(3),"inf") && !vconjq(N(3),"-ed"))
+		fail();
+	}
+  else
+    {
+	if (!vconjq(N(3),"-s") && !vconjq(N(3),"-ed"))
+		fail();
+	}
+@POST
+  alphatoverb(3,"active","VBP");
+@RULES
+_xNIL <-
+	where [s]
+	_noun
+	_xALPHA
+	_xALPHA [star]
+	_xWILD [one lookahead match=(_fnword _prep)]
+	@@
+
+# noun conj alpha , adj
+# Note: Part of a complex noun or list.
+@PRE
+<3,3> var("noun");
+@POST
+  fixnphead(3);
+@RULES
+_xNIL <-
+	_xWILD [one match=(_noun _np)]
+	_conj
+	_xALPHA
+	\, [lookahead]
+	_xWILD [one match=(_adj _adjc)]
+	@@
+
+# which alpha alpha adj
+@PRE
+<2,2> var("verb");
+@CHECK
+  if (N("adv",2) && N("verb",3))
+  	fail();	# Another interp.
+  if (!N("noun",3) && !N("adj",3))
+  	fail();
+  if (vconjq(N(2),"-ing"))
+  	fail();
+@POST
+  alphatovg(2,0,"VBP");
+@RULES
+_xNIL <-
+	which [s]
+	_xALPHA
+	_xALPHA [lookahead]
+	@@
+
+# pro alpha conj
+@PRE
+<2,2> var("noun");
+@POST
+  fixnphead(2);
+@RULES
+_xNIL <-
+	_proPoss [s]
+	_xALPHA
+	_conj [lookahead]
+	_xWILD [one match=(_np _det _quan _num _xNUM)]
+	@@
+
+# verb alpha conj alpha
+@PRE
+<3,3> varz("pos25 v-a-conj-a");
+@POST
+  N("pos25 v-a-conj-a",3) = 1;
+  if ((N("noun",2) || N("adj",2)) && !N("verb",2))
+  	{
+	if (!N("adj",4))
+	  alphatonoun(2);
+	}
+@RULES
+_xNIL <-
+	_xWILD [one match=(_verb _vg)]
+	_xALPHA
+	_conj [lookahead]
+	_xALPHA
+	@@
+
+# verb to alpha
+# be to alpha
+# have to alpha
+@PRE
+<3,3> var("verb");
+<3,3> varz("noun");
+@CHECK
+  if (N("stem",1) != "be" && N("stem",1) != "have")
+  	fail();
+  if (!vconjq(N(3),"inf"))
+  	fail();
+@POST
+  alphatoverb(3,"active","VB");
+@RULES
+_xNIL <-
+	_xWILD [one match=(_verb _vg)]
+	_prep
+	_xALPHA
+	@@
+
+
+# Hard-wired development set item.
+# (Not to raise score, but because every error is reviewed
+# over and over.)
+@PRE
+<4,4> var("verb");
+@CHECK
+  if (!vconjq(N(4),"-ed"))
+  	fail();
+@POST
+  alphatovg(4,"active","VBD");
+@RULES
+_xNIL <-
+	I [s]
+	say [s]
+	_dblquote
+	_xALPHA
+	_noun
+	_dblquote
+	@@
+
+
+###########################
+# JOBDESC	# 11/13/12 AM.
+# Ex:	^ Designs and oversees	# JOBDESC	# 11/13/12 AM.
+# ^ cap and verb
+# Todo: agreement among the two verbs.
+@PRE
+<2,2> var("verb");	# Can be a verb.
+@POST
+  alphatovg(2,"active",0);
+@RULES
+_xNIL <-
+	_xSTART
+	_xCAP
+	_xWILD [one lookahead match=(_conj)]
+	_xWILD [one match=(_verb _vg)]
 	@@

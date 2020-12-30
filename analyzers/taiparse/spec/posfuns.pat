@@ -132,7 +132,7 @@ replaceval(L("crule"),"fired",++L("fired"));
 
 # Score
 L("arr") = pnvar(L("n"),"posarr");
-#"posdump.txt" << str(L("npos")) << "\t" << L("arr")[0] << "\n";
+#"posdump.txt" << str(L("npos")) << "\t" << L("arr")[0] << "\n";	# *VERBOSE*
 if (L("arr")[0] == L("npos"))	# Correct.
   {
   L("good") = numval(L("crule"),"good");
@@ -151,8 +151,17 @@ posacctdump()
 if (!G("posacct") || !G("posacct root"))
   return;
 
-L("fname") = G("$apppath") + "\\data\\posdump.txt";
-L("out") = openfile(L("fname"));
+if (!G("LINUX"))
+  {
+  L("fname") = G("$apppath") + "\\data\\posdump.txt";	# *VERBOSE*
+  L("out") = openfile(L("fname"));
+  }
+else
+  {
+  L("fname") = ".." + "/data/posdump.txt";	# *VERBOSE*
+#  L("out") = openfile(L("fname"));
+  L("out") = L("fname");	# workaround.
+  }
 
 L("out")
   << "pass   rule        good        total      pct" <<"\n"
@@ -251,10 +260,10 @@ if (L("name") == "adj")
   }
 if (L("name") == "adv")
   {
-  if (pnvar(L("n"),"comparative"))
-    return "RBR";
-  if (pnvar(L("n"),"superlative"))
-    return "RBS";
+#  if (pnvar(L("n"),"comparative"))
+#    return "RBR";
+#  if (pnvar(L("n"),"superlative"))
+#    return "RBS";
   fixadv(L("n"));	# 06/19/06 AM.
   L("pos") = pnvar(L("n"),"mypos");
   if (L("pos"))
@@ -265,13 +274,13 @@ if (L("name") == "pro")
   return "PP";
 if (L("name") == "noun")
   {
-#  "dump.txt" << pnvar(L("n"),"$text") << " ";
+#  "dump.txt" << pnvar(L("n"),"$text") << " ";	# *VERBOSE*
   L("cap") = pnvar(L("n"),"cap");
   if (pnvar(L("n"),"newsent"))
     L("cap") = 0;	# 07/11/06 AM.
   if (!(L("num") = pnvar(L("n"),"number") ))
     L("num") = number(L("n"));
-#  "dump.txt" << L("num") << "\n";
+#  "dump.txt" << L("num") << "\n";	# *VERBOSE*
   if (L("num") == "singular")
     {
 	if (L("cap"))
@@ -295,7 +304,7 @@ if (L("name") == "verb")
   if (pnvar(L("n"),"-s"))
     return "VBZ";
   if (pnvar(L("n"),"inf"))
-    return "VB";
+    return "VBP";	# verb/VBP	# [DEFAULT] for verb inf	# 05/27/07 
   if (pnvar(L("n"),"-ing"))
     return "VBG";
   if (pnvar(L("n"),"-ed"))
@@ -330,6 +339,35 @@ if (L("arr")[0] == L("npos"))
   return 1;
   }
 return 0;
+}
+
+########
+# FUNC:	CAPPOS
+# SUBJ:	Handle pos for capitalized word.
+########
+cappos(L("n"), L("override"))
+{
+if (!L("n"))
+	return;
+# DON'T WANT TO DEAL WITH ARTIFICIAL NPS ISSUES. # 05/22/07 AM.
+
+if (pnvar(L("n"),"mypos") && !L("overrride"))
+  return;
+
+L("t") = pnvar(L("n"),"$text");
+if (strendswith(L("t"),"s"))
+  {
+  L("l") = strlength(L("t"));
+  if (L("l") == 1 || L("l") == 2)
+    ;
+  else if (strisupper(strpiece(L("t"),L("l")-2,L("l")-2)))
+    {
+    chpos(L("n"),"NPS");
+	return;
+	}
+  }
+
+chpos(L("n"),"NP");
 }
 
 ########
@@ -409,6 +447,42 @@ return 0;
 }
 
 ########
+# FUNC:	VGASSIGNED
+# SUBJ:	See if verb group has been handled wrt pos tagging.
+# CR:	05/27/07 AM.
+# RET:	1 if done, else 0.
+########
+
+vgassigned(L("vg"))
+{
+if (!L("vg"))
+  return 0;
+
+# Handle compound/complex vg.
+if (pnvar(L("vg"),"first vg"))
+  L("vg")= pnvar(L("vg"),"first vg");
+
+if (pnname(L("vg")) != "_vg")
+  return 0;
+
+if (!pnvar(L("vg"),"voice"))
+	return 0;	# If no voice, not done.
+
+L("v") = pnvar(L("vg"),"first verb");
+if (!L("v"))
+  L("v") = pnvar(L("vg"),"verb node");
+if (!L("v"))
+  {
+  if (G("error")) "err.txt" << "Vg with no verb pointer = " << pnvar(L("vg"),"$text") << "\n";
+  return 0;
+  }
+
+if (pnvar(L("v"),"mypos"))
+  return 1;
+return 0;
+}
+
+########
 # FUNC:	MHBV
 # SUBJ:	Handle verb group in a rule.
 # CR:	11/26/04 AM.
@@ -421,6 +495,30 @@ mhbv(L("n"),L("neg"),L("m"),L("h"),L("b"),L("being"),L("v"))
 if (!L("n"))
   return 0;
 
+# Look at verb components for negation.
+if (L("m"))
+  {
+  if (pnvar(L("m"),"neg"))
+    ++L("ng");
+  }
+ if (L("h"))
+  {
+  if (pnvar(L("h"),"neg"))
+    ++L("ng");
+  }
+if (L("b"))
+  {
+  if (pnvar(L("b"),"neg"))
+    ++L("ng");
+  }
+if (L("neg"))
+  ++L("ng");
+# Double negation.
+if (L("ng") == 2 || L("ng") == 4)
+  L("neg") = 0;
+else if (L("ng"))
+  L("neg") = 1;
+
 if (L("neg"))
   pnreplaceval(L("n"),"neg",L("neg"));
 
@@ -432,12 +530,28 @@ if (!L("m") && !L("h") && !L("b") && !L("being") && !L("v"))
   return 0;
   }
 
-L("voice") = mhbvfix(L("n"),L("m"),L("h"),L("b"),L("being"),L("v"));
+if (L("v"))	# 09/24/19 AM,
+  {
+  L("vv") = pnvar(L("v"),"voice");	# 08/22/19 AM.
+
+#  "xxx.txt" << "mhbv in: v= " << pnvar(L("v"),"$text") << "\n";
+#  "xxx.txt" << "  voice in = " << L("vv") << "\n";
+  }
+
+if (L("vv") && L("vv") != "AMBIG")	# 09/24/19 AM.
+  L("voice") = L("vv");	# 08/22/19 AM.
+else
+  L("voice") = mhbvfix(L("n"),L("m"),L("h"),L("b"),L("being"),L("v"));
 
 if (L("voice"))
+  {
+#  "xxx.txt" << " voice=" << L("voice") << "\n";
   pnreplaceval(L("n"),"voice",L("voice"));
+  }
 
-semvg(L("n"),L("v"));
+semvg(L("n"),L("v"),L("b"),L("being"));
+
+# TODO:	Compose semantics.
 
 if (L("v"))
   L("vn") = L("v");
@@ -448,12 +562,19 @@ else if (L("h"))
 
 if (L("vn"))
   {
+  semcomposenp(L("n"),L("vn"),L("vn"));
   pnreplaceval(L("n"),"verb node",L("vn"));
   L("stem") = pnvar(L("vn"),"stem");
   if (L("stem"))
     pnreplaceval(L("n"),"stem",L("stem"));
   else
     pnreplaceval(L("n"),"stem",pnvar(L("vn"),"$text"));
+
+  # VERB TO VG COPY ATTRS
+  if (pnvar(L("vn"),"helping-verb") )	# 09/21/19 AM.
+    pnreplaceval(L("n"),"helping-verb",1);  
+  if (pnvar(L("vn"),"prepositional-verb") )	# 09/21/19 AM.
+    pnreplaceval(L("n"),"prepositional-verb",1);  
   }
 else
   {
@@ -462,6 +583,7 @@ else
     L("sv") = L("being");
   else
     L("sv") = L("m");
+  semcomposenp(L("n"),L("sv"),L("sv"));
   L("stem") = pnvar(L("sv"),"stem");
   if (L("stem"))
     pnreplaceval(L("n"),"stem",L("stem"));
@@ -478,17 +600,17 @@ if (L("m"))
   else
     L("first") = 0;	# NO "first" verb to conjugate. # 02/26/05 AM.
   if (L("h"))
-    chpos(L("h"),"VB");
+    chpos(L("h"),"VB");	# have/VB
   else if (L("b"))
-    chpos(L("b"),"VB");
+    chpos(L("b"),"VB");	# be/VB
   else if (L("v"))
-    chpos(L("v"),"VB");
+    chpos(L("v"),"VB"); # verb/VB
   }
 else if (L("h"))
   {
   L("first") = L("h");
   if (pnvar(L("h"),"-edn")) # had
-    chpos(L("h"),"VBD");
+    chpos(L("h"),"VBD");	# had/VBD
   }
 else if (L("b"))
   L("first") = L("b");
@@ -527,6 +649,8 @@ if (!L("v"))
 	fixvgattrs(L("n"),L("m"),L("h"),L("b"),L("being"),0);
   return 0;
   }
+
+#"xxx.txt" << "mhbvfix: in = " << pnvar(L("v"),"$text") << "\n";
 
 # If assigned already, handle that...
 L("assig") = 0;	# Track if verb has hard-wired assignments.
@@ -592,6 +716,9 @@ if (pnvar(L("v"),"-ed"))
 	}
   # will/have/been ate.  Informal, disagree, or error.
   # Look for alternative...
+  # 09/22/19 AM.
+  # -ED has been corrupted to be AMBIGUOUS.
+  # SHOULD BE UNAMBIGUOUS.
   }
 
 if (pnvar(L("v"),"-edn"))
@@ -599,6 +726,7 @@ if (pnvar(L("v"),"-edn"))
   ++L("assig");
   if (L("b") || L("being"))
     {
+#	"xxx.txt" << "mhbvfix: -edn + b" << "\n";
     chpos(L("v"),"VBN");
 	fixvgattrs(L("n"),L("m"),L("h"),L("b"),L("being"),"-en");
     return "passive"; 	# been worked.
@@ -638,6 +766,7 @@ if (pnvar(L("v"),"inf"))	# 01/05/05 AM.
 if (L("assig"))	# Hard-wired conjugations.
 	{
 	fixvgattrs(L("n"),L("m"),L("h"),L("b"),L("being"),"inf");
+#	"xxx.txt" << "error" << "\n";
 	return 0;	# Didn't work out.
 	}
 
@@ -686,7 +815,7 @@ if (L("x") == "-ing")
 if (!L("h") && !L("b") && !L("being"))
   {
   fixvgattrs(L("n"),L("m"),L("h"),L("b"),L("being"),"-edn");
-  return 0; # ambiguous.
+  return "AMBIG"; # ambiguous.
   }
 if (L("x") != "-edn")
   return 0; # error.
@@ -704,7 +833,7 @@ else if (L("h"))
   return "active";
   }
 fixvgattrs(L("n"),L("m"),L("h"),L("b"),L("being"),"-edn");
-return 0;
+return "AMBIG";	# 09/24/19 AM.
 }
 
 ########
@@ -722,6 +851,13 @@ if (!L("vconj")|| !L("n"))
   return 0;
   }
 
+# Fix voice...
+if (!L("b") && !L("being"))	# 09/08/19 AM.
+  {
+  if (!L("m") || L("h"))
+    pnreplaceval(L("n"),"voice","active");	# 09/08/19 AM.
+  }
+
 if (L("m"))
   pnreplaceval(L("n"),"tense","future");
 else if (L("h"))
@@ -735,32 +871,83 @@ else if (L("vconj") == "-ed"
  || L("vconj") == "-edn")
   pnreplaceval(L("n"),"tense","past");
 else
+  {
+  if (L("vconj") == "-ing")	# 11/10/07 AM.
+    pnreplaceval(L("n"),"lone-ing",1); # 11/10/07 AM.
   pnreplaceval(L("n"),"tense","present");
+  }
 
-if (L("vconj") == "-s")
-  pnreplaceval(L("n"),"aspect","none");
-else if (L("b") && L("vconj") == "-en") # Passive.
+# REWORK	# 09/21/19 AM.
+if (L("m")) pnreplaceval(L("n"),"m",L("m"));
+if (L("h")) pnreplaceval(L("n"),"h",L("h"));
+if (L("b")) pnreplaceval(L("n"),"b",L("b"));
+if (L("being")) pnreplaceval(L("n"),"being",1);
+
+#"xxx.txt" << phrasetext() << "\n";
+#"xxx.txt" << L("vconj") << "\n";
+if (L("b"))
   {
-  if (L("being") && L("h"))
-    pnreplaceval(L("n"),"aspect","perfective-progressive");
-  else if (L("h"))
-    pnreplaceval(L("n"),"aspect","perfective");
-  else if (L("being"))
-    pnreplaceval(L("n"),"aspect","progressive");
-  else
-    pnreplaceval(L("n"),"aspect","none");
+  if (L("vconj") == "-ed"
+   || L("vconj") == "-en"
+   || L("vconj") == "-edn"
+   )
+    {
+	pnreplaceval(L("n"),"voice","passive");
+	pnreplaceval(L("n"),"suff","en");
+	pnreplaceval(L("n"),"-en",1);
+	pnreplaceval(L("n"),"-ed",0);
+	pnreplaceval(L("n"),"-edn",0);
+	}
   }
-else # Active.
-  {
-  if (L("b") && L("h"))
-    pnreplaceval(L("n"),"aspect","perfective-progressive");
-  else if (L("h"))
-    pnreplaceval(L("n"),"aspect","perfective");
-  else if (L("b") || L("vconj") == "-ing")
-    pnreplaceval(L("n"),"aspect","progressive");
-  else
-    pnreplaceval(L("n"),"aspect","none");
-  }
+else if (L("vconj") == "-en")
+    {
+	pnreplaceval(L("n"),"voice","passive");
+	pnreplaceval(L("n"),"suff","en");
+	pnreplaceval(L("n"),"-en",1);
+	pnreplaceval(L("n"),"-ed",0);
+	pnreplaceval(L("n"),"-edn",0);
+	}
+else if (L("vconj") == "-edn")
+    {
+	pnreplaceval(L("n"),"voice","AMBIG");	# NEW.
+	pnreplaceval(L("n"),"suff","edn");
+	pnreplaceval(L("n"),"-en",1);
+	pnreplaceval(L("n"),"-ed",1);
+	pnreplaceval(L("n"),"-edn",1);
+	}
+else
+    {
+	pnreplaceval(L("n"),"voice","active");
+	}
+
+#pnreplaceval(L("n"),"vconj",L("vconj"));
+
+# NEVER USED THIS GARBAGE!	# 09/21/19 AM.
+#if (L("vconj") == "-s")
+#  pnreplaceval(L("n"),"aspect","none");
+#else if (L("b") && L("vconj") == "-en") # Passive.
+#  {
+#  pnreplaceval(L("n"),"voice","passive");	# 09/08/19 AM.
+#  if (L("being") && L("h"))
+#    pnreplaceval(L("n"),"aspect","perfective-progressive");
+#  else if (L("h"))
+#    pnreplaceval(L("n"),"aspect","perfective");
+#  else if (L("being"))
+#    pnreplaceval(L("n"),"aspect","progressive");
+#  else
+#    pnreplaceval(L("n"),"aspect","none");
+#  }
+#else # Active.
+#  {
+#  if (L("b") && L("h"))
+#    pnreplaceval(L("n"),"aspect","perfective-progressive");
+#  else if (L("h"))
+#    pnreplaceval(L("n"),"aspect","perfective");
+#  else if (L("b") || L("vconj") == "-ing")
+#    pnreplaceval(L("n"),"aspect","progressive");
+#  else
+#    pnreplaceval(L("n"),"aspect","none");
+#  }
 }
 
 ########
@@ -772,6 +959,7 @@ else # Active.
 
 fixvg(L("vg"),L("active/passive"),L("pos"))
 {
+#"output.txt" << "fixvg: " << L("pos") << "\n";
 if (!L("vg"))
   return;
 L("fst") = pnvar(L("vg"),"first vg");
@@ -800,109 +988,197 @@ while (L("vg") && (L("vg") != L("lst")))
 
 fixvgsimple(L("vg"),L("active/passive"),L("pos"))
 {
+#"output.txt" << "fixvgsimple: " << L("pos") << "\n";
 if (!L("vg"))
   return;
 if (L("tmp") = pnvar(L("vg"),"first vg"))
   return;	# Too nested to bother with, for now.
 
-pnreplaceval(L("vg"),"voice",L("active/passive"));
 L("v") = pnvar(L("vg"),"first verb");
 if (!L("v"))
   L("v") = pnvar(L("vg"),"verb node");
 if (L("v"))
-  fixverb(L("v"),L("active/passive"),L("pos"));
+  L("voice") = fixverb(L("v"),L("active/passive"),L("pos"));
+
+if (!L("voice") && !L("active/passive"))
+  return;
+
+if (!L("active/passive") || L("voice") == L("active/passive"))
+  {
+  pnreplaceval(L("vg"),"voice",L("voice"));
+  return;
+  }
+
+if (L("active/passive") && L("voice"))
+  {
+  if (G("error")) "err.txt" << "Voice mismatch: " << pnvar(L("vg"),"$text") << "\n";
+#  "err.txt" << " " << phrasetext() << "\n";
+#  "err.txt" << " voice=" << L("voice") << "\n";
+#  "err.txt" << " a/p=  " << L("active/passive") << "\n";
+  }
 }
 
 ########
 # FUNC:	FIXVERB
 # SUBJ:	Fix up a lone verb.
+# RET: voice = active, passive or 0 if couldn't deduce.
 ########
 
 fixverb(L("v"),
-	L("active/passive"), # What to do if ambiguous.
+	L("active/passive"), # What to do if ambiguous. 0 let fn decide.
 	L("pos")	# A reference pos, mainly from previous verb.
 	)
 {
+#"xxx.txt" << "fixverb: " << L("pos") << " | " << phrasetext() << "\n";
+#"xxx.txt" << "voice=" << L("active/passive") << "\n";
+#"output.txt" << G("$passnum") << "," << G("$rulenum") << "\n";
+
 if (!L("v"))
-  return;
+  return 0;
 
-L("dn") = pndown(L("v"));
-#if (pnname(L("dn")) == "_verb")
-# "grunk.txt" << "_verb: " << pnname(pndown(L("dn"))) << "\n";
-#else
-# "grunk.txt" << pnname(L("dn")) << "\n";
-#if (pnname(L("dn")) == "believes")
-#  exitpass();	# DEBUGGING!!!!
+#L("dn") = pndown(L("v"));	# UNUSED	# 09/22/19 AM.
 
-# No defaults. 
-#if (!L("active/passive"))
-#  L("active/passive") = "active";
-if (pnvar(L("v"),"mypos"))
-  return;
+L("my") = pnvar(L("v"), "mypos");
+if (L("my"))
+  {
+  if (L("my") == "VBN")
+    return "passive";
+  return "active";
+  }
+
+if (pnvar(L("v"),"inf")
+  && (
+	pnvar(L("v"),"-ed") ||
+	pnvar(L("v"),"-edn")
+	|| pnvar(L("v"),"-en")
+	) )
+  L("highly ambig") = 1;
+
+# TRY TO MATCH THE DESIRED POS. 05/10/07 AM.
+# Note: mainly due to ambiguous tenses.
+if (L("pos"))
+	{
+	if (L("pos") == "VB" || L("pos") == "VBP")
+		{
+#"output.txt" << "*" << pnvar(L("v"),"inf") << "\n";
+#"output.txt" << L("pos") << "\n";
+#"output.txt" << pnname(L("v")) << "\n";
+		if (pnvar(L("v"),"inf"))
+			{
+			chpos(L("v"),L("pos"));
+			return "active";
+			}
+		}
+	else if (L("pos") == "VBZ")
+		{
+		if (pnvar(L("v"),"-s"))
+			{
+			chpos(L("v"),"VBZ");
+			return "active";
+			}
+		}
+ 	else if (L("pos") == "VBG")
+		{
+		if (pnvar(L("v"),"-ing"))
+			{
+			chpos(L("v"),"VBG");
+			return "active";
+			}
+		}
+	else if (L("pos") == "VBD")
+		{
+		if (pnvar(L("v"),"-ed"))	# 09/24/19 AM.
+			{
+			chpos(L("v"),"VBD");
+			return "active";
+			}
+		if (pnvar(L("v"),"-edn"))
+			{
+#			chpos(L("v"),"VBD");
+			return "AMBIG";	# 09/24/19 AM.
+			}
+		}
+	else if (L("pos") == "VBN")
+		{
+#		"xxx.txt" << "vbn -edn=" << pnvar(L("v"),"-edn") << "\n";
+		if (pnvar(L("v"),"-en") || pnvar(L("v"),"-edn"))
+			{
+			chpos(L("v"),"VBN");
+#			"xxx.txt" << "fixverb: passive;" << phrasetext() << "\n";
+			return "passive";
+			}
+		}
+	}
 
 # If assigned already, done.
 if (pnvar(L("v"),"-en"))
-  {
-  chpos(L("v"),"VBN");
-  return;
-  }
-if (pnvar(L("v"),"-ed"))
+	{
+	if (!L("highly ambig") || L("active/passive") == "passive")
+      {
+      chpos(L("v"),"VBN");
+      return "passive";
+      }
+	}
+if (pnvar(L("v"),"-ed") && !L("highly ambig"))
   {
   chpos(L("v"),"VBD");
-  return;
+  return "active";
   }
 if (pnvar(L("v"),"-s"))
   {
   chpos(L("v"),"VBZ");
-  return;
+  return "active";
   }
 if (pnvar(L("v"),"-ing"))
   {
   chpos(L("v"),"VBG");
-  return;
+  return "active";
   }
 
 L("x") = vconj(L("v"));
-if (L("x") == "inf")
+if (!L("highly ambig") && L("x") == "inf")
   {
-# "grunk.txt" << "inf=" << pnname(L("dn")) << "," << L("pos") << "\n";
   pnreplaceval(L("v"),"inf",1);
   if (L("pos") == "VB" || L("pos") == "VBP")
     chpos(L("v"),L("pos"));
-  return;
+  return "active";
   }
 if (L("x") == "-s")
   {
   pnreplaceval(L("v"),"-s",1);
   chpos(L("v"),"VBZ");
-  return;
+  return "active";
   }
-if (L("x") == "-ed")
+if (!L("highly ambig") && L("x") == "-ed")
   {
   pnreplaceval(L("v"),"-ed",1);
   chpos(L("v"),"VBD");
-  return;
+  return "active";
   }
-if (L("x") == "-en")
+if (!L("highly ambig") && L("x") == "-en")
   {
   pnreplaceval(L("v"),"-en",1);
   chpos(L("v"),"VBN");
-  return;
+  return "passive";
   }
 if (L("x") == "-ing")
   {
   pnreplaceval(L("v"),"-ing",1);
   chpos(L("v"),"VBG");
-  return;
+  return "active";
   }
 
+if (L("highly ambig"))
+  return 0;	# 05/27/07 AM.
+
 if (L("x") != "-edn")
-  return; # Some kind of error or special case...
+  return 0; # Some kind of error or special case...
 if (L("active/passive") == "passive" || L("pos") == "VBN")
   {
   pnreplaceval(L("v"),"-en",1);
   pnreplaceval(L("v"),"-edn",0);
   chpos(L("v"),"VBN");
+  return "passive";
   }
 else if (L("active/passive") == "active" # 10/09/04 AM.
  || L("pos") == "VBD" )
@@ -910,8 +1186,9 @@ else if (L("active/passive") == "active" # 10/09/04 AM.
   pnreplaceval(L("v"),"-ed",1);
   pnreplaceval(L("v"),"-edn",0);
   chpos(L("v"),"VBD");
+  return "active";
   }
-
+return 0;
 }
 
 ########
@@ -934,6 +1211,7 @@ pnreplaceval(L("vg"),"tense","present"); # Maybe.
 pnreplaceval(L("vg"),"voice","active");
 
 }
+
 
 ########
 # FUNC:	CLAUSEPOS
@@ -963,9 +1241,9 @@ vgpos(L("vg"))
 {
 if (!L("vg"))
   return 0;
-	  L("v") = pnvar(L("vg"),"verb node");
-	if (L("v"))
-	  L("pos") = pnvar(L("v"),"mypos");
+L("v") = pnvar(L("vg"),"verb node");
+if (L("v"))
+  L("pos") = pnvar(L("v"),"mypos");
 return L("pos");
 }
 
@@ -1025,7 +1303,6 @@ L("newsent") = pnvar(L("n"),"newsent");
 L("unknown") = pnvar(L("n"),"unknown");
 if (!(L("num") = pnvar(L("n"),"number") ))
    L("num") = number(L("n"));
-
 if (L("num") == "singular")
     {
 	if (L("cap") && (L("unknown") || !L("newsent")))
@@ -1165,6 +1442,10 @@ if (pnvar(L("n"),"hyphenated"))
 if (!pnvar(L("n"),"verb"))
   return;	# 10/09/06 AM.
 
+# IF OUR DICTIONARY LISTS AN ADJ, USE IT.	# 05/22/07 AM.
+if (pnvar(L("n"),"adj"))
+  return;	# 05/22/07 AM.
+
 L("vc") = vconj(L("n"));
 if (L("vc") == "-en" || L("vc") == "-edn")
   chpos(L("n"),"VBN");
@@ -1186,6 +1467,11 @@ if (!L("word"))
   return 0;
 if (finddictattr(L("word"),"adj-plain"))
   return "JJ";	# 01/15/05 AM.
+if (finddictattr(L("word"),"-er"))
+  return "JJR";
+if (finddictattr(L("word"),"-est"))
+  return "JJS";
+
 if (strendswith(L("word"),"est"))
   return "JJS";
 if (strendswith(L("word"),"er"))
@@ -1235,6 +1521,11 @@ if (!L("word"))
   return 0;
 if (finddictattr(L("word"),"adv-plain"))
   return "RB";
+if (finddictattr(L("word"),"-er"))
+  return "RBR";
+if (finddictattr(L("word"),"-est"))
+  return "RBS";
+
 if (strendswith(L("word"),"est"))
   return "RBS";
 if (strendswith(L("word"),"er"))
@@ -1275,19 +1566,19 @@ else if (literal(L("node"))) # _xALPHA
   # DO A REDUCE RIGHT HERE!
  	if (pnvar(L("node"),"adj"))
 	  {
-	  group(L("ord"),L("ord"),"_adj");
-	  L("red") = pnup(L("node"));	# Sloppy get of new node.
+	  L("red") = group(L("ord"),L("ord"),"_adj");
 	  pncopyvars(L("node"),L("red"));
 	  fixadjs(L("red"),L("red"));
 	  }
 	else
 	  {
-	  group(L("ord"),L("ord"),"_noun");
-	  L("red") = pnup(L("node"));	# Sloppy get of new node.
+	  L("red") = group(L("ord"),L("ord"),"_noun");
 	  pncopyvars(L("node"),L("red"));
 	  fixnounnonhead(L("red"));
 	  }
+  L("node") = L("red");	# 05/22/07 AM.
   }
+return L("node");	# 05/22/07 AM.
 }
 
 ########
@@ -1303,8 +1594,7 @@ L("n") = eltnode(L("ord"));
 if (!L("n") || !L("ord"))
   return 0;
 
-group(L("ord"),L("ord"),"_noun");
-L("red") = pnup(L("n"));	# Sloppy get of new node.
+L("red") = group(L("ord"),L("ord"),"_noun");
 pncopyvars(L("n"),L("red"));
 
 fixnounhead(L("red"));
@@ -1403,8 +1693,8 @@ while (L("node") != L("last"))
 	;	# Leave it alone.
   else if (pnvar(L("node"),"unknown"))
 	chpos(L("node"),"NP");
-  else if (plural(L("node")))
-	chpos(L("node"),"NPS");
+#  else if (plural(L("node")))
+#	chpos(L("node"),"NPS");
   else
     chpos(L("node"),"NP");
 
@@ -1464,8 +1754,7 @@ if (!L("n") || !L("o") || !L("name"))
   return;
 
 # Do the reduce here.
-group(L("o"),L("o"),L("name"));
-L("red") = pnup(L("n"));	# Sloppy get of new node.
+L("red") = group(L("o"),L("o"),L("name"));
 
 if (L("copy"))
   {
@@ -1480,21 +1769,33 @@ if (L("copy"))
 # SUBJ:	Smart group of nodes to a noun phrase.
 # NOTE: Do the right thing with tagging info.
 # ASS:	Assumes dqaninfo and rule have set up S variables.
+# RET:	The np node.
 ########
 
 groupnp()
 {
 if (!S("ofirst") || !S("olast") || !S("first") || !S("last"))
   {
-  "err.txt" << "groupnp fail" << "\n";
-  return;
+  if (G("error")) "err.txt" << "groupnp fail" << "\n";
+  return 0;
   }
 L("name") = "_np";
+#"glubby.txt" << phrasetext() << "\n";
+
+# glomming attrs.	# 09/10/19 AM.
+if (pnvar(S("first"),"no-glom-left"))
+  ++L("no-glom-left");
+if (pnvar(S("first"),"no-glom-right"))
+  ++L("no-glom-right");
+
 
 # Look for possessive pronoun.
 if (pnvar(S("first"),"proposs")
  && !pnvar(S("first"),"mypos"))
    chpos(S("first"),"PP$");
+
+if (pnname(S("first")) == "_det")
+  L("det stem") = pnvar(S("first"),"stem");
 
 if (S("firstj"))
   fixadjs(S("firstj"),S("lastj"));
@@ -1507,17 +1808,21 @@ L("ne arr") = nenoderange(S("firstan"),S("lastan"));
 L("neg") = attrinrange("neg",S("first"),S("last"));
 
 # Do the reduce here.
-group(S("ofirst"),S("olast"),L("name"));
-L("red") = pnup(S("first"));	# Sloppy get of new node.
+L("red") = group(S("ofirst"),S("olast"),L("name"));
 
+#if (!L("red"))
+#	"glubby.txt" << "NO RED" << "\n";
 #if (L("neg"))
 #  "sem.txt" << "neg np=" << pnvar(L("red"),"$text") << "\n";
 
+# COPY ATTRS FROM HEAD NOUN TO NP.
 pncopyvars(S("last"),L("red"));
+# Todo: Clear domain semantics.
 clearpos(L("red"),1,1);
 
-if (S("firstn") && S("firstn") != S("last"))
-  semrange(L("red"),S("firstn"),S("last"));
+#if (S("firstn") && S("firstn") != S("last"))	# 2/8/11 AM.
+#  semrange(L("red"),S("firstn"),S("last"));	# 2/8/11 AM.
+semrange(L("red"),S("first"),S("last"));		# 2/8/11 AM.
 
 #if (S("firstan") && S("firstan") != S("last"))
 #  semnpnouns(L("red"),S("firstan"),S("last"),L("neg"));
@@ -1529,8 +1834,8 @@ if (S("firstn") && S("firstn") != S("last"))
 L("sem") = pnvar(S("last"),"sem");
 L("ne") = pnvar(S("last"),"ne");
 L("typ") = pnvar(S("last"),"ne type");
-if (!L("typ") && L("ne"))
-  L("typ") = "name";
+#if (!L("typ") && L("ne"))	# 08/19/19 AM.
+#  L("typ") = "name";	# 08/19/19 AM.
 if (L("typ"))
   pnreplaceval(L("red"),"sem",L("typ"));
 else if (L("sem"))
@@ -1548,7 +1853,243 @@ if (L("ne arr"))
   pnreplaceval(L("red"),"ne arr",L("ne arr"));
 if (L("neg"))
   pnreplaceval(L("red"),"neg",L("neg"));
+if (L("no-glom-left"))
+  pnreplaceval(L("red"),"no-glom-left",1);
+if (L("no-glom-right"))
+  pnreplaceval(L("red"),"no-glom-right",1);
+
+if (L("det stem"))
+  pnreplaceval(L("red"),"det stem",L("det stem"));
+
+# DOMAIN SPECIFIC.
+if (S("firstj"))
+  semcomposenp(L("red"),S("firstj"),S("last"));
+else if (S("firstn"))
+  semcomposenp(L("red"),S("firstn"),S("last"));
+
+#domnpsem(L("red"),S("firstj"),S("lastj"),S("firstn"),S("lastn"));	# 02/08/11 AM.
+
+# Pronoun looks.	# 11/22/10 AM.
+if (S("firstd"))
+  {
+  L("dd") = S("firstd");
+  if (S("lastd"))
+    L("ee") = pnnext(S("lastd"));
+  else
+    L("ee") = S("lastd");
+  while (L("dd") != L("ee"))
+    {
+	# Mark if NP contains pronouns.
+	if (pnname(L("dd")) == "_pro")
+	  pnreplaceval(L("red"),"pro",1);
+	L("dd") = pnnext(L("dd"));
+	}
+  }
+
+return L("red");
 }
+
+########
+# FUNC:	NOUNTONP
+# SUBJ:	Reduce noun to np.
+# RET:	Return the np node created here.
+########
+
+nountonp(L("o"),L("bracket"))
+{
+if (!L("o"))
+  return;
+L("n") = eltnode(L("o"));
+if (!L("n"))
+  return;
+
+# If more than one noun, process nonheads.
+L("e") = lasteltnode(L("o"));
+
+# Gather ne array.	# 11/16/10 AM.
+L("ne arr") = nenoderange(L("n"),L("e"));	# 11/16/10 AM.
+
+if (L("e") != L("n"))
+  {
+  L("tmp") = pnprev(L("e"));
+  L("start") = pnprev(L("n"));
+  while (L("tmp") != L("start"))
+    {
+	L("name") = pnname(L("tmp"));
+	if (L("name") == "_adj")
+	  fixadjs(L("tmp"),L("tmp"));
+	else if (L("name") == "_noun")
+	  fixnouns(L("tmp"),L("tmp"));
+	L("tmp") = pnprev(L("tmp"));
+	}
+  }
+else
+  {
+  if (pnname(L("n")) == "_det")	# 11/30/07 AM.
+  	L("pro") = 1;	# Flag pronoun-like det.
+  }
+
+# Do the reduce here.
+L("red") = group(L("o"),L("o"),"_np");
+
+pncopyvars(L("e"),L("red"));
+clearpos(L("red"),1,L("bracket"));
+
+if (L("pro"))
+  pnreplaceval(L("red"),"pro",1);	# 11/30/07 AM.
+
+# DOMAIN SPECIFiC.
+semcomposenp(L("red"),L("n"),L("n"));
+
+if (L("ne arr"))	# 11/16/10 AM.
+	pnreplaceval(L("red"),"ne arr",L("ne arr"));	# 11/16/10 AM.
+
+return L("red");
+}
+
+
+
+########
+# FUNC:	VERBTOVG
+# SUBJ:	Reduce verb to vg.
+# RET:	Return the vg node created here.
+########
+
+verbtovg(L("o"),L("e"),L("voice"),L("pos"))
+{
+if (!L("o") || !L("e"))
+  return;
+L("n") = eltnode(L("o"));
+if (!L("n"))
+  return;
+
+# Do the reduce here.
+# L("e") allows for a range of nodes to be reduced.
+L("red") = group(L("o"),L("e"),"_vg");
+
+L("voicex") = mhbv(L("red"),L("neg"),0,0,0,0,L("n"));
+pncopyvars(L("n"),L("red"));
+clearpos(L("red"),1,0);
+
+pnreplaceval(L("red"),"first verb",L("n"));
+pnreplaceval(L("red"),"verb node",L("n"));
+
+fixvg(L("red"),L("voice"),L("pos"));
+
+return L("red");
+}
+
+
+########
+# FUNC:	VGVGCOMPOUND
+# SUBJ:	Glom two vgs together.
+# RET:	Return the vg node created here.
+# NOTE:	"has helped build..."
+########
+
+vgvgcompound(L("o_vg1"),L("o_vg2"),L("pattern"))
+{
+if (!L("o_vg1") || !L("o_vg2"))
+  return;
+if (L("o_vg1") > L("o_vg2"))
+  {
+  "err.txt" << "vgvgcompound: Bad range=" << L("o_vg1")
+  	<< " " << L("o_vg2") << "\n";
+  exitpass();
+  }
+
+L("vg1") = eltnode(L("o_vg1"));
+L("vg2") = eltnode(L("o_vg2"));
+if (!L("vg1") || !L("vg2"))
+  return;
+
+# Do the reduce here.
+# L("e") allows for a range of nodes to be reduced.
+L("red") = group(L("o_vg1"),L("o_vg2"),"_vg");
+
+pnreplaceval(L("red"),"compound-vg",1);
+pnreplaceval(L("red"),"first vg",L("vg1"));
+pnreplaceval(L("red"),"last vg",L("vg2"));
+pnreplaceval(L("red"),"pattern",L("pattern"));
+
+L("voice") = pnvar(L("vg1"),"voice");
+if (L("voice"))
+  pnreplaceval(L("red"),"voice",L("voice"));
+
+return L("red");
+}
+
+
+########
+# FUNC:	GROUPVGPREP
+# SUBJ:	Join a verb and particle/preposition.
+# RET:	Return the np node created here.
+########
+
+groupvgprep(L("o_vg"),L("o_prep"))
+{
+if (!L("o_vg") || !L("o_prep"))
+  return 0;
+if (L("o_vg") > L("o_prep"))
+  {
+  "err.txt" << "groupvgprep: Bad range=" << L("o_vg")
+  	<< " " << L("o_prep") << "\n";
+  exitpass();
+  }
+L("vg") = eltnode(L("o_vg"));
+L("prep") = eltnode(L("o_prep"));
+if (!L("vg") || !L("prep"))
+  return 0;
+
+# Do the reduce here.
+# L("e") allows for a range of nodes to be reduced.
+L("red") = group(L("o_vg"),L("o_prep"),"_vg");
+
+pncopyvars(L("vg"),L("red"));
+pnreplaceval(L("red"),"prep/phrasal",1);
+pnreplaceval(L("red"),"prep node",L("prep"));
+
+return L("red");
+}
+
+########
+# FUNC:	PREPNPTOADVL
+# SUBJ:	Reduce prep+np to advl.
+# RET:	Return the advl node created here.
+########
+prepnptoadvl(L("o prep"),L("o np"))
+{
+if (!L("o prep") || !L("o np"))
+  return 0;
+if (L("o prep") > L("o np"))
+  {
+  "err.txt" << "prepnptoadvl: Bad range=" << L("o prep")
+  	<< " " << L("o np") << "\n";
+  exitpass();
+  }
+
+L("n prep") = eltnode(L("o prep"));
+L("n np") = eltnode(L("o np"));
+if (!L("n prep"))
+  return 0;
+
+# Todo: by-np and by-actor semantics can go here...
+L("p stem") = pnvar(L("n prep"),"stem");
+
+L("red") = group(L("o prep"),L("o np"),"_advl");
+
+pnreplaceval(L("red"),"pp",1);
+pnreplaceval(L("red"),"np",L("n np"));	# 11/12/07 AM.
+
+if (L("p stem") == "by")
+  {
+  pnreplaceval(L("red"),"by-np",1);
+  if (semactornode(L("n np")))
+    pnreplaceval(L("red"),"by-actor",L("n np"));
+  }
+return L("red");
+}
+
 
 ########
 # FUNC:	ALPHATOVERB
@@ -1568,12 +2109,53 @@ if (!L("n") || !L("ord"))
   return;
 
 # Do the reduce here.
-group(L("ord"),L("ord"),"_verb");
-L("v") = pnup(L("n"));	# Sloppy get of verb node.
+L("v") = group(L("ord"),L("ord"),"_verb");
 
 pncopyvars(L("n"),L("v"));
-if (L("voice") || L("pos"))
-  fixverb(L("v"),L("voice"),L("pos"));
+if (L("voice") && L("voice") != "AMBIG")
+  {
+  pnreplaceval(L("v"),"voice",L("voice")); # Ok
+  if (L("voice") == "active")
+    {
+    pnreplaceval(L("v"),"-edn",0);
+	# -ed if appropriate...
+	}
+  else if (L("voice") == "passive")
+    {
+    pnreplaceval(L("v"),"-edn",0);
+    pnreplaceval(L("v"),"suff","en");
+    pnreplaceval(L("v"),"-en",1);
+	}
+  }
+else if (L("voice") || L("pos"))
+  {
+  L("vc") = fixverb(L("v"),L("voice"),L("pos"));
+  if (L("vc"))	# FIX.	# 09/22/19 AM.
+    pnreplaceval(L("v"),"voice",L("vc"));	# FIX. # 09/22/19 AM.
+  }
+
+# Other fixups as needed.	# 09/09/19 AM.
+if (!pnvar(L("n"),"suff"))	# 09/09/19 AM.
+  {
+  L("txt") = strtolower(pnvar(L("n"),"$text"));
+  L("stem arr") = nvstem(L("txt"));
+  if (L("stem") = L("stem arr")[0] )
+   {
+   pnreplaceval(L("n"),"stem",L("stem"));
+   pnreplaceval(L("n"),"sem",L("stem"));
+   }
+  if (L("suff") = L("stem arr")[1] )
+    pnreplaceval(L("n"),"suff",L("suff"));
+  }
+
+# Weird NLP++ bug, this test isn't working right.	# 09/13/19 AM.
+# X(3) returns true when there is no X(3)...
+# (What may happen is that the last context node gets used by default...a bug..)
+if (pnname(X()) == "_sent")	#	[WORKAROUND]	# 09/13/19 AM.
+  {
+  ++X("verb_count");	# 09/10/19 AM.	# [WORKAROUND]
+  }
+
 return L("v");
 }
 
@@ -1595,16 +2177,19 @@ if (!L("n") || !L("ord"))
   return;
 
 # Do the reduce here.
-group(L("ord"),L("ord"),"_verb");
-L("v") = pnup(L("n"));	# Sloppy get of verb node.
+L("v") = group(L("ord"),L("ord"),"_verb");
+if (X())  ++X("verb_count");	# 09/10/19 AM.
 
 pncopyvars(L("n"),L("v"));
 if (L("voice") || L("pos"))
-  fixverb(L("v"),L("voice"),L("pos"));
+  {
+  L("vc") = fixverb(L("v"),L("voice"),L("pos"));
+  if (L("vc"))	# FIX.	# 09/22/19 AM.
+    pnreplaceval(L("v"),"voice",L("vc"));	# FIX. # 09/22/19 AM.
+  }
 
 # Do the reduce here.
-group(L("ord"),L("ord"),"_vg");
-L("vg") = pnup(L("v"));	# Sloppy get of vg node.
+L("vg") = group(L("ord"),L("ord"),"_vg");
 
 mhbv(L("vg"),0,0,0,0,0,L("v"));
 pncopyvars(L("v"),L("vg"));
@@ -1613,6 +2198,118 @@ pnreplaceval(L("vg"),"verb node",L("v"));
 pnreplaceval(L("vg"),"first verb",L("v"));
 clearpos(L("vg"),1,0);	# Zero out token info.
 return L("vg");
+}
+
+########
+# FUNC:	ALPHATOVGCOPY
+# SUBJ:	Smart group of alpha to verb to vg. Copy from given v.
+# NOTE: Do the right thing with tagging info.
+########
+alphatovgcopy(L("n"),L("v"))
+{
+if (!L("n") || !L("v"))
+  return; 	# Error.
+if (pnname(L("v")) == "_vg")
+  L("v") = pnvar(L("v"),"verb node");
+L("pos") = pnvar(L("v"),"mypos");
+alphatovg(L("n"),0,L("pos"));
+}
+
+########
+# FUNC:	VTREEBANKTOPOS
+# SUBJ:	Convert treebank to our pos notation.
+########
+vtreebanktopos(L("tb"))
+{
+if (L("tb") == "VB")
+  return "inf";
+if (L("tb") == "VBP")
+  return "inf";
+if (L("tb") == "VBG")
+  return "-ing";
+if (L("tb") == "VBZ")
+  return "-s";
+if (L("tb") == "VBD")
+  return "-ed";
+if (L("tb") == "VBN")
+  return "-en";
+return 0;
+}
+
+########
+# FUNC:	ALPHAUNAMBIGRED
+# SUBJ:	Reduce unambiguous alpha.
+# OLD:	Renamed from ALPHAUNAMBIG.	# 12/13/20 AM.
+########
+alphaunambigred(L("ord"))
+{
+if (!L("ord"))
+  return 0;
+L("n") = eltnode(L("ord"));
+if (!L("n"))
+  return 0;
+if (pnvar(L("n"),"pos num") != 1)
+  return 0;
+
+if (pnvar(L("n"),"noun"))
+  alphatonoun(L("ord"));
+else if (pnvar(L("n"),"verb"))
+  alphatoverb(L("ord"),0,0);
+else if (pnvar(L("n"),"adj"))
+  alphatoadj(L("ord"));
+else if (pnvar(L("n"),"adv"))
+  alphatoadv(L("ord"));
+else
+   return 0;
+return 1;
+}
+
+
+########
+# FUNC:	ALPHAUNAMBIG
+# SUBJ:	Reduce unambiguous alpha. [DE-POS]
+########
+alphaunambig(
+	L("ord"),
+	L("pos")	# part-of-speech to disregard.  [DE-POS]
+	)
+{
+if (!L("ord") || !L("pos"))
+  return 0;
+L("n") = eltnode(L("ord"));
+if (!L("n"))
+  return 0;
+if (!pnvar(L("n"),L("pos")))
+  return 0;
+
+L("pos num") = pnvar(L("n"),"pos num");
+if (L("pos num") > 2)
+  {
+  # Decrement.
+  pnreplaceval(L("n"),"pos num",--L("pos num"));
+  pnreplaceval(L("n"),L("pos"),0);
+  pnreplaceval(L("n"),"ref "+L("pos"),1);	# For reference.
+  return 0;
+  }
+
+if (L("pos") != "noun" && pnvar(L("n"),"noun"))
+  alphatonoun(L("ord"));
+else if (L("pos") != "verb" && pnvar(L("n"),"verb"))
+  alphatoverb(L("ord"),0,0);
+else if (L("pos") != "adj" && pnvar(L("n"),"adj"))
+  alphatoadj(L("ord"));
+else if (L("pos") != "adv" && pnvar(L("n"),"adv"))
+  alphatoadv(L("ord"));
+else
+  {
+  # Decrement.
+  pnreplaceval(L("n"),"pos num",--L("pos num"));
+  pnreplaceval(L("n"),L("pos"),0);
+  pnreplaceval(L("n"),"ref"+L("pos"),1);	# For reference.
+  return 0;
+  }
+
+return 1;
 }
 
 ########
@@ -1628,10 +2325,25 @@ if (!L("n") || !L("ord"))
   return 0;
 
 # Do the reduce here.
-group(L("ord"),L("ord"),"_noun");
-L("noun") = pnup(L("n"));	# Sloppy get of node.
+L("noun") = group(L("ord"),L("ord"),"_noun");
 
 pncopyvars(L("n"),L("noun"));
+
+L("t") = nodetreetext(L("n"));
+L("lc") = strtolower(L("t"));
+if (L("t") != L("lc"))	# Has uppercase char.
+  {
+  if (!spellword(L("lc")))
+    pnreplaceval(L("noun"),"ne",1);
+  }
+
+# Add some "semantics".	# 11/22/10 AM.
+if (L("sem") = pnvar(L("n"),"sem"))
+  return;
+
+L("stem") = pnvar(L("n"),"stem");
+if (L("stem"))
+  pnreplaceval(L("noun"),"sem",L("stem"));	# FIX.	# 02/19/11 AM.
 return L("noun");
 }
 
@@ -1648,11 +2360,20 @@ if (!L("n") || !L("ord"))
   return 0;
 
 # Do the reduce here.
-group(L("ord"),L("ord"),"_adj");
-L("adj") = pnup(L("n"));	# Sloppy get of node.
+L("adj") = group(L("ord"),L("ord"),"_adj");
 
 pncopyvars(L("n"),L("adj"));
 fixadj(L("adj"));
+
+# Record stuff in sentence.	# 09/10/19 AM.
+if (X())
+  {
+  # (Could count these)
+  if (pnvar(L("adj"),"-er")) pnreplaceval(X(),"er",1);
+  if (pnvar(L("adj"),"-est")) pnreplaceval(X(),"est",1);
+  pnreplaceval(X(),"comparative-adj",1);
+  }
+
 return L("adj");
 }
 ########
@@ -1667,8 +2388,7 @@ if (!L("n") || !L("ord"))
   return 0;
 
 # Do the reduce here.
-group(L("ord"),L("ord"),"_adv");
-L("adv") = pnup(L("n"));	# Sloppy get of node.
+L("adv") = group(L("ord"),L("ord"),"_adv");
 
 pncopyvars(L("n"),L("adv"));
 fixadv(L("adv"));
@@ -1746,7 +2466,7 @@ if (L("nnoun"))
 
 if (!S("ofirst") || !S("olast")
 	|| !S("first") || !S("last"))
-	"err.txt" << "dqaninfo fail." << "\n";
+	if (G("error")) "err.txt" << "dqaninfo fail." << "\n";
 }
 
 ########
@@ -1763,6 +2483,11 @@ if (pnname(L("n")) == "_vg")
 if (!L("n"))
   return 0;
 
+if (pnvar(L("n"),"apos-s"))
+ return 1;
+if (pnvar(L("n"),"copula"))
+ return 1;
+
 L("txt") = nodestem(L("n"));
 L("sem") = nodesem(L("n"));
 if (L("sem") == "be" || L("sem") == "being"
@@ -1772,5 +2497,5 @@ return 0;
 }
 
 @CODE
-G("hello") = 0;
+L("hello") = 0;
 @@CODE

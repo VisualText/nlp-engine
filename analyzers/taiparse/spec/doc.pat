@@ -2,7 +2,18 @@
 # FILE: doc.pat
 # SUBJ: Analyzer documentation
 # AUTH: AM
-# CREATED: 30/May/05 11:04:06
+# CREATED:	07/10/12 AM.
+# ANALYZER:	TAIPARSE_0_11
+# REF:	TAIPARSE_0_10
+#	Merge from taiparse_0_8_1_2 (with SHIP passes).
+#	Examine mhx_pmc general parse rules.
+#	Using DICTTOKZ tokenizer.
+#	Using RELATIVE PATHS in parse tree, to make this more
+#	portable to applications.
+
+# OLD DOCUMENTATION RETAINED FOR REFERENCE.
+# =========================================
+
 # ANALYZER:	TAIParse is a general analyzer for English text.
 #	The current version focuses on accurate POS tagging.
 #	Blind testing on a Penn Treebank-like corpus is at 93%
@@ -82,6 +93,54 @@
 # last chunk = last main node name (v, n) in clause
 # first = first node name in clause
 # last  = last node name in clause
+
+###################
+## POS TAGS
+###################
+# WordNet part-of-speech (POS) tags.  36 tags.
+# May be copyright of Penn Treebank Project.
+# https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
+# Same tagset used in NLTK
+# https://pythonprogramming.net/part-of-speech-tagging-nltk-tutorial
+#
+#	-----------------------------------------
+#	CC	Coordinating conjunction
+#	CD	Cardinal number
+#	DT	Determiner
+#	EX	Existential 'there'
+#	FW	Foreign word
+#	IN	Preposition or subordinating conjunction
+#	JJ	Adjective
+#	JJR	Adjective, comparative
+#	JJS	Adjective, superlative
+#	LS	List item marker
+#	MD	Modal
+#	NN	Noun, singular or mass
+#	NNS Noun, plural
+#	NNP Proper noun, singular
+#	NNPS	Proper noun, plural
+#	PDT	Predeterminer
+#	POS	Possessive ending
+#	PRP	Personal pronoun
+#	PRP$ Possessive pronoun
+#	RB	Adverb
+#	RBR	Adverb, comparative
+#	RBS	Adverb, superlative
+#	RP	Particle
+#	SYM	Symbol
+#	TO	'to'
+#	UH	Interjection
+#	VB	Verb, base form
+#	VBD	Verb, past tense
+#	VBG	Verb, gerund or present participle
+#	VBN	Verb, past participle
+#	VBP	Verb, non-3rd person singular present
+#	VBZ	Verb, 3rd person singular present
+#	WDT	Wh-determiner
+#	WP	Wh-pronoun
+#	WP$	Possessive wh-pronoun
+#	WRB	Wh-adverb
+#	-----------------------------------------
 
 
 

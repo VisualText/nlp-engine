@@ -10,12 +10,13 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent _clause
+#@PATH _ROOT _TEXTZONE _sent _clause
+@NODES _clause
 
 # Zap clause start temporary nodes.
 @POST
   # Copy any attrs from the node to the clause.
-  pncopyvars(N(1),X(4));
+  pncopyvars(N(1),X());
   splice(1,1);
 @RULES
 _xNIL <-

@@ -10,7 +10,7 @@
 G("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 # Moved here from sent300.	# 01/08/05 AM.
 @POST
@@ -48,7 +48,7 @@ _xNIL <-
 #  merge();
   noop();	# 01/31/05 AM.
 @RULES
-_clause <-
+_clause [unsealed] <-
 	_clause
 	_clause
 	@@

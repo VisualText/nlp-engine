@@ -12,7 +12,8 @@ if (!G("eos"))
   exitpass();
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+#@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 @POST
   splice(1,1);

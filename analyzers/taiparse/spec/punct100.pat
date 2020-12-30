@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE
+@NODES _TEXTZONE
 
 # Non- eos cases also.
 @PRE
@@ -204,6 +204,16 @@ _xNIL <-
 	\.
 	@@
 
+# Just a period at end of line, assume ok for now. # 03/04/10 AM.
+@POST
+  group(1,1,"_qEOS");
+@RULES
+_xNIL <-
+	\.
+	_xBLANK [star]
+	\n [lookahead]
+	@@
+
 # Rearguard.
 @POST
   ++G("unhandled periods");
@@ -264,6 +274,7 @@ _dblquote <-
 	\'
 	\'
 	@@
+
 
 # alpha *
 @POST
@@ -381,3 +392,25 @@ _xNIL <-
 	_xALPHA
 	\)
 	@@
+
+# Zap single quotes for now.	# 05/10/07 AM.
+@POST
+  excise(2,2);
+@RULES
+_xNIL <-
+	_xWHITE [star]
+	_xWILD [one match=( \` \' )]
+	@@
+@POST
+  excise(1,1);
+@RULES
+_xNIL <-
+	_xWILD [one match=( \` \' )]
+	_xWHITE [star]
+	@@
+
+# Zap all control characters	# 03/04/10 AM.
+@POST
+  excise(1,1);
+@RULES
+_xNIL <- _xCTRL @@

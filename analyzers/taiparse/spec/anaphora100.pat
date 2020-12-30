@@ -16,7 +16,7 @@ if (G("verbose"))
   "wsd.txt" << "\n" << "ANAPHORA100 PASS" << "\n";
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 # that
 @CHECK

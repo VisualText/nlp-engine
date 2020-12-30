@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 @POST
   if (pnname(N(1)) == "_vg")

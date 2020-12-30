@@ -32,7 +32,8 @@ if (!L("wcon"))
   return;
   }
 
-lookupalpha(L("lctxt"),L("n"));
+#lookupalpha(L("lctxt"),L("n"));		# [DICTZ_FIX]	# 12/29/20 AM.
+lookupalphadicttokz(L("lctxt"),N(1));	# [DICTZ_FIX]	# 12/29/20 AM.
 if (!pnvar(L("n"),"pos num"))	# Not in dictionary.
   	{
     if (G("verbose"))
@@ -50,10 +51,11 @@ if (!pnvar(L("n"),"pos num"))	# Not in dictionary.
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE
+@NODES _TEXTZONE
 
 @CHECK
-  if (N("pos num"))
+#  if (N("pos num"))	# [DICTZ_FIX]	# 12/29/20 AM.
+  if (N("pos"))			# [DICTZ_FIX]	# 12/29/20 AM.
     fail();	# Fixed dict earlier.
 @POST
   lookupword(N(1));

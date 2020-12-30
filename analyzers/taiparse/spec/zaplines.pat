@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE
+@NODES _TEXTZONE
 
 @POST
   ++X("line count",2);

@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE
+@NODES _TEXTZONE
 
 
 # noncount or mass nouns.  Need to build a full listing.
@@ -155,6 +155,7 @@ nonsense
 nylon
 oil
 optimism
+output
 oxygen
 paper
 pasta

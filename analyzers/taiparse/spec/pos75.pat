@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 # another ugly tiptoeing
 # adj verb
@@ -20,7 +20,7 @@ L("hello") = 0;
   if (!vconjq(L("n"),"-ing"))
     fail();
 @POST
-  pnrename(N(2),"_noun");
+  pnrename(N(2),"_noun");	# verb -> noun
   posacct(N(2));
 @RULES
 _xNIL <-
@@ -50,10 +50,7 @@ _xNIL <-
 
 # prep noun
 @POST
-  L("tmp2") = N(2);
-  group(2,2,"_np");
-  pncopyvars(L("tmp2"),N(2));
-  clearpos(N(2),1,1);	# Zero out token info.
+  nountonp(2,1);
 @RULES
 _xNIL <-
 	_xWILD [one match=(_prep)]
@@ -106,9 +103,7 @@ _xNIL <-
   L("tmp2") = N(2);
   group(2,2,"_noun");
   pncopyvars(L("tmp2"),N(2));
-  group(2,2,"_np");
-  pncopyvars(L("tmp2"),N(2));
-  clearpos(N(2),1,1);	# Zero out token info.
+  nountonp(2,1);
 @RULES
 _xNIL <-
 	_howmuch [s]
@@ -231,25 +226,25 @@ _xNIL <-
 
 # verb alpha
 # foreshadow rising
-@CHECK
-  if (!N("adj",2))
-    fail();
-  if (!N("adv",2) && !N("verb",2))
-    fail();
-  S("vc2") = vconj(N(2));
-  if (S("vc2") == "inf"
-   || S("vc2") == "-s")
-    fail();
-@POST
-  L("tmp2") = N(2);
-  group(2,2,"_adj");
-  pncopyvars(L("tmp2"),N(2));
-  fixadj(N(2));
-@RULES
-_xNIL <-
-	_xWILD [s one match=(_verb _vg) except=(_modal _have _be being)]
-	_xALPHA
-	@@
+#@CHECK
+#  if (!N("adj",2))
+#    fail();
+#  if (!N("adv",2) && !N("verb",2))
+#    fail();
+#  S("vc2") = vconj(N(2));
+#  if (S("vc2") == "inf"
+#   || S("vc2") == "-s")
+#    fail();
+#@POST
+#  L("tmp2") = N(2);
+#  group(2,2,"_adj");
+#  pncopyvars(L("tmp2"),N(2));
+#  fixadj(N(2));
+#@RULES
+#_xNIL <-
+#	_xWILD [s one match=(_verb _vg) except=(_modal _have _be being)]
+#	_xALPHA
+#	@@
 
 
 # noun verb alpha

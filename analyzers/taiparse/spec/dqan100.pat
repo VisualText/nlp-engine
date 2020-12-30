@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 # Lone noun.
 @POST
@@ -132,9 +132,7 @@ _np <-
   L("tmp2") = N(2);
   group(2,2,"_noun");
   pncopyvars(L("tmp2"),N(2));
-  group(2,2,"_np");
-  pncopyvars(L("tmp2"),N(2));
-  clearpos(N(2),1,1);	# Zero out token info.
+  nountonp(2,1);
   if (pnname(N(1)) == "_vg")
     if (!N("voice",1))
 	  N("voice",1) = "active";
@@ -220,10 +218,7 @@ _xNIL <-
 	  N("voice",3) = "active";
   if (pnname(N(2)) == "_pro")
     {
-	L("tmp2") = N(2);
-	group(2,2,"_np");
-    pncopyvars(L("tmp2"),N(2));
-    clearpos(N(2),1,1);	# Zero out token info.
+	nountonp(2,1);
 	}
 @RULES
 _xNIL <-
@@ -233,7 +228,7 @@ _xNIL <-
 	@@
 
 # prep adj alpha
-# dqan alpha
+# dqa alpha
 @CHECK
   if (!N("noun",5) && !N("adj",5))
     fail();
@@ -327,9 +322,7 @@ _xNIL <-
   pncopyvars(L("tmp2"),N(2));
   if (pnname(N(2)) == "_adj")
     fixadj(N(2));
-  group(2,2,"_np");
-  pncopyvars(L("tmp2"),N(2));
-  clearpos(N(2),1,1);	# Zero out token info.
+  nountonp(2,1);
 @RULES
 _xNIL <-
 	_xWILD [one match=(\,)]
@@ -435,14 +428,13 @@ _xNIL <-
 	@@
 
 # Convert pronouns at some point.
+@PRE
+<1,1> varz("proposs");
 @CHECK
   if (pnname(N(1)) == "_np")
     fail();
 @POST
-  L("tmp1") = N(1);
-  group(1,1,"_np");
-  pncopyvars(L("tmp1"),N(1));
-  clearpos(N(1),1,1);
+  nountonp(1,1);
 @RULES
 _xNIL <-
 	_xWILD [s one match=(_proSubj _proObj) except=(_whword)]

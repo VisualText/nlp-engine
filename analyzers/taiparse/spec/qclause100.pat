@@ -10,11 +10,13 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent _clause
+#@PATH _ROOT _TEXTZONE _sent _clause
+@NODES _clause
 
 
 # Validate well-formed clause.
 @POST
+  L("x3") = pnparent(X());		# 07/13/12 AM.
   if (!N(3))
     X("no subj") = 1;
   X("vg node") = N(5);
@@ -48,21 +50,21 @@ L("hello") = 0;
   X("last name") = pnname(L("n"));
   L("v") = N("first verb",5);	# 06/05/06 AM.
   if (N(3) || N(7)
-   || X("vg count",3) == 1) # Lone verb in sent.
+   || pnvar(L("x3"),"vg count") == 1) # Lone verb in sent.
     {
 	# Ambiguous VB or VBP.
-	fixverb(L("v"),"active","VBP");
+	fixverb(L("v"),"active",0);
 	X("voice") = N("voice",5) = "active";
     }
   # Other verb fixup: _aposS.	# 9/18/05 AM.
   fixaposs(X("vg node"),L("v"));	# 9/18/05 AM.
 
   X("id") = "qclause100 wfj";
-#  semclausenvj(X(4),2,3,4,5,6,7,8);  # Domain semantics for clause.
+#  semclausenvj(X(),2,3,4,5,6,7,8);  # Domain semantics for clause.
 @RULES
 _xNIL <-
 	_xSTART
-	_xWILD [star match=(_advl _adv)]
+	_xWILD [star match=(_advl _adv _xPUNCT)]
 	_xWILD [opt match=(_np _pro)]
 	_xWILD [star match=(_advl _adv)]
 	_vg
@@ -82,7 +84,7 @@ _xNIL <-
     X("pattern") = "nvp";
   X("id") = "qclause100 n-j";
   X("voice") = "active";
-#  semclausenj(X(4),2,3,4,5,6);  # Domain semantics for clause.
+#  semclausenj(X(),2,3,4,5,6);  # Domain semantics for clause.
 @RULES
 _xNIL <-
 	_xSTART
@@ -95,6 +97,7 @@ _xNIL <-
 
 # Validate well-formed clause.
 @POST
+  L("x3") = pnparent(X());		# 07/13/12 AM.
   if (!N(3))
     X("no subj") = 1;
   X("vg node") = N(5);
@@ -122,12 +125,12 @@ _xNIL <-
   if (N(7))
     {
 	# Ambiguous -edn or inf.
-	fixvg(N(5),"active","VBP");
+	fixvg(N(5),"active","VBD");
 	X("voice") = "active";
     }
   else if (N(3)
-   || X("vg count",3) == 1) # Only 1 verb in sentence.
-    fixvg(N(5),"active","VBP");
+   || pnvar(L("x3"),"vg count") == 1) # Only 1 verb in sentence.
+    fixvg(N(5),"active","VBD");
   X("id") = "qclause100 wf";
 @RULES
 _xNIL <-
@@ -144,8 +147,11 @@ _xNIL <-
 
 # Validate well-formed clause.
 @POST
+  L("x3") = pnparent(X());		# 07/13/12 AM.
+  # Characterize verb a bit. # 05/09/07 AM.
+  qclausevg(N(5),X());	# 05/09/07 AM.
   # Determine if lone clause.	# 01/06/05 AM.
-  if (X("clauses",3) == 1
+  if (pnvar(L("x3"),"clauses") == 1
    && X("clause num") == 1)
     L("lone clause") = 1;
 
@@ -153,9 +159,9 @@ _xNIL <-
     X("no subj") = 1;
   X("vg node") = N(5);
 
-  if (N(3) && N(7))
+  if (N(3) && N(7) && !N("prep/phrasal",5))
     X("pattern") = "nvn";
-  else if (N(7))
+  else if (N(7) && !N("prep/phrasal",5))
     X("pattern") = "vn";
   else if (N(3))
     X("pattern") = "nv";
@@ -177,16 +183,19 @@ _xNIL <-
   L("firstv") = N("first verb",5);
   if (L("firstv"))
     L("v") = L("firstv");	# 01/08/05 AM.
-  if (N(7))
+  if (N(7) && !N("prep/phrasal",5))
     {
 	# Ambiguous -edn or inf.
-	fixvg(N(5),"active","VBP");
+	if (singular(N(3)) && vconjq(L("v"),"-ed"))
+	  fixvg(N(5),"active","VBD");
+	else
+	  fixvg(N(5),"active",0);
     }
-  if (X("vg count",3) == 1) # Lone verb in sent.
+  if (pnvar(L("x3"),"vg count") == 1) # Lone verb in sent.
     {
 	if (N("voice",5) != "passive")
 	  {
-  	  fixvg(N(5),"active","VBP");		# 01/07/05 AM.
+  	  fixvg(N(5),"active",0);		# 01/07/05 AM.
 	  X("voice") = "active";
 	  }
 	}
@@ -199,18 +208,21 @@ _xNIL <-
 		 || verbfeat(L("v"),"T5")	# MBUILD type verb.
 		 ))
 	  {
-	  fixvg(N(5),"active","VBP");
+	  fixvg(N(5),"active",0);
 	  X("voice") = "active";
 	  }
 	
-    if (L("v") && !pnvar(L("v"),"mypos"))
-      {
-	   if (pnvar(L("v"),"inf"))
-	    chpos(L("v"),"VBP");
-	  }
+#    if (L("v") && !pnvar(L("v"),"mypos"))
+#      {
+#	   if (pnvar(L("v"),"inf"))
+#	    chpos(L("v"),"VBP");
+#	  }
 	}
+
+  if (N("voice",5))
+	X("voice") = N("voice",5);
 #  domnvn(N(2),N(3),N(4),N(5),N(6),N(7),N(8));
-#  semclausenvn(X(4),2,3,4,5,6,7,8,9);  # Domain semantics for clause.
+#  semclausenvn(X(),2,3,4,5,6,7,8,9);  # Domain semantics for clause.
   X("id") = "qclause100 wf1";
 @RULES
 _xNIL <-
@@ -258,7 +270,7 @@ _xNIL <-
 @POST
   X("pattern") = "vnn";
   X("query") = 1;
-  domvnn(X(4),N(3),N(5),N(7));
+  domvnn(X(),N(3),N(5),N(7));
 @RULES
 _xNIL <-
 	_xSTART
@@ -274,24 +286,15 @@ _xNIL <-
 
 # Singleton uncharacterized alpha.
 @POST
-  if (vconjq(N(2),"-en"))
-   {
-   L("tmp2") = N(2);
-   group(2,2,"_verb");
-   L("v") = N(2);
-   pncopyvars(L("tmp2"),N(2));
-   chpos(N(2),"VBN");
-   group(2,2,"_vg");
-  mhbv(N(2),L("neg"),0,0,0,0,L("v"));
-   pncopyvars(L("tmp2"),N(2));
-   X("voice") = N("voice",2) = "passive";
-   clearpos(N(2),1,0);	# Zero out token info.
-   X("pattern") = "v";
-   X("vg node") = N(2);
-   }
+  if (N("verb",2))
+	{
+	alphatovg(2,0,0);
+	X("pattern") = "v";
+	X("vg node") = N(2);
+	}
   else
     X("pattern") = "alpha";
-#  pncopyvars(N(2),X(4));	# 03/01/05 AM.
+#  pncopyvars(N(2),X());	# 03/01/05 AM.
 @RULES
 _xNIL <-
 	_xSTART
@@ -303,9 +306,10 @@ _xNIL <-
 # Patterns with segments.
 # np vg np prep seg
 @POST
+  L("x3") = pnparent(X());		# 07/13/12 AM.
   X("vg count") = 1; # 1 verb in clause.
   if (N(3)
-   || X("vg count",3) == 1)
+   || pnvar(L("x3"),"vg count") == 1)
     {
     if (!N("voice",5))
 	  X("voice") = N("voice",5) = "active";
@@ -368,14 +372,8 @@ _xNIL <-
 
 # Decide on some active voice.
 @POST
-  L("v") = N("verb node",5);
-  if (L("v") && !pnvar(L("v"),"mypos") )
-    {
-    if (pnvar(L("v"),"-edn"))
-	  chpos(L("v"),"VBD");
-	else if (pnvar(L("v"),"inf"))
-	  chpos(L("v"),"VBP");
-	}
+  if (!vgassigned(N(5)))
+  	fixvg(N(5),"active",0);
   if (!N("voice",5))
 	  X("voice") = N("voice",5) = "active";
   if (!N(3))
@@ -394,23 +392,10 @@ _xNIL <-
 
 # lone vg at clause start.
 @POST
-  L("v") = N("verb node",3);
-  L("vc") = vconj(L("v"));
-  if (L("v") && !pnvar(L("v"),"mypos") )
-    {
-    if (L("vc") == "-edn")
-	  {
-	  chpos(L("v"),"VBN");
-      if (!N("voice",3))
-	    X("voice") = N("voice",3) = "passive";
-	  }
-	else if (L("vc") == "inf")
-	  {
-	  chpos(L("v"),"VBP");
-      if (!N("voice",3))
-	    X("voice") = N("voice",3) = "active";
-	  }
-	}
+  if (!vgassigned(N(3)))
+  	fixvg(N(3),X("voice"),0);
+  if (N("voice",3))
+  	X("voice") = N("voice",3);
   X("no subj") = 1;
   X("vg node") = N(3);
   X("id") = "qclause100 v";
@@ -489,10 +474,22 @@ _xNIL <-
 # Pure adverbial.
 @POST
   X("pattern") = "x";
-#  semclauseadvls(X(4),2);
+#  semclauseadvls(X(),2);
 @RULES
 _xNIL <-
 	_xSTART
 	_xWILD [plus match=(_advl _adv)]
 	_xEND
 	@@
+
+# DEFAULT TO GET RID OF SEG.
+@POST
+  if (N("seg type"))
+	pnrename(N(1),"_" + N("seg type"));
+  else
+	pnrename(N(1),"_np");	# Default.
+@RULES
+_xNIL <-
+	_seg
+	@@
+

@@ -18,10 +18,10 @@ if (G("verbose"))
 	<< "\n\n";
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 @POST
-  clauseregister(N(1),X(3));
+  clauseregister(N(1),X());
 @RULES
 _xNIL <-
 	_clause

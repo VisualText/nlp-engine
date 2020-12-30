@@ -10,7 +10,8 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent _clause
+#@PATH _ROOT _TEXTZONE _sent _clause
+@NODES _clause
 
 #### DEFAULTS
 # Some default pos tagging.
@@ -77,3 +78,23 @@ _xNIL <-
 	_xALPHA
 	@@
 
+# np vg
+@CHECK
+  L("x3") = pnparent(X());		# 07/13/12 AM.
+ S("v") = N("verb node",3);
+ if (!S("v"))
+	fail();
+ if (pnvar(S("v"),"mypos"))
+	fail();
+ # Looking at last clause.
+ if (X("clause num") != pnvar(L("x3"),"clauses"))
+	fail();
+@POST
+  fixvg(N(3),"active","VBG");
+  X("voice") = "active";
+@RULES
+_xNIL <-
+	_np
+	_xWILD [star match=(_adv _advl)]
+	_vg
+	@@

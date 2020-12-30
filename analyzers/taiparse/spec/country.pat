@@ -6,7 +6,7 @@
 ###############################################
 
 # TODO: PUT YOUR CONTEXT IN HERE.
-@PATH _ROOT _TEXTZONE
+@NODES _TEXTZONE
 
 # TODO: SET UP USER ACTIONS HERE.
 @POST

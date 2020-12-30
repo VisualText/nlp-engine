@@ -10,7 +10,8 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent _clause
+#@PATH _ROOT _TEXTZONE _sent _clause
+@NODES _clause
 
 @CHECK
   if (N("verb",2))
@@ -52,22 +53,19 @@ _xNIL <-
 _xNIL <-
 	_prep
 	_adv [star]
-	_np
+	_xWILD [s one match=(_np) except=(_proSubj)]
 	_xWILD [one lookahead fail=(_conj)]
 	@@
 _xNIL <-
 	_prep
 	_adv [star]
-	_np
+	_xWILD [s one match=(_np) except=(_proSubj)]
 	_xEND
 	@@
 
 # noun vg
 @POST
-  L("tmp2") = N(2);
-  group(2,2,"_np");
-  pncopyvars(L("tmp2"),N(2));
-  clearpos(N(2),1,1);	# Zero out token info.
+  nountonp(2,1);
   if (pnname(N(4)) == "_vg")
     if (!N("voice",4))
 	  X("voice") = N("voice",4) = "active";
@@ -178,9 +176,7 @@ _xNIL <-
   group(2,2,"_noun");
   pncopyvars(L("tmp2"),N(2));
   fixnoun(N(2));
-  group(2,2,"_np");
-  pncopyvars(L("tmp2"),N(2));
-  clearpos(N(2),1,1);
+  nountonp(2,1);
   X("vg node") = N(4);
 @RULES
 _xNIL <-
@@ -200,6 +196,7 @@ _xNIL <-
   if (!N("verb",5))
     fail();
 @POST
+  L("x3") = pnparent(X());		# 07/13/12 AM.
   L("tmp5") = N(5);
   group(5,5,"_verb");
   pncopyvars(L("tmp5"),N(5));
@@ -213,7 +210,8 @@ _xNIL <-
 
   X("need verb") = 0;	# Reset.
   ++X("vg count");
-  ++X("vg count",3);
+  L("ct") = pnvar(L("x3"),"vg count");			# 07/13/12 AM.
+  pnreplaceval(L("x3"),"vg count",++L("ct"));	# 07/13/12 AM.
   X("vg node") = N(5);
 @RULES
 _xNIL <-
@@ -405,6 +403,18 @@ _xNIL <-
 	_xWILD [star match=(_quan _num _xNUM)]
 	_adj [star]
 	_noun [plus]
-	_xWILD [one lookahead fail=(_xALPHA)]
+	_xWILD [one lookahead fail=(_xALPHA _aposS)]
 	@@
 
+# ^ alpha
+@POST
+  L("x3") = pnparent(X());			# 07/13/12 AM.
+  if (pnvar(L("x3"),"conditional"))	# 07/13/12 AM.
+	alphatoverb(2,"active","VB");
+  else
+	fixnphead(2);
+@RULES
+_xNIL <-	# 05/08/07 AM.
+ 	_xSTART
+	_xWILD [one match=(double triple)]
+	@@

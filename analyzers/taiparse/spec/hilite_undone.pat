@@ -10,7 +10,8 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent _clause
+#@PATH _ROOT _TEXTZONE _sent _clause
+@NODES _clause
 
 @POST
  X("stuff-in-clause") = 1;
