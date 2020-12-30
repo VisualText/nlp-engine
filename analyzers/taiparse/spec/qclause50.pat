@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 # vg
 @CHECK
@@ -73,18 +73,21 @@ _xNIL <-
 @RULES
 _xNIL <-
 	to [s except=(_clausestart)]
+	_adv [star]
 	_vg [lookahead]
 	@@
 
 # parallel construction.
 # ellipted copula
+@PRE
+<1,1> varz("qc50 nvacna");
 @POST
+  N("qc50 nvacna",1) = 1;
   group(7,7,"_clausesep");
   if (N(8))
     group(8,8,"_clausestart");
   else
     group(9,9,"_clausestart");
-  noop();
 @RULES
 _xNIL <-
 	_np
@@ -106,7 +109,10 @@ _xNIL <-
 
 # np vg vg
 # ex: people bitten by mosquitos reacted violently.
+@PRE
+<3,3> varz("qc50 s-nvv");
 @POST
+  N("qc50 s-nvv",3) = 1;
   L("v5") = N("verb node",5);
   L("vc5") = vconj(L("v5"));
   if (L("vc5") == "-ed"
@@ -120,7 +126,6 @@ _xNIL <-
 	  group(5,5,"_clausestart");
 	group(7,7,"_clausestart");
 	}
-  noop();
 @RULES
 _xNIL <-
 	_xSTART
@@ -132,6 +137,8 @@ _xNIL <-
 	_vg
 	@@
 
+@PRE
+<1,1> varz("qc50 v-n-v");
 @CHECK
   if (N("q-q remote",1) == "right"
    || N("q-q remote",5) == "left")
@@ -139,9 +146,15 @@ _xNIL <-
 @POST
   if (N("glom",3) == "right"
    || N("glom",1) == "left"
-   || N("pro",3) )	# 01/08/05 AM.
+   || N("prosubj",3) )	# 01/08/05 AM.
     {
 	group(3,3,"_clausestart");
+	}
+  else if (N("glom",3) == "left"
+  	|| N("proobj",3))
+    {
+	# If more than one adverbial, need a _clauseend
+	# to be implemented...
 	}
   else
     {
@@ -154,21 +167,61 @@ _xNIL <-
 _xNIL <-
 	_xWILD [s one match=(_vg)]
 	_xWILD [star match=(_advl _adv)]
-	_np
+	_xWILD [one match=(_np _adjc)]
 	_xWILD [star match=(_advl _adv)]
 	_vg
 	@@
+
+# Redundant with the above. # 06/02/07 AM.
+@PRE
+<1,1> varz("qclause50: vg-adv-vg");	# Loop guard.	# 04/24/10 AM.
+@CHECK
+  ++N("qclause50: vg-adv-vg",1);	# Loop guard.	# 04/24/10 AM.
+  # Look for bound verb groups.
+  # As in "is john eating".
+#  if (N("q-q remote",1) == "right"
+#   || N("q-q remote",5) == "left")
+#     fail();
+#@POST
+#  group(3,3,"_clausestart");
+#@RULES
+#_xNIL <-
+#	_vg
+#	_xWILD [star match=(_advl _adv)]
+#	_np
+#	_xWILD [star match=(_advl _adv)]
+#	_vg
+#	@@
+
+# A third one! # 06/02/07 AM.
+# vg np vg
+#@CHECK
+#  if (N("q-q remote",1) == "right"
+#   || N("q-q remote",5) == "left")
+#     fail();
+#@POST
+#  group(5,5,"_clausestart");
+#@RULES
+#_xNIL <-
+#	_vg [s]
+#	_xWILD [star match=(_advl _adv)]
+#	_np [opt]
+#	_xWILD [star match=(_advl _adv)]
+#	_vg
+#	@@
 
 # vg vg
 @POST
 #  if (N("voice",1) == "active")
 #    {
-	group(3,3,"_clausestart");
+   if (N(2))	# 04/24/10 AM.
+	group(2,2,"_clausestart");	# FIX	# 04/14/10 AM.
 #	}
 #  else
 #    {
 #    L("v") = N("verb node",1);
 #    group(1,2,"_clause");
+#	 setunsealed(1,"true");	# 07/10/12 AM.
 #    }
 @RULES
 _xNIL <-
@@ -251,22 +304,6 @@ _xNIL <-
 	_vg
 	@@
 
-@CHECK
-  # Look for bound verb groups.
-  # As in "is john eating".
-  if (N("q-q remote",1) == "right"
-   || N("q-q remote",5) == "left")
-     fail();
-@POST
-  group(3,3,"_clausestart");
-@RULES
-_xNIL <-
-	_vg
-	_xWILD [star match=(_advl _adv)]
-	_np
-	_xWILD [star match=(_advl _adv)]
-	_vg
-	@@
 
 @POST
   group(3,3,"_clausestart");
@@ -350,21 +387,6 @@ _clausestart <-
 	_xWILD [one fail=(_clausestart _clausesep)]
 	@@
 
-# vg np vg
-@CHECK
-  if (N("q-q remote",1) == "right"
-   || N("q-q remote",5) == "left")
-     fail();
-@POST
-  group(5,5,"_clausestart");
-@RULES
-_xNIL <-
-	_vg [s]
-	_xWILD [star match=(_advl _adv)]
-	_np [opt]
-	_xWILD [star match=(_advl _adv)]
-	_vg
-	@@
 
 # Conj at this point is a clause separator....
 @RULES
@@ -377,7 +399,7 @@ _clausesep <-
   group(3,3,"_clausestart");
   N("glom",2) = "left";
   N("glom",3) = "right";
-  fixvg(N(4),"active","VBD");
+  fixvg(N(4),"active","VBP");
 @RULES
 _xNIL <-
 	than [s]

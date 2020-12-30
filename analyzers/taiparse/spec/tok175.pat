@@ -10,7 +10,8 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _tok
+#@PATH _ROOT _TEXTZONE _tok
+@NODES _tok
 
 # num - year - old
 # alpha - alpha - alpha
@@ -24,11 +25,13 @@ L("hello") = 0;
   X("num-year-old") = 1;
 @RULES
 _xNIL <-
-	_xNUM
+	_xSTART
+	_xWILD [plus match=(_xNUM _xALPHA)]
 	\-
 	year
 	\-
 	old
+	_xEND
 	@@
 
 # num - alpha - num
@@ -41,6 +44,7 @@ _xNIL <-
 @POST
   X("hyphenated") = 1;
   X("pos_np") = "JJ";
+  X("num-dash-dash") = 1;
   xrename("_adj");
 @RULES
 _xNIL <-
@@ -48,6 +52,15 @@ _xNIL <-
 	_xNUM
 	_xWILD [plus match=(_xALPHA \- )]
 	_xNUM
+	_xEND
+	@@
+_xNIL <-
+	_xSTART
+	_xNUM
+	\-
+	_xALPHA
+	\-
+	_xALPHA
 	_xEND
 	@@
 
@@ -81,7 +94,7 @@ _xNIL <-
 	# N("mypos",1) = N("mypos",5) = "NN";
     xrename("_noun");
 	X("noun") = 1;
-	chpos(X(3),"NN");
+	chpos(X(),"NN");
 	}
   X("alpha-and-alpha") = 1;
 @RULES
@@ -97,10 +110,18 @@ _xNIL <-
 @CHECK
   if (X("tok175 a-a-a-"))
     fail();
+  if (X("hyphenated"))
+  	fail();	# 05/28/07 AM.
 @POST
+  X("hyphenated") = 1;	# 05/28/07 AM.
   xrename("_adj");
-  X("adj") = 1;
-  chpos(X(3),"JJ");
+  if (N("noun",5))
+	X("pos_np") = "NN";
+  else
+	{
+    X("adj") = 1;
+    chpos(X(),"JJ");
+	}
   X("tok175 a-a-a-") = 1;
 @RULES
 _xNIL <-
@@ -122,7 +143,7 @@ _xNIL <-
 @POST
   xrename("_noun");
   X("noun") = 1;
-  chpos(X(3),"NP");
+  chpos(X(),"NP");
   X("tok175 a.a.a") = 1;
 @RULES
 _xNIL <-
@@ -133,6 +154,53 @@ _xNIL <-
 	\.
 	_xALPHA
 	_xWILD [star match=( \. _xALPHA)]
+	_xEND
+	@@
+
+# alpha - alpha
+# Note:	Splitting up the complex rule below.
+@PRE
+<2,2> var("noun");
+<2,2> varz("adj");
+<4,4> var("noun");
+@CHECK
+  if (X("hyphenated"))
+    fail();
+  if (N("verb",4))
+  	{
+	if (!vconjq(N(4),"inf") && !vconjq(N(4),"-s"))
+	  fail();
+	}
+@POST
+  L("tmp4") = N(4);
+  X("hyphenated") = 1;
+  L("cap2") = strisupper(N("$text",2));
+  L("cap4") = strisupper(N("$text",4));
+  if (L("cap2") || L("cap4"))
+    X("cap") = 1;
+  if (L("cap4"))
+    X("pos_np") = "NP";
+
+	group(4,4,"_noun");
+	pncopyvars(L("tmp4"),N(4));
+	fixnoun(N(4));
+	L("pos") = N("mypos",4);
+	if (L("pos") == "NNS")
+	  L("pos") = "NN";	# 05/21/07 AM.
+	xrename("_adj");
+	if (pnvar(L("tmp4"),"sem") == "date")
+	  chpos(X(),"JJ");  # eg., "five-year".
+	else
+	  chpos(X(),L("pos")); # NN or NNS...
+  X("adj") = 1;
+  X("tok175 a-a0") = 1;
+
+@RULES
+_xNIL <-
+	_xSTART
+	_xALPHA
+	\-
+	_xALPHA
 	_xEND
 	@@
 
@@ -152,8 +220,9 @@ _xNIL <-
     X("cap") = 1;
   if (L("cap4"))
     X("pos_np") = "NP";
-  else
-    X("pos_np") = "JJ";	# Default.	# 06/07/06 AM.
+#  else
+#    X("pos_np") = "JJ";	# Default.	# 06/07/06 AM.
+#
   # Try glomming.
 #  L("txt") = strtolower(N("$text",2)+N("$text",4));
 #  if (dictfindword(L("txt")))
@@ -161,7 +230,7 @@ _xNIL <-
 #	L("t") = N("$text",2)+N("$text",4); # Preserve case.
 #	group(3,3,"_dash");
 #	xrename(L("t"));
-#	lookupword(X(3));
+#	lookupword(X());
 #	X("id") = "tok175 a-a";
 #	}
 #  else
@@ -171,24 +240,29 @@ _xNIL <-
 	if (L("vc") == "-ing"
 	 || L("vc") == "-en"
 	 || L("vc") == "-edn")
+	  {
 	  L("inflected") = 1;
+	  X("pos_np") = "JJ";	# 05/04/07 AM.
+	  }
 	}
   if (L("inflected") && !L("cap4"))
     {
 	group(4,4,"_adj");
 	xrename("_adj");
+	X("pos_np") = "JJ";	# 05/04/07 AM.
 	}
   else if (N("unknown",4)
    || X("cap"))	# 06/21/06 AM.
     {
 	group(4,4,"_noun");
 	xrename("_noun");
-    chpos(X(3),"NP");
+    chpos(X(),"NP");
 	}
   else if (N("adj",4) || L("inflected"))
     {
 	group(4,4,"_adj");
 	xrename("_adj");
+	X("pos_np") = "JJ";	# 05/04/07 AM.
 	}
   else if (N("noun",4))
     {
@@ -198,12 +272,20 @@ _xNIL <-
 	pncopyvars(L("tmp4"),N(4));
 	fixnoun(N(4));
 	L("pos") = N("mypos",4);
+# Don't know why this one was done.	# 05/25/07 AM.
+#	if (L("pos") == "NNS")
+#	  L("pos") = "NN";	# 05/21/07 AM.
 	xrename("_adj");
 	if (pnvar(L("tmp4"),"sem") == "date")
-	  chpos(X(3),"JJ");  # eg., "five-year".
+	  chpos(X(),"JJ");  # eg., "five-year".
 	else
-	  chpos(X(3),L("pos")); # NN or NNS...
+	  chpos(X(),L("pos")); # NN or NNS...
 	}
+  else if (N("pos num",4) == 1 && N("adv",4))
+	{
+	group(4,4,"_adv");
+	xrename("_adv");
+ 	}
   else
     {
 	# Default to adj for now.
@@ -228,9 +310,9 @@ _xNIL <- # 7
   X("hyphenated") = 1;
   xrename("_noun");
   if (strisupper(N("$text",2)))
-    chpos(X(3),"NP");
+    chpos(X(),"NP");
   # Check plural etc.
-  pncopyvars(N(2),X(3));
+  pncopyvars(N(2),X());
 @RULES
 _xNIL <-
 	_xSTART
@@ -287,7 +369,7 @@ _xNIL <-
 @POST
   group(2,5,"_nounCountry");
   group(2,2,"_letlet");
-  chpos(X(3),"NP");
+  chpos(X(),"NP");
   X("cap") = 1;
   xrename("_noun");
 @RULES
@@ -305,7 +387,7 @@ _xNIL <-
 <4,4> length(1);
 @POST
   group(2,5,"_letlet");
-  chpos(X(3),"NP");
+  chpos(X(),"NP");
   xrename("_noun");
 @RULES
 _xNIL <-
@@ -374,7 +456,7 @@ _xNIL <-
 # 's
 # ' s
 @CHECK
-  if (pnname(X(3)) == "_aposS")
+  if (pnname(X()) == "_aposS")
     fail();	# Guard against infinite loop here.
 @POST
   xrename("_aposS");
@@ -389,7 +471,7 @@ _xNIL <-
 # 'd
 # ' d
 @CHECK
-  if (pnname(X(3)) == "_aposD")
+  if (pnname(X()) == "_aposD")
     fail();	# Guard against infinite loop here.
 @POST
   xrename("_aposD");
@@ -405,7 +487,7 @@ _xNIL <-
 # 'll
 # ' ll
 @CHECK
-  if (pnname(X(3)) == "_modal")
+  if (pnname(X()) == "_modal")
     fail();	# Guard against infinite loop here.
 @POST
   xrename("_modal");
@@ -413,7 +495,7 @@ _xNIL <-
   X("aposLL") = 1;
   X("nopos") = 0;	# Valid possessive or verb pos for this.
   X("stem") = X("sem") = "will";
-  chpos(X(3),"MD");
+  chpos(X(),"MD");
 @RULES
 _xNIL <-
 	\'
@@ -423,7 +505,7 @@ _xNIL <-
 # 've
 # ' ve
 @CHECK
-  if (pnname(X(3)) == "_verb")
+  if (pnname(X()) == "_verb")
     fail();	# Guard against infinite loop here.
 @POST
   xrename("_verb");
@@ -431,7 +513,7 @@ _xNIL <-
   X("aposVE") = 1;
   X("nopos") = 0;	# Valid possessive or verb pos for this.
   X("stem") = X("sem") = "have";
-  chpos(X(3),"VBP");
+  chpos(X(),"VBP");
   group(1,2,"_have");
 @RULES
 _xNIL <-
@@ -442,7 +524,7 @@ _xNIL <-
 # 'm
 # ' m
 @CHECK
-  if (pnname(X(3)) == "_verb")
+  if (pnname(X()) == "_verb")
     fail();	# Guard against infinite loop here.
 @POST
   xrename("_verb");
@@ -450,7 +532,7 @@ _xNIL <-
   X("aposM") = 1;
   X("nopos") = 0;	# Valid possessive or verb pos for this.
   X("stem") = X("sem") = "be";
-  chpos(X(3),"VBP");
+  chpos(X(),"VBP");
   group(1,2,"_be");
 @RULES
 _xNIL <-
@@ -511,7 +593,7 @@ _xNIL <-
   X("hyphenated") = 1;
   X("pos_np") = "JJ";	# Default.	# 06/07/06 AM.
   X("adj") = 1;
-  clearpos(X(3),1,0);
+  clearpos(X(),1,0);
 @RULES
 _xNIL <-
 	_xSTART
@@ -551,4 +633,5 @@ _xNIL <-
 	\-
 	_xALPHA
 	@@
+
 

@@ -10,14 +10,14 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent _clause
+@NODES _clause
 
 @POST
   singler(1,2);
 @RULES
 _advl <-
 	_prep
-	_np
+	_xWILD [s one match=(_np) except=(_proSubj)]
 	_xWILD [one lookahead fail=(_conj)]
 	@@
 
@@ -43,7 +43,7 @@ _advl <-
   # Rather than excising, convert to an adverbial! # 06/02/06 AM.
   # This enables pos tagger to record verb parts of speech.
 #  excise(3,3);
-  pnrename(N(3),"_advl");
+  pnrename(N(3),"_advl");	# verb -> advl !
 @RULES
 _xNIL <-
 	_xSTART

@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE
+@NODES _TEXTZONE
 
 # Idioms....
 @POST
@@ -32,6 +32,7 @@ _xNIL <-
   S("sem") = "person";
   S("stem") = strtolower(N("$text"));
   S("need-vconj") = "-s";
+  S("prosubj") = 1;
   pncopyvars();
   single();
 @RULES
@@ -43,13 +44,33 @@ _proSubj [layer=(_pro)] <- _xWILD [one match=(
   S("sem") = "person";
   S("stem") = strtolower(N("$text"));
   S("need-vconj") = "inf";	# Except for verb to be...
+  S("prosubj") = 1;
   pncopyvars();
   single();
 @RULES
 _proSubj [layer=(_pro)] <- _xWILD [one match=(
 	I we they
 	)] @@
+
+@POST
+  S("sem") = "person";
+  S("stem") = strtolower(N("$text"));
+  S("need-vconj") = "inf";	# Except for verb to be...
+  S("prosubj") = 1;
+  S("proobj") = 1;
+  pncopyvars();
+  single();
+@RULES
 _proObj [layer=(_proSubj _pro)] <- you [s] @@
+
+@POST
+  S("sem") = "person";
+  S("stem") = strtolower(N("$text"));
+  S("need-vconj") = "inf";	# Except for verb to be...
+  S("proobj") = 1;
+  pncopyvars();
+  single();
+@RULES
 _proObj [layer=(_pro)] <- _xWILD [s one match=(
 	me him them us
 	)] @@
@@ -68,7 +89,7 @@ _proObj [layer=(_pro)] <- _xWILD [s one match=(
   S("nounpro") = 1;	# Give this class of words a name.
   single();
 @RULES
-_noun <- _xWILD [one match=(
+_nounpro [layer=_noun] <- _xWILD [one match=(
 	anybody anyone anything
 	everybody everyone everything
 	somebody someone something
@@ -83,6 +104,7 @@ _noun <- _xWILD [one match=(
 _nounpro [layer=_noun] <- _xWILD [one match=(
 	nobody noone nothing
 	)] @@
+_noun <- none @@	# 05/13/07 AM.
 
 @POST
   L("tmp1") = N(1);
@@ -98,15 +120,17 @@ _xNIL <- _xWILD [s one match=(
 # Lone "it".
 @POST
   L("tmp1") = N(1);
+  group(1,1,"_proObj");
+  group(1,1,"_proSubj");
   group(1,1,"_pro");
   group(1,1,"_noun");
   pncopyvars(L("tmp1"),N(1));
   chpos(N(1),"PP");
-  group(1,1,"_np");
-  pncopyvars(L("tmp1"),N(1));
+  nountonp(1,1);
   N("pro",1) = 1;	# 01/08/05 AM.
+  N("prosubj",1) = 1;
+  N("proobj",1) = 1;
   N("sem",1) = N("stem",1) = "it";
-  clearpos(N(1),1,1);
 @RULES
 _xNIL <-
   it [s]
@@ -117,11 +141,14 @@ _xNIL <-
 @POST
   pncopyvars();
   S("proposs",1) = 1;
+  S("proobj",1) = 1;	# Ambiguous.
+  S("stem") = "her";
   single();
 @RULES # 10
 _proObj [layer=(_proPoss _pro)] <- her @@
 @POST
   pncopyvars();
+  S("proposs") = 1;
   single();
 @RULES
 _pro <- _xWILD [one match=(
@@ -131,6 +158,7 @@ _pro <- _xWILD [one match=(
 @POST
   pncopyvars();
   S("pro-reflexive") = 1;
+  S("proobj") = 1;
   single();
 @RULES
 _proObj [layer=(_pro)] <- _xWILD [one match=(	# 06/02/02 AM.
@@ -157,6 +185,7 @@ _be [layer=(_verb)] <- be @@
   S("sem") = "be";
   S("stem") = "be";
   S("verb") = 1;
+  S("mypos") = "VBN";
   single();
 @RULES
 _be [layer=(_verb)] <- been @@
@@ -169,6 +198,7 @@ _be [layer=(_verb)] <- been @@
   S("sem") = "be";
   S("stem") = "be";
   S("verb") = 1;
+  S("mypos") = "VBP";
   single();
 @RULES
 _be [layer=(_verb)] <- am @@
@@ -195,6 +225,7 @@ _be [layer=(_verb)] <- are @@
   S("sem") = "be";
   S("stem") = "be";
   S("verb") = 1;
+  S("mypos") = "VBD";
   single();
 @RULES
 _be [layer=(_verb)] <- was @@
@@ -208,6 +239,7 @@ _be [layer=(_verb)] <- was @@
   S("sem") = "be";
   S("stem") = "be";
   S("verb") = 1;
+  S("mypos") = "VBD";
   single();
 @RULES
 _be [layer=(_verb)] <- were @@
@@ -221,6 +253,7 @@ _be [layer=(_verb)] <- were @@
   S("sem") = "be";
   S("stem") = "be";
   S("verb") = 1;
+  S("mypos") = "VBZ";
   single();
 @RULES
 _be [layer=(_verb)] <- is @@
@@ -258,6 +291,7 @@ _det <- _xWILD [s one match=(
   pncopyvars();
   S("number") = "singular";
   S("needs-np") = 1;
+  S("stem") = strtolower(N("$text"));
   single();
 @RULES
 _det <- _xWILD [one match=(a an every) except=(_letabbr)] @@
@@ -290,6 +324,21 @@ _det <-
 		)]
 	@@
 
+# Note: Not defaulting at this point.	# 05/30/07 AM.
+# (Automatically defaults to DT with _det as node name.)
+# all
+@POST
+  pncopyvars();
+  S("number") = "plural";
+#  S("mypos") = "DT";	# all/	# 05/30/07 AM.
+  S("stem") = strtolower(N("$text"));
+  S("mass-ok") = 1; # 06/07/07 AM.
+  single();
+@RULES
+_det <- _xWILD [s one match=(all)] @@
+
+# these
+# those
 @POST
   pncopyvars();
   S("number") = "plural";
@@ -297,8 +346,8 @@ _det <-
   S("stem") = strtolower(N("$text"));
   single();
 @RULES
-_det <- _xWILD [s one match=(all)] @@
-_det [layer=(_fnword)] <- _xWILD [one match=(these those)] @@
+# Not layering _fnword	# 05/07/07 AM.
+_det <- _xWILD [one match=(these those)] @@
 
 @POST
   pncopyvars();
@@ -319,10 +368,7 @@ _fnword <- both @@
   L("tmp1") = N(1);
   group(1,1,"_noun");
   pncopyvars(L("tmp1"),N(1));
-  group(1,1,"_np");
-  pncopyvars(L("tmp1"),N(1));
-  clearpos(N(1),1,0);
-  N("bracket",1) = 1;
+  nountonp(1,1);
 @RULES
 _xNIL <- there @@
 
@@ -340,8 +386,6 @@ _fnword <- while @@
 # fnword except where shown to be a verb infinitive or advl.
 _fnword <- please @@
 
-_fnword <- once @@	# 09/08/04 AM.
-
 # Want to watch for prepositional "like".
 _fnword <- like @@ # 10/12/04 AM.
 
@@ -351,7 +395,20 @@ _fnword <- yet @@	# 10/18/04 AM.
 @POST
   pncopyvars();
   S("stem") = strtolower(N("$text"));
-  if (G("conform treebank"))
+  S("mypos") = "RB";	# 05/12/07 AM.
+  single();
+@RULES
+
+#_fnword <- once @@	# 09/08/04 AM.
+_adv <- once @@ # 05/12/07 AM.
+
+# ahead
+_adj <- ahead @@	# Conform Treebank.	# 05/28/07 AM.
+
+@POST
+  pncopyvars();
+  S("stem") = strtolower(N("$text"));
+#  if (G("conform treebank"))
     S("mypos") = "IN";	# unless/IN
   single();
 @RULES
@@ -369,6 +426,7 @@ _fnword <- unless @@
   
   group(1,1,"_det");
   pncopyvars(L("tmp1"),N(1));
+  N("neg",1) = 1;
 @RULES
 _xNIL <- # 40
 	no
@@ -405,6 +463,7 @@ _fnword <- whose @@	# 02/26/02 AM.
   pncopyvars();
   ++X("func words");
   S("mypos") = "RB";
+  S("stem") = "then";
   single();
 @RULES
 _fnword <- then @@	# 05/23/02 AM.
@@ -454,37 +513,42 @@ _premod <- slightly @@
 @RULES
 _fnword <- most @@ # 50
 
+
 @POST
   pncopyvars();
   S("mypos") = "MD";
   single();
 @RULES
-_modal <- _xWILD [s one match=(
-	will would can could may might shall should ought
-	must
-	)] @@
+_modal <-
+	_xWILD [s one match=(
+	  will would can could may might shall should ought
+	  must
+	  )] @@
 
 @POST
   pncopyvars();
   S("inf") = 1;
-  S("sem") = "have";
+  S("sem") = S("stem") = "have";
   S("tense") = "present";
+  # mypos ambiguous.
   single();
 @RULES
 _have [layer=(_verb)] <- have @@
 @POST
   pncopyvars();
   S("-s") = 1;
-  S("sem") = "have";
+  S("sem") = S("stem") = "have";
   S("tense") = "present";
+  S("mypos") = "VBZ";
   single();
 @RULES
 _have [layer=(_verb)] <- has @@
 @POST
   pncopyvars();
   S("-ing") = 1;
-  S("sem") = "have";
+  S("sem") = S("stem") = "have";
   S("tense") = "present";
+  S("mypos") = "VBG";
   single();
 @RULES
 _have [layer=(_verb)] <- having @@
@@ -492,8 +556,9 @@ _have [layer=(_verb)] <- having @@
   # Note that -en is idiomatic. "I've been had".
  pncopyvars();
  S("-edn") = 1;
-  S("sem") = "have";
-  S("tense") = "present";
+  S("sem") = S("stem") = "have";
+  S("tense") = "past";
+  S("mypos") = "VBD";
   single();
 @RULES
 _have [layer=(_verb)] <- had @@
@@ -514,7 +579,8 @@ _do [layer=(_verb)] <- do @@
   S("-s") = 1;
   S("sem") = "do";
   S("stem") = "do";
-  single();
+   S("mypos") = "VBZ";
+ single();
 @RULES
 _do [layer=(_verb)] <- does @@	# 06/09/06 AM.
 
@@ -524,6 +590,7 @@ _do [layer=(_verb)] <- does @@	# 06/09/06 AM.
   S("-ing") = 1;
   S("sem") = "do";
   S("stem") = "do";
+  S("mypos") = "VBG";
   single();
 @RULES
 _do [layer=(_verb)] <- doing @@
@@ -534,6 +601,7 @@ _do [layer=(_verb)] <- doing @@
   S("-ed") = 1;
   S("sem") = "do";
   S("stem") = "do";
+  S("mypos") = "VBD";
   single();
 @RULES
 _do [layer=(_verb)] <- did @@
@@ -544,6 +612,7 @@ _do [layer=(_verb)] <- did @@
   S("-en") = 1;
   S("sem") = "do";
   S("stem") = "do";
+  S("mypos") = "VBN";
   single();
 @RULES
 _do [layer=(_verb)] <- done @@ # 60
@@ -620,12 +689,15 @@ _adv <- at [s] _xWHITE [s star] _xWILD [s one match=(most least)] @@
 @POST
   pncopyvars();
   S("sem") = "date";
-  S("mypos") = "RB";	# 01/13/05 AM.
+  ++X("date ref");
+#  S("mypos") = "RB";	# 01/13/05 AM.
   single();
 @RULES
 #_adv <-	# 10/22/04 AM.
 #	now
 #	@@
+
+# now
 _fnword <- now @@	# 10/22/04 AM.
 
 @POST
@@ -817,6 +889,8 @@ _xNIL <- # 79
   chpos(N(3),"IN");
   chpos(N(1),"JJ");	# Penn Treebank conform.
   sclearpos(1,0);
+  S("sem") = "such-as";	# 11/13/12 AM.
+  ++S("prenoun");	# 11/13/12 AM.
   single();
 @RULES
 _prep <- such _xWHITE [s star] as @@
@@ -971,6 +1045,108 @@ _fnword <- _xWILD [one match=(
 	)]
 	@@
 
+ # TO is specially tagged. Conform Treebank.	# 05/17/07 AM.
+@POST
+  ++X("func words");
+  pncopyvars();
+  S("stem") = strtolower(N("$text"));
+  if (S("stem") == "without")
+    S("neg") = 1;
+  S("mypos") = "TO";	# to/TO.	# Conform Treebank.
+  single();
+@RULES
+_prep <- to @@
+
+# Complex prepositions to handle	# 10/12/10 AM.
+#	"according to"
+#	"ahead of"
+#	"a la" (French)
+#	"along with"
+#	"apart from"
+#	"as far as"
+#	"as for"
+#	"as of"
+#	"as per"
+#	"as regards"
+#	"as to"
+#	"as well as"
+#	"aside from"
+#	"away from"
+#	"bar none"
+#	"because of"
+#	"but for"
+#	"by means of"
+#	"close to"
+#	"contrary to"
+#	"depending on"
+#	"due to"
+#	"except for"
+#	"far from"
+#	"forward of"
+#	"further to"
+#	"in accordance with"
+#	"in addition to"
+#	"in between"
+#	"in case of"
+#	"in (the) face of"
+#	"in favor of"
+#	"in favour of"
+#	"in front of"
+#	"in lieu of"
+#	"in place of"
+#	"in point of"
+#	"in spite of"
+#	"in to"
+#	"in view of"
+#	"inside of"
+#	"instead of"
+#	"irrespective of"
+#	"left of"
+#	"near to"
+#	"next to"
+#	"on account of"
+#	"on behalf of"
+#	"on board"
+#	"on to"
+#	"on top of"
+#	"opposite to"
+#	"other than"
+#	"out from"
+#	"out of"
+#	"outside of"
+#	"owing to"
+#	"preparatory to"
+#	"prior to"
+#	"pursuant to"
+#	"regardless of"
+#	"right of"
+#	"save for"
+#	"subsequent to"
+#	"thanks to"
+#	"that of"
+#	"together with"
+#	"up against"
+#	"up to"
+#	"up until"
+#	"vis-a-vis"
+#	"where as"
+#	"with reference to"
+#	"with regard to"
+#	"with regards to" (ambig)
+#	"with respect to"
+
+# Postpositions
+# (see http://en.wikipedia.org/wiki/List_of_English_prepositions)
+# ago
+# apart
+# aside
+# away
+# hence
+# notwithstanding
+# on
+# through
+# withal
+
 @POST
   ++X("func words");
   pncopyvars();
@@ -980,28 +1156,95 @@ _fnword <- _xWILD [one match=(
   single();
 @RULES
 _prep <- _xWILD [one match=(
-	about above after along around
+	aboard	# 10/12/10 AM.
+	about
+#	absent	# 10/12/10 AM.
+	above
+	across	# 10/12/10 AM.
+	after
+	against	# 10/12/10 AM.
+	ahead	# 10/12/10 AM.
+	along
+	alongside	# 10/12/10 AM.
+	amid amidst	# 10/12/10 AM.
+	among amongst	# 10/12/10 AM.
+	anent	# archaic	# 10/12/10 AM.
+#	anti	# 10/12/10 AM.
+	around
 #	as	# 08/01/02 AM.
+#	aside
+	astride	# 10/12/10 AM.
 	at
+	athwart	# archaic?	# 10/12/10 AM.
+	atop	# 10/12/10 AM.
+#	barring
+#	bating	# archaic?	# 10/12/10 AM.
 #	before
-	below beside between
+	behind	# AMBIG	# 10/12/10 AM.
+	behither	# archaic	# 10/12/10 AM.
+	below
+	beneath	# 10/12/10 AM.
+	beside
 	besides	# 04/22/07 AM.
+	between
+	betwixt	# archaic	# 10/12/10 AM.
 	beyond
+#	but	(ambig)
 	by
+	circa	# 10/12/10 AM.
+#	concerning considering counting cum	# 10/12/10 AM.
+	despite	# 10/12/10 AM.
 	down
 	during # acts like prep.
-	for from
-	in into
+	ere	# archaic, poetic	# 10/12/10 AM.
+#	except excepting excluding failing following	# 10/12/10 AM.
+	for
+	fornenst fornent	# archaic	# 10/12/10 AM.
+	from
+#	given gone
+	in
+#	including
+	inside	# ambig # 10/12/10 AM.
+	into
+#	less like
+#	mid midst	# (poetic)
+#	minus
 	near
-	of off on over
+#	next
+	notwithstanding	# 10/12/10 AM.
+	of off on
+	onto	# 10/12/10 AM.
+#	opposite outside
 	out	# adv etc.
-#	past
+	over
+#	overthwart	# obsolete	# 10/12/10 AM.
+#	pace past pending
+	per	# 10/12/10 AM.
+#	plus pro
+	qua	# 10/12/10 AM.
+#	re regarding respecting round save saving
+	sans	# 10/12/10 AM.
 #	since # fnword....
-	till through to
-	throughout
-	under until up
+#	than
+	through thru
+	throughout thruout
+	till
+#	times	# (math...)	
+#	to	# *to* treated as a special word.
+#	touching
+	toward towards	# 10/12/10 AM.
+	twixt	# archaic	# 10/12/10 AM.
+	under
 	underneath
-	with without within
+	unlike	# 10/12/10 AM.
+	until
+	unto	# religious,archaic	# 10/12/10 AM.
+	up
+	upon	# 10/12/10 AM.
+	versus via	# 10/12/10 AM.
+#	vice	# ambig	# 10/12/10 AM.
+	with within without
+#	worth
 	despite
 	per upon
 	)] @@
@@ -1029,7 +1272,7 @@ _fnword <- _xWILD [s one match=(
   single();
 @RULES
 _fnword <- _xWILD [s one match=(
-	whatever wherever
+	whatever
     if than
 	whether
 	thus
@@ -1045,29 +1288,39 @@ _fnword [layer=_adv] <- therefore [s] @@
   single();
 @RULES
 _fnword <- _xWILD [s one match=(
-	whenever
+	whenever wherever whereby
 	)] @@
 
 @POST
   pncopyvars(1);
+  S("mypos") = "CC";	# Conform Treebank.
   single();
 @RULES
 # Conjunction type thingy.
-_conj <- but @@
+#_conj <- but @@
+_fnword <- but @@	# 05/13/07 AM.
 
 
 @POST
-  S("mypos",1) = "JJ";
-  S("mypos",3) = "IN";
-  single();
+  N("mypos",1) = "JJ";	# Conform Treebank.
+  N("mypos",3) = "IN";
+  group(1,3,"_adv");
+  N("sem",1) = "other_than";
 @RULES
 
 # Other is tricky too.
 # _adj [layer=(_fnword)] <- other @@
-_fnword <- other [s] _xWHITE [s star] than [s] @@
+_xNIL <-
+	other [s] _xWHITE [s star] than [s] @@
+
+@POST
+  alphatoadv(1);
+@RULES
+_xNIL <- else @@
 
 @POST
   pncopyvars();
+  S("stem") = strtolower(N("$text"));
   single();
 @RULES
 _adj <- other @@
@@ -1095,12 +1348,14 @@ _whword [layer=(_fnword)] <- _xWILD [s one match=(
 @POST
   chpos(N(1),"JJ");	# Conformity.
   N("number") = "plural";
+  alphatoadj(1);  
 @RULES
 _xNIL <- many @@
 
 @POST
   pncopyvars();
   S("mypos") = "WRB";
+  S("stem") = "when";
   single();
 @RULES
 _whword [layer=(_fnword)] <- when @@
@@ -1127,10 +1382,20 @@ _whword [layer=(_fnword)] <-
 
 @POST
   pncopyvars();
+  S("prosubj") = 1;
+  S("proobj") = 1;
   S("mypos") = "WP";
+  S("stem") = "who";
   single();
 @RULES
 _whword [layer=(_proSubj _proObj _pro _fnword)] <- who @@
+@POST
+  pncopyvars();
+  S("proobj") = 1;
+  S("mypos") = "WP";
+  S("stem") = "who";
+  single();
+@RULES
 _whword [layer=( _proObj _pro _fnword)] <- whom @@
 
 @POST
@@ -1138,6 +1403,7 @@ _whword [layer=( _proObj _pro _fnword)] <- whom @@
   S("temporal") = 1;
   S("unit") = "dy";
   S("sem") = "date";
+  ++X("date ref");
   single();
 @RULES
 _day [layer=(_time _noun)] <-

@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE
+@NODES _TEXTZONE
 
 # New tokenization handlers.
 @CHECK
@@ -60,6 +60,7 @@ _qEOS <-
 
 @POST
   S("sem") = "money";
+  S("sem val") = phrasetext();
   S("ignorepos") = 1;	# 04/21/07 AM.
   # Changing from _num to _noun.
   single();
@@ -69,6 +70,18 @@ _money [layer=_noun] <-
 	_xWILD [one match=(_num _xNUM)]
 	_xWHITE [star]
 	_xWILD [s opt match=(thousand million billion trillion)]
+	@@
+
+# $ num-a-share
+@PRE
+<2,2> var("num-dash-dash");
+@POST
+  N("sem",2) = "money";
+  listadd(2,1,"false");
+@RULES
+_xNIL <-
+	\$
+	_adj
 	@@
 
 # noun - noun
@@ -132,15 +145,7 @@ _xNIL <-
 @POST
   --N("pos num",1);
   N("noun",1) = 0;
-  if (N("pos num",1) == 1)
-    {
-	if (N("verb",1))
-	  alphatoverb(1,0,0);
-	else if (N("adj",1))
-	  alphatoadj(1);
-	else if (N("adv",1))
-	  alphatoadv(1);
-	}
+  alphaunambigred(1);
 @RULES
 _xNIL <- _xWILD [one match=(
 	lent

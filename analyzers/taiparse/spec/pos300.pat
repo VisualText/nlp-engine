@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 # leading parts that turn up...
 # that
@@ -97,7 +97,7 @@ _xNIL <-
     fail();
 @POST
   # Ambiguous -edn ...
-  fixvg(N(3),"active","VBD");
+  fixvg(N(3),"active","VBP");
 @RULES
 _xNIL <-
 	_xWILD [one match=( \, )]
@@ -117,7 +117,7 @@ _np <-
 	_np
 	\,
 	_np
-	\, [opt]
+	_xWILD [star match=( \, _noun _np)]	# 11/13/12 AM.
 	_conj
 	_np
 	@@
@@ -184,7 +184,7 @@ _np <-
   if (N("sem",5) != "date") # Or other quan  # 01/06/05 AM.
     fixvg(N(3),"passive","VBN");
   else
-    fixvg(N(3),"active","VBD");
+    fixvg(N(3),"active","VBP");
 @RULES
 _xNIL <-
 	_xWILD [one match=(_prep)]

@@ -11,7 +11,7 @@ if (G("pretagged"))
   exitpass();
 @@CODE
 
-@PATH _ROOT _TEXTZONE
+@NODES _TEXTZONE
 
 # Sentinel.
 @POST

@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 # np , vg to vg , vg
 # John , trying to work... , left the room...
@@ -199,23 +199,10 @@ _xNIL <-
 	_clause
 	@@
 
-	
 # that clause
 # that
-#@CHECK
-#  if (N("mypos",1))
-#    fail();
-#  if (!N("pattern",2))
-#    fail();
 #@POST
-#  L("ch") = strpiece(N("pattern",2),0,0);
-#  if (L("ch") == "n")
-#   chpos(N(1),"IN");		# that/IN
-#  else if (L("ch") == "v")
-#   {
-#   chpos(N(1),"WDT");	# that/WDT
-#   N("bracket",1) = 1;
-#   }
+#  noop();
 #@RULES
 #_xNIL <-
 #	that [s]
@@ -351,8 +338,11 @@ _xNIL <-
 @POST
   if (N("voice",1) && !N("voice",2))
     {
-	if ((N("pattern",1) == "nvn" || N("pattern",1) == "vn")
-	 && (N("pattern",2) == "v"   || N("pattern",2) == "vn"))
+	if ((N("pattern",1) == "nvn" || N("pattern",1) == "vn"
+		|| (N("pattern",1) == "v" && N("last name",1) == "_advl") )
+	 && (N("pattern",2) == "v"   || N("pattern",2) == "vn"
+	     || N("pattern",2) == "vp"	# 05/16/07 AM.
+	))
 	  {
 	  fixvg(N("vg node",2),"passive","VBN");
 	  N("voice",2) = "passive";
@@ -419,16 +409,117 @@ _xNIL <-
 @CHECK
   if (N("voice",1))
     fail();
-  if (N("pattern",1) != "nv")
-    fail();
 @POST
   N("sent400 last-clause",1) = 1;
-  fixvg(N("vg node",1),"active","VBD");
-  N("voice",1) = "active";
+  if (N("pattern",1) == "nv")
+	{
+    fixvg(N("vg node",1),"active","VBD");
+    N("voice",1) = "active";
+	}
+  else if (N("pattern",1) == "v")
+	{
+    fixvg(N("vg node",1),"passive","VBN");
+    N("voice",1) = "passive";
+	}
 @RULES
 _xNIL <-
 	_clause
 	_xEND
 	@@
 
+# clause conj clause
+# "one eating prunes, the other stuffed silly."
+@PRE
+<1,1> var("ellipted-that-is");
+<3,3> vareq("pattern","nv");
+<3,3> varz("voice");
+@POST
+  L("vg") = N("vg node",3);
+  fixvg(L("vg"),"passive","VBN");
+  N("voice",3) = "passive";
+@RULES
+_xNIL <-
+	_clause
+	_conj
+	_clause
+	@@
 
+# ^ clause , clause $
+@PRE
+<2,2> vareq("voice","active");
+<4,4> varz("voice");
+<4,4> vareq("pattern","v");
+@POST
+  L("vg") = N("vg node",2);
+  if (L("vg"))
+    L("v") = pnvar(L("vg"),"verb node");
+  if (L("v"))
+    L("pos") = pnvar(L("v"),"mypos");
+  L("vg4") = N("vg node",4);
+  if (N("last name",2) == "_advl"
+   || N("last name",4) == "_advl")
+  	{
+	fixvg(L("vg4"),"passive","VBN");
+	N("voice",4) = "passive";
+	}
+  else
+	{
+    fixvg(L("vg4"),"active",L("pos"));
+	N("voice",4) = "active";
+	}
+@RULES
+_xNIL <-
+	_xSTART
+	_clause
+	\,
+	_clause
+	_xEND
+	@@
+
+# clause conj clause
+@PRE
+<1,1> vareq("voice","active");
+<3,3> varz("voice");
+<3,3> vareq("pattern","v");
+@POST
+  L("vg") = N("vg node",1);
+  if (L("vg"))
+    L("v") = pnvar(L("vg"),"verb node");
+  if (L("v"))
+    L("pos") = pnvar(L("v"),"mypos");
+  L("vg3") = N("vg node",3);
+  fixvg(L("vg3"),"active",L("pos"));
+  N("voice",3) = "active";
+@RULES
+_xNIL <-
+	_clause
+ 	_xWILD [plus lookahead match=(_conj \, )]
+ 	_clause
+	@@
+ 
+# fnword clause , clause
+# ex: when blah , say blah.
+@CHECK
+  S("vg4") = N("vg node",4);
+  if (!S("vg4"))
+    fail();
+  if (vgassigned(S("vg4")))
+   	fail();
+  if (!vconjq(S("vg4"),"inf"))
+  	fail();
+  if (!N("pattern",4))
+  	fail();
+  L("ch") = strpiece(N("pattern",4),0,0);
+  if (L("ch") != "v")
+  	fail();
+@POST
+  fixvg(S("vg4"),"active","VB");	# Imperative.
+@RULES
+ _xNIL <-
+ 	_whword [s]
+	_clause
+	\, [opt]
+	_clause
+	@@
+
+	 

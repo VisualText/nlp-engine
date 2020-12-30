@@ -10,7 +10,8 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent _clause
+#@PATH _ROOT _TEXTZONE _sent _clause
+@NODES _clause
 
 # Looking for suitable by-actor adverbial.
 # For passive, will support transformation to active.
@@ -26,9 +27,11 @@ _xNIL <-
 	@@
 
 @POST
+  L("x3") = pnparent(X());		# 07/13/12 AM.
   X("last np") = N(1);
-  if (!X("subject",3))	# Find subject for sentence.
-    X("subject",3) = N(1);
+  if (!pnvar(L("x3"),"subject"))	# Find subject for sentence.
+#    X("subject",3) = N(1);
+	pnreplaceval(L("x3"),"subject",N(1));	# 07/13/12 AM.
 @RULES
 _xNIL <-
 	_np

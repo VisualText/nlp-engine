@@ -8,9 +8,12 @@
 
 @CODE
 L("hello") = 0;
+if (!G("hilite"))	# 10/25/10 AM.
+  exitpass();		# 10/25/10 AM.
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent _clause
+#@PATH _ROOT _TEXTZONE _sent _clause
+@NODES _clause
 
 @POST
  noop();

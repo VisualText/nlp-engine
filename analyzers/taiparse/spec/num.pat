@@ -10,7 +10,20 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE
+@NODES _TEXTZONE
+
+
+######## MISC #########
+# det modal
+@POST
+ splice(3,3);
+@RULES
+_xNIL <-
+	_xWILD [s one match=(a an the)]
+	_xWHITE [star]
+	_xWILD [s one match=(can will may might should)]
+	@@
+################
 
 # num %
 @POST
@@ -20,6 +33,7 @@ L("hello") = 0;
   S("percent") = N("$text",1);
   S("sem") = "quantity";
   S("sem detail") = "percent";
+  S("num") = 1;
   sclearpos(1,0);
   single();
 @RULES
@@ -137,11 +151,35 @@ _num <-
 	@@
 
 @POST
-  pncopyvars(1);
+#  pncopyvars(1);	# FIX.	# 01/16/13 AM.
   single();
 @RULES
 _num <-
 	_xWILD [s min=4 match=(_xNUM)]
+	@@
+
+# num . num . num
+# Note: Probable date.  Can do some validation.
+@POST
+  L("n1") = N("$text",1);
+  L("n2") = N("$text",3);
+  L("n3") = N("$text",5);
+  group(1,5,"_num");
+  group(1,1,"_noun");
+  N("sem",1) = "date";
+  N("year",1) = L("n3");
+  N("num1",1) = L("n1");
+  N("num2",1) = L("n2");
+  N("mypos",1) = "NN";
+  ++X("date ref");
+@RULES
+_xNIL <-
+	_xNUM [s]
+	\. [s]
+	_xNUM [s]
+	\. [s]
+	_xNUM [s]
+	_xWILD [one lookahead fail=( \. )]
 	@@
 
 # num . num
@@ -187,10 +225,13 @@ _noun <-
 
 @POST
   S("num") = 1;
+  S("number") = "singular";
+  S("stem") = "one";
   pncopyvars(1);
   single();
 @RULES
-_num <- one [s] @@
+_num <-
+	_xWILD [s one match=(one) except=(_noun)] @@
 
 @POST
   S("num") = 1;

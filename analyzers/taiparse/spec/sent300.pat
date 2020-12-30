@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 
 
@@ -20,4 +20,13 @@ L("hello") = 0;
 @RULES
 _xNIL <-
 	_clause
+	@@
+
+# ^ if
+@POST
+  X("conditional") = 1;	# 05/08/07 AM.
+@RULES
+_xNIL <-
+	_xSTART
+	if [s]
 	@@

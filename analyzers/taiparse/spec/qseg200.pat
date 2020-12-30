@@ -10,7 +10,8 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent _clause _seg
+#@PATH _ROOT _TEXTZONE _sent _clause _seg
+@NODES _seg
 
 @CHECK
   if (!N("noun",3) && !N("adj",3))
@@ -32,8 +33,8 @@ L("hello") = 0;
     pncopyvars(L("tmp3"),N(3));
 	}
   group(4,4,"_noun");
-  pncopyvars(L("tmp4"),X(5));
-  clearpos(X(5),1,1);	# Zero out token info.
+  pncopyvars(L("tmp4"),X());
+  clearpos(X(),1,1);	# Zero out token info.
   xrename("_np");
 @RULES
 _xNIL <-
@@ -46,8 +47,9 @@ _xNIL <-
 
 # dqan
 @CHECK
+  L("x4") = pnparent(X());		# 07/13/12 AM.
   if (N("verb",6)
-   && X("need verb",4)) # 02/12/05 AM.
+   && pnvar(L("x4"),"need verb")) # 02/12/05 AM.
     fail();
 @POST
   L("tmp6") = N(6);
@@ -72,7 +74,7 @@ _xNIL <-
 	}
 
   xrename("_np");
-  clearpos(X(5),1,1);
+  clearpos(X(),1,1);
 @RULES
 _xNIL <-
 	_xSTART
@@ -91,8 +93,8 @@ _xNIL <-
   fixnpnonhead(5);
   xrename("_np");
   L("head") = lasteltnode(7);
-  pncopyvars(L("head"),X(5));
-  clearpos(X(5),1,1);
+  pncopyvars(L("head"),X());
+  clearpos(X(),1,1);
 @RULES
 _xNIL <-
 	_xSTART
@@ -110,8 +112,8 @@ _xNIL <-
   fixnpnonhead(4);
   xrename("_np");
   L("head") = lasteltnode(6);
-  pncopyvars(L("head"),X(5));
-  clearpos(X(5),1,1);
+  pncopyvars(L("head"),X());
+  clearpos(X(),1,1);
 @RULES
 _xNIL <-
 	_xSTART

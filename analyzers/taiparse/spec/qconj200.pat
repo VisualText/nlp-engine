@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 @CHECK
   if (N(5))
@@ -79,6 +79,7 @@ _xNIL <-
 # Some nonverb regions.
 @POST
   group(2,4,"_clause");
+  setunsealed(2,"true");	# 07/10/12 AM.
 @RULES
 _xNIL <-
 	_xWILD [one match=( _xSTART _qEOS \, _dbldash )]

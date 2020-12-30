@@ -10,9 +10,15 @@
 
 @CODE
 L("hello") = 0;
+
+# Remove spurious words from the dictionary.
+L("c") = dictfindword("nondurables");
+if (L("c"))
+  rmconcept(L("c"));
+	
 @@CODE
 
-@PATH _ROOT _TEXTZONE
+@NODES _TEXTZONE
 
 #####
 ## CORRECTIONS TO DICTIONARY HERE.
@@ -71,6 +77,46 @@ _xNIL <- own @@
 @RULES
 _xNIL <- even @@
 
+# disparate - Noun sense looks erroneous.
+@POST
+  N("adj") = 1;
+  N("noun") = 0;
+  N("sem") = N("stem") = "disparate";
+  N("pos num") = 1;
+  N("pos") = "_adj";
+@RULES
+_xNIL <- disparate @@
+
+# goes - Erroneously listed as noun.
+@POST
+  N("verb") = 1;
+  N("noun") = 0;
+  N("sem") = N("stem") = "go";
+  N("pos num") = 1;
+  N("pos") = "_verb";
+@RULES
+_xNIL <- goes @@
+
+# Note: exclusively in "single-handedly".
+@POST
+  N("adv") = 1;
+  N("sem") = N("stem") = "handed";
+  N("pos num") = 1;
+  N("pos") = "_adv";
+@RULES
+_xNIL <- handedly @@
+
+# protecting
+# dict lists as noun, adj.
+@POST
+  N("pos num") = 1;
+  N("verb") = 1;
+  N("sem") = N("stem") = "protect";
+  N("-ing") = 1;
+  N("pos") = "_verb";
+@RULES
+_xNIL <- protecting @@
+
 # provided - special word.
 # dict lists as conj. (handle in grammar).
 @POST
@@ -114,8 +160,9 @@ _xNIL <- pending @@
   N("adj") = 1;
   N("verb") = 1;
   N("noun") = 1;
-  N("stem") = N("sem") = "failing";
+  N("stem") = N("sem") = "fail";  # AMBIG, could have failings...
   N("pos") = "_verb";
+  N("pos_np") = "VBG";
 @RULES
 _xNIL <- failing @@ # 10
 
@@ -155,6 +202,8 @@ _xNIL <- plus @@
   N("stem") = "past";
   N("pos") = "_adj";
   N("sem") = "date";	# 07/13/06 AM.
+  ++X("date ref");
+  ++X("date=past");
 @RULES
 _xNIL <- past @@
 
@@ -201,6 +250,27 @@ _xNIL <- next @@
   N("pos") = "_verb";
 @RULES
 _xNIL <- go @@
+
+# 'offer' listed as adj in dict, but can't corroborate.
+@POST
+  N("pos num") = 2;
+  N("verb") = 1;
+  N("noun") = 1;
+  N("stem") = "offer";
+  N("pos") = "_noun";
+@RULES
+_xNIL <- offer @@
+
+# used
+@POST
+  N("pos num") = 2;
+  N("verb") = 1;
+  N("adj") = 1;
+  N("sem") = N("stem") = "use";
+  N("-edn") = 1;
+  N("pos") = "_verb";
+@RULES
+_xNIL <- used @@
 
 # 'seek' listed as noun in dict, but can't corroborate.
 @POST
@@ -256,6 +326,15 @@ _xNIL <- thing @@
   N("pos") = "_adj";
 @RULES
 _xNIL <- unirradiated @@
+
+# Consecutive is ONLY an adj.
+@POST
+  N("pos num") = 1;
+  N("adj") = 1;
+  N("stem") = "consecutive";
+  N("pos") = "_adj";
+@RULES
+_xNIL <- consecutive @@
 
 @POST
   N("pos num") = 2;
@@ -405,16 +484,6 @@ _xNIL <- heard @@
 
 @POST
   N("pos num") = 2;
-  N("verb") = 1;
-  N("noun") = 1;
-  N("stem") = "think";
-  N("pos") = "_verb";
-  N("-edn") = 1;
-@RULES
-_xNIL <- thought @@
-
-@POST
-  N("pos num") = 2;
   N("verb") = 50;
   N("noun") = 50;
   N("stem") = "interest";
@@ -497,6 +566,17 @@ _noun <- knowns @@
 @RULES
 _noun <- news @@
 
+# noun in dict is spurious.
+@POST
+  N("pos num") = 1;
+  N("adj") = 1;
+  pncopyvars();
+  single();
+@RULES
+_adj <-
+	nondurable
+	@@
+
 @POST
   N("pos num") = 1;
   N("adj") = 1;
@@ -534,33 +614,46 @@ _xNIL <- _xWILD [one match=(
 	accelerated
 	annual
 	blue	# Colors...
-	chief
 	common
 	composite
 	computerized
+	confused
 	differential
+	disaffected
+	disembodied
+	distorted
 	disturbing
 	domestic
 	executive	# About 665/510 !
+	facial
 	first
+	free
 	further	# Treebank 329/356.
 	general
 	good
 	human
 	initial
+	intellectual
 	last
+	lead	# ambig.
+	local
+	matching
 	major
 	member	#
 	monthly
 	open
 	past
 	personal
+	private
 	senior		# 06/04/06 AM.
+	shaded
 	simple
 	specific
+	standardized
 	standing
 	striking
 	troubled
+	worthy
 	)] @@
 @POST
   N("pos_np") = "JJS";
@@ -578,8 +671,10 @@ _xNIL <- _xWILD [one match=(
 
 @POST
   N("pos_np") = "NNS";
+  N("-s") = 1;
 @RULES
 _xNIL <- _xWILD [one match=(
+	alumni
 	data
 	)] @@
 
@@ -587,27 +682,43 @@ _xNIL <- _xWILD [one match=(
   N("pos_np") = "NN";
 @RULES
 _xNIL <- _xWILD [one match=(
+	adult
+	attack
+	baby
+	bond
 	business
 	capital
+	cardboard
 	centennial
-	chief
+	cheerleading	# new noun.
 	compound
 	copyright
+	country
+	crack	# usually.
 	desktop
+	district
 	engineering
 	guest
+	holding
+	home
 	household
+	managing
 	manufacturing
 	market
+	material
+	mathematics	# want singular...
 	morning
 	motor
 	operating
 	patent
  	power
+	radio
 	rate
 	state
 	stock
 	summer
+	test
+	textile
 	trade
 	trading
 	vice
@@ -621,6 +732,8 @@ _xNIL <- _xWILD [one match=(
   N("pos_np") = "VBN";	# 04/20/07 AM.
 @RULES
 _xNIL <- _xWILD [one match=(
+ 	accused
+ 	announced
 	expected
 	imported
 	)] @@
@@ -629,9 +742,15 @@ _xNIL <- _xWILD [one match=(
   N("pos_np") = "VBG";
 @RULES
 _xNIL <- _xWILD [one match=(
+	amusing
+	building
+	competing
+	developing
+	failing
 	growing		# 04/23/07 AM.
 	remaining	# 04/20/07 AM.
 	receiving
+	slowing
 	)] @@
 
 @POST

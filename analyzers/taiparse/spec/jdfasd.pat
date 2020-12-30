@@ -1,22 +1,18 @@
 ###############################################
-# FILE: hilite_alpha.pat
+# FILE: jdfasd.pat
 # SUBJ: comment
 # AUTH: AM
-# CREATED: 15/Oct/04 17:52:52
+# CREATED: 23/Mar/06 10:48:48
 # MODIFIED:
 ###############################################
 
 @CODE
 L("hello") = 0;
-if (!G("hilite"))	# 10/25/10 AM.
-  exitpass();		# 10/25/10 AM.
 @@CODE
 
-@PATH _ROOT _TEXTZONE
+@NODES _ROOT
 
-@POST
-  noop();
 @RULES
 _xNIL <-
-	_xALPHA [plus]
+	_xNIL	### (1)
 	@@
