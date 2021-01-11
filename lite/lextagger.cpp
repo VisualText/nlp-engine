@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright © 2003-2010 by Text Analysis International, Inc.
+Copyright ï¿½ 2003-2010 by Text Analysis International, Inc.
 All rights reserved.
 ********************************************************************************
 *
@@ -22,6 +22,9 @@ All rights reserved.
 #include "u_out.h"		// 01/19/06 AM.
 
 #include "prim/libprim.h"	// 09/15/08 AM.
+#ifndef DWORD
+#define DWORD double
+#endif
 LIBPRIM_API DWORD run_silent(_TCHAR* strCMD);	// 09/15/08 AM.
 
 #include "lite/global.h"

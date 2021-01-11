@@ -1,5 +1,5 @@
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -24,6 +24,10 @@ skip_blanks(_TCHAR cc, _t_istream *fp);
 //tab(int num, ostream *out);
 
 extern LIBPRIM_API bool resolve_file(_TCHAR*,_TCHAR*,_TCHAR*);
+
+#ifndef DWORD
+#define DWORD double
+#endif
 
 // Run without popping up DOS window.	// 03/16/07 AM.
 LIBPRIM_API DWORD
