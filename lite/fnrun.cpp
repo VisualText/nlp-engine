@@ -10535,8 +10535,8 @@ str_spell_candidate(lcstr1, str2, buf);
 
 Chars::destroy(lcstr1);														// 09/28/00 AM.
 
-_TCHAR *str = '\0';
-//_TCHAR *str = "";	// 09/26/19 AM.
+// _TCHAR *str = '\0';
+_TCHAR *str = "";	// 09/26/19 AM.
 if (buf[0] == '\0')															// 09/28/00 AM.
 	return 0;
 
