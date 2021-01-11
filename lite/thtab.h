@@ -29,7 +29,9 @@ All rights reserved.
 #include "str.h"
 #include "slist.h"
 #include "selt.h"
-//#include "gen.h"				// 06/16/00 AM.
+#ifdef LINUX
+#include "gen.h"				// 06/16/00 AM.
+#endif
 #include "htab.h"			// Just for the global string table ptr.
 #include "tsym.h"
 
