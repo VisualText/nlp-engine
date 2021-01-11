@@ -1,6 +1,3 @@
-include_directories(../include/Api/lite)
-include_directories(../include/Api)
-include_directories(../cs/include)
 #include_directories(/usr/local/libiodbc-3.52.12/include)
 
 add_definitions( -DLITE_EXPORTS )
@@ -12,5 +9,4 @@ endif()
 
 file(GLOB lite_src "*.h" "*.cpp")
 add_library(lite STATIC ${lite_src})
-
 target_link_libraries(lite PUBLIC prim kbm consh words)

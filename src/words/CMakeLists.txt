@@ -1,6 +1,3 @@
-include_directories(../../include/Api)
-include_directories(../include)
-
 add_definitions( -DWORDS_EXPORTS )
 if(WIN32)
   add_definitions( -DMSVC_VERSION=${MSVC_VERSION} -D_CRT_SECURE_NO_WARNINGS )
