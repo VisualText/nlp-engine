@@ -1,0 +1,20 @@
+name: Build
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # build project
+      - name: make build directory
+        run: mkdir build
+      - name: Cmake Build
+        run: cmake -Bbuild -H.
+      - name: Cmake Make
+        run: cmake --build build/ --target all
