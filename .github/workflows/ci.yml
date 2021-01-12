@@ -18,7 +18,7 @@ jobs:
       # build project
       - name: make build directory
         run: mkdir build
+      - name: Cmake Configure
+        run: cmake -Bbuild -S.
       - name: Cmake Build
-        run: cmake -Bbuild -H.
-      - name: Cmake Make
         run: cmake --build build/ --target all
