@@ -9927,7 +9927,7 @@ if (!fname || !*fname)
 	}
 
 // Build up a bit-flag vector for the modes.
-#ifdef LINUX
+#ifdef __linux__
 std::_Ios_Openmode modes;
 #else
 int modes = 0;
