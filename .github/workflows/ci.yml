@@ -8,8 +8,12 @@ on: push
 #     types: [opened, synchronize, reopened]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  Build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        # os: [macos-latest, ubuntu-latest, windows-latest]
+        os: [macos-latest]
     steps:
       - uses: actions/checkout@v2
       # build project
