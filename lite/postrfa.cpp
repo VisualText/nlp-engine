@@ -3951,7 +3951,7 @@ nname = nregs = ncheck = 0;
 if (!args_0to3(_T("recurse"), args, nlppp->collect_, nlppp->sem_, /*DU*/ nname,nregs,ncheck))
 	return false;
 
-if (nname <= 0)
+if (nname <= (void *)0)
 	{
 	_t_strstream gerrStr;
 	gerrStr << _T("[RFA recurse action: Argument for region name is required.]")
