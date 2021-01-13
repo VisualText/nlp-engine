@@ -46,8 +46,9 @@ NLP_ENGINE::NLP_ENGINE(
     static _TCHAR logfile[MAXSTR];
     static _TCHAR rfbdir[MAXSTR];
     if (workingFolder) {
+        _stprintf(m_workingFolder, workingFolder);
         _stprintf(logfile,"%s%s%s",workingFolder,DIR_STR,_T("vtrun_logfile.out"));
-        _stprintf(rfbdir,"%s%sdata/rfb/spec",workingFolder,DIR_STR);
+        _stprintf(rfbdir,"%s%sdata%srfb%sspec",workingFolder,DIR_STR,DIR_STR,DIR_STR);
     } else {
         _stprintf(logfile,"%s",_T("vtrun_logfile.out"));
         _stprintf(rfbdir,"data/rfb/spec");
@@ -78,6 +79,7 @@ void NLP_ENGINE::zeroInit()
     m_output = 0;
     m_sequence = 0;
 
+    m_workingFolder[0] = '\0';
     m_anadir[0] = '\0';
     m_ananame[0] = '\0';
 //  m_rfbdir[0] = '\0';
@@ -163,19 +165,23 @@ int NLP_ENGINE::init(
         }
 	#endif
     } else {
-        _stprintf(m_anadir, _T("%s"),analyzer);	
+        _stprintf(m_anadir, analyzer);	
         _TCHAR *ana = _tcsrchr(m_anadir,_T('/'));
         ++ana;
-        _stprintf(m_ananame, _T("%s"), ana); 
+        _stprintf(m_ananame, ana); 
     }
 
 	_t_cout << _T("[analyzer directory: ") << m_anadir << _T("]") << endl;
     _t_cout << _T("[analyzer name: ") << m_ananame << _T("]") << endl; 
 
-    _stprintf(m_rfbdir, _T("%s/data%crfb%cspec"),cwd, DIR_CH,DIR_CH);  
+    _stprintf(m_rfbdir, _T("%s%cdata%crfb%cspec"),cwd, DIR_CH,DIR_CH,DIR_CH);
     _t_cout << _T("[rfb file: ") << m_rfbdir << _T("]") << endl;
 
+#ifdef LINUX
     _TCHAR *tmp = _T("./tmp");
+#else
+    _TCHAR* tmp = _T(".\\tmp");
+#endif
     _stprintf(m_logfile, _T("%s%cvisualtext.log"),tmp,DIR_CH);
     NLP_ENGINE::createDir(tmp);
     _t_cout << _T("[log file: ") << m_logfile << _T("]") << endl;
