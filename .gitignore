@@ -1,4 +1,4 @@
 build/
+bin/
 lib/
-nlp.exe
-.vscode
+.vscode/
