@@ -43,8 +43,11 @@ to initialize ptr table management.
  */
 
 // LINUX: Distinguish internal kb load from auto-generated kb load // 03/23/19 AM.
+#ifdef LINUX
 bool ccx_ptr_ini(void *cgx)						// 03/23/19 AM.
-//bool ccx_ptr_ini(void *cgx)						// 06/11/02 AM.
+#else
+bool cc_ptr_ini(void *cgx)
+#endif
 {
 PTR **segs;			/* Global seg table for ptr table mgr.		*/
 

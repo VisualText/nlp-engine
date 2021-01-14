@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright © 1998-2009 by Text Analysis International, Inc.
+Copyright ï¿½ 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 ********************************************************************************
 *
@@ -29,7 +29,7 @@ using namespace std;											// Upgrade.	// 01/24/01 AM.
 #elif LINUX
 #define STDOPERATOR	operator
 #else
-#define STDOPERATOR	std::operator
+#define STDOPERATOR	operator
 #endif
 
 #ifndef CONCEPT

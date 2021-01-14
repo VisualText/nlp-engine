@@ -42,8 +42,11 @@ to initialize con table management.
  */
 
 // NOTE: Renaming hardwired kb build functions to differ from auto-generated fns.
+#ifdef LINUX
 bool ccx_con_ini(void *xcg)	// 02/20/19 AM.
-//bool cc_con_ini(void *xcg)	// 08/15/02 AM.
+#else
+bool cc_con_ini(void *xcg)	// 08/15/02 AM.
+#endif
 {
 CON **segs;			/* Global seg table for con table mgr.		*/
 CG *cg = (CG *) xcg;															// 08/15/02 AM.

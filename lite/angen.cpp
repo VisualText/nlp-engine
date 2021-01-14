@@ -28,9 +28,11 @@ All rights reserved.
 #include "node.h"	// 07/07/03 AM.
 #include "tree.h"							// 02/26/01 AM.
 #include "nlppp.h"	// 07/07/03 AM.
-#include "pn.h"							// 02/14/01 AM.
+#include "pn.h"
+#ifdef LINUX						// 02/14/01 AM.
 #include "io.h"		// Linux.	// 04/26/07 AM.
 #include "gen.h"	// Linux.	// 04/26/07 AM.
+#endif
 #include "ana.h"							// 05/10/00 AM.
 #include "parse.h"
 #include "seqn.h"

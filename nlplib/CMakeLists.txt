@@ -1,6 +1,4 @@
 #include_directories(${NLP_SRC_DIR}/include/Api/lite)
-include_directories(../include/Api)
-include_directories(../cs/include)
 #include_directories(/usr/local/libiodbc-3.52.12/include)
 
 add_definitions( -DLIBNLPLIB_EXPORTS )

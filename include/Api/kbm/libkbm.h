@@ -6,12 +6,15 @@ All rights reserved.
 #ifndef LIBKBM_H_
 #define LIBKBM_H_
 
-#ifdef _MSC_VER
- #define DECL_EXPORT __declspec(dllexport)
- #define DECL_IMPORT __declspec(dllimport)
-#elif __GNUC__ >= 4
- #define DECL_EXPORT __attribute__ ((visibility ("default")))
- #define DECL_IMPORT __attribute__ ((visibility ("default")))
+#ifdef SHARED_LIB
+ #ifdef _MSC_VER
+  #define DECL_EXPORT __declspec(dllexport)
+  #define DECL_IMPORT __declspec(dllimport)
+ #elif __GNUC__ >= 4
+  #define DECL_EXPORT __attribute__ ((visibility ("default")))
+  #define DECL_IMPORT __attribute__ ((visibility ("default")))
+ #endif
+//  add MacOS
 #else
  #define DECL_EXPORT
  #define DECL_IMPORT

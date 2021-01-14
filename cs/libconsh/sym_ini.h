@@ -2,8 +2,11 @@
 /*** IN CONSH: HAND-EDITED. ***/
 
 // Distinguish library from auto-generated kb load.	// 03/23/19 AM.
+#ifdef LINUX
 extern bool ccx_sym_ini(void*);				// 03/23/19 AM.
-//extern bool cc_sym_ini(void*);			// 08/16/02 AM.
+#else
+extern bool cc_sym_ini(void*);			// 08/16/02 AM.
+#endif
 
 // In the interp KBMS, no more hard-coded sym segments.			// 02/15/01 AM.
 //extern SYM Sym0[];															// 02/15/01 AM.

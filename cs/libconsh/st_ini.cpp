@@ -45,8 +45,11 @@ to initialize st management.
  */
 
 // RENAME to not conflict with gend code.	// 02/26/19 AM.
+#ifdef LINUX
 bool ccx_st_ini(void *xcg)			// 02/26/19 AM.
-//bool cc_st_ini(void *xcg)			// 06/11/02 AM.
+#else
+bool cc_st_ini(void *xcg)			// 06/11/02 AM.
+#endif
 {
 _TCHAR **segs;			/* Global seg table for st mgr.		*/
 CG *cg = (CG *) xcg;

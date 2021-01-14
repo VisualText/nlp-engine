@@ -50,7 +50,7 @@ LIBPRIM_API DWORD run_silent(_TCHAR* strCMD);	// 09/15/08 AM.
 #include "dlist.h"					// 07/07/03 AM.
 #include "node.h"	// 07/07/03 AM.
 #include "lite/Auser.h"			// 07/07/03 AM.
-#include	"lite/iarg.h"			// 05/14/03 AM.
+#include "lite/iarg.h"			// 05/14/03 AM.
 #include "tree.h"			// 02/26/01 AM.
 #include "inline.h"
 #include "str.h"
@@ -77,10 +77,10 @@ LIBPRIM_API DWORD run_silent(_TCHAR* strCMD);	// 09/15/08 AM.
 #include "LexTagger.h"			// 12/14/03 AM.
 
 
-#include <vector>	// 05/06/14 DDH.
-#include <wininet.h>	// 05/06/14 DDH.
-#include <process.h>	// 05/19/14 DDH.
-#include <atlstr.h>	// 05/19/14 DDH.
+//#include <vector>	// 05/06/14 DDH.
+//#include <wininet.h>	// 05/06/14 DDH.
+//#include <process.h>	// 05/19/14 DDH.
+//#include <atlstr.h>	// 05/19/14 DDH.
 //#include "web.h"	// 05/06/14 DDH.
 //using namespace openutils;	// 05/06/14 DDH.
 

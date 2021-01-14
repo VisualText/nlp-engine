@@ -134,9 +134,11 @@ public:
 	Delt<Seqn> *getSeq();			// 07/23/01 AM.
 	long getLine();					// 08/24/02 AM.
 	long getInputline();				// 08/24/02 AM.
-
-//	_t_ostrstream *getCbuf();			// 05/11/02 AM.
+#ifdef LINUX
 	ostrstream *getCbuf();			// 05/11/02 AM. // 09/27/19 AM.
+#else
+	_t_ostrstream *getCbuf();			// 05/11/02 AM.
+#endif
 	long getCbufmax();				// 05/11/02 AM.
 	long getCbuftot();				// 05/11/02 AM.
 	bool getCbufover();				// 05/11/02 AM.
@@ -184,8 +186,11 @@ public:
 	void setLine(long);				// 08/24/02 AM.
 	void setInputline(long);		// 08/24/02 AM.
 
-//	void setCbuf(_t_ostrstream *);	// 05/11/02 AM.
+#ifdef LINUX
 	void setCbuf(ostrstream *);	// 09/27/19 AM.
+#else
+	void setCbuf(_t_ostrstream *);	// 05/11/02 AM.
+#endif
 	void setCbufmax(long);			// 05/11/02 AM.
 	void setCbuftot(long);			// 05/11/02 AM.
 	void setCbufover(bool);			// 05/11/02 AM.
@@ -547,8 +552,11 @@ private:
 
 	// Output to a buffer.													// 05/11/02 AM.
 	// (Looks like this should be an output-buffer class.)		// 05/11/02 AM.
-//	_t_ostrstream *cbuf_;		// Stream for output buffer.			// 05/11/02 AM.
+#ifdef LINUX
 	ostrstream *cbuf_;		// Stream for output buffer.			// 05/11/02 AM. // 09/27/19 AM.
+#else
+	_t_ostrstream *cbuf_;		// Stream for output buffer.			// 05/11/02 AM.
+#endif
 	long cbufmax_;			// Length of output buffer.				// 05/11/02 AM.
 	long cbuftot_;			// Total output length so far.			// 05/11/02 AM.
 	bool cbufover_;		// Buffer overflow.							// 05/11/02 AM.

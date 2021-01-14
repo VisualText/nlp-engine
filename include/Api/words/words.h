@@ -12,12 +12,15 @@ All rights reserved.
 #ifndef WORDS_H_
 #define WORDS_H_
 
-#ifdef _MSC_VER
- #define DECL_EXPORT __declspec(dllexport)
- #define DECL_IMPORT __declspec(dllimport)
-#elif __GNUC__ >= 4
- #define DECL_EXPORT __attribute__ ((visibility ("default")))
- #define DECL_IMPORT __attribute__ ((visibility ("default")))
+#ifdef SHARED_LIB
+ #ifdef _MSC_VER
+  #define DECL_EXPORT __declspec(dllexport)
+  #define DECL_IMPORT __declspec(dllimport)
+ #elif __GNUC__ >= 4
+  #define DECL_EXPORT __attribute__ ((visibility ("default")))
+  #define DECL_IMPORT __attribute__ ((visibility ("default")))
+ #endif
+//  add MacOS
 #else
  #define DECL_EXPORT
  #define DECL_IMPORT

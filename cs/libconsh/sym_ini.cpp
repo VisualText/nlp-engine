@@ -49,8 +49,11 @@ using namespace std;											// Upgrade	// 01/24/01 AM.
 ********************************************/
 
 // Distinguish library from auto-generated kb load.	// 03/23/19 AM.
+#ifdef LINUX
 bool ccx_sym_ini(void *xcg)				// 03/23/19 AM.
-//bool cc_sym_ini(void *xcg)				// 06/11/02 AM.
+#else
+bool cc_sym_ini(void *xcg)				// 06/11/02 AM.
+#endif
 {
 CG *cg = (CG *) xcg;
 AKBM *kbm = cg->kbm_;
