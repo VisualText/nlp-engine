@@ -19,26 +19,29 @@ G("kout") << "PART   SEM          STEM          NE_TEXT       ALL_TEXT" << "\n"
 		  ;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent _clause
+#@PATH _ROOT _TEXTZONE _sent _clause
+@NODES _clause
 
 @POST
-  if (!X("printed",3))
+  L("x3") = pnparent(X());		# 07/13/12 AM.
+  if (!pnvar(L("x3"),"printed"))
      {
     G("kout") << "\n" << "sentence: "
-		<< X("$text",3)
+		<< pnvar(L("x3"),"$text")
 		<< "\n";
-	 X("printed",3) = 1;
+#	 X("printed",3) = 1;	# 07/13/12 AM.
+	 pnreplaceval(L("x3"),"printed",1);	# 07/13/12 AM.
 	 }
-  if (!X("printed",4))
+  if (!X("printed"))
      {
     G("kout") << "\n" << "clause: "
-		<< X("$text",4)
+		<< X("$text")
 		<< "\n";
-	 if (X("voice",4))
-	    G("kout") << "voice:\t" << X("voice",4) << "\n";
+	 if (X("voice"))
+	    G("kout") << "voice:\t" << X("voice") << "\n";
 	 else
 	    G("kout") << "voice:\tnil\n";
-	 X("printed",4) = 1;
+	 X("printed") = 1;
 	 }
 
   if (!X("stuff-in-clause"))

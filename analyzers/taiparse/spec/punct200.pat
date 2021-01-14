@@ -11,7 +11,7 @@ if (!G("unhandled periods"))
   exitpass();
 @@CODE
 
-@PATH _ROOT _TEXTZONE
+@NODES _TEXTZONE
 
 @POST
   listadd(5,6,"false");

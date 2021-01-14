@@ -49,9 +49,10 @@ L("out") << G("$inputhead") << " "
 	<< rightjustifynum(L("alltot"),6)
 	<< " = "
 	<< rightjustifynum(100 * L("allgood") / L("alltot"),3)
-
-	<< "\n"
 	;
+if (G("score date"))
+	L("out") << "\t[" << today() << "]";
+L("out") << "\n";
 # Update overall scores.
 replaceval(G("scorepos"),"allgood",L("allgood"));
 replaceval(G("scorepos"),"alltot",L("alltot"));

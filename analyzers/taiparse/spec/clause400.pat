@@ -10,7 +10,8 @@
 G("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent _clause
+#@PATH _ROOT _TEXTZONE _sent _clause
+@NODES _clause
 
 # vg to vg
 @POST
@@ -47,6 +48,8 @@ _xNIL <-
 	_vg
 	@@
 
+# Note: Updated, but still cruddy logic.	# 05/25/07 AM.
+# Note: Clause should record if by-np, by-actor seen.
 # alpha advl
 @CHECK
   if (!N("verb",3))
@@ -54,25 +57,29 @@ _xNIL <-
   if (N("noun",3))
     fail();
 @POST
-  L("tmp3") = N(3);
-  group(3,3,"_verb");
-  pncopyvars(L("tmp3"),N(3));
-  L("v") = N(3);
-  group(3,3,"_vg");
-  pncopyvars(L("tmp3"),N(3));
-  N("verb node",3) = L("v");
-  clearpos(N(3),1,0);
-  mhbv(N(3),L("neg"),0,0,0,0,L("v"));
-  if (vconjq(N(3),"-en"))
-    {
-	fixvg(N(3),"passive","VBN");
-	X("voice") = "passive";
+  if (pnname(N(4)) == "_np")
+  	L("np") = 1;
+  else if (N(2))
+  	{
+	if (pnname(N(2)) == "_np")
+		L("np") = 1;
 	}
+  if (L("np"))
+   {
+   alphatovg(3,"active","VBP");
+   X("voice") = "active";
+   }
+  else if (!vconjq(N(3),"-en"))
+   {
+   alphatovg(3,"active","VBP");
+   X("voice") = "active";
+   }
   else
-    {
-    fixvg(N(3),"active","VBD");
-	X("voice") = "active";
-	}
+   {
+   alphatovg(3,"passive","VBN");
+   X("voice") = "passive";
+   }
+ 
 @RULES
 _xNIL <-
 	_xSTART

@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE
+@NODES _TEXTZONE
 
 # New tokenization handlers.
 @CHECK
@@ -196,6 +196,23 @@ _usstate [layer=_noun] <-
 	\. [s opt]
 	@@
 
+# US States.
+@POST
+  pncopyvars(1);
+  S("sem") = "us_state";
+  S("ne type") = "location";
+  S("ne type conf") = 85;
+  S("stem") = strtolower(phrasetext());
+  S("ne") = 1;
+  S("mypos") = "NP";
+  single();
+@RULES
+_usstate [layer=_noun] <-
+	Conn
+	\. [s]
+	@@
+
+
 @PRE
 <2,2> length(1);
 <5,5> length(1);
@@ -221,21 +238,19 @@ _letabbr <-
 	\.
 	_xWILD [one fail=(_xALPHA \.)]
 	@@
-@PRE
-<2,2> length(1);
 @POST
   S("cap") = 1;	# 04/21/07 AM.
   singler(2,3);
 @RULES
 _letabbr <-
 	_xWILD [one fail=(_xALPHA \.)]
-	_xCAP
+	_xCAPLET
 	\.
 	_xWILD [one lookahead fail=(_xALPHA \.)]
 	@@
 _letabbr <-
 	_xSTART
-	_xCAP
+	_xCAPLET
 	\.
 	_xWILD [one lookahead fail=(_xALPHA \.)]
 	@@
@@ -293,16 +308,68 @@ _aposD <-
 	d [s]
 	@@
 
+# aposLL
+# Note: I'll ....
+@POST
+  group(1,2,"_modal");
+  N("mypos",1) = "MD";
+@RULES
+_xNIL <-
+	\'
+	ll
+	@@
+
+@POST
+  if (N(6))
+  	N("quoted eos left",6) = 1;
+  L("txt") = N("$text",2);
+  if (L("txt") == "?")
+    S("sent end") = "interrogative";
+  else if (L("txt") == "!")
+    S("sent end") = "exclamatory";
+  singler(2,4);
+@RULES
+_qEOS <-	# 05/27/07 AM.
+	_xWILD [one match=(_xALPHA _xNUM \] \) \> \% _noun)]
+	_xWILD [plus match=( \. \: \; \? \! )]
+	_xWHITE [star]
+	_dblquote
+	_xWHITE [star lookahead]
+	_xANY
+	@@
+
+# NOTE: Trying to retain quotes within a sentence.
+# alpha " alpha
+@POST
+    N("dblquote rt",1) = 1;
+    N("dblquote lt",3) = 1;
+  noop();
+@RULES
+_xNIL <-
+	_xALPHA
+	_dblquote
+	_xALPHA [lookahead]
+	@@
+
 # Zap double quotes for now...
 @POST
-  N("dblquote rt",1) = 1;
-  N("dblquote lt",3) = 1;
+  if (N(1))
+    N("dblquote rt",1) = 1;
+  if (N(3))
+    N("dblquote lt",3) = 1;
   excise(2,2);
 @RULES
 _xNIL <-
-	_xWILD [one match=(_xALPHA _tok)]
+	_xANY
+	_dblquote [trigger]
+	_xWILD [one lookahead match=(
+#		_xANY	# 05/28/07 AM.
+		_xEND)]
+	@@
+_xNIL <-
+	_xSTART
 	_dblquote
-	_xALPHA [lookahead]
+	_xANY [lookahead]
 	@@
 
 # num %
@@ -373,3 +440,12 @@ _xNIL <-
 	_xNUM
 	_num
 	@@
+
+
+# 03/04/10 AM.
+@POST
+  group(1,5,"_EQ");
+  group(1,1,"_adv");
+  chpos(N(1),"RB");	# 03/04/10 AM.
+@RULES
+_xNIL <- e \. _xWHITE [star] g \. @@

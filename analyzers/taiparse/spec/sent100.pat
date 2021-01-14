@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE
+@NODES _TEXTZONE
 
 @POST
   if (N("sent end",3))
@@ -24,7 +24,7 @@ L("hello") = 0;
   else # _EOS
     singler(1,3);  # Include the _EOS node.
 @RULES
-_sent <-
+_sent [unsealed] <-
 	_xWILD [one fail=(_qEOS \" \( \< \[ _EOS)]
 	_xWILD [star fail=(_qEOS _EOS)]
 	_xWILD [one match=(_qEOS _EOS)]
@@ -39,6 +39,6 @@ _xNIL <- _xWILD [plus match=(
 	)] @@
 
 @RULES
-_sent <-
+_sent [unsealed] <-
 	_xANY [plus]
 	@@

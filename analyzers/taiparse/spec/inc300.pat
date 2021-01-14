@@ -11,4 +11,5 @@ L("hello") = 0;
 @@CODE
 
 #@PATH _ROOT _TEXTZONE _sent
+#@NODES _sent
 

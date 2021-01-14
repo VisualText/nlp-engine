@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE
+@NODES _TEXTZONE
 
 @RULES
 _stockSYMBOL [layer=_acro] <-
@@ -119,7 +119,11 @@ _xNIL <-
 @POST
   N("cap",3) = 1;
   fixnoun(N(3));
-  group(3,6,"_adj");
+  group(3,6,"_citystate");
+  group(3,3,"_noun");
+  N("cap",3) = 1;
+  N("glom comma",3) = 1;
+  N("sem",3) = "geoloc";
 @RULES
 _xNIL <-
 	_xALPHA
@@ -128,4 +132,23 @@ _xNIL <-
 	\,
 	_xWHITE [star]
 	_xANY
+	@@
+
+# Idiom from French.
+# tour de force
+@POST
+  fixnphead(5);
+  L("tmp3") = N(3);
+  group(3,3,"_prep");
+  pncopyvars(L("tmp3"),N(3));
+  chpos(N(3),"FW");
+  fixnpnonhead(1);
+  group(1,5,"_noun");
+@RULES
+_xNIL <-
+	tour
+	_xWHITE [star]
+	de
+	_xWHITE [star]
+	force
 	@@

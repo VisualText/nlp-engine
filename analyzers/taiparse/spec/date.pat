@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE
+@NODES _TEXTZONE
 
 # 0900 GMT
 @POST
@@ -31,6 +31,7 @@ _date [layer=(_noun _np)] <-
   S("mo") = num(N("$text",1));
   S("yr") = num(N("$text",5));
   S("sem") = "date";
+  ++X("date ref");
   # Normalize year.
   if (S("yr") < 20)
     S("yr") = S("yr") + 2000;
@@ -54,15 +55,19 @@ _date [layer=(_noun _np)] <-
 	if (S("yr") < 100)
 		fail();
 @POST
+  N("mypos",1) = "NP";
   S("mo") = monthtonum(strtolower(N("$text",1)));
   S("sem") = "date";
+  ++X("date ref");
   if (N(7))
     S("don't splice") = 1;	# Keep this np.
   	# (Don't want to lose useful work.)
+  S("bracket") = 1;
   single();
 @RULES
 _date [layer=(_noun _np)] <-
 	_xWILD [s one match=(
+	_month
 	January February March April May June July August
 	September October November December
 	
@@ -114,12 +119,12 @@ _date [layer=(_noun _np)] <-
   	# (Don't want to lose useful work.)
   group(1,7,"_date");
   group(1,1,"_noun");
-  group(1,1,"_np");
-  N("bracket",1) = 1;
+  nountonp(1,1);
   N("sem",1) = "date";
   N("mo",1) = S("mo");
   N("yr",1) = S("yr");
   N("dy",1) = S("dy");
+  ++X("date ref");
   if (L("flag"))
     {
     N("don't splice",1) = 1;	# Keep this np.
@@ -131,6 +136,7 @@ _xNIL <-
 	_xNUM [s]
 	_xWILD [s star match=(_xWHITE \- )]
 	_xWILD [s one match=(
+	_month
 	January February March April May June July August
 	September October November December
 	
@@ -162,10 +168,13 @@ _xNIL <-
   chpos(N(1),"NP");
   S("mo") = monthtonum(strtolower(N("$text",1)));
   S("sem") = "date";
+  S("year") = N("$text",5);	 # 02/13/14 AM.
+  ++X("date ref");
   single();
 @RULES
 _date [layer=(_noun)] <-
 	_xWILD [s one match=(
+	_month
 	January February March April May June July August
 	September October November December
 	
@@ -180,6 +189,7 @@ _date [layer=(_noun)] <-
 # pretagged corpus stuff.
 @POST
  S("sem") = "date";
+  ++X("date ref");
  single();
 @RULES
 _date [layer=(_noun)] <-
@@ -194,6 +204,7 @@ _date [layer=(_noun)] <-
   S("mypos") = "NP";
   S("ne") = 1;
   S("ne type") = "date";
+  ++X("date ref");
   S("ne type conf") = 95;
   single();
 @RULES
@@ -233,6 +244,7 @@ _xNIL <- _xWILD [s one match=(
 
 @POST
   N("sem") = "date";
+  ++X("date ref");
 @RULES
 _xNIL <- _xWILD [s one match=(
 	millennium millennia millenniums

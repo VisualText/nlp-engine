@@ -10,14 +10,27 @@
 
 L("hello") = 0;
 
+G("LINUX") = 0;
+# G("LINUX") = 1; # If on Linux system.
+# Workaround: use relative or hardwired filenames on Linux for now.
+# No #IFDEF in NLP++	# 02/13/19 AM.
+
 # If verbose outputs.
 G("verbose") = 1;
 
 # If error outputs.
 G("error") = 1;
 
+# If highlighting passes.
+# If not interactive (VisualText session), no point
+# in running highlighting passes.
+# NLP++: Want to know if Toggle Highlight Mode is on in VT.
+G("hilite") = 1;	# 10/25/10 AM.
+#if (!interactive())	# 10/25/10 AM.
+#  G("hilite") = 0;	# 10/25/10 AM.
+
 # If expecting and zapping HTML/XML input.
-G("find html") = 0;
+G("find html") = 1;	# !!!!!
 
 if (G("find html"))	# Some html setup.
   {
@@ -29,15 +42,17 @@ if (G("find html"))	# Some html setup.
 G("allcap") = 0;
 
 # If dealing with pretagged input texts.
-G("pretagged") = 1;
+G("pretagged") = 0;  # !!!!!!
 
 # Confidence threshold for outputting tags 0-100.
 # For now, using 0 to "guess" if nothing has been assigned.
 # Note: Computing confidence is not implemented.
-G("thresh") = 0;
+# CONFIGURE: TAGGER GUESSES WHEN UNSURE.	# 09/24/13 AM.
+#G("threshold") = 70;	# 09/24/13 AM.
+G("threshold") = 0;		# 09/24/13 AM.
 
 # If gathering global data on rule performance.
-G("posacct") = 1;
+G("posacct") = 0;
 
 if (!G("pretagged"))
   G("posacct") = 0;
@@ -55,11 +70,11 @@ G("xml tags only") = 0;
 G("bracket") = 1;
 
 # If printing a treebank header.
-G("treebank") = 1;
+G("treebank") = 0;
 
 # If pos tagging to conform as well as possible to Treebank
 # assignments that I disagree with.
-G("conform treebank") = 1;
+G("conform treebank") = 0;
 
 # If printing filenames with mismatch diagnostic output.
 G("mismatch verbose") = 1;
@@ -91,6 +106,32 @@ G("semantic processing") = 1;
 
 if (G("semantic processing"))
   seminit();	# See semfuns pass.
+
+## To help track development time.
+G("score date") = 1; # If outputting date with score.
+
+# Track runs of the analyzer.
+G("worklog") = 0;
+if (interactive())
+  G("worklog") = 1;
+
+if (G("worklog"))
+  {
+  # Worklog goes to data\worklog.txt
+  if (!G("LINUX"))
+    {
+    L("file") = G("$apppath") + "\\data\\worklog.txt";
+    L("out") = openfile(L("file"),"app");
+	}
+  else
+    {
+    L("file") = "../data/worklog.txt";
+#    L("out") = openfile(L("file"),"app");
+	L("out") = L("file");	# workaround.
+	}
+  L("out") << "[" << today() << "]\t[" << G("$inputhead") << "]\n";
+  closefile(L("out"));
+  }
 
 @@CODE
 

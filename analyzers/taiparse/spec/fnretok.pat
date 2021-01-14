@@ -11,7 +11,7 @@ if (G("pretagged"))
   exitpass();
 @@CODE
 
-@PATH _ROOT _TEXTZONE
+@NODES _TEXTZONE
 
 @POST
   S("neg") = 1;
@@ -141,13 +141,24 @@ _xNIL <-
 
 
 # Some mumbles.
+@PRE
+<1,1> varz("NOSP");
+<2,2> var("NOSP");
 @POST
   ++X("nmumbles");
   single();
 @RULES
 _mumble <-
-	_xWILD [min=2 match=(_xALPHA _xNUM \_ )]
+	_xWILD [one match=(_xALPHA _xNUM \_ )]
+	_xWILD [plus match=(_xALPHA _xNUM \_ )]
 	@@
+
+# Some mumbles.
+
+@POST
+  ++X("nmumbles");
+  single();
+@RULES
 
 _mumble <-
 	_xALPHA

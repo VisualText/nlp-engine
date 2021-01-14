@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _LINE
+@NODES _LINE
 
 # Looking for numbered lines.
 @POST

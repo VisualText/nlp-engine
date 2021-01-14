@@ -10,21 +10,20 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent _clause
+@NODES _clause
 
 # there vg
 @POST
-  if (pnname(N(3)) == "_np")
-    L("n") = pndown(N(3));
+  if (pnname(N(2)) == "_np")
+    L("n") = pndown(N(2));
   else
-    L("n") = N(3);
-  chpos(L("n"),"EX");
-  if (pnname(N(5)) == "_vg")
-    if (!N("voice",5))
-	  X("voice") = N("voice",5) = "active";
+    L("n") = N(2);
+  chpos(L("n"),"EX");	# there/EX	[DEFAULT]
+  if (pnname(N(4)) == "_vg")
+    if (!N("voice",4))
+	  X("voice") = N("voice",4) = "active";
 @RULES
 _xNIL <-
-	_xSTART
 	_xWILD [star match=(_advl _adv)]
 	there [s]
 	_xWILD [star match=(_advl _adv)]
@@ -41,7 +40,7 @@ _xNIL <-
   else
     L("n") = N(1);
   if (!pnvar(L("n"),"mypos"))
-    chpos(L("n"),"RB");
+    chpos(L("n"),"RB");	# there/RB [DEFAULT]
   N("there") = 1;
 @RULES
 _xNIL <-
@@ -67,7 +66,9 @@ _xNIL <-
 # vg advl
 # vg by-actor
 @PRE
+<1,1> varne("voice","active");
 <2,2> var("by-actor");
+<2,2> varne("sem","date");
 @POST
   fixvg(N(1),"passive","VBN");
 @RULES

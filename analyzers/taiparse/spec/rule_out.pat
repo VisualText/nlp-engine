@@ -138,7 +138,8 @@ G("rout") << "\n@RULES\n";
 @@CODE
 
 #@PATH _ROOT _TEXTZONE _sent _clause
-@PATH _ROOT _TEXTZONE _sent
+#@PATH _ROOT _TEXTZONE _sent	# Comment.	# 07/13/12 AM.
+@NODES _sent	# 07/13/12 AM.
 
 # Every time I see a clause with a verb group,
 #traverse it and print out a grammar rule for it.

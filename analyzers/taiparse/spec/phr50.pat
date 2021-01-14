@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 # vg np conj vg
 @POST
@@ -18,7 +18,6 @@ L("hello") = 0;
   L("pos") = vgpos(N(1));
   L("voice") = N("voice",1);
   fixvg(N(4),L("voice"),L("pos"));
-  "ps.txt" << L("voice") << " " << L("pos") << "\n";
 @RULES
 _xNIL <-
 	_vg
@@ -40,22 +39,37 @@ _xNIL <-
 	_vg
 	@@
 
-# np vg np vg
-# need to check for helping verbs etc.
-# WEAK RULE.	# 10/22/04 AM.
-#@CHECK
-#  if (N("voice",4) != "active")
-#   fail();
-#@POST
-#  N("glom",2) = "left";
-#  N("glom",3) = "right";
-#@RULES
-#_xNIL <-
-#	_np
-#	_vg
-#	_np
-#	_vg
-#	@@
+# np vg np vg np
+@PRE
+<4,4> varz("voice");
+@CHECK
+  if (N("glom",2) != "left" && N("glom",3) != "right")
+  	fail();
+@POST
+  fixvg(N(4),"active","VBP");
+@RULES
+_xNIL <-
+	_np
+	_vg [lookahead]
+	_np
+	_vg
+	_np
+	@@
+
+# vg np vg
+@PRE
+<3,3> varz("phr50 vg-np-vg");
+<3,3> varz("voice");
+@POST
+  N("phr50 vg-np-vg",3) = 1;
+  if (verbfeat(N(1),"V8") && vconjq(N(3),"-en"))
+  	fixvg(N(3),"passive","VBN");
+@RULES
+_xNIL <-
+	_vg
+	_np
+	_vg
+	@@
 
 # In a larger context.
 # prep dqan alpha
@@ -120,5 +134,27 @@ _xNIL <-
 _xNIL <-
 	_np
 	_aposX
+	@@
+
+# ^ np vg prep np advl np vg
+@POST
+  N("ellipted-that",11) = 1;
+  group(2,10,"_clause");
+  setunsealed(2,"true");	# 07/10/12 AM.
+@RULES
+_xNIL <-
+	_xSTART
+	_xWILD [star match=(_adv _advl)]
+	_np
+	_xWILD [star match=(_adv _advl)]
+	_vg
+	_xWILD [star match=(_adv _advl)]
+	_prep
+	_xWILD [star match=(_adv _advl)]
+	_np
+	_xWILD [plus match=(_adv _advl)]
+	_np
+	_xWILD [star match=(_adv _advl)]
+	_vg
 	@@
 

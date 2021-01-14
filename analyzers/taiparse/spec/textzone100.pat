@@ -12,9 +12,23 @@ L("hello") = 0;
 
 @NODES _ROOT
 
+# First paragraph.
+@PRE
+<3,3> varz("PAR");
 @RULES
-_TEXTZONE <-
-	_LINE [plus]
+_TEXTZONE [unsealed] <-
+	_xSTART
+	_LINE
+	_LINE [star]
+	@@
+
+@PRE
+<1,1> var("PAR");
+<2,2> varz("PAR");
+@RULES
+_TEXTZONE [unsealed] <-
+	_LINE
+	_LINE [star]
 	@@
 
 # Excise blank lines.

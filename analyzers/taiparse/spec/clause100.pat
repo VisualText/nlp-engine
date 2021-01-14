@@ -10,10 +10,11 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 @POST
   group(1,2,"_clause");
+  setunsealed(1,"true");	# 07/10/12 AM.
 @RULES
 _xNIL <-
 	_clausestart [opt]
@@ -24,6 +25,7 @@ _xNIL <-
 
 @POST
   group(1,1,"_clause");
+  setunsealed(1,"true");	# 07/10/12 AM.
 @RULES
 _xNIL <-
 	_clausestart
