@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 # np that clause clause
 # that
@@ -36,41 +36,45 @@ _xNIL <-
 	_clause # Needs verb.
 	@@
 
+# OBSOLETE.	# 05/29/07 AM.
 # clause clause
-@CHECK
-  if (N("voice",2))
-    fail();
-  if (N("voice",1) != "passive")
-    fail();
-  S("vg") = N("vg node",2);
-  if (!S("vg"))
-    {
+#@PRE
+#<2,2> varz("ellipted-that");
+#@CHECK
+#  if (N("voice",2))
+#    fail();
+#  if (N("voice",1) != "passive")
+#    fail();
+#  S("vg") = N("vg node",2);
+#  if (!S("vg"))
+#    {
 #	"err.txt" << "Clause has no vg=" << N("$text",2) << "\n";
-	fail();
-	}
-  S("v") = pnvar(S("vg"),"verb node");
-  if (!S("v"))
-    {
-	if (G("error"))
-	"err.txt" << "Vg has no verb=" << N("$text",2) << "\n";
-	fail();
-	}
-@POST
-  if (!pnvar(S("v"),"mypos"))
-    {
-	L("vc") = vconj(S("v"));
-	"vc.txt" << pnvar(S("v"),"$text") << ","<< L("vc") << "\n";
-	if (L("vc") == "-edn")
-	  {
-	  fixvg(S("vg"),"passive","VBN");
-	  N("voice",2) = "passive";
-	  }
-	}
-@RULES
-_xNIL <-
-	_clause
-	_clause [lookahead]
-	@@
+#	fail();
+#	}
+#  S("v") = pnvar(S("vg"),"verb node");
+#  if (!S("v"))
+#    {
+#	if (G("error"))
+#	"err.txt" << "Vg has no verb=" << N("$text",2) << "\n";
+#	fail();
+#	}
+#@POST
+#  N("qsent75 c-c",1) = 1;
+#  if (!pnvar(S("v"),"mypos"))
+#    {
+#	L("vc") = vconj(S("v"));
+#	"vc.txt" << pnvar(S("v"),"$text") << ","<< L("vc") << "\n";
+#	if (L("vc") == "-edn")
+#	  {
+#	  fixvg(S("vg"),"passive","VBN");
+#	  N("voice",2) = "passive";
+#	  }
+#	}
+#@RULES
+#_xNIL <-
+#	_clause
+#	_clause [lookahead]
+#	@@
 
 # This rule is too loose.  Need constraints before and after.
 @CHECK
@@ -94,10 +98,15 @@ _xNIL <-
   if (!pnvar(S("v1"),"mypos"))
     fail();
 @POST
-  S("pos") = pnvar(S("v1"),"mypos");
-#  "clause.txt" << S("pos") << "\n";
+  L("pos") = pnvar(S("v1"),"mypos");
+  L("voice") = pnvar(S("vg1"),"voice");
+  if (L("pos") == "VB" && N("first name",3) == "_np")
+	L("pos") = "VBP";
   if (samevconj(S("v1"),S("v3")))
-    pnreplaceval(S("v3"),"mypos",S("pos"));
+  	{
+	fixvg(S("vg3"),L("voice"),L("pos"));
+	N("voice",3) = pnvar(S("vg3"),"voice");
+	}
   N("qsent75 c-and-c",1) = N("qsent75 c-and-c",3) = 1;
 @RULES
 _xNIL <-

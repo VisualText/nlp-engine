@@ -10,7 +10,8 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent _seg
+#@PATH _ROOT _TEXTZONE _sent _seg
+@NODES _seg
 
 # alpha alpha alpha.
 # Could still want to allow first or last to be separated as

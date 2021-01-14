@@ -12,7 +12,7 @@ if (!G("eos"))
   exitpass();
 @@CODE
 
-@PATH _ROOT _TEXTZONE
+@NODES _TEXTZONE
 
 @CHECK
   if (!N("eos"))

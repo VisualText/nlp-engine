@@ -16,7 +16,7 @@ L("fname") = G("$apppath") + "\\data\\study100.txt";
 G("studyout") = openfile(L("fname"),"app");
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 # Find every alpha cluster.
 @POST

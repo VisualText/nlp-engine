@@ -11,7 +11,8 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _tok
+#@PATH _ROOT _TEXTZONE _tok
+@NODES _tok
 
 # num . num
 @POST
@@ -46,7 +47,7 @@ _xNIL <-
   xrename("_num");
   X("num") = 1;	# singular.
   X("ordinal") = 1;
-  chpos(X(3),"JJ");	# Conform Treebank.
+  chpos(X(),"JJ");	# Conform Treebank.
 @RULES
 _xNIL <-
 	_xSTART
@@ -59,7 +60,7 @@ _xNIL <-
 # cap / cap
 @POST
   xrename("_noun");
-  chpos(X(3),"NP");
+  chpos(X(),"NP");
   X("cap") = 1;
 @RULES
 _xNIL <-
@@ -67,6 +68,7 @@ _xNIL <-
 	_xCAP
 	_xWILD [one match=( \& \/ )]
 	_xCAP
+	_xWILD [star match=(_xPUNCT _xCAP)]
 	_xEND
 	@@
 
@@ -119,6 +121,7 @@ _xNIL <-
 # ``
 # ''
 @POST
+  ++G("dbl quotes");
   xrename("_dblquote");
   X("nopos") = 1;
 @RULES
@@ -131,10 +134,11 @@ _xNIL <-
 	\'
 	@@
 
+
 # Mishandled by pretagged.
 @POST
   xrename("_modal");
-  chpos(X(3),"VBP");
+  chpos(X(),"VBP");
   X("neg") = 1;
 @RULES
 _xNIL <-
@@ -155,7 +159,7 @@ _xNIL <-
 	@@
 @POST
   xrename("_modal");
-  chpos(X(3),"VBD");
+  chpos(X(),"VBD");
   X("neg") = 1;
 @RULES
 _xNIL <-
@@ -177,7 +181,7 @@ _xNIL <-
 
 @POST
   xrename("_adv");
-  chpos(X(3),"RB");
+  chpos(X(),"RB");
   X("neg") = 1;
   X("tok") = "n't";
 @RULES
@@ -192,7 +196,7 @@ _xNIL <-
 <2,2> cap();	# 10/14/06 AM.
 @POST
   xrename("_noun");
-  chpos(X(3),"NP");
+  chpos(X(),"NP");
   X("abbrev") = 1;
   X("cap") = 1; # 5/25/06 AM.
   single();
@@ -236,7 +240,7 @@ _companyDESIG <- # 17
 
 @POST
   xrename("_noun");
-  chpos(X(3),"NN");
+  chpos(X(),"NN");
   X("abbrev") = 1;
   X("cap") = 1;
   single();
@@ -258,7 +262,7 @@ _noabbr <-
 #  X("-ed") = 1;
   group(2,3,"_be");
   xrename("_verb");
-  chpos(X(3),"VBP");
+  chpos(X(),"VBP");
 @RULES
 _xNIL <-
 	_xSTART
@@ -285,12 +289,12 @@ _xNIL <- # 20
 # alpha *
 @POST
 #  xrename("_noun");
-#  pncopyvars(N(2),X(3));
+#  pncopyvars(N(2),X());
   X("text") = N("$text",2);
   X("punct end") = "*";
   excise(3,3);
 #  if (strisupper(X("text")))
-#    chpos(X(3),"NP");
+#    chpos(X(),"NP");
 @RULES
 _xNIL <-
 	_xSTART
@@ -303,7 +307,7 @@ _xNIL <-
 # num s
 @POST
   xrename("_noun");
-  chpos(X(3),"CD");
+  chpos(X(),"NNS");	# Treebank 5/2 NNS/CD.
   X("id") = "tok50 num-s";
 @RULES
 _xNIL <-
@@ -320,7 +324,7 @@ _xNIL <-
 <6,6> length(3);
 @POST
   xrename("_num");
-  chpos(X(3),"CD");
+  chpos(X(),"CD");
   X("id") = "tok50 num,num,num";
 @RULES
 _xNIL <-
@@ -339,8 +343,9 @@ _xNIL <-
 <4,4> length(3);
 @POST
   xrename("_num");
-  chpos(X(3),"CD");
+  chpos(X(),"CD");
   X("id") = "tok50 num,num";
+  X("number") = "plural";
 @RULES
 _xNIL <-
 	_xSTART
@@ -354,7 +359,7 @@ _xNIL <-
 @POST
  xrename("_noun");
  X("sem") = "us_state";
-  chpos(X(3),"NP");
+  chpos(X(),"NP");
  if (N(4))
    X("pos eos") = 1;
  X("id") = "tok50 us-state";
@@ -370,7 +375,7 @@ _usstate <-
 @POST
  xrename("_noun");
  X("sem") = "us_state";
-  chpos(X(3),"NP");
+  chpos(X(),"NP");
  if (N(4))
    X("pos eos") = 1;
  X("id") = "tok50 us-state";
@@ -389,7 +394,7 @@ _usstate <-
 @POST
  xrename("_noun");
  X("sem") = "us_state";
-  chpos(X(3),"NP");
+  chpos(X(),"NP");
  if (N(2))
    X("pos eos") = 1;
  X("id") = "tok50 us-state";
@@ -590,11 +595,22 @@ _xNIL <- # 20
 @POST
   if (G("conform treebank"))
     {
-    chpos(X(3),"NN");
+    chpos(X(),"NN");
 	N("bracket") = 1;
 	}
   N("sem") = "date";
   N("advl") = 1;	# Possible standalone adverbial.
+  L("xx") = pnparent(X());	# 07/10/12 AM.
+  # Some temporal evidence.
+  L("t") = strtolower(N("$text"));
+  if (L("t") == "today")
+	pnreplaceval(L("xx"),"date=present",1);	# 07/10/12 AM.
+  else if (L("t") = "yesterday")
+	pnreplaceval(L("xx"),"date=past",1);	# 07/10/12 AM.
+  else
+	pnreplaceval(L("xx"),"date=future",1);	# 07/10/12 AM.
+  # General date references.
+  pnreplaceval(L("xx"),"date ref",1);	# 07/10/12 AM.
 @RULES
 _xNIL <- _xWILD [s one match=(
 	today yesterday tomorrow
@@ -602,6 +618,8 @@ _xNIL <- _xWILD [s one match=(
 
 @POST
   N("sem") = "date";
+  L("xx") = pnparent(X());	# 07/10/12 AM.
+  pnreplaceval(L("xx"),"date ref",1);	# 07/10/12 AM.
 @RULES
 _xNIL <- _xWILD [s one match=(
 	millennium millennia millenniums
@@ -624,3 +642,4 @@ _xNIL <- _xWILD [s one match=(
 	quarter quarters	# ambig, of course.
 	)]
 	@@
+

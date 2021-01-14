@@ -24,8 +24,51 @@ L("out") << "*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*
 L("out") << "*x*            Copyright (C) 2005 Text Analysis International, Inc.     *x*\n";
 L("out") << "*x*            All rights reserved.                                     *x*\n";
 L("out") << "*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*\n";
-
 }
+
+############ POSTOKB
+## NOTE:	Send pos to kb.
+######################
+postokb(L("nm"),L("txt"))
+{
+if (!L("nm") || !L("txt"))
+  return;
+
+if (strisdigit(L("txt")))
+  return;
+
+# CONFIGURE: TO DISTINGUISH LETTER CASE, COMMENT THIS:  # 09/24/13 AM.
+L("txt") = strtolower(L("txt"));	# 09/24/13 AM.
+
+L("con") = getconcept(G("kbpos"),L("nm"));
+L("wcon") = getconcept(L("con"),L("txt"));
+}
+
+############ POSTOFILE
+## NOTE:	Send pos to file.
+######################
+postofile()
+{
+if (!G("kbpos")) return;
+
+sorthier(G("kbpos"));
+L("o") = "pos.txt";
+L("c") = down(G("kbpos"));
+while (L("c"))
+  {
+  L("o") << "\n" << strtoupper(conceptname(L("c"))) << "\n";
+  # Words for this pos.
+  L("w") = down(L("c"));
+  while (L("w"))
+    {
+	L("o") << conceptname(L("w")) << "\n";
+	L("w") = next(L("w"));
+	}
+  L("c") = next(L("c"));
+  }
+}
+
+###################################################################
 
 @CODE
 # If not outputting tags, exit.
@@ -34,6 +77,12 @@ if (!G("verbose"))  # Todo: another flag here.
 
 if (G("pretagged"))
   exitpass();
+
+if (L("con") = findconcept(findroot(),"pos"))	# 09/19/13 AM.
+  rmconcept(L("con"));	# CLEAR LIST FOR CURRENT DOC.	# 09/19/13 AM.
+
+G("kbpos") = getconcept(findroot(),"pos");	# 09/16/13 AM.
+
   
 G("para") = "======================================";
 
@@ -124,11 +173,17 @@ while (G("node"))                       # Traverse the parse tree.
   	{
 	L("newpar") = 0;
 	G("gochilds") = 0; # Don't traverse children.
-	L("txt") = prosify(G("node"));
+	L("txt") = prosify(G("node"),"text");	# 12/15/20 AM.
 	 "tags.txt" << L("txt")
 	 	<< "/"
 		<< L("npos")
 		;
+# CONFIGURE: EACH POS TO ITS OWN FILE.			# 09/15/13 AM.
+#	L("out") = L("nm") + ".txt";	# 09/16/13 AM.
+#	L("out") << L("txt") << "\n";	# 09/15/13 AM.
+# OR THIS, ALL IN ONE FILE:			# 09/24/13 AM.
+	postokb(L("nm"),L("txt"));		# 09/16/13 AM.
+	
 	if (!G("bracket"))
 	  {
 	  "tags.txt" << "\n";
@@ -206,5 +261,6 @@ while (G("node"))                       # Traverse the parse tree.
 	 }
   }
 
+postofile();	# 09/16/13 AM.
 @@CODE
 

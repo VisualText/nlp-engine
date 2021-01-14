@@ -10,13 +10,15 @@
 G("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent _clause _seg
+#@PATH _ROOT _TEXTZONE _sent _clause _seg
+@NODES _seg
 
 # dqan
 @CHECK
+  L("x4") = pnparent(X());		# _clause # 07/10/12 AM.
   # If verbs in clause, want a better look at parallel
   # construction patterns , etc.
-  if (X("vg count",4))
+  if (pnvar(L("x4"),"vg count"))	# 07/10/12 AM.
     fail();
   if (X("seg type") != "np")
     fail();
@@ -76,8 +78,8 @@ G("hello") = 0;
 
   # Now fix up noun phrase.
   xrename("_np");
-  pncopyvars(L("head"),X(5));
-  clearpos(X(5),1,1);
+  pncopyvars(L("head"),X());
+  clearpos(X(),1,1);
 @RULES
 _xNIL <-
 	_xSTART
@@ -98,8 +100,8 @@ _xNIL <-
   fixnpnonhead(6);
   xrename("_np");
   L("head") = lasteltnode(7);
-  pncopyvars(L("head"),X(5));
-  clearpos(X(5),1,1);
+  pncopyvars(L("head"),X());
+  clearpos(X(),1,1);
 @RULES
 _xNIL <-
 	_xSTART

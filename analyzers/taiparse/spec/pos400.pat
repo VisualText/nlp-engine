@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 # np alpha alpha dqan
 @CHECK
@@ -183,7 +183,7 @@ _xNIL <-
 _advl <-
 	_xWILD [one match=(_prep)]
 	_adv [star]
-	_np
+	_xWILD [s one match=(_np) except=(_proSubj)]
 	_xWILD [one lookahead fail=(_conj)]
 	@@
 
@@ -217,7 +217,7 @@ _xNIL <-
 @CHECK
   S("stem") = nodestem(N(1));
   "zub.txt" << "stem=" << S("stem") << "\n";
-  if (!finddictattr(S("stem"),"vnj")) # keep it green ...
+  if (!finddictattr(S("stem"),"X7")) # keep it green ...
     fail();
   "zub.txt" << "here" << "\n";
   if (!vconjq(N(2),"-ing"))

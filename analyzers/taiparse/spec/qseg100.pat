@@ -13,7 +13,8 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent _seg
+#@PATH _ROOT _TEXTZONE _sent _seg
+@NODES _seg
 
 # Assume we're here because this is an np.
 @CHECK
@@ -28,8 +29,8 @@ L("hello") = 0;
     X("noun agree") = 1;
   X("vconj") = vconj(N(6));
   xrename("_np");
-  pncopyvars(N(6),X(4));
-  clearpos(X(4),1,1);	# Zero out token info.
+  pncopyvars(N(6),X());
+  clearpos(X(),1,1);	# Zero out token info.
   
   # Heur: assign pos to alphas.
   L("tmp6") = N(6);
@@ -99,8 +100,8 @@ _xNIL <-
   group(6,6,"_noun");
   pncopyvars(L("tmp6"),N(6));
   xrename("_np");
-  pncopyvars(N(6),X(4));
-  clearpos(X(4),1,1);	# Zero out token info.
+  pncopyvars(N(6),X());
+  clearpos(X(),1,1);	# Zero out token info.
 @RULES
 _xNIL <-
 	_xSTART
@@ -122,8 +123,8 @@ _xNIL <-
   pncopyvars(L("tmp3"),N(3));
   fixnoun(N(3));
   xrename("_np");
-  pncopyvars(L("tmp3"),X(4));
-  clearpos(X(4),1,1);	# Zero out token info.
+  pncopyvars(L("tmp3"),X());
+  clearpos(X(),1,1);	# Zero out token info.
 @RULES
 _xNIL <-
 	_xSTART

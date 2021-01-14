@@ -17,7 +17,7 @@ if (G("verbose"))
 	<< "\n\n";
 @@CODE
 
-@PATH _ROOT _TEXTZONE 
+@NODES _TEXTZONE 
 
 @POST
   sentregister(N(1));

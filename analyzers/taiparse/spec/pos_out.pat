@@ -48,7 +48,7 @@ while (G("node"))                       # Traverse the parse tree.
   	{
 	G("gochilds") = 0; # Don't traverse children.
 	L("npos") = nodepos(G("node"),L("nm"));
-	L("txt") = prosify(G("node"));
+	L("txt") = prosify(G("node"),"text");	# 12/15/20 AM.
 	 "tags.txt" << L("txt")
 	 	<< " / ("
 		<< pnvar(G("node"),"posarr")

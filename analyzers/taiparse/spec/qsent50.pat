@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 @CHECK
   if (!N("verb",2))
@@ -98,7 +98,8 @@ _xNIL <-
   clearpos(N(1),1,0);	# Zero out token info.
 @RULES
 _xNIL <-
-	_xWILD [one match=(say said says state stated states)]
+	_xWILD [one match=(say said says state stated states
+		quip quips quipped recalls recalled)]
 	\, [s lookahead opt]
 	\"
 	@@
@@ -128,7 +129,9 @@ _xNIL <-
   if (!N("voice",5))
 	  N("voice",5) = "passive";
   group(5,7,"_clause");
+  setunsealed(5,"true");	# 07/10/12 AM.
   group(5,5,"_advl");
+  setunsealed(5,"true");	# 07/10/12 AM.
 @RULES
 _xNIL <-
 	_xWILD [one match=(_xSTART _clause)]
@@ -146,6 +149,8 @@ _xNIL <-
 # 2nd should be passive...
 # np vg np vg
 # WEAK RULE. # 10/22/04 AM.
+@PRE
+<5,5> varne("voice","passive");
 @CHECK
   # Make sure first verb in vg can be -en conjugation.
   S("ven") = findven(N(9));
@@ -153,7 +158,10 @@ _xNIL <-
     fail();
 @POST
   if (N("glom",5) == "left")	# 04/21/07 AM.
+    {
 	group(2,5,"_clause");	# 04/21/07 AM.
+	setunsealed(2,"true");	# 07/10/12 AM.
+	}
   else
 	{
 	# Set passive conjugation.
@@ -162,6 +170,7 @@ _xNIL <-
 	if (!N("voice",5))
 	  N("voice",5) = "passive";
   	group(2,8,"_clause");
+	setunsealed(2,"true");	# 07/10/12 AM.
 	}
 @RULES
 _xNIL <-
@@ -214,7 +223,7 @@ _advl <-
 #	_xWILD [s one match=(_prep) except=(to)]
 	_xWILD [one match=(_prep)]
 	_adv [star]
-	_np
+	_xWILD [s one match=(_np) except=(_proSubj)]
 	_xWILD [one lookahead fail=(_conj)]
 	@@
 
@@ -246,7 +255,7 @@ _advl <-
   S("passive") = 1;
   singler(1,2);
 @RULES
-_clause <-
+_clause [unsealed] <-
 	_vg
 	_advl
 	_vg [lookahead]
@@ -256,19 +265,27 @@ _clause <-
 # parallel construction.
 # vg np conj vg
 @CHECK
-  if (!N("verb node",1))
+  S("v1") = N("verb node",1);
+  if (!S("v1"))
     fail();
-  if (!N("verb node",7))
+  S("v7") = N("verb node",7);
+  if (!S("v7"))
     fail();
-  if (pnvar(N("verb node",7),"mypos"))
+  if (pnvar(S("v7"),"mypos"))
   	fail();
-  S("pos") = pnvar(N("verb node",1),"mypos");
-  if (!S("pos"))
-    fail();
+  S("pos1") = pnvar(S("v1"),"mypos");
+  if (!S("pos1"))
+	fail();
+  S("pos") = vtreebanktopos(S("pos1"));
+  if (!vconjq(S("v7"),S("pos")))
+	fail();
 @POST
-  # Get verb pos from one and set to the other.
-  pnreplaceval(N("verb node",7),"mypos",S("pos"));
-  # Match up voice here as well.
+  N("qsent50 vncv",7) = 1;
+  if (N("voice",1) && !N("voice",7))
+	L("voice") = N("voice",1);
+  else
+	L("voice") = N("voice",7);
+  fixvg(N(7),L("voice"),S("pos1"));
 @RULES
 _xNIL <-
 	_vg
@@ -358,6 +375,7 @@ _xNIL <-
 # np , vg np ,
 @POST
   group(4,7,"_clause");
+  setunsealed(4,"true");	# 07/10/12 AM.
 #  group(3,3,"_advl");
 @RULES
 _xNIL <-
@@ -443,14 +461,12 @@ _xNIL <-
   L("tmp2") = N(2);
   group(2,2,"_noun");
   pncopyvars(L("tmp2"),N(2));
-  group(2,2,"_np");
-  pncopyvars(L("tmp2"),N(2));
-  clearpos(N(2),1,1);
+  nountonp(2,1);
 @RULES
 _xNIL <-
 	_xWILD [one match=(_verb _vg)]
 	_xALPHA
-	_np [lookahead]
+	_np	# 09/24/13 AM.
 	@@
 
 # alpha np
@@ -503,3 +519,4 @@ _xNIL <-
 	_np
 	_xWILD [one fail=( \, _conj)]
 	@@
+

@@ -13,7 +13,7 @@ if (G("studyout"))
   closefile(G("studyout"));
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 @CHECK
   # Agreement...
@@ -207,7 +207,7 @@ _xNIL <-
   N("voice",1) = S("voice");
 @RULES
 _xNIL <-
-	_xWILD [s one match=(_modal _do) except=(_vg)]
+	_xWILD [s one match=(_modal _do) except=(_vg _np)]
 	_xWILD [star match=(_adv _advl)]
 	_have [s opt]
 	_xWILD [star match=(_adv _advl)]
@@ -233,8 +233,14 @@ _xNIL <-
     chpos(N(5),"VBG");
    }
   L("neg") = mhbvadv(2,4,0,0);
- group(1,5,"_vg");
+ if (N(5))
+   group(1,5,"_vg");
+ else if (N(3))
+	group(1,3,"_vg");
+ else
+	group(1,1,"_vg");
  mhbv(N(1),L("neg"),0,L("h"),L("b"),L("being"),0);
+
 @RULES
 _xNIL <-
 	_xWILD [s one match=(_have) except=(_vg)]

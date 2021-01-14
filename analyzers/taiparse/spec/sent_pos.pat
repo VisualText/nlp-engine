@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 # so
 # while
@@ -39,6 +39,18 @@ L("hello") = 0;
 @RULES
 _xNIL <-
 	before [s]
+	@@
+
+@CHECK
+  if (N("mypos"))
+    fail();
+  if (pnname(N(1)) != "_fnword")
+    fail();
+@POST
+  chpos(N(1),"IN");	# except/IN. DEFAULT.
+@RULES
+_xNIL <-
+	except [s]
 	@@
 
 # what

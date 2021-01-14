@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 @CHECK
   if (!N("needs-np",1))
@@ -81,9 +81,7 @@ _xNIL <-
   L("tmp2") = N(2);
   group(2,2,"_noun");
   pncopyvars(L("tmp2"),N(2));
-  group(2,2,"_np");
-  pncopyvars(L("tmp2"),N(2));
-  clearpos(N(2),1,1);	# Zero out token info.
+  nountonp(2,1);
   if (pnname(N(1)) == "_vg")
     if (!N("voice",1))
 	  N("voice",1) = "active";
@@ -122,7 +120,7 @@ _xNIL <-
 	_xALPHA
 	@@
 
-# dqan alpha alpha prep
+# dqa alpha alpha prep
 @CHECK
   if (N("noun",3))
     fail();
@@ -305,10 +303,7 @@ _xNIL <-
 
 # noun conj np
 @POST
-  L("tmp2") = N(2);
-  group(2,2,"_np");
-  pncopyvars(L("tmp2"),N(2));
-  clearpos(N(2),1,1);	# Zero out token info.
+  nountonp(2,1);
   group(2,4,"_np");
 @RULES
 _xNIL <-

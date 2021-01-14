@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE
+@NODES _TEXTZONE
 
 @POST
   S("sem") = S("ne type") = "organization";
@@ -98,7 +98,7 @@ _usstate [layer=_noun] <-
 single();
 @RULES
 _usstate [layer=_noun] <-
-	_xWILD [one match=(
+	_xWILD [s one match=(
 AA
 AE
 AK
@@ -106,23 +106,23 @@ AL
 Ala
 Alb
 Alabama
-Alas
+#Alas
 Alaska
 AP
 AR
 Ari
 Ariz
 Arizona
-Ark
+#Ark
 Arkan
 Arkansas
-AS
+#AS
 AZ
 CA
 Cal
 Calif
 California
-CO
+#CO
 Col
 Colo
 Colorado
@@ -133,7 +133,7 @@ CT
 Dak
 Dakota
 DC
-DE
+#DE
 Del
 Dela
 Delaware
@@ -142,7 +142,7 @@ Fla
 Flo
 Flor
 Florida
-FM
+#FM
 GA
 Geo
 Georg
@@ -151,38 +151,38 @@ GU
 Guam
 Haw
 Hawaii
-HI
+#HI
 IA
-ID
+#ID
 Ida
 Idaho
-IL
-Ill
+#IL
+#Ill
 Illin
 Illinois
-IN
+#IN
 Ind
 Indiana
 Iowa
 Kan
 Kans
 Kansas
-Ken
-Kent
+#Ken
+#Kent
 Kentucky
 KS
 KY
-LA
-Louis
+#LA
+#Louis
 Louisiana
-MA
+#MA
 Maine
-Mary
+#Mary
 Maryland
-Mass
+#Mass
 Massachusetts
-MD
-ME
+#MD
+#ME
 MH
 MI
 Mich
@@ -190,7 +190,7 @@ Michigan
 Micronesia
 Minn
 Minnesota
-Miss
+#Miss
 Mississippi
 Missouri
 MN
@@ -199,7 +199,7 @@ Mon
 Mont
 Montana
 MP
-MS
+#MS
 MT
 NC
 ND
@@ -214,18 +214,18 @@ NM
 NSW
 NV
 NY
-OH
+#OH
 Ohio
-OK
+#OK
 Okl
 Okla
 Oklahoma
-OR
-Ore
+#OR
+#Ore
 Oreg
 Oregon
 Orpalau
-PA
+#PA
 Penn
 Pennsyl
 Pennsylvania
@@ -267,4 +267,48 @@ Wyo
 Wyoming
 )]
 \. [opt]
+	@@
+
+# Hard-wiring some plural proper names. # 05/27/07 AM.
+@PRE
+<1,1> cap();
+@POST
+  N("mypos") = "NPS";	# cap/NPS
+@RULES
+_xNIL <-
+	_xWILD [s one match=(
+americans
+beatles
+communists
+germans
+jews
+russians
+soviets
+virginians
+		)]
+	@@
+
+# Hard-wiring some development stuff so I don't keep
+# stumbling across it as an error.	# 05/28/07 AM.
+
+# composer name name
+# jobtype cap cap
+@POST
+  if (N("cap",1))
+    {
+  	N("cap",1) = 0;
+	setbase(1,"true");	# Don't look for the capitalization here.
+	}
+  N("mypos",2) = N("mypos",3) = "NP";
+  group(2,3,"_noun");
+  N("ne type",2) = "person";
+  N("ne type conf",2) = 95;
+  N("ne",2) = 1;
+  N("sem",2) = "person";
+@RULES
+_xNIL <-
+	_xWILD [s one match=(composer)]
+	_xCAP [s]
+	_xCAP [s]
+	_xWILD [s one lookahead fail=(_xCAP)]
 	@@

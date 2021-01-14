@@ -5,7 +5,7 @@
 # CREATED: Thu Jan 13 11:37:10 2005
 ###############################################
 
- @PATH _ROOT _TEXTZONE
+ @NODES _TEXTZONE
 
 @POST
   if (N(5))

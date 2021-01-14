@@ -10,7 +10,7 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 @CHECK
   if (!N("noun",3) && !N("adj",3))
@@ -131,66 +131,90 @@ _seg <-
 	_xWILD [one lookahead match=(_prep _xPUNCT _xEND _dbldash)]
 	@@
 
-# pro alpha alpha
-# pro alpha alpha alpha
+# pro alpha+
+# pro alpha alpha alpha ...
 @CHECK
-  if (!N("noun",3) && !N("adj",3))
-    fail();
-  if (!N("noun",2) && !N("adj",2))
-    fail();
-  if (N(4))
+  S("o start") = 2;
+  if (N(7))
+    S("o end") = 7;
+  else if (N(6))
+    S("o end") = 6;
+  else if (N(5))
+    S("o end") = 5;
+  else if (N(4))
+    S("o end") = 4;
+  else if (N(3))
+    S("o end") = 3;
+  else
+    S("o end") = 2;
+  S("ii") = S("o start");
+  S("o bad") = 2;	# Cutoff point for np.
+  while (S("ii") <= S("o end"))
     {
-    if (!N("noun",4) && !N("adj",4))
-      fail();
+	L("n") = eltnode(S("ii"));
+	if (pnvar(L("n"),"noun") || pnvar(L("n"),"adj"))
+	  S("o bad") = ++S("ii");
+	else
+	  S("ii") = S("o end") + 1;	# terminate.
 	}
+  if (S("o bad") > S("o start"))
+    succeed();
+  else
+    fail();	# 04/24/10 AM.
+  
 @POST
-  L("tmp3") = N(3);
-  L("tmp2") = N(2);
-  if (N("noun",3))
-    {
-    group(3,3,"_noun");
-	pncopyvars(L("tmp3"),N(3));
-	fixnounnonhead(N(3));
+  if (!N("mypos",1))
+    chpos(N(1),"PP$");	# pro/PP$
+  # Figure out the np head.
+  if (S("o bad") > S("o end"))
+  	{
+	if (!N(8))
+	  {
+	  fixnphead(S("o end"));
+	  L("ii") = S("o end") - 1;
+	  }
+	else
+	  {
+	  L("include nouns") = 1;
+	  L("ii") = S("o end");
+	  }
 	}
   else
     {
-	group(3,3,"_adj");
-	pncopyvars(L("tmp3"),N(3));
-	fixadj(N(3));
+	S("o end") = S("o bad") - 1;
+	fixnphead(S("o end"));
+	L("ii") = S("o end") - 1;
 	}
 
-  if (N("verb",2) && N("noun",2)
-    && vconjq(N(2),"inf"))
+  while (L("ii") >= S("o start"))
     {
-    group(2,2,"_noun");
-	pncopyvars(L("tmp2"),N(2));
-	fixnounnonhead(N(2));
+	fixnpnonhead(L("ii"));
+	--L("ii");
 	}
-  else if (N("adj",2))
+  # Now group a noun phrase.
+  if (L("include nouns"))
     {
-	group(2,2,"_adj");
-	pncopyvars(L("tmp2"),N(2));
-	fixadj(N(2));
+#	setlookahead(9);
+    group(S("o start"),8,"_np");
 	}
   else
     {
-    group(2,2,"_noun");
-	pncopyvars(L("tmp2"),N(2));
-	fixnounnonhead(N(2));
+#    setlookahead(S("o end") + 1);
+    group(S("o start"),S("o end"),"_np");
 	}
-
-  S("seg type") = "np";
-  singler(1,5);
 @RULES
-_seg <-
-	_xWILD [s one  match=(_proPoss)]
-	_xALPHA
-	_xALPHA
-	_xALPHA [opt]
-	_noun [star]
-	_xWILD [one lookahead match=(
-		_prep _xPUNCT _xEND _dbldash _fnword)]
-	@@
+_xNIL <-
+    _xWILD [s one match=(_proPoss)]				### (1)
+    _xALPHA										### (2)
+    _xALPHA [opt]								### (3)
+    _xALPHA [opt]								### (4)
+    _xALPHA [opt]								### (5)
+    _xALPHA [opt]								### (6)
+    _xALPHA [opt]								### (7)
+    _noun [star]								### (8)
+    _xWILD [one lookahead match=(
+        _prep _xPUNCT _xEND _dbldash _fnword)]	### (9)
+    @@
 
 # alpha alpha alpha
 @CHECK
@@ -299,9 +323,7 @@ _seg <-
   group(4,4,"_noun");
   pncopyvars(L("tmp4"),N(4));
   fixnoun(N(4));
-  group(4,4,"_np");
-  pncopyvars(L("tmp4"),N(4));
-  clearpos(N(4),1,0);
+  nountonp(4,1);
   listadd(2,3,"false");	# Get rid of appositive comma.
 @RULES
 _xNIL <-

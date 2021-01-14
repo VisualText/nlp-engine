@@ -9,6 +9,8 @@
 @CODE
 if (G("pretagged"))
   exitpass();
+if (!G("hilite"))	# 10/25/10 AM.
+  exitpass();		# 10/25/10 AM.
 G("hello") = 0;
 @@CODE
 

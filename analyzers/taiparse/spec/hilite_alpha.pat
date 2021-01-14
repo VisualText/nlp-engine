@@ -8,6 +8,8 @@
 
 @CODE
 L("hello") = 0;
+if (!G("hilite"))	# 10/25/10 AM.
+  exitpass();		# 10/25/10 AM.
 @@CODE
 
 @PATH _ROOT _TEXTZONE

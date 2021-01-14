@@ -10,14 +10,13 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent
+@NODES _sent
 
 # np lists...
 @POST
   if (pnname(N(7)) != "_np")
     {
-	group(7,7,"_np");
-	N("bracket",7) = 1;
+	nountonp(7,1);
 	}
   group(2,7,"_np");
   N("list-np",2) = 1;
@@ -57,10 +56,7 @@ _xNIL <-
 	
 
 @POST
-  L("tmp") = N(2);
-  group(2,2,"_np");
-  pncopyvars(L("tmp"),N(2));
-  clearpos(N(2),1,1);	# Zero out token info.
+ nountonp(2,1);
 @RULES
 _xNIL <-
 	_xSTART
@@ -336,9 +332,7 @@ _xNIL <-
     pncopyvars(L("tmp2"),N(2));
 	fixadj(N(2));
     }
-  group(2,2,"_np");
-  pncopyvars(L("tmp2"),N(2));
-  clearpos(N(2),1,1);	# Zero out token info.
+  nountonp(2,1);
 @RULES
 _xNIL <-
 	_xWILD [one match=(_prep) except=(to)]
@@ -348,10 +342,7 @@ _xNIL <-
 
 # vg , noun vg
 @POST
-  L("tmp3") = N(3);
-  group(3,3,"_np");
-  pncopyvars(L("tmp3"),N(3));
-  clearpos(N(3),1,1);	# Zero out token info.
+  nountonp(3,1);
 @RULES
 _xNIL <-
 	_xWILD [one match=(_vg)]
@@ -420,10 +411,8 @@ _xNIL <-
 
 # fnword noun vg
 @POST
-  L("tmp2") = lasteltnode(2);
-  group(2,2,"_np");
-  pncopyvars(L("tmp2"),N(2));
-  clearpos(N(2),1,1);	# Zero out token info.
+  dqaninfo(0,0,0,2);	# Cleanup.	# 05/25/07 AM.
+  groupnp();
 @RULES
 _xNIL <-
 	_xWILD [one match=(_fnword)]
@@ -439,9 +428,7 @@ _xNIL <-
   L("tmp4") = N(4);
   if (pnname(N(4)) == "_noun")
     {
-	group(4,4,"_np");
-	pncopyvars(L("tmp4"),N(4));
-	clearpos(N(4),1,1);
+	nountonp(4,1);
 	}
   group(2,5,"_np");
   pncopyvars(L("tmp2"),N(2));
@@ -464,8 +451,7 @@ _xNIL <-
   L("tmp4") = N(4);
   if (pnname(N(4)) == "_noun")
     {
-	group(4,4,"_np");
-	N("bracket",4) = 1;
+	nountonp(4,1);
 	}
   group(2,4,"_np");
   pncopyvars(L("tmp2"),N(2));
@@ -535,9 +521,7 @@ _xNIL <-
 # dqan
 @POST
   L("tmp2") = lasteltnode(2);
-  group(2,2,"_np");
-  pncopyvars(L("tmp2"),N(2));
-  clearpos(N(2),1,1);
+  nountonp(2,1);
   N("ne",2) = 0;
   if (pnname(N(3)) == "_vg")
     if (!N("voice",3))
@@ -576,6 +560,9 @@ _xNIL <-
 
 # prep np and np
 # check agreement?
+@PRE
+<2,2> varne("glom","left");
+<4,4> varne("glom","right");
 @POST
   if (pnname(N(4)) == "_noun")
     {
@@ -584,8 +571,7 @@ _xNIL <-
 	}
   if (pnname(N(2)) == "_noun")
     {
-	group(2,2,"_np");
-	N("bracket",2)  = 1;
+	nountonp(2,1);
 	}
   group(2,4,"_np");
   N("compound-np",2) = 1;
@@ -635,9 +621,7 @@ _xNIL <-
   group(2,2,"_noun");
   pncopyvars(L("tmp2"),N(2));
   fixnoun(N(2));
-  group(2,2,"_np");
-  pncopyvars(L("tmp2"),N(2));
-  clearpos(N(2),1,1);
+  nountonp(2,1);
 @RULES
 _xNIL <-
 	_xWILD [one match=(_verb _vg)]

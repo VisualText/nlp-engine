@@ -10,12 +10,17 @@
 L("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE _sent _clause
+#@PATH _ROOT _TEXTZONE _sent _clause
+@NODES _clause
 
 @POST
+  L("x3") = pnparent(X());		# _sent # 07/10/12 AM.
  X("last chunk") = "v";
  ++X("vg count");
  ++X("vg count",3);	# Count in sentence also. # 01/07/05 AM.
+ L("cc") = num(pnvar(L("x3"),"vg count"));		# 07/07/12 AM.
+ pnreplaceval(L("x3"),"vg count",++L("cc"));	# 07/07/12 AM.
+ 
  if (N("voice"))
    X("voice") = N("voice");	# Copy active/passive to clause.
  if (N("last vg"))
@@ -29,11 +34,14 @@ L("hello") = 0;
  X("last") = N(1);
  if (!X("first name"))
    X("first name") = "_vg";
- if (!X("first vclause",3))
+ if (!pnvar(L("x3"),"first vclause"))	# 07/10/12 AM.
    {
-   X("first vclause",3) = X(4);	# First clause with vg.
-   X("first v in sent",4) = 1;
+   # First clause with vg.
+   pnreplaceval(L("x3"),"first vclause",X());	# 07/10/12 AM.
+   X("first v in sent") = 1;
    }
+ if (N("ellipted-that"))
+	X("ellipted-that") = 1;
  # Todo: check for multiple vgs...
 @RULES
 _xNIL <-
@@ -62,6 +70,8 @@ _xNIL <-
 	else
 	  X("first name") = "_np";
 	}
+ if (N("ellipted-that"))
+	X("ellipted-that") = 1;
 @RULES
 _xNIL <-
 	_xSTART
@@ -76,16 +86,21 @@ _xNIL <-
   X("last") = N(1);
   if (!X("first name"))
     X("first name") = "_np";
+ if (N("ellipted-that"))
+	X("ellipted-that") = 1;
 @RULES
 _xNIL <-
 	_np
 	@@
 
 @POST
+  L("x3") = pnparent(X());		# _sent	# 07/10/12 AM.
   X("last chunk") = "v";
   X("start to-vg") = 1;
  ++X("vg count");
- ++X("vg count",3);	# Count in sentence also. # 01/07/05 AM.
+ # Count in sentence also. # 01/07/05 AM.
+ L("cc") = num(pnvar(L("x3"),"vg count"));		# 07/10/12 AM.
+ pnreplaceval(L("x3"),"vg count",++L("cc"));	# 07/10/12 AM.
  if (N("voice"))
    X("voice") = N("voice");	# Copy active/passive to clause.
  if (N("last vg"))

@@ -10,7 +10,7 @@
 G("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE
+@NODES _TEXTZONE
 
 @CHECK
   if (!N("ne type",1))
@@ -92,6 +92,17 @@ _xNIL <-
 	nor [s]
 	@@
 
+@POST
+  pnrename(N(1),"_adv");	# either -> adv
+  chpos(N(1),"CC");	# either/CC
+  chpos(N(3),"CC");	# or/CC
+@RULES
+_xNIL <-
+	either [s]
+	_xALPHA
+	or [s]
+	@@
+
 # Miscellany.
 
 # ^ "
@@ -107,7 +118,9 @@ _xNIL <-
 # , "
 @POST
   ++X("dblquote");
-  group(1,2,"_qEOS");
+  N("double quote",1) = 1;
+#  group(1,2,"_qEOS"); # 05/29/07 AM.
+  excise(2,2);	# Try this.	# 05/29/07 AM.
 @RULES
 _xNIL <-
 	\,
@@ -121,7 +134,7 @@ _xNIL <-
   if (N("mypos",1))
     fail();
 @POST
-  if (G("conform treebank"))
+#  if (G("conform treebank"))
     chpos(N(1),"NP");
 @RULES
 _xNIL <-
@@ -176,6 +189,7 @@ _xNIL <-
 		Services
 		Stores
 		Systems
+		United
 		)]
 	_xCAP [s lookahead]
 	@@
@@ -186,7 +200,7 @@ _xNIL <-
   if (N("mypos",2))
     fail();
 @POST
-  if (G("conform treebank"))
+#  if (G("conform treebank"))
     chpos(N(2),"NP");
 @RULES
 _xNIL <- # 8
@@ -247,7 +261,7 @@ _xNIL <- # 8
 
 @POST
   if (G("conform treebank"))
-    N("mypos",1);
+    N("mypos",1) = "NP";
   chpos(N(2),"NP");
   if (N(3))
     chpos(N(3),"NP");
@@ -263,7 +277,7 @@ _xNIL <-
 @PRE
 <1,1> cap();
 @POST
-  pnrename(N(1),"_noun");
+  pnrename(N(1),"_noun");	# -> noun
   chpos(N(1),"NP");
   if (N(2))
     chpos(N(2),"NP");
@@ -369,7 +383,7 @@ _xNIL <-
 # adj 's
 # Fix some bad assignments.
 @POST
-  pnrename(N(1),"_noun");
+  pnrename(N(1),"_noun");	# adj -> noun
 @RULES
 _xNIL <-
 	_adj
@@ -492,10 +506,13 @@ _xNIL <-
 	to [s]
 	@@
 
-# det num
+# det num [det year]
+# prep num [prep year]
 @CHECK
+  if (pnname(N(1)) == "_pro" && !N("proposs",1))
+  	fail();
   N("num") = num(N("$text",2));
-  if (N("num") > 1950 && N("num") < 2015)
+  if (N("num") > 1900 && N("num") < 2015)
     succeed();
   fail();
 @POST
@@ -503,7 +520,7 @@ _xNIL <-
   chpos(N(2),"CD");
 @RULES
 _xNIL <-
-	_det
+	_xWILD [one match=(_det _pro)]
 	_xNUM
 	@@
 
@@ -520,3 +537,56 @@ _xNIL <-
 	_xWILD [s one match=(street avenue boulevard)]
 	@@
 
+# Note: cap not sentence starter.
+@PRE
+<2,2> cap();
+@POST
+  N("mypos",2) = "NP";
+@RULES
+_xNIL <-
+	_xWILD [one fail=( \. _qEOS)]
+	_det [trigger]
+ 	_xCAP [s]
+	@@
+
+# adj cap
+@PRE
+<1,1> vareq("number","plural");
+@CHECK
+  L("t") = strtolower(N("$text",2));
+  if (strendswith(L("t"),"ss"))
+	fail();
+  if (!strendswith(L("t"),"s"))
+	fail();
+@POST
+  N("mypos",2) = "NPS";
+@RULES
+_xNIL <-
+	_adj
+	_xCAP
+	@@
+
+#Get rid of quotes inside a cap phrase.
+# Ex: Toys "R" Us
+@POST
+  excise(4,4);
+  excise(2,2);
+@RULES
+_xNIL <-
+	_xCAP [s]
+	_dblquote
+	_xCAP [s plus]
+	_dblquote
+	@@
+
+##########################
+### NONCAP ISSUES
+##########################
+# verb ok
+@POST
+  alphatoadj(2);
+@RULES
+_xNIL <-
+	_verb
+	ok
+	@@

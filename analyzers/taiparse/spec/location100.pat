@@ -10,7 +10,7 @@
 G("hello") = 0;
 @@CODE
 
-@PATH _ROOT _TEXTZONE
+@NODES _TEXTZONE
 
 @PRE
 <2,2> cap();
@@ -83,11 +83,14 @@ _noun <-
 
 @POST
   pncopyvars(5);
+  N("mypos",1) = N("mypos",5) = "NP";
+  N("mypos",3) = "IN";
   S("ne text") = S("stem") = phrasetext();
   S("ne type") = "person";
   S("ne type conf") = 95;
   S("ne") = 1;
   S("sem") = "person title";
+  sclearpos(1,0);
   single();
 @RULES
 _noun <-
@@ -97,13 +100,18 @@ _noun <-
 	_xWHITE [star]
 	State
 	@@
+@PRE
+<1,1> cap();
+<3,3> cap();
 @POST
   pncopyvars(3);
+  N("mypos",1) = N("mypos",3) = "NP";
   S("ne text") = S("stem") = phrasetext();
   S("ne type") = "person";
   S("ne type conf") = 95;
   S("ne") = 1;
   S("sem") = "person title";
+  sclearpos(1,0);
   single();
 @RULES
 _noun <-
