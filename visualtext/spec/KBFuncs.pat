@@ -75,8 +75,10 @@ DisplayKB(L("top"),L("full")) {
 		L("file") = "ana0" + str(G("$passnum"));
 	}
 	L("file") = L("file") + ".kbb";
-	DisplayKBRecurse(L("file"),L("top"),0,L("full"));
+	L("top con") = findconcept(findroot(),L("top"));
+	DisplayKBRecurse(L("file"),L("top con"),0,L("full"));
 	L("file") << "\n";
+	return L("top con");
 }
 
 DisplayKBRecurse(L("file"),L("top"),L("level"),L("full")) {
