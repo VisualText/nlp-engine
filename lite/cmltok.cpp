@@ -348,7 +348,7 @@ if (!nlp->getFinteractive())
 // Write out the input buffer to _LOG\RETEXT.TXT.
 // Mimic inputrangetofile!
 
-#ifdef LINUX
+#ifdef __linux__
 std::_Ios_Openmode modes;
 #else
 int modes = 0;

@@ -1,0 +1,27 @@
+name: Build
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  Build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v2
+      # build project
+      - name: make build directory
+        run: mkdir build
+      - name: Cmake Configure
+        run: cmake -Bbuild -S.
+      - name: Cmake Build all targets on Windows
+        run: cmake --build build/ --target ALL_BUILD
+        if: ${{ matrix.os == 'windows-latest' }}
+      - name: Cmake Build all targets on Unix
+        run: cmake --build build/ --target all
+        if: ${{ matrix.os != 'windows-latest' }}

@@ -18,7 +18,7 @@ bool cmdReadArgs(int,_TCHAR*argv[],_TCHAR*&,_TCHAR*&,_TCHAR*&,_TCHAR*&,bool&,boo
 void cmdHelpargs(_TCHAR*);
 
 #ifdef LINUX
-main(
+int main(
 #else
 int _tmain(
 #endif
