@@ -8,7 +8,22 @@ else()
 endif()
 
 file(GLOB nlp_src "*.h" "*.cpp")
-add_executable(nlp ${nlp_src})
 
-target_link_libraries(nlp PUBLIC prim kbm consh words lite)
-#target_link_libraries(nlp PUBLIC prim kbm consh words lite odbc)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Debug)
+endif()
+
+if(WIN32)
+  add_executable(nlp ${nlp_src})
+  target_link_libraries(nlp PUBLIC prim kbm consh words lite)
+  #target_link_libraries(nlp PUBLIC prim kbm consh words lite odbc)
+  add_custom_command(TARGET nlp POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE}/nlp.exe ${CMAKE_SOURCE_DIR})
+else()
+  add_executable(nlp.exe ${nlp_src})
+  target_link_libraries(nlp.exe PUBLIC prim kbm consh words lite)
+  #target_link_libraries(nlp.exe PUBLIC prim kbm consh words lite odbc)
+  add_custom_command(TARGET nlp.exe POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/bin/nlp.exe ${CMAKE_SOURCE_DIR})
+endif()
+

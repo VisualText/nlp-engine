@@ -477,7 +477,7 @@ int NLP_ENGINE::createDir(_TCHAR *dirPath) {
     struct stat st;
     if (stat(dirPath,&st) != 0) {
 #ifdef LINUX
-	    mkdir(dirPath, 777);
+	    mkdir(dirPath, 0755);
 #else
 	    CreateDirectory(dirPath,NULL);
 #endif
