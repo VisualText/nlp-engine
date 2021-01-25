@@ -55,7 +55,8 @@ _TCHAR skip_b(_TCHAR cc, _t_istream *fp);		// 04/20/99 AM.
 LIBCONSH_API void
 args_pp(
 	LIST *args,
-	_t_ostream *out
+	_t_ostream *out,
+    _TCHAR *buf
 	)
 {
 _TCHAR *str;
@@ -64,7 +65,7 @@ _TCHAR *str;
 char *lpstr8;
 #endif
 
-while (str = (_TCHAR *) ALIST::list_pop(&args))						// 08/14/02 AM.
+while (str = ALIST::list_pop_buf(&args,buf))						// 08/14/02 AM.
    {
 #ifdef UNICODE
 	u_to_mbcs((LPCWSTR)str, CP_UTF8, (LPCTSTR*&)lpstr8);
@@ -114,12 +115,13 @@ args_read(
 	_TCHAR *buf,						/* Buffer for args.			*/
 	long bufsiz,		// Length of buffer.								// 07/22/04 AM.
 	/*DU*/
-	LIST **args						/* List of ptrs to args.	*/
+	LIST **args					/* List of ptrs to args.	*/
 	)
 {
 _TCHAR cc;						/* Char to process. 		*/
 bool ok;						/* Successful read.			*/
 LIST *end;						/* End of args list.		*/
+int len = 0;
 
 *args = end = LNULL;
 
@@ -142,7 +144,7 @@ for (;;)						/* While getting args.		*/
 		case '\0':	// Using this in case skip_b found EOF.		// 12/16/01 AM.
 //    case EOF:	// Matches ANSI y-umlaut, so not using.		// 12/16/01 AM.
          if (!silent_f)		/* If echoing input. */
-            args_pp(*args, out);
+            args_pp(*args, out, buf);
          return(false);		// 05/02/99 AM. Unexpected eof.
       case '\n':
 		case '\r':				// FIX.  04/21/99 AM.
@@ -153,7 +155,7 @@ for (;;)						/* While getting args.		*/
 				cc = fp->get();	// 10/31/06 AM.
 #endif
          if (!silent_f)		/* If echoing input. */
-            args_pp(*args, out);
+            args_pp(*args, out, buf);
          return(true);
       case ';':					/* Get comment.				*/
 #ifdef UNICODE
@@ -170,10 +172,10 @@ for (;;)						/* While getting args.		*/
          cc = fp->get();			/* Lookahead char.			*/
 #endif
          ok = arg_get_str(fp, alist, out,								// 06/21/03 AM.
-													&cc, &buf, args, &end);	// 08/14/02 AM.
+													&cc, &buf, args, &end, len);	// 08/14/02 AM.
          break;
       default:					/* Get regular arg.			*/
-         ok = arg_get(fp, alist, &cc, &buf, args, &end);			// 08/14/02 AM.
+         ok = arg_get(fp, alist, &cc, &buf, args, &end, len);			// 08/14/02 AM.
          break;
       }
       
@@ -182,7 +184,7 @@ for (;;)						/* While getting args.		*/
    }
 
 if (!silent_f)		/* If echoing input. */
-   args_pp(*args, out);
+   args_pp(*args, out, buf);
 return(ok);
 }
 
@@ -205,7 +207,8 @@ arg_get(
 	_TCHAR *cup,			/* Lookahead char.					*/
 	_TCHAR **pos,			/* Buffer for placing arg.			*/
 	LIST **args,
-	LIST **end			/* Args to add to.					*/
+	LIST **end,			/* Args to add to.					*/
+    int &len
 	)
 {
 _TCHAR cc;			/* Lookahead char.					*/
@@ -219,6 +222,8 @@ if (fp->eof())																	// 12/18/01 AM.
 	cc = '\0';																	// 12/18/01 AM.
 buf = *pos;
 f_esc = 0;
+int lenIn = len;
+
 for (;;)			/* While getting arg */
    {
    if (f_esc)			/* Add to current arg. */
@@ -247,7 +252,8 @@ for (;;)			/* While getting arg */
 		case '\0':																// 12/16/01 AM.
  //     case EOF:																// 12/16/01 AM.
          *buf++ = '\0';
-         *args = alist->list_add(*args, (long) *pos, end);		// 08/14/02 AM.
+         //*args = alist->list_add(*args, (long) *pos, end);		// 08/14/02 AM.
+         *args = alist->list_add(*args, lenIn, end);		// 08/14/02 AM.
          *cup = cc;
          *pos = buf;
          return(ok);
@@ -259,7 +265,8 @@ for (;;)			/* While getting arg */
       case '\t':
       case '\r':
          *buf++ = '\0';
-         *args = alist->list_add(*args, (long) *pos, end);
+         //*args = alist->list_add(*args, (long) *pos, end);
+         *args = alist->list_add(*args, lenIn, end);
          while (cc == '\r')	// In case of cr-lf format.	// 10/31/06 AM.
 #ifdef UNICODE
 		cc = getutf8(fp);	// 10/31/06 AM.
@@ -268,9 +275,11 @@ for (;;)			/* While getting arg */
 #endif
          *cup = cc;
          *pos = buf;
+         len++;
          return(ok);
       default:
          *buf++ = cc;	/* Add char to current arg. */
+         len++;
          break;
       }
 #ifdef UNICODE
@@ -364,7 +373,8 @@ arg_get_str(
 	_TCHAR *cup,			/* Lookahead char.				*/
 	_TCHAR **pos,			/* Buffer for arg.				*/
 	LIST **args,
-	LIST **end		/* Args to add to.					*/
+	LIST **end,		/* Args to add to.					*/
+    int &len
 	)
 {
 _TCHAR cc;			/* Lookahead char.				*/
@@ -378,6 +388,8 @@ if (fp->eof())																	// 12/18/01 AM.
 	cc = '\0';																	// 12/18/01 AM.
 buf = *pos;
 f_esc = 0;
+int lenIn = len;
+
 for (;;)			/* While getting arg */
    {
    if (f_esc)			/* Add to current arg. */
@@ -409,9 +421,11 @@ for (;;)			/* While getting arg */
           *out																	// 06/21/03 AM.
 				<< _T("[arg_get_str: Error. EOF in middle of string.]") << endl;
 			*out << _T("[str=") << *pos << _T("]") << endl;						// 06/21/03 AM.
-        *args = alist->list_add(*args, (long)*pos, end);
+         //*args = alist->list_add(*args, (long)*pos, end);
+         *args = alist->list_add(*args, lenIn, end);
          *cup = cc;
          *pos = buf;
+         len++;                 //01/25/21 Dd.
          return(false);
       case '\\':
          f_esc = 1;
@@ -430,12 +444,15 @@ for (;;)			/* While getting arg */
             return(false);
             }
          *buf++ = '\0';
-         *args = alist->list_add(*args, (long)*pos, end);
+         //*args = alist->list_add(*args, (long)*pos, end);
+         *args = alist->list_add(*args, lenIn, end);
          *cup = cc;
          *pos = buf;
+         len++;
          return(ok);
       default:
          *buf++ = cc;	/* Add char to current arg. */
+         len++;
          break;
       }
 #ifdef UNICODE

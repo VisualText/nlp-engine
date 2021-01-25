@@ -76,6 +76,9 @@ public:
 		long val,
 		LIST *list
 		);
+	void list_add_buf(
+		_TCHAR* buf
+	);
 
 	// GENERAL FUNCTIONS.
 	static LIST *list_add_elt(
@@ -102,6 +105,10 @@ public:
 	static long list_pop(
 		LIST **list
 		);
+	static _TCHAR* list_pop_buf(
+		LIST** list,
+		_TCHAR* buf
+	);
 	static LIST *list_pop_elt(
 		LIST **list
 		);
@@ -115,6 +122,7 @@ public:
 		LIST *list
 		);
 
+
 private:
 	LIST *List_segs[LIST_SEGS_MAX];	// Seg table for list mgr.
 	int   List_segs_tot;					// Number of list segments.
@@ -122,11 +130,13 @@ private:
 	LIST *List_free;						// The free list.
 	LIST *List_end;						// End of free list.
 
+
 // When code is well debugged and stable, can remove the stuff below.
 #ifndef STABLE_
 public:
 	static int getCount();
 	static void prettyCount();				// Pretty-print the count.
+	_TCHAR* List_buffer;
 private:
 	static int count_;						// Count objects currently allocated.
 #endif

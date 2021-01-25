@@ -111,7 +111,8 @@ cmd_gen_all(
 extern LIBCONSH_API bool
 cmd_help(
 	LIST *args,
-	_t_ostream *out
+	_t_ostream *out,
+	_TCHAR *buf
 	);
 extern LIBCONSH_API bool
 cmd_ind(

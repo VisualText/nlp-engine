@@ -85,11 +85,12 @@ path_to_con(
 {
 _TCHAR *name;
 CON *con, *sub, *child;
+ALIST* alist = cg->alist_;
 
 *upcon = CNULL;
 
 /* Set up root of hierarchy. */
-name = (_TCHAR *) ALIST::list_pop(&args);
+name = ALIST::list_pop_buf(&args,alist->List_buffer);
 if (!name || !*name)	// 10/31/06 AM.
    {
    _t_cerr << _T("[path_to_con: Empty args.]") << endl;	// 10/31/06 AM.
@@ -118,7 +119,7 @@ else
 con = cg->acon_->c_cg_CONCEPT;											// 08/22/02 AM.
 
 /* Find first path component not yet built. */
-while (name = (_TCHAR *) ALIST::list_pop(&args))
+while (name = ALIST::list_pop_buf(&args,alist->List_buffer))
    {
    child = con->dn;
    sub = CNULL;
