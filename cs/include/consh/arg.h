@@ -21,7 +21,8 @@ arg_get(
 	_TCHAR *cup,			/* Lookahead char.					*/
 	_TCHAR **pos,			/* Buffer for placing arg.			*/
 	LIST **args,
-	LIST **end			/* Args to add to.					*/
+	LIST **end,			/* Args to add to.					*/
+	int &len
 	);
 extern LIBCONSH_API bool
 arg_get_comment(
@@ -38,12 +39,14 @@ arg_get_str(
 	_TCHAR *cup,			/* Lookahead char.				*/
 	_TCHAR **pos,			/* Buffer for arg.				*/
 	LIST **args,
-	LIST **end		/* Args to add to.					*/
+	LIST **end,		/* Args to add to.					*/
+	int &len
 	);
 extern LIBCONSH_API void
 args_pp(
 	LIST *args,
-	_t_ostream *out
+	_t_ostream *out,
+	_TCHAR *buf
 	);
 extern LIBCONSH_API bool
 args_read(

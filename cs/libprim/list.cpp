@@ -56,6 +56,7 @@ ALIST::ALIST(																	// 08/14/02 AM.
 List_segs_tot = 0;
 List_free = 0;
 List_end = 0;
+List_buffer = NULL;
 
 // May want to clear out the segment table also.
 int ii;
@@ -271,6 +272,13 @@ elt = list_make(val);
 return(list_push_elt(elt, list));
 }
 
+void ALIST::list_add_buf(
+	_TCHAR *buf
+)
+{
+	List_buffer = buf;
+}
+
 ////////////////////////////////////////////////////////////////////////
 // GENERAL LIST FUNCTIONS
 ////////////////////////////////////////////////////////////////////////
@@ -440,6 +448,20 @@ if (!list || !*list)
 tmp = *list;
 *list = tmp->next;
 return(tmp->val);
+}
+
+_TCHAR* ALIST::list_pop_buf(
+	LIST** list,
+	_TCHAR* buf
+)
+{
+	LIST* tmp;
+
+	if (!list || !*list)
+		return((long)0);
+	tmp = *list;
+	*list = tmp->next;
+	return(&buf[tmp->val]);
 }
 
 

@@ -307,10 +307,15 @@ int NLP_ENGINE::analyze(
     _stprintf(m_outfile, _T("%s%soutfile.txt"),m_anadir,DIR_STR);
     _t_cout << _T("[outfile path: ") << m_outfile << _T("]") << endl;
 
-    stat(outdir,&st);
-    if ((st.st_mode & S_IFREG) == S_IFDIR) {
-        _stprintf(m_outdir, _T("%s"),outdir);
-    } else {
+    bool create = true;
+    if (outdir) {
+        stat(outdir, &st);
+        if ((st.st_mode & S_IFREG) == S_IFDIR) {
+            _stprintf(m_outdir, _T("%s"), outdir);
+            create = false;
+        }
+    }
+    if (create) {
         _stprintf(m_outdir, _T("%s_log"),infile);
         NLP_ENGINE::createDir(m_outdir);
     }
