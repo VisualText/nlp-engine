@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									IND.C
 *
-* FILE:	consh.¹/ind.c
+* FILE:	consh.ï¿½/ind.c
 * SUBJ:	Higher-level knowledge addition commands.
 * CR:		10/15/95 AM.
 * NOTE:	Support multi-line addition commands, with some abstraction from kb.
@@ -254,9 +254,9 @@ for (;;)
 		return(false);
    
    if (!vals
-		 || (!_tcscmp(_T("end"), (_TCHAR *) vals->val)
+		 || (!_tcscmp(_T("end"), ALIST::list_str(&vals,buf))
 			  && vals->next										// PATCH	// 10/26/00 AM.
-			  && !_tcscmp(_T("ind"),(_TCHAR *)vals->next->val))	// PATCH	// 10/26/00 AM.
+			  && !_tcscmp(_T("ind"),ALIST::list_str(&vals->next,buf)))	// PATCH	// 10/26/00 AM.
 		)
       {
       alist->list_free(vals, LNULL);
@@ -273,7 +273,7 @@ for (;;)
       }
    else
       {
-      ok = cg->aptr_->s_to_pval((_TCHAR *) vals->val, p_kind, &p_val);
+      ok = cg->aptr_->s_to_pval(ALIST::list_str(&vals,buf), p_kind, &p_val);
       alist->list_free(vals, LNULL);
       if (!ok)
 			return(false);
@@ -378,9 +378,9 @@ for (;;)
 		return(false);
    
    if (!vals
-		 || (!_tcscmp(_T("end"), (_TCHAR *) vals->val)
+		 || (!_tcscmp(_T("end"), ALIST::list_str(&vals,buf))
 			  && vals->next										// PATCH	// 10/26/00 AM.
-			  && !_tcscmp(_T("ind"),(_TCHAR *)vals->next->val))	// PATCH	// 10/26/00 AM.
+			  && !_tcscmp(_T("ind"),ALIST::list_str(&vals->next,buf)))	// PATCH	// 10/26/00 AM.
 		)
       {
       alist->list_free(vals, LNULL);
@@ -415,7 +415,7 @@ for (;;)
       }
    else
       {
-      ok = cg->aptr_->s_to_pval((_TCHAR *) vals->val, p_kind, &p_val);
+      ok = cg->aptr_->s_to_pval(ALIST::list_str(&vals,buf), p_kind, &p_val);
       alist->list_free(vals, LNULL);
       if (!ok)
 			return(false);
@@ -512,9 +512,9 @@ for (;;)
 		return(false);
    
    if (!vals
-		 || (!_tcscmp(_T("end"), (_TCHAR *) vals->val)
+		 || (!_tcscmp(_T("end"), ALIST::list_str(&vals,buf))
 			  && vals->next										// PATCH	// 10/26/00 AM.
-			  && !_tcscmp(_T("ind"),(_TCHAR *)vals->next->val))	// PATCH	// 10/26/00 AM.
+			  && !_tcscmp(_T("ind"),ALIST::list_str(&vals->next,buf)))	// PATCH	// 10/26/00 AM.
 		)
       {
       alist->list_free(vals, LNULL);
@@ -531,7 +531,7 @@ for (;;)
       }
    else
       {
-      ok = cg->aptr_->s_to_pval((_TCHAR *) vals->val, p_kind, &p_val);
+      ok = cg->aptr_->s_to_pval(ALIST::list_str(&vals,buf), p_kind, &p_val);
       alist->list_free(vals, LNULL);
       if (!ok)
 			return(false);
@@ -596,13 +596,13 @@ if (!ok)
    return(false);
    }
 
-if (!ends || _tcscmp(_T("end"), (_TCHAR *) ends->val))
+if (!ends || _tcscmp(_T("end"), ALIST::list_str(&ends,buf)))
    *out << _T("ind childs: Missing 'end ind'.") << endl;
 alist->list_free(ends, LNULL);
 
 /* ADD CHILDREN TO HIERARCHY */
 save = names;
-while (str = (_TCHAR *) ALIST::list_pop(&names))
+while (str = ALIST::list_str(&names,nbuf))
    cg->acon_->con_add_basic(str, con);
 
 alist->list_free(save, LNULL);
@@ -667,7 +667,7 @@ for (;;)
    if (!ok) return(false);
    
    /* First word = "end" terminates the addition. */
-   if (!list || !_tcscmp(_T("end"), (_TCHAR *) list->val))
+   if (!list || !_tcscmp(_T("end"), ALIST::list_str(&list,buf)))
       {
       alist->list_free(list, LNULL);
       break;
@@ -680,7 +680,7 @@ for (;;)
       return(false);
       }
 
-   word = cg->kbm_->dict_add_word((_TCHAR *) list->val);
+   word = cg->kbm_->dict_add_word(ALIST::list_str(&list,buf));
    alist->list_free(list, LNULL);
    if (!word) return(false);
    elts[count++] = word;
@@ -779,7 +779,7 @@ for (;;)
 		return(false);
 		}
    
-   if (!list || !_tcscmp(_T("end"), (_TCHAR *) list->val))
+   if (!list || !_tcscmp(_T("end"), ALIST::list_str(&list,buf)))
       {
       alist->list_free(list, LNULL);
       break;
@@ -907,7 +907,7 @@ for (;;)
    ok  = args_read(in, out, silent,alist, buf,CMD_SIZE, &vals);
    if (!ok) return(false);
    
-   if (!vals || !_tcscmp(_T("end"), (_TCHAR *) vals->val))
+   if (!vals || !_tcscmp(_T("end"), ALIST::list_str(&vals,buf)))
       {
       alist->list_free(vals, LNULL);
       break;
@@ -922,7 +922,7 @@ for (;;)
       }
    else
       {
-      ok = s_to_pval((_TCHAR *) vals->val, p_kind, &p_val);
+      ok = s_to_pval(ALIST::list_str(&vals,buf), p_kind, &p_val);
       alist->list_free(vals, LNULL);
       if (!ok) return(false);
       }

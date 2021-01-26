@@ -1,5 +1,5 @@
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -7,7 +7,7 @@ All rights reserved.
 *
 *									CMD.H
 *
-* FILE:	conch.¹/cmd.h
+* FILE:	conch.ï¿½/cmd.h
 * SUBJ:	Declarations for the command-line interface.
 * CR:	8/20/95 AM.
 *
@@ -109,7 +109,8 @@ cmd_gen_all(
 extern LIBQCONSH_API bool
 cmd_help(
 	LIST *args,
-	_t_ostream *out
+	_t_ostream *out,
+	_TCHAR *buf
 	);
 extern LIBQCONSH_API bool
 cmd_ind(

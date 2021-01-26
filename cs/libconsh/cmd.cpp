@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -139,7 +139,6 @@ for (;;)		/* Execute commands till quit or abort. */
       continue;
       }
    list = args;
-   alist->list_add_buf(buf);
    str = ALIST::list_pop_buf(&args,buf);		/* Get first arg. */
    //str = ALIST::list_pop_buf(&args,alist->List_buffer);		/* Get first arg. */
 //	if (str && *str)							// 10/05/99 AM.
@@ -446,7 +445,7 @@ _TCHAR *name,
 long id;
 SYM *sym;
 CON *con;
-ALIST* alist = cg->alist_;
+_TCHAR *buf = cg->alist_->List_buffer;
 
 if (!args)
    {
@@ -454,7 +453,7 @@ if (!args)
    return(false);
    }
 
-name = (_TCHAR *)ALIST::list_pop(&args);
+name = ALIST::list_pop_buf(&args,buf);
 
 if (!args)
    {
@@ -462,7 +461,7 @@ if (!args)
    return(false);
    }
 
-idstr = ALIST::list_pop_buf(&args,alist->List_buffer);
+idstr = ALIST::list_pop_buf(&args,buf);
 
 if (args)
    {

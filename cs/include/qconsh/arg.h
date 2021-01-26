@@ -1,5 +1,5 @@
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -7,7 +7,7 @@ All rights reserved.
 *
 *									ARG.H
 *
-* FILE:	conch.¹/arg.h
+* FILE:	conch.ï¿½/arg.h
 * SUBJ:	Declarations for command-line parsing.
 * CR:	8/20/95 AM.
 *
@@ -43,7 +43,8 @@ arg_get_str(
 extern LIBQCONSH_API void
 args_pp(
 	LIST *args,
-	_t_ostream *out
+	_t_ostream *out,
+	_TCHAR *buf
 	);
 extern LIBQCONSH_API bool
 args_read(

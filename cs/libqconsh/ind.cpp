@@ -1,5 +1,5 @@
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -7,7 +7,7 @@ All rights reserved.
 *
 *									IND.C
 *
-* FILE:	consh.¹/ind.c
+* FILE:	consh.ï¿½/ind.c
 * SUBJ:	Higher-level knowledge addition commands.
 * CR:		10/15/95 AM.
 * NOTE:	Support multi-line addition commands, with some abstraction from kb.
@@ -761,13 +761,13 @@ if (!ok)
    return(false);
    }
 
-if (!ends || _tcscmp(_T("end"), (_TCHAR *) ends->val))
+if (!ends || _tcscmp(_T("end"), ALIST::list_str(&ends,buf)))
    *out << _T("ind childs: Missing 'end ind'.") << endl;
 alist->list_free(ends, LNULL);
 
 /* ADD CHILDREN TO HIERARCHY */
 save = names;
-while (str = (_TCHAR *) ALIST::list_pop(&names))
+while (str = ALIST::list_pop(&names,nbuf))
    cg->cgcon_->con_add_basic(str, con);
 
 alist->list_free(save, LNULL);

@@ -1,5 +1,5 @@
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -7,7 +7,7 @@ All rights reserved.
 *
 *									ARG.C
 *
-* FILE:	conch.¹/arg.c
+* FILE:	conch.ï¿½/arg.c
 * SUBJ:	Argument parser.
 * CR:	8/26/95 AM.
 * NOTE:	Parse arguments, C-style.
@@ -56,7 +56,8 @@ _TCHAR skip_b(_TCHAR cc, _t_istream *fp);		// 04/20/99 AM.
 LIBQCONSH_API void
 args_pp(
 	LIST *args,
-	_t_ostream *out
+	_t_ostream *out,
+   _TCHAR *buf;
 	)
 {
 _TCHAR *str;
@@ -65,7 +66,7 @@ _TCHAR *str;
 char *lpstr8;
 #endif
 
-while (str = (_TCHAR *) ALIST::list_pop(&args))						// 08/14/02 AM.
+while (str = ALIST::list_pop(&args,buf))						// 08/14/02 AM.
    {
 #ifdef UNICODE
 	u_to_mbcs((LPCWSTR)str, CP_UTF8, (LPCTSTR*&)lpstr8);
@@ -143,7 +144,7 @@ for (;;)						/* While getting args.		*/
 		case '\0':	// Using this in case skip_b found EOF.		// 12/16/01 AM.
 //    case EOF:	// Matches ANSI y-umlaut, so not using.		// 12/16/01 AM.
          if (!silent_f)		/* If echoing input. */
-            args_pp(*args, out);
+            args_pp(*args, out, buf);
          return(false);		// 05/02/99 AM. Unexpected eof.
       case '\n':
 		case '\r':				// FIX.  04/21/99 AM.
@@ -154,7 +155,7 @@ for (;;)						/* While getting args.		*/
 				cc = fp->get();	// 10/31/06 AM.
 #endif
          if (!silent_f)		/* If echoing input. */
-            args_pp(*args, out);
+            args_pp(*args, out, buf);
          return(true);
       case ';':					/* Get comment.				*/
 #ifdef UNICODE
@@ -183,7 +184,7 @@ for (;;)						/* While getting args.		*/
    }
 
 if (!silent_f)		/* If echoing input. */
-   args_pp(*args, out);
+   args_pp(*args, out, buf);
 return(ok);
 }
 

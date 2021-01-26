@@ -1,5 +1,5 @@
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -7,7 +7,7 @@ All rights reserved.
 *
 *									UI.C
 *
-* FILE:	consh.¹/ui.c
+* FILE:	consh.ï¿½/ui.c
 * SUBJ:	UI primitives for Consh.
 * CR:	10/15/95 AM.
 *
@@ -97,11 +97,12 @@ path_to_con(
 _TCHAR *name;
 XCON_S *con, *sub, *child, *tmp;
 CON_ID cid, sid;
+_TCHAR *buf = cg->alist_->List_buffer;
 
 *upcon = 0;
 
 /* Set up root of hierarchy. */
-name = (_TCHAR *) ALIST::list_pop(&args);
+name = ALIST::list_pop_buf(&args,buf);
 if (!name || !*name)	// 10/31/06 AM.
    {
    _t_cerr << _T("[path_to_con: Empty args.]") << endl;	// 10/31/06 AM.
@@ -132,7 +133,7 @@ cid = sid = (CON_ID) 1;	// Root concept id.
 
 /* Find first path component not yet built. */
 _TCHAR *nm;
-while (name = (_TCHAR *) ALIST::list_pop(&args))
+while (name = ALIST::list_pop_buf(&args,buf))
    {
    sid = con->dn;
    child = cg->qkbm_->Con(sid);
@@ -211,11 +212,12 @@ path_to_con(
 
 _TCHAR *name;
 XCON_S *con, *sub, *child, *tmp;
+_TCHAR *buf = cg->alist_->List_buffer;
 //CON_ID cid, sid;
 
 
 /* Set up root of hierarchy. */
-name = (_TCHAR *) ALIST::list_pop(&args);
+name = ALIST::list_pop_buf(&args,buf);
 if (!name || !*name)	// 10/31/06 AM.
    {
    _t_cerr << _T("[path_to_con: Empty args.]") << endl;	// 10/31/06 AM.
@@ -260,7 +262,7 @@ else	// Get root concept from tracking.
 
 /* Find first path component not yet built. */
 _TCHAR *nm;
-while (name = (_TCHAR *) ALIST::list_pop(&args))
+while (name = ALIST::list_pop_buf(&args,buf))
    {
 //   sid = con->dn;
    ++depth;
