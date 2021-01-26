@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -124,6 +124,7 @@ LIST *end;						/* End of args list.		*/
 int len = 0;
 
 *args = end = LNULL;
+alist->list_add_buf(buf);
 
 #ifdef UNICODE
 cc = getutf8(fp);

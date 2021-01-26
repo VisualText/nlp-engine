@@ -1,5 +1,5 @@
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -7,7 +7,7 @@ All rights reserved.
 *
 *									CMD.C
 *
-* FILE:	consh.¹/cmd.c
+* FILE:	consh.ï¿½/cmd.c
 * SUBJ:	Command-line interface.
 * CR:	8/20/95 AM.
 * NOTE:	To support all the needed commands for Consh.
@@ -136,13 +136,13 @@ for (;;)		/* Execute commands till quit or abort. */
          return(false);
          }
       *out << _T("Bad command=");
-      args_pp(args, out);
+      args_pp(args, out, buf);
       alist->list_free(args, LNULL);
       if (!i_flag) return(false);
       continue;
       }
    list = args;
-   str = (_TCHAR *) ALIST::list_pop(&args);		/* Get first arg. */
+   str = ALIST::list_pop_buf(&args,buf);		/* Get first arg. */
 //	if (str && *str)							// 10/05/99 AM.
 //		{
 //		*cgerr << prompt << flush;
@@ -167,7 +167,7 @@ for (;;)		/* Execute commands till quit or abort. */
       ok = cmd_st(args, out,cg);		/* String table primitives. */
    else if (!_tcscmp(_T("help"), str)
          || !_tcscmp(_T("h"), str))
-      ok = cmd_help(args, out);
+      ok = cmd_help(args, out, buf);
    else if (!_tcscmp(_T("proxy"), str))
       ok = cmd_proxy(args, out,cg);
    else if (!_tcscmp(_T("show"), str))
@@ -189,7 +189,7 @@ for (;;)		/* Execute commands till quit or abort. */
    else if (Str_full(str))
       {
       *out << _T("Unknown command=");
-      args_pp(list, out);
+      args_pp(list, out, buf);
       ok = false;
       }
    /* else empty command. */
@@ -218,7 +218,8 @@ return(ok);
 LIBQCONSH_API bool
 cmd_help(
 	LIST *args,
-	_t_ostream *out
+	_t_ostream *out,
+   _TCHAR *buf
 	)
 {
 _TCHAR *str;
@@ -227,7 +228,7 @@ bool ok;
 ok = true;
 if (args)
    {
-   str = (_TCHAR *) ALIST::list_pop(&args);		/* Get first arg. */
+   str = ALIST::list_pop_buf(&args,buf);		/* Get first arg. */
    if (args)
       {
       *out << _T("Too many args in 'help' command.") << endl;
@@ -242,7 +243,7 @@ if (args)
    else if (Str_full(str))
       {
       *out << _T("Unknown command=");
-      args_pp(args, out);
+      args_pp(args, out, buf);
       return(false);
       }
    /* else empty command. */
@@ -295,6 +296,7 @@ cmd_add(
 	)
 {
 _TCHAR *str;
+_TCHAR *buf = cg->alist_->List_buffer;
 
 if (!args)
    {
@@ -302,7 +304,7 @@ if (!args)
    return(false);
    }
 
-str = (_TCHAR *) ALIST::list_pop(&args);
+str = ALIST::list_pop_buf(&args,buf);
 
 if (!_tcscmp(str, _T("root")))				/* Add root kb concept.			*/
    return(cmd_add_root(args, out,cg));
@@ -358,25 +360,25 @@ if (!args)
    *out << _T("Too few args in ADD ATTR command.") << endl;
    return(false);
    }
-s_con = (_TCHAR *) ALIST::list_pop(&args);
+s_con = ALIST::list_pop_buf(&args,buf);
 if (!args)
    {
    *out << _T("Too few args in ADD ATTR command.") << endl;
    return(false);
    }
-s_slot = (_TCHAR *) ALIST::list_pop(&args);
+s_slot = ALIST::list_pop_buf(&args,buf);
 if (!args)
    {
    *out << _T("Too few args in ADD ATTR command.") << endl;
    return(false);
    }
-s_val = (_TCHAR *) ALIST::list_pop(&args);
+s_val = ALIST::list_pop_buf(&args,buf);
 if (!args)
    {
    *out << _T("Too few args in ADD ATTR command.") << endl;
    return(false);
    }
-s_kind = (_TCHAR *) ALIST::list_pop(&args);
+s_kind = ALIST::list_pop_buf(&args,buf);
 
 /* VERIFY INPUTS. */
 /* Check appropriate values everywhere. */
@@ -457,7 +459,7 @@ if (!args)
    return(false);
    }
 
-name = (_TCHAR *) ALIST::list_pop(&args);
+name = ALIST::list_pop_buf(&args,buf);
 
 if (!args)
    {
@@ -465,7 +467,7 @@ if (!args)
    return(false);
    }
 
-idstr = (_TCHAR *) ALIST::list_pop(&args);
+idstr = ALIST::list_pop_buf(&args,buf);
 
 if (args)
    {
@@ -578,6 +580,7 @@ XCON_S *con,		// Hierarchy path built so far.
 CON_ID child_id;	// 02/15/07 AM.
 CON_ID cid;
 bool dirty = false;
+_TCHAR *buf = cg->alist_->List_buffer;
 
 if (!args)
    {
@@ -586,7 +589,7 @@ if (!args)
    }
 
 // Set up root of hierarchy.
-name = (_TCHAR *) ALIST::list_pop(&args);
+name = ALIST::list_pop_buf(&args,buf);
 if (_tcscmp(name, CON_ROOT_NAME))
    {
    *out << _T("add hier: Path must begin with '")
@@ -605,7 +608,7 @@ if (!con)
 // Find first path component not yet built.
 STR_ID sid = 0;	// 02/15/07 AM.
 STR_ID c_sid = 0;	// 02/15/07 AM.
-while (name = (_TCHAR *) ALIST::list_pop(&args))
+while (name = ALIST::list_pop_buf(&args,buf))
    {
    sid = cg->qkbm_->sym_get(name, /*UP*/dirty);	// 02/27/07 AM.
    child_id = con->dn;
@@ -648,7 +651,7 @@ while (name)
    newcon = cg->qkbm_->Con(cid);
    cg->kbfree(con);	// 02/15/07 AM.
    con = newcon;		// 02/15/07 AM.
-   name = (_TCHAR *) ALIST::list_pop(&args);
+   name = ALIST::list_pop_buf(&args,buf);
    }
 
 cg->kbfree(con);	// Could return this ...	// 02/15/07 AM.
@@ -815,6 +818,7 @@ cmd_add_word(
 	)
 {
 _TCHAR *name;
+_TCHAR *buf = cg->alist_->List_buffer;
 //SYM *sym;
 //XCON_S *con;
 
@@ -825,7 +829,7 @@ if (!args)
    return(false);
    }
 
-name = (_TCHAR *) ALIST::list_pop(&args);
+name = ALIST::list_pop_buf(&args,buf);
 
 if (args)
    {
@@ -879,6 +883,7 @@ cmd_bind(
 	)
 {
 _TCHAR *str;
+_TCHAR *buf = cg->alist_->List_buffer;
 
 if (!args)
    {
@@ -886,7 +891,7 @@ if (!args)
    return(false);
    }
 
-str = (_TCHAR *) ALIST::list_pop(&args);
+str = ALIST::list_pop_buf(&args,buf);
 
 if (!_tcscmp(str, _T("app")))				/* Bind application concepts.	*/
    return(cmd_bind_app(args, out,cg));
@@ -993,6 +998,7 @@ cmd_con(
 #ifdef OLD_070215_
 _TCHAR *str;
 long id;
+_TCHAR *buf = cg->alist_->List_buffer;
 
 if (!args)
    {
@@ -1000,7 +1006,7 @@ if (!args)
    return(true);
    }
 
-str = (_TCHAR *) ALIST::list_pop(&args);
+str = ALIST::list_pop_buf(&args,buf);
 
 if (!_tcscmp(str, _T("pp")))
    {
@@ -1041,6 +1047,7 @@ cmd_gen(
 	)
 {
 _TCHAR *str;
+_TCHAR *buf = cg->alist_->List_buffer;
 
 if (!args)
    {\
@@ -1048,7 +1055,7 @@ if (!args)
    return(false);
    }
 
-str = (_TCHAR *) ALIST::list_pop(&args);
+str = ALIST::list_pop_buf(&args,buf);
 
 *cgerr << _T("[cmd gen: Command not updated. 07/01/00 AM.]") << endl;
 return false;
@@ -1168,7 +1175,7 @@ cmd_ind(
 	)
 {
 _TCHAR *str;
-ALIST *alist = cg->alist_;	// List manager.							// 08/14/02 AM.
+_TCHAR *buf = cg->alist_->List_buffer;
 
 if (!args)
    {
@@ -1176,7 +1183,7 @@ if (!args)
    return(false);
    }
 
-str = (_TCHAR *) ALIST::list_pop(&args);
+str = ALIST::list_pop_buf(&args,buf);
 
 //if (!strcmp(str, "action"))
 //   return(ind_action(args, in, out, i_flag, silent,cg));
@@ -1229,6 +1236,7 @@ long id;
 long ord;
 XCON_S *con, *phr, *prox;
 CON_ID phr_nid;	// 03/05/07 AM.
+_TCHAR *buf = cg->alist_->List_buffer;
 
 usage = _T("Usage: proxy ID NTH");
 
@@ -1238,7 +1246,7 @@ if (!args)
    return(false);
    }
 
-s_id = (_TCHAR *) ALIST::list_pop(&args);
+s_id = ALIST::list_pop_buf(&args,buf);
 
 if (!args)
    {
@@ -1246,7 +1254,7 @@ if (!args)
    return(false);
    }
 
-s_ord = (_TCHAR *) ALIST::list_pop(&args);
+s_ord = ALIST::list_pop_buf(&args,buf);
 
 if (!s_to_l(s_id, /*UP*/ &id) || !s_to_l(s_ord, /*UP*/ &ord))
    {
@@ -1289,14 +1297,14 @@ cmd_show(
 	)
 {
 _TCHAR *str;
-ALIST *alist = cg->alist_;	// List manager.							// 08/14/02 AM.
+_TCHAR *buf = cg->alist_->List_buffer;
 
 if (!args)
    {
    return(false);
    }
 
-str = (_TCHAR *) ALIST::list_pop(&args);
+str = ALIST::list_pop_buf(&args,buf);
 
 if (!_tcscmp(str, _T("name")))				/* Show instances of name in kb.*/
    return(cmd_show_name(args, out,cg));
@@ -1331,13 +1339,14 @@ _TCHAR *str;
 LIST *list=0, *end=0, *elt;
 XCON_S *con;
 ALIST *alist = cg->alist_;	// List manager.							// 08/14/02 AM.
+_TCHAR *buf = cg->alist_->List_buffer;
 
 if (!args)
    {
    *out << _T("Usage: show name NAME") << endl;
    return(false);
    }
-str = (_TCHAR *) ALIST::list_pop(&args);
+str = ALIST::list_pop_buf(&args,buf);
 if (args)
    {
    *out << _T("Too many args in \"show name\" command.") << endl;
@@ -1393,13 +1402,14 @@ cmd_st(
 {
 /*
 _TCHAR *str;
+_TCHAR *buf = cg->alist_->List_buffer;
 
 if (!args)
    {
    cg->ast_->st_pp(out);
    return(true);
    }
-str = (_TCHAR *) ALIST::list_pop(&args);
+str = ALIST::list_pop_buf(&args,buf);
 
 if (!_tcscmp(str, _T("add")))				// Add string to string table.
    return(cmd_st_add(args, out,cg));
@@ -1436,13 +1446,14 @@ cmd_st_add(
 /*
 _TCHAR *str;
 _TCHAR *ptr;
+_TCHAR *buf = cg->alist_->List_buffer;
 
 if (!args)
    {
    *out << _T("Usage: st add \"STRING\"") << endl;
    return(false);
    }
-str = (_TCHAR *) ALIST::list_pop(&args);
+str = ALIST::list_pop_buf(&args,buf);
 if (args)
    {
    *out << _T("Too many args in \"st add\" command.") << endl;
@@ -1519,6 +1530,7 @@ cmd_sym(
 return false;	// 02/15/07 AM.
 /*
 _TCHAR *str;
+_TCHAR *buf = cg->alist_->List_buffer;
 
 if (!args)
    {
@@ -1526,7 +1538,7 @@ if (!args)
    return(true);
    }
 
-str = (_TCHAR *) ALIST::list_pop(&args);
+str = ALIST::list_pop_buf(&args,buf);
 
 if (!_tcscmp(str, _T("add")))				// Add string to sym table.
    return(cmd_sym_add(args, out,cg));
@@ -1570,13 +1582,14 @@ cmd_sym_add(
 return false;	// 02/15/07 AM.
 /*
 _TCHAR *str;
+_TCHAR *buf = cg->alist_->List_buffer;
 
 if (!args)
    {
    *out << _T("Usage: sym add \"STRING\"") << endl;
    return(false);
    }
-str = (_TCHAR *) ALIST::list_pop(&args);
+str = ALIST::list_pop_buf(&args,buf);
 if (args)
    {
    *out << _T("Too many args in \"sym add\" command.") << endl;
@@ -1675,7 +1688,7 @@ cmd_take(
 _TCHAR *fil;
 //ifstream *fin;						// 03/08/00 AM.
 bool ok;
-ALIST *alist = cg->alist_;	// List Manager.							// 08/14/02 AM.
+_TCHAR *buf = cg->alist_->List_buffer;
 
 #ifdef OLD_030701_
 _TCHAR *dir;
@@ -1685,7 +1698,7 @@ if (!args)
    return(false);
    }
 
-dir = (_TCHAR *) ALIST::list_pop(&args);
+dir = ALIST::list_pop_buf(&args,buf);
 #endif
 
 if (!args)
@@ -1694,7 +1707,7 @@ if (!args)
    return(false);
    }
 
-fil = (_TCHAR *) ALIST::list_pop(&args);
+fil = ALIST::list_pop_buf(&args,buf);
 
 if (args)
    {

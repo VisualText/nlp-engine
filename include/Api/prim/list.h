@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -106,6 +106,10 @@ public:
 		LIST **list
 		);
 	static _TCHAR* list_pop_buf(
+		LIST** list,
+		_TCHAR* buf
+	);
+	static _TCHAR* list_str(
 		LIST** list,
 		_TCHAR* buf
 	);
