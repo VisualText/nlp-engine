@@ -156,7 +156,6 @@ int NLP_ENGINE::init(
             _stprintf(m_anadir, _T("%s%sanalyzers%s%s"),m_workingFolder,DIR_STR,DIR_STR,m_analyzer);
             _stprintf(m_ananame, _T("%s"),m_analyzer);          
         }
-
     }
     
     strcpy(str,m_anadir);
@@ -165,10 +164,11 @@ int NLP_ENGINE::init(
         return 0;
     }
     
-    _stprintf(m_anadir,_T("%s"),analyzer);	
-    _TCHAR *ana = _tcsrchr(m_anadir,DIR_CH);
-    ++ana;
-    _stprintf(m_ananame,_T("%s"),ana);         
+    if (m_ananame[0] == '\0') {
+        _TCHAR *ana = _tcsrchr(m_anadir,DIR_CH);
+        ++ana;
+        _stprintf(m_ananame,_T("%s"),ana);           
+    }
 
 	_t_cout << _T("[analyzer directory: ") << m_anadir << _T("]") << endl;
     _t_cout << _T("[analyzer name: ") << m_ananame << _T("]") << endl; 

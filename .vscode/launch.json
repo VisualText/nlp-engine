@@ -5,11 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(gbd) nlp DOJ",
+            "name": "(gbd) TAIParse",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/nlp.exe",
-            "args": ["-ANA","/home/dehilster/analyzers/DOJ-Quick","-WORK","/home/dehilster/nlp-engine","/home/dehilster/analyzers/DOJ-Quick/input/Scrapy-New/article_12.txt","-DEV"],
+            "args": ["-ANA","/home/dehilster/nlp-engine/analyzers/taiparse","-WORK","/home/dehilster/nlp-engine","/home/dehilster/nlp-engine/analyzers/taiparse/input/doj.txt","-DEV"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
@@ -24,7 +24,7 @@
             ]
         },
         {
-            "name": "(gbd) nlp Corporate",
+            "name": "(gbd) Corporate",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/nlp.exe",
@@ -46,7 +46,7 @@
             "name": "(gbd) test",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/test.exe",
+            "program": "${workspaceFolder}/test-nlp.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

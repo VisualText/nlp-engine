@@ -132,3 +132,4 @@ pat	xmlrecursive	# comment
 pat	ne_out	# comment
 pat	ne_xml	# comment
 pat	fin	# comment
+pat buff_out    # comment
