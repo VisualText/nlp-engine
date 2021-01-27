@@ -119,7 +119,8 @@ public:
 	static void list_pp_strs(
 		LIST *args,
 		//FILE *out				// 04/20/99 AM.
-		_t_ostream *out			// 04/20/99 AM.
+		_t_ostream *out,		// 04/20/99 AM.
+		_TCHAR *buf
 		);
 	static LIST *list_push_elt(
 		LIST *elt,
