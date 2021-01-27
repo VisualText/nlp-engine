@@ -66,7 +66,7 @@ _TCHAR *str;
 char *lpstr8;
 #endif
 
-while (str = ALIST::list_pop(&args,buf))						// 08/14/02 AM.
+while (str = ALIST::list_pop_buf(&args,buf))						// 08/14/02 AM.
    {
 #ifdef UNICODE
 	u_to_mbcs((LPCWSTR)str, CP_UTF8, (LPCTSTR*&)lpstr8);
