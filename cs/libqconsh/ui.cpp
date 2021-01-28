@@ -1,5 +1,5 @@
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -7,7 +7,7 @@ All rights reserved.
 *
 *									UI.C
 *
-* FILE:	consh.¹/ui.c
+* FILE:	consh.ï¿½/ui.c
 * SUBJ:	UI primitives for Consh.
 * CR:	10/15/95 AM.
 *
@@ -97,11 +97,12 @@ path_to_con(
 _TCHAR *name;
 XCON_S *con, *sub, *child, *tmp;
 CON_ID cid, sid;
+_TCHAR *buf = cg->alist_->List_buffer;
 
 *upcon = 0;
 
 /* Set up root of hierarchy. */
-name = (_TCHAR *) ALIST::list_pop(&args);
+name = ALIST::list_pop_buf(&args,buf);
 if (!name || !*name)	// 10/31/06 AM.
    {
    _t_cerr << _T("[path_to_con: Empty args.]") << endl;	// 10/31/06 AM.
@@ -132,7 +133,7 @@ cid = sid = (CON_ID) 1;	// Root concept id.
 
 /* Find first path component not yet built. */
 _TCHAR *nm;
-while (name = (_TCHAR *) ALIST::list_pop(&args))
+while (name = ALIST::list_pop_buf(&args,buf))
    {
    sid = con->dn;
    child = cg->qkbm_->Con(sid);
@@ -171,7 +172,7 @@ if (name)
 		<< _T("[path_to_con: Concept not found.]") << endl;	// 10/05/99 AM.
 	*cgerr << _T("[name=*") << name << _T("*]") << endl;			// 10/05/99 AM.
 	*cgerr << _T("[namech=") << (_TUCHAR) *name << _T("]") << endl;
-	if (ALIST::list_pop(&args))	// Still more.			// 07/08/03 AM.
+	if (ALIST::list_pop_buf(&args,buf))	// Still more.			// 07/08/03 AM.
 		return false;												// 07/08/03 AM.
 	// ADD THE CONCEPT!!  (eg, newstyle numeric)			// 07/08/03 AM.
 	bool dirt;														// 07/08/03 AM.
@@ -211,11 +212,12 @@ path_to_con(
 
 _TCHAR *name;
 XCON_S *con, *sub, *child, *tmp;
+_TCHAR *buf = cg->alist_->List_buffer;
 //CON_ID cid, sid;
 
 
 /* Set up root of hierarchy. */
-name = (_TCHAR *) ALIST::list_pop(&args);
+name = ALIST::list_pop_buf(&args,buf);
 if (!name || !*name)	// 10/31/06 AM.
    {
    _t_cerr << _T("[path_to_con: Empty args.]") << endl;	// 10/31/06 AM.
@@ -260,7 +262,7 @@ else	// Get root concept from tracking.
 
 /* Find first path component not yet built. */
 _TCHAR *nm;
-while (name = (_TCHAR *) ALIST::list_pop(&args))
+while (name = ALIST::list_pop_buf(&args,buf))
    {
 //   sid = con->dn;
    ++depth;
@@ -429,7 +431,7 @@ if (!silent)																// 02/21/00 AM.
 ok  = args_read(in, out, silent,alist, buf,CMD_SIZE, &args);
 if (!ok) return(false);
 
-if (!_tcscmp(_T("end"), (_TCHAR *) args->val))
+if (!_tcscmp(_T("end"), ALIST::list_str(&args,buf)))
    ok = true;
 else
    ok = false;
@@ -479,7 +481,7 @@ if (args->next)
    return(false);			/* Too many args. */
    }
 
-ok = s_to_l((_TCHAR *)(args->val), /*UP*/ num);
+ok = s_to_l(ALIST::list_str(&args,buf), /*UP*/ num);
 alist->list_free(args, LNULL);
 return(ok);
 }
@@ -522,7 +524,7 @@ if (args->next)
    return(false);			/* Too many args. */
    }
 
-ok = cg->qkbm_->s_to_pkind((_TCHAR *) args->val, /*UP*/ pkind);
+ok = cg->qkbm_->s_to_pkind(ALIST::list_str(&args,buf), /*UP*/ pkind);
 alist->list_free(args, LNULL);
 return(ok);
 }
@@ -567,7 +569,7 @@ if (args->next)
    }
 
 bool dirt;	// 06/29/03 AM.
-if (!((*sym) = cg->qkbm_->sym_get((_TCHAR *) args->val,dirt)))
+if (!((*sym) = cg->qkbm_->sym_get(ALIST::list_str(&args,buf),dirt)))
    ok = false;
 
 alist->list_free(args, LNULL);
@@ -615,9 +617,9 @@ if (args->next)
    }
 
 #ifdef OLD_030629_
-if (!((*wcon) = cg->cgdict_->dict_find_word((_TCHAR *) args->val)))
+if (!((*wcon) = cg->cgdict_->dict_find_word(ALIST::list_str(&args,buf))))
 	{
-	if (!((*wcon) = cg->cgdict_->dict_add_word((_TCHAR *) args->val)))
+	if (!((*wcon) = cg->cgdict_->dict_add_word(ALIST::list_str(&args,buf))))
 		ok = false;
 	}
 #endif

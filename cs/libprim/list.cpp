@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									LIST.C
 *
-* FILE:	consh.¹/list.c
+* FILE:	consh.ï¿½/list.c
 * SUBJ:	Generic list data structures.
 * NOTE:	This is akin to a LISP subsystem, which substantial programs require.
 *		List element will have a generic value field, and pointer to next list
@@ -464,6 +464,17 @@ _TCHAR* ALIST::list_pop_buf(
 	return(&buf[tmp->val]);
 }
 
+_TCHAR* ALIST::list_str(
+	LIST** list,
+	_TCHAR* buf
+)
+{
+	LIST* tmp;
+	tmp = *list;
+	return(&buf[tmp->val]);
+}
+
+
 
 /**************************************************
 *						LIST_POP_ELT
@@ -501,13 +512,14 @@ return(tmp);
 void ALIST::list_pp_strs(
 	LIST *args,
 //	FILE *out			// 04/20/99 AM.
-	_t_ostream *out		// 04/20/99 AM.
+	_t_ostream *out,	// 04/20/99 AM.
+	_TCHAR *buf
 	)
 {
 while (args)
    {
    //fprintf(out, "\"%s\" ", (char *) args->val);				// 04/20/99 AM.
-	*out << _T("\"") << ((_TCHAR *) args->val) << _T("\" ") << flush;	// 04/20/99 AM.
+	*out << _T("\"") << (ALIST::list_str(&args,buf)) << _T("\" ") << flush;	// 04/20/99 AM.
    args = args->next;
    }
 //fprintf(out, "\n");		// 04/20/99 AM.
