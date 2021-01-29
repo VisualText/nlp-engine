@@ -29,7 +29,7 @@ while (L("childs")) {
 				L("out") << "\n" << spaces(L("level"));
 			L("out") << "</" << L("tag") << ">";
 		} else {
-			L("out") << pnvar(L("childs"),"$text") 
+			L("out") << pnvar(L("childs"),"$text");
 			L("leaf") = 1;
 		}
 	}
