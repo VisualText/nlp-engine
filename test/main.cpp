@@ -31,6 +31,8 @@ int _tmain( // 09/23/20 AM.
     _stprintf(workingFolder,"%s",_T("./"));
  
     _t_cout << _T("[Create runtime manager.]") << endl;
+    GetCurrentDir(workingFolder, FILENAME_MAX);
+    std::string current_working_dir(workingFolder);
     NLP_ENGINE *nlpEngine = new NLP_ENGINE(workingFolder);
 
     char *str = 

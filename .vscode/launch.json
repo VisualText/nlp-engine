@@ -5,11 +5,30 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "(gbd) TAIParse",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/nlp.exe",
+            "args": ["-ANA","${workspaceFolder}/analyzers/taiparse","-WORK","${workspaceFolder}","${workspaceFolder}/analyzers/taiparse/input/doj.txt","-DEV"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
             "name": "(gbd) Corporate",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/nlp.exe",
-            "args": ["-ANA","/home/dehilster/nlp-engine/analyzers/corporate","-WORK","/home/dehilster/nlp-engine","/home/dehilster/nlp-engine/analyzers/corporate/input/Dev/Sold.txt","-DEV"],
+            "args": ["-ANA","${workspaceFolder}/analyzers/corporate","-WORK","${workspaceFolder}","${workspaceFolder}/analyzers/corporate/input/Dev/Sold.txt","-DEV"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

@@ -512,13 +512,14 @@ return(tmp);
 void ALIST::list_pp_strs(
 	LIST *args,
 //	FILE *out			// 04/20/99 AM.
-	_t_ostream *out		// 04/20/99 AM.
+	_t_ostream *out,	// 04/20/99 AM.
+	_TCHAR *buf
 	)
 {
 while (args)
    {
    //fprintf(out, "\"%s\" ", (char *) args->val);				// 04/20/99 AM.
-	*out << _T("\"") << ((_TCHAR *) args->val) << _T("\" ") << flush;	// 04/20/99 AM.
+	*out << _T("\"") << (ALIST::list_str(&args,buf)) << _T("\" ") << flush;	// 04/20/99 AM.
    args = args->next;
    }
 //fprintf(out, "\n");		// 04/20/99 AM.

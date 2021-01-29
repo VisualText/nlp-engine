@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright Â© 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									UI.C
 *
-* FILE:	consh.¹/ui.c
+* FILE:	consh.Â¹/ui.c
 * SUBJ:	UI primitives for Consh.
 * CR:	10/15/95 AM.
 *
@@ -223,7 +223,7 @@ if (!silent)																// 02/21/00 AM.
 ok  = args_read(in, out, silent,alist, buf,CMD_SIZE, &args);
 if (!ok) return(false);
 
-if (!_tcscmp(_T("end"), (_TCHAR *) args->val))
+if (!_tcscmp(_T("end"), ALIST::list_str(&args,buf)))
    ok = true;
 else
    ok = false;
@@ -273,7 +273,7 @@ if (args->next)
    return(false);			/* Too many args. */
    }
 
-ok = s_to_l((_TCHAR *)(args->val), /*UP*/ num);
+ok = s_to_l(ALIST::list_str(&args,buf), /*UP*/ num);
 alist->list_free(args, LNULL);
 return(ok);
 }
@@ -316,7 +316,7 @@ if (args->next)
    return(false);			/* Too many args. */
    }
 
-ok = cg->aptr_->s_to_pkind((_TCHAR *) args->val, /*UP*/ pkind);
+ok = cg->aptr_->s_to_pkind(ALIST::list_str(&args,buf), /*UP*/ pkind);
 alist->list_free(args, LNULL);
 return(ok);
 }
@@ -361,7 +361,7 @@ if (args->next)
    }
 
 bool dirt;	// 06/29/03 AM.
-if (!((*sym) = cg->asym_->sym_get((_TCHAR *) args->val,dirt)))
+if (!((*sym) = cg->asym_->sym_get(ALIST::list_str(&args,buf),dirt)))
    ok = false;
 
 alist->list_free(args, LNULL);
@@ -409,15 +409,15 @@ if (args->next)
    }
 
 #ifdef OLD_030629_
-if (!((*wcon) = cg->kbm_->dict_find_word((_TCHAR *) args->val)))
+if (!((*wcon) = cg->kbm_->dict_find_word(ALIST::list_str(&args,buf))))
 	{
-	if (!((*wcon) = cg->kbm_->dict_add_word((_TCHAR *) args->val)))
+	if (!((*wcon) = cg->kbm_->dict_add_word(ALIST::list_str(&args,buf))))
 		ok = false;
 	}
 #endif
 
 bool dirt;																		// 06/29/03 AM.
-*wcon = cg->kbm_->dict_get_word((_TCHAR*)args->val,dirt);			// 06/29/03 AM.
+*wcon = cg->kbm_->dict_get_word(ALIST::list_str(&args,buf),dirt);			// 06/29/03 AM.
 if (!*wcon)																		// 06/29/03 AM.
 	ok = false;																	// 06/29/03 AM.
 
