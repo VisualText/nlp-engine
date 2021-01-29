@@ -499,9 +499,6 @@ public:
 	bool freeDbstmt();														// 05/25/02 AM.
 #endif
 
-#ifndef LINUX
-        inline
-#endif
 	void finPass(														// 05/20/00 AM.
 		int num,							// Pass number.
 		bool flogfiles,

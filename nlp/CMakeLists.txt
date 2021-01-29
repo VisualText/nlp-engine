@@ -10,7 +10,7 @@ endif()
 file(GLOB nlp_src "*.h" "*.cpp")
 
 if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Debug)
+  set(CMAKE_BUILD_TYPE Release)
 endif()
 
 if(WIN32)

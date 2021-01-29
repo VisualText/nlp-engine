@@ -728,9 +728,6 @@ sprintf_s(fname, _T("%s%c%s%s%d%s"),
 * NOTE:	Modularity fn.
 ********************************************/
 
-#ifndef LINUX
-inline
-#endif
  void Parse::finPass(
 	int num,							// Pass number.
 	bool flogfiles,
