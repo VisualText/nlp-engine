@@ -1,12 +1,12 @@
 #include "lite/nlp_engine.h"
 #include "lite/vtrun.h"     // Include NLP++ runtime manager.   // 09/25/20 AM.
 
-#ifdef WINDOWS
-#include <direct.h>
-#define GetCurrentDir _getcwd
-#else
+#ifdef LINUX
 #include <unistd.h>
 #define GetCurrentDir getcwd
+#else
+#include <direct.h>
+#define GetCurrentDir _getcwd
 #endif
 #include<iostream>
 
