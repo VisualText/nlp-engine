@@ -1,6 +1,6 @@
 # nlp-engine
 
-The NLP engine is the engine that runs text analyzers writtein in [NLP++](http://visualtext.org). It can be called in two different ways:
+The NLP engine is the engine that runs text analyzers writtein in [NLP++](http://visualtext.org). The nlp-engine runs on Linux, Windows, and MacOS. It can be called in two different ways:
 
 1. Calling the nlp.exe command line executable (this is what the VSCode NLP++ Language Extension does)
 1. Calling from within C++ or another language that can call c++ functions
@@ -44,19 +44,42 @@ There is a test directory in the repository that builds a test.exe that calls an
 ## Test directory
 The test directory contains a call to the nlp engine using buffers.
 
-# Development and Compiling the NLP-ENGINE
+# Compiling the NLP-ENGINE
+
+The nlp engine compiles and runs on Linus, Windows, and MacOS. The easist way to compile them is using VSCode using the [C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools), [CMake](https://marketplace.visualstudio.com/items?itemName=twxs.cmake), and [CMake Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools) extensions.
 
 ## Linux
 
-In order to compile the NLP Engine on linux, you will need to install the following packages:
+To compile the nlp-engine for Linux:
 
 * git clone https://github.com/VisualText/nlp-engine.git
-* cd nlp-engine
-* mkdir build
-* cd build
-* cmake ../
-* make
+* Install [VSCode](https://code.visualstudio.com/download)
+* Open the nlp-engine folder in VSCode
+* Install the [C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools), [CMake](https://marketplace.visualstudio.com/items?itemName=twxs.cmake), and [CMake Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools) extensions into VSCode
+* Install the gcc compiler
+* Select a "GCC kit" using the bottom status bar
+* Click on "Build" in the status bar
 
-## Windows
+## Windows 10
 
-Too be done
+To compile the nlp-engine for Windows 10:
+
+* git clone https://github.com/VisualText/nlp-engine.git
+* Install [VSCode](https://code.visualstudio.com/download)
+* Open the nlp-engine folder in VSCode
+* Install the [C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools), [CMake](https://marketplace.visualstudio.com/items?itemName=twxs.cmake), and [CMake Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools) extensions into VSCode
+* Install the community version of [VisualStudio 2019](https://visualstudio.microsoft.com/downloads/)
+* Select a "Visual Studio Community 2019 Release - x86" kit using the bottom status bar
+* Click on "Build" in the status bar
+
+## MacOS
+
+To compile the nlp-engine for the Mac:
+
+* git clone https://github.com/VisualText/nlp-engine.git
+* Install [VSCode](https://code.visualstudio.com/download)
+* Open the nlp-engine folder in VSCode
+* Install the [C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools), [CMake](https://marketplace.visualstudio.com/items?itemName=twxs.cmake), and [CMake Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools) extensions into VSCode
+* Install the [clang c++ compiler](https://clang.llvm.org/get_started.html)
+* Select the "Clang kit" using the bottom status bar
+* Click on "Build" in the status bar
