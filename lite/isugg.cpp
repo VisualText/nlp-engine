@@ -202,7 +202,7 @@ _t_ostream &STDOPERATOR<<(_t_ostream &output, Dlist<Isugg> &list)		// 11/23/98 A
 Delt<Isugg> *delt;
 delt = list.getFirst();
 output << *delt;
-while (delt = delt->Right())
+while ((delt = delt->Right()))
 	{
 	output << _T(" ") << *delt;
 	}
@@ -391,7 +391,7 @@ if (sugg->getUnsealed())					// 10/11/99 AM.
 	}
 Dlist<Iarg> *dargs;
 Starr *starr;
-if (starr = sugg->getLayers())		// Interned attrs.			// 05/06/00 AM.
+if ((starr = sugg->getLayers()))		// Interned attrs.			// 05/06/00 AM.
 	{
 	_TCHAR **arr = starr->getArr() - 1;	// One BEFORE array.
 	int len = starr->getLength() + 1;	// One greater than length.
@@ -405,7 +405,7 @@ if (starr = sugg->getLayers())		// Interned attrs.			// 05/06/00 AM.
 	ofile << _T(")");
 	found = true;
 	}
-else if (dargs = sugg->getAttrs())	// Uninterned, for some reason.
+else if ((dargs = sugg->getAttrs()))	// Uninterned, for some reason.
 	{
 	// Layering attribute.
 	if (found)

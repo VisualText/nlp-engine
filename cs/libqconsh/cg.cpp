@@ -16,6 +16,7 @@ All rights reserved.
 #include <direct.h>							// 03/05/07 AM.
 #include "machine-min.h"					// 03/08/00 AM.
 #include "prim/libprim.h"
+#include "lite/global.h"
 #include "cg_global.h"				// 09/16/99 AM.
 
 #include "prim/unicode.h"					// 01/13/06 AM.
@@ -44,9 +45,6 @@ All rights reserved.
 
 #include "io.h"
 #include "cmd.h"
-
-#define MAXPATH 512
-#define MAXLN 2048
 
 // Number of ind attr commands per file.								// 07/01/03 AM.
 // Segmenting the attr commands into multiple cmd files.			// 07/01/03 AM.

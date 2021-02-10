@@ -512,7 +512,7 @@ if (nlppp->wildord_)				// If pending wildcards.
 	bool matched = false;
 	for (;;)
 		{
-		if (matched = match_real_left(match,nlppp))
+		if ((matched = match_real_left(match,nlppp)))
 			break;
 		++count;
 		if (limit && count > limit)
@@ -616,7 +616,7 @@ if (nlppp->wildord_)				// If pending wildcards.
 	bool matched = false;
 	for (;;)
 		{
-		if (matched = match_real_right(match,nlppp))					// 05/23/00 AM.
+		if ((matched = match_real_right(match,nlppp)))					// 05/23/00 AM.
 			break;
 		++count;
 		if (limit && count > limit)
@@ -1187,7 +1187,7 @@ Node<Pn> *nd = (Node<Pn> *) node;							// FIX	// 06/07/00 AM.
 while (nd)															// FIX	// 06/07/00 AM.
 	{
 	pn = &(((Node<Pn> *)nd)->data);
-	if (success = !strcmp_i(pn->name_, elt->name))
+	if ((success = !strcmp_i(pn->name_, elt->name)))
 		break;
 	if (pn->getBase())
 		return false;
@@ -1252,7 +1252,7 @@ while (nd)
 	dbuf = Chars::create(len + 2);
 	Xml::de_accent(nname,/*DU*/dbuf);
 
-	if (success = !strcmp_i(dbuf, elt->name))
+	if ((success = !strcmp_i(dbuf, elt->name)))
 		{
 		Chars::destroy(dbuf);
 		break;
@@ -1332,7 +1332,7 @@ while (nd)
 	dbuf = Chars::create(len + 2);
 	Xml::de_junk(nname,/*DU*/dbuf);
 
-	if (success = !strcmp_i(dbuf, elt->name))
+	if ((success = !strcmp_i(dbuf, elt->name)))
 		{
 		Chars::destroy(dbuf);
 		break;
@@ -2214,12 +2214,12 @@ while (nd)															// FIX	// 06/07/00 AM.
 	pn = &(((Node<Pn> *)nd)->data);
 	if (elt->match.htab)
 		{
-		if (success = hash_str_nocase(pn->name_, elt->match))
+		if ((success = hash_str_nocase(pn->name_, elt->match)))
 			break;
 		}
 	else if (elt->match.reg)
 		{
-		if (success = find_str_nocase(pn->name_, elt->match.reg))
+		if ((success = find_str_nocase(pn->name_, elt->match.reg)))
 			break;
 		}
 
@@ -2305,7 +2305,7 @@ while (nd)															// FIX	// 06/07/00 AM.
 
 	if (elt->match.htab)
 		{
-		if (success = hash_str_nocase(dbuf, elt->match))
+		if ((success = hash_str_nocase(dbuf, elt->match)))
 			{
 			Chars::destroy(dbuf);
 			break;
@@ -2313,7 +2313,7 @@ while (nd)															// FIX	// 06/07/00 AM.
 		}
 	else if (elt->match.reg)
 		{
-		if (success = find_str_nocase(dbuf, elt->match.reg))
+		if ((success = find_str_nocase(dbuf, elt->match.reg)))
 			{
 			Chars::destroy(dbuf);
 			break;
@@ -2416,7 +2416,7 @@ while (nd)															// FIX	// 06/07/00 AM.
 
 	if (elt->match.htab)
 		{
-		if (success = hash_str_nocase(dbuf, elt->match))
+		if ((success = hash_str_nocase(dbuf, elt->match)))
 			{
 			Chars::destroy(dbuf);
 			break;
@@ -2424,7 +2424,7 @@ while (nd)															// FIX	// 06/07/00 AM.
 		}
 	else if (elt->match.reg)
 		{
-		if (success = find_str_nocase(dbuf, elt->match.reg))
+		if ((success = find_str_nocase(dbuf, elt->match.reg)))
 			{
 			Chars::destroy(dbuf);
 			break;
@@ -2518,12 +2518,12 @@ while (nd)															// FIX	// 06/07/00 AM.
 	pn = &(((Node<Pn> *)nd)->data);
 	if (elt->fail.htab)
 		{
-		if (success = hash_str_nocase(pn->name_, elt->fail))
+		if ((success = hash_str_nocase(pn->name_, elt->fail)))
 			break;
 		}
 	else if (elt->fail.reg)
 		{
-		if (success = find_str_nocase(pn->name_, elt->fail.reg))
+		if ((success = find_str_nocase(pn->name_, elt->fail.reg)))
 			break;
 		}
 	if (elt->fail.spec &&										// FIX.	// 06/14/00 AM.
@@ -2607,7 +2607,7 @@ while (nd)															// FIX	// 06/07/00 AM.
 
 	if (elt->fail.htab)
 		{
-		if (success = hash_str_nocase(dbuf, elt->fail))
+		if ((success = hash_str_nocase(dbuf, elt->fail)))
 			{
 			Chars::destroy(dbuf);
 			break;
@@ -2615,7 +2615,7 @@ while (nd)															// FIX	// 06/07/00 AM.
 		}
 	else if (elt->fail.reg)
 		{
-		if (success = find_str_nocase(dbuf, elt->fail.reg))
+		if ((success = find_str_nocase(dbuf, elt->fail.reg)))
 			{
 			Chars::destroy(dbuf);
 			break;
@@ -2717,7 +2717,7 @@ while (nd)															// FIX	// 06/07/00 AM.
 
 	if (elt->fail.htab)
 		{
-		if (success = hash_str_nocase(dbuf, elt->fail))
+		if ((success = hash_str_nocase(dbuf, elt->fail)))
 			{
 			Chars::destroy(dbuf);
 			break;
@@ -2725,7 +2725,7 @@ while (nd)															// FIX	// 06/07/00 AM.
 		}
 	else if (elt->fail.reg)
 		{
-		if (success = find_str_nocase(dbuf, elt->fail.reg))
+		if ((success = find_str_nocase(dbuf, elt->fail.reg)))
 			{
 			Chars::destroy(dbuf);
 			break;
@@ -2983,7 +2983,7 @@ if (nlppp->wildord_)				// If pending wildcards.
 	bool matched = false;
 	for (;;)
 		{
-		if (matched = special_real_left(match,micro,nlppp))
+		if ((matched = special_real_left(match,micro,nlppp)))
 			break;
 		++count;
 		if (limit && count > limit)
@@ -3083,7 +3083,7 @@ if (nlppp->wildord_)				// If pending wildcards.
 
 	for (;;)
 		{
-		if (matched = special_real_right(match,micro,nlppp))
+		if ((matched = special_real_right(match,micro,nlppp)))
 			break;
 		++count;
 		if (limit && count > limit)
@@ -3443,7 +3443,7 @@ bool success = false;
 Node<Pn> *nd = (Node<Pn> *) node;							// FIX	// 06/07/00 AM.
 while (nd)															// FIX	// 06/07/00 AM.
 	{
-	if (success = (match)(nd,elt,nlppp))	// MATCH.
+	if ((success = (match)(nd,elt,nlppp)))	// MATCH.
 		break;
 	pn = &(((Node<Pn> *)nd)->data);
 	if (pn->getBase())
@@ -3498,7 +3498,7 @@ bool success = false;
 Node<Pn> *nd = (Node<Pn> *) node;							// FIX	// 06/07/00 AM.
 while (nd)															// FIX	// 06/07/00 AM.
 	{
-	if (success = (match)(nd,elt,nlppp))	// MATCH.
+	if ((success = (match)(nd,elt,nlppp)))	// MATCH.
 		break;
 	pn = &(((Node<Pn> *)nd)->data);
 	if (pn->getBase())
@@ -3563,7 +3563,7 @@ bool success = false;
 Node<Pn> *nd = (Node<Pn> *) node;
 while (nd)
 	{
-	if (success = (match)(nd,elt,nlppp))	// MATCH.
+	if ((success = (match)(nd,elt,nlppp)))	// MATCH.
 		break;
 	pn = &(((Node<Pn> *)nd)->data);
 	if (pn->getBase())
@@ -4088,7 +4088,7 @@ void Arun::switch_left(
 	)
 {
 Node<Pn> *node;
-if (node = nlppp->first_)		// There is a first matched node.
+if ((node = nlppp->first_))		// There is a first matched node.
 	{
 	nlppp->node_ = Pat::nodeLeft(node, nlppp->start_);
 	return;
@@ -4108,7 +4108,7 @@ void Arun::switch_right(
 	)
 {
 Node<Pn> *node;
-if (node = nlppp->last_)		// There is a last matched node.
+if ((node = nlppp->last_))		// There is a last matched node.
 	{
 	nlppp->node_ = Pat::nodeRight(node, nlppp->end_);
 	Pat::updateRestart(nlppp,nlppp->node_);	// RECOPT2	// 07/25/06 AM.
@@ -5210,7 +5210,7 @@ if (!coll2)	// RECOVER.	// 11/20/09 AM.
 	int x = num2 - 1;							// 11/20/09 AM.
 	while (x > num1 && !coll2)				// 11/20/09 AM.
 		{
-		if (coll2 = &(nlppp->coll_[x]))	// 11/20/09 AM.
+		if ((coll2 = &(nlppp->coll_[x])))	// 11/20/09 AM.
 			num2 = x;							// 11/20/09 AM.
 		--x;										// 11/20/09 AM.
 		}
@@ -5230,7 +5230,7 @@ if (!node2)	// RECOVER.	// 11/20/09 AM.
 	int x = num2 - 1;									// 11/20/09 AM.
 	while (x > num1 && coll2 && !node2)			// 11/20/09 AM.
 		{
-		if (coll2 = &(nlppp->coll_[x]))			// 11/20/09 AM.
+		if ((coll2 = &(nlppp->coll_[x])))			// 11/20/09 AM.
 			{
 			node2 = (Node<Pn> *)coll2->start;	// 11/20/09 AM.
 			}
@@ -6831,7 +6831,7 @@ Node<Pn> *node;
 Pn *pn;
 
 Node<Pn> *end = 0;
-if (end = (Node<Pn> *) coll->end)
+if ((end = (Node<Pn> *) coll->end))
 	end = end->Right();					// One past last node.
 for (node = (Node<Pn> *)coll->start;
 				node && node != end;
@@ -7320,7 +7320,7 @@ switch(val->getType())
 		break;
 	case RS_KBCONCEPT:
 		CONCEPT *conc;															// 11/15/00 AM.
-		if (conc = val->getKBconcept())						// FIX.	// 11/15/00 AM.
+		if ((conc = val->getKBconcept()))						// FIX.	// 11/15/00 AM.
 			nval = new RFASem(conc,RS_KBCONCEPT);
 		Var::setVal(pair, nval);
 		break;
@@ -7647,7 +7647,7 @@ switch(val->getType())
 	case RS_KBCONCEPT:
 		arg->setType(IASEM);
 		CONCEPT *conc;
-		if (conc = val->getKBconcept())
+		if ((conc = val->getKBconcept()))
 			nval = new RFASem(conc,RS_KBCONCEPT);
 		arg->setSem(nval);
 		break;
@@ -8038,7 +8038,7 @@ if (!sem2)
 //if (!sem1 || !sem2)															// 05/21/01 AM.
 
 bool ok = true;
-long num;													// FIX			// 08/17/01 AM.
+long num = 0L;													// FIX			// 08/17/01 AM.
 float fnum;																		// 08/17/01 AM.
 _TCHAR *str;
 //char buf[MAXSTR];
@@ -9022,7 +9022,7 @@ return res;
 RFASem *Arun::minus(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
-long num;															// FIX	// 08/17/01 AM.
+long num = 0L;															// FIX	// 08/17/01 AM.
 float fnum;																		// 08/17/01 AM.
 RFASem *sem=0;																	// 08/17/01 AM.
 if (!sem1 && !sem2)															// 03/13/02 AM.
@@ -9784,7 +9784,7 @@ return res;
 long Arun::rem(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
-long num;															// FIX	// 08/17/01 AM.
+long num = 0L;															// FIX	// 08/17/01 AM.
 if (!sem2 || !sem1)															// 03/13/02 AM.
 	{
 	if (sem1)																	// 03/13/02 AM.
@@ -9874,7 +9874,7 @@ long Arun::conf(RFASem *sem1, RFASem *sem2)
 {
 RFASem *sem=0;				// New sem.
 bool ok = true;
-long num;															// FIX	// 08/17/01 AM.
+long num = 0L;															// FIX	// 08/17/01 AM.
 if (!sem1 || !sem2)															// 03/13/02 AM.
 	{
 	if (sem1)																	// 03/13/02 AM.
@@ -10085,7 +10085,7 @@ return res;
 long Arun::eq(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
-long num;															// FIX	// 08/17/01 AM.
+long num = 0L;															// FIX	// 08/17/01 AM.
 if (!sem1 && !sem2)												// FIX.	// 07/04/06 AM.
 	return 1;																	// 07/04/06 AM.
 if (!sem1 || !sem2)															// 03/13/02 AM.
@@ -10534,7 +10534,7 @@ return res;
 long Arun::ne(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
-long num;															// FIX	// 08/17/01 AM.
+long num = 0L;															// FIX	// 08/17/01 AM.
 if (!sem1 && !sem2)												// FIX.	// 07/04/06 AM.
 	return 0;																	// 07/04/06 AM.
 if (!sem1 || !sem2)															// 03/13/02 AM.
@@ -10935,7 +10935,7 @@ return res;
 long Arun::gt(RFASem *sem1, RFASem *sem2)	// VARIANT
 {
 bool ok = true;
-long num;
+long num = 0L;
 if (!sem1 && !sem2)												// FIX	// 08/10/08 AM.
 	return 0;														// FIX	// 08/10/08 AM.
 if (!sem1)															// FIX	// 08/10/08 AM.
@@ -11154,7 +11154,7 @@ return res;
 long Arun::lt(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
-long num;
+long num = 0L;
 if (!sem1 && !sem2)												// FIX	// 08/10/08 AM.
 	return 0;														// FIX	// 08/10/08 AM.
 if (!sem1)															// FIX	// 08/10/08 AM.
@@ -11376,7 +11376,7 @@ return res;
 long Arun::ge(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
-long num;
+long num = 0L;
 if (!sem1 && !sem2)												// FIX	// 08/10/08 AM.
 	return 1;														// FIX	// 08/10/08 AM.
 
@@ -11598,7 +11598,7 @@ return res;
 long Arun::le(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
-long num;
+long num = 0L;
 
 if (!sem1 && !sem2)												// FIX	// 08/10/08 AM.
 	return 1;														// FIX	// 08/10/08 AM.
@@ -12251,7 +12251,7 @@ long Arun::inc(
 	Nlppp *nlppp
 	)
 {
-long num;
+long num = 0L;
 if (!sem)																		// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
 
@@ -12399,7 +12399,7 @@ long Arun::dec(
 	Nlppp *nlppp
 	)
 {
-long num;
+long num = 0L;
 if (!sem)																		// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
 
@@ -12540,7 +12540,7 @@ long Arun::vtnot(
 	RFASem *sem
 	)
 {
-long num;
+long num = 0L;
 
 // Creates variable with init value of zero, if not found.
 if (!Iexpr::vtnot(sem, 0, /*UP*/ num))
@@ -12820,7 +12820,7 @@ if (parse->getOut())
 // Open the user-supplied output file.
 // If none, then use standard output.
 _TCHAR *name = 0;
-if (name = parse->getOutput())
+if ((name = parse->getOutput()))
 	{
 	// Open the output file for APPENDING.
 	_t_ofstream *fout = 0;
@@ -13287,13 +13287,13 @@ for (;;)			// Traverse both arrays simultaneously.
 	if (!*arr1)
 		{
 		// Copy out rest of arr2 and done.
-		while (*ptr++ = *arr2++);
+		while ((*ptr++ = *arr2++));
 		return newarr;
 		}
 	else if (!*arr2)
 		{
 		// Copy out rest of arr1 and done.
-		while (*ptr++ = *arr1++);
+		while ((*ptr++ = *arr1++));
 		return newarr;
 		}
 	else			// Both arrays still full.

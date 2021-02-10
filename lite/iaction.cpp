@@ -197,7 +197,7 @@ _t_ostream &STDOPERATOR<<(_t_ostream &output, Dlist<Iaction> &list)
 Delt<Iaction> *delt;
 delt = list.getFirst();
 output << *delt;
-while (delt = delt->Right())
+while ((delt = delt->Right()))
 	{
 	output << endl << *delt;
 	}
@@ -738,7 +738,7 @@ else if (!badname)	// Known action with bad result
 
 // ACTIONS INDEPENDENT OF CODE REGION GO HERE.
 //.....
-if (ok = Fn::fnCall(this, nlppp, /*UP*/ badname, sem))
+if ((ok = Fn::fnCall(this, nlppp, /*UP*/ badname, sem)))
 	{
 	if (iargs)
 		{

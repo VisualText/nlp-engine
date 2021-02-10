@@ -519,7 +519,7 @@ inline void xstrcpy_e(
 	_TCHAR *str			// Terminated string to copy.
 	)
 {
-while (*++ptr = *str++)
+while ((*++ptr = *str++))
 	;
 --ptr;	// Go back to last filled char.
 }
@@ -544,7 +544,7 @@ _TCHAR *save = sql;
 
 --sql;	// Just a convenience to start here.
 --text;
-while (*++sql = *++text)
+while ((*++sql = *++text))
 	{
 	if (*text == '\'')
 		*++sql = '\'';

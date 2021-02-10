@@ -55,6 +55,8 @@ typedef void PHRASE;					// A concept's phrase of nodes.
 
 // Quick and dirty limit on name sizes.								// 11/10/98 AM.
 #define MAXSTR 512
+#define MAXMSG 2048                                                 //02/10/21 Dd.
+#define MAXPATH 2048                                                //02/10/21 Dd.
 
 // Handling very long lines.												// 07/26/01 AM.
 //#define MAXLINE 5120

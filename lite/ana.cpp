@@ -836,7 +836,7 @@ while (ptr)
 void Ana::writeSeqfile()
 {
 // Open temporary output file.
-_TCHAR fname[MAXSTR];
+_TCHAR fname[FILENAME_MAX*2];
 
 // G++ BUGS.																	// 03/08/00 AM.
 //ostrstream *outStr = 0;													// 03/08/00 AM.

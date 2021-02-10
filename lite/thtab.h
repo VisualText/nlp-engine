@@ -604,7 +604,7 @@ str_to_lower(str, lc_buf);
 
 // The calls check for empty string.
 Selt<tSym<TYPE> > *ptr;
-if (ptr = hfind(lc_buf))
+if ((ptr = hfind(lc_buf)))
 	return ptr;
 return hadd(lc_buf);
 }

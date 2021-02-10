@@ -659,7 +659,7 @@ inline
 	_TCHAR* &pretname
 	)
 {
-_TCHAR	fname[MAXSTR];
+_TCHAR	fname[MAXSTR*2];
 
 s_time = clock();																// 12/28/98 AM.
 
@@ -788,7 +788,7 @@ void Parse::finalTree()
 {
 _t_ofstream *fout;				// File for outputting pass data.
 _t_ostream *sout;					// For restoring output stream.
-_TCHAR fname[MAXSTR];
+_TCHAR fname[MAXSTR*2];
 
 // G++ BUGS.	// 03/08/00 AM.
 //ostrstream *outStr = 0;													// 03/08/00 AM.
@@ -1012,7 +1012,7 @@ _TCHAR *Parse::internStr(_TCHAR *str, /*DU*/ _TCHAR* &tstr)
 {
 tstr = 0;
 Sym *sym = 0;
-if (sym = getSym(str))
+if ((sym = getSym(str)))
 	return (tstr = sym->getStr());
 return 0;
 }
@@ -1022,7 +1022,7 @@ _TCHAR *Parse::internStr(_TCHAR *str, long len, /*DU*/ _TCHAR* &tstr)
 {
 tstr = 0;
 Sym *sym = 0;
-if (sym = getSym(str, len))
+if ((sym = getSym(str, len)))
 	return (tstr = sym->getStr());
 return 0;
 }

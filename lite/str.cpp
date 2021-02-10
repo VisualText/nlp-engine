@@ -522,7 +522,7 @@ bool all_uppercase(_TCHAR *str)
 _TCHAR ch;
 if (empty(str))
 	return true;
-while (ch = *str++)
+while ((ch = *str++))
 	{
 	// 09/22/99 AM. Accepting accented ASCII chars as both uppercase and
 	// lowercase!
@@ -546,7 +546,7 @@ bool all_lowercase(_TCHAR *str)
 _TCHAR ch;
 if (empty(str))
 	return true;
-while (ch = *str++)
+while ((ch = *str++))
 	{
 	// 09/22/99 AM. Accepting accented ASCII chars as both uppercase and
 	// lowercase!
@@ -625,7 +625,7 @@ if (empty(str))
 	return 0;
 _TCHAR *ptr;
 ptr = &(buf[0]);
-while (*ptr++ = to_lower(*str++))										// 12/16/01 AM.
+while ((*ptr++ = to_lower(*str++)))										// 12/16/01 AM.
 	;
 return buf;
 }
@@ -645,7 +645,7 @@ _TCHAR *str_to_lower(_TCHAR *str)
 _TCHAR *buf = str;
 if (empty(str))
 	return 0;
-while (*str = to_lower(*str++));
+while ((*str = to_lower(*str++)));
 return buf;
 }
 
@@ -665,7 +665,7 @@ if (empty(str))
 	return 0;
 _TCHAR *ptr;
 ptr = &(buf[0]);
-while (*ptr++ = to_upper(*str++))										// 12/16/01 AM.
+while ((*ptr++ = to_upper(*str++)))									// 12/16/01 AM.
 	;
 return buf;
 }
@@ -684,7 +684,7 @@ _TCHAR *str_to_upper(_TCHAR *str)
 _TCHAR *buf = str;
 if (empty(str))
 	return 0;
-while (*str = to_upper(*str++));
+while ((*str = to_upper(*str++)));
 return buf;
 }
 
@@ -829,7 +829,7 @@ inline void strcpy_e(
 	_TCHAR *str			// Terminated string to copy.
 	)
 {
-while (*++ptr = *str++)
+while ((*++ptr = *str++))
 	;
 --ptr;	// Go back to last filled char.
 }
@@ -1766,8 +1766,8 @@ inline bool spell_new_low(
 	long best_len			// Best possible length.
 	)
 {
-return (weight >= 0)
-	&& (weight < low_weight)
+return ((weight >= 0)
+	&& (weight < low_weight))
 	|| (weight == low_weight
 		 && (abs(len - best_len) < abs(low_len - best_len)) )
 	;
@@ -2292,7 +2292,7 @@ bool str_escape(_TCHAR *str, _TCHAR *chars, _TCHAR escape, _TCHAR *buf)
 --buf;	// Set up pointer to buffer.
 --str;	// Set up string pointer.
 _TCHAR ch;
-while (ch = *++str)
+while ((ch = *++str))
 	{
 	if (_tcschr(chars, ch))		// If char is to be escaped.
 		*++buf = escape;			// Add escape char.
@@ -2316,7 +2316,7 @@ bool str_unescape(_TCHAR *str, _TCHAR *chars, _TCHAR escape, _TCHAR *buf)
 --buf;	// Set up pointer to buffer.
 --str;	// Set up pointer to string.
 _TCHAR ch;
-while (ch = *++str)
+while ((ch = *++str))
 	{
 	if (ch == escape && _tcschr(chars, *(str+1)))
 		ch = *++str;		// Slough escape char.

@@ -340,7 +340,7 @@ Ipair *pair;
 Dlist<Iarg> *vals;
 Delt<Iarg> *darg = 0;
 long index=FULLARRAY;														// 10/14/00 AM.
-Iarg *arg;																		// 10/14/00 AM.
+Iarg *arg = NULL;																		// 10/14/00 AM.
 //bool deleting = false;														// 10/14/00 AM.
 if (!rhs_)
 	{
@@ -2909,7 +2909,7 @@ switch (type_)
 				darg->setLeft(0);					// Detach.				// 10/15/00 AM.
 				vals->setLast(vals->getFirst());	// Fix list.		// 10/15/00 AM.
 				}
-			while (tmp = darg)												// 10/14/00 AM.
+			while ((tmp = darg))												// 10/14/00 AM.
 				{
 				darg = darg->Right();										// 10/14/00 AM.
 				Delt<Iarg>::DeleteDeltAndData(tmp);						// 10/14/00 AM.
@@ -2919,7 +2919,7 @@ switch (type_)
 			if (arg->getType() == IASEM)									// 12/07/00 AM.
 				{
 				RFASem *sem;													// 12/07/00 AM.
-				if (sem = arg->getSem())									// 12/07/00 AM.
+				if ((sem = arg->getSem()))									// 12/07/00 AM.
 					delete sem;													// 12/07/00 AM.
 				}
 			else if (arg->getType() == IASTR)	// GC.				// 06/12/06 AM.
@@ -2995,7 +2995,7 @@ switch (type_)
 				case RS_KBCONCEPT:											// 02/22/00 AM.
 					arg->setType(IASEM);										// 10/14/00 AM.
 					CONCEPT *conc;												// 11/15/00 AM.
-					if (conc = rval->getKBconcept())						// 11/15/00 AM.
+					if ((conc = rval->getKBconcept()))						// 11/15/00 AM.
 						val = new RFASem(rval->getKBconcept(),RS_KBCONCEPT);
 					else
 						val = 0;													// 11/15/00 AM.
@@ -4177,7 +4177,7 @@ Iarg *Iexpr::getVarindex(
 	long index
 	)
 {
-Iarg *arg;
+Iarg *arg = NULL;
 Delt<Iarg> *darg=vals->getFirst();
 if (!darg)
 	{

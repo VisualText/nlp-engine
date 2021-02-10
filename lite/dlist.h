@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright © 1998-2003 by Text Analysis International, Inc.
+Copyright ï¿½ 1998-2003 by Text Analysis International, Inc.
 All rights reserved.
 ********************************************************************************
 *
@@ -1037,7 +1037,7 @@ if (delt->pLeft)
 	}
 
 Delt<DELTTYPE> *tmp;
-while (tmp = delt)
+while ((tmp = delt))
 	{
 	delt = delt->pRight;
 	Delt<DELTTYPE>::DeleteDeltAndData(tmp);

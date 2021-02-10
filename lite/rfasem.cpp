@@ -649,7 +649,7 @@ _TCHAR *indent = gen->indent_;
 //_t_ofstream *fcode = gen->fcode_;
 _t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 _TCHAR buff[MAXSTR+1];
-bool ok;
+bool ok = false;
 long num=0;																		// 03/13/02 AM.
 switch (type_)
 	{

@@ -198,7 +198,7 @@ Ifile *dat;
 selt = list.getFirst();
 dat   = selt->getData();
 output << *dat << endl;
-while (selt = selt->Right())
+while ((selt = selt->Right()))
 	{
 	dat = selt->getData();
 	output << *dat << endl;

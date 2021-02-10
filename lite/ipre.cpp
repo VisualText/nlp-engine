@@ -166,7 +166,7 @@ Ipre *elt;
 delt = list.getFirst();
 elt  = delt->getData();
 output << *elt << endl;
-while (delt = delt->Right())
+while ((delt = delt->Right()))
 	{
 	elt = delt->getData();
 	output << *elt << endl;

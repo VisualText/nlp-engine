@@ -167,7 +167,7 @@ if (nlppp->sem_)
 
 Iarg *arg1;
 arg1 = args->getData();
-if (args = args->Right())
+if ((args = args->Right()))
 	{
 	_t_strstream gerrStr;
 	gerrStr << _T("[RFA name action: More than one arg given.]") << ends;
@@ -275,7 +275,7 @@ if (nlppp->sem_)
 
 Iarg *arg1;
 arg1 = args->getData();
-if (args = args->Right())
+if ((args = args->Right()))
 	{
 	_t_strstream gerrStr;
 	gerrStr << _T("[RFA num action: More than one arg given.]") << ends;
@@ -404,7 +404,7 @@ if (!(args = args->Right()))
 
 Iarg *arg2 = args->getData();
 
-if (args = args->Right())
+if ((args = args->Right()))
 	{
 	_t_strstream gerrStr;
 	gerrStr << _T("[RFA float action: Too many args.]") << ends;
@@ -549,7 +549,7 @@ if (nlppp->sem_)
 
 Iarg *arg1;
 arg1 = args->getData();
-if (args = args->Right())
+if ((args = args->Right()))
 	{
 	_t_strstream gerrStr;
 	gerrStr << _T("[RFA nonlit action: More than one arg given.]") << ends;
@@ -675,7 +675,7 @@ if (nlppp->sem_)
 
 Iarg *arg1;
 arg1 = args->getData();
-if (args = args->Right())
+if ((args = args->Right()))
 	{
 	_t_strstream gerrStr;
 	gerrStr << _T("[RFA str action: More than one arg given.]") << ends;
@@ -1315,7 +1315,7 @@ if (nlppp->sem_)
 
 Iarg *arg1;
 arg1 = args->getData();
-if (args = args->Right())
+if ((args = args->Right()))
 	{
 	_t_strstream gerrStr;
 	gerrStr << _T("[RFA list action: More than one arg given.]") << ends;
@@ -1910,7 +1910,7 @@ if (nlppp->sem_)
 
 Iarg *arg1;
 arg1 = args->getData();
-if (args = args->Right())
+if ((args = args->Right()))
 	{
 	_t_strstream gerrStr;
 	gerrStr << _T("[RFA pairs action: More than one arg given.]") << ends;
@@ -2349,7 +2349,7 @@ else
 
 
 // Get semantics from the kiddies.
-RFASem *semname, *sempairs;
+RFASem *semname = NULL, *sempairs = NULL;
 if (!(semname = (RFASem *) nname->getData()->getSem()))
 	return false;
 if (npairs)
@@ -2439,7 +2439,7 @@ if (nlppp->sem_)
 
 Iarg *arg1;
 arg1 = args->getData();
-if (args = args->Right())
+if ((args = args->Right()))
 	{
 	_t_strstream gerrStr;
 	gerrStr << _T("[RFA elt action: More than one arg given.]") << ends;
@@ -2557,7 +2557,7 @@ if (nlppp->sem_)
 
 Iarg *arg1;
 arg1 = args->getData();
-if (args = args->Right())
+if ((args = args->Right()))
 	{
 	_t_strstream gerrStr;
 	gerrStr << _T("[RFA rulelts action: More than one arg given.]") << ends;
@@ -2706,7 +2706,7 @@ if (nlppp->sem_)
 
 Iarg *arg1;
 arg1 = args->getData();
-if (args = args->Right())
+if ((args = args->Right()))
 	{
 	_t_strstream gerrStr;
 	gerrStr << _T("[RFA sugg action: More than one arg given.]") << ends;
@@ -3062,7 +3062,7 @@ if (nlppp->sem_)
 
 Iarg *arg1;
 arg1 = args->getData();
-if (args = args->Right())
+if ((args = args->Right()))
 	{
 	_t_strstream gerrStr;
 	gerrStr << _T("[RFA rules action: More than one arg given.]") << ends;
@@ -5699,7 +5699,7 @@ if (namearg->getType() != IASTR)
 	}
 name = namearg->getStr();
 
-if (darg = darg->Right())	// If there's a second arg.
+if ((darg = darg->Right()))	// If there's a second arg.
 	{
 	if (darg->Right())
 		{
@@ -5866,7 +5866,7 @@ if (sem)
 
 Iarg *arg1;
 arg1 = args->getData();
-if (args = args->Right())
+if ((args = args->Right()))
 	{
 	_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
@@ -6380,9 +6380,9 @@ if (!node2)							// FIX								// 01/11/00 AM.
 	{
 	while (--num2 >= num1)												// 09/26/99 AM.
 		{
-		if (coll2 = colls->nth(num2))									// 09/26/99 AM.
+		if ((coll2 = colls->nth(num2)))									// 09/26/99 AM.
 			{
-			if (node2 = coll2->eDown())								// 09/26/99 AM.
+			if ((node2 = coll2->eDown()))								// 09/26/99 AM.
 //				return true;												// 01/11/00 AM.
 				break;														// 01/11/00 AM.
 			}
@@ -6394,10 +6394,10 @@ if (!node1)																	// 01/11/00 AM.
 	{
 	while (++num1 <= num2)												// 01/11/00 AM.
 		{
-		if (coll1 = colls->nth(num1))									// 01/11/00 AM.
+		if ((coll1 = colls->nth(num1)))									// 01/11/00 AM.
 			{
 //			if (node1 = coll1->eDown())						// BUG	// 02/13/02 AM.
-			if (node1 = coll1->Down())							// FIX	// 02/13/02 AM.
+			if ((node1 = coll1->Down()))						// FIX	// 02/13/02 AM.
 				break;
 			}
 		}
@@ -7596,7 +7596,7 @@ _TCHAR *typestr = action->getName();			// Var type=G,X,N,S...
 Dlist<Iarg> *iargs = action->getArgs();
 if (!iargs)																		// 02/21/00 AM.
 	{
-	if (ok = postRFApnode(typestr,ord,0,false,nlppp))				// 10/18/00 AM.
+	if ((ok = postRFApnode(typestr,ord,0,false,nlppp)))				// 10/18/00 AM.
 		{
 		pn->setSem(0);			// Clear old sem.							// 10/18/00 AM.
 		delete semfn;			// Delete old sem.						// 10/18/00 AM.
@@ -7607,7 +7607,7 @@ Delt<Iarg> *darg = iargs->getFirst();
 Iarg *iarg;
 if (!darg)
 	{
-	if (ok = postRFApnode(typestr,ord,0,false,nlppp))				// 10/18/00 AM.
+	if ((ok = postRFApnode(typestr,ord,0,false,nlppp)))				// 10/18/00 AM.
 		{
 		pn->setSem(0);			// Clear old sem.							// 10/18/00 AM.
 		delete semfn;			// Delete old sem.						// 10/18/00 AM.
@@ -7625,7 +7625,7 @@ switch (iarg->getType())													// 10/18/00 AM.
 		// HANDLE THE PNODE HERE.											// 10/18/00 AM.
 		ord = iarg->getNum();												// 10/18/00 AM.
 		darg = darg->Right();	// Check if next arg.				// 10/18/00 AM.
-		if (ok = postRFApnode(typestr,ord,darg,true,nlppp))		// 10/18/00 AM.
+		if ((ok = postRFApnode(typestr,ord,darg,true,nlppp)))		// 10/18/00 AM.
 			{
 			pn->setSem(0);			// Clear old sem.						// 10/18/00 AM.
 			delete semfn;			// Delete old sem.					// 10/18/00 AM.
@@ -8308,7 +8308,7 @@ if (!name || !*name)
 
 Dlist<Iarg> *params = 0;	// Placeholder for parameters.
 Dlist<Iarg> *pargs=0;														// 03/09/02 AM.
-if (pargs = fncall->getArgs())
+if ((pargs = fncall->getArgs()))
 	{
 	// CHECK ON AND CONDENSE PARAMS PROGRAMMATICALLY.				// 03/09/02 AM.
 	if (!rfbParams(pargs,nlppp,/*UP*/params))							// 03/09/02 AM.

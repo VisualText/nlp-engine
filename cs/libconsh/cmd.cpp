@@ -564,7 +564,7 @@ if (!con)
    }
 
 /* Find first path component not yet built. */
-while (name = ALIST::list_pop_buf(&args,alist->List_buffer))
+while ((name = ALIST::list_pop_buf(&args,alist->List_buffer)))
    {
    child = con->dn;
    sub = CNULL;
@@ -1279,7 +1279,7 @@ if (args)
 /* Display data nicely. */
 for (elt = list; elt; elt = elt->next)
    {
-   if (con = (CON *) elt->val)
+   if ((con = (CON *) elt->val))
       *out << con->id << _T(": (")
 			  << cg->acon_->con_kind_str(con)
 			  << _T(") ")

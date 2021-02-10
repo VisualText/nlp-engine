@@ -373,7 +373,7 @@ if (!ostr)
 // Write out buffer here.
 _TCHAR *ptr = text_ - 1;	// Minus 1 for convenient looping.
 _TCHAR ch;
-while (ch = *++ptr)
+while ((ch = *++ptr))
 	*ostr << ch;
 *ostr << flush;
 
@@ -798,7 +798,7 @@ inline bool CMLTok::getCMLnum(
 ptr_ = &(buf_[0]);
 *ptr_ = *fmptr_;	// Lookahead char.
 
-while (*++ptr_ = *++fmptr_)
+while ((*++ptr_ = *++fmptr_))
 	{
 	++fmpos_;
 	if (*ptr_ == '|')
@@ -879,7 +879,7 @@ if (*(fmptr_+1) == '/')	// END TAG.
 ptr_ = &(buf_[0]) - 1;	// Set up for loop.
 
 // Get alphabetic token.
-while (*++ptr_ = *++fmptr_)
+while ((*++ptr_ = *++fmptr_))
 	{
 	++fmpos_;
 	if (!alphabetic(*ptr_))
@@ -900,7 +900,7 @@ if (strcmp_i(buf_,_T("PAGE")))
 ptr_ = &(buf_[0]) - 1;	// Set up for loop.
 
 // Get separator chars.
-while (*++ptr_ = *++fmptr_)
+while ((*++ptr_ = *++fmptr_))
 	{
 	++fmpos_;
 	if (*ptr_ == '\n')
@@ -918,7 +918,7 @@ if (!*fmptr_)	// If empty, error.
 // Get page number.
 ptr_ = &(buf_[0]);
 *ptr_ = *fmptr_;			// First digit of page number.
-while (*++ptr_ = *++fmptr_)
+while ((*++ptr_ = *++fmptr_))
 	{
 	++fmpos_;
 	if (!_istdigit(*ptr_))

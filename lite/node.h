@@ -389,7 +389,7 @@ Node<NODETYPE> *tmp, *node;
 
 // Get head, or first node in list.
 node = this;
-while (tmp = node->pLeft)
+while ((tmp = node->pLeft))
 	node = tmp;
 
 return node->pUp;

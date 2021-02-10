@@ -189,7 +189,7 @@ for (dpost = posts->getFirst(); dpost; dpost = dpost->Right())
 	// Perform the current post action.
 	post	= dpost->getData();
 
-	if (rfasem = post->getSem())	// 11/99 AM.
+	if ((rfasem = post->getSem()))	// 11/99 AM.
 		{
 		//*gerr << "[Statements to execute.]" << endl;
 		//Nlppp nlppp(rule,collect,parse,nlppp->select_,			// 11/19/99 AM.
@@ -1073,7 +1073,7 @@ Node<Pn> *next, *first = 0, *last = 0, *childs, *echilds;
 while (curr)
 	{
 	next = curr->Right();
-	if (childs = curr->Down())
+	if ((childs = curr->Down()))
 		{
 		childs->setUp(0);	// Detach from parent.
 
@@ -1381,7 +1381,7 @@ arg2 = args->getData();
 
 // Third arg is optional.												// 12/14/99 AM.
 Iarg *arg3 = 0;															// 12/14/99 AM.
-if (args = args->Right())												// 12/14/99 AM.
+if ((args = args->Right()))												// 12/14/99 AM.
 	{
 	arg3 = args->getData();												// 12/14/99 AM.
 	if (args->Right())
@@ -3192,7 +3192,7 @@ parent = 0;			// Don't set till needed.
 if (end)
 	after = end->Right();
 
-if (before = start->Left())			// Normal case in parse tree.
+if ((before = start->Left()))			// Normal case in parse tree.
 	;
 else
 	parent = start->Up();
@@ -3315,7 +3315,7 @@ parent = 0;			// Don't set till needed.
 if (end)
 	after = end->Right();
 
-if (before = start->Left())			// Normal case in parse tree.
+if ((before = start->Left()))			// Normal case in parse tree.
 	;
 else
 	parent = start->Up();
@@ -3496,7 +3496,7 @@ for (pcoll = nodes; pcoll; pcoll = pcoll->Right())
 	Delt<Seqn> *dpass;							// 11/09/98 AM.
 	Seqn *pass;										// 11/09/98 AM.
 	Dlist<Irule> *ruleset;
-	if (passes = elt->getPasses())
+	if ((passes = elt->getPasses()))
 		{
 //		if (Debug())
 //			*gout << "   ruleset present" << endl;
@@ -3519,7 +3519,7 @@ for (pcoll = nodes; pcoll; pcoll = pcoll->Right())
 
 	Node<Pn> *node;
 	Node<Pn> *bound, *tmp;
-	if (tmp = pcoll->eDown())
+	if ((tmp = pcoll->eDown()))
 		bound = tmp->Right();
 	else
 		bound = 0;
@@ -3544,7 +3544,7 @@ for (pcoll = nodes; pcoll; pcoll = pcoll->Right())
 	// 03/23/99 AM. PERFORM ELEMENT LAYERING HERE.
 	// May need to rejigger the parse tree and the collect.
 	Dlist<Iarg>* attrs = 0;
-	if (attrs = elt->getAttrs())
+	if ((attrs = elt->getAttrs()))
 		{
 //		if (Debug())
 //			*gout << "   layering elt" << endl;
@@ -3613,7 +3613,7 @@ parent = 0;			// Don't set till needed.
 if (end)
 	after = end->Right();
 
-if (before = start->Left())			// Normal case in parse tree.
+if ((before = start->Left()))			// Normal case in parse tree.
 	;
 else
 	parent = start->Up();
@@ -5731,16 +5731,16 @@ if (!node)
 	}
 // Now we're at optional element's nodes.
 Node<Pn> *tmp;
-if (tmp = node->Down())
+if ((tmp = node->Down()))
 	{
 	nlppp->lookahead_ = tmp;			// Got lookahead node.
 	return true;
 	}
 
 // Presumably lookahead elt is optional.  So look to the right.
-while (node = node->Right())
+while ((node = node->Right()))
 	{
-	if (tmp = node->Down())				// Found nodes here.
+	if ((tmp = node->Down()))				// Found nodes here.
 		{
 		nlppp->lookahead_ = tmp;		// Got lookahead node.
 		return true;
@@ -5788,7 +5788,7 @@ if (!node)
 	}
 // Now we're at element's nodes.
 Node<Pn> *tmp;
-if (tmp = node->Down())
+if ((tmp = node->Down()))
 	{
 	nlppp->after_ = tmp;
 	return true;
@@ -6095,7 +6095,7 @@ parent = 0;			// Don't set till needed.
 if (end)
 	after = end->Right();
 
-if (before = start->Left())			// Normal case in parse tree.
+if ((before = start->Left()))			// Normal case in parse tree.
 	;
 else
 	parent = start->Up();
@@ -6410,7 +6410,7 @@ Node<Pn> *next, *first = 0, *last = 0, *childs, *echilds;
 while (curr)
 	{
 	next = curr->Right();
-	if (childs = curr->Down())
+	if ((childs = curr->Down()))
 		{
 		childs->setUp(0);	// Detach from parent.
 

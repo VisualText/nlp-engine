@@ -265,7 +265,7 @@ else		// 07/03/99 AM.
 // Which elt is the trigger in original rule.
 Delt<Ielt> *trig = 0;
 long ord = 0;
-if (trig = orig->getTrigger())
+if ((trig = orig->getTrigger()))
 	{
 	ord = orig->getPhrase()->getOrd(trig);
 	assert(ord);
@@ -330,7 +330,7 @@ if (!(delt = list.getFirst()))
 	return output;
 rr   = delt->getData();
 output << *rr << endl;
-while (delt = delt->Right())
+while ((delt = delt->Right()))
 	{
 	rr = delt->getData();
 	output << *rr << endl;
@@ -359,7 +359,7 @@ if (!(selt = list.getFirst()))
 	return output;
 rr   = selt->getData();
 output << *rr << endl;
-while (selt = selt->Right())
+while ((selt = selt->Right()))
 	{
 	rr = selt->getData();
 	output << *rr << endl;
@@ -916,7 +916,7 @@ if (num2 < num1)
 	}
 else if (num2 > num1)	// 09/20/06 AM.
 	{
-	if (next1 = selt1->Right())
+	if ((next1 = selt1->Right()))
 		{
 		rule1 = next1->getData();
 		max = rule1->getNum();
@@ -924,7 +924,7 @@ else if (num2 > num1)	// 09/20/06 AM.
 	}
 else			// EQUAL.	// 09/20/06 AM.
 	{
-	if (next1 = selt1->Right())	// 09/20/06 AM.
+	if ((next1 = selt1->Right()))	// 09/20/06 AM.
 		{
 		rule1 = next1->getData();	// 09/20/06 AM.
 		max = rule1->getNum();		// 09/20/06 AM.
@@ -958,7 +958,7 @@ while (next1)
 	// Move ahead one rule in list1.
 	selt1 = next1;						// Update the min rule.
 //	min = max;												// UNNEEDED.	// 11/12/01 AM.
-	if (next1 = next1->Right())
+	if ((next1 = next1->Right()))
 		{
 		rule1 = next1->getData();
 		max = rule1->getNum();
@@ -1449,7 +1449,7 @@ for (delt = phrase->getFirst(); delt; delt = delt->Right())
 	{
 	++count;
 	elt = delt->getData();
-	if (layer = elt->lastAttr())		// Get last layer from elt.
+	if ((layer = elt->lastAttr()))		// Get last layer from elt.
 		{
 		built = true;
 		// Build and attach action.
@@ -1730,7 +1730,7 @@ if (!trigger_
 	{
 	gen->setEltid(++eltno);
 	Ielt::genFirst(rphrase, gen);
-	while (rphrase = rphrase->Right())
+	while ((rphrase = rphrase->Right()))
 		{
 		gen->setEltid(++eltno);
 		Ielt::genRight(rphrase, gen);
@@ -1854,7 +1854,7 @@ bool badname = false;
 for (dpost = posts->getFirst(); dpost; dpost = dpost->Right())
 	{
 	post = dpost->getData();
-	if (rfasem = post->getSem())
+	if ((rfasem = post->getSem()))
 		{
 		rfasem->genEval(gen);	// GENERATE CODE FOR NLP++.
 		//*fcode << indent << "if (val) delete val;" << endl;
@@ -1917,7 +1917,7 @@ bool found = false;	// 05/20/08 AM.
 for (dcheck = checks->getFirst(); dcheck; dcheck = dcheck->Right())
 	{
 	check = dcheck->getData();
-	if (rfasem = check->getSem())
+	if ((rfasem = check->getSem()))
 		{
 		found = true;	// 05/20/08 AM.
 		rfasem->genEval(gen);	// GENERATE CODE FOR NLP++.
@@ -1975,7 +1975,7 @@ bool badname = false;
 for (dcode = codes->getFirst(); dcode; dcode = dcode->Right())
 	{
 	code = dcode->getData();
-	if (rfasem = code->getSem())
+	if ((rfasem = code->getSem()))
 		{
 		rfasem->genEval(gen);	// GENERATE CODE FOR NLP++.
 		//*fcode << indent << "if (val) delete val;" << endl;
@@ -2038,9 +2038,9 @@ for (delt = phrase->getFirst(); delt; delt = delt->Right())
 	{
 	gen->setEltid(++count);													// 05/31/00 AM.
 	elt = delt->getData();
-	if (passes = elt->getPasses())
+	if ((passes = elt->getPasses()))
 		Seqn::genRecurse(passes, gen);									// 05/31/00 AM.
-	if (gp = elt->getGroup())												// 09/23/00 AM.
+	if ((gp = elt->getGroup()))												// 09/23/00 AM.
 		{
 		*fcode << indent << _T("Arun::group_elt(")							// 09/23/00 AM.
 				 << count  << _T(",")												// 09/23/00 AM.
@@ -2051,7 +2051,7 @@ for (delt = phrase->getFirst(); delt; delt = delt->Right())
 				 << _T(");  /* Group. */");
 		Gen::nl(fcode);														// 04/04/03 AM.
 		}
-	if (ren = elt->getRename())
+	if ((ren = elt->getRename()))
 		{
 //		*fcode << indent << "// For each node matched by rule elt...." << endl;
 //		*fcode << indent << "// Could collapse nodes then rename...." << endl;
@@ -2066,7 +2066,7 @@ for (delt = phrase->getFirst(); delt; delt = delt->Right())
 		Gen::nl(fcode);														// 04/04/03 AM.
 		}
 	Starr *starr;
-	if (starr = elt->getLayers())											// 05/06/00 AM.
+	if ((starr = elt->getLayers()))											// 05/06/00 AM.
 		{
 		_TCHAR a_attrs[MAXSTR];
 		_stprintf(a_attrs, _T("attr%d_%d_%d_%d"),

@@ -136,12 +136,12 @@ private:
 
 	CONCEPT *gram_;			// Top of GRAM concept hierarchy.
 	NLP *nlp_;						// Current analyzer.
-	_TCHAR appdir_[MAXSTR];		// Base directory of analyzer app.
+	_TCHAR appdir_[MAXPATH];		// Base directory of analyzer app.
 	CG *cg_;						// Current knowledge base.	// 05/17/99 AM.
 	Eana *erfa_;				// Runtime config for RFA	// 10/13/99 AM.
 
-	_TCHAR output_[MAXSTR];	// Output filename.			// 05/18/99 AM.
-	_TCHAR outdir_[MAXSTR];	// Output directory.			// 05/18/99 AM.
+	_TCHAR output_[MAXPATH*3];	// Output filename.			// 05/18/99 AM.
+	_TCHAR outdir_[MAXPATH*2];	// Output directory.			// 05/18/99 AM.
 	// NOTE: indir == appdir_\input .
 
 // When code is well debugged and stable, can remove the stuff below.

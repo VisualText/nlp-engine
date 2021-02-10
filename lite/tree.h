@@ -565,7 +565,7 @@ else if (!start->pLeft)			// Replacing first node in phrase.
 
 		return;
 		}
-	if (tmp = end->pRight)
+	if ((tmp = end->pRight))
 		{
 		end->pRight = 0;
 		tmp->pLeft = 0;
@@ -957,7 +957,7 @@ for (;;)	// While looking up the tree.
 		return false;
 
 	// Go to first node in phrase. (leftmost node in phrase)
-	while (tmp = node->pLeft)
+	while ((tmp = node->pLeft))
 		node = tmp;
 
 	if (!(node = node->pUp))

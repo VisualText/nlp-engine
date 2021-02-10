@@ -424,7 +424,7 @@ if (!dir_exists(outdir))
 _t_ostream *serr;																	// 03/22/99 AM.
 _t_ofstream *ferr;																// 03/22/99 AM.
 _t_ostream *sdbg=0;																// 02/21/02 AM.
-_TCHAR errout[MAXSTR];															// 03/22/99 AM.
+_TCHAR errout[MAXMSG];															// 03/22/99 AM.
 //if (!silent)																	// 06/16/02 AM.
 	{
 	_stprintf(errout, _T("%s%cinit.log"), outdir,							// 03/22/99 AM.
@@ -944,7 +944,7 @@ ana_->setAppdir(appdir);													// 05/10/00 AM.
 
 //if (develop)																	// 12/26/98 AM.
 	{
-	_TCHAR defout[MAXSTR];
+	_TCHAR defout[MAXMSG];
 	_stprintf(defout, _T("%s%cdef.log"), outdir,								// 03/10/99 AM.
 						DIR_CH);													// 03/08/00 AM.
 	fileOut(defout, /*DU*/ fout, sout);
@@ -1367,7 +1367,7 @@ if (!dir_exists(outdir))
 	make_dir(outdir);
 
 // Setting up ERROR OUTPUT FILE.											// 03/22/99 AM.
-_TCHAR errout[MAXSTR];															// 03/22/99 AM.
+_TCHAR errout[MAXMSG];															// 03/22/99 AM.
 
 //if (!eana->getFsilent())													// 06/16/02 AM.
 	{
@@ -1511,7 +1511,7 @@ if (!dir_exists(outdir))
 	make_dir(outdir);
 
 // Setting up ERROR OUTPUT FILE.											// 03/22/99 AM.
-_TCHAR errout[MAXSTR];															// 03/22/99 AM.
+_TCHAR errout[MAXMSG];															// 03/22/99 AM.
 
 //if (!eana->getFsilent())													// 06/16/02 AM.
 	{

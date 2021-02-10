@@ -182,7 +182,7 @@ Ifile *rulesfile = 0;
 Slist<Irule> *mustlist = 0;
 Selt<Irule> *musts = 0;
 tHtab<Slist<Irule> > *htab = 0;
-if (rulesfile = seqn->getRulesfile())
+if ((rulesfile = seqn->getRulesfile()))
 	{
 	mustlist = rulesfile->getMusts();
 	if (mustlist)

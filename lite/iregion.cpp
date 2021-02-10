@@ -122,7 +122,7 @@ Iregion *dat;
 selt = list.getFirst();
 dat   = selt->getData();
 output << *dat;
-while (selt = selt->Right())
+while ((selt = selt->Right()))
 	{
 	dat = selt->getData();
 	output << *dat;
