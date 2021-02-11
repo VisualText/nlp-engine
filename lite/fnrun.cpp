@@ -17320,7 +17320,7 @@ if (node1)
 // Look to the right.
 while (++num1 <= nlppp->len_)
 	{
-	if (node1 = (Node<Pn>*)nlppp->coll_[num1].start)
+	if ((node1 = (Node<Pn>*)nlppp->coll_[num1].start))
 		{
 		nlppp->after_ = node1;
 		nlppp->nlookahead_ = num1;		// FIX	// 09/06/08 AM.
@@ -18053,7 +18053,7 @@ while (!done)
 		;	// Move to next.
 	else if (_istpunct(*buf) && punct_num)
 		; // Skip punctuation too.
-	else if (cx = cg->findConcept(cc, buf))	// MATCHED CHILD
+	else if ((cx = cg->findConcept(cc, buf)))	// MATCHED CHILD
 		{
 		cc = cx;
 		// TODO: RECORD MATCH.

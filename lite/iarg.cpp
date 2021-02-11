@@ -346,7 +346,7 @@ delt = list.getFirst();
 if (!delt)
 	return output;
 output << *delt;
-while (delt = delt->Right())
+while ((delt = delt->Right()))
 	{
 	output << _T(" ") << *delt;
 	}
@@ -854,13 +854,13 @@ Delt<Iarg> *Iarg::whiteArg(Dlist<Iarg> *dlist)
 if (!dlist)
 	return 0;
 Delt<Iarg> *delt;
-if (delt = findArg(dlist, _T(" ")))
+if ((delt = findArg(dlist, _T(" "))))
 	return delt;
-if (delt = findArg(dlist, _T("\t")))
+if ((delt = findArg(dlist, _T("\t"))))
 	return delt;
-if (delt = findArg(dlist, _T("\n")))
+if ((delt = findArg(dlist, _T("\n"))))
 	return delt;
-if (delt = findArg(dlist, _T("\r")))
+if ((delt = findArg(dlist, _T("\r"))))
 	return delt;
 return 0;
 }
@@ -881,7 +881,7 @@ void Iarg::genArgs(
 if (!args || !sep)
 	return;
 Delt<Iarg> *darg;
-if (darg = args->getFirst())	// First specially.
+if ((darg = args->getFirst()))	// First specially.
 	genArg(darg->getData(), ofile);
 
 int count = 1;		// To avoid long lines.								// 06/05/00 AM.

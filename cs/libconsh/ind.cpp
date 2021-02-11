@@ -602,7 +602,7 @@ alist->list_free(ends, LNULL);
 
 /* ADD CHILDREN TO HIERARCHY */
 save = names;
-while (str = ALIST::list_str(&names,nbuf))
+while ((str = ALIST::list_str(&names,nbuf)))
    cg->acon_->con_add_basic(str, con);
 
 alist->list_free(save, LNULL);

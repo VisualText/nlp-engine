@@ -253,7 +253,7 @@ rmGenpasses();
 
 // Fabricate an input document from from the samples in the Gram hierarchy.
 // HARDWIRE the fabricated filename as RUG.TXT.
-_TCHAR intext[1024];
+_TCHAR intext[MAXPATH*2];
 _stprintf(intext, _T("%s%crug%crug.txt"), appdir, DIR_CH,DIR_CH);		// HARDWIRED.
 // 05/16/99 AM.  Actually, going to take text directly from samples into
 // the input buffer.  NO FILES!  Even if fabricating, will place dummy
@@ -293,7 +293,7 @@ for (seq = Aseq::firstPass(nlp); seq; seq = Aseq::nextPass(seq))
 		stubname = stubName(seq);
 //		stubname = passname + 5;		// Skip past "stub_".
 		CONCEPT *tree;
-		if (tree = findStubconcept(stubname, gram))
+		if ((tree = findStubconcept(stubname, gram)))
 			{
 			_t_cerr << _T("[Found stub in hierachy]") << endl;
 
@@ -1108,7 +1108,7 @@ Arug::fillPass(rugpass, rules, selects);
 // Intern pass.
 
 // Build file path for pass.
-_TCHAR buff[2048];
+_TCHAR buff[MAXPATH*2];
 _stprintf(buff, _T("%s%c%s%c%s.pat"), appdir_,DIR_CH,
 			SPECDIRNAME,														// 05/14/00 AM.
 			DIR_CH, conname);
@@ -1140,7 +1140,7 @@ if (!conname || !*conname)
 	return false;
 
 // Build file path for pass.
-_TCHAR buff[1024];
+_TCHAR buff[MAXPATH*2];
 _stprintf(buff, _T("%s%c%s%c%s.pat"), appdir_,DIR_CH,
 			SPECDIRNAME,														// 05/14/00 AM.
 			DIR_CH, conname);

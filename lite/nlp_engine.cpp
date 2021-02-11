@@ -82,7 +82,6 @@ void NLP_ENGINE::zeroInit()
     m_workingFolder[0] = '\0';
     m_anadir[0] = '\0';
     m_ananame[0] = '\0';
-//  m_rfbdir[0] = '\0';
     m_rfbdir[0] = '\0';
     m_logfile[0] = '\0';	
     m_specdir[0] = '\0';
@@ -111,7 +110,6 @@ void NLP_ENGINE::zeroAna()
 
     m_anadir[0] = '\0';
     m_ananame[0] = '\0';
-//  m_rfbdir[0] = '\0';
     m_rfbdir[0] = '\0';
     m_logfile[0] = '\0';	
     m_specdir[0] = '\0';
@@ -147,7 +145,7 @@ int NLP_ENGINE::init(
     m_compiled = compiled;
 
     struct stat st;
-    char str[MAXSTR] = _T("");
+    char str[MAXPATH] = _T("");
     _stprintf(m_anadir,_T("%s"),analyzer);
 
     if (m_workingFolder[0] != '\0') {
@@ -203,7 +201,7 @@ int NLP_ENGINE::init(
     // INITIALIZE ANALYZER RUNTIME ENGINE
     /////////////////////////////////////////////////
 //    if (m_nlp = VTRun_Ptr->findAna(analyzer))   // [DEGLOB]	// 10/15/20 AM.
-    if (m_nlp = m_vtrun->findAna(analyzer))   // [DEGLOB]	// 10/15/20 AM.
+    if ((m_nlp = m_vtrun->findAna(analyzer)))   // [DEGLOB]	// 10/15/20 AM.
         {
         _t_cout << _T("Analyzer found: ") << analyzer << analyzer << endl;
         _t_cout << _T("[TODO: RELOAD ANALYZER (NLP) INTO NLPENGINE HERE.]") << analyzer << endl;

@@ -489,7 +489,7 @@ if (count == 0 || count == 1)
 
 if (count > 0)
 	{
-	while (*ptr++ = *str++)
+	while ((*ptr++ = *str++))
 		{
 		if (--count == 0)
 			break;
@@ -508,7 +508,7 @@ if (count > 0)
 	}
 else							// Not checking on buffer size.
 	{
-	while (*ptr++ = *str++)
+	while ((*ptr++ = *str++))
 		;
 	--ptr;					// Back up to termination char.
 	}

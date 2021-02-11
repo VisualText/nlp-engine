@@ -100,7 +100,7 @@ inline void strcpy_ee(
 	_TCHAR *str			// Terminated string to copy.
 	)
 {
-while (*ptr++ = *str++)
+while ((*ptr++ = *str++))
 	;
 --ptr;					// Back to overwrite newline.
 }

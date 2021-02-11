@@ -1217,12 +1217,12 @@ if (!matchRealRight(ielt,
 	if (optionalElt(ielt))		// If current rule elt is optional.
 		{
 		makeCollect(nlppp->collect_, curr, 0, 0, LEFT);
-		if (elt = curr->Left())	// Move left to next rule elt.
+		if ((elt = curr->Left()))	// Move left to next rule elt.
 			return true;
 		// No more rule elts in left direction.
 		// Succeed and try to continue right.
 		// STAY AT node.
-		if (elt = curr->Right())
+		if ((elt = curr->Right()))
 			{
 			dir = RIGHT;
 			return true;
@@ -1255,7 +1255,7 @@ makeCollect(nlppp->collect_, trig, real, nlppp->node_, LEFT);
 nlppp->first_ = real;				// 11/09/98 AM.
 nlppp->last_  = nlppp->node_;				// 11/09 98 AM.
 // Set up for match of next element.
-if (elt = trig->Left())
+if ((elt = trig->Left()))
 	{
 	dir = LEFT;
 //	node = nodeLeft(node, start);	// Try to back up one node.
@@ -1313,7 +1313,7 @@ if (!nlppp->node_)
 	// 11/06/98 AM. Handle indefinite number of optionals at left end of rule.
 	if (optionalElt(ielt))		// If current rule elt is optional, succeed.
 		{
-		if (elt = curr->Left())	// Move left to next rule elt.
+		if ((elt = curr->Left()))	// Move left to next rule elt.
 			{
 			makeCollect(nlppp->collect_,
 										curr, 0, 0, LEFT);		// 11/24/98 AM. Fix.
@@ -1363,7 +1363,7 @@ if (!matchRealLeft(ielt,nlppp->start_,wildone,wildmin,wildmax,
 	if (optionalElt(ielt))		// If current rule elt is optional, succeed.
 		{
 		nlppp->node_ = save;				// Reset current node.
-		if (elt = curr->Left())	// Move left to next rule elt.
+		if ((elt = curr->Left()))	// Move left to next rule elt.
 			{
 			makeCollect(nlppp->collect_, curr, 0, 0, LEFT);	// 11/23/98 AM.
 			return true;
@@ -1399,7 +1399,7 @@ wildone = 0;
 wildmin = wildmax = -1;
 
 // Set up for match of next element.
-if (elt = curr->Left())
+if ((elt = curr->Left()))
 	{
 	//dir = LEFT;						// Continue moving left.
 	nlppp->node_ = nodeLeft(nlppp->node_,
@@ -1454,7 +1454,7 @@ if (!nlppp->node_)
 	// 11/06/98 AM. Handle any number of optionals at right end of rule.
 	if (optionalElt(ielt))		// If current rule elt is optional, succeed.
 		{
-		if (elt = curr->Right())	// Move right to next rule elt.
+		if ((elt = curr->Right()))	// Move right to next rule elt.
 			{
 			makeCollect(nlppp->collect_, curr, 0, 0, RIGHT);	// 11/23/98 AM.
 			return true;
@@ -1515,7 +1515,7 @@ if (!matchRealRight(ielt,nlppp->end_,wildone,wildmin,wildmax,nlppp,
 	if (optionalElt(ielt))		// If current rule elt is optional, succeed.
 		{
 		nlppp->node_ = save;				// Reset current node.
-		if (elt = curr->Right())	// Move right to next rule elt.
+		if ((elt = curr->Right()))	// Move right to next rule elt.
 			{
 			makeCollect(nlppp->collect_,
 											curr, 0, 0, RIGHT);	// 11/24/98 AM. Fix.
@@ -1557,7 +1557,7 @@ if (!nlppp->first_)
 // to set first here also.
 
 // Set up for match of next element.
-if (elt = curr->Right())
+if ((elt = curr->Right()))
 	{
 
 	// Try to go forward one node.
@@ -1631,7 +1631,7 @@ if (min == -1)
 	min = 0;					// Default.
 if (max == -1)				// Default.
 	max = 0;					// Unlimited is the default wildcard max.
-if (elt = curr->Left())
+if ((elt = curr->Left()))
 	{
 	dir = LEFT;
 
@@ -1722,7 +1722,7 @@ if (min == -1)
 	min = 0;					// Default.
 if (max == -1)				// Default.
 	max = 0;					// Unlimited is the default wildcard max.
-if (elt = curr->Right())
+if ((elt = curr->Right()))
 	{
 	dir = RIGHT;
 
@@ -1987,7 +1987,7 @@ for (;;)				// While matching.
 	if (count == max)			// Maxed out.
 		return true;
 	// Move left one node.
-	if (test = nodeLeft(node, start))
+	if ((test = nodeLeft(node, start)))
 		;
 	else
 		{
@@ -2096,7 +2096,7 @@ for (;;)				// While matching.
 		return true;
 		}
 	// Move right one node.
-	if (test = nodeRight(node, end))
+	if ((test = nodeRight(node, end)))
 		{
 		updateRestart(nlppp,test);	// RECOPT2	// 07/17/06 AM.
 		// Need to back up if failed repeat match.// RECOPT2.	// 07/23/06 AM.
@@ -2566,7 +2566,7 @@ else if (!_tcscmp(name, _T("_xWILD")))						// Restricted wildcard.
 	Htab *htab = 0;						// 12/12/98 AM.
 	bool deaccent = ielt->getDeaccent();					// 01/28/05 AM.
 	bool dejunk = ielt->getDejunk();							// 09/09/11 AM.
-	if (list = ielt->getMatches())	// 11/08/99 AM.
+	if ((list = ielt->getMatches()))	// 11/08/99 AM.
 		{
 		for (delt = list->getFirst(); delt; delt = delt->Right())
 			{
@@ -2578,14 +2578,14 @@ else if (!_tcscmp(name, _T("_xWILD")))						// Restricted wildcard.
 				return true;
 			}
 		}
-	if (htab = ielt->getHmatches())		// 11/08/99 AM.
+	if ((htab = ielt->getHmatches()))		// 11/08/99 AM.
 		return modeHash(nname, htab,		// Check out the hash table.
 						ielt->getDeaccent(),					// 03/27/05 AM.
 						ielt->getDejunk());					// 09/09/11 AM.
 	if (list)
 		return false;			// Match mode failed.	// 11/08/99 AM.
 	failmode = true;	// 03/23/99 AM.
-	if (list = ielt->getFails())			// 11/08/99 AM.
+	if ((list = ielt->getFails()))			// 11/08/99 AM.
 		{
 		for (delt = list->getFirst(); delt; delt = delt->Right())
 			{
@@ -2597,7 +2597,7 @@ else if (!_tcscmp(name, _T("_xWILD")))						// Restricted wildcard.
 				return false;
 			}
 		}
-	if (htab = ielt->getHfails())			// 11/08/99 AM.
+	if ((htab = ielt->getHfails()))			// 11/08/99 AM.
 		// If matched nothing on fails list, succeed.
 		return !modeHash(nname, htab,			// Check out the hash table.
 								ielt->getDeaccent(),		// 03/27/05 AM.
@@ -3250,7 +3250,7 @@ bool Pat::switchRight(		// 11/19/99 AM.
 	enum Dir &dir
 	)
 {
-if (elt = trig->Right())
+if ((elt = trig->Right()))
 	{
 	dir = RIGHT;
 
@@ -3416,7 +3416,7 @@ else
 bool Pat::matchCleanup(Tree<Pn> *collect)
 {
 Node<Pn> *tmp;
-if (tmp = collect->pRoot)			// OPT								// 05/16/00 AM.
+if ((tmp = collect->pRoot))			// OPT								// 05/16/00 AM.
 	{
 	// DELETE THE LIST OF COLLECT NODES.
 	Node<Pn>::deleteNodes(tmp);
@@ -4687,7 +4687,7 @@ COLL *pcoll = &(coll[from]);
 int ii;
 for (ii = from; ii <= to; ++ii, ++pcoll)
 	{
-	if (start = (Node<Pn> *)pcoll->start)
+	if ((start = (Node<Pn> *)pcoll->start))
 		break;
 	}
 if (!start)
@@ -4704,7 +4704,7 @@ int jj;
 pcoll = &(coll[to]);
 for (jj = to; jj >= ii; --jj, --pcoll)
 	{
-	if (end = (Node<Pn> *)pcoll->end)
+	if ((end = (Node<Pn> *)pcoll->end))
 		break;
 	}
 
@@ -4752,7 +4752,7 @@ if (must)
 		int *ptr=arr;
 		const int *mptr = must->rules;
 		--ptr; --mptr;
-		while (*++ptr = *++mptr)
+		while ((*++ptr = *++mptr))
 			;										// Copy the array.
 		}
 	}
@@ -4793,7 +4793,7 @@ while (node)
 		arr = new int [asize+1];
 		int *ptr=arr-1;
 		--narr;
-		while (*++ptr = *++narr)
+		while ((*++ptr = *++narr))
 			;										// Copy the array.		
 		}
 
@@ -4822,7 +4822,7 @@ while (node)
 			arr = new int [asize+1];
 			int *ptr=arr-1;
 			--narr;
-			while (*++ptr = *++narr)
+			while ((*++ptr = *++narr))
 				;										// Copy the array.		
 			}
 		}

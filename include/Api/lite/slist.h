@@ -720,7 +720,7 @@ if (!selt)
 	return;
 
 Selt<SELTTYPE> *tmp;
-while (tmp = selt)
+while ((tmp = selt))
 	{
 	selt = selt->pRight;
 	Selt<SELTTYPE>::DeleteSeltAndData(tmp);
@@ -759,7 +759,7 @@ if (!selt)
 	return;
 
 Selt<SELTTYPE> *tmp;
-while (tmp = selt)
+while ((tmp = selt))
 	{
 	selt = selt->pRight;
 	Selt<SELTTYPE>::DeleteSelt(tmp);

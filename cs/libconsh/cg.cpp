@@ -16,6 +16,7 @@ All rights reserved.
 #include <time.h>
 #include "machine-min.h"					// 03/08/00 AM.
 #include "prim/libprim.h"
+#include "lite/global.h"
 #include "cg_global.h"				// 09/16/99 AM.
 
 #include "prim/unicode.h"					// 01/13/06 AM.
@@ -50,9 +51,6 @@ All rights reserved.
 #include "io.h"
 #include "cmd.h"
 #include "dyn.h"					// 06/29/00 AM.
-
-#define MAXPATH 512
-#define MAXLN 2048
 
 // Number of ind attr commands per file.								// 07/01/03 AM.
 // Segmenting the attr commands into multiple cmd files.			// 07/01/03 AM.
@@ -456,7 +454,7 @@ if (!findConcept(root, _T("gram")))						// 10/20/99 AM.
 
 // For example, path= C:\apps\Resume\kb\user.
 _TCHAR *kbdir = _T("kb");
-_TCHAR path[FNAMESIZ];
+_TCHAR path[MAXPATH];
 _stprintf(path, _T("%s%c%s%c%s"), getAppdir(), DIR_CH, kbdir, DIR_CH, dir);
 *cgerr << _T("[writeKB: path=") << path << _T("]") << endl;				// 02/19/02 AM.
 
@@ -464,10 +462,10 @@ _stprintf(path, _T("%s%c%s%c%s"), getAppdir(), DIR_CH, kbdir, DIR_CH, dir);
 make_dir(path);	// 05/06/99 AM.
 
 // Prep and open up the output files.
-_TCHAR o_hier[FNAMESIZ*2];
-_TCHAR o_word[FNAMESIZ*2];
-_TCHAR o_attr[FNAMESIZ*2];
-_TCHAR o_phr[FNAMESIZ*2];
+_TCHAR o_hier[MAXPATH*2];
+_TCHAR o_word[MAXPATH*2];
+_TCHAR o_attr[MAXPATH*2];
+_TCHAR o_phr[MAXPATH*2];
 
 _TCHAR *suff;
 suff = _T("kb");		// Kb file suffix.
@@ -610,7 +608,7 @@ if (hkbdll_)
 
 // For example, path= C:\apps\Resume\kb\user.
 _TCHAR *kbdir = _T("kb");
-_TCHAR path[FNAMESIZ];
+_TCHAR path[MAXPATH];
 _stprintf(path, _T("%s%c%s%c%s"), getAppdir(),DIR_CH, kbdir,DIR_CH, dir);
 // 08/11/99 AM. Checking out Purify warnings.
 *cgerr << _T("[readKB: path=")													// 02/19/02 AM.
@@ -620,7 +618,7 @@ _stprintf(path, _T("%s%c%s%c%s"), getAppdir(),DIR_CH, kbdir,DIR_CH, dir);
 
 // Prep and open up the input file.
 // hier, word, phr, attr.
-_TCHAR infile[FNAMESIZ*2];
+_TCHAR infile[MAXPATH*2];
 
 _TCHAR *suff;
 suff = _T("kb");		// Kb file suffix.
@@ -696,7 +694,7 @@ bool CG::genKB()
 {
 // For example, path= d:\apps\resume\kb\ .
 _TCHAR *kbdir = _T("kb");
-_TCHAR path[FNAMESIZ];
+_TCHAR path[MAXPATH];
 _stprintf(path, _T("%s%c%s"), getAppdir(),DIR_CH, kbdir);
 
 if (!cmd_gen_all(path,0,cgerr,this))
@@ -1080,13 +1078,13 @@ for (; node; node = node->next)
 	}
 
 // If not root and first in list, look at my siblings.
-CON *tmp;
+CON *tmp = NULL;
 CONCEPT *found;
 if (!isroot && !((CON *)tree)->prev)
 	{
 	for (tmp = ((CON *)tree)->next; tmp; tmp = tmp->next)
 		{
-		if (found = hierConcept(name, tmp, false))
+		if ((found = hierConcept(name, tmp, false)))
 			return found;
 		}
 	}
@@ -1126,7 +1124,7 @@ sort_hier_rec(((CON *)tree)->dn, false);
 sortChilds(tree);
 
 // If not root and first in list, look at my siblings.
-CON *tmp;
+CON *tmp = NULL;
 bool ok = true;
 if (!isroot && !((CON *)tree)->prev)
 	{
@@ -1422,7 +1420,7 @@ if (!tree)
 // Look for attribute in concept's phrase.
 _TCHAR ptr[MAXPATH];
 CON *node;
-if (node = kbm_->acon_->con_phrase((CON *) tree))
+if ((node = kbm_->acon_->con_phrase((CON *) tree)))
 	{
 	for (; node; node = node->next)
 		{
@@ -1500,7 +1498,7 @@ if (findVal(tree, attr, /*UP*/ ptr))
 
 // Look for attribute in concept's phrase.	// FIX				// 08/12/99 AM.
 CON *node;
-if (node = kbm_->acon_->con_phrase((CON *) tree))
+if ((node = kbm_->acon_->con_phrase((CON *) tree)))
 	{
 	for (; node; node = node->next)
 		{
@@ -1858,7 +1856,7 @@ bool CG::rmConcept(CONCEPT *parent, _TCHAR *name)
 CONCEPT *ptr;
 dirty_ = true;																	// 05/12/00 AM.
 //if (ptr = getConcept(parent, name))	// CREATES!!	// FIX	// 02/06/01 AM.
-if (ptr = findConcept(parent, name))						// FIX.	// 02/06/01 AM.
+if ((ptr = findConcept(parent, name)))						// FIX.	// 02/06/01 AM.
 	return rmConcept(ptr);
 return false;
 }
@@ -1991,7 +1989,7 @@ rmCphrase(conc);
 // If not root and start of list, manage the list.
 if (!root && !((CON *)conc)->prev)
 	{
-	CON *tmp;
+	CON *tmp = NULL;
 	for (tmp = ((CON *)conc)->next; tmp; tmp = tmp->next)
 		prunePhrasesRec(tmp, false);
 	}
@@ -2356,8 +2354,8 @@ if (!nn || nn->kind != cPROXY)
 	*cgerr << _T("[listNode: Given bad node.]") << endl;
 	return 0;
 	}
-CON *tmp;
-while (tmp = nn->prev)
+CON *tmp = NULL;
+while ((tmp = nn->prev))
 	nn = tmp;
 return (CONCEPT *)nn;
 }
@@ -2631,7 +2629,7 @@ if (!(con = (CON *) findNode(phr, name)))
 	return false;
 
 // If removing first node in phrase, set caller's phrase properly.
-PHRASE *tmp;
+PHRASE *tmp = NULL;
 if (phr == (PHRASE *)con)
 	tmp = (PHRASE *) con->next;
 
@@ -2650,7 +2648,7 @@ if (!(con = (CON *) findNode(phr, pos)))
 	return false;
 
 // If removing first node in phrase, set caller's phrase properly.
-PHRASE *tmp;
+PHRASE *tmp = NULL;
 if (phr == (PHRASE *)con)
 	tmp = (PHRASE *) con->next;
 
@@ -2671,7 +2669,7 @@ if (((CON *)node)->kind != cPROXY)
 	return false;
 
 // If removing first node in phrase, set caller's phrase properly.
-PHRASE *tmp;
+PHRASE *tmp = NULL;
 if (phr == (PHRASE *)node)
 	tmp = (PHRASE *) ((CON *)node)->next;
 
@@ -2815,17 +2813,17 @@ if (!goodKbfile(file))	// Check for good kb filename.
 _TCHAR *dir = _T("tmp");
 
 // For example, path= C:\apps\Resume\tmp.
-_TCHAR path[FNAMESIZ];
+_TCHAR path[MAXPATH];
 _stprintf(path, _T("%s%c%s"), getAppdir(), DIR_CH, dir);
 
 // If tmp directory absent, create it.
 make_dir(path);
 
 // Prep and open up the output files.
-_TCHAR o_hier[FNAMESIZ*2];
-_TCHAR o_word[FNAMESIZ*2];
-_TCHAR o_attr[FNAMESIZ*2];
-_TCHAR o_phr[FNAMESIZ*2];
+_TCHAR o_hier[MAXPATH*2];
+_TCHAR o_word[MAXPATH*2];
+_TCHAR o_attr[MAXPATH*2];
+_TCHAR o_phr[MAXPATH*2];
 
 _TCHAR *suff;
 suff = _T("kb");		// Kb file suffix.
@@ -2871,39 +2869,39 @@ f_phr  << endl << _T("quit") << endl << endl;
 // TODO: CATENATE THE COMMAND FILES TO THE OUTPUT FILE.
 #ifndef LINUX
 // Do the catenate in C++.
-_TCHAR buf[MAXLN];
+_TCHAR buf[MAXMSG];
 _t_ofstream *f_dump = new _t_ofstream(TCHAR2A(file));	// Final output file.
 _t_ifstream *f_in = new _t_ifstream(TCHAR2A(o_hier));
-while (f_in->getline(buf, MAXLN))		// Copy first file.
+while (f_in->getline(buf, MAXMSG))		// Copy first file.
 	*f_dump << buf << endl;
 delete f_in;
 
 *f_dump << endl;								// Separate commands.
 f_in = new _t_ifstream(TCHAR2A(o_word));
-while (f_in->getline(buf, MAXLN))		// Copy first file.
+while (f_in->getline(buf, MAXMSG))		// Copy first file.
 	*f_dump << buf << endl;
 delete f_in;
 
 *f_dump << endl;								// Separate commands.
 f_in = new _t_ifstream(TCHAR2A(o_attr));
-while (f_in->getline(buf, MAXLN))		// Copy first file.
+while (f_in->getline(buf, MAXMSG))		// Copy first file.
 	*f_dump << buf << endl;
 delete f_in;
 
 *f_dump << endl;								// Separate commands.
 f_in = new _t_ifstream(TCHAR2A(o_phr));
-while (f_in->getline(buf, MAXLN))		// Copy first file.
+while (f_in->getline(buf, MAXMSG))		// Copy first file.
 	*f_dump << buf << endl;
 delete f_in;
 
 delete f_dump;
 
 #else
-_TCHAR cmd[4096];
+_TCHAR cmd[MAXPATH*9];
 _TCHAR *cp = _T("cat");
 _stprintf(cmd, _T("%s %s %s %s %s > %s"),
 	cp, o_hier, o_word, o_attr, o_phr, file);
-_tsystem(cmd);
+int systemRet = _tsystem(cmd);
 #endif
 
 *cgerr << _T("[Done with modular kb dump.]") << endl;
@@ -2949,7 +2947,7 @@ if (!conceptName(root, name))
 	return false;
 	}
 
-_TCHAR buf[2048];
+_TCHAR buf[MAXMSG];
 prep_str(buf, name);
 
 // Print information for the current concept.
@@ -3017,7 +3015,7 @@ switch (con->kind)
 	}
 
 // Make path to concept itself.
-_TCHAR conpath[4096];
+_TCHAR conpath[MAXPATH*2];
 if (path && *path)
 	_stprintf(conpath, _T("%s \"%s\""), path, buf);
 else if (*buf && !_tcscmp(buf,_T("concept")))				// CHECK.	// 12/28/01 AM.
@@ -3116,7 +3114,7 @@ _TCHAR *str, *s_slot;
 _TCHAR *s_kind;
 _TCHAR buf[MAXPATH];					// 04/29/99 AM.
 _TCHAR sbuf[MAXPATH];					// 04/29/99 AM.
-_TCHAR strbuf[2048];				// 04/30/99 AM.
+_TCHAR strbuf[MAXPATH*2];				// 04/30/99 AM.
 int val_pos = 0;	// If concept value is a node.	// 10/09/05 AM.
 
 while (attrs)

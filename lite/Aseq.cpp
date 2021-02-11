@@ -430,7 +430,7 @@ return seqlist->exciseElt((Delt<Seqn> *) pass);
 LITE_API void Aseq::deletePass(NLP *nlp, int pos)
 {
 Delt<Seqn> *delt = 0;
-if (delt = (Delt<Seqn> *)Aseq::excisePass(nlp, pos))
+if ((delt = (Delt<Seqn> *)Aseq::excisePass(nlp, pos)))
 	Delt<Seqn>::DeleteDeltAndData(delt);
 else
 	{
@@ -836,7 +836,7 @@ for (selt = (Delt<Seqn> *)Aseq::firstPass(nlp); selt; selt = selt->Right())
 			{
 			}
 		// Reload the hash table for functions here, etc.			// 12/20/01 AM.
-		if (rf = seqn->getRulesfile())									// 12/20/01 AM.
+		if ((rf = seqn->getRulesfile()))								// 12/20/01 AM.
 			if (!Ifunc::loadHtab(htfunc,									// 12/20/01 AM.
 							rf->getDecls(),									// 12/20/01 AM.
 							vtrun->htfunc_,	// 08/28/02 AM.	// [DEGLOB]	// 10/15/20 AM.
@@ -923,7 +923,7 @@ if (Aseq::startStub(curr))
 else
 	{
 	seqlist->exciseElt(curr);				// Remove fm current position.
-	if (prev2 = prev->Left())				// If there's one 2 passes earlier.
+	if ((prev2 = prev->Left()))				// If there's one 2 passes earlier.
 		seqlist->insertRight(curr, prev2);		// ... insert after it.
 	else
 		seqlist->insertAfter(curr, 0);	// Insert as 1st (before prev).
@@ -1135,7 +1135,7 @@ if (!(prev = curr->Left()))
 	return false;
 
 seqlist->exciseElt(curr);				// Remove fm current position.
-if (prev2 = prev->Left())				// If there's one 2 passes earlier.
+if ((prev2 = prev->Left()))				// If there's one 2 passes earlier.
 	seqlist->insertRight(curr, prev2);		// ... insert after it.
 else
 	seqlist->insertAfter(curr, 0);	// Insert as 1st (before prev).

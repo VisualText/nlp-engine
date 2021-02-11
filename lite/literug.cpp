@@ -583,7 +583,7 @@ rule->setNlabels(count);				// 07/16/99 AM.
 
 // If actions were generated, add a reduce action to the end.
 Dlist<Iaction> *posts;
-if (posts = rule->getPost())
+if ((posts = rule->getPost()))
 	{
 	// SORT ACCORDING TO DESCENDING ORDS.
 	// Doing a bubble sort.
@@ -882,7 +882,7 @@ actions->setFirst(0);
 actions->setLast(0);
 
 Delt<Iaction> *sorts = 0;
-Delt<Iaction> *sptr, *last;
+Delt<Iaction> *sptr = 0, *last = 0;
 bool err = false;
 int cmp = 0;
 
@@ -919,7 +919,7 @@ while (list)
 			}
 		else
 			{
-			while (sptr = sptr->Right())
+			while ((sptr = sptr->Right()))
 				{
 				cmp = cmpGroup(daction, sptr, /*UP*/ err);
 				if (err)
@@ -1338,7 +1338,7 @@ for (delt = lphr->getFirst(); delt; delt = delt->Right())
 		// 07/11/99 AM. Generalize if token type found.
 		// 11/24/00 AM. HANDLING LIST CONTAINING NONLITERALS ONLY.
 		_TCHAR *nam;
-		if (nam = elt->litName())											// 11/24/00 AM.
+		if ((nam = elt->litName()))										// 11/24/00 AM.
 			{
 			if (!(name = tok_type(nam)))
 				{
@@ -2104,7 +2104,7 @@ for (delt = phrase->getFirst(); delt; delt = delt->Right())
 		if (!(name = elt->litName()))
 			return true;				// FIX.	// 08/23/99 AM.
 		// Trash the matches if any, but reuse list object.
-		if (matches = elt->getMatches())
+		if ((matches = elt->getMatches()))
 			{
 			Dlist<Iarg>::DelDlistAndData(matches->getFirst());
 			matches->setFirst(0);
@@ -2255,7 +2255,7 @@ if (celt->getClosed())			// A closed-set elt.		// 07/16/99 AM.
 	{
 	// Fold closed-set element.
 	_TCHAR *name;
-	if (name = relt->litName())
+	if ((name = relt->litName()))
 		{
 		Dlist<Iarg> *matches;
 		if (!(matches = celt->getMatches()))
@@ -2933,7 +2933,7 @@ Dlist<Irule> *tmp;			// Build pruned list.
 Delt<Irule> *drule;
 Irule *rule;
 tmp = new Dlist<Irule>();		// Empty so far.
-while (drule = constrains->pop())
+while ((drule = constrains->pop()))
 	{
 	rule = drule->getData();
 	if (pruneConstrain(rule))		// Rule is too general.
@@ -3029,7 +3029,7 @@ Dlist<Iarg> *names = new Dlist<Iarg>(arg);
 if (pn->getBase())
 	return names;
 
-while (node = node->Down())
+while ((node = node->Down()))
 	{
 	if (node->Right())									// Branches out.
 		break;
@@ -3124,7 +3124,7 @@ for (delt = phrase->getFirst(); delt; delt = delt->Right())
 		if (!(name = elt->litName()))
 			return false;
 		// Trash the matches.
-		if (matches = elt->getMatches())
+		if ((matches = elt->getMatches()))
 			{
 			Dlist<Iarg>::DeleteDlistAndData(matches);
 			elt->setMatches(0);		// Zero it out.
@@ -3309,7 +3309,7 @@ for (delt = phrase->getFirst(); delt; delt = delt->Right())
 	// Could be _xWHITE, and otherwise can be nonliterals.
 	elt = delt->getData();
 	matches = elt->getMatches();
-	if (name = elt->litName())			// If there's a literal elt.
+	if ((name = elt->litName()))			// If there's a literal elt.
 		{
 		// Done;
 		}

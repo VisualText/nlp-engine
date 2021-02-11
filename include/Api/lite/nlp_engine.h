@@ -60,16 +60,16 @@ public:
     _TCHAR *m_output;
     _TCHAR *m_sequence;
 
-    _TCHAR m_workingFolder[MAXSTR];
-    _TCHAR m_anadir[MAXSTR];
-    _TCHAR m_ananame[MAXSTR];
-    _TCHAR m_rfbdir[MAXSTR];
-    _TCHAR m_logfile[MAXSTR];	
-    _TCHAR m_specdir[MAXSTR];
-    _TCHAR m_infile[MAXSTR];
-    _TCHAR m_outdir[MAXSTR];
-    _TCHAR m_outfile[MAXSTR];
-    _TCHAR m_seqfile[MAXSTR];
+    _TCHAR m_workingFolder[MAXPATH];
+    _TCHAR m_anadir[MAXPATH*2];
+    _TCHAR m_ananame[MAXPATH];
+    _TCHAR m_rfbdir[MAXPATH*2];
+    _TCHAR m_logfile[MAXPATH];	
+    _TCHAR m_specdir[MAXPATH*3];
+    _TCHAR m_infile[MAXPATH*3];
+    _TCHAR m_outdir[MAXPATH*3];
+    _TCHAR m_outfile[MAXPATH*3];
+    _TCHAR m_seqfile[MAXPATH*4];
 
     VTRun *m_vtrun;
     NLP *m_nlp;

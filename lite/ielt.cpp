@@ -470,7 +470,7 @@ _t_ostream &STDOPERATOR<<(_t_ostream &output, Dlist<Ielt> &list)
 Delt<Ielt> *delt;
 delt = list.getFirst();
 output << *delt;
-while (delt = delt->Right())
+while ((delt = delt->Right()))
 	{
 	output << _T(" ") << *delt;
 	}
@@ -1650,7 +1650,7 @@ Iarg *arg = 0;
 Dlist<Iarg> *keep;		// New list of names to keep.
 keep = new Dlist<Iarg>();	// Empty list.
 _TCHAR *str;
-while (darg = vals->pop())
+while ((darg = vals->pop()))
 	{
 	arg = darg->getData();
 	str = arg->getStr();
@@ -1959,7 +1959,7 @@ if (!(list = sym->getPtr()))
 // If rule is already on the hash chain, don't add it.
 Selt<Irule> *selt;
 Irule *hrule;
-if (selt = list->getLast())
+if ((selt = list->getLast()))
 	{
 	hrule = selt->getData();
 	if (hrule->getNum() == rule->getNum())			// 12/19/98 AM.
@@ -2185,7 +2185,7 @@ else if (elt->getDeaccent())		// 01/28/05 AM.
 		}
 	ofile << _T("da");
 	}
-if (str = elt->getRename())
+if ((str = elt->getRename()))
 	{
 	if (seen)
 		ofile << _T(" ");
@@ -2199,7 +2199,7 @@ if (str = elt->getRename())
 	else
 		ofile << _T("ren=") << pretty_char(*str);					// 11/04/99 AM.
 	}
-if (str = elt->getGroup())													// 09/23/00 AM.
+if ((str = elt->getGroup()))												// 09/23/00 AM.
 	{
 	if (seen)
 		ofile << _T(" ");
@@ -2215,7 +2215,7 @@ if (str = elt->getGroup())													// 09/23/00 AM.
 	}
 Dlist<Iarg> *dargs;
 Starr *starr;															// 05/06/00 AM.
-if (starr = elt->getLayers())
+if ((starr = elt->getLayers()))
 	{
 	_TCHAR **arr = starr->getArr() - 1;	// One BEFORE array.
 	int len = starr->getLength() + 1;	// One greater than length.
@@ -2231,7 +2231,7 @@ if (starr = elt->getLayers())
 		ofile << *++arr << _T(" ");
 	ofile << _T(")");
 	}
-else if (dargs = elt->getAttrs())
+else if ((dargs = elt->getAttrs()))
 	{
 	// Layering attribute.
 	if (seen)
@@ -2245,7 +2245,7 @@ else if (dargs = elt->getAttrs())
 	Iarg::genArgs(dargs, _T(" "), ofile,trunc);
 	ofile << _T(")");
 	}
-if (dargs = elt->getMatches())
+if ((dargs = elt->getMatches()))
 	{
 	if (seen)
 		ofile << _T(" ");
@@ -2258,7 +2258,7 @@ if (dargs = elt->getMatches())
 	Iarg::genArgs(dargs, _T(" "), ofile,trunc);
 	ofile << _T(")");
 	}
-if (dargs = elt->getFails())
+if ((dargs = elt->getFails()))
 	{
 	if (seen)
 		ofile << _T(" ");
@@ -2271,7 +2271,7 @@ if (dargs = elt->getFails())
 	Iarg::genArgs(dargs, _T(" "), ofile,trunc);
 	ofile << _T(")");
 	}
-if (dargs = elt->getExcepts())			// 10/14/99 AM.
+if ((dargs = elt->getExcepts()))			// 10/14/99 AM.
 	{
 	if (seen)
 		ofile << _T(" ");
@@ -2285,7 +2285,7 @@ if (dargs = elt->getExcepts())			// 10/14/99 AM.
 	ofile << _T(")");
 	}
 Dlist<Seqn> *seqs;							// 11/04/99 AM.
-if (seqs = elt->getPasses())				// 11/04/99 AM.
+if ((seqs = elt->getPasses()))				// 11/04/99 AM.
 	{
 	if (seen)
 		ofile << _T(" ");
@@ -2500,7 +2500,7 @@ if (!_tcscmp(name, str))
 	return true;
 
 Dlist<Iarg> *matches = 0;
-if (matches = getMatches())
+if ((matches = getMatches()))
 	{
 	// (name should be "_xWILD" here).
 	if (Iarg::findArg(matches, str))
@@ -2525,7 +2525,7 @@ if (*(str = getName()) != '_')
 	return str;			// Name is literal.
 
 Dlist<Iarg> *matches;
-if (matches = getMatches())
+if ((matches = getMatches()))
 	{
 	Delt<Iarg> *delt;
 	Iarg *arg;

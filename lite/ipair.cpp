@@ -148,7 +148,7 @@ Ipair *rr;
 delt = list.getFirst();
 rr   = delt->getData();
 output << *rr;
-while (delt = delt->Right())
+while ((delt = delt->Right()))
 	{
 	rr = delt->getData();
 	output << _T(" ") << *rr;

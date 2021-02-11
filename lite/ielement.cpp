@@ -137,7 +137,7 @@ Ielement *elt;
 delt = list.getFirst();
 elt  = delt->getData();
 output << *elt;
-while (delt = delt->Right())
+while ((delt = delt->Right()))
 	{
 	elt = delt->getData();
 	output << _T(" ") << *elt;

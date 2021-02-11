@@ -437,7 +437,7 @@ bool ok = true;
 switch (arg->getType())
 	{
 	case IAREF:
-		if (sem = arg->getSem())
+		if ((sem = arg->getSem()))
 			{
 			Ivar *var = 0;
 			if (sem->getType() != RSVAR)	// Must be a variable.

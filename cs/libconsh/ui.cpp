@@ -119,7 +119,7 @@ else
 con = cg->acon_->c_cg_CONCEPT;											// 08/22/02 AM.
 
 /* Find first path component not yet built. */
-while (name = ALIST::list_pop_buf(&args,alist->List_buffer))
+while ((name = ALIST::list_pop_buf(&args,alist->List_buffer)))
    {
    child = con->dn;
    sub = CNULL;
@@ -150,7 +150,7 @@ if (name)
 		return false;												// 07/08/03 AM.
 	// ADD THE CONCEPT!!  (eg, newstyle numeric)			// 07/08/03 AM.
 	bool dirt;														// 07/08/03 AM.
-	if (*upcon = cg->kbm_->dict_get_word(name,dirt))	// 07/08/03 AM.
+	if ((*upcon = cg->kbm_->dict_get_word(name,dirt)))	// 07/08/03 AM.
 		return true;												// 07/08/03 AM.
    return(false);
    }

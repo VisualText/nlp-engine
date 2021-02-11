@@ -174,7 +174,7 @@ else																				// 12/26/01 AM.
 	else																			// 12/26/01 AM.
 		{
 		htab = ana->getHtfunc();											// 12/21/01 AM.
-		if (ifunc = Ifunc::htLookup(func,htab))						// 12/21/01 AM.
+		if ((ifunc = Ifunc::htLookup(func,htab)))						// 12/21/01 AM.
 			{
 //			action->setFunc(ifunc);								// BAD.	// 12/27/01 AM.
 			return ifunc->eval(args,nlppp,sem);							// 12/21/01 AM.
@@ -12077,9 +12077,9 @@ if (node1)
 	}
 
 // Presumably lookahead elt is optional.  So look to the right.
-while (colls = colls->Right())
+while ((colls = colls->Right()))
 	{
-	if (node1 = colls->Down())	// Found nodes here.
+	if ((node1 = colls->Down()))	// Found nodes here.
 		{
 		nlppp->after_ = node1;		// Got lookahead node.
 		nlppp->nlookahead_ = num1;				// 09/06/08 AM.
@@ -13046,7 +13046,7 @@ while (!done)
 		;	// Move to next.
 	else if (_istpunct(*buf) && punct_num)
 		; // Skip punctuation too.
-	else if (cx = cg->findConcept(cc, buf))	// MATCHED CHILD
+	else if ((cx = cg->findConcept(cc, buf)))	// MATCHED CHILD
 		{
 		cc = cx;
 		// TODO: RECORD MATCH.

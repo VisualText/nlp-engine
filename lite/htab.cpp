@@ -474,7 +474,7 @@ Selt<Sym> *Htab::hget(register _TCHAR *str)
 {
 // The calls check for empty string.
 Selt<Sym> *ptr;
-if (ptr = hfind(str))
+if ((ptr = hfind(str)))
 	return ptr;
 return hadd(str);
 }
@@ -505,7 +505,7 @@ return sym->getStr();
 Selt<Sym> *Htab::hget(register _TCHAR *str, register long len)
 {
 Selt<Sym> *ptr;
-if (ptr = hfind(str, len))
+if ((ptr = hfind(str, len)))
 	return ptr;
 return hadd(str, len);
 }
@@ -521,7 +521,7 @@ return hadd(str, len);
 Sym *Htab::hsym(_TCHAR *str)
 {
 Selt<Sym> *selt;
-if (selt = hget(str))														// 12/07/01 AM.
+if ((selt = hget(str)))														// 12/07/01 AM.
 	return selt->getData();
 return 0;																		// 12/07/01 AM.
 }
@@ -530,7 +530,7 @@ return 0;																		// 12/07/01 AM.
 Sym *Htab::hsym(_TCHAR *str, long len)
 {
 Selt<Sym> *selt;
-if (selt = hget(str, len))													// 12/07/01 AM.
+if ((selt = hget(str, len)))													// 12/07/01 AM.
 	return selt->getData();
 return 0;																		// 12/07/01 AM.
 }
@@ -589,7 +589,7 @@ if (!(selt = hget(str, len)))												// 12/07/01 AM.
 	return 0;																	// 12/07/01 AM.
 sym = selt->getData();
 
-if (lcsym = sym->getLcsym())			// Already has a lowercase version.
+if ((lcsym = sym->getLcsym()))			// Already has a lowercase version.
 	{
 	lcstr = lcsym->getStr();	// 08/01/11 AM.
 	return sym;
@@ -637,7 +637,7 @@ Slist<Sym> *list;
 Selt<Sym> *pre;		// Prior element in list.
 Selt<Sym> *elt;		// The element itself.
 list = 0;
-if (pre = hpre(str, /*UP*/ list))
+if ((pre = hpre(str, /*UP*/ list)))
 	{
 	elt = list->rmNext(pre);	// Delete from list.
 	}

@@ -146,7 +146,7 @@ for (dcheck = checks->getFirst(); dcheck; dcheck = dcheck->Right())
 	// Perform the current check action.
 	check	= dcheck->getData();
 
-	if (rfasem = check->getSem())											// 11/22/99 AM.
+	if ((rfasem = check->getSem()))											// 11/22/99 AM.
 		{
 		//*gerr << "[Check: Statements to execute.]" << endl;		// 11/22/99 AM.
 		if (!(ok = rfasem->eval(nlppp, /*UP*/ val)))					// 11/22/99 AM.

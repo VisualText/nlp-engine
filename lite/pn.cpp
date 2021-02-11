@@ -207,7 +207,7 @@ _TCHAR *buf;
 // U+200E left-to-right mark.
 // U+200F right-to-left mark.
 
-if (buf = pn.name_)
+if ((buf = pn.name_))
    {
 	while (*buf)
 		{
@@ -662,7 +662,7 @@ pn = node->getData();
 if (!_tcscmp(name, pn->getName()))
 	return node;
 
-if (tmp =findTreenode(name, node->pDown, false))		// RECURSIVE.
+if ((tmp =findTreenode(name, node->pDown, false)))		// RECURSIVE.
 	return tmp;
 
 // Minimal recursion in this part (optimization and resource saving!).
@@ -670,7 +670,7 @@ if (!root && !(node->pLeft))		// First node in list takes care of list.
 	{
 	for (node = node->pRight; node; node = node->pRight)
 		{
-		if (tmp = findTreenode(name, node, false))
+		if ((tmp = findTreenode(name, node, false)))
 			return tmp;
 		}
 	}

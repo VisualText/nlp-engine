@@ -177,7 +177,7 @@ for (daction = codes->getFirst(); daction; daction = daction->Right())
 	action = daction->getData();
 
 	// Execute NLP++ code.												// 01/14/00 AM.
-	if (rfasem = action->getSem())									// 01/14/00 AM.
+	if ((rfasem = action->getSem()))									// 01/14/00 AM.
 		{
 		//*gerr << "[Code: Statements to execute.]" << endl;
 
@@ -612,7 +612,7 @@ for (;;)					// Traverse file and list.
 		{
 		// Word not in file.  Set looked up flag.
 		sym = parse->getSym(str);
-		if (sym = sym->getLcsym())		// Get lowercased sym.
+		if ((sym = sym->getLcsym()))		// Get lowercased sym.
 			sym->setLooked(true);		// It's been looked up.
 		else
 			{
@@ -955,7 +955,7 @@ if (parse->getOut())
 // Open the user-supplied output file.
 // If none, then use standard output.
 _TCHAR *name = 0;
-if (name = parse->getOutput())
+if ((name = parse->getOutput()))
 	{
 	// Open the output file for APPENDING.
 	_t_ofstream *fout = 0;
