@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright Â© 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									ATTR.C
 *
-* FILE:	libkbm.¹/attr.c
+* FILE:	libkbm.Â¹/attr.c
 * SUBJ:	Attribute manager for concepts.
 * CR:		10/9/95 AM.
 * NOTE:	Layered over the PTR manager.
@@ -641,7 +641,7 @@ if (!_tcscmp(name, s_slot))
 	}
 
 pre = attrs;				// Pointer to previous.
-while (attrs = attrs->next)
+while ((attrs = attrs->next))
    {
    p_slot = attrs->v.vptr;
    slot   = p_slot->v.vcon;
@@ -683,7 +683,7 @@ if (attrs == ptr)
 	}
 
 pre = attrs;				// Pointer to previous.
-while (attrs = attrs->next)
+while ((attrs = attrs->next))
    {
 	if (attrs == ptr)
 		return pre;
@@ -776,7 +776,7 @@ PTR *AKBM::attr_get(CON *con, CON *slot)
 {
 PTR *pslot;
 
-if (pslot = attr_find_slot(con, slot))
+if ((pslot = attr_find_slot(con, slot)))
    return(pslot->next);
 return(PNULL);
 }
@@ -830,7 +830,7 @@ while (attrs)
    attrs = attrs->next;
    }
 */
-if (attrs = attr_find_h(con, name))				// 07/12/99 AM.
+if ((attrs = attr_find_h(con, name)))				// 07/12/99 AM.
 	return attrs;										// 07/12/99 AM.
 
 // Couldn't find it, so make it.
@@ -987,7 +987,7 @@ PTR *slot;
 if (!con || !slot_con)
    return(PNULL);
 
-if (slot = attr_find_slot(con, slot_con))
+if ((slot = attr_find_slot(con, slot_con)))
    return(slot);
 return(attr_as_add_end(con, slot_con));
 }
@@ -1330,7 +1330,7 @@ p_slot = ptr->v.vptr;
 // Find matching value, if any, and delete.
 PTR *pval, *preval;
 preval = p_slot;
-while (pval = preval->next)
+while ((pval = preval->next))
 	{
 	if (pval->kind == pST && pval->v.vst
 		 && !_tcscmp(str, pval->v.vst))
@@ -1400,7 +1400,7 @@ p_slot = ptr->v.vptr;
 // Find matching value, if any, and delete.
 PTR *pval, *preval;
 preval = p_slot;
-while (pval = preval->next)
+while ((pval = preval->next))
 	{
 	if (pval->kind == pNUM
 		 && (val == pval->v.vnum))
@@ -1471,7 +1471,7 @@ p_slot = ptr->v.vptr;
 // Find matching value, if any, and delete.
 PTR *pval, *preval;
 preval = p_slot;
-while (pval = preval->next)
+while ((pval = preval->next))
 	{
 	if (pval->kind == pNUM
 		 && (val >= (pval->v.vfloat - 0.0001)
@@ -1535,7 +1535,7 @@ p_slot = ptr->v.vptr;
 // Find matching value, if any, and delete.
 PTR *pval, *preval;
 preval = p_slot;
-while (pval = preval->next)
+while ((pval = preval->next))
 	{
 	if (pval->kind == pCON
 		 && (val == pval->v.vcon))

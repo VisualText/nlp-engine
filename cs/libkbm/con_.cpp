@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									CON.C
 *
-* FILE:	consh.¹/con.c
+* FILE:	consh.ï¿½/con.c
 * SUBJ:	Concept table manager for Consh.
 * NOTE:	Like sym handler, but simpler.  No hashing and no conflict table.
 *		Just as in the string table, we add concepts to the end, allocate
@@ -1397,7 +1397,7 @@ if (con->kind != cPROXY)
 	return 0;
 
 long ord = 1;
-while (con = con->prev)
+while ((con = con->prev))
    ++ord;
 return ord;
 }
@@ -1498,7 +1498,7 @@ void ACON::con_to_path_r(
 	)
 {
 CON *parent;
-if (parent = con_parent(con))
+if ((parent = con_parent(con)))
 	{
 	// Glom my ancestors.
 	con_to_path_r(parent, end);
@@ -1514,7 +1514,7 @@ str = con_str(con);
 prep_str(buf, str);
 str = buf;
 *end++ = '"';
-while (*end++ = *str++)	// Concept's string.
+while ((*end++ = *str++))	// Concept's string.
 	;							// Copy string into buffer.
 //end--;						// Back to first empty space.
 *(end-1) = '"';
