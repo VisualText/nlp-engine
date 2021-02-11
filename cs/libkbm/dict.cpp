@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright Â© 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									DICT.C
 *
-* FILE:	ext.¹/dict.c
+* FILE:	ext.Â¹/dict.c
 * SUBJ:	Dictionary in kb.
 * CR:	10/22/95 AM.
 * NOTE:	
@@ -297,7 +297,7 @@ else if (result == 0)
    return(dict_find_index(subs, name));
 
 index = subs;
-while (subs = subs->next)
+while ((subs = subs->next))
    {
    result = _tcscmp(name, ACON::con_str(subs));
    if (result < 0)
@@ -344,7 +344,7 @@ AKBM::dict_find_word(
 {
 SYM *sym;
 
-if (sym = asym_->sym_find(name))
+if ((sym = asym_->sym_find(name)))
    return(sym->con);
 return(CNULL);
 }
@@ -396,7 +396,7 @@ if (!name || !*name)
 	return CNULL;
 s_to_lower(name);
 
-if (sym = asym_->sym_find(name))
+if ((sym = asym_->sym_find(name)))
    return(sym->con);
 return(CNULL);
 }
@@ -484,7 +484,7 @@ else
 	for (tmp = con; tmp; tmp = tmp->next)
 		{
 		// Look in subtree for first wordcon.
-		if (found = dict_subtree(tmp,true))
+		if ((found = dict_subtree(tmp,true)))
 			return found;
 		}
 	}
@@ -528,11 +528,11 @@ if (con->kind == cWORD)
 
 // I'm an index concept
 // Look down.
-if (tmp = con->dn)
+if ((tmp = con->dn))
 	{
 	if (tmp->kind == cWORD)
 		return tmp;
-	if (found = dict_subtree(tmp,false))
+	if ((found = dict_subtree(tmp,false)))
 		return found;
 	}
 
@@ -541,7 +541,7 @@ if (!rootflag && !con->prev)
 	{
 	for (tmp = con->next; tmp; tmp = tmp->next)
 		{
-		if (found = dict_subtree(tmp,true))
+		if ((found = dict_subtree(tmp,true)))
 			return found;
 		}
 	}
