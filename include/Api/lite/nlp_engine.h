@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <strstream>
 #include <time.h>
+#include <vector>
 
 #include "machine.h"
 
@@ -70,6 +71,8 @@ public:
     _TCHAR m_outdir[MAXPATH*3];
     _TCHAR m_outfile[MAXPATH*3];
     _TCHAR m_seqfile[MAXPATH*4];
+
+    std::vector<std::string> m_files;
 
     VTRun *m_vtrun;
     NLP *m_nlp;
@@ -129,4 +132,5 @@ public:
 
 private:
     int createDir(_TCHAR *dirPath);
+    int readFiles(_TCHAR *directoryPath);
 };
