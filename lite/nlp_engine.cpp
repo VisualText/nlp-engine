@@ -14,6 +14,7 @@ MIT License
 
 #ifdef LINUX
 #include <unistd.h>
+#include <dirent.h>
 #endif
 
 ////////// NLP_INIT /////////////
@@ -41,7 +42,7 @@ NLP_ENGINE::NLP_ENGINE(
 	bool silent
 	)
 {
-     NLP_ENGINE::zeroInit();    // [DEGLOB]	// 10/15/20 AM.
+    NLP_ENGINE::zeroInit();    // [DEGLOB]	// 10/15/20 AM.
 
     static _TCHAR logfile[MAXSTR];
     static _TCHAR rfbdir[MAXSTR];
@@ -292,55 +293,61 @@ int NLP_ENGINE::analyze(
     bool compiled
 	)
 {   
- 
     NLP_ENGINE::init(analyzer,develop,silent,compiled);
 
+    readFiles(infile);
+    const char *file;
     struct stat st;
-    if (stat(infile,&st) == 0)
-        _stprintf(m_infile, _T("%s"),infile);
-    else
-        _stprintf(m_infile, _T("%s%sinput%s%s"),m_anadir,DIR_STR,DIR_STR,infile);
-    _t_cout << _T("[infile path: ") << m_infile << _T("]") << endl;
 
-    _stprintf(m_outfile, _T("%s%soutfile.txt"),m_anadir,DIR_STR);
-    _t_cout << _T("[outfile path: ") << m_outfile << _T("]") << endl;
+    for (std::vector<std::string>::iterator it = m_files.begin() ; it != m_files.end(); ++it) {
+        file = it->c_str();
 
-    bool create = true;
-    if (outdir) {
-        stat(outdir, &st);
-        if ((st.st_mode & S_IFREG) == S_IFDIR) {
-            _stprintf(m_outdir, _T("%s"), outdir);
-            create = false;
+        if (stat(file,&st) == 0)
+            _stprintf(m_infile, _T("%s"),file);
+        else
+            _stprintf(m_infile, _T("%s%sinput%s%s"),m_anadir,DIR_STR,DIR_STR,file);
+        _t_cout << _T("[infile path: ") << m_infile << _T("]") << endl;
+
+        _stprintf(m_outfile, _T("%s%soutfile.txt"),m_anadir,DIR_STR);
+        _t_cout << _T("[outfile path: ") << m_outfile << _T("]") << endl;
+
+        bool create = true;
+        if (outdir) {
+            stat(outdir, &st);
+            if ((st.st_mode & S_IFREG) == S_IFDIR) {
+                _stprintf(m_outdir, _T("%s"), outdir);
+                create = false;
+            }
         }
+        if (create) {
+            _stprintf(m_outdir, _T("%s_log"),file);
+            NLP_ENGINE::createDir(m_outdir);
+        }
+        _t_cout << _T("[outdir path: ") << m_outdir << _T("]") << endl;
+
+        // Analyzer can output to a stream.
+        _TCHAR ofstr[MAXSTR];
+        #ifdef LINUX
+        _stprintf(ofstr,_T("./dummy.txt"));
+        #else
+        _stprintf(ofstr,_T("e:\\dummy.txt"));
+        #endif
+        _t_ofstream os(TCHAR2CA(ofstr), ios::out);						// 08/07/02 AM.
+
+        // Testing output to buffer.
+        _TCHAR obuf[MAXSTR];
+
+        m_nlp->analyze(m_infile, m_outfile, m_anadir, m_develop,
+            m_silent,        // Debug/log output files.                  // 06/16/02 AM.
+            m_outdir,             // Outdir.
+            0,           // Input buffer.
+            0,        // Length of input buffer, or 0.
+            m_compiled,      // If running compiled analyzer.
+            &os,	   // Rebind cout output stream in analyzer    // 08/07/02 AM.
+            obuf,       // 05/11/02 AM.
+            MAXSTR	   // 05/11/02 AM.
+            );
     }
-    if (create) {
-        _stprintf(m_outdir, _T("%s_log"),infile);
-        NLP_ENGINE::createDir(m_outdir);
-    }
-    _t_cout << _T("[outdir path: ") << m_outdir << _T("]") << endl;
-
-    // Analyzer can output to a stream.
-    _TCHAR ofstr[MAXSTR];
-    #ifdef LINUX
-    _stprintf(ofstr,_T("./dummy.txt"));
-    #else
-    _stprintf(ofstr,_T("e:\\dummy.txt"));
-    #endif
-    _t_ofstream os(TCHAR2CA(ofstr), ios::out);						// 08/07/02 AM.
-
-    // Testing output to buffer.
-    _TCHAR obuf[MAXSTR];
-
-    m_nlp->analyze(m_infile, m_outfile, m_anadir, m_develop,
-        m_silent,        // Debug/log output files.                  // 06/16/02 AM.
-        m_outdir,             // Outdir.
-        0,           // Input buffer.
-        0,        // Length of input buffer, or 0.
-        m_compiled,      // If running compiled analyzer.
-        &os,	   // Rebind cout output stream in analyzer    // 08/07/02 AM.
-        obuf,       // 05/11/02 AM.
-        MAXSTR	   // 05/11/02 AM.
-        );
 
 //    NLP_ENGINE::close();  // NO.  // 09/27/20 AM.
     return 0;
@@ -486,5 +493,81 @@ int NLP_ENGINE::createDir(_TCHAR *dirPath) {
 #endif
 	    _t_cout << _T("[Creating output directory: ") << dirPath << _T("]") << endl;
 	}
+    return 0;
+}
+
+int NLP_ENGINE::readFiles(_TCHAR *path) 
+{
+    m_files.clear();
+
+#ifdef LINUX
+
+    struct stat s;
+    if (lstat(path, &s) == 0 ) {
+        if (S_ISREG(s.st_mode)) {
+            m_files.push_back(path);
+            return 1;
+        }
+    } else {
+        return 0;
+    }
+
+    DIR *dpdf;
+    struct dirent *epdf;
+    _TCHAR fullPath[MAXPATH*3];
+
+    dpdf = opendir(path);
+
+    if (dpdf != NULL) {
+        unsigned char isFile =0x8;
+        while (epdf = readdir(dpdf)) {
+            if (epdf->d_name[0] != '.' && epdf->d_type == isFile) {
+                _stprintf(fullPath, _T("%s%s%s"),path,DIR_STR,epdf->d_name);
+                m_files.push_back(fullPath);
+            }
+        }
+    }
+    
+#else
+
+    DWORD ftyp = GetFileAttributesA(path);
+    if (ftyp == INVALID_FILE_ATTRIBUTES && GetLastError() == ERROR_FILE_NOT_FOUND)
+    {
+        return 0;
+    }
+
+    if (ftyp & FILE_ATTRIBUTE_DIRECTORY) {
+        WIN32_FIND_DATA ffd;
+        HANDLE hFind = INVALID_HANDLE_VALUE;
+        DWORD dwError=0;
+
+        // Find the first file in the directory.
+
+        hFind = FindFirstFile(path, &ffd);
+
+        if (INVALID_HANDLE_VALUE == hFind) 
+        {
+            return 0;
+        }
+
+        do
+        {
+            if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+            {
+                continue;
+            }
+            else if (ffd.cFileName[0] != '.')
+            {
+                m_files.push_back(ffd.cFileName);
+            }
+        }
+        while (FindNextFile(hFind, &ffd) != 0);
+        }
+    else {
+        m_files.push_back(path);
+    }
+
+#endif
+
     return 0;
 }
