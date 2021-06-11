@@ -9,7 +9,6 @@
 @CODE
 
 G("out") = cbuf();
-G("out") << "[zzz " << today() << "]" << "\n";
 
 G("sentence") = down(G("parse"));
 
