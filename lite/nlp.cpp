@@ -1323,14 +1323,14 @@ Parse *NLP::initAnalyze(
 	bool retain			// If retaining hash,sym tables.				// 05/21/09 AM.
 	)
 {
-// BUG: cbufv is already an ostrstream at this point.	// 06/30/05 AM.
+// BUG: cbufv is already an ostringstream at this point.	// 06/30/05 AM.
 // WINDOWS:
 
 #ifndef LINUX
 _t_ostrstream *cbuf = (_t_ostrstream *) cbufv;			// 06/30/05 AM.
 #else
 // BUFFER/ARRAY STREAM ALREADY CREATED!!!	// 09/28/19 AM.
-ostrstream *cbuf = (ostrstream *) cbufv;			// 06/30/05 AM.	// 09/28/19 AM.
+ostringstream *cbuf = (ostringstream *) cbufv;			// 06/30/05 AM.	// 09/28/19 AM.
 
 // cerr << "initAnalyze in: " << ends;
 // cerr << "cbufv: *" << cbuf->str() << "*" << endl;
@@ -1459,7 +1459,7 @@ return parse;
 
 Parse *NLP::initAnalyze(
 	istrstream *iss,
-	ostrstream *oss,
+	ostringstream *oss,
 	_TCHAR *appdir,
 	Eana *eana,
 	_TCHAR *outdir,
@@ -1467,14 +1467,14 @@ Parse *NLP::initAnalyze(
 	bool retain		// If retaining hash,sym tables.
 	)
 {
-// BUG: cbufv is already an ostrstream at this point.	// 06/30/05 AM.
+// BUG: cbufv is already an ostringstream at this point.	// 06/30/05 AM.
 // WINDOWS:
 
 #ifndef LINUX
 //_t_ostrstream *cbuf = (_t_ostrstream *) cbufv;
 #else
 // BUFFER/ARRAY STREAM ALREADY CREATED!!!	// 09/28/19 AM.
-//ostrstream *cbuf = (ostrstream *) cbufv;			// 06/30/05 AM.	// 09/28/19 AM.
+//ostringstream *cbuf = (ostringstream *) cbufv;			// 06/30/05 AM.	// 09/28/19 AM.
 
 // cerr << "initAnalyze in: " << ends;
 // cerr << "cbufv: *" << cbuf->str() << "*" << endl;
@@ -1550,7 +1550,7 @@ parse->setHdll(hdll_);		// Handle to user.dll.					// 01/29/99 AM.
 
 // Set up output to buffer.
 #ifdef LINUX
-parse->setCbuf((ostrstream*)oss);			// Try this.	// 11/17/20 AM.
+parse->setCbuf((ostringstream*)oss);			// Try this.	// 11/17/20 AM.
 #else
 parse->setCbuf((_t_ostrstream*)oss);			// Try this.	// 11/17/20 AM.
 #endif
@@ -1741,9 +1741,9 @@ void NLP::analyze(
 //_t_ostrstream ocbuf;
 //_t_ostrstream *pbuf = 0;
 //pbuf = &ocbuf;
-//ostrstream ocbuf(outbuf, outlen, ios::out);							// 05/11/02 AM.	// 09/28/19 AM.
-ostrstream ocbuf(outbuf, outlen, ios::app);							// 09/28/19 AM.
-ostrstream *pbuf = 0;														// 05/13/02 AM.	// 09/28/19 AM.
+//ostringstream ocbuf(outbuf, outlen, ios::out);							// 05/11/02 AM.	// 09/28/19 AM.
+ostringstream ocbuf(outbuf, ios_base::app);							// 09/28/19 AM.
+ostringstream *pbuf = 0;														// 05/13/02 AM.	// 09/28/19 AM.
 if (outbuf && outlen > 1)													// 05/13/02 AM.	// 09/28/19 AM.
 	pbuf = &ocbuf;																// 05/13/02 AM.	// 09/28/19 AM.
 #else
@@ -1765,7 +1765,7 @@ if (compiled)																	// 07/05/00 AM.
 														);
 
 #ifdef UNICODE
-	// No Unicode analog to ostrstream, so copy buffer.				// 04/15/06 AM.
+	// No Unicode analog to ostringstream, so copy buffer.				// 04/15/06 AM.
 	long siz = ocbuf.str().size();											// 04/15/06 AM.
 	if (siz >= outlen)	// Overflow.										// 04/15/06 AM.
 		siz = outlen - 1;															// 04/15/06 AM.
@@ -1839,7 +1839,7 @@ if (pbuf)																		// 05/13/02 AM.
 	*pbuf << ends;		// Terminate buffer.								// 05/11/02 AM.
 
 #ifdef UNICODE
-// No Unicode analog to ostrstream, so copy buffer.				// 04/14/06 AM.
+// No Unicode analog to ostringstream, so copy buffer.				// 04/14/06 AM.
 long siz = ocbuf.str().size();											// 04/15/06 AM.
 if (siz >= outlen)	// Overflow.										// 04/15/06 AM.
 	siz = outlen - 1;															// 04/15/06 AM.
@@ -1877,7 +1877,7 @@ if (flogfiles)																	// 02/21/02 AM.
 
 void NLP::analyze(
 	istrstream *iss,	// Input strstream.
-	ostrstream *oss,	// Output strstream.
+	ostringstream *oss,	// Output strstream.
 	_TCHAR *appdir,		// Directory holding analyzer.
 	bool flogfiles,		// Changing the meaning of this.
 	bool silent,		// Silent run mode.
@@ -1959,7 +1959,7 @@ fbatchstart_ = false;										// FIX		// 05/19/08 AM.
 // Terminate buffer.	// 11/17/20 AM.
 
 #ifdef UNICODE
-// No Unicode analog to ostrstream, so copy buffer.				// 04/14/06 AM.
+// No Unicode analog to ostringstream, so copy buffer.				// 04/14/06 AM.
 long siz = ocbuf.str().size();											// 04/15/06 AM.
 if (siz >= outlen)	// Overflow.										// 04/15/06 AM.
 	siz = outlen - 1;															// 04/15/06 AM.
@@ -2031,7 +2031,7 @@ if (outbuf && outlen > 1)													// 05/13/02 AM.
 #ifdef UNICODE
 	pbuf = new _t_ostrstream(outbuf,ios::out);						// 02/20/05 AM.
 #elif LINUX
-	pbuf = new _t_ostrstream;
+	pbuf = new _t_ostrstream(outbuf,ios_base::out);
 #else
 	pbuf = new _t_ostrstream(outbuf,ios::out);				// 02/20/05 AM.
 #endif
@@ -2140,7 +2140,7 @@ Parse *prs = (Parse *) parse;
 Eana *eana = prs->getEana();
 
 #ifdef LINUX
-ostrstream* cbuf = prs->getCbuf();											// 09/28/19 AM.
+ostringstream* cbuf = prs->getCbuf();											// 09/28/19 AM.
 #else
 _t_ostream *cbuf = prs->getCbuf();											// 05/13/02 AM.
 #endif
@@ -2269,7 +2269,7 @@ if (parse->getText())
 	}
 
 #ifdef LINUX
-ostrstream *cbf = parse->getCbuf();										// 09/28/19 AM.
+ostringstream *cbf = parse->getCbuf();										// 09/28/19 AM.
 #else
 _t_ostream *cbf = parse->getCbuf();										// 04/25/05 AM.
 #endif
@@ -2308,7 +2308,7 @@ if (flogfiles)																	// 02/21/02 AM.
 
 void NLP::runAnalyzer(
 	istrstream *iss,
-	ostrstream *oss,
+	ostringstream *oss,
 	_TCHAR *appdir,
 	bool flogfiles,	// Changing the meaning of this.
 	bool silent,		// Silent run mode.
@@ -2377,7 +2377,7 @@ if (parse->getText())
 #endif
 	}
 #ifdef LINUX
-ostrstream *cbf = parse->getCbuf();										// 09/28/19 AM.
+ostringstream *cbf = parse->getCbuf();										// 09/28/19 AM.
 #else
 _t_ostream *cbf = parse->getCbuf();										// 04/25/05 AM.
 #endif

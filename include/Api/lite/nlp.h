@@ -174,7 +174,7 @@ public:
 
 	void analyze(
 		istrstream *iss,	// Input strstream.
-		ostrstream *oss,	// Output strstream.
+		ostringstream *oss,	// Output strstream.
 		_TCHAR *appdir = 0,		// Directory holding analyzer.
 		bool flogfiles = false,	// Changing the meaning of this.
 		bool silent = false,	// Silent run mode.
@@ -257,7 +257,7 @@ public:
 		_TCHAR *inbuf = 0,	// IF ANALYZING A BUFFER, SUPPLY IT HERE
 		long len = 0,		// LENGTH OF INPUT BUFFER
 		_t_ostream *os = 0,	// STANDARD OUTPUT STREAM					  // 05/13/02 AM.
-//		ostrstream * = 0,	// Output buffer stream, if any.         // 10/10/03 AM.
+//		ostringstream * = 0,	// Output buffer stream, if any.         // 10/10/03 AM.
 	   void * = 0,       // For .NET compatibility.               // 10/10/03 AM.
 		long outlen = 0,	// MAXIMUM LENGTH OF cbuf OUTPUT BUFFER  // 05/13/02 AM.
 		_TCHAR *datum = 0   // PASS INFO TO G("$datum").             // 03/13/03 AM.
@@ -265,7 +265,7 @@ public:
 
 	void runAnalyzer(
 		istrstream *iss,
-		ostrstream *oss,
+		ostringstream *oss,
 		_TCHAR *appdir,
 		bool flogfiles,			// Changing the meaning of this.
 		bool silent = false,	// Silent run mode.
@@ -298,7 +298,7 @@ public:
 		_TCHAR *inbuf = 0,   // IF ANALYZING A BUFFER, SUPPLY IT HERE.// 02/06/00 AM.
 		long len = 0,        // LENGTH OF INPUT BUFFER.					  // 02/06/00 AM.
 		_t_ostream * = 0,		// Output stream, if any.                // 05/11/02 AM.
-//		ostrstream * = 0,    // Output buffer stream, if any.         // 10/10/03 AM.
+//		ostringstream * = 0,    // Output buffer stream, if any.         // 10/10/03 AM.
 	   void * = 0,          // For .NET compatibility.               // 10/10/03 AM.
 		long = 0,            // Output buffer length, if any.         // 05/11/02 AM.
 		bool retain = false  // If retaining hash,sym tables.         // 05/21/09 AM.
@@ -306,7 +306,7 @@ public:
 
 	Parse *initAnalyze(
 		istrstream *iss,
-		ostrstream *oss,
+		ostringstream *oss,
 		_TCHAR *appdir,
 		Eana *eana,
 		_TCHAR *outdir = 0,

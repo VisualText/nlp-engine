@@ -176,7 +176,7 @@ long	Parse::getInputpass()	{return inputpass_;}					// 08/23/02 AM.
 Delt<Seqn> *Parse::getSeq()		{return seq_;}						// 07/24/01 AM.
 
 #ifdef LINUX
-ostrstream		*Parse::getCbuf()	{return cbuf_;}					// 05/11/02 AM. // 09/27/19 AM.
+ostringstream		*Parse::getCbuf()	{return cbuf_;}					// 05/11/02 AM. // 09/27/19 AM.
 #else
 _t_ostrstream		*Parse::getCbuf()	{return cbuf_;}					// 05/11/02 AM.
 #endif
@@ -246,7 +246,7 @@ void Parse::setRulepass(long x)		{rulepass_		=	x;}		// 02/03/05 AM.
 void Parse::setInputpass(long x)		{inputpass_	= x;}				// 08/23/02 AM.
 void Parse::setSeq(Delt<Seqn> *x)		{seq_		= x;}				// 07/24/01 AM.
 #ifdef LINUX
-void Parse::setCbuf(ostrstream* x) { cbuf_ = x; }				// 05/11/02 AM. // 09/27/19 AM.
+void Parse::setCbuf(ostringstream* x) { cbuf_ = x; }				// 05/11/02 AM. // 09/27/19 AM.
 #else
 void Parse::setCbuf(_t_ostrstream* x) { cbuf_ = x; }				// 05/11/02 AM.
 #endif
@@ -791,8 +791,8 @@ _t_ostream *sout;					// For restoring output stream.
 _TCHAR fname[MAXSTR*2];
 
 // G++ BUGS.	// 03/08/00 AM.
-//ostrstream *outStr = 0;													// 03/08/00 AM.
-//outStr = new ostrstream(fname, MAXSTR, ios::out);				// 03/08/00 AM.
+//ostringstream *outStr = 0;													// 03/08/00 AM.
+//outStr = new ostringstream(fname, MAXSTR, ios::out);				// 03/08/00 AM.
 //*outStr << getOutdir() << "\\final.log" << ends;					// 03/08/00 AM.
 
 #ifdef UNICODE
