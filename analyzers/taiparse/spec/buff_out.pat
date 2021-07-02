@@ -8,6 +8,45 @@
 
 @DECL
 
+eclXMLTree(
+	L("out"),
+	L("n"),
+	L("parent id")
+	)
+{
+L("childs") = pndown(L("n"));
+L("leaf") = 0;
+
+while (L("childs")) {
+	L("name") = pnname(L("childs"));
+	if (strlength(L("name")) > 1) {
+		L("id") = G("id")++;
+		L("tag") = strtrim(strpiece(L("name"),0,strlength(L("name"))-1));
+
+		L("out") << "<vertice";
+		getAttributes(L("out"),L("childs"));
+		L("out") << ">\n";
+		L("out") << "  <id>" << L("id") << "</id>\n";
+		L("out") << "  <label>" << L("tag") << "</label>\n";
+		L("out") << "</vertice>\n";
+
+		if (L("parent id")) {
+			L("out") << "<edge>\n";
+			L("out") << "  <source>" << L("parent id") << "</source>\n";
+			L("out") << "  <target>" << L("id") << "</target>\n";
+			L("out") << "</edge>\n";			
+		}
+
+		if (pndown(L("childs"))) {
+			eclXMLTree(L("out"),L("childs"),L("id"));
+		}
+	}
+
+	L("childs") = pnnext(L("childs"));
+}
+return L("leaf");
+}
+
 xmlrecurseall(
 	L("out"),
 	L("n"),	     # Current node.
@@ -22,6 +61,7 @@ while (L("childs")) {
 	if (strlength(L("name")) > 1) {
 		L("tag") = strpiece(L("name"),1,strlength(L("name"))-1);
 		if (pndown(L("childs"))) {
+			G("id")++;
 			L("out") << "\n" << spaces(L("level")) << "<" << L("tag");
 			getAttributes(L("out"),L("childs"));
 			L("out") << ">";
@@ -68,7 +108,9 @@ if (interactive())
 else
 	G("out") = cbuf();
 
+G("id") = 1;
 xmlheader(G("out"));
-xmlrecurseall(G("out"),pnroot(),0);
+#xmlrecurseall(G("out"),pnroot(),0);
+eclXMLTree(G("out"),pnroot(),0);
 
 @@CODE

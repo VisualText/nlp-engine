@@ -121,7 +121,7 @@ public:
     int analyze(
         _TCHAR *analyzer,
         istrstream *iss,
-        ostrstream *oss,
+        ostringstream *oss,
         bool develop=false,
         bool silent=false,
         bool compiled=false

@@ -75,7 +75,7 @@ int _tmain( // 09/23/20 AM.
 "More than they know.";
 
     istrstream ssi1(str);
-    ostrstream sso1;
+    ostringstream sso1;
     _t_cout << _T("[analyzer: ") << anaParse << _T("]") << endl;
     _t_cout << _T("[input: ") << ssi1.str() << _T("]") << endl;
     nlpEngine->analyze(anaParse,&ssi1,&sso1);
@@ -83,7 +83,7 @@ int _tmain( // 09/23/20 AM.
     _t_cout << _T("[end: ") << anaParse << _T("]") << endl;
 
     istrstream ssi2(str);
-    ostrstream sso2;
+    ostringstream sso2;
     _t_cout << _T("[analyzer: ") << anaCorporate << _T("]") << endl;
     _t_cout << _T("[input: ") << ssi2.str() << _T("]") << endl;
     nlpEngine->analyze(anaCorporate,&ssi2,&sso2);
@@ -91,7 +91,7 @@ int _tmain( // 09/23/20 AM.
     _t_cout << _T("[end: ") << anaCorporate << _T("]") << endl;
 
     istrstream ssi3("Strstream test.");
-    ostrstream sso3;
+    ostringstream sso3;
     _t_cout << _T("[analyzer: ") << anaNoop << _T("]") << endl;
     _t_cout << _T("[input: ") << ssi3.str() << _T("]") << endl;
     nlpEngine->analyze(anaNoop,&ssi3,&sso3);

@@ -402,7 +402,7 @@ int NLP_ENGINE::analyze(
 int NLP_ENGINE::analyze(
     _TCHAR *analyzer,
     istrstream *iss,
-    ostrstream *oss,
+    ostringstream *oss,
 	bool develop,
 	bool silent,
     bool compiled
