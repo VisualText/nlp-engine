@@ -5466,7 +5466,11 @@ if (!Var::val(_T("Base"), nlppp->parse_, /*DU*/ base))
 	return true;	// Input doc's problem: relative urls with no base.
 
 _TCHAR burl[MAXSTR];
-_tcscpy(burl, base);		// For mangling.
+if (base != NULL) {
+	_tcscpy(burl, base);		// For mangling.
+} else {
+	burl[0] = '\0';
+}
 
 // Parse the base URL.  Note: URL buffer gets mangled.
 _TCHAR *bservice, *bserver, *bdirs, *bfile, *bport;
