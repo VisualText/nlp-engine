@@ -675,8 +675,8 @@ if (flogfiles || ftimepass)												// 10/13/99 AM.
 	if (!sfile || !*sfile)
 			sfile = _T("NIL");
 	if (salgo && *salgo
-		 && strcmp_i(salgo, _T("pat"))
-		     && strcmp_i(salgo, _T("rec")))									// 06/13/00 AM.
+		 && strcmp_i(salgo, _T("nlp"))
+		 && strcmp_i(salgo, _T("rec")))									// 06/13/00 AM.
 		pretname = salgo;
 	else
 		pretname = sfile;

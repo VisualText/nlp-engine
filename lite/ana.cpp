@@ -339,6 +339,9 @@ while (*buf)	// For each line of file.
 	if (!strcmp_i(_T("folder"),token) || !strcmp_i(_T("stub"),token) || !strcmp_i(_T("end"),token)) {
 		goto skip;
 	}
+	if (!strcmp_i(_T("pat"),token)) {
+		token = _T("nlp");
+	}
 
 	if (_istdigit((_TUCHAR)*token))
 		{
@@ -604,7 +607,7 @@ else if (	!strcmp_i(s_algo, _T("lines"))
 	if (gen)		// Gen'ing code for analyzer.							// 05/10/00 AM.
 		genLines(pass, gen);													// 05/10/00 AM.
 	}
-else if (!strcmp_i(s_algo, _T("pat")))
+else if (!strcmp_i(s_algo, _T("nlp")))
 	{
 	// 12/02/98 AM. Pat algorithm should have all the code in this case.
 	// Current function should merely say: Pat, instantiate yourself.

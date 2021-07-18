@@ -43,7 +43,7 @@ All rights reserved.
 #include "pat.h"
 
 // For pretty printing the algorithm name.
-static _TCHAR algo_name[] = _T("pat");
+static _TCHAR algo_name[] = _T("nlp");
 
 // WARNING: Must match pat.h/enum Dir definition.
 static _TCHAR *Dir_s[] =

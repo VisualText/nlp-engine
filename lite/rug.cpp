@@ -864,7 +864,7 @@ if (justDirty)										// 08/25/99 AM.
 		// Set up to read rules file here.
 		// Attach pass to analyzer sequence.
 		rugpass = Aseq::insertAfter(nlp_, seq,
-							_T("pat"),			// Algorithm name.
+							_T("nlp"),			// Algorithm name.
 							conname,			// Concept name == pass file name.
 							_T("RUG file!"),	// Comment.
 							true);			// An active pass.
@@ -891,7 +891,7 @@ else if (skipLocks)								// 08/25/99 AM.
 		// Set up to read rules file here.
 		// Attach pass to analyzer sequence.
 		rugpass = Aseq::insertAfter(nlp_, seq,
-							_T("pat"),			// Algorithm name.
+							_T("nlp"),			// Algorithm name.
 							conname,			// Concept name == pass file name.
 							_T("RUG file!"),	// Comment.
 							true);			// An active pass.
@@ -1098,7 +1098,7 @@ Arug::prettyRules(rules);
 
 // Attach pass to analyzer sequence.
 rugpass = Aseq::insertAfter(nlp_, seq,
-					_T("pat"),			// Algorithm name.
+					_T("nlp"),			// Algorithm name.
 					conname,			// Concept name == pass file name.
 					_T("RUG file!"),	// Comment.
 					true);			// An active pass.

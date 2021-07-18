@@ -291,7 +291,7 @@ _t_ofstream *fout;				// File pass output.
 _t_ostream *sout;					// For restoring output stream.
 clock_t s_time;
 _TCHAR *pretname;
-_TCHAR *salgo = _T("pat");
+_TCHAR *salgo = _T("nlp");
 _TCHAR *prefix = _T("ana");		// Prefix for naming files.
 bool flogfiles = parse->eana_->getFlogfiles();
 bool ftimepass = parse->eana_->getFtimepass();
