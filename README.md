@@ -88,8 +88,8 @@ To compile the nlp-engine for the Mac:
 
 We recommend developing on Linux using VSCode. On Windows, we recommend WSL using VSCode on windows.
 
-* git clone https://github.com/visualtext/nlp-engine
-* cd nlp-engine
-* git remote rename origin upstream
-* git remote add origin https://github.com/YOUR-USERNAME/nlp-engine
-* git fetch --all
+      git clone https://github.com/visualtext/nlp-engine
+      cd nlp-engine
+      git remote rename origin upstream
+      git remote add origin https://github.com/YOUR-USERNAME/nlp-engine
+      git fetch --all
