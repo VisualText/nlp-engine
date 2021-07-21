@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(gbd) TAIParse",
+            "name": "TAIParse",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/nlp.exe",
@@ -24,26 +24,7 @@
             ]
         },
         {
-            "name": "(gbd) Corp Dir",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/nlp.exe",
-            "args": ["-ANA","${workspaceFolder}/analyzers/corporate","-WORK","${workspaceFolder}","${workspaceFolder}/analyzers/corporate/input/Dev","-DEV"],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ]
-        },
-        {
-            "name": "(gbd) Corporate",
+            "name": "Corporate",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/nlp.exe",
@@ -62,7 +43,26 @@
             ]
         },
         {
-            "name": "(gbd) test",
+            "name": "Corp Dir",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/nlp.exe",
+            "args": ["-ANA","${workspaceFolder}/analyzers/corporate","-WORK","${workspaceFolder}","${workspaceFolder}/analyzers/corporate/input/Dev","-DEV"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "test",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/test-nlp.exe",

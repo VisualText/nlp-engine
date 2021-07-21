@@ -705,7 +705,7 @@ Gen::eol(fdata);																// 04/04/03 AM.
 _TCHAR execbuf[MAXSTR];
 
 _TCHAR *execname;
-if (!_tcscmp(algo, _T("pat")))													// 05/31/00 AM.
+if (!_tcscmp(algo, _T("nlp")))													// 05/31/00 AM.
 	execname = _T("patExecute");
 else if (!_tcscmp(algo, _T("rec")))
 	execname = _T("recExecute");
@@ -766,7 +766,7 @@ _TCHAR *algo = parse->getAlgo();											// 05/31/00 AM.
 _TCHAR execbuf[MAXSTR];
 
 _TCHAR *execname;
-if (!_tcscmp(algo, _T("pat")))													// 05/31/00 AM.
+if (!_tcscmp(algo, _T("nlp")))													// 05/31/00 AM.
 	execname = _T("patExecute");
 else if (!_tcscmp(algo, _T("rec")))
 	execname = _T("recExecute");
