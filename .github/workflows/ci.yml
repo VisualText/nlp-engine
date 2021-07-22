@@ -36,24 +36,24 @@ jobs:
         
       - name: Cmake Build all targets on Windows
         run: cmake --build build/ --target ALL_BUILD
+        if: ${{ matrix.os == 'windows-latest' }}
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: "./nlp-engine.win.exe"
-        if: ${{ matrix.os == 'windows-latest' }}
-        
+
       - name: Cmake Build all targets on Linux
         run: cmake --build build/ --target all
+        if: ${{ matrix.os == 'ubuntu-latest' }}
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: "./nlp-engine.linux.exe"
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        
+
       - name: Cmake Build all targets on Unix
         run: cmake --build build/ --target all
+        if: ${{ matrix.os == 'macos-latest' }}
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: "./nlp-engine.linux.exe"
-        if: ${{ matrix.os == 'macos-latest' }}
