@@ -7,7 +7,7 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  Release:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Create Release
@@ -21,7 +21,8 @@ jobs:
           draft: false
           prerelease: false
           
-  Build:
+  build:
+    needs: release
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -38,20 +39,20 @@ jobs:
       - name: Cmake Build all targets on Windows
         run: cmake --build build/ --target ALL_BUILD
         with:
-          upload_url: ${{ Release.steps.create_release.outputs.upload_url }}
+          upload_url: ${{ release.steps.create_release.outputs.upload_url }}
           asset_path: "./nlp-engine.win.exe"
         if: ${{ matrix.os == 'windows-latest' }}
         
       - name: Cmake Build all targets on Linux
         run: cmake --build build/ --target all
         with:
-          upload_url: ${{ Release.steps.create_release.outputs.upload_url }}
+          upload_url: ${{ release.steps.create_release.outputs.upload_url }}
           asset_path: "./nlp-engine.linux.exe"
         if: ${{ matrix.os == 'ubuntu-latest' }}
         
       - name: Cmake Build all targets on Unix
         run: cmake --build build/ --target all
         with:
-          upload_url: ${{ Release.steps.create_release.outputs.upload_url }}
+          upload_url: ${{ release.steps.create_release.outputs.upload_url }}
           asset_path: "./nlp-engine.linux.exe"
         if: ${{ matrix.os == 'macos-latest' }}
