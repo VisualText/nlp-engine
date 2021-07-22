@@ -38,7 +38,7 @@ jobs:
         run: cmake --build build/ --target ALL_BUILD
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
-          upload_url: ${{ release.steps.create_release.outputs.upload_url }}
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: "./nlp-engine.win.exe"
         if: ${{ matrix.os == 'windows-latest' }}
         
@@ -46,7 +46,7 @@ jobs:
         run: cmake --build build/ --target all
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
-          upload_url: ${{ release.steps.create_release.outputs.upload_url }}
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: "./nlp-engine.linux.exe"
         if: ${{ matrix.os == 'ubuntu-latest' }}
         
@@ -54,6 +54,6 @@ jobs:
         run: cmake --build build/ --target all
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
-          upload_url: ${{ release.steps.create_release.outputs.upload_url }}
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: "./nlp-engine.linux.exe"
         if: ${{ matrix.os == 'macos-latest' }}
