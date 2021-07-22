@@ -7,6 +7,20 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
+  Release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+          
   Build:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -14,14 +28,30 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v2
-      # build project
+      - uses: shogo82148/actions-upload-release-asset@v1
+
       - name: make build directory
         run: mkdir build
       - name: Cmake Configure
         run: cmake -Bbuild -S.
+        
       - name: Cmake Build all targets on Windows
         run: cmake --build build/ --target ALL_BUILD
+        with:
+          upload_url: ${{ Release.steps.create_release.outputs.upload_url }}
+          asset_path: "./nlp-engine.win.exe"
         if: ${{ matrix.os == 'windows-latest' }}
+        
+      - name: Cmake Build all targets on Linux
+        run: cmake --build build/ --target all
+        with:
+          upload_url: ${{ Release.steps.create_release.outputs.upload_url }}
+          asset_path: "./nlp-engine.linux.exe"
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        
       - name: Cmake Build all targets on Unix
         run: cmake --build build/ --target all
-        if: ${{ matrix.os != 'windows-latest' }}
+        with:
+          upload_url: ${{ Release.steps.create_release.outputs.upload_url }}
+          asset_path: "./nlp-engine.linux.exe"
+        if: ${{ matrix.os == 'macos-latest' }}
