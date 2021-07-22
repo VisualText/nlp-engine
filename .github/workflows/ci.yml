@@ -29,8 +29,6 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v2
-      - uses: shogo82148/actions-upload-release-asset@v1
-
       - name: make build directory
         run: mkdir build
       - name: Cmake Configure
@@ -38,6 +36,7 @@ jobs:
         
       - name: Cmake Build all targets on Windows
         run: cmake --build build/ --target ALL_BUILD
+      - uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ release.steps.create_release.outputs.upload_url }}
           asset_path: "./nlp-engine.win.exe"
@@ -45,6 +44,7 @@ jobs:
         
       - name: Cmake Build all targets on Linux
         run: cmake --build build/ --target all
+      - uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ release.steps.create_release.outputs.upload_url }}
           asset_path: "./nlp-engine.linux.exe"
@@ -52,6 +52,7 @@ jobs:
         
       - name: Cmake Build all targets on Unix
         run: cmake --build build/ --target all
+      - uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ release.steps.create_release.outputs.upload_url }}
           asset_path: "./nlp-engine.linux.exe"
