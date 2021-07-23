@@ -6,6 +6,9 @@ on:
     types:
       - created
       
+env:
+  BUILD_TYPE: Release      
+      
 jobs:    
   build:
     runs-on: windows-latest
@@ -17,7 +20,7 @@ jobs:
         run: cmake -Bbuild -S.
 
       - name: Cmake Build all targets on Linux
-        run: cmake --build build/ -DCMAKE_BUILD_TYPE=Release --target ALL_BUILD
+        run: cmake --build build/ --target ALL_BUILD
         
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
