@@ -25,6 +25,7 @@ jobs:
         with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: "./bin/nlp.exe"
+          asset_name: "nlpw.exe"
 
       - name: Cmake Build all targets on Linux
         run: cmake --build build/ --target all
@@ -32,7 +33,8 @@ jobs:
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./bin/nlp"
+          asset_path: "./bin/nlp.exe"
+          asset_name: "nlpl.exe"
 
       - name: Cmake Build all targets on Unix
         run: cmake --build build/ --target all
@@ -41,3 +43,4 @@ jobs:
         with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: "./bin/nlp"
+          asset_name: "nlpw.exe"
