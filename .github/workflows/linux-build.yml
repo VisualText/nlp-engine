@@ -4,9 +4,6 @@ on:
   release:
     types:
       - created
-
-env:
-  BUILD_TYPE: Release
       
 jobs:    
   build:
