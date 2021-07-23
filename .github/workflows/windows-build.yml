@@ -4,7 +4,10 @@ name: Attach Released Assets
 on:
   release:
     types:
-      - created  
+      - created
+      
+env:
+  BUILD_TYPE: Release
       
 jobs:    
   build:
@@ -14,10 +17,10 @@ jobs:
       - name: make build directory
         run: mkdir build
       - name: Cmake Configure
-        run: cmake -DCMAKE_BUILD_TYPE=Release -Bbuild/release -S.
+        run: cmake -Bbuild -S. -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
       - name: Cmake Build all targets on Windows
-        run: cmake --build build/release --target ALL_BUILD
+        run: cmake --build build --target nlp
         
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
