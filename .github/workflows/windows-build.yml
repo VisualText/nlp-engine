@@ -4,10 +4,7 @@ name: Attach Released Assets
 on:
   release:
     types:
-      - created
-      
-env:
-  BUILD_TYPE: Release      
+      - created  
       
 jobs:    
   build:
@@ -20,7 +17,7 @@ jobs:
         run: cmake -Bbuild -S.
 
       - name: Cmake Build all targets on Linux
-        run: cmake --build build/ --target ALL_BUILD
+        run: cmake --build build/ -DCMAKE_BUILD_TYPE=Release -H. -Bbuild/Release --target ALL_BUILD
         
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
