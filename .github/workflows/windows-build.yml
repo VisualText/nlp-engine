@@ -18,6 +18,7 @@ jobs:
 
       - name: Cmake Build all targets on Linux
         run: cmake --build build/ --target BUILD_ALL
+        
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ github.event.release.upload_url }}
