@@ -6,9 +6,6 @@ on:
     types:
       - created
       
-env:
-  BUILD_TYPE: Release
-      
 jobs:    
   build:
     runs-on: windows-latest
@@ -17,13 +14,13 @@ jobs:
       - name: make build directory
         run: mkdir build
       - name: Cmake Configure
-        run: cmake -Bbuild -S. -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+        run: cmake -Bbuild -S.
 
       - name: Cmake Build all targets on Windows
-        run: cmake --build build --target nlp
+        run: cmake --build build --target ALL_BUILD
         
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./bin/Release/nlp.exe"
+          asset_path: "./bin/Debug/nlp.exe"
           asset_name: "nlpw.exe"
