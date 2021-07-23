@@ -24,8 +24,9 @@ jobs:
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./bin/nlp.exe"
+          asset_path: "./bin/Debug/nlp.exe"
           asset_name: "nlpw.exe"
+        if: ${{ matrix.os == 'windows-latest' }}
 
       - name: Cmake Build all targets on Linux
         run: cmake --build build/ --target all
@@ -35,6 +36,7 @@ jobs:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: "./bin/nlp.exe"
           asset_name: "nlpl.exe"
+        if: ${{ matrix.os == 'ubuntu-latest' }}
 
       - name: Cmake Build all targets on Unix
         run: cmake --build build/ --target all
@@ -42,5 +44,6 @@ jobs:
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./bin/nlp"
+          asset_path: "./bin/nlp.exe"
           asset_name: "nlpw.exe"
+        if: ${{ matrix.os == 'macos-latest' }}
