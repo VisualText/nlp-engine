@@ -1,28 +1,12 @@
-name: Build
+name: Attach Released Assets
 
 on:
-  push:
-    branches: [master]
-  pull_request:
-    types: [opened, synchronize, reopened]
-
-jobs:
   release:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-          
+    types:
+      - created
+      
+jobs:    
   build:
-    needs: release
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -39,21 +23,21 @@ jobs:
         if: ${{ matrix.os == 'windows-latest' }}
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "./nlp-engine.win.exe"
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "./bin/nlp.exe"
 
       - name: Cmake Build all targets on Linux
         run: cmake --build build/ --target all
         if: ${{ matrix.os == 'ubuntu-latest' }}
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "./nlp-engine.linux.exe"
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "./bin/nlp"
 
       - name: Cmake Build all targets on Unix
         run: cmake --build build/ --target all
         if: ${{ matrix.os == 'macos-latest' }}
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "./nlp-engine.linux.exe"
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "./bin/nlp"
