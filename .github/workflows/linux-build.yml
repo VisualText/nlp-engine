@@ -13,7 +13,7 @@ jobs:
       - name: make build directory
         run: mkdir build
       - name: Cmake Configure
-        run: cmake -Bbuild -S.
+        run: cmake -DCMAKE_BUILD_TYPE=Release -Bbuild -S.
 
       - name: Cmake Build all targets on Linux
         run: cmake --build build/ --target all
