@@ -8,12 +8,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: papeloto/action-zip@v1
-        id: vt-zip
         with:
           files: analyzers/ data/ visualtext/
           dest: visualtext.zip
           
-      - uses: shogo82148/actions-upload-release-asset@v1
+      - uses: actions/upload-artifact@v1
         with:
-          upload_url: ${{ steps.vt-zip.outputs.vt-zip }}
-          asset_path: "./visualtext.zip"
+          name: my-artifact
+          path: ${{ github.workspace }}/visualtext.zip
