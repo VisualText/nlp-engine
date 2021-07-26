@@ -15,7 +15,7 @@ jobs:
           files: analyzers/ data/ visualtext/
           dest: visualtext.zip
           
-      - uses: actions/upload-artifact@v1
+      - uses: shogo82148/actions-upload-release-asset@v1
         with:
-          name: visualtext-files
-          path: ${{ github.workspace }}/visualtext.zip
+          upload_url: "./visualtext.zip"
+          asset_path: "./visualtext.zip"
