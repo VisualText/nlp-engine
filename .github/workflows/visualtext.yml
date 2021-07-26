@@ -10,10 +10,10 @@ jobs:
       - uses: papeloto/action-zip@v1
         with:
           files: analyzers/ data/ visualtext/
-          recursive: true
+          recursive: false
           dest: visualtext.zip
           
       - uses: actions/upload-artifact@v1
         with:
-          name: my-artifact
+          name: visualtext
           path: ${{ github.workspace }}/visualtext.zip
