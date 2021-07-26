@@ -14,3 +14,8 @@ jobs:
         with:
           files: analyzers/ data/ visualtext/
           dest: visualtext.zip
+          
+      - uses: actions/upload-artifact@v1
+        with:
+          name: visualtext-files
+          path: ${{ github.workspace }}/visualtext.zip
