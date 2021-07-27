@@ -1,6 +1,9 @@
 name: Attach Released Assets
 
-on: [push]
+on:
+  release:
+    types:
+      - created
 
 jobs:    
   zip-files:
