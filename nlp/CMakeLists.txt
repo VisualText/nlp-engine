@@ -9,7 +9,7 @@ endif()
 
 file(GLOB nlp_src "*.h" "*.cpp")
 
-if (WindowsRelease)
+if (ForceRelease)
   set(CMAKE_BUILD_TYPE,Release)
 endif()
 
