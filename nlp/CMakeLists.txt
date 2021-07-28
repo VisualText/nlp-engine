@@ -11,6 +11,8 @@ file(GLOB nlp_src "*.h" "*.cpp")
 
 if (ForceRelease)
   set(CMAKE_BUILD_TYPE,Release)
+else()
+  set(CMAKE_BUILD_TYPE,Debug)
 endif()
 
 if(WIN32)
