@@ -10,7 +10,6 @@ endif()
 file(GLOB nlp_src "*.h" "*.cpp")
 
 if(WIN32)
-  set(CMAKE_BUILD_TYPE Release)
   add_executable(nlp ${nlp_src})
   target_link_libraries(nlp PUBLIC prim kbm consh words lite)
   #target_link_libraries(nlp PUBLIC prim kbm consh words lite odbc)
