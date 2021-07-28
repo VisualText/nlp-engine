@@ -14,10 +14,10 @@ jobs:
       - name: make build directory
         run: mkdir build
       - name: Cmake Configure
-        run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -S.
+        run: cmake -Bbuild -S.
 
       - name: Cmake Build all targets on Windows
-        run: cmake --build build --target nlp
+        run: cmake --build build -DWindowsRelease=ON --target nlp
         
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
