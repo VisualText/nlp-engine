@@ -9,6 +9,7 @@ endif()
 
 file(GLOB nlp_src "*.h" "*.cpp")
 
+message(STATUS "ForceRelease: ${ForceRelease}")
 if (ForceRelease)
   set(CMAKE_BUILD_TYPE,Release)
 else()
