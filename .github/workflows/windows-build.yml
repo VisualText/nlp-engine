@@ -14,7 +14,7 @@ jobs:
       - name: make build directory
         run: mkdir build
       - name: Cmake Configure
-        run: cmake -Bbuild -DForceRelease=ON -S.
+        run: cmake -Bbuild -S. -DForceRelease=ON 
 
       - name: Cmake Build all targets on Windows
         run: cmake --build build --target nlp
