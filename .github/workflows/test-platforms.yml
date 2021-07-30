@@ -18,7 +18,7 @@ jobs:
       - name: make build directory
         run: mkdir build
       - name: Cmake Configure
-        run: cmake -Bbuild --config Debug -S.
+        run: cmake -Bbuild -S.
       - name: Cmake Build all targets on Windows
         run: cmake --build build/ --target ALL_BUILD
         if: ${{ matrix.os == 'windows-latest' }}
