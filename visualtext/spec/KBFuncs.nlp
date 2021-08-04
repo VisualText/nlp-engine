@@ -66,7 +66,7 @@ ChildCount(L("con")) {
 # KBB DISPLAY FUNCTIONS
 ###############################################
 
-DisplayKB(L("top"),L("full")) {
+DisplayKB(L("top con"),L("full")) {
 	if (num(G("$passnum")) < 10) {
 		L("file") = "ana00" + str(G("$passnum"));
 	}else if (num(G("$passnum")) < 100) {
@@ -75,7 +75,6 @@ DisplayKB(L("top"),L("full")) {
 		L("file") = "ana0" + str(G("$passnum"));
 	}
 	L("file") = L("file") + ".kbb";
-	L("top con") = findconcept(findroot(),L("top"));
 	DisplayKBRecurse(L("file"),L("top con"),0,L("full"));
 	L("file") << "\n";
 	return L("top con");
