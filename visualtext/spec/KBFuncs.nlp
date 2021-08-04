@@ -39,7 +39,9 @@ IncrementCount(L("con"),L("countname")) {
 		replaceval(L("con"),L("countname"),L("count"));
 	} else {
 		addnumval(L("con"),L("countname"),1);
+		L("count") = 1;
 	}
+	return L("count");
 }
 
 TakeKB(L("filename")) {

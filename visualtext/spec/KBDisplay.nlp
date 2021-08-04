@@ -10,6 +10,6 @@
 
 # Change the passed argument to the concept you are wanting to Dump
 
-G("Some Concept") = DisplayKB(G("Some Concept"),0);
+G("Some Concept") = DisplayKB(G("Some Concept"),1);
 
 @@CODE
