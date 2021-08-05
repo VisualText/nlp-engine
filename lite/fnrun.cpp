@@ -8956,6 +8956,134 @@ return 0;
 
 
 /********************************************
+* FN:		STRSTARTSWITH
+* CR:		08/05/21 Dd.
+* SUBJ:		Checks to see if the string start with the given string.
+* RET:		True if ok, else false.
+*			UP - returns true if string has starting string, else false.
+* FORMS:	strstartswith(str,end_str)
+* NOTE:
+********************************************/
+
+bool Arun::strstartswith(
+	Nlppp *nlppp,
+	_TCHAR *name1,
+	_TCHAR *startstr
+	)
+{
+if (!nlppp || !startstr || !*startstr)
+	return false;
+
+if (!name1 || !*name1)
+	{
+	_t_strstream gerrStr;
+	gerrStr << _T("[strstartswith: Warning. Given no str.]") << ends;
+	errOut(&gerrStr,false);
+	return false;																// 08/05/21 Dd
+	}
+
+return str_starts_with(name1, startstr);
+}
+
+
+// VARIANTS.																	// 08/05/21 Dd
+bool Arun::strstartswith(														// 08/05/21 Dd.
+	Nlppp *nlppp,
+	RFASem *name1_sem,
+	_TCHAR *startstr
+	)
+{
+if (!name1_sem)
+	return false;
+if (!nlppp || !startstr || !*startstr)
+	{
+	delete name1_sem;
+	return false;
+	}
+
+_TCHAR *name1 = sem_to_str(name1_sem);
+delete name1_sem;
+if (!name1 || !*name1)
+	{
+	_t_strstream gerrStr;
+	gerrStr << _T("[strstartswith: Warning. Given no str.]") << ends;
+	errOut(&gerrStr,false);
+	return false;
+	}
+
+return str_starts_with(name1, startstr);
+}
+
+bool Arun::strstartswith(														// 08/05/21 Dd.
+	Nlppp *nlppp,
+	_TCHAR *name1,
+	RFASem *start_sem
+	)
+{
+if (!start_sem)
+	return false;
+if (!nlppp || !name1 || !*name1)
+	{
+	delete start_sem;
+	return false;
+	}
+
+_TCHAR *startstr = sem_to_str(start_sem);
+delete start_sem;
+if (!startstr || !*startstr)
+	{
+	_t_strstream gerrStr;
+	gerrStr << _T("[strstartswith: Warning. Given no str.]") << ends;
+	errOut(&gerrStr,false);
+	return false;
+	}
+
+return str_starts_with(name1, startstr);
+}
+
+bool Arun::strstartswith(														// 08/05/21 Dd.
+	Nlppp *nlppp,
+	RFASem *name1_sem,
+	RFASem *start_sem
+	)
+{
+if (!start_sem && !name1_sem)
+	return false;
+if (!start_sem)
+	{
+	delete name1_sem;
+	return false;
+	}
+if (!name1_sem)
+	{
+	delete start_sem;
+	return false;
+	}
+if (!nlppp)
+	{
+	delete name1_sem;
+	delete start_sem;
+	return false;
+	}
+
+_TCHAR *name1  = sem_to_str(name1_sem);
+_TCHAR *startstr = sem_to_str(start_sem);
+delete name1_sem;
+delete start_sem;
+if (!startstr || !*startstr || !name1 || !*name1)
+	{
+	_t_strstream gerrStr;
+	gerrStr << _T("[strstartswith: Warning. Given no str.]") << ends;
+	errOut(&gerrStr,false);
+	return false;
+	}
+
+return str_starts_with(name1, startstr);
+}
+////////////////////////////////
+////////////////////////////////
+
+/********************************************
 * FN:		STRENDSWITH
 * CR:		01/08/01 AM.
 * SUBJ:	Checks to see if the string ends with the given ending.

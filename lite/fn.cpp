@@ -651,6 +651,8 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnStrcontains(args, nlppp, /*UP*/ sem);				// 04/25/00 Dd.
 	case FNstrcontainsnocase:
 		return fnStrcontainsnocase(args, nlppp, /*UP*/ sem);		// 04/25/00 Dd.
+	case FNstrstartswith:
+		return fnStrstartswith(args, nlppp, /*UP*/ sem);				// 11/20/00 Dd.
 	case FNstrendswith:
 		return fnStrendswith(args, nlppp, /*UP*/ sem);				// 11/20/00 DD.
 	case FNstrequal:
@@ -8915,10 +8917,55 @@ return true;
 
 
 /********************************************
+* FN:		FNSTRSTARTSWITH
+* CR:		08/05/21 Dd.
+* SUBJ:		Checks to see if the string starts with the given start string.
+* RET:		True if starts with, else false.
+*			UP - returns true if string has start string, else false.
+* FORMS:	strstartswith(str,end_str)
+* NOTE:
+********************************************/
+
+bool Fn::fnStrstartswith(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+_TCHAR *name1=0;
+_TCHAR *ending=0;
+
+if (!Arg::str1(_T("strstartswith"), /*UP*/ (DELTS*&)args, name1))
+	return false;
+if (!Arg::str1(_T("strstartswith"), /*UP*/ (DELTS*&)args, ending))
+	return false;
+if (!Arg::done((DELTS*)args, _T("strstartswith"),parse))
+	return false;
+
+if (!name1)
+	{
+	_stprintf(Errbuf,_T("[strstartswith: Warning. Given no str.]"));
+	return parse->errOut(true);
+	}
+
+long endsWith = str_starts_with(name1, ending) ? 1 : 0;
+
+// Return as str type.
+sem = new RFASem(endsWith);
+
+return true;
+}
+
+
+/********************************************
 * FN:		FNSTRENDSWITH
 * CR:		11/17/00 Dd.
-* SUBJ:	Checks to see if the string ends with the given ending.
-* RET:	True if ok, else false.
+* SUBJ:		Checks to see if the string ends with the given ending.
+* RET:		True if ok, else false.
 *			UP - returns true if string has ending, else false.
 * FORMS:	strendswith(str,end_str)
 * NOTE:

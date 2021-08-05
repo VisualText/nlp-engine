@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright © 2000-2009 by Text Analysis International, Inc.
+Copyright Â© 2000-2009 by Text Analysis International, Inc.
 All rights reserved.
 ********************************************************************************
 *
@@ -1309,6 +1309,11 @@ public:
 	static _TCHAR *strtrim(Nlppp*,_TCHAR*);									// 01/08/01 AM.
 	static _TCHAR *strtrim(Nlppp*,RFASem*);								// 05/07/01 AM.
 	static _TCHAR *strtrim(Nlppp*,long);                          // 07/11/03 AM.
+	
+	static bool strstartswith(Nlppp*,_TCHAR*,_TCHAR*);				// 08/05/21 Dd.
+	static bool strstartswith(Nlppp*,RFASem*,_TCHAR*);				// 08/05/21 Dd.
+	static bool strstartswith(Nlppp*,_TCHAR*,RFASem*);				// 08/05/21 Dd.
+	static bool strstartswith(Nlppp*,RFASem*,RFASem*);				// 08/05/21 Dd.
 
 	static bool strendswith(Nlppp*,_TCHAR*,_TCHAR*);						// 01/08/01 AM.
 	static bool strendswith(Nlppp*,RFASem*,_TCHAR*);					// 04/28/01 AM.

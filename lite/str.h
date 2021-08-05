@@ -172,6 +172,7 @@ bool str_trim(																	// 11/10/00 DD.
         _TCHAR *buf                       // Supplied buffer to fill.
         );
 bool str_ends_with(_TCHAR *str, _TCHAR *ending);							// 11/20/00 DD.
+bool str_starts_with(_TCHAR *str, _TCHAR *startstr);							// 08/05/21 Dd.
 
 bool str_unescape(_TCHAR*,_TCHAR*,_TCHAR,_TCHAR*);							// 07/26/01 DD.
 bool str_escape(_TCHAR*,_TCHAR*,_TCHAR,_TCHAR*);								// 07/26/01 DD.

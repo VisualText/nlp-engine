@@ -289,6 +289,7 @@ _T("strpiece"),
 _T("strrchr"),						// FIX.	// 12/21/01 AM.
 _T("strspellcandidate"),
 _T("strspellcompare"),
+_T("strstartswith"),
 _T("strsubst"),
 _T("strtolower"),
 _T("strtotitle"),
