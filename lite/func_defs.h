@@ -295,6 +295,7 @@ enum funcDef
 	FNstrrchr,
 	FNstrspellcandidate,
 	FNstrspellcompare,
+	FNstrstartswith,
 	FNstrsubst,
 	FNstrtolower,
 	FNstrtotitle,

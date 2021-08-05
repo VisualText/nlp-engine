@@ -638,6 +638,12 @@ public:
 	  /*UP*/
 	  RFASem* &sem
 	  );
+  static bool fnStrstartswith(												// 08/05/21 DD.
+	  Delt<Iarg> *args,
+	  Nlppp *nlppp,
+	  /*UP*/
+	  RFASem* &sem
+	  );
   static bool fnStrendswith(												// 11/20/00 DD.
 	  Delt<Iarg> *args,
 	  Nlppp *nlppp,

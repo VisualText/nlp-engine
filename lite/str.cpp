@@ -2240,6 +2240,47 @@ return true;
 
 
 /********************************************
+* FN:		STR_STARTS_WITH
+* CR:		08/05/21 Dd.
+* SUBJ:		Checks to see if the string starts with the substring
+* RET:		True if the string starts with substring, else false.
+* NOTE:		All strings are unsigned.
+********************************************/
+
+bool str_starts_with(_TCHAR *str, _TCHAR *startstr)
+{
+
+if (empty(str) || empty(startstr))
+	return false;
+long slen = _tcsclen(str);
+long elen = _tcsclen(startstr);
+if (slen < elen)
+	return false;
+_TCHAR *ptr;
+_TCHAR *endPtr;
+_TCHAR *startPtr;
+ptr = &(str[0]);
+startPtr = &(startstr[0]);
+endPtr = &(startstr[elen-1]);
+bool matched = false;
+
+for (;;)
+	{
+	if (*ptr == *startPtr)
+		{
+		if (startPtr == endPtr)
+			return true;
+		++startPtr;
+		++ptr;
+		}
+	else
+		return false;
+	}
+return false;
+}
+
+
+/********************************************
 * FN:		STR_ENDS_WITH
 * CR:		11/17/00 Dd.
 * SUBJ:	Checks to see if the string ends in the substring
