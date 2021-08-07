@@ -89,7 +89,7 @@ DisplayKBRecurse(L("file"),L("top"),L("level"),L("full")) {
 	L("con") = down(L("top"));
 	while (L("con")) {
 		L("file") << SpacesStr(L("level")+1) << conceptname(L("con"));
-		DisplayAttributes(L("file"),L("con"),L("full"));
+		DisplayAttributes(L("file"),L("con"),L("full"),L("level"));
 		L("file") << "\n";
 		if (down(L("con"))) {
 			L("lev") = 1;
@@ -100,7 +100,7 @@ DisplayKBRecurse(L("file"),L("top"),L("level"),L("full")) {
 	}
 }
 
-DisplayAttributes(L("file"),L("con"),L("full")) {
+DisplayAttributes(L("file"),L("con"),L("full"),L("level")) {
 	L("attrs") = findattrs(L("con"));
 	if (L("attrs")) L("file") << ": ";
 	if (L("full") && L("attrs")) L("file") << "\n";
