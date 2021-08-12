@@ -739,10 +739,9 @@ switch (typ)
 				}
 				
 				VAL *vals = cg_->findVals(con, buf);
-				if (vals) {
-					_TCHAR *strattr, *strval;
-					parse_->internStr(buf, strattr);
-
+				_TCHAR *strattr, *strval;
+				parse_->internStr(buf, strattr);
+				if (vals && _tcscmp(_T("pos"),strattr)) {
 					if (cg_->isValStr(vals)) {
 						cg_->popSval(vals,bufval);
 						parse_->internStr(bufval, strval);
