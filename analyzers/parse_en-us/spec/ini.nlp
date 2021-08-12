@@ -3,7 +3,7 @@
 # SUBJ: Initializations.
 # AUTH: AM
 # CREATED: 05/Jul/04 20:07:12
-# ANALYZER: TAIPARSE is a general analyzer of English text.
+# ANALYZER: Parse_EN-US is a general analyzer of English text.
 ###############################################
 
 @CODE

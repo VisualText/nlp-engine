@@ -179,9 +179,10 @@ public:
 	bool findVal(CONCEPT *con, _TCHAR *attr, /*UP*/ float &val);	// 08/16/01 AM.
 	bool findVal(CONCEPT *con,_TCHAR *attr,/*UP*/CONCEPT* &val);	// 08/12/00 AM.
 	_TCHAR *strVal(CONCEPT *conc, _TCHAR *s_attr);						// 11/12/00 AM.
-	bool isValConcept(VAL* &vals);						// 06/03/02 Dd.
+	bool isValCon(VAL* &vals);						// 08/11/21 Dd.
+	bool isValStr(VAL* &vals);						// 08/11/21 Dd.
+	bool isValNum(VAL* &vals);						// 08/11/21 Dd.
 
-	
 	// Look for an attribute up the hierarchy. (INHERIT).
 	// hier is the top of the concept hierarchy to be searched.
 	// hier = 0 means search up to root of the entire tree.
