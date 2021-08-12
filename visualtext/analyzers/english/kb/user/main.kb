@@ -10,4 +10,5 @@ take "kb/user/attr5.kb"
 take "kb/user/attr6.kb"
 take "kb/user/attr7.kb"
 take "kb/user/attr8.kb"
+take "kb/user/numbers.kb"
 quit
