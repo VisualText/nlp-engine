@@ -84,7 +84,7 @@ if (L("sem1") == "city")
 # FUNC:	DOMOBJECTREGISTER
 # SUBJ:	Domain- and task-specific register of object.
 # NOTE: Domain functions calling generic functions.
-#	The reverse of previous implementations in TAIParse.
+#	The reverse of previous implementations in Parse_EN-US.
 #	This lets us do domain and task stuff as we like.
 #	(One could go domain-to-generic or generic-to-domain, etc.)
 ########

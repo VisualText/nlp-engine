@@ -1688,13 +1688,35 @@ val = ptr->v.vcon;
 }
 
 // 6/3/02 Dd.
-bool CG::isValConcept(VAL* &vals)
+bool CG::isValCon(VAL* &vals)
 {
 if (!vals)
 	return false;
 PTR *ptr;
 ptr = (PTR *) vals;
 if (ptr->kind != pCON)
+	return false;
+return true;
+}
+
+bool CG::isValStr(VAL* &vals)
+{
+if (!vals)
+	return false;
+PTR *ptr;
+ptr = (PTR *) vals;
+if (ptr->kind != pST)
+	return false;
+return true;
+}
+
+bool CG::isValNum(VAL* &vals)
+{
+if (!vals)
+	return false;
+PTR *ptr;
+ptr = (PTR *) vals;
+if (ptr->kind != pNUM)
 	return false;
 return true;
 }

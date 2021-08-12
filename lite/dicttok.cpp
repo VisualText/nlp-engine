@@ -691,53 +691,73 @@ switch (typ)
 			replaceNum(node,_T("TABS"),tabs_);
 		prevwh_ = false;
 		lines_ = tabs_ = 0;
-		if (lcstr && *lcstr)
-		  {
-		  int pos_num = 0;	// Count parts of speech.
-		  con = cg_->findWordConcept(lcstr);	// dictfindword.
-		  _TCHAR *attr = _T("pos");
-			VAL *vals = cg_->findVals(con, attr);
-			_TCHAR *val;
-			while (vals)
-				{
-				val = popsval(vals);
-				// Some kb editing.
-				if (!_tcscmp(_T("adjective"),val))
-					val = _T("adj");
-				else if (!_tcscmp(_T("adverb"),val))
-					val = _T("adv");
-				else if (!_tcscmp(_T("pronoun"),val))
-					val = _T("pro");
-				else if (!_tcscmp(_T("conjunction"),val))
-					val = _T("conj");
-				// TODO: Look for COLON as first char, copy attr and VALUE.
-				replaceNum(node,val,1);
-				++pos_num;
-				vals = cg_->nextVal(vals);
-				}
-			if (pos_num) replaceNum(node,_T("pos num"),pos_num);
-			// MORE ATTRS ONTO ALPHA NODE.
-			if (!_tcscmp(str,lcstr))
-				{
-				replaceNum(node,_T("lower"),1);	// LOWERCASE.
-				++totlowers_;
-				}
-			else
-				{
-				++totcaps_;
-				replaceNum(node,_T("cap"),1);
-				// CHECK UPPERCASE HERE.
-				_TCHAR ucstr[MAXSTR];
-				str_to_upper(str, ucstr);
-				if (!_tcscmp(str,ucstr))
-					{
-					++totuppers_;
-					replaceNum(node,_T("upper"),1);
+
+		if (lcstr && *lcstr) {
+			int pos_num = 0;	// Count parts of speech.
+			con = cg_->findWordConcept(lcstr);	// dictfindword.
+			ATTR *attrs = cg_->findAttrs(con);
+			_TCHAR buf[NAMESIZ];
+			_TCHAR bufval[NAMESIZ];
+
+			while (attrs) {
+				cg_->attrName(attrs, buf, NAMESIZ);
+				if (!_tcscmp(_T("pos"),buf)) {
+					VAL *vals = cg_->findVals(con, _T("pos"));
+					_TCHAR *val;
+					while (vals) {
+						val = popsval(vals);
+						// Some kb editing.
+						if (!_tcscmp(_T("adjective"),val))
+							val = _T("adj");
+						else if (!_tcscmp(_T("adverb"),val))
+							val = _T("adv");
+						else if (!_tcscmp(_T("pronoun"),val))
+							val = _T("pro");
+						else if (!_tcscmp(_T("conjunction"),val))
+							val = _T("conj");
+						// TODO: Look for COLON as first char, copy attr and VALUE.
+						replaceNum(node,val,1);
+						++pos_num;
+						vals = cg_->nextVal(vals);
 					}
 				}
 
+				if (!_tcscmp(str,lcstr)) {
+					replaceNum(node,_T("lower"),1);	// LOWERCASE.
+					++totlowers_;
+				}
+				else {
+					++totcaps_;
+					replaceNum(node,_T("cap"),1);
+					// CHECK UPPERCASE HERE.
+					_TCHAR ucstr[MAXSTR];
+					str_to_upper(str, ucstr);
+					if (!_tcscmp(str,ucstr)) {
+						++totuppers_;
+						replaceNum(node,_T("upper"),1);
+					}
+				}
+				
+				VAL *vals = cg_->findVals(con, buf);
+				if (vals) {
+					_TCHAR *strattr, *strval;
+					parse_->internStr(buf, strattr);
+
+					if (cg_->isValStr(vals)) {
+						cg_->popSval(vals,bufval);
+						parse_->internStr(bufval, strval);
+						replaceStr(node,strattr,strval);
+					} else if (cg_->isValNum(vals)) {
+						long num = 0L;
+						cg_->popVal(vals,num);
+						replaceNum(node,strattr,num);	
+					} else
+						cg_->nextVal(vals);
+				}
+				cg_->popAttr(attrs);
+			}
 //		  _TCHAR *val = KB::strVal(con,attr,cg_,htab_);
-		  }
+		}
 		break;
 	case PNNUM:	// Placed here for easy reference.
 		++totnums_;

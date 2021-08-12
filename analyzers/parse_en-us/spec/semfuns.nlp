@@ -2075,7 +2075,7 @@ pnreplaceval(L("n"),"nsenses",L("tot"));
 
 
 ####################################
-### FROM KBLOAD PASS (TAIPARSE)
+### FROM KBLOAD PASS (Parse_EN-US)
 ####################################
 ########
 # FUNC:	DICTATTR
