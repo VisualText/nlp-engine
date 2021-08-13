@@ -1494,25 +1494,6 @@ return prosify(L("root"),"text");
 }
 
 ##############
-## STRSTARTSWITH
-## SUBJ: See if string starts with given substr.
-## RET:	1 if so, else 0.
-## NOTE:	NLP++ should have this, analogous to strendswith.
-##############
-
-strstartswith(L("str"),L("substr"))
-{
-if (!L("str") || !L("substr"))
-  return 0;
-L("len") = strlength(L("substr"));
-if (strlength(L("str")) < L("len"))
-  return 0;
-if (strpiece(L("str"),0,L("len")-1) == L("substr"))
-  return 1;
-return 0;
-}
-
-##############
 ## STRDETAG
 ## SUBJ: Get rid of HTML tags from a string.
 ## RET:	str = trimmed string.
@@ -3855,7 +3836,7 @@ if (!L("str"))
   return 0;
 #"depx.txt" << L("str") << "   <=>   ";
 L("str") = strsubst(L("str"),"'"," ");
-L("str") = strsubst(L("str"),"’"," ");	# 03/04/13 AM.
+L("str") = strsubst(L("str"),"ï¿½"," ");	# 03/04/13 AM.
 L("str") = strsubst(L("str"),"."," ");
 L("str") = strsubst(L("str"),"-"," ");
 L("str") = strsubst(L("str"),"_"," ");
