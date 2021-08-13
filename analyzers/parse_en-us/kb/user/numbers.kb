@@ -264,9 +264,26 @@ ind attr
 0
 "concept" "sys" "dict" "a" "n" "nu" "numeric"
 pnum
-100000
+1000000
+end ind
+
+
+ind attr
+"concept" "sys" "dict" "a" "b" "bi" "billion"
+0
+"concept" "sys" "dict" "a" "n" "nu" "numeric"
+pnum
+1000000000
+end ind
+
+
+ind attr
+"concept" "sys" "dict" "a" "t" "ti" "trillion"
+0
+"concept" "sys" "dict" "a" "n" "nu" "numeric"
+pnum
+1000000000000
 end ind
 
 
 quit
-
