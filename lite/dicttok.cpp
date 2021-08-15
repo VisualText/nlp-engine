@@ -693,7 +693,7 @@ switch (typ)
 		lines_ = tabs_ = 0;
 
 		if (lcstr && *lcstr) {
-			int pos_num = 0;	// Count parts of speech.
+
 			con = cg_->findWordConcept(lcstr);	// dictfindword.
 			ATTR *attrs = cg_->findAttrs(con);
 			_TCHAR buf[NAMESIZ];
@@ -704,6 +704,7 @@ switch (typ)
 				if (!_tcscmp(_T("pos"),buf)) {
 					VAL *vals = cg_->findVals(con, _T("pos"));
 					_TCHAR *val;
+					int pos_num = 0;	// Count parts of speech.
 					while (vals) {
 						val = popsval(vals);
 						// Some kb editing.
@@ -720,6 +721,7 @@ switch (typ)
 						++pos_num;
 						vals = cg_->nextVal(vals);
 					}
+					if (pos_num) replaceNum(node,_T("pos num"),pos_num);
 				}
 
 				if (!_tcscmp(str,lcstr)) {
@@ -755,6 +757,7 @@ switch (typ)
 				}
 				cg_->popAttr(attrs);
 			}
+			
 //		  _TCHAR *val = KB::strVal(con,attr,cg_,htab_);
 		}
 		break;
