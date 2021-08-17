@@ -696,7 +696,7 @@ wsprintf(fname, _T("%s%c%s%s%d%s"),
 		 prefix,
 		 ((num < 10) ? _T("00") : (num < 100) ? _T("0") : _T("")),
 		 num,
-		_T(".log")
+		_T(".tree")
 		);
 #else
 #ifdef LINUX
@@ -709,7 +709,7 @@ sprintf_s(fname, _T("%s%c%s%s%d%s"),
 		 prefix,
 		 ((num < 10) ? _T("00") : (num < 100) ? _T("0") : _T("")),
 		 num,
-		_T(".log")
+		_T(".tree")
 		);
 #endif
 	fileOut(fname, /*DU*/ fout, sout);
@@ -793,22 +793,22 @@ _TCHAR fname[MAXSTR*2];
 // G++ BUGS.	// 03/08/00 AM.
 //ostringstream *outStr = 0;													// 03/08/00 AM.
 //outStr = new ostringstream(fname, MAXSTR, ios::out);				// 03/08/00 AM.
-//*outStr << getOutdir() << "\\final.log" << ends;					// 03/08/00 AM.
+//*outStr << getOutdir() << "\\final.tree" << ends;					// 03/08/00 AM.
 
 #ifdef UNICODE
-wsprintf(fname, _T("%s%c%s"), getOutdir(), DIR_CH, _T("final.log"));
+wsprintf(fname, _T("%s%c%s"), getOutdir(), DIR_CH, _T("final.tree"));
 #else
 #ifdef LINUX
-sprintf(fname, _T("%s%c%s"), getOutdir(), DIR_CH, _T("final.log"));
+sprintf(fname, _T("%s%c%s"), getOutdir(), DIR_CH, _T("final.tree"));
 #else
-sprintf_s(fname, _T("%s%c%s"), getOutdir(), DIR_CH, _T("final.log"));
+sprintf_s(fname, _T("%s%c%s"), getOutdir(), DIR_CH, _T("final.tree"));
 #endif
 #endif
 fileOut(fname, /*DU*/ fout, sout);										// 03/08/00 AM.
 
 // TRYING SOMETHING NEW HERE... // 02/26/05 AM.
 // _t_strstream outStr;
-// outStr << getOutdir() << DIR_CH << _T("final.log") << ends;
+// outStr << getOutdir() << DIR_CH << _T("final.tree") << ends;
 // fileOut(&outStr, /*DU*/ fout, sout);
 
 //prettyPassnum(num, pretname);
