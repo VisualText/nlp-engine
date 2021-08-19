@@ -38,7 +38,7 @@ MIT License
 
 
 NLP_ENGINE::NLP_ENGINE(
-    _TCHAR *workingFolder,
+    string workingFolder,
 	bool silent
 	)
 {
@@ -46,10 +46,10 @@ NLP_ENGINE::NLP_ENGINE(
 
     static _TCHAR logfile[MAXSTR];
     static _TCHAR rfbdir[MAXSTR];
-    if (workingFolder) {
-        _stprintf(m_workingFolder,_T("%s"),workingFolder);
-        _stprintf(logfile,"%s%s%s",workingFolder,DIR_STR,_T("vtrun_logfile.out"));
-        _stprintf(rfbdir,"%s%sdata%srfb%sspec",workingFolder,DIR_STR,DIR_STR,DIR_STR);
+    if (!workingFolder.empty()) {
+        _stprintf(m_workingFolder,_T("%s"),workingFolder.c_str());
+        _stprintf(logfile,"%s%s%s",workingFolder.c_str(),DIR_STR,_T("vtrun_logfile.out"));
+        _stprintf(rfbdir,"%s%sdata%srfb%sspec",workingFolder.c_str(),DIR_STR,DIR_STR,DIR_STR);
     } else {
         _stprintf(logfile,"%s",_T("vtrun_logfile.out"));
         _stprintf(rfbdir,"data/rfb/spec");

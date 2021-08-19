@@ -50,7 +50,7 @@ class LITE_API NLP_ENGINE
 
 public:
 	NLP_ENGINE(
-        _TCHAR *workingFolder = NULL,
+        string workingFolder,
         bool silent=false
  	);
 
