@@ -19,7 +19,7 @@ elif [ $# != 0 ];then
 fi
 
 # Get the git repository version number
-REPO=$(git describe --dirty --always)
+REPO=$(git describe --tags)
 
 # Get the build time stamp
 WHEN=$(date +"%Y-%m-%d %H:%M:%S")

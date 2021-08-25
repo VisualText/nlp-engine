@@ -116,9 +116,9 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 			else if (!strcmp_i(ptr, _T("version")))
 				{
 #ifdef LINUX
-				_t_cout << "Version " << Version() << std::endl;
+				_t_cout << Version() << std::endl;
 #else
-				_t_cout << _T("1.7.4") << endl;
+				_t_cout << _T("1.7.5") << endl;
 #endif
 				return false;
 				}
