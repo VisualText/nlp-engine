@@ -1,5 +1,7 @@
 #include_directories(/usr/local/libiodbc-3.52.12/include)
 
+set(VERSION ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/version.o)
+
 add_definitions( -DNLP_EXPORTS )
 if(WIN32)
   add_definitions( -DMSVC_VERSION=${MSVC_VERSION} -D_CRT_SECURE_NO_WARNINGS )
@@ -21,9 +23,14 @@ if(WIN32)
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE}/nlp.exe ${CMAKE_SOURCE_DIR})
 else()
   add_executable(nlp.exe ${nlp_src})
-  target_link_libraries(nlp.exe PUBLIC prim kbm consh words lite)
+  target_link_libraries(nlp.exe PUBLIC prim kbm consh words lite ${VERSION})
   #target_link_libraries(nlp.exe PUBLIC prim kbm consh words lite odbc)
-  add_custom_command(TARGET nlp.exe POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/bin/nlp.exe ${CMAKE_SOURCE_DIR})
+  execute_process(COMMAND touch ${VERSION})
+  add_custom_command(TARGET nlp.exe
+    PRE_LINK COMMAND bash ${CMAKE_SOURCE_DIR}/nlp/makeversion.sh -o ${VERSION}
+  )
+  add_custom_command(TARGET nlp.exe
+    POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/bin/nlp.exe ${CMAKE_SOURCE_DIR}
+  )
 endif()
 

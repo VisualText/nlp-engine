@@ -13,6 +13,7 @@ All rights reserved.
 *******************************************************************************/
 
 #include "lite/nlp_engine.h"
+#include "version.h"
 
 bool cmdReadArgs(int,_TCHAR*argv[],_TCHAR*&,_TCHAR*&,_TCHAR*&,_TCHAR*&,bool&,bool&,bool&);
 void cmdHelpargs(_TCHAR*);
@@ -114,7 +115,11 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 				}
 			else if (!strcmp_i(ptr, _T("version")))
 				{
-				_t_cerr << _T("[Not implemented yet: --version") << endl;
+#ifdef LINUX
+				_t_cout << "Version " << Version() << std::endl;
+#else
+				_t_cout << _T("1.7.4") << endl;
+#endif
 				return false;
 				}
 		}
