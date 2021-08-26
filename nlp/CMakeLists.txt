@@ -17,8 +17,12 @@ endif()
 
 if(WIN32)
   add_executable(nlp ${nlp_src})
-  target_link_libraries(nlp PUBLIC prim kbm consh words lite)
+  target_link_libraries(nlp PUBLIC prim kbm consh words lite ${VERSION})
+  execute_process(COMMAND touch ${VERSION})
   #target_link_libraries(nlp PUBLIC prim kbm consh words lite odbc)
+  add_custom_command(TARGET nlp
+    PRE_LINK COMMAND cmd ${CMAKE_SOURCE_DIR}/nlp/makeversion.bat -o ${VERSION} ${CMAKE_CXX_COMPILER}
+  )
   add_custom_command(TARGET nlp POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE}/nlp.exe ${CMAKE_SOURCE_DIR})
 else()
