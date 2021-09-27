@@ -1,1 +1,0 @@
-This directory is for the function kbdumptree. The engine should create this but sometimes permission problems arrise.

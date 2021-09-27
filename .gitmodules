@@ -1,0 +1,3 @@
+[submodule "analyzers"]
+	path = analyzers
+	url = https://github.com/VisualText/analyzers.git
