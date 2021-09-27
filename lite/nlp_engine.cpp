@@ -181,8 +181,10 @@ int NLP_ENGINE::init(
     _TCHAR* tmp = _T(".\\tmp");
 #endif
     _stprintf(m_logfile, _T("%s%cvisualtext.log"),tmp,DIR_CH);
-    NLP_ENGINE::createDir(tmp);
-    _t_cout << _T("[log file: ") << m_logfile << _T("]") << endl;
+    if (!silent) {
+        NLP_ENGINE::createDir(tmp);
+        _t_cout << _T("[log file: ") << m_logfile << _T("]") << endl;
+    }
 
     _stprintf(m_specdir, _T("%s%sspec"), m_anadir, DIR_STR);
     _t_cout << _T("[spec directory: ") << m_specdir << _T("]") << endl;
@@ -191,8 +193,10 @@ int NLP_ENGINE::init(
     _t_cout << _T("[spec file: ") << m_seqfile << _T("]") << endl;
  
     _stprintf(m_outdir, _T("%s%s%s"), m_anadir,DIR_STR,_T("output"));
-    NLP_ENGINE::createDir(m_outdir);
-    _t_cout << _T("[output directory: ") << m_outdir << _T("]") << endl;
+    if (!silent) {
+        NLP_ENGINE::createDir(m_outdir);
+        _t_cout << _T("[output directory: ") << m_outdir << _T("]") << endl;
+    }
 
     /////////////////////////////////////////////////
     // INITIALIZE VISUALTEXT RUNTIME SYSTEM                        // 08/27/02 AM.
@@ -319,7 +323,7 @@ int NLP_ENGINE::analyze(
                 create = false;
             }
         }
-        if (create) {
+        if (!silent && create) {
             _stprintf(m_outdir, _T("%s_log"),file);
             NLP_ENGINE::createDir(m_outdir);
         }
