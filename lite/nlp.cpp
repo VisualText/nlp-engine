@@ -1735,7 +1735,7 @@ void NLP::analyze(
 
 // To avoid any output string stream bugs, keeping this			// 05/11/02 AM.
 // object here. (G++ bug reported way back.)							// 05/11/02 AM.
-
+outbuf[0] = L'\0';
 #ifdef LINUX
 // How to return to outbuf.	// 10/26/06 AM.
 //_t_ostrstream ocbuf;
