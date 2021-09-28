@@ -49,6 +49,7 @@ if (!cmdReadArgs(argc,argv,analyzerpath,input,output,workdir,develop,compiled,si
 
 NLP_ENGINE *nlpEngine = new NLP_ENGINE(workdir);
 nlpEngine->analyze(analyzerpath,input,output,develop,silent,compiled);
+delete nlpEngine;
 
 }
 
