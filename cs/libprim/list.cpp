@@ -458,7 +458,7 @@ _TCHAR* ALIST::list_pop_buf(
 	LIST* tmp;
 
 	if (!list || !*list)
-		return((long)0);
+		return(nullptr);
 	tmp = *list;
 	*list = tmp->next;
 	return(&buf[tmp->val]);
