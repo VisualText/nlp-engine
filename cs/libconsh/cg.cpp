@@ -532,7 +532,7 @@ bool CG::writeKBmain(
 	_TCHAR *suff		// File suffix.
 	)
 {
-_TCHAR o_main[FNAMESIZ];
+_TCHAR o_main[4096];
 _stprintf(o_main, _T("%s%cmain.%s"), path, DIR_CH, suff);
 _t_ofstream f_main(TCHAR2A(o_main));
 
