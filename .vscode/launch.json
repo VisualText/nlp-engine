@@ -5,11 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "TAIParse",
+            "name": "Parse EN-US",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/nlp.exe",
-            "args": ["-ANA","${workspaceFolder}/analyzers/taiparse","-WORK","${workspaceFolder}","${workspaceFolder}/analyzers/taiparse/input/doj.txt","-DEV"],
+            "args": ["-ANA","${workspaceFolder}/analyzers/parse-en-us","-WORK","${workspaceFolder}","${workspaceFolder}/analyzers/parse-en-us/input/doj.txt","-DEV"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
