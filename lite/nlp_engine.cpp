@@ -547,7 +547,9 @@ int NLP_ENGINE::readFiles(_TCHAR *path)
 
         // Find the first file in the directory.
 
-        hFind = FindFirstFile(path, &ffd);
+        _TCHAR fullPath[MAXPATH*3];
+        _stprintf(fullPath, _T("%s%s%s"),path,DIR_STR,_T("*"));
+        hFind = FindFirstFile(fullPath, &ffd);
 
         if (INVALID_HANDLE_VALUE == hFind) 
         {
@@ -562,7 +564,8 @@ int NLP_ENGINE::readFiles(_TCHAR *path)
             }
             else if (ffd.cFileName[0] != '.')
             {
-                m_files.push_back(ffd.cFileName);
+                _stprintf(fullPath, _T("%s%s%s"),path,DIR_STR,ffd.cFileName);
+                m_files.push_back(fullPath);
             }
         }
         while (FindNextFile(hFind, &ffd) != 0);

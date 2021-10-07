@@ -43,7 +43,7 @@
             ]
         },
         {
-            "name": "Corp Dir",
+            "name": "Corp Dir (linux)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/nlp.exe",
@@ -53,6 +53,24 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "Corp Dir (win)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}\\bin/Debug\\nlp.exe",
+            "args": ["-ANA","${workspaceFolder}/analyzers/corporate","-WORK","${workspaceFolder}","${workspaceFolder}/analyzers/corporate/input/Dev","-DEV"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
