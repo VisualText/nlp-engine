@@ -34,7 +34,7 @@ WHERE=$(hostname)
 WHAT=$(uname -sr)
 
 # Put it all together
-VERSION="$REPO (built $WHEN by $WHO on $WHERE with $WHAT)"
+VERSION="built $WHEN by $WHO on $WHERE with $WHAT\n$REPO"
 
 # Output the version number to the build log
 echo "Building version $VERSION" >&2
