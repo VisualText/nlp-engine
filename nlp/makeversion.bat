@@ -12,5 +12,5 @@ FOR /F "tokens=*" %%F IN ('git.exe tag ^| sort -V ^| tail -1') DO (
 echo // This file was created on %datestr%
 echo // Do not edit - do not add to git
 echo char const *Version() {
-echo     return "v1.9.2";
+echo     return "%version%";
 echo }

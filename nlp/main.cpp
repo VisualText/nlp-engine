@@ -116,7 +116,11 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 				}
 			else if (!strcmp_i(ptr, _T("version")))
 				{
-				_t_cout << Version() << std::endl;
+#ifdef LINUX
+				_t_cout << "Version " << Version() << std::endl;
+#else
+				_t_cout << _T("1.9.2") << endl;
+#endif
 				return false;
 				}
 		}
