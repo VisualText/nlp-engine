@@ -4,6 +4,7 @@ set(VERSION ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/version.o)
 
 add_definitions( -DNLP_EXPORTS )
 if(WIN32)
+  execute_process(COMMAND cmd /c ${CMAKE_SOURCE_DIR}/nlp/makeversion.bat > ${CMAKE_SOURCE_DIR}/nlp/version.cpp)
   add_definitions( -DMSVC_VERSION=${MSVC_VERSION} -D_CRT_SECURE_NO_WARNINGS )
 else()
   add_definitions( -DLINUX -Wno-write-strings -Wno-deprecated)
