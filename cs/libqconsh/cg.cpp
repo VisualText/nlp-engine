@@ -455,9 +455,9 @@ _stprintf(o_word, _T("%s%cword.%s"), path, DIR_CH, suff);
 _stprintf(o_phr,  _T("%s%cphr.%s"),  path, DIR_CH, suff);
 
 // Open the files for output.
-_t_ofstream f_hier(TCHAR2A(o_hier));
-_t_ofstream f_word(TCHAR2A(o_word));
-_t_ofstream f_phr(TCHAR2A(o_phr));
+_t_ofstream f_hier(o_hier);
+_t_ofstream f_word(o_word);
+_t_ofstream f_phr(o_phr);
 
 // May open multiples of these as needed.								// 07/01/03 AM.
 long n_attr = 1;	// Count attr#.kb files.							// 07/01/03 AM.
@@ -2878,9 +2878,9 @@ _stprintf(o_attr, _T("%s%cattr.%s"), path, DIR_CH, suff);
 _stprintf(o_phr,  _T("%s%cphr.%s"),  path, DIR_CH, suff);
 
 // Open the files for output.
-_t_ofstream f_hier(TCHAR2A(o_hier));
-_t_ofstream f_word(TCHAR2A(o_word));
-_t_ofstream f_phr(TCHAR2A(o_phr));
+_t_ofstream f_hier(o_hier);
+_t_ofstream f_word(o_word);
+_t_ofstream f_phr(o_phr);
 
 _t_ofstream *f_attr = new _t_ofstream(TCHAR2A(o_attr));	// 07/01/03 AM.
 
@@ -2922,13 +2922,13 @@ f_phr  << endl << _T("quit") << endl << endl;
 // Do the catenate in C++.
 _TCHAR buf[MAXLN];
 _t_ofstream *f_dump = new _t_ofstream(TCHAR2A(file));	// Final output file.
-_t_ifstream *f_in = new _t_ifstream(TCHAR2A(o_hier));
+_t_ifstream *f_in = new _t_ifstream(o_hier);
 while (f_in->getline(buf, MAXLN))		// Copy first file.
 	*f_dump << buf << endl;
 delete f_in;
 
 *f_dump << endl;								// Separate commands.
-f_in = new _t_ifstream(TCHAR2A(o_word));
+f_in = new _t_ifstream(o_word);
 while (f_in->getline(buf, MAXLN))		// Copy first file.
 	*f_dump << buf << endl;
 delete f_in;
@@ -2940,7 +2940,7 @@ while (f_in->getline(buf, MAXLN))		// Copy first file.
 delete f_in;
 
 *f_dump << endl;								// Separate commands.
-f_in = new _t_ifstream(TCHAR2A(o_phr));
+f_in = new _t_ifstream(o_phr);
 while (f_in->getline(buf, MAXLN))		// Copy first file.
 	*f_dump << buf << endl;
 delete f_in;

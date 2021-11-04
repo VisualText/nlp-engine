@@ -121,7 +121,7 @@ dest = this;
 #ifdef IPOST_OVERRIDE_
 _t_ostream &STDOPERATOR<<(_t_ostream &output, Iaction &action)
 {
-#ifndef UNICODE
+#ifndef ANYTHINGGOES
 output << str(action.name) << _T("(") << action.args << _T(")") << endl;
 #else
 char *lpstr8;																	// 01/28/06 AM.

@@ -489,7 +489,7 @@ lineflag = false;	// RESET end of line tracker.	// 08/16/11 AM.
 
 if (alphabetic(*ptr))						// 09/22/99 AM.
 	{
-#ifdef UNICODE
+#ifdef OLDSTUFF
 	 short u_gcb = u_getIntPropertyValue((UChar32)*ptr, UCHAR_GRAPHEME_CLUSTER_BREAK);	// 01/30/06 AM.
 	 short new_gcb = 0;
 
@@ -506,7 +506,7 @@ if (alphabetic(*ptr))						// 09/22/99 AM.
 	++ptr;		// 11/05/99 AM.
 	++end;		// 11/05/99 AM.
 
-#ifdef UNICODE
+#ifdef OLDSTUFF
 //	while (alphabetic(*ptr) && ((*ptr >= 'a' && *ptr <= 'z') || (*ptr >= 'A' && *ptr <= 'Z')))
 //   while (alphabetic(*ptr) && ! u_hasBinaryProperty((_TUCHAR)*ptr, UCHAR_WORD_BREAK))
 	while (alphabetic_extend(*ptr,u_gcb,u_wb,u_script,/*UP*/new_gcb,new_wb,new_script))

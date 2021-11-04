@@ -286,7 +286,7 @@ sprintf_s(fname, _T("%s%c%s%s"), dir, DIR_CH, rules_file_name_, _T(".nlp"));
 //_t_ostrstream outStr(fname, MAXSTR, ios::out);							// 03/08/00 AM.
 //outStr << dir << DIR_CH << rules_file_name_ << _T(".nlp") << ends; // 03/08/00 AM.
 #endif
-_t_ofstream fout(TCHAR2CA(fname), ios::out);											// 03/08/00 AM.
+_t_ofstream fout(fname, ios::out);										// 03/08/00 AM.
 
 
 _TCHAR fhead[1024];

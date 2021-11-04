@@ -229,7 +229,7 @@ bool
 f_exists(_TCHAR *fil)
 {
 //ifstream x(fil, ios::in | ios::nocreate);
-_t_ifstream x(TCHAR2A(fil), ios::in);									// Upgrade.	// 01/24/01 AM.
+_t_ifstream x(fil, ios::in);									// Upgrade.	// 01/24/01 AM.
 if (x)
 	return true;
 else

@@ -233,7 +233,7 @@ int String::getLength() const { return length_; }
 // Overloaded output operator.
 _t_ostream &STDOPERATOR<<(_t_ostream &output, const String &s)
 {
-#ifndef UNICODE
+#ifndef ANYTHINGGOES
 output << s.sptr_;
 #else
 char *lpstr8;																	// 01/28/06 AM.

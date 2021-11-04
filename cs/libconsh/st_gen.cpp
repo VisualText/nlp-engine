@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									ST_GEN.C
 *
-* FILE:	consh.¹/st_gen.c
+* FILE:	consh.ï¿½/st_gen.c
 * SUBJ:	Generate string table code for Consh.
 * CR:	5/07/95 AM.
 * NOTE:	9/25/95 AM. Moved from st.c .
@@ -90,7 +90,7 @@ for (ii = 0; ii <= seg_curr; ii++)
    _stprintf(s_nam, _T("%s%s%s.cpp%s"), dir, DIR_SEP, s_tab, tail);
    //if (!file_open(s_nam, "w", &fp))
    //   return;
-	fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+	fp = new _t_ofstream(s_nam);			// 04/20/99 AM.
    gen_file_head(fp);
 // LINUX: Need to resolve to same capitalization in file name.	// 03/23/19 AM.
 #ifdef LINUX
@@ -182,7 +182,7 @@ for (ii = seg_curr + 1; ii < segs_tot; ii++)
    _stprintf(s_nam, _T("%s%s%s.cpp"), dir, DIR_SEP, s_tab);
    //if (!file_open(s_nam, "w", &fp))
    //  return;
-	fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+	fp = new _t_ofstream(s_nam);			// 04/20/99 AM.
 
    gen_file_head(fp);
    gen_array_def(_T("_TCHAR"), s_tab, siz, fp);	/* Array definition. */
@@ -217,7 +217,7 @@ segs_tot = cg->ast_->st_segs_tot();
 _stprintf(s_nam, _T("%s%s%s_ini.h%s"), dir, DIR_SEP, consh_ST_BASE, tail);
 //if (!file_open(s_nam, "w", &fp))
 //   return;
-fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+fp = new _t_ofstream(s_nam);			// 04/20/99 AM.
 
 gen_file_head(fp);
 
@@ -267,7 +267,7 @@ tsize		= cg->ast_->st_seg_size();
 _stprintf(s_nam, _T("%s%s%s_ini.cpp%s"), dir, DIR_SEP, tbase, tail);
 //if (!file_open(s_nam, "w", &fp))
 //   return;
-fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+fp = new _t_ofstream(s_nam);			// 04/20/99 AM.
 
 gen_file_head(fp);
 

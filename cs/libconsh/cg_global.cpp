@@ -47,7 +47,7 @@ _t_ofstream *cgerr = 0;	// 07/18/03 AM.
 
 void cgfileOut(_TCHAR *fname, /*DU*/ _t_ofstream* &fout, _t_ostream* &sout)
 {
-fout = new _t_ofstream(TCHAR2A(fname), ios::out);
+fout = new _t_ofstream(fname, ios::out);
 sout = cgout;				// Save current output stream.
 cgout = fout;				// Bind output to file.
 }
@@ -80,7 +80,7 @@ void cgfileErr(_TCHAR *fname)	// 07/18/03 AM.
 //fout = new ofstream(fname, ios::out);
 //sout = cgerr;				// Save current output stream.
 //cgerr = fout;				// Bind output to file.
-cgerr = new _t_ofstream(TCHAR2A(fname), ios::out);	// 07/18/03 AM.
+cgerr = new _t_ofstream(fname, ios::out);	// 07/18/03 AM.
 }
 
 

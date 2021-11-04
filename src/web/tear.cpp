@@ -373,7 +373,6 @@ WEB_API int tear_url(
 		// 12/12/98 AM.  Read the file into a buffer, then call NLP Lite
 		// on it!
 //		_t_ofstream *fout = 0;						// 09/28/05 AM.
-//		fout = new _t_ofstream(TCHAR2CA(outf), ios::out);	// 09/28/05 AM.
 		CFile outFile;									// 09/28/05 AM.
 		outFile.Open(outf,CFile::modeWrite | CFile::modeCreate); // 09/28/05 AM.
 		TCHAR sz[1024];

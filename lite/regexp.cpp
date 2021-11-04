@@ -78,7 +78,7 @@ _tcscpy(xbuf_, xstr);					// Copy to buffer.
 // Init first element of pattern array to zeros.
 elts_ = 0;
 // elt_[0].alpha = '\0';
-elt_[0].alpha = "";	// 09/26/19 AM.
+elt_[0].alpha = _T("");	// 09/26/19 AM.
 elt_[0].qms = 0;
 elt_[0].stars = 0;
 
@@ -97,7 +97,7 @@ while (*x)
 				// New elt.
 				++elts_;
 				// elt_[elts_].alpha = '\0';
-				elt_[elts_].alpha = "";	// 09/26/19 AM.
+				elt_[elts_].alpha = _T("");	// 09/26/19 AM.
 				elt_[elts_].qms = 0;
 				elt_[elts_].stars = 1;
 				}
@@ -111,7 +111,7 @@ while (*x)
 				// New elt.
 				++elts_;
 				// elt_[elts_].alpha = '\0';
-				elt_[elts_].alpha = "";	// 09/26/19 AM.
+				elt_[elts_].alpha = _T("");	// 09/26/19 AM.
 				elt_[elts_].qms = 1;
 				elt_[elts_].stars = 0;
 				}

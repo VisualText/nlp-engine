@@ -163,7 +163,7 @@ dest->index_ = orig->index_;		// Copy constructor??			// 10/13/00 AM.
 
 _t_ostream &STDOPERATOR<<(_t_ostream &output, Ivar &var)
 {
-#ifndef UNICODE
+#ifndef ANYTHINGGOES
 _TCHAR *nm = var.name_;													// 01/28/06 AM.
 #else
 char *nm;																	// 01/28/06 AM.
@@ -198,7 +198,7 @@ switch (var.type_)
 if (var.index_)																// 10/13/00 AM.
 	output << _T("[") << var.index_ << _T("]");									// 10/13/00 AM.
 
-#ifdef UNICODE
+#ifdef ANYTHINGGOES
 if (nm && *nm)																// 01/28/06 AM.
 	u_delete((LPCTSTR*&)nm);											// 01/28/06 AM.
 #endif

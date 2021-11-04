@@ -30,8 +30,6 @@ All rights reserved.
 #include "words/wordarrs.h"	// 10/16/00 AM.
 
 #ifdef UNICODE
-//#include "unicode/utypes.h"	// 03/03/05 AM.
-//#include "unicode/uchar.h"
 #include "utypes.h"	// 03/03/05 AM.
 #include "uchar.h"
 #endif
@@ -128,7 +126,7 @@ switch((_TUCHAR)ch)
 return false;
 #else
 //return _istalpha((_TUCHAR)ch);	// 03/06/00 AM.
-return u_isalpha(ch) ? true : false;	// 03/27/05 AM.
+return IsCharAlphaW(ch) ? true : false;	// 03/27/05 AM.
 #endif
 }
 
@@ -138,7 +136,7 @@ LITE_API bool alphabetic(_TCHAR ch)	// 03/03/05 AM.
 #ifndef UNICODE
 return _istalpha((_TUCHAR)ch) ? true : false;
 #else
-return u_isalpha(ch) ? true : false;
+return IsCharAlphaW(ch) ? true : false;
 #endif
 }
 #endif
@@ -186,7 +184,7 @@ return false;
 #ifndef UNICODE
 return _istupper((_TUCHAR)ch) ? true : false;
 #else
-return u_isupper(ch) ? true : false;
+return IsCharUpperW(ch) ? true : false;
 #endif
 }
 
@@ -231,7 +229,7 @@ switch((_TUCHAR)ch)
 return false;
 #endif
 #ifdef UNICODE
-return u_islower(ch) ? true : false;
+return IsCharLowerW(ch) ? true : false;
 #else
 return _istlower((_TUCHAR)ch) ? true : false;
 #endif
@@ -325,7 +323,7 @@ return 0;
 #endif
 
 #ifdef UNICODE
-return u_toupper(ch);
+return (_TCHAR)CharUpperW((LPWSTR)ch);
 #else
 return _totupper((_TUCHAR)ch);	// 03/06/00 AM.
 #endif
@@ -420,7 +418,7 @@ return 0;
 #endif
 
 #ifdef UNICODE
-return u_tolower(ch);
+return (_TCHAR)CharLowerW((LPWSTR)ch);
 #else
 return _totlower((_TUCHAR)ch);
 #endif
@@ -526,9 +524,14 @@ while ((ch = *str++))
 	{
 	// 09/22/99 AM. Accepting accented ASCII chars as both uppercase and
 	// lowercase!
+#ifdef UNICODE
+	if (IsCharAlphaW(ch) && !IsCharUpperW(ch))
+		return false;
+#else
 	if (alphabetic((_TUCHAR)ch)									// 12/16/01 AM.
 		 && !is_upper((_TUCHAR)ch))								// 12/16/01 AM.
 		return false;
+#endif
 	}
 return true;
 }
@@ -550,9 +553,14 @@ while ((ch = *str++))
 	{
 	// 09/22/99 AM. Accepting accented ASCII chars as both uppercase and
 	// lowercase!
+#ifdef UNICODE
+	if (IsCharAlphaW(ch) && !IsCharLowerW(ch))
+		return false;
+#else
 	if (alphabetic((_TUCHAR)ch)									// 12/16/01 AM.
 	 && !is_lower((_TUCHAR)ch))									// 12/16/01 AM.
 		return false;
+#endif
 	}
 return true;
 }
@@ -580,18 +588,29 @@ bool lower = false;
 bool upper = false;
 
 // If first char is uppercase, ignore it.
+#ifdef UNICODE
+	if (IsCharAlphaW((_TUCHAR)*str) && IsCharUpperW((_TUCHAR)*str))
+		return false;
+#else
 if (alphabetic((_TUCHAR)*str)										// 12/16/10 AM.
 	&& is_upper((_TUCHAR)*str))									// 12/16/01 AM.
 	{
 	if (!*++str)
 		return false;
 	}
+#endif
 
 for (ch = *str; ch; ch = *++str)
 	{
+#ifdef UNICODE
+	if (IsCharAlphaW(ch)) 
+		{
+		if (IsCharUpperW(ch))
+#else
 	if (alphabetic((_TUCHAR)ch))									// 12/16/01 AM.
 		{
 		if (is_upper((_TUCHAR)ch))									// 12/16/01 AM.
+#endif
 			{
 			if (lower)
 				return true;
@@ -1091,7 +1110,8 @@ buf = Chars::create(biglen+1);		// Extra one for termination.
 #ifdef LINUX
 _t_ifstream inFile(fname, ios::in);
 #else
-_t_ifstream inFile(TCHAR2CA(fname), ios::in							// Upgrade.	// 01/24/01 AM.
+
+_t_ifstream inFile(fname, ios::in							// Upgrade.	// 01/24/01 AM.
 								| ios_base::binary);			// FIX.		// 02/01/01 AM.
 #endif
 if (!inFile)
@@ -1326,7 +1346,7 @@ return true;
 #ifdef UNICODE
 #define ASCII_7 0 // 0 - 0x7f
 #define ASCII_EX 1 // 0 - 0xff
-BOOL UTL_IsASCII(LPCWSTR lpwStr, int typeASCII)
+BOOL UTL_IsASCII(LPCTSTR lpwStr, int typeASCII)
 {
 	int maxVal = ASCII_7 == typeASCII ? 0x7f : 0xff;
 	int len = lstrlen(lpwStr);
@@ -1343,13 +1363,13 @@ BOOL UTL_IsASCII(LPCWSTR lpwStr, int typeASCII)
 ********************************************/
 
 bool UTL_GetMBCSFromUnicodeString(
-	LPCWSTR lpwUnicode,
+	LPCTSTR lpwUnicode,
 	UINT nCodePage,
 	LPCTSTR* &mbcsstr
 	)
 {
-	int nChars = wcslen(lpwUnicode) + 1;
-	int nMultiByteBufferSize = nChars * 6;  // possible 6 bytes max per character for UTF-8
+	size_t nChars = wcslen(lpwUnicode) + 1;
+	size_t nMultiByteBufferSize = nChars * 6;  // possible 6 bytes max per character for UTF-8
 	wchar_t* pszUnicodeString = new wchar_t[nChars];
 	char *pszMultiByteString = new char[nMultiByteBufferSize];
 
@@ -1595,7 +1615,7 @@ if (end < start
  || start < 0
  || len >= siz )
 	return false;
-if (_tcsclen(str) <= (unsigned long)end)	// .NET COMPLAINT.	// 06/11/03 AM.
+if (_tcsclen(str) <= (size_t)end)	// .NET COMPLAINT.	// 06/11/03 AM.
 	return false;
 _tcsnccpy(buf,&(str[start]),len);
 buf[len] = '\0'; // Terminate.
@@ -1714,7 +1734,7 @@ _TCHAR *candStr=0;				// Start of current candidate in strList.
 
 int lowestWeight = 10000;	// Weight of best candidate so far.
 long lowestLen = 0;			// Length of best candidate so far.	// 10/16/00 AM.
-long slen = _tcsclen(str);	// Length of original word. (ie, optimal).
+size_t slen = _tcsclen(str);	// Length of original word. (ie, optimal).
 
 for (;;)					// While traversing candidates.				// 10/16/00 AM.
 	{
@@ -1854,7 +1874,7 @@ _TCHAR *start = buf;
 long siz = maxbuf;
 if (!word || !*word)
 	return 0;
-long len = _tcsclen(word);
+size_t len = _tcsclen(word);
 if (len > MAXWORDLENGTH)										// FIX	// 11/13/01 AM.
 	return 0;														// FIX	// 11/13/01 AM.
 
@@ -1938,7 +1958,7 @@ if (min < minlet)			// Only first letter matched.  Too much.
 if (min > minlet)															// 09/28/00 AM.
 	--min;		// Allow one less than the max.					// 09/28/00 AM.
 
-long wlen = _tcsclen(word);
+long wlen = (long)_tcsclen(word);
 int fudge = 1;			// Amount we can fudge on word length.
 if (wlen >= 10)
 	fudge = 2;			// Allow more fudge on long words.
@@ -1949,7 +1969,7 @@ ptr = buf;				// Slot for placing next candidate.
 long ii = pos;			// Moved here.										// 05/17/02 AM.
 
 // See if current pos is a good candidate by length.
-int alen = _tcsclen(arr[pos]);
+long alen = (long)_tcsclen(arr[pos]);
 if (abs(wlen - alen) <= fudge)
 	{
 	// Even here, need to check buffer overflow.			// FIX.	// 05/17/02 AM.
@@ -1978,7 +1998,7 @@ for (;;)
 		break;
 	if (prefix_match_len(word, arr[ii]) >= min)
 		{
-		alen = _tcsclen(arr[ii]);
+		alen = (long)_tcsclen(arr[ii]);
 		if (abs(wlen - alen) <= fudge)
 			{
 			// Found good candidate.
@@ -2011,7 +2031,7 @@ for (;;)
 		break;
 	if (prefix_match_len(word, arr[ii]) >= min)
 		{
-		alen = _tcsclen(arr[ii]);
+		alen = (long)_tcsclen(arr[ii]);
 		if (abs(wlen - alen) <= fudge)
 			{
 			// Found good candidate.
@@ -2169,7 +2189,7 @@ if (!str || !*str)
 
 // Compute width of string.
 long tmp=0;
-long width = _tcsclen(str);
+long width = (long)_tcsclen(str);
 
 _TCHAR *buf;
 if (width >= fieldsize)		// Can't justify
@@ -2225,7 +2245,7 @@ if (_istspace((_TUCHAR)*str))
 
 _tcscpy(buf,str);
 
-int len = _tcsclen(buf)-1;
+size_t len = _tcsclen(buf)-1;
 for (int i=0; i<len; i++)
 	*buf++;
 
@@ -2252,8 +2272,8 @@ bool str_starts_with(_TCHAR *str, _TCHAR *startstr)
 
 if (empty(str) || empty(startstr))
 	return false;
-long slen = _tcsclen(str);
-long elen = _tcsclen(startstr);
+size_t slen = _tcsclen(str);
+size_t elen = _tcsclen(startstr);
 if (slen < elen)
 	return false;
 _TCHAR *ptr;
@@ -2293,8 +2313,8 @@ bool str_ends_with(_TCHAR *str, _TCHAR *ending)
 
 if (empty(str) || empty(ending))
 	return false;
-long slen = _tcsclen(str);										// OPT.	// 11/20/00 AM.
-long elen = _tcsclen(ending);									// OPT.	// 11/20/00 AM.
+size_t slen = _tcsclen(str);										// OPT.	// 11/20/00 AM.
+size_t elen = _tcsclen(ending);									// OPT.	// 11/20/00 AM.
 if (slen < elen)
 	return false;
 _TCHAR *ptr;
@@ -2502,8 +2522,8 @@ bool strsuffix(
 if (!word || !*word || !suffix || !*suffix)
 	return false;
 
-long len1 = _tcsclen(word);
-long len2 = _tcsclen(suffix);
+long len1 = (long)_tcsclen(word);
+long len2 = (long)_tcsclen(suffix);
 long len = len1 - len2;
 if (len < 2)
 	return false;
@@ -2585,7 +2605,7 @@ _TCHAR *strstem(
 if (!word || !*word)
 	return NULL;	// 09/26/19 AM.
 
-long len = _tcsclen(word);
+long len = (long)_tcsclen(word);
 
 _TCHAR *lcstr = Chars::create(len + 1 + 10);	// Extra space for variants.
 str_to_lower(word, lcstr);

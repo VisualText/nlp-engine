@@ -132,7 +132,7 @@ _t_ostream &STDOPERATOR<<(_t_ostream &output, Isugg &sugg)			// 11/23/98 AM.
 {
 bool flag = false;		// If something prior was printed.
 
-#ifndef UNICODE
+#ifndef ANYTHINGGOES
 output << str(sugg.name_);
 #else
 char *lpstr8;																	// 01/28/06 AM.

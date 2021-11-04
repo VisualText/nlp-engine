@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -48,7 +48,7 @@ _TCHAR s_nam[PATH];	/* Name of file.		*/
 _stprintf(s_nam, _T("%s%s%s_code.h%s"), dir, DIR_SEP, consh_CC_BASE, tail);
 //if (!file_open(s_nam, "w", &fp))
 //   return;
-fp = new _t_ofstream(TCHAR2A(s_nam));		// 04/20/99 AM.
+fp = new _t_ofstream(s_nam);		// 04/20/99 AM.
 
 gen_file_head(fp);
 *fp << _T("extern bool cc_ini(void*);") << endl;							// 08/16/02 AM.
@@ -78,7 +78,7 @@ _TCHAR s_nam[PATH];	/* Name of file.		*/
 _stprintf(s_nam, _T("%s%s%s_code.cpp%s"), dir, DIR_SEP, consh_CC_BASE, tail);
 //if (!file_open(s_nam, "w", &fp))
 //   return;
-fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+fp = new _t_ofstream(s_nam);			// 04/20/99 AM.
 
 gen_file_head(fp);
 #ifdef LINUX

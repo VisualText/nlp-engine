@@ -475,15 +475,15 @@ _stprintf(o_word, _T("%s%cword.%s"), path, DIR_CH, suff);
 _stprintf(o_phr,  _T("%s%cphr.%s"),  path, DIR_CH, suff);
 
 // Open the files for output.
-_t_ofstream f_hier(TCHAR2A(o_hier));
-_t_ofstream f_word(TCHAR2A(o_word));
-_t_ofstream f_phr(TCHAR2A(o_phr));
+_t_ofstream f_hier(o_hier);
+_t_ofstream f_word(o_word);
+_t_ofstream f_phr(o_phr);
 
 // May open multiples of these as needed.								// 07/01/03 AM.
 long n_attr = 1;	// Count attr#.kb files.							// 07/01/03 AM.
 long c_attr = 0;	// Count of attributes.								// 07/01/03 AM.
 _stprintf(o_attr, _T("%s%cattr%ld.%s"),path,DIR_CH,n_attr,suff);		// 07/01/03 AM.
-_t_ofstream *f_attr = new _t_ofstream(TCHAR2A(o_attr));								// 07/01/03 AM.
+_t_ofstream *f_attr = new _t_ofstream(o_attr);								// 07/01/03 AM.
 
 // KB BOOTSTRAP COMMANDS. (Axiomatics)									// 08/06/01 AM.
 // (Moved out of writeTree).												// 08/06/01 AM.
@@ -534,7 +534,7 @@ bool CG::writeKBmain(
 {
 _TCHAR o_main[4096];
 _stprintf(o_main, _T("%s%cmain.%s"), path, DIR_CH, suff);
-_t_ofstream f_main(TCHAR2A(o_main));
+_t_ofstream f_main(o_main);
 
 #ifdef LINUX
 f_main << _T("take \"kb\\\\user\\\\hier.kb\"") << endl;
@@ -2856,11 +2856,11 @@ _stprintf(o_attr, _T("%s%cattr.%s"), path, DIR_CH, suff);
 _stprintf(o_phr,  _T("%s%cphr.%s"),  path, DIR_CH, suff);
 
 // Open the files for output.
-_t_ofstream f_hier(TCHAR2A(o_hier));
-_t_ofstream f_word(TCHAR2A(o_word));
-_t_ofstream f_phr(TCHAR2A(o_phr));
+_t_ofstream f_hier(o_hier);
+_t_ofstream f_word(o_word);
+_t_ofstream f_phr(o_phr);
 
-_t_ofstream *f_attr = new _t_ofstream(TCHAR2A(o_attr));	// 07/01/03 AM.
+_t_ofstream *f_attr = new _t_ofstream(o_attr);	// 07/01/03 AM.
 
 // GET PATH TO "root" CONCEPT.
 CONCEPT *parent = Up(root);
@@ -2892,26 +2892,26 @@ f_phr  << endl << _T("quit") << endl << endl;
 #ifndef LINUX
 // Do the catenate in C++.
 _TCHAR buf[MAXMSG];
-_t_ofstream *f_dump = new _t_ofstream(TCHAR2A(file));	// Final output file.
-_t_ifstream *f_in = new _t_ifstream(TCHAR2A(o_hier));
+_t_ofstream *f_dump = new _t_ofstream(file);	// Final output file.
+_t_ifstream *f_in = new _t_ifstream(o_hier);
 while (f_in->getline(buf, MAXMSG))		// Copy first file.
 	*f_dump << buf << endl;
 delete f_in;
 
 *f_dump << endl;								// Separate commands.
-f_in = new _t_ifstream(TCHAR2A(o_word));
+f_in = new _t_ifstream(o_word);
 while (f_in->getline(buf, MAXMSG))		// Copy first file.
 	*f_dump << buf << endl;
 delete f_in;
 
 *f_dump << endl;								// Separate commands.
-f_in = new _t_ifstream(TCHAR2A(o_attr));
+f_in = new _t_ifstream(o_attr);
 while (f_in->getline(buf, MAXMSG))		// Copy first file.
 	*f_dump << buf << endl;
 delete f_in;
 
 *f_dump << endl;								// Separate commands.
-f_in = new _t_ifstream(TCHAR2A(o_phr));
+f_in = new _t_ifstream(o_phr);
 while (f_in->getline(buf, MAXMSG))		// Copy first file.
 	*f_dump << buf << endl;
 delete f_in;
@@ -2987,7 +2987,7 @@ switch (con->kind)
 
 			hier << _T("add hier ");
 
-			#ifdef UNICODE
+			#ifdef OLDSTUFF
 			u_to_mbcs((LPCWSTR)path, CP_UTF8, (LPCTSTR*&)lpstr8);
 			hier << lpstr8;
 			u_delete((LPCTSTR*&)lpstr8);
@@ -2997,7 +2997,7 @@ switch (con->kind)
 
 			hier << _T(" \"");
 
-			#ifdef UNICODE
+			#ifdef OLDSTUFF
 			u_to_mbcs((LPCWSTR)buf, CP_UTF8, (LPCTSTR*&)lpstr8);
 			hier << lpstr8;
 			u_delete((LPCTSTR*&)lpstr8);
@@ -3018,7 +3018,7 @@ switch (con->kind)
 	case cWORD:
 		// Need to handle some chars specially.
 		{
-#ifndef UNICODE
+#ifndef ANYTHINGGOES
 		word << _T("add word \"") << buf << _T("\"") << endl;
 #else
 		char *lpstr8;
@@ -3267,7 +3267,7 @@ while (attrs)
 			*o_attr << endl << _T("quit") << endl << endl;				// 07/01/03 AM.
 			delete o_attr;	// Maxed out in the old file.				// 07/01/03 AM.
 			_stprintf(b_attr, _T("%s%cattr%ld.%s"),fpath,DIR_CH,n_attr,suff);
-			o_attr = new _t_ofstream(TCHAR2A(b_attr));								// 07/01/03 AM.
+			o_attr = new _t_ofstream(b_attr);								// 07/01/03 AM.
 			}
 
       vals = vals->next;
@@ -3356,7 +3356,7 @@ bool CG::readFile(
 {
 //cout << "infile=" << infile << endl;
 //ifstream fin(infile, ios::in | ios::nocreate);	// Upgrade. // 01/24/01 AM.
-_t_ifstream fin(TCHAR2A(infile), ios::in);							// Upgrade.	// 01/24/01 AM.
+_t_ifstream fin(infile, ios::in);							// Upgrade.	// 01/24/01 AM.
 #ifdef UNICODE
 if (!u_readbom(&fin))
 	{

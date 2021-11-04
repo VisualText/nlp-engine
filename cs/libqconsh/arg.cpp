@@ -68,7 +68,7 @@ char *lpstr8;
 
 while (str = ALIST::list_pop_buf(&args,buf))						// 08/14/02 AM.
    {
-#ifdef UNICODE
+#ifdef OLDSTUFF
 	u_to_mbcs((LPCWSTR)str, CP_UTF8, (LPCTSTR*&)lpstr8);
    if (_tcschr(str, ' '))
       *out << _T("\"") << lpstr8 << _T("\" ");

@@ -345,7 +345,7 @@ switch (sem.type_)
 	case RSOP:		 output	<< *(sem.val_.op_);			break;
 
 	case RSSTR:
-#ifndef UNICODE
+#ifndef ANYTHINGGOES
 		output	<< *(sem.val_.name_);
 #else
 		u_to_mbcs((LPCWSTR)*(sem.val_.name_), CP_UTF8, (LPCTSTR*&)nm);// 01/28/06 AM.
@@ -354,7 +354,7 @@ switch (sem.type_)
 #endif
 		 break;
 	case RSNUM:
-#ifndef UNICODE
+#ifndef ANYTHINGGOES
 		output	<< *(sem.val_.name_);
 #else
 		u_to_mbcs((LPCWSTR)*(sem.val_.name_), CP_UTF8, (LPCTSTR*&)nm);// 01/28/06 AM.
@@ -373,7 +373,7 @@ switch (sem.type_)
 									<< _T(")")										// 09/09/01 AM.
 									;		break;
 	case RSNAME:
-#ifndef UNICODE
+#ifndef ANYTHINGGOES
 		output	<< *(sem.val_.name_);
 #else
 		u_to_mbcs((LPCWSTR)*(sem.val_.name_), CP_UTF8, (LPCTSTR*&)nm);// 01/28/06 AM.

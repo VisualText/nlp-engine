@@ -34,6 +34,6 @@ bool file_exists(const _TCHAR *iname)
 {
 
 //ifstream inFile(iname, ios::in | ios::nocreate);
-_t_ifstream inFile(CTCHAR2CA(iname), ios::in);							// Upgrade.	// 01/24/01 AM.
+_t_ifstream inFile(iname, ios::in);							// Upgrade.	// 01/24/01 AM.
 return (inFile ? true : false);
 }

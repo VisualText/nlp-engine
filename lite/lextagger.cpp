@@ -171,7 +171,7 @@ tok1[0] = tok2[0] = pos[0] = '\0';	// Initialize.
 #ifdef LINUX
 _t_ifstream inFile(fname, ios::in | ios::nocreate);
 #else
-_t_ifstream inFile(TCHAR2CA(fname), ios::in | ios_base::binary);
+_t_ifstream inFile(fname, ios::in | ios_base::binary);
 #endif
 if (!inFile)
 	{

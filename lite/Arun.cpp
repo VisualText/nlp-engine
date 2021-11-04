@@ -12824,7 +12824,7 @@ if ((name = parse->getOutput()))
 	{
 	// Open the output file for APPENDING.
 	_t_ofstream *fout = 0;
-	fout = new _t_ofstream(TCHAR2CA(name), ios::app);
+	fout = new _t_ofstream(name, ios::app);
 	parse->setOut(fout);
 	parse->newostr(fout);			// Add to list of ostrs.		// 05/23/01 AM.
 	}

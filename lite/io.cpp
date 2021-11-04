@@ -37,7 +37,7 @@ void copy_file(const _TCHAR *iname, const _TCHAR *oname)
 {
 
 //ifstream inFile(iname, ios::in | ios::nocreate);
-_t_ifstream inFile(CTCHAR2CA(iname), ios::in);							// Upgrade.	// 01/24/01 AM.
+_t_ifstream inFile(iname, ios::in);							// Upgrade.	// 01/24/01 AM.
 if (!inFile)
 	{
 	_t_strstream gerrStr;
@@ -46,7 +46,7 @@ if (!inFile)
 	return;					// 06/15/99 AM.
 	}
 
-_t_ofstream outFile(CTCHAR2CA(oname), ios::out);
+_t_ofstream outFile(oname, ios::out);
 if (!outFile)
 	{
 	_t_strstream gerrStr;
@@ -83,7 +83,7 @@ bool file_exists(const _TCHAR *iname)
 {
 
 //ifstream inFile(iname, ios::in | ios::nocreate);
-_t_ifstream inFile(CTCHAR2CA(iname), ios::in);
+_t_ifstream inFile(iname, ios::in);
 return (inFile ? true : false);
 }
 
@@ -108,7 +108,7 @@ void file_to_buffer(const _TCHAR *iname, _TCHAR *buf,
 {
 
 //ifstream inFile(iname, ios::in | ios::nocreate);
-_t_ifstream inFile(CTCHAR2CA(iname), ios::in);							// Update.	// 01/24/01 AM.
+_t_ifstream inFile(iname, ios::in);							// Update.	// 01/24/01 AM.
 if (!inFile)
 	{
 	_t_strstream gerrStr;

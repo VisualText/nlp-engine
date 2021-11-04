@@ -4,6 +4,8 @@ project(nlp VERSION 0.1.0)
 include(CTest)
 enable_testing()
 
+add_definitions(-DUNICODE -D_UNICODE)
+
 set(CMAKE_GENERATOR_PLATFORM Win32)
 
 if(MSVC)
@@ -13,7 +15,7 @@ if(MSVC)
     add_definitions(-DNONSTD_)
     add_definitions(-D_CONSOLE)
     add_definitions(-DWIN32)
-    add_definitions(-DNDEBUG)
+    #add_definitions(-DNDEBUG)
     add_definitions(-D_WINDOWS)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zc:wchar_t")
     find_program(CMAKE_MAKE_PROGRAM
@@ -37,6 +39,7 @@ include_directories(cs/include)
 include_directories(include)
 include_directories(include/Api)
 include_directories(include/Api/lite)
+include_directories(include/unicode)
 
 add_subdirectory(cs)
 add_subdirectory(src)

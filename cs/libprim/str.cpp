@@ -131,7 +131,7 @@ switch((_TUCHAR)ch)
 return false;
 #else
 //return _istalpha((_TUCHAR)ch);	// 03/06/00 AM.
-return u_isalpha(ch) ? true : false;	// 03/27/05 AM.
+return IsCharAlphaW(ch) ? true : false;	// 03/27/05 AM.
 #endif 
 }
 

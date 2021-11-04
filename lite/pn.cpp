@@ -211,7 +211,7 @@ if ((buf = pn.name_))
    {
 	while (*buf)
 		{
-#ifndef UNICODE
+#ifndef ANYTHINGGOES
 		output << pretty_char(*buf++);	// 11/1/98 AM.
 #else
 		if (*buf == '\u200F') {

@@ -178,10 +178,10 @@ dest->body_ = orig->body_;	// Need copy constructor.....
 
 _t_ostream &STDOPERATOR<<(_t_ostream &output, Ifunc &func)
 {
-#ifndef UNICODE
+#ifndef ANYTHINGGOES
 output << str(func.name_) << _T("(");
 #else
-char *lpstr8;																	// 01/28/06 AM.
+TCHAR *lpstr8;																	// 01/28/06 AM.
 u_to_mbcs((LPCWSTR)str(func.name_),										// 01/28/06 AM.
 										 CP_UTF8, (LPCTSTR*&)lpstr8);		// 01/28/06 AM.
 output << lpstr8;																// 01/28/06 AM.

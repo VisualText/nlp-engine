@@ -8,4 +8,4 @@ endif()
 file(GLOB consh_src "*.cpp")
 add_library(consh STATIC ${consh_src})
 
-target_link_libraries(consh PUBLIC prim kbm)
+target_link_libraries(consh PUBLIC stream prim kbm)

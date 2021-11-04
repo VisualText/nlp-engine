@@ -50,7 +50,7 @@ class LITE_API NLP_ENGINE
 
 public:
 	NLP_ENGINE(
-        string workingFolder,
+        std::wstring workingFolder,
         bool silent=false
  	);
 
@@ -72,7 +72,11 @@ public:
     _TCHAR m_outfile[MAXPATH*3];
     _TCHAR m_seqfile[MAXPATH*4];
 
+#ifdef UNICODE
+    std::vector<std::wstring> m_files;
+#else
     std::vector<std::string> m_files;
+#endif
 
     VTRun *m_vtrun;
     NLP *m_nlp;

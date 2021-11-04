@@ -29,6 +29,10 @@ All rights reserved.
 #include <direct.h>	// For _mkdir										// 12/07/01 AM.
 #endif
 
+#ifdef UNICODE
+#include "streamClasses.h"
+#endif
+
 #include "machine.h"
 #include "lite/lite.h"		// MOVE UP.	// 03/23/19 AM.
 #include "lite/global.h"	// MOVE UP.	// 03/23/19 AM.
@@ -6997,7 +7001,8 @@ else					// Absolute path.
 	parse->internStr(fname, /*UP*/ str);
 
 // Open the output file.
-_t_ostream *ostr = new _t_ofstream(TCHAR2CA(str), modes);
+//_t_ostream *ostr = new _t_ofstream(TCHAR2CA((LPTSTR)str), modes);
+_t_ostream *ostr = new _t_ofstream(str, modes);
 parse->newostr(ostr);			// Add to list of ostrs.			// 05/23/01 AM.
 
 if (!ostr)
@@ -7116,7 +7121,7 @@ str_spell_candidate(lcstr1, str2, buf);
 
 Chars::destroy(lcstr1);														// 09/28/00 AM.
 
-_TCHAR *str = "\0";
+_TCHAR *str = L"\0";
 if (buf[0] == '\0')															// 09/28/00 AM.
 	return true;
 

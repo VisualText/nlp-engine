@@ -23,7 +23,7 @@ All rights reserved.
 #include <tchar.h>
 #include <my_tchar.h>
 
-#include <streamclasses.h>
+#include <streamClasses.h>
 
 #ifdef UNICODE
 //#define gerrStr(a,b,c) gerrStr(a,c)

@@ -114,7 +114,7 @@ return *this;
 
 _t_ostream &STDOPERATOR<<(_t_ostream &output, Ielement &element)
 {
-#ifndef UNICODE
+#ifndef ANYTHINGGOES
 output << str(element.name_) << _T(" [");
 #else
 char *lpstr8;																	// 01/27/06 AM.

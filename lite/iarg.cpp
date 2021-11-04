@@ -299,7 +299,7 @@ switch(arg.type)
 	case IASTR:
 		if (arg.val_.str_)													// 03/14/03 AM.
 			{
-#ifndef UNICODE
+#ifndef ANYTHINGGOES
 			output << arg.val_.str_;
 #else
 			char *lpstr8;														// 01/27/06 AM.

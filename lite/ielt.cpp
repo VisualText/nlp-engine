@@ -251,7 +251,7 @@ char *lpstr8;																	// 01/27/06 AM.
 
 if (!empty(elt.name_))
 	{
-#ifndef UNICODE
+#ifndef ANYTHINGGOES
 	output << pretty_str(elt.name_, buf, size);	// 11/24/98 AM.
 #else
 	u_to_mbcs((LPCWSTR)pretty_str(elt.name_,buf,size),					// 01/27/06 AM.
@@ -291,7 +291,7 @@ if (elt.rename_)
 	else
 		flag = true;
 	output << _T("rename=");
-#ifndef UNICODE
+#ifndef ANYTHINGGOES
 	output << pretty_str(elt.rename_, buf, size);	// 11/24/98 AM.
 #else
 	u_to_mbcs((LPCWSTR)pretty_str(elt.rename_,buf,size),				// 01/27/06 AM.
@@ -307,7 +307,7 @@ if (elt.group_)																// 09/23/00 AM.
 	else
 		flag = true;
 	output << _T("group=");
-#ifndef UNICODE
+#ifndef ANYTHINGGOES
 	output << pretty_str(elt.group_, buf, size);						// 09/23/00 AM.
 #else
 	u_to_mbcs((LPCWSTR)pretty_str(elt.group_,buf,size),				// 01/27/06 AM.

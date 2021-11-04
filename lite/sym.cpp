@@ -120,7 +120,7 @@ Sym::~Sym()
 
 _t_ostream &STDOPERATOR<<(_t_ostream &output, Sym &sym)
 {
-#ifndef UNICODE
+#ifndef ANYTHINGGOES
 output << str(sym.str_);
 #else
 char *lpstr8;																	// 01/28/06 AM.

@@ -62,12 +62,12 @@ args_pp(
 _TCHAR *str;
 
 #ifdef UNICODE
-char *lpstr8;
+_TCHAR *lpstr8;
 #endif
 
 while ((str = ALIST::list_pop_buf(&args,buf)))						// 08/14/02 AM.
    {
-#ifdef UNICODE
+#ifdef OLDSTUFF
 	u_to_mbcs((LPCWSTR)str, CP_UTF8, (LPCTSTR*&)lpstr8);
    if (_tcschr(str, ' '))
       *out << _T("\"") << lpstr8 << _T("\" ");

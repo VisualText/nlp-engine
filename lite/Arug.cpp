@@ -280,7 +280,7 @@ if (!(rules = seq->getRules()))
 	return false;
 
 // Open file for writing.
-_t_ofstream ofile(TCHAR2CA(fname), ios::out);
+_t_ofstream ofile(fname, ios::out);
 
 // File header.
 ofile << _T("\n# AUTOMATICALLY GENERATED! EDITS WILL BE LOST!") << endl;
