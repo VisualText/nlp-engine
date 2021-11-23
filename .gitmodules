@@ -1,3 +1,6 @@
 [submodule "analyzers"]
 	path = analyzers
 	url = https://github.com/VisualText/analyzers.git
+[submodule "icu"]
+	path = icu
+	url = https://github.com/unicode-org/icu.git
