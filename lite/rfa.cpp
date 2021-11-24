@@ -294,7 +294,7 @@ if (!(file = rfa_fix_file_name(specdir, file, _T("nlp")))) {
 	return false;
 }
 
-_t_ifstream x(TCHAR2A(file), ios::in);
+_t_ifstream x(file, ios::in);
 if (!x) {
 	if (!(file = rfa_fix_file_name(specdir, fileOrig, _T("pat")))) {
 		return false;

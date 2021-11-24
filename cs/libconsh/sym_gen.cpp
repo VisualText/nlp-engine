@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									SYM_GEN.C
 *
-* FILE:	consh.¹/sym_gen.c
+* FILE:	consh.ï¿½/sym_gen.c
 * SUBJ:	Generate symbol and conflict table code files, from Consh.
 * CR:	10/1/95 AM.
 *
@@ -100,7 +100,7 @@ for (ii = 0; ii <= seg_curr; ii++)
    _stprintf(s_nam, _T("%s%s%s.cpp%s"), dir, DIR_SEP, s_tab, tail);
    //if (!file_open(s_nam, "w", &fp))
    //   return;
-	fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+	fp = new _t_ofstream(s_nam);			// 04/20/99 AM.
 
    gen_file_head(fp);
    consh_gen_includes(fp);
@@ -147,7 +147,7 @@ for (ii = seg_curr + 1; ii < segs_tot; ii++)
    _stprintf(s_nam, _T("%s%s%s.cpp"), dir, DIR_SEP, s_tab);
    //if (!file_open(s_nam, "w", &fp))
    //   return;
-	fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+	fp = new _t_ofstream(s_nam);			// 04/20/99 AM.
 
    gen_file_head(fp);
    consh_gen_includes(fp);
@@ -183,7 +183,7 @@ segs_tot = cg->asym_->sym_segs_tot();
 _stprintf(s_nam, _T("%s%s%s_ini.h%s"), dir, DIR_SEP, consh_SYM_BASE, tail);
 //if (!file_open(s_nam, "w", &fp))
 //   return;
-fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+fp = new _t_ofstream(s_nam);			// 04/20/99 AM.
 
 gen_file_head(fp);
 
@@ -232,7 +232,7 @@ tsize		= cg->asym_->sym_seg_size();
 _stprintf(s_nam, _T("%s%s%s_ini.cpp"), dir, DIR_SEP, tbase);
 //if (!file_open(s_nam, "w", &fp))
 //   return;
-fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+fp = new _t_ofstream(s_nam);			// 04/20/99 AM.
 
 gen_file_head(fp);
 

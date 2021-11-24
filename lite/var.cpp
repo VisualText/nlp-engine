@@ -2394,7 +2394,7 @@ _stprintf(buf, _T("%s%c%s"), parse->getOutdir(),DIR_CH, fname);	 // 03/10/99 AM.
 parse->internStr(buf, /*UP*/ str);
 
 // Open the output file for APPENDING.
-ostr = new _t_ofstream(TCHAR2CA(str), ios::app);
+ostr = new _t_ofstream(str, ios::app);
 #ifdef UNICODE
 *ostr << BOM_UTF8;
 #endif

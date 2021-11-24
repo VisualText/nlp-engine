@@ -47,7 +47,7 @@ WEB_API bool urlsProcess(
 	)
 {
 //ifstream inFile(urlfile, ios::in | ios::nocreate);
-_t_ifstream inFile(TCHAR2CA(urlfile), ios::in);						// Upgrade.	// 01/24/01 AM>
+_t_ifstream inFile(urlfile, ios::in);						// Upgrade.	// 01/24/01 AM>
 if (!inFile)
 	{
 	_t_cerr << _T("Could not open input file '") << urlfile << _T("'.") << endl;

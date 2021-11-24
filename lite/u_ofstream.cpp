@@ -16,7 +16,7 @@ All rights reserved.
 u_ofstream &u_ofstream::operator<<(const _TCHAR &lpszBuffer)
 {
         char *lpstr8;
-        u_to_mbcs((LPCWSTR)lpszBuffer, CP_UTF8, (LPCTSTR*&)lpstr8);
+        u_to_mbcs(&lpszBuffer, CP_UTF8, (const _TCHAR*&)lpstr8);
         std::operator<<(*this,lpstr8);
         delete lpstr8;
         return *this;

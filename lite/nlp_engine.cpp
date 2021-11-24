@@ -35,10 +35,8 @@ MIT License
 /////////////////////////////////
 /////////////////////////////////
 
-
-
 NLP_ENGINE::NLP_ENGINE(
-    string workingFolder,
+    icu::UnicodeString* workingFolder,
 	bool silent
 	)
 {
@@ -46,13 +44,13 @@ NLP_ENGINE::NLP_ENGINE(
 
     static _TCHAR logfile[MAXSTR];
     static _TCHAR rfbdir[MAXSTR];
-    if (!workingFolder.empty()) {
-        _stprintf(m_workingFolder,_T("%s"),workingFolder.c_str());
-        _stprintf(logfile,"%s%s%s",workingFolder.c_str(),DIR_STR,_T("vtrun_logfile.out"));
-        _stprintf(rfbdir,"%s%sdata%srfb%sspec",workingFolder.c_str(),DIR_STR,DIR_STR,DIR_STR);
+    if (!workingFolder->isEmpty()) {
+        _stprintf(m_workingFolder,_T("%s"),workingFolder);
+        _stprintf(logfile,_T("%hs%s%s"),workingFolder,DIR_STR,_T("vtrun_logfile.out"));
+        _stprintf(rfbdir,_T("%hs%sdata%srfb%sspec"),workingFolder,DIR_STR,DIR_STR,DIR_STR);
     } else {
-        _stprintf(logfile,"%s",_T("vtrun_logfile.out"));
-        _stprintf(rfbdir,"data/rfb/spec");
+        _stprintf(logfile,_T("%s"),_T("vtrun_logfile.out"));
+        _stprintf(rfbdir,_T("data/rfb/spec"));
     }
     _t_cout << _T("[logfile: ") << logfile << _T("]") << endl;
  
@@ -146,19 +144,19 @@ int NLP_ENGINE::init(
     m_compiled = compiled;
 
     struct stat st;
-    char str[MAXPATH] = _T("");
+    _TCHAR str[MAXPATH] = _T("");
     _stprintf(m_anadir,_T("%s"),analyzer);
 
-    if (m_workingFolder[0] != '\0') {
-        strcpy(str,m_analyzer);
-        if (stat(str,&st) != 0) {
+    if (m_workingFolder[0] != L'\0') {
+        _tcscpy(str,m_analyzer);
+        if (stat((const char *)str,&st) != 0) {
             _stprintf(m_anadir, _T("%s%sanalyzers%s%s"),m_workingFolder,DIR_STR,DIR_STR,m_analyzer);
             _stprintf(m_ananame, _T("%s"),m_analyzer);          
         }
     }
     
-    strcpy(str,m_anadir);
-    if (stat(m_anadir,&st) != 0) {
+    _tcscpy(str,m_anadir);
+    if (stat((const char *)m_anadir,&st) != 0) {
         _t_cerr << _T("[analyzer directory not found: ") << m_anadir << _T("]") << endl;
         return 0;
     }
@@ -317,7 +315,7 @@ int NLP_ENGINE::analyze(
 
         bool create = true;
         if (outdir) {
-            stat(outdir, &st);
+            stat((const char *)outdir, &st);
             if ((st.st_mode & S_IFREG) == S_IFDIR) {
                 _stprintf(m_outdir, _T("%s"), outdir);
                 create = false;
@@ -336,7 +334,7 @@ int NLP_ENGINE::analyze(
         #else
         _stprintf(ofstr,_T("e:\\dummy.txt"));
         #endif
-        _t_ofstream os(TCHAR2CA(ofstr), ios::out);						// 08/07/02 AM.
+        _t_ofstream os(ofstr, ios::out);						// 08/07/02 AM.
 
         // Testing output to buffer.
         _TCHAR obuf[MAXSTR];
@@ -378,7 +376,7 @@ int NLP_ENGINE::analyze(
     #else
     _stprintf(ofstr,_T("e:\\dummy.txt"));
     #endif
-    _t_ofstream os(TCHAR2CA(ofstr), ios::out);
+    _t_ofstream os(ofstr, ios::out);
     
     _t_cout << _T("[infile path: ") << m_infile << _T("]") << endl;
     _t_cout << _T("[outfile path: ") << m_outfile << _T("]") << endl;
@@ -422,7 +420,7 @@ int NLP_ENGINE::analyze(
     #else
     _stprintf(ofstr,_T("e:\\dummy.txt"));
     #endif
-    _t_ofstream os(TCHAR2CA(ofstr), ios::out);
+    _t_ofstream os(ofstr, ios::out);
 
 //_t_cout << _T("BEFORE ANALYSIS: ") << endl; // 09/27/20 AM.
 //object_counts();    // TESTING analysis cleanup.    // 09/27/20 AM.
@@ -489,7 +487,7 @@ int NLP_ENGINE::close(_TCHAR *analyzer)
 
 int NLP_ENGINE::createDir(_TCHAR *dirPath) {
     struct stat st;
-    if (stat(dirPath,&st) != 0) {
+    if (stat((const char *)dirPath,&st) != 0) {
 #ifdef LINUX
 	    mkdir(dirPath, 0755);
 #else
@@ -534,7 +532,7 @@ int NLP_ENGINE::readFiles(_TCHAR *path)
     
 #else
 
-    DWORD ftyp = GetFileAttributesA(path);
+    DWORD ftyp = GetFileAttributesA((LPCSTR)path);
     if (ftyp == INVALID_FILE_ATTRIBUTES && GetLastError() == ERROR_FILE_NOT_FOUND)
     {
         return 0;
@@ -565,13 +563,13 @@ int NLP_ENGINE::readFiles(_TCHAR *path)
             else if (ffd.cFileName[0] != '.')
             {
                 _stprintf(fullPath, _T("%s%s%s"),path,DIR_STR,ffd.cFileName);
-                m_files.push_back(fullPath);
+                m_files.push_back((const char *)fullPath);
             }
         }
         while (FindNextFile(hFind, &ffd) != 0);
         }
     else {
-        m_files.push_back(path);
+        m_files.push_back((const char *)path);
     }
 
 #endif

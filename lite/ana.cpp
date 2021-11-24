@@ -855,7 +855,7 @@ sprintf(fname, _T("%s%c%s"), this->getSpecdir(), DIR_CH, _T("tmp.seq"));
 #else
 sprintf_s(fname, _T("%s%c%s"), this->getSpecdir(), DIR_CH, _T("tmp.seq"));
 #endif
-_t_ofstream fout(TCHAR2CA(fname), ios::out);											// 03/08/00 AM.
+_t_ofstream fout(fname, ios::out);											// 03/08/00 AM.
 
 // Write out the sequence file.
 //genSeqfile(*fout);							// 11/04/99 AM.			// 03/08/00 AM.
@@ -936,7 +936,7 @@ sprintf(fname, _T("%s%c%s"), dir, DIR_CH, DEFAULT_SEQFILE);
 #else
 sprintf_s(fname, _T("%s%c%s"), dir, DIR_CH, DEFAULT_SEQFILE);
 #endif
-_t_ofstream fout(TCHAR2CA(fname), ios::out);											// 03/08/00 AM.
+_t_ofstream fout(fname, ios::out);											// 03/08/00 AM.
 
 //genSeqfile(*fout);	// Write out the sequence file.				// 03/08/00 AM.
 genSeqfile(fout);		// Write out the sequence file.				// 03/08/00 AM.

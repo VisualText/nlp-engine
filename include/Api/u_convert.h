@@ -8,13 +8,13 @@ All rights reserved.
 #ifndef _U_CONVERT_H_
 #define _U_CONVERT_H_
 
-LIBSTREAM_API bool u_isascii(LPCWSTR lpwStr, int typeASCII);
+LIBSTREAM_API bool u_isascii(const _TCHAR lpwStr, int typeASCII);
 LIBSTREAM_API bool u_to_mbcs(
-	LPCWSTR lpwUnicode,
+	const _TCHAR* lpwUnicode,
 	UINT nCodePage,
-	LPCTSTR* &mbcsstr
+	const _TCHAR* &mbcsstr
 	);
-LIBSTREAM_API bool u_delete(LPCTSTR* &mbcsstr);
+LIBSTREAM_API bool u_delete(const _TCHAR* &mbcsstr);
 
 
 #endif

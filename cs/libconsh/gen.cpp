@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									GEN.C
 *
-* FILE:	conan.¹/gen.c
+* FILE:	conan.ï¿½/gen.c
 * SUBJ:	Module for generating code.
 * NOTE:	Should separate primitives from consh_gen facilities.
 *		Some old stuff still infests these files.
@@ -172,7 +172,7 @@ _t_ofstream *s_fp;			/* File ptr for string table file.		*/
 
 //if (!file_open(s_nam, "w", &s_fp))
 //   return;
-s_fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+s_fp = new _t_ofstream(s_nam);			// 04/20/99 AM.
 
 gen_array_hd(_T("char"), s_tab, _T(""), s_fp);			/* Start array.				*/
 *s_fp << _T("\"");							/* Start quote for string.	*/

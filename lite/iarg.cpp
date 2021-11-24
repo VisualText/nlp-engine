@@ -303,9 +303,9 @@ switch(arg.type)
 			output << arg.val_.str_;
 #else
 			char *lpstr8;														// 01/27/06 AM.
-			u_to_mbcs((LPCWSTR)arg.val_.str_, CP_UTF8, (LPCTSTR*&)lpstr8);
+			u_to_mbcs(arg.val_.str_, CP_UTF8, (const _TCHAR *&)lpstr8);
 			output << lpstr8;													// 01/27/06 AM.
-			u_delete((LPCTSTR*&)lpstr8);									// 01/27/06 AM.
+			u_delete((const _TCHAR *&)lpstr8);									// 01/27/06 AM.
 #endif
 			}
 		break;

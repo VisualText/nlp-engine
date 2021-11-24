@@ -6,15 +6,16 @@
 #ifdef UNICODE
 #define ASCII_7 0 // 0 - 0x7f
 #define ASCII_EX 1 // 0 - 0xff
-LIBSTREAM_API bool u_isascii(LPCWSTR lpwStr, int typeASCII)
+/*
+LIBSTREAM_API bool u_isascii(const _TCHAR lpwStr, int typeASCII)
 {
 	int maxVal = ASCII_7 == typeASCII ? 0x7f : 0xff;
-	int len = lstrlen(lpwStr);
+	int len = _tcslen(&lpwStr);
 	for (int n = 0; n < len; n++)
-		if ((int)lpwStr[n] > maxVal)
+		if ((int)(&lpwStr)[n] > maxVal)
 			return false;
 	return true;
-}
+*/
 
 /********************************************
 * FN:		u_to_mbcs
@@ -24,12 +25,12 @@ LIBSTREAM_API bool u_isascii(LPCWSTR lpwStr, int typeASCII)
 ********************************************/
 
 LIBSTREAM_API bool u_to_mbcs(
-	LPCWSTR lpwUnicode,
+	const _TCHAR* lpwUnicode,
 	UINT nCodePage,
-	LPCTSTR* &mbcsstr
+	const _TCHAR* &mbcsstr
 	)
 {
-	int nChars = wcslen(lpwUnicode) + 1;
+	int nChars = _tcslen(lpwUnicode) + 1;
 	int nMultiByteBufferSize = nChars * 6;  // possible 6 bytes max per character for UTF-8
 	wchar_t* pszUnicodeString = new wchar_t[nChars]; 
 	char *pszMultiByteString = new char[nMultiByteBufferSize];  
@@ -63,7 +64,7 @@ LIBSTREAM_API bool u_to_mbcs(
 //	if (pszMultiByteString)
 //		delete [] pszMultiByteString;
 //	return strMBCS;
-mbcsstr = (LPCTSTR *)pszMultiByteString;
+mbcsstr = (_TCHAR *)pszMultiByteString;
 return true;
 }
 
@@ -76,7 +77,7 @@ return true;
 ********************************************/
 
 LIBSTREAM_API bool u_delete(
-	LPCTSTR* &mbcsstr
+	const _TCHAR* &mbcsstr
 	)
 {
 if (mbcsstr)

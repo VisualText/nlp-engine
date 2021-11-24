@@ -36,6 +36,7 @@ using namespace std;											// Upgrade	// 01/24/01 AM.
 #include "prim/list_s.h"
 #include "prim/list.h"
 //#include "prim/io.h"
+#include "u_convert.h"
 
 #include "consh/libconsh.h"				// 04/29/99 AM.
 #include "consh/arg.h"
@@ -68,12 +69,12 @@ char *lpstr8;
 while ((str = ALIST::list_pop_buf(&args,buf)))						// 08/14/02 AM.
    {
 #ifdef UNICODE
-	u_to_mbcs((LPCWSTR)str, CP_UTF8, (LPCTSTR*&)lpstr8);
+	u_to_mbcs((const _TCHAR *&)str, CP_UTF8, (const _TCHAR *&)lpstr8);
    if (_tcschr(str, ' '))
       *out << _T("\"") << lpstr8 << _T("\" ");
    else
       *out << lpstr8 << _T(" ");
-	u_delete((LPCTSTR*&)lpstr8);
+	u_delete((const _TCHAR *&)lpstr8);
 #else
    if (_tcschr(str, ' '))
       *out << _T("\"") << str << _T("\" ");

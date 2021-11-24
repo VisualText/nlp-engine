@@ -22,9 +22,8 @@ BOOL APIENTRY DllMain( HANDLE hModule,
     return TRUE;
 }
 
-
 // This is an example of an exported variable
-LIBSTREAM_API int nLibStream=0;
+LIBSTREAM_API int nLibStream;
 
 // This is an example of an exported function.
 LIBSTREAM_API int fnLibStream(void)

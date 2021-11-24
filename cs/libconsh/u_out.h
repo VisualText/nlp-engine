@@ -54,14 +54,12 @@ bool u_readbom(_t_ifstream *);
 #define STDOPERATOR	std::operator
 #endif
 
-
 #ifndef _U_OUTOVERRIDE_
 #define _U_OUTOVERRIDE_
 // Move to prim library.			// 01/24/06 AM.
 _t_ofstream &STDOPERATOR<<(_t_ofstream &os, _TCHAR* &lpszBuffer);
 _t_ostream &STDOPERATOR<<(_t_ostream &os, _TCHAR* &lpszBuffer);
 #endif
-
 
 
 class u_string

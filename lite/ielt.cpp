@@ -254,10 +254,10 @@ if (!empty(elt.name_))
 #ifndef UNICODE
 	output << pretty_str(elt.name_, buf, size);	// 11/24/98 AM.
 #else
-	u_to_mbcs((LPCWSTR)pretty_str(elt.name_,buf,size),					// 01/27/06 AM.
-												 CP_UTF8, (LPCTSTR*&)lpstr8);	// 01/27/06 AM.
+	u_to_mbcs(pretty_str(elt.name_,buf,size),					// 01/27/06 AM.
+												 CP_UTF8, (const _TCHAR*&)lpstr8);	// 01/27/06 AM.
 	output << lpstr8;																// 01/27/06 AM.
-	u_delete((LPCTSTR*&)lpstr8);												// 01/27/06 AM.
+	u_delete((const _TCHAR*&)lpstr8);												// 01/27/06 AM.
 #endif
 	}
 else
@@ -294,10 +294,10 @@ if (elt.rename_)
 #ifndef UNICODE
 	output << pretty_str(elt.rename_, buf, size);	// 11/24/98 AM.
 #else
-	u_to_mbcs((LPCWSTR)pretty_str(elt.rename_,buf,size),				// 01/27/06 AM.
-												CP_UTF8, (LPCTSTR*&)lpstr8);	// 01/27/06 AM.
+	u_to_mbcs(pretty_str(elt.rename_,buf,size),				// 01/27/06 AM.
+												CP_UTF8, (const _TCHAR*&)lpstr8);	// 01/27/06 AM.
 	output << lpstr8;																// 01/27/06 AM.
-	u_delete((LPCTSTR*&)lpstr8);												// 01/27/06 AM.
+	u_delete((const _TCHAR*&)lpstr8);												// 01/27/06 AM.
 #endif
 	}
 if (elt.group_)																// 09/23/00 AM.
@@ -310,10 +310,10 @@ if (elt.group_)																// 09/23/00 AM.
 #ifndef UNICODE
 	output << pretty_str(elt.group_, buf, size);						// 09/23/00 AM.
 #else
-	u_to_mbcs((LPCWSTR)pretty_str(elt.group_,buf,size),				// 01/27/06 AM.
-												CP_UTF8, (LPCTSTR*&)lpstr8);	// 01/27/06 AM.
+	u_to_mbcs(pretty_str(elt.group_,buf,size),				// 01/27/06 AM.
+												CP_UTF8, (const _TCHAR*&)lpstr8);	// 01/27/06 AM.
 	output << lpstr8;																// 01/27/06 AM.
-	u_delete((LPCTSTR*&)lpstr8);												// 01/27/06 AM.
+	u_delete((const _TCHAR*&)lpstr8);												// 01/27/06 AM.
 #endif
 	}
 if (elt.getSinglet())

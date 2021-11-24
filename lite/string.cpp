@@ -237,9 +237,9 @@ _t_ostream &STDOPERATOR<<(_t_ostream &output, const String &s)
 output << s.sptr_;
 #else
 char *lpstr8;																	// 01/28/06 AM.
-u_to_mbcs((LPCWSTR)s.sptr_, CP_UTF8, (LPCTSTR*&)lpstr8);			// 01/28/06 AM.
+u_to_mbcs((const _TCHAR*&)s.sptr_, CP_UTF8, (const _TCHAR*&)lpstr8);			// 01/28/06 AM.
 output << lpstr8;																// 01/28/06 AM.
-u_delete((LPCTSTR*&)lpstr8);												// 01/28/06 AM.
+u_delete((const _TCHAR*&)lpstr8);												// 01/28/06 AM.
 #endif
 return output;			// Enables concatenation.
 }

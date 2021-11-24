@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									CON_GEN.C
 *
-* FILE:	consh.¹/con_gen.c
+* FILE:	consh.ï¿½/con_gen.c
 * SUBJ:	Generate concept table code files, from Consh.
 * CR:	10/6/95 AM.
 *
@@ -100,7 +100,7 @@ for (ii = 0; ii <= seg_curr; ii++)
    _stprintf(s_nam, _T("%s%s%s.cpp"), dir, DIR_SEP, s_tab);
 //   if (!file_open(s_nam, "w", &fp))
 //      return;
-fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+fp = new _t_ofstream(s_nam);			// 04/20/99 AM.
 
    gen_file_head(fp);
    consh_gen_includes(fp);
@@ -147,7 +147,7 @@ for (ii = seg_curr + 1; ii < segs_tot; ii++)
    _stprintf(s_nam, _T("%s%s%s.cpp"), dir, DIR_SEP, s_tab);
 //   if (!file_open(s_nam, "w", &fp))
 //      return;
-fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+fp = new _t_ofstream(s_nam);			// 04/20/99 AM.
 
    gen_file_head(fp);
    consh_gen_includes(fp);
@@ -183,7 +183,7 @@ segs_tot = cg->acon_->con_segs_tot();
 _stprintf(s_nam, _T("%s%s%s_ini.h%s"), dir, DIR_SEP, consh_CON_BASE, tail);
 //if (!file_open(s_nam, "w", &fp))
 //   return;
-fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+fp = new _t_ofstream(s_nam);			// 04/20/99 AM.
 
 gen_file_head(fp);
 
@@ -233,7 +233,7 @@ tcount		= cg->acon_->con_count();
 _stprintf(s_nam, _T("%s%s%s_ini.cpp%s"), dir, DIR_SEP, tbase, tail);
 //if (!file_open(s_nam, "w", &fp))
 //   return;
-fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+fp = new _t_ofstream(s_nam);			// 04/20/99 AM.
 
 gen_file_head(fp);
 

@@ -219,9 +219,9 @@ if ((buf = pn.name_))
 		}
 		_TCHAR *lpszBuffer = pretty_char(*buf++);	// 01/25/06 AM.
 		char *lpstr8;	// 01/25/06 AM.
-		u_to_mbcs((LPCWSTR)lpszBuffer, CP_UTF8, (LPCTSTR*&)lpstr8);	// 01/25/06 AM.
+		u_to_mbcs(lpszBuffer, CP_UTF8, (const _TCHAR *&)lpstr8);	// 01/25/06 AM.
 		output << lpstr8;	// 01/25/06 AM.
-		u_delete((LPCTSTR*&)lpstr8);	// 01/25/06 AM.
+		u_delete((const _TCHAR *&)lpstr8);	// 01/25/06 AM.
 #endif
 		}
 	}

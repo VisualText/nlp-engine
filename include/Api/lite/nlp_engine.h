@@ -8,6 +8,9 @@
 #include <sys/stat.h>
 #include "machine.h"
 #endif
+
+#include "unicode/unistr.h"
+
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -50,7 +53,7 @@ class LITE_API NLP_ENGINE
 
 public:
 	NLP_ENGINE(
-        string workingFolder,
+        icu::UnicodeString* workingFolder,
         bool silent=false
  	);
 

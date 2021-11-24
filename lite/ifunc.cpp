@@ -182,10 +182,10 @@ _t_ostream &STDOPERATOR<<(_t_ostream &output, Ifunc &func)
 output << str(func.name_) << _T("(");
 #else
 char *lpstr8;																	// 01/28/06 AM.
-u_to_mbcs((LPCWSTR)str(func.name_),										// 01/28/06 AM.
-										 CP_UTF8, (LPCTSTR*&)lpstr8);		// 01/28/06 AM.
+u_to_mbcs(str(func.name_),										// 01/28/06 AM.
+										 CP_UTF8, (const _TCHAR*&)lpstr8);		// 01/28/06 AM.
 output << lpstr8;																// 01/28/06 AM.
-u_delete((LPCTSTR*&)lpstr8);												// 01/28/06 AM.
+u_delete((const _TCHAR*&)lpstr8);												// 01/28/06 AM.
 output << _T("(");
 #endif
 

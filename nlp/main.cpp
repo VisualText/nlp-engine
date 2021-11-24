@@ -13,7 +13,10 @@ All rights reserved.
 *******************************************************************************/
 
 #include "lite/nlp_engine.h"
+#include "unicode/ustring.h"
 #include "version.h"
+
+#define U_SIZEOF_WCHAR_T 2
 
 bool cmdReadArgs(int,_TCHAR*argv[],_TCHAR*&,_TCHAR*&,_TCHAR*&,_TCHAR*&,bool&,bool&,bool&);
 void cmdHelpargs(_TCHAR*);
@@ -47,7 +50,8 @@ bool silent=false;			// No log/debug output files.
 if (!cmdReadArgs(argc,argv,analyzerpath,input,output,workdir,develop,compiled,silent))
    exit(1);
 
-NLP_ENGINE *nlpEngine = new NLP_ENGINE(workdir);
+icu::UnicodeString unicoder(workdir);
+NLP_ENGINE *nlpEngine = new NLP_ENGINE(&unicoder);
 nlpEngine->analyze(analyzerpath,input,output,develop,silent,compiled);
 delete nlpEngine;
 

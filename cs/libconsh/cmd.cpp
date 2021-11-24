@@ -1631,7 +1631,7 @@ if (!f_exists(buf))
 // G++ BUGS.																	// 03/08/00 AM.
 //fin = new ifstream(fil, ios::in | ios::nocreate);				// 04/30/99 AM.
 //ifstream fin(fil, ios::in | ios::nocreate);						// 03/08/00 AM.
-_t_ifstream fin(TCHAR2A(buf), ios::in);								// Upgrade.	// 01/24/01 AM.
+_t_ifstream fin(buf, ios::in);								// Upgrade.	// 01/24/01 AM.
 if (!fin)		// 04/30/99 AM.
 	{
 	_t_cerr << _T("[Couldn't open file ") << buf << _T("]") << endl;
@@ -1680,7 +1680,7 @@ int ii;	// Counter.
 
 _TCHAR s_nam[PATH];
 _stprintf(s_nam, _T("%s%skb.mak"), dir, DIR_SEP);
-_t_ofstream *fp = new _t_ofstream(TCHAR2A(s_nam));
+_t_ofstream *fp = new _t_ofstream(s_nam);
 
 *fp << _T("# VISUALTEXT Generated NMAKE File, Based on kb.dsp\n");
 *fp << _T("!IF \"$(CFG)\" == \"\" \n");
@@ -2030,7 +2030,7 @@ _TCHAR s_nam[PATH];
 
 // RELEASE VERSION
 _stprintf(s_nam, _T("%s%skb_release.bat"), dir, DIR_SEP);
-_t_ofstream *fp = new _t_ofstream(TCHAR2A(s_nam));
+_t_ofstream *fp = new _t_ofstream(s_nam);
 
 *fp << _T("rem VISUALTEXT Generated KB batch file.\n");
 *fp << _T("pushd ") << dir << endl;
@@ -2041,7 +2041,7 @@ delete fp;
 
 // DEBUG VERSION
 _stprintf(s_nam, _T("%s%skb_debug.bat"), dir, DIR_SEP);
-fp = new _t_ofstream(TCHAR2A(s_nam));
+fp = new _t_ofstream(s_nam);
 
 *fp << _T("rem VISUALTEXT Generated KB batch file.\n");
 *fp << _T("pushd ") << dir << endl;

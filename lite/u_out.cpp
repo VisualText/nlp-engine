@@ -30,9 +30,9 @@ _t_ofstream &STDOPERATOR<<(_t_ofstream &os, u_string* &str)
 _TCHAR* lpszBuffer = (_TCHAR*) str;
 
 char *lpstr8;
-u_to_mbcs((LPCWSTR)lpszBuffer, CP_UTF8, (LPCTSTR*&)lpstr8);
+u_to_mbcs(lpszBuffer, CP_UTF8, (const _TCHAR*&)lpstr8);
 os << lpstr8;
-u_delete((LPCTSTR*&)lpstr8);
+u_delete((const _TCHAR*&)lpstr8);
 return os;
 }
 
@@ -42,9 +42,9 @@ _t_ostream &STDOPERATOR<<(_t_ostream &os, u_string* &str)
 _TCHAR* lpszBuffer = (_TCHAR*) str;
 
 char *lpstr8;
-u_to_mbcs((LPCWSTR)lpszBuffer, CP_UTF8, (LPCTSTR*&)lpstr8);
+u_to_mbcs(lpszBuffer, CP_UTF8, (const _TCHAR*&)lpstr8);
 os << lpstr8;
-u_delete((LPCTSTR*&)lpstr8);
+u_delete((const _TCHAR*&)lpstr8);
 return os;
 }
 
@@ -52,18 +52,18 @@ return os;
 _t_ofstream &STDOPERATOR<<(_t_ofstream &os, _TCHAR* &lpszBuffer)
 {
 char *lpstr8;
-u_to_mbcs((LPCWSTR)lpszBuffer, CP_UTF8, (LPCTSTR*&)lpstr8);
+u_to_mbcs(lpszBuffer, CP_UTF8, (const _TCHAR*&)lpstr8);
 os << lpstr8;
-u_delete((LPCTSTR*&)lpstr8);
+u_delete((const _TCHAR*&)lpstr8);
 return os;
 }
 
 _t_ostream &STDOPERATOR<<(_t_ostream &os, _TCHAR* &lpszBuffer)
 {
 char *lpstr8;
-u_to_mbcs((LPCWSTR)lpszBuffer, CP_UTF8, (LPCTSTR*&)lpstr8);
+u_to_mbcs(lpszBuffer, CP_UTF8, (const _TCHAR*&)lpstr8);
 os << lpstr8;
-u_delete((LPCTSTR*&)lpstr8);
+u_delete((const _TCHAR*&)lpstr8);
 return os;
 }
 

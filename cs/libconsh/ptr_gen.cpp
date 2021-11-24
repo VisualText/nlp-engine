@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									PTR_GEN.C
 *
-* FILE:	consh.¹/ptr_gen.c
+* FILE:	consh.ï¿½/ptr_gen.c
 * SUBJ:	Generate ptr table code files, from Consh.
 * CR:	10/8/95 AM.
 *
@@ -101,7 +101,7 @@ for (ii = 0; ii <= seg_curr; ii++)
    _stprintf(s_nam, _T("%s%s%s.cpp%s"), dir, DIR_SEP, s_tab, tail);
    //if (!file_open(s_nam, "w", &fp))
    //   return;
-	fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+	fp = new _t_ofstream(s_nam);			// 04/20/99 AM.
 
    gen_file_head(fp);
    consh_gen_includes(fp);
@@ -148,7 +148,7 @@ for (ii = seg_curr + 1; ii < segs_tot; ii++)
    /* Set up file for current segment. */
    _stprintf(s_tab, _T("%s%d"), consh_PTR_BASE, ii);
    _stprintf(s_nam, _T("%s%s%s.cpp"), dir, DIR_SEP, s_tab);
-	fp = new _t_ofstream(TCHAR2A(s_nam));
+	fp = new _t_ofstream(s_nam);
 
    gen_file_head(fp);
    consh_gen_includes(fp);
@@ -184,7 +184,7 @@ segs_tot = cg->aptr_->ptr_segs_tot();
 _stprintf(s_nam, _T("%s%s%s_ini.h%s"), dir, DIR_SEP, consh_PTR_BASE, tail);
 //if (!file_open(s_nam, "w", &fp))
 //   return;
-fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+fp = new _t_ofstream(s_nam);			// 04/20/99 AM.
 
 gen_file_head(fp);
 
@@ -233,7 +233,7 @@ tsize		= cg->aptr_->ptr_seg_size();
 _stprintf(s_nam, _T("%s%s%s_ini.cpp%s"), dir, DIR_SEP, tbase, tail);
 //if (!file_open(s_nam, "w", &fp))
 //   return;
-fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+fp = new _t_ofstream(s_nam);			// 04/20/99 AM.
 
 gen_file_head(fp);
 

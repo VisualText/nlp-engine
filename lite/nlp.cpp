@@ -1019,41 +1019,41 @@ if (compile)																	// 05/10/00 AM.
 	// Set up an output file for code generation.
 	_stprintf(buf, _T("%s%c%s%canalyzer.cpp"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *fcode = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	_t_ofstream *fcode = new _t_ofstream(buf, ios::out);
 	_stprintf(buf, _T("%s%c%s%canalyzer.h"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *fhead = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	_t_ofstream *fhead = new _t_ofstream(buf, ios::out);
 	_stprintf(buf, _T("%s%c%s%cdata.h"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *fdata = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	_t_ofstream *fdata = new _t_ofstream(buf, ios::out);
 	_stprintf(buf, _T("%s%c%s%cauxiliary.cpp"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *faux = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	_t_ofstream *faux = new _t_ofstream(buf, ios::out);
 
 	// 06/14/00 AM.
 	_stprintf(buf, _T("%s%c%s%cehash.cpp"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *ehash = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	_t_ofstream *ehash = new _t_ofstream(buf, ios::out);
 	_stprintf(buf, _T("%s%c%s%cehead.h"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *ehead = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	_t_ofstream *ehead = new _t_ofstream(buf, ios::out);
 	_stprintf(buf, _T("%s%c%s%cedata.h"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *edata = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	_t_ofstream *edata = new _t_ofstream(buf, ios::out);
 
 	// 06/17/00 AM.
 	_stprintf(buf, _T("%s%c%s%crhash.cpp"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *rhash = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	_t_ofstream *rhash = new _t_ofstream(buf, ios::out);
 	_stprintf(buf, _T("%s%c%s%crhead.h"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *rhead = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	_t_ofstream *rhead = new _t_ofstream(buf, ios::out);
 	_stprintf(buf, _T("%s%c%s%crchain.h"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *rchain = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	_t_ofstream *rchain = new _t_ofstream(buf, ios::out);
 	_stprintf(buf, _T("%s%c%s%crdata.h"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *rdata = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	_t_ofstream *rdata = new _t_ofstream(buf, ios::out);
 
 	gen = new Gen(_T(""), fcode,fhead,fdata,								// 05/10/00 AM.
 							faux);												// 06/05/00 AM.
@@ -1566,7 +1566,7 @@ parse->setFbatchstart(fbatchstart_);					// FIX		// 05/19/08 AM.
 // Set up to parse given buffer.						// 02/06/00 AM.
 
 // Copy buffer into parse object.
-parse->copyBuffer(iss->str(), 0);	// Try this.	// 11/17/20 AM.
+parse->copyBuffer((_TCHAR *)iss->str(), 0);	// Try this.	// 11/17/20 AM.
 
 // New manager for cout ostream.											// 05/04/03 AM.
 if (os)																			// 05/05/03 AM.
@@ -1748,7 +1748,11 @@ if (outbuf && outlen > 1)													// 05/13/02 AM.	// 09/28/19 AM.
 	pbuf = &ocbuf;																// 05/13/02 AM.	// 09/28/19 AM.
 #else
 //_t_ostrstream ocbuf(outbuf, outlen, ios::out);							// 05/11/02 AM.
+#ifdef UNICODE
+_t_ostrstream ocbuf(outbuf, 0, ios::app);
+#else
 _t_ostrstream ocbuf(outbuf, ios::app);							// 09/28/19 AM.
+#endif
 _t_ostrstream *pbuf = 0;														// 05/13/02 AM.
 if (outbuf && outlen > 1)													// 05/13/02 AM.
 	pbuf = &ocbuf;																// 05/13/02 AM.
@@ -1958,7 +1962,7 @@ fbatchstart_ = false;										// FIX		// 05/19/08 AM.
 
 // Terminate buffer.	// 11/17/20 AM.
 
-#ifdef UNICODE
+#ifdef UNICODE_BLOCK
 // No Unicode analog to ostringstream, so copy buffer.				// 04/14/06 AM.
 long siz = ocbuf.str().size();											// 04/15/06 AM.
 if (siz >= outlen)	// Overflow.										// 04/15/06 AM.
@@ -2536,7 +2540,7 @@ sdbg = dbgout_;			// Save the current debug stream.
 
 _TCHAR fname[MAXSTR];
 _stprintf(fname, _T("%s%c%s"), dirname, DIR_CH, _T("dbg.log"));
-dbgout_ = new _t_ofstream(TCHAR2CA(fname), ios::out);
+dbgout_ = new _t_ofstream(fname, ios::out);
 }
 
 

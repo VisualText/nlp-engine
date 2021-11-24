@@ -7,3 +7,4 @@ endif()
 
 file(GLOB prim_src "*.h" "*.cpp")
 add_library(prim STATIC ${prim_src})
+target_link_libraries(prim PUBLIC stream)

@@ -74,7 +74,7 @@ extern char BOM_UTF8[];
 
 void fileOut(_TCHAR *fname, /*DU*/ _t_ofstream* &fout, _t_ostream* &sout)
 {
-fout = new _t_ofstream(TCHAR2CA(fname), ios::out);
+fout = new _t_ofstream(fname, ios::out);
 #ifdef UNICODE
 *fout << BOM_UTF8;
 #endif
@@ -86,7 +86,7 @@ gout = fout;				// Bind output to file.
 
 void fileApp(_TCHAR *fname, /*DU*/ _t_ofstream* &fout, _t_ostream* &sout)
 {
-fout = new _t_ofstream(TCHAR2CA(fname), ios::app);
+fout = new _t_ofstream(fname, ios::app);
 #ifdef UNICODE
 *fout << BOM_UTF8;
 #endif
@@ -98,7 +98,7 @@ gout = fout;				// Bind output to file.
 // VARIANT.	// TRYING SOMETHING HERE.	// 02/26/05 AM.
 void fileOut(_t_strstream *outStr, /*DU*/ _t_ofstream* &fout, _t_ostream* &sout)
 {
-//fout = new _t_ofstream(TCHAR2CA(fname), ios::out);
+//fout = new _t_ofstream(fname, ios::out);
 //fout = new _t_ofstream(outStr->str().c_str, ios::out);
 sout = gout;				// Save current output stream.
 gout = fout;				// Bind output to file.
@@ -129,7 +129,7 @@ sout = 0;
 
 void fileErr(_TCHAR *fname, /*DU*/ _t_ofstream* &fout, _t_ostream* &sout)
 {
-fout = new _t_ofstream(TCHAR2CA(fname), ios::out);
+fout = new _t_ofstream(fname, ios::out);
 sout = gerr;				// Save current output stream.
 gerr = fout;				// Bind output to file.
 }

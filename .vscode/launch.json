@@ -80,6 +80,24 @@
             ]
         },
         {
+            "name": "Corp PT (win)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}\\bin/Debug\\nlp.exe",
+            "args": ["-ANA","${workspaceFolder}/analyzers/corporate","-WORK","${workspaceFolder}","${workspaceFolder}/analyzers/corporate/input/Dev/Vendas.txt","-DEV"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
             "name": "test",
             "type": "cppdbg",
             "request": "launch",

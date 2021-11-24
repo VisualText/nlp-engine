@@ -436,7 +436,7 @@ _t_ofstream *fhead = gen->fhead_;
 _TCHAR buff[MAXSTR];					// 04/03/09 AM.
 _stprintf(buff, _T("%s%c%s%cpass%d.cpp"),	// 04/03/09 AM.
 				parse->getAna()->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH, id);
-_t_ofstream *passc = new _t_ofstream(TCHAR2CA(buff), ios::out);
+_t_ofstream *passc = new _t_ofstream(buff, ios::out);
 gen->setPassc(passc);	// 04/03/09 AM.
 
 // Todo: Replace fcode with passc in this function.	// 04/03/09 AM.
@@ -448,7 +448,7 @@ _t_ofstream *fcode = passc;	// Just locally for current pass.	// 04/03/09 AM.
 // Used for FDATA information private to the current pass.	// 04/03/09 AM.
 _stprintf(buff, _T("%s%c%s%cpass%d.h"),	// 04/03/09 AM.
 				parse->getAna()->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH, id);
-_t_ofstream *passh = new _t_ofstream(TCHAR2CA(buff), ios::out);
+_t_ofstream *passh = new _t_ofstream(buff, ios::out);
 gen->setPassh(passh);	// 04/03/09 AM.
 
 // Replace fdata with passh in this function.	// 04/04/09 AM.

@@ -167,7 +167,7 @@ _t_ostream &STDOPERATOR<<(_t_ostream &output, Ivar &var)
 _TCHAR *nm = var.name_;													// 01/28/06 AM.
 #else
 char *nm;																	// 01/28/06 AM.
-u_to_mbcs((LPCWSTR)var.name_, CP_UTF8, (LPCTSTR*&)nm);		// 01/28/06 AM.
+u_to_mbcs(var.name_, CP_UTF8, (const _TCHAR*&)nm);		// 01/28/06 AM.
 #endif
 
 switch (var.type_)
@@ -200,7 +200,7 @@ if (var.index_)																// 10/13/00 AM.
 
 #ifdef UNICODE
 if (nm && *nm)																// 01/28/06 AM.
-	u_delete((LPCTSTR*&)nm);											// 01/28/06 AM.
+	u_delete((const _TCHAR*&)nm);											// 01/28/06 AM.
 #endif
 
 return output;

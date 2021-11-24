@@ -124,9 +124,9 @@ _t_ostream &STDOPERATOR<<(_t_ostream &output, Sym &sym)
 output << str(sym.str_);
 #else
 char *lpstr8;																	// 01/28/06 AM.
-u_to_mbcs((LPCWSTR)str(sym.str_), CP_UTF8, (LPCTSTR*&)lpstr8);	// 01/28/06 AM.
+u_to_mbcs((const _TCHAR*&)sym.str_, CP_UTF8, (const _TCHAR*&)lpstr8);	// 01/28/06 AM.
 output << lpstr8;																// 01/28/06 AM.
-u_delete((LPCTSTR*&)lpstr8);												// 01/28/06 AM.
+u_delete((const _TCHAR*&)lpstr8);												// 01/28/06 AM.
 #endif
 return output;
 }

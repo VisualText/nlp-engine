@@ -1091,7 +1091,7 @@ buf = Chars::create(biglen+1);		// Extra one for termination.
 #ifdef LINUX
 _t_ifstream inFile(fname, ios::in);
 #else
-_t_ifstream inFile(TCHAR2CA(fname), ios::in							// Upgrade.	// 01/24/01 AM.
+_t_ifstream inFile(fname, ios::in							// Upgrade.	// 01/24/01 AM.
 								| ios_base::binary);			// FIX.		// 02/01/01 AM.
 #endif
 if (!inFile)
@@ -1326,7 +1326,7 @@ return true;
 #ifdef UNICODE
 #define ASCII_7 0 // 0 - 0x7f
 #define ASCII_EX 1 // 0 - 0xff
-BOOL UTL_IsASCII(LPCWSTR lpwStr, int typeASCII)
+BOOL UTL_IsASCII(_TCHAR * lpwStr, int typeASCII)
 {
 	int maxVal = ASCII_7 == typeASCII ? 0x7f : 0xff;
 	int len = lstrlen(lpwStr);
@@ -1343,7 +1343,7 @@ BOOL UTL_IsASCII(LPCWSTR lpwStr, int typeASCII)
 ********************************************/
 
 bool UTL_GetMBCSFromUnicodeString(
-	LPCWSTR lpwUnicode,
+	_TCHAR* lpwUnicode,
 	UINT nCodePage,
 	LPCTSTR* &mbcsstr
 	)

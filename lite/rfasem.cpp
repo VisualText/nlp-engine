@@ -348,18 +348,18 @@ switch (sem.type_)
 #ifndef UNICODE
 		output	<< *(sem.val_.name_);
 #else
-		u_to_mbcs((LPCWSTR)*(sem.val_.name_), CP_UTF8, (LPCTSTR*&)nm);// 01/28/06 AM.
+		u_to_mbcs(sem.val_.name_, CP_UTF8, (const _TCHAR*&)nm);// 01/28/06 AM.
 		output << nm;																// 01/28/06 AM.
-		u_delete((LPCTSTR*&)nm);												// 01/28/06 AM.
+		u_delete((const _TCHAR*&)nm);												// 01/28/06 AM.
 #endif
 		 break;
 	case RSNUM:
 #ifndef UNICODE
 		output	<< *(sem.val_.name_);
 #else
-		u_to_mbcs((LPCWSTR)*(sem.val_.name_), CP_UTF8, (LPCTSTR*&)nm);// 01/28/06 AM.
+		u_to_mbcs(sem.val_.name_, CP_UTF8, (const _TCHAR*&)nm);// 01/28/06 AM.
 		output << nm;																// 01/28/06 AM.
-		u_delete((LPCTSTR*&)nm);												// 01/28/06 AM.
+		u_delete((const _TCHAR*&)nm);												// 01/28/06 AM.
 #endif
 		break;
 	case RSLONG:	 output													// 11/10/99 AM.
@@ -376,9 +376,9 @@ switch (sem.type_)
 #ifndef UNICODE
 		output	<< *(sem.val_.name_);
 #else
-		u_to_mbcs((LPCWSTR)*(sem.val_.name_), CP_UTF8, (LPCTSTR*&)nm);// 01/28/06 AM.
+		u_to_mbcs(sem.val_.name_, CP_UTF8, (const _TCHAR*&)nm);// 01/28/06 AM.
 		output << nm;																// 01/28/06 AM.
-		u_delete((LPCTSTR*&)nm);												// 01/28/06 AM.
+		u_delete((const _TCHAR*&)nm);												// 01/28/06 AM.
 #endif
 		break;
 	case RSOSTREAM: output	<< _T("<ostream>");				break;	// 12/31/99 AM.

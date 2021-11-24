@@ -1361,7 +1361,7 @@ bool Parse::errOut(
 if (logfile_)	// VTLOG	// 05/06/13 AM.
 	{
 	// Todo: get input file name, text near error.
-	_t_ofstream logf(TCHAR2CA(logfile_), ios::app);	// VTLOG	// 05/06/13 AM.
+	_t_ofstream logf(logfile_, ios::app);	// VTLOG	// 05/06/13 AM.
 	logf << _T("[") << currpass_ << _T(",") << line_ << _T("] ")
 		<< st->str() << endl;	// VTLOG	// 05/06/13 AM.
 	logf << _T("  TEXT: ") << getText() << endl;	// VTLOG	// 05/06/13 AM.

@@ -118,9 +118,9 @@ _t_ostream &STDOPERATOR<<(_t_ostream &output, Ielement &element)
 output << str(element.name_) << _T(" [");
 #else
 char *lpstr8;																	// 01/27/06 AM.
-u_to_mbcs((LPCWSTR)str(element.name_), CP_UTF8, (LPCTSTR*&)lpstr8);	// 01/27/06 AM.
+u_to_mbcs(element.name_, CP_UTF8, (const _TCHAR*&)lpstr8);	// 01/27/06 AM.
 output << lpstr8;																// 01/27/06 AM.
-u_delete((LPCTSTR*&)lpstr8);												// 01/27/06 AM.
+u_delete((const _TCHAR*&)lpstr8);												// 01/27/06 AM.
 output << _T(" [");															// 01/27/06 AM.
 #endif
 

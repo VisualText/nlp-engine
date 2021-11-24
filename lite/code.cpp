@@ -586,7 +586,7 @@ _stprintf(buf, _T("%s%c%s"), parse->getAna()->getDatadir(),		// 12/08/99 AM.
 													DIR_CH,						// 03/09/00 AM.
 													fname);						// 12/08/99 AM.
 //ifstream inFile(buf, ios::in | ios::nocreate);
-_t_ifstream inFile(TCHAR2CA(buf), ios::in);							// Upgrade.	// 01/24/01 AM.
+_t_ifstream inFile(buf, ios::in);							// Upgrade.	// 01/24/01 AM.
 if (!inFile)
 	{
 	_t_strstream gerrStr;
@@ -959,7 +959,7 @@ if ((name = parse->getOutput()))
 	{
 	// Open the output file for APPENDING.
 	_t_ofstream *fout = 0;
-	fout = new _t_ofstream(TCHAR2CA(name), ios::app);
+	fout = new _t_ofstream(name, ios::app);
 	parse->setOut(fout);
 	parse->newostr(fout);			// Add to list of ostrs.		// 05/23/01 AM.
 	}

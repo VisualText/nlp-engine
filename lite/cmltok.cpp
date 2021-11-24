@@ -358,7 +358,7 @@ modes |= ios::app;
 
 _TCHAR fname[MAXSTR];
 _stprintf(fname, _T("%s%cretext.txt"), parse_->getOutdir(),DIR_CH);
-_t_ostream *ostr = new _t_ofstream(TCHAR2CA(fname), modes);
+_t_ostream *ostr = new _t_ofstream(fname, modes);
 
 if (!ostr)
 	{

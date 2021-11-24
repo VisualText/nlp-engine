@@ -136,9 +136,9 @@ bool flag = false;		// If something prior was printed.
 output << str(sugg.name_);
 #else
 char *lpstr8;																	// 01/28/06 AM.
-u_to_mbcs((LPCWSTR)str(sugg.name_), CP_UTF8, (LPCTSTR*&)lpstr8);// 01/28/06 AM.
+u_to_mbcs(str(sugg.name_), CP_UTF8, (const _TCHAR*&)lpstr8);// 01/28/06 AM.
 output << lpstr8;																// 01/28/06 AM.
-u_delete((LPCTSTR*&)lpstr8);												// 01/28/06 AM.
+u_delete((const _TCHAR*&)lpstr8);												// 01/28/06 AM.
 #endif
 
 output << _T(" [");
