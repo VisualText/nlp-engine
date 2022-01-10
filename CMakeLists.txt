@@ -4,6 +4,8 @@ project(nlp VERSION 0.1.0)
 include(CTest)
 enable_testing()
 
+find_package(ICU COMPONENTS uc i18n REQUIRED)
+
 set(CMAKE_GENERATOR_PLATFORM Win32)
 
 if(MSVC)
@@ -37,6 +39,7 @@ include_directories(cs/include)
 include_directories(include)
 include_directories(include/Api)
 include_directories(include/Api/lite)
+include_directories(icu/include)
 
 add_subdirectory(cs)
 add_subdirectory(src)

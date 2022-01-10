@@ -15,6 +15,11 @@ All rights reserved.
 #include "lite/nlp_engine.h"
 #include "version.h"
 
+#include "lite/unitest.h"
+#include "unicode/unistr.h"
+
+using icu::UnicodeString;
+
 bool cmdReadArgs(int,_TCHAR*argv[],_TCHAR*&,_TCHAR*&,_TCHAR*&,_TCHAR*&,bool&,bool&,bool&);
 void cmdHelpargs(_TCHAR*);
 
@@ -50,6 +55,8 @@ if (!cmdReadArgs(argc,argv,analyzerpath,input,output,workdir,develop,compiled,si
 NLP_ENGINE *nlpEngine = new NLP_ENGINE(workdir);
 nlpEngine->analyze(analyzerpath,input,output,develop,silent,compiled);
 delete nlpEngine;
+
+moose();
 
 }
 
