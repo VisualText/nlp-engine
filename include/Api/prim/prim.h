@@ -29,7 +29,7 @@ All rights reserved.
 #define _32_K		_2_16
 
 #ifndef LINUX
-#if MSVC_VERSION < 1900
+#ifdef MSVC_VERSION
 #define INFINITY
 #endif
 #endif

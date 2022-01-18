@@ -42,7 +42,7 @@ namespace consh_cg {		// 09/26/19 AM.
 #ifdef LINUX
 typedef double HINSTANCE;
 #endif
-#if MSVC_VERSION >= 1900
+#ifdef MSVC_VERSION
 	typedef HINSTANCE HINSTANCE;
 #else
 	typedef HINSTANCE HINSTANCE;
