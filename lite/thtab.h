@@ -669,7 +669,7 @@ Selt<tSym<TYPE> > *tHtab<TYPE>::hget(register _TCHAR *str)
 {
 // The calls check for empty string.
 Selt<tSym<TYPE> > *ptr;
-if (ptr = hfind(str))
+if ((ptr = hfind(str)) != NULL)
 	return ptr;
 return hadd(str);
 }
@@ -680,7 +680,7 @@ template<class TYPE>
 Selt<tSym<TYPE> > *tHtab<TYPE>::hget(register _TCHAR *str, register long len)
 {
 Selt<tSym<TYPE> > *ptr;
-if (ptr = hfind(str, len))
+if ((ptr = hfind(str, len)) != NULL)
 	return ptr;
 return hadd(str, len);
 }
@@ -697,7 +697,7 @@ template<class TYPE>
 tSym<TYPE>  *tHtab<TYPE>::hsym(_TCHAR *str)
 {
 Selt<tSym<TYPE> > *selt;
-if (selt = hget(str))														// 12/07/01 AM.
+if ((selt = hget(str)) != NULL)														// 12/07/01 AM.
 	return selt->getData();
 return 0;																		// 12/07/01 AM.
 }
@@ -707,7 +707,7 @@ template<class TYPE>
 tSym<TYPE>  *tHtab<TYPE>::hsym(_TCHAR *str, long len)
 {
 Selt<tSym<TYPE> > *selt;
-if (selt = hget(str, len))													// 12/07/01 AM.
+if ((selt = hget(str, len)) != NULL)													// 12/07/01 AM.
 	return selt->getData();
 return 0;																		// 12/07/01 AM.
 }
@@ -737,7 +737,7 @@ Slist<tSym<TYPE> > *list;
 Selt<tSym<TYPE> > *pre;		// Prior element in list.
 Selt<tSym<TYPE> > *elt;		// The element itself.
 list = 0;
-if (pre = hpre(str, /*UP*/ list))
+if ((pre = hpre(str, /*UP*/ list)) != NULL)
 	{
 	elt = list->rmNext(pre);	// Delete from list.
 	}
