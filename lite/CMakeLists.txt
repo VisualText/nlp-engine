@@ -9,4 +9,9 @@ endif()
 
 file(GLOB lite_src "*.h" "*.cpp")
 add_library(lite STATIC ${lite_src})
-target_link_libraries(lite PUBLIC prim kbm consh words)
+target_link_libraries(lite PUBLIC 
+  prim
+  kbm
+  consh
+  words
+  ${ICU_LIBRARIES})

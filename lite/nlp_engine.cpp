@@ -297,7 +297,9 @@ int NLP_ENGINE::analyze(
     bool compiled
 	)
 {   
-    NLP_ENGINE::init(analyzer,develop,silent,compiled);
+    int bad = NLP_ENGINE::init(analyzer,develop,silent,compiled);
+    if (bad)
+        return bad;
 
     readFiles(infile);
     const char *file;
@@ -368,8 +370,9 @@ int NLP_ENGINE::analyze(
     bool compiled
 	)
 {
- 
-    NLP_ENGINE::init(analyzer,develop,silent,compiled);
+    int bad = NLP_ENGINE::init(analyzer,develop,silent,compiled);
+    if (bad)
+        return bad;
 
     // Analyzer can output to a stream.
     _TCHAR ofstr[MAXSTR];
@@ -412,8 +415,9 @@ int NLP_ENGINE::analyze(
     bool compiled
 	)
 {
- 
-    NLP_ENGINE::init(analyzer,develop,silent,compiled);
+    int bad = NLP_ENGINE::init(analyzer,develop,silent,compiled);
+    if (bad)
+        return bad;
 
     // Analyzer can output to a stream.
     _TCHAR ofstr[MAXSTR];

@@ -84,12 +84,69 @@ To compile the nlp-engine for the Mac:
 * Select the "Clang kit" using the bottom status bar
 * Click on "Build" in the status bar
 
-# NLP-ENGINE Development
+# NLP-ENGINE Development - Unicode (In Development)
 
-We recommend developing on Linux using VSCode. On Windows, we recommend WSL using VSCode on windows.
+## Linux / MacOS
+```
+git clone https://github.com/visualtext/nlp-engine
+cd nlp-engine
+git submodule update --init --recursive
+```
 
-      git clone https://github.com/visualtext/nlp-engine
-      cd nlp-engine
-      git remote rename origin upstream
-      git remote add origin https://github.com/YOUR-USERNAME/nlp-engine
-      git fetch --all
+### Fetch the third-party libraries (via vcpkg)
+```
+cd vcpkg
+bootstrap-vcpkg.bat
+vcpkg install icu
+```
+
+### Create an out of source build folder
+```
+cd ..
+mkdir build
+cd build
+```
+
+### Build
+```
+cmake ..
+```
+
+## Windows
+
+### Clone the repository
+```
+git clone https://github.com/visualtext/nlp-engine
+cd nlp-engine
+git submodule update --init --recursive
+```
+
+### Fetch the third-party libraries (via vcpkg)
+```
+cd vcpkg
+bootstrap-vcpkg.bat
+vcpkg install icu
+```
+
+### Create an out of source build folder
+```
+cd ..
+mkdir build
+cd build
+```
+
+### Generate Visual Studio Solution
+```
+cmake .. -G "Visual Studio 16 2019" -A Win32 -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
+```
+
+### Build
+```
+cmake --build . --config Debug -- -m
+```
+
+### Debug using VSCode
+```
+cd ..
+code .
+```

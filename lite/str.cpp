@@ -29,6 +29,15 @@ All rights reserved.
 #include "words/words.h"		// 10/16/00 AM.
 #include "words/wordarrs.h"	// 10/16/00 AM.
 
+#include "unicode/unistr.h"
+#include "unicode/uchar.h"
+#include "unicode/ustring.h"
+#include "unicode/uchriter.h"
+#include "unicode/coll.h"
+#include "unicode/ucasemap.h"
+#include <unicode/brkiter.h>
+#include <unicode/locid.h>
+
 #ifdef UNICODE
 //#include "unicode/utypes.h"	// 03/03/05 AM.
 //#include "unicode/uchar.h"
@@ -475,13 +484,26 @@ bool str_to_int(_TCHAR *str, /*UP*/ int &num)
 if (empty(str))
 	return false;
 
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
+const UChar *strBuf = ustr.getTerminatedBuffer();
+icu::UCharCharacterIterator iter(strBuf, u_strlen(strBuf));
 num = 0;
+UChar c = iter.first();
+do {
+	if (!u_isdigit(c))
+		return false;
+	num = 10 * num + char_to_digit(c);
+	c = iter.next();
+
+} while (c != icu::CharacterIterator::DONE); 
+/*
 while (*str)
 	{
 	if (!_istdigit((_TUCHAR)*str))
 		return false;
 	num = 10 * num + char_to_digit(*str++);
 	}
+*/
 return true;
 }
 
@@ -499,13 +521,27 @@ bool str_to_long(_TCHAR *str, /*UP*/ long &num)
 if (empty(str))
 	return false;
 
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
+const UChar *strBuf = ustr.getTerminatedBuffer();
+icu::UCharCharacterIterator iter(strBuf, u_strlen(strBuf));
 num = 0;
+UChar c = iter.first();
+do {
+	if (!u_isdigit(c))
+		return false;
+	num = 10 * num + char_to_digit(c);
+	c = iter.next();
+
+} while (c != icu::CharacterIterator::DONE); 
+/*
+
 while (*str)
 	{
 	if (!_istdigit((_TUCHAR)*str))
 		return false;
-	num = 10 * num + char_to_digit(*str++);
+	um = 10 * num + char_to_digit(*str++);n
 	}
+*/
 return true;
 }
 
@@ -519,6 +555,17 @@ return true;
 
 bool all_uppercase(_TCHAR *str)
 {
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
+const UChar *strBuf = ustr.getTerminatedBuffer();
+icu::UCharCharacterIterator iter(strBuf, u_strlen(strBuf));
+UChar c = iter.first();
+do {
+	if (!u_isupper(c))
+		return false;
+	c = iter.next();
+
+} while (c != icu::CharacterIterator::DONE); 
+/*
 _TCHAR ch;
 if (empty(str))
 	return true;
@@ -530,6 +577,7 @@ while ((ch = *str++))
 		 && !is_upper((_TUCHAR)ch))								// 12/16/01 AM.
 		return false;
 	}
+*/
 return true;
 }
 
@@ -543,6 +591,17 @@ return true;
 
 bool all_lowercase(_TCHAR *str)
 {
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
+const UChar *strBuf = ustr.getTerminatedBuffer();
+icu::UCharCharacterIterator iter(strBuf, u_strlen(strBuf));
+UChar c = iter.first();
+do {
+	if (!u_islower(c))
+		return false;
+	c = iter.next();
+
+} while (c != icu::CharacterIterator::DONE);
+/*
 _TCHAR ch;
 if (empty(str))
 	return true;
@@ -554,6 +613,7 @@ while ((ch = *str++))
 	 && !is_lower((_TUCHAR)ch))									// 12/16/01 AM.
 		return false;
 	}
+*/
 return true;
 }
 
@@ -572,6 +632,45 @@ return true;
 
 bool mixcap(_TCHAR *str)
 {
+if (empty(str))
+	return false;
+
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
+const UChar *strBuf = ustr.getTerminatedBuffer();
+icu::UCharCharacterIterator iter(strBuf, u_strlen(strBuf));
+
+bool lower = false;
+bool upper = false;
+UChar c = iter.first();
+
+// If first char is uppercase, ignore it.
+if (u_isUAlphabetic(c) && is_upper(c))
+	{
+	if ((c = iter.next()) == icu::CharacterIterator::DONE)
+		return false;
+	upper = true;
+	}
+
+do {
+	if (u_isUAlphabetic(c))									// 12/16/01 AM.
+		{
+		if (is_upper(c))									// 12/16/01 AM.
+			{
+			if (lower)
+				return true;
+			upper = true;
+			}
+		else
+			{
+			if (upper)
+				return true;
+			lower = true;
+			}
+		}
+	c = iter.next();
+
+} while (c != icu::CharacterIterator::DONE);
+/*
 _TCHAR ch;
 if (empty(str))
 	return false;
@@ -605,6 +704,7 @@ for (ch = *str; ch; ch = *++str)
 			}
 		}
 	}
+*/
 return false;
 }
 
@@ -620,13 +720,11 @@ return false;
 
 _TCHAR *str_to_lower(_TCHAR *str, _TCHAR *buf)
 {
-buf[0] = '\0';
-if (empty(str))
-	return 0;
-_TCHAR *ptr;
-ptr = &(buf[0]);
-while ((*ptr++ = to_lower(*str++)))										// 12/16/01 AM.
-	;
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
+ustr.toLower();
+std::string converted;
+ustr.toUTF8String(converted);
+strcpy(buf,&converted[0]);
 return buf;
 }
 
@@ -642,11 +740,22 @@ return buf;
 
 _TCHAR *str_to_lower(_TCHAR *str)
 {
+if (empty(str))
+	return 0;
+
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
+ustr.toLower();
+std::string converted;
+ustr.toUTF8String(converted);
+strcpy(str,&converted[0]);
+return str;
+/*
 _TCHAR *buf = str;
 if (empty(str))
 	return 0;
 while ((*str = to_lower(*str++)));
 return buf;
+*/
 }
 
 
@@ -660,13 +769,11 @@ return buf;
 
 _TCHAR *str_to_upper(_TCHAR *str, _TCHAR *buf)
 {
-buf[0] = '\0';
-if (empty(str))
-	return 0;
-_TCHAR *ptr;
-ptr = &(buf[0]);
-while ((*ptr++ = to_upper(*str++)))									// 12/16/01 AM.
-	;
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
+ustr.toUpper();
+std::string converted;
+ustr.toUTF8String(converted);
+strcpy(buf,&converted[0]);
 return buf;
 }
 
@@ -681,11 +788,20 @@ return buf;
 
 _TCHAR *str_to_upper(_TCHAR *str)
 {
-_TCHAR *buf = str;
 if (empty(str))
 	return 0;
+
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
+ustr.toUpper();
+std::string converted;
+ustr.toUTF8String(converted);
+strcpy(str,&converted[0]);
+return str;
+/*
+_TCHAR *buf = str;
 while ((*str = to_upper(*str++)));
 return buf;
+*/
 }
 
 
@@ -944,9 +1060,19 @@ bool find_str_nocase(
 {
 if (!str || !*str || !arr || !*arr)
 	return false;
+
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
+const UChar *strBuf = ustr.getTerminatedBuffer();
+icu::UCharCharacterIterator iter(strBuf, u_strlen(strBuf));
+
+UErrorCode success = U_ZERO_ERROR;
+icu::Collator *collator = icu::Collator::createInstance("UTF-8", success);
+collator->setStrength(icu::Collator::PRIMARY);  // This is for case insensitive
+
 while (*arr)
 	{
-	if (!strcmp_i(str, *arr))	// Case insensitive.
+	icu::UnicodeString astr = icu::UnicodeString::fromUTF8(icu::StringPiece(*arr));
+	if (collator->compare(astr,ustr) == icu::Collator::EComparisonResult::EQUAL)
 		return true;
 	++arr;
 	}
@@ -969,9 +1095,15 @@ bool strlen_eq(
 {
 if (!str)
 	return false;
+
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
+return (ustr.length() == len);
+/*
 for (; (len > 0) && *str; --len, ++str)
 	;
 return (len == 0 && !*str);
+}
+*/
 }
 
 bool strlen_eq(long len, _TCHAR *str)
@@ -984,6 +1116,11 @@ bool strlen_eq(_TCHAR *str1, _TCHAR *str2)
 if (!str1 || !str2)		// Requiring that a string be given.
 	return false;
 
+icu::UnicodeString ustr1 = icu::UnicodeString::fromUTF8(icu::StringPiece(str1));
+icu::UnicodeString ustr2 = icu::UnicodeString::fromUTF8(icu::StringPiece(str2));
+return (ustr1.length() == ustr2.length());
+/*
+
 while (*str1 && *str2)
 	{
 	++str1;
@@ -992,6 +1129,7 @@ while (*str1 && *str2)
 if (*str1 || *str2)		// Exactly one is still not empty.
 	return false;
 return true;
+*/
 }
 
 
@@ -1393,7 +1531,7 @@ return true;
 /********************************************
 * FN:		STR_TO_TITLE
 * CR:		08/21/00 Dd.
-* SUBJ:	Convert a string to uppercase
+* SUBJ:	Convert a string to title case
 * RET:	True if ok, else false.
 * NOTE:	All strings are unsigned.
 *			08/31/00 AM. Installed Dave's fixes.
@@ -1404,6 +1542,16 @@ _TCHAR *str_to_title(_TCHAR *str, _TCHAR *buf)
 buf[0] = '\0';
 if (empty(str))
 	return 0;
+
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
+UErrorCode status = U_ZERO_ERROR;
+ustr.toTitle(NULL, icu::Locale::getUS());
+std::string converted;
+ustr.toUTF8String(converted);
+strcpy(buf,&converted[0]);
+return buf;
+
+/*
 _TCHAR *ptr;
 ptr = &(buf[0]);
 _TCHAR lastChar = ' ';
@@ -1423,6 +1571,7 @@ while (*str)
   }
 
 *ptr = '\0';
+*/
 
 return buf;
 }
@@ -1590,7 +1739,40 @@ bool str_piece(
 {
 if (!str || !*str)
 	return false;
+
+icu::StringPiece sp(str);
+const char *spd = sp.data();
+int32_t length = sp.length();
 long len = end-start+1;
+
+if (end < start
+ || start < 0
+ || len >= siz )
+	return false;
+
+UChar32 c;
+int32_t s = 0;
+int32_t e = 0;
+int32_t i = 0;
+
+U8_NEXT(spd, s, length, c);
+i++;
+while (c && i<start) {
+	U8_NEXT(spd, s, length, c);
+	i++;
+}
+e = s;
+i = 0;
+while (c && i<len) {
+	U8_NEXT(spd, e, length, c);
+	i++;
+}
+len = e-s;
+_tcsnccpy(buf,&(str[s]),len);
+buf[len] = '\0';
+return true;
+
+/*
 if (end < start
  || start < 0
  || len >= siz )
@@ -1600,6 +1782,7 @@ if (_tcsclen(str) <= (unsigned long)end)	// .NET COMPLAINT.	// 06/11/03 AM.
 _tcsnccpy(buf,&(str[start]),len);
 buf[len] = '\0'; // Terminate.
 return true;
+*/
 }
 
 

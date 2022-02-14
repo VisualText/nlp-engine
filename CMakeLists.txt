@@ -4,9 +4,12 @@ project(nlp VERSION 0.1.0)
 include(CTest)
 enable_testing()
 
-set(CMAKE_GENERATOR_PLATFORM Win32)
+find_package(ICU REQUIRED COMPONENTS uc i18n io)
+set(CMAKE_GENERATOR_PLATFORM Win32 HINT)
 
 if(MSVC)
+    add_compile_options(/w44005 /w44244 /w44311 /w44211 /w44302 /w44267 /w44312 /w45033 /w44624 /w44996 /w44273)
+    add_definitions(-D_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING)
     add_definitions(-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
     add_definitions(-D_CRT_NON_CONFORMING_SWPRINTFS)
@@ -15,12 +18,7 @@ if(MSVC)
     add_definitions(-DWIN32)
     add_definitions(-DNDEBUG)
     add_definitions(-D_WINDOWS)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zc:wchar_t")
-    find_program(CMAKE_MAKE_PROGRAM
-        NAMES mingw32-make
-              mingw32-make.exe
-        DOC "Find a suitable make program for building under Windows/MinGW"
-        HINTS c:/MinGW-32/bin )
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zc:wchar_t /std:c++17")
 endif()
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
@@ -37,6 +35,7 @@ include_directories(cs/include)
 include_directories(include)
 include_directories(include/Api)
 include_directories(include/Api/lite)
+include_directories(${ICU_INCLUDE_DIR})
 
 add_subdirectory(cs)
 add_subdirectory(src)

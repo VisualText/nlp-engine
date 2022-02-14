@@ -1,14 +1,14 @@
-
-name: Windows Create Released Asset
+name: Test Windows
 
 on:
-  release:
-    types:
-      - created
-      
+  push:
+    branches: [master]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
 jobs:
   job:
-    name: Windows Create NLP-ENGINE
+    name: Windows Compile Test
     runs-on: windows-latest
 
     env:
@@ -35,9 +35,3 @@ jobs:
 
       - name: Cmake Build all targets Windows
         run: cmake --build build --config Release --target nlp
-        
-      - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./bin/Release/nlp.exe"
-          asset_name: "nlpw.exe"
