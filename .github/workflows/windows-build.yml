@@ -2,6 +2,10 @@
 name: Attach Released Assets
 
 on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
   release:
     types:
       - created
@@ -9,16 +13,29 @@ on:
 jobs:    
   build:
     runs-on: windows-latest
+    with:
+        submodules: true
+
+    env:
+      VCPKG_DEFAULT_TRIPLET: x64-windows
+
     steps:
       - uses: actions/checkout@v2
       - name: make build directory
         run: mkdir build
-      - name: Cmake Configure
-        run: cmake -Bbuild -S. 
 
+      - name: Run vcpkg
+        uses: lukka/run-vcpkg@v10.1
+        with:
+          vcpkgTriplet: x64-windows
+          vcpkgArguments: 'icu'
+
+      - name: Cmake Configure
+        run: cmake .. -G "Visual Studio 16 2019" -A Win32 -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
+        
       - name: Cmake Build all targets on Windows
         run: cmake --build build --config Release --target nlp
-        
+
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ github.event.release.upload_url }}
