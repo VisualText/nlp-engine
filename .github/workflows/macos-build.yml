@@ -31,17 +31,35 @@ jobs:
         run: vcpkg install
         working-directory: vcpkg
 
+      - name: List $RUNNER_WORKSPACE before build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+
       - name: Make build directory
         run: mkdir build
 
       - name: Generate Solution MaxOs
-        run: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/usr/local/opt/icu4c -B build -S . -DCMAKE_CXX_FLAGS=-std=c++11
+        run: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_BUILD_TYPE=release -DCMAKE_PREFIX_PATH=/usr/local/opt/icu4c -B build -S . -DCMAKE_CXX_FLAGS=-std=c++11
 
       - name: Cmake Build all targets Linux
         run: cmake --build build/ --target all
         
-      - uses: shogo82148/actions-upload-release-asset@v1
+      - name: Zip nlp and icu files
+        uses: papeloto/action-zip@v1
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./bin/nlp.exe"
-          asset_name: "nlpm.exe"
+          files: ./bin/nlp.exe ./vcpkg_installed/x64-osx/lib/libicutu.a ./vcpkg_installed/x64-osx/lib/libicuuc.a
+          recursive: false
+          dest: nlpm.zip
+          
+      - name: Upload zip artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: nlpl
+          path: ${{ github.workspace }}/nlpm.zip
+        
+      - name: Attach Zip to Release
+        uses: fnkr/github-action-ghr@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GHR_PATH: nlpm.zip
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
