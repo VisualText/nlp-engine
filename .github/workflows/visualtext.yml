@@ -1,4 +1,4 @@
-name: Attach Released Assets
+name: Attach VisualText Files Assets
 
 on:
   release:

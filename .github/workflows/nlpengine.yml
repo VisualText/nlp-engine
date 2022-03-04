@@ -1,4 +1,4 @@
-name: Attach Released Assets
+name: Attach Engine File Assets
 
 on:
   release:
