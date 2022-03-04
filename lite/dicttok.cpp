@@ -40,6 +40,13 @@ All rights reserved.
 #include "nlp.h"				// 06/25/03 AM.
 #include "ivar.h"
 
+#include "unicode/unistr.h"
+#include <unicode/schriter.h>
+#include <unicode/uchriter.h>
+#include <unicode/utf8.h>
+
+using namespace icu;
+
 #ifdef UNICODE
 #include "utypes.h"	// 03/03/05 AM.
 #include "uchar.h"
@@ -65,6 +72,7 @@ lines_ = tabs_ = 0;	// 08/16/11 AM.
 tottabs_ = 0;
 totlines_ = 1;	// Every text has minimum 1 line.
 totlowers_ = totcaps_ = totuppers_ = totnums_ = 0;
+token_ = new Tok();
 }
 
 DICTTok::DICTTok(const DICTTok &orig)			// Copy constructor	// 12/03/98 AM.
@@ -175,25 +183,24 @@ bool DICTTok::Tokenize(Parse *parse)
 //////////////////////////////////////////////////////////
 
 _TCHAR *buf = text_;			// For traversing text.
-long start = 0;			// Count offset of current char.
+int32_t start = 0;			// Count offset of current char.
 Node<Pn> *last = 0;			// Last token node.	// FIX. ZERO INIT.	// 08/28/11 AM.
+StringPiece sp(text_);
+const char *s = sp.data();
 
 prevwh_ = false;	// No whitespace before first token.	// 08/16/11 AM.
 
 // Bookkeep line numbers for debug.										// 05/17/01 AM.
 long line = 1;
+long len  = parse->getLength();
 
 // Get first token and attach to tree.
-FirstToken(tree_, htab_, /*DU*/ &buf, start, last,
-					line															// 05/17/01 AM.
-					);
+FirstToken(tree_, htab_, &buf, s, len, start, last, line);
 
 // Continue getting tokens.
 while (*buf)
 	{
-	if (!NextToken(tree_, htab_, /*DU*/ &buf, start, last,			// 01/26/02 AM.
-					line															// 05/17/01 AM.
-					))
+	if (!NextToken(tree_, htab_, &buf, s, len, start, last, line))
 		return false;															// 01/26/02 AM.
 	}
 
@@ -340,22 +347,21 @@ return true;
 void DICTTok::FirstToken(
 	Tree<Pn> *tree,
 	Htab *htab,
-	/*DU*/
 	_TCHAR* *buf,
-	long &start,
+	const char* s,
+	int32_t length,
+	int32_t &start,
 	Node<Pn>* &last,
 	long &line					// Bookkeep line number.				// 05/17/01 AM.
 	)
 {
-long end;
-_TCHAR *ptr;	// Point to end of token.
+int32_t end;
 enum Pntype typ;
 bool lineflag = false;														// 05/17/01 AM.
 
 // Get first token information.
-nextTok(*buf, start, /*UP*/ end, ptr, typ,
-	lineflag		// Flag newline seen										// 05/17/01 AM.
-	);
+token_->nextTok(s, start, end, length, typ, lineflag);
+int len = end-start+1;
 
 /* Attach first node. */
 Sym *sym;
@@ -384,8 +390,8 @@ if (lineflag)		// First token was a newline!						// 05/17/01 AM.
 	++line;																		// 05/17/01 AM.
 
 /* UP */
-start = end + 1;	// Continue tokenizing from next char.
-*buf   = ptr + 1;	// Continue tokenizing from next char.
+start = ++end;	// Continue tokenizing from next char.
+*buf += len;
 }
 
 
@@ -399,21 +405,21 @@ start = end + 1;	// Continue tokenizing from next char.
 bool DICTTok::NextToken(
 	Tree<Pn> *tree,
 	Htab *htab,
-	/*DU*/
 	_TCHAR* *buf,
-	long &start,
+	const char* s,
+	int32_t length,
+	int32_t &start,
 	Node<Pn>* &last,
 	long &line					// Bookkeep line number.				// 05/17/01 AM.
 	)
 {
-long end;
-_TCHAR *ptr;	// Point to end of token.
+int32_t end;
 enum Pntype typ;
 
 // Get next token information.
 bool lineflag = false;														// 05/17/01 AM.
-nextTok(*buf, start, /*UP*/ end, ptr, typ,
-			lineflag);															// 05/17/01 AM.
+token_->nextTok(s, start, end, length, typ, lineflag);
+int32_t len = end-start+1;													// 05/17/01 AM.
 
 /* Attach next node to list. */
 Sym *sym;
@@ -454,142 +460,9 @@ if (lineflag)																	// 05/17/01 AM.
 	++line;																		// 05/17/01 AM.
 
 /* UP */
-start = end + 1;	// Continue tokenizing from next char.
-*buf  = ptr + 1;	// Continue tokenizing from next char.
+start = ++end;	// Continue tokenizing from next char.
+*buf += len;
 return true;																	// 01/26/02 AM.
-}
-
-
-/********************************************
-* FN:		NEXTTOK
-* CR:		10/09/98 AM.
-* SUBJ:	Get the data for next token.
-* OPT:	Could make a big switch statement.
-* UNI:	Not worrying about Unicode.
-********************************************/
-
-void DICTTok::nextTok(
-	_TCHAR *buf,		// Start char of token.
-	long start,		// Start offset of token.
-	/*UP*/
-	long &end,		// End offset of token.
-	_TCHAR* &ptr,		// End char of token.
-	enum Pntype &typ,	// Type of token.
-	bool &lineflag		// Flag new line number.						// 05/17/01 AM.
-	)
-{
-end = start;
-ptr = buf;
-lineflag = false;	// RESET end of line tracker.	// 08/16/11 AM.
-
-//if (*ptr < 0)		// Non-ASCII char.	// 07/28/99 AM.	// 09/22/99 AM.
-//	{
-	// Fall through.
-//	}
-
-if (alphabetic(*ptr))						// 09/22/99 AM.
-	{
-#ifdef UNICODE
-	 short u_gcb = u_getIntPropertyValue((UChar32)*ptr, UCHAR_GRAPHEME_CLUSTER_BREAK);	// 01/30/06 AM.
-	 short new_gcb = 0;
-
-	short u_wb = u_getIntPropertyValue((UChar32)*ptr, UCHAR_WORD_BREAK);			// 01/30/06 AM.
-	short new_wb = 0;																				// 01/30/06 AM.
-
-	UErrorCode errorCode;
-	short u_script = uscript_getScript(*ptr,&errorCode);								// 01/30/06 AM.
-	short new_script = 0;																		// 01/30/06 AM.
-#endif
-
-	typ = PNALPHA;
-	// 09/22/99 AM. Negative char values now handled in alphabetic() fn.
-	++ptr;		// 11/05/99 AM.
-	++end;		// 11/05/99 AM.
-
-#ifdef UNICODE
-//	while (alphabetic(*ptr) && ((*ptr >= 'a' && *ptr <= 'z') || (*ptr >= 'A' && *ptr <= 'Z')))
-//   while (alphabetic(*ptr) && ! u_hasBinaryProperty((_TUCHAR)*ptr, UCHAR_WORD_BREAK))
-	while (alphabetic_extend(*ptr,u_gcb,u_wb,u_script,/*UP*/new_gcb,new_wb,new_script))
-		{
-		u_gcb = new_gcb;
-		u_wb = new_wb;
-		u_script = new_script;
-		new_gcb = new_wb = new_script = 0;
-
-		++ptr;
-		++end;
-		}
-#else
-	while (alphabetic(*ptr)					// 09/22/99 AM.
-			// && *ptr > 0						// 07/28/99 AM.	// 09/22/99 AM.
-			 )
-		{
-		++ptr;
-		++end;
-		}
-#endif
-
-	--end;		// Back up to final alpha char.
-	--ptr;
-	return;		// 07/28/99 AM.
-	}
-else if (*ptr < 0)	// Other extended ANSI chars.	// 09/22/99 AM.
-	{
-	// Fall through.			// 09/22/99 AM.
-	}
-else if (_istdigit(*ptr))
-	{
-	typ = PNNUM;
-	++ptr;		// 11/05/99 AM.
-	++end;		// 11/05/99 AM.
-	while (_istdigit(*ptr)
-			 && *ptr > 0						// 07/28/99 AM.
-			)
-		{
-		++ptr;
-		++end;
-		}
-	--end;		// Back up to final digit char.
-	--ptr;
-	return;		// 07/28/99 AM.
-	}
-else if (_istspace(*ptr))
-	{
-	// Assuming newline always present at end of line.				// 05/17/01 AM.
-	if (*ptr == '\n')															// 05/17/01 AM.
-		{
-		lineflag = true;	// Flag new line number.					// 05/17/01 AM.
-		++lines_;	// 08/16/11 AM.
-		++totlines_;
-		tabs_ = 0;	// Newlines kill tabbing!	// 08/16/11 AM.
-		}
-	else if (*ptr == '\t')	// 08/16/11 AM.
-		{
-		++tabs_;	// 08/16/11 AM.
-		++tottabs_;
-		}
-	typ = PNWHITE;
-	return;		// 07/28/99 AM.
-	}
-else if (_istpunct((_TUCHAR)*ptr))
-	{
-	typ = PNPUNCT;
-	return;		// 07/28/99 AM.
-	}
-
-// NON ASCII CHAR.			// 07/28/99 AM.
-
-if (!bad_)						// 01/15/99 AM.
-	{
-	bad_ = true;					// 01/15/99 AM.
-//	_t_strstream gerrStr;
-//	gerrStr << _T("[Non-ASCII chars in file.]") << ends;
-//	errOut(&gerrStr,false);
-	}
-// Hack. 12/05/98 AM.
-//typ = PNPUNCT;
-//*ptr = '~';				// 07/28/99 AM. I didn't like @.
-typ = PNCTRL;																	// 07/19/00 AM.
 }
 
 

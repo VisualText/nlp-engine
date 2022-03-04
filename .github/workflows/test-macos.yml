@@ -1,14 +1,14 @@
-
-name: MacOS Create Released Asset
+name: Test MaxOS
 
 on:
-  release:
-    types:
-      - created
-      
+  push:
+    branches: [master]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
 jobs:
   job:
-    name: MacOS Create NLP-ENGINE
+    name: MacOS Compile Test
     runs-on: macos-latest
 
     env:
@@ -39,9 +39,3 @@ jobs:
 
       - name: Cmake Build all targets Linux
         run: cmake --build build/ --target all
-        
-      - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./bin/nlp.exe"
-          asset_name: "nlpm.exe"

@@ -1,33 +1,38 @@
-name: Attach Released Assets
+
+name: Test Windows
 
 on:
   push:
-    branches: [ main ]
+    branches: [master]
   pull_request:
-    branches: [ main ]
-      
-jobs:    
-  build:
-    runs-on: ubuntu-latest
-    with:
-      submodules: true
-      
+    types: [opened, synchronize, reopened]
+
+jobs:
+  job:
+    name: Windows Compile Test
+    runs-on: windows-latest
+
     env:
-      VCPKG_DEFAULT_TRIPLET: x64-linux
+      VCPKG_DEFAULT_TRIPLET: x64-windows
 
     steps:
       - uses: actions/checkout@v2
-      - name: make build directory
-        run: mkdir build
-        
-      - name: Run vcpkg
-        uses: lukka/run-vcpkg@v10.1
         with:
-          vcpkgArguments: 'icu'
+          submodules: true
 
-      - name: Cmake Configure
-        run: cmake .. -G "Visual Studio 16 2019" -A Win32 -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
-        run: cmake -DCMAKE_BUILD_TYPE=Release -Bbuild -S.
+      - name: Vcpkg bootstrap Windows
+        run: bootstrap-vcpkg.bat
+        working-directory: vcpkg
 
-      - name: Cmake Build
-        run: cmake --build . --config Release -- -m
+      - name: Install ICU
+        run: vcpkg install
+        working-directory: vcpkg
+
+      - name: Make build directory
+        run: mkdir build
+
+      - name: Generate Solution Windows
+        run: cmake -B build -A Win32 -DCMAKE_TOOLCHAIN_FILE='${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake'
+
+      - name: Cmake Build all targets Windows
+        run: cmake --build build --config Release --target nlp

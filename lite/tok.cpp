@@ -29,6 +29,13 @@ All rights reserved.
 #include "Eana.h"				// 02/26/01 AM.
 #include "nlp.h"				// 06/25/03 AM.
 
+#include "unicode/unistr.h"
+#include <unicode/schriter.h>
+#include <unicode/uchriter.h>
+#include <unicode/utf8.h>
+
+using namespace icu;
+
 #ifdef UNICODE
 #ifdef LINUX
 #include "unicode/utypes.h"	// 03/03/05 AM.
@@ -136,8 +143,7 @@ void Tok::setup(_TCHAR *s_data)
 
 bool Tok::Execute(Parse *parse, Seqn *seqn)
 {
-// Ignore the pass data.
-return Tokenize(parse);														// 01/26/02 AM.
+return Tokenize(parse);
 }
 
 
@@ -151,85 +157,70 @@ return Tokenize(parse);														// 01/26/02 AM.
 
 bool Tok::Tokenize(Parse *parse)
 {
+	if (parse->Verbose())
+		*gout << _T("[Tokenize:]") << endl;
 
-if (parse->Verbose())
-	*gout << _T("[Tokenize:]") << endl;
+	// Reset.  No bad chars seen yet.
+	bad_ = false;					// 01/15/99 AM.
 
-// Reset.  No bad chars seen yet.
-bad_ = false;					// 01/15/99 AM.
+	Htab *htab = parse->htab_;									// 06/25/03 AM.
 
-#ifdef OLD_030625_
-Ana *ana;
-Htab *htab;						// Get the hash table.	// 11/19/98 AM.
-ana = parse->getAna();
-assert(ana);
-htab = ana->getHtab();
-assert(htab);
-#endif
+	_TCHAR *text = parse->getText();
+	Tree<Pn> *tree = (Tree<Pn> *)parse->getTree();
+	long len  = parse->getLength();
 
-Htab *htab = parse->htab_;									// 06/25/03 AM.
+	if (tree)
+		{
+		_t_strstream gerrStr;
+		gerrStr << _T("[Tokenize: Parse tree exists. Skipping tokenization.]") << ends;
+		errOut(&gerrStr,false);
+		return true;		// Assuming this is ok.							// 01/26/02 AM.
+		}
+	if (!text)
+		{
+		_t_strstream gerrStr;
+		gerrStr << _T("[Tokenize: Given no text.]") << ends;
+		return errOut(&gerrStr,false);													// 01/26/02 AM.
+		}
 
-_TCHAR *text = parse->getText();
-Tree<Pn> *tree = (Tree<Pn> *)parse->getTree();
-long len  = parse->getLength();
+	_TCHAR *str = _T("_ROOT");				// 11/30/98 AM.
+	Sym *sym = htab->hsym(str);
+	tree = Pn::makeTree(0, len-1, PNNODE, text, str, sym); // Create parse tree.
+	parse->setTree(tree);								// Update global data.
 
-if (tree)
-	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Tokenize: Parse tree exists. Skipping tokenization.]") << ends;
-	errOut(&gerrStr,false);
-	return true;		// Assuming this is ok.							// 01/26/02 AM.
-	}
-if (!text)
-	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Tokenize: Given no text.]") << ends;
-	return errOut(&gerrStr,false);													// 01/26/02 AM.
-	}
+	// NEED TO MAKE THE ROOT NODE UNSEALED!	// 10/11/99 AM.
+	Node<Pn> *node = tree->getRoot();			// 10/11/99 AM.
+	Pn *pn = node->getData();						// 10/11/99 AM.
+	pn->setUnsealed(true);							// 10/11/99 AM.
 
-_TCHAR *str = _T("_ROOT");				// 11/30/98 AM.
-Sym *sym = htab->hsym(str);
-tree = Pn::makeTree(0, len-1, PNNODE, text, str, sym); // Create parse tree.
-parse->setTree(tree);								// Update global data.
+	//////////////////////////////////////////////////////////
+	// Traverse buffer, creating a node for every token found.
+	//////////////////////////////////////////////////////////
 
-// NEED TO MAKE THE ROOT NODE UNSEALED!	// 10/11/99 AM.
-Node<Pn> *node = tree->getRoot();			// 10/11/99 AM.
-Pn *pn = node->getData();						// 10/11/99 AM.
-pn->setUnsealed(true);							// 10/11/99 AM.
+	int32_t start = 0;			// Count offset of current char.
+	Node<Pn> *last = 0;			// Last token node.	// Preemptive init.	// 08/28/11 AM.
 
-//////////////////////////////////////////////////////////
-// Traverse buffer, creating a node for every token found.
-//////////////////////////////////////////////////////////
+	// Bookkeep line numbers for debug.										// 05/17/01 AM.
+	long line = 1;
 
-_TCHAR *buf = text;			// For traversing text.
-long start = 0;			// Count offset of current char.
-Node<Pn> *last = 0;			// Last token node.	// Preemptive init.	// 08/28/11 AM.
+	_TCHAR *buf = text;			// For traversing text.
+	StringPiece sp(text);
+	const char *s = sp.data();
 
+	// Get first token and attach to tree.
+	FirstToken(tree, htab, &buf, s, len, start, last, line);
 
-// Bookkeep line numbers for debug.										// 05/17/01 AM.
-long line = 1;
-
-// Get first token and attach to tree.
-FirstToken(tree, htab, /*DU*/ &buf, start, last,
-					line															// 05/17/01 AM.
-					);
-
-// Continue getting tokens.
-while (*buf)
-	{
-	if (!NextToken(tree, htab, /*DU*/ &buf, start, last,			// 01/26/02 AM.
-					line															// 05/17/01 AM.
-					))
-		return false;															// 01/26/02 AM.
-	}
-
-//if (parse->Verbose())											// FIX	// 02/01/00 AM.
-if (parse->getEana()->getFlogfiles())						// FIX	// 02/01/00 AM.
-	{
-	//*gout << "[Tokenize: Dumping parse tree.]" << endl;
-	tree->Traverse(tree->getRoot(), *gout);
-	}
-return true;																	// 01/26/02 AM.
+	// Continue getting tokens.
+	while (start < len)
+		{
+		if (!NextToken(tree, htab, &buf, s, len, start, last, line))
+			return false;															// 01/26/02 AM.
+		}
+	if (parse->getEana()->getFlogfiles())						// FIX	// 02/01/00 AM.
+		{
+		tree->Traverse(tree->getRoot(), *gout);
+		}
+	return true;																	// 01/26/02 AM.
 }
 
 
@@ -242,38 +233,35 @@ return true;																	// 01/26/02 AM.
 void Tok::FirstToken(
 	Tree<Pn> *tree,
 	Htab *htab,
-	/*DU*/
 	_TCHAR* *buf,
-	long &start,
+	const char* s,
+	int32_t length,
+	int32_t &start,
 	Node<Pn>* &last,
 	long &line					// Bookkeep line number.				// 05/17/01 AM.
 	)
 {
-long end;
-_TCHAR *ptr;	// Point to end of token.
-enum Pntype typ;
-bool lineflag = false;														// 05/17/01 AM.
+	int32_t end = 0;
+	enum Pntype typ;
+	bool lineflag = false;														// 05/17/01 AM.
 
-// Get first token information.
-nextTok(*buf, start, /*UP*/ end, ptr, typ,
-	lineflag		// Flag newline seen										// 05/17/01 AM.
-	);
+	// Get first token information.
+	nextTok(s, start, end, length, typ, lineflag);
+	int len = end-start+1;
 
-/* Attach first node. */
-Sym *sym;
-_TCHAR *str;
-sym = internTok(*buf, end-start+1, htab);
-str = sym->getStr();
-//last = Pn::makeNode(start, end, typ, *buf, str, sym);			// 10/09/99 AM.
-last = Pn::makeTnode(start, end, typ, *buf, str, sym,				// 10/09/99 AM.
-							line);												// 05/17/01 AM.
-tree->firstNode(*last);	// Attach first node to tree.
-if (lineflag)		// First token was a newline!						// 05/17/01 AM.
-	++line;																		// 05/17/01 AM.
+	/* Attach first node. */
+	Sym *sym;
+	_TCHAR *str;
+	sym = internTok(*buf, len, htab);
+	str = sym->getStr();
+	last = Pn::makeTnode(start, end, typ, *buf, str, sym, line);												// 05/17/01 AM.
+	tree->firstNode(*last);	// Attach first node to tree.
+	if (lineflag)		// First token was a newline!						// 05/17/01 AM.
+		++line;																		// 05/17/01 AM.
 
-/* UP */
-start = end + 1;	// Continue tokenizing from next char.
-*buf   = ptr + 1;	// Continue tokenizing from next char.
+	/* UP */
+	start = ++end;	// Continue tokenizing from next char.
+	*buf += len;
 }
 
 
@@ -287,50 +275,49 @@ start = end + 1;	// Continue tokenizing from next char.
 bool Tok::NextToken(
 	Tree<Pn> *tree,
 	Htab *htab,
-	/*DU*/
 	_TCHAR* *buf,
-	long &start,
+	const char* s,
+	int32_t length,
+	int32_t &start,
 	Node<Pn>* &last,
 	long &line					// Bookkeep line number.				// 05/17/01 AM.
 	)
 {
-long end;
-_TCHAR *ptr;	// Point to end of token.
-enum Pntype typ;
+	int32_t end = start;
+	enum Pntype typ;
+	bool lineflag = false;
+	long e = end;
 
-// Get next token information.
-bool lineflag = false;														// 05/17/01 AM.
-nextTok(*buf, start, /*UP*/ end, ptr, typ,
-			lineflag);															// 05/17/01 AM.
+	// Get next token information.
+	nextTok(s, start, end, length, typ, lineflag);
+	int32_t len = end-start+1;
 
-/* Attach next node to list. */
-Sym *sym;
-_TCHAR *str;
-sym = internTok(*buf, end-start+1, htab);
-str = sym->getStr();
-Node<Pn> *node;
-//node = Pn::makeNode(start, end, typ, *buf, str, sym);			// 10/09/99 AM.
-node = Pn::makeTnode(start, end, typ, *buf, str, sym,				// 10/09/99 AM.
-							line);												// 05/17/01 AM.
+	/* Attach next node to list. */
+	Sym *sym;
+	_TCHAR *str;
+	sym = internTok(*buf, end-start+1, htab);
+	str = sym->getStr();
+	Node<Pn> *node;
+	node = Pn::makeTnode(start, end, typ, *buf, str, sym, line);												// 05/17/01 AM.
 
-// CHECK NODE OVERFLOW.														// 01/24/02 AM.
-if (!node)																		// 01/24/02 AM.
-	{
-	_t_strstream gerrStr;						// 01/24/02 AM.
-	gerrStr << _T("[Node overflow at ") << start << _T(" chars, ")		// 01/24/02 AM.
-		<< last->getCount() << _T(" nodes.]") << ends;					// 01/24/02 AM.
-	return errOut(&gerrStr,false,0,0);												// 01/26/02 AM.
-	}
+	// CHECK NODE OVERFLOW.														// 01/24/02 AM.
+	if (!node)																		// 01/24/02 AM.
+		{
+		_t_strstream gerrStr;						// 01/24/02 AM.
+		gerrStr << _T("[Node overflow at ") << start << _T(" chars, ")		// 01/24/02 AM.
+			<< last->getCount() << _T(" nodes.]") << ends;					// 01/24/02 AM.
+		return errOut(&gerrStr,false,0,0);												// 01/26/02 AM.
+		}
 
-tree->insertRight(*node, *last);
-last = node;		// node is last node of list now.
-if (lineflag)																	// 05/17/01 AM.
-	++line;																		// 05/17/01 AM.
+	tree->insertRight(*node, *last);
+	last = node;		// node is last node of list now.
+	if (lineflag)																	// 05/17/01 AM.
+		++line;																		// 05/17/01 AM.
 
-/* UP */
-start = end + 1;	// Continue tokenizing from next char.
-*buf  = ptr + 1;	// Continue tokenizing from next char.
-return true;																	// 01/26/02 AM.
+	/* UP */
+	start = ++end;	// Continue tokenizing from next char.
+	*buf += len;
+	return true;													// 01/26/02 AM.
 }
 
 
@@ -343,116 +330,94 @@ return true;																	// 01/26/02 AM.
 ********************************************/
 
 void Tok::nextTok(
-	_TCHAR *buf,		// Start char of token.
-	long start,		// Start offset of token.
-	/*UP*/
-	long &end,		// End offset of token.
-	_TCHAR* &ptr,		// End char of token.
+	const char *s,		// Start char of token.
+	int32_t start,		// Start offset of token.
+	int32_t &end,		// End offset of token.
+	int32_t length,
 	enum Pntype &typ,	// Type of token.
 	bool &lineflag		// Flag new line number.						// 05/17/01 AM.
 	)
 {
-end = start;
-ptr = buf;
-
-//if (*ptr < 0)		// Non-ASCII char.	// 07/28/99 AM.	// 09/22/99 AM.
-//	{
-	// Fall through.
-//	}
-
-if (alphabetic(*ptr))						// 09/22/99 AM.
-	{
-#ifdef UNICODE
-	 short u_gcb = u_getIntPropertyValue((UChar32)*ptr, UCHAR_GRAPHEME_CLUSTER_BREAK);	// 01/30/06 AM.
-	 short new_gcb = 0;
-
-	short u_wb = u_getIntPropertyValue((UChar32)*ptr, UCHAR_WORD_BREAK);			// 01/30/06 AM.
-	short new_wb = 0;																				// 01/30/06 AM.
-
-	UErrorCode errorCode;
-	short u_script = uscript_getScript(*ptr,&errorCode);								// 01/30/06 AM.
-	short new_script = 0;																		// 01/30/06 AM.
-#endif
-
+	end = start;
 	typ = PNALPHA;
-	// 09/22/99 AM. Negative char values now handled in alphabetic() fn.
-	++ptr;		// 11/05/99 AM.
-	++end;		// 11/05/99 AM.
+	lineflag = false;
+	int32_t lastEnd = end;
+	int32_t len = 0;
 
-#ifdef UNICODE
-//	while (alphabetic(*ptr) && ((*ptr >= 'a' && *ptr <= 'z') || (*ptr >= 'A' && *ptr <= 'Z')))
-//   while (alphabetic(*ptr) && ! u_hasBinaryProperty((_TUCHAR)*ptr, UCHAR_WORD_BREAK))
-	while (alphabetic_extend(*ptr,u_gcb,u_wb,u_script,/*UP*/new_gcb,new_wb,new_script))
-		{
-		u_gcb = new_gcb;
-		u_wb = new_wb;
-		u_script = new_script;
-		new_gcb = new_wb = new_script = 0;
+	UChar32 c;
+	U8_NEXT(s, end, length, c);
 
-		++ptr;
-		++end;
+	if (c) {
+		if (isSingle(c)) {
+			;
 		}
-#else
-	while (alphabetic(*ptr)					// 09/22/99 AM.
-			// && *ptr > 0						// 07/28/99 AM.	// 09/22/99 AM.
-			 )
-		{
-		++ptr;
-		++end;
+		else if (u_isUAlphabetic(c)) {
+			while (c && u_isUAlphabetic(c) && !isSingle(c)) {
+				lastEnd = end;
+				U8_NEXT(s, end, length, c);
+			}
+			end -= end - lastEnd;
 		}
-#endif
-
-	--end;		// Back up to final alpha char.
-	--ptr;
-	return;		// 07/28/99 AM.
-	}
-else if (*ptr < 0)	// Other extended ANSI chars.	// 09/22/99 AM.
-	{
-	// Fall through.			// 09/22/99 AM.
-	}
-else if (_istdigit(*ptr))
-	{
-	typ = PNNUM;
-	++ptr;		// 11/05/99 AM.
-	++end;		// 11/05/99 AM.
-	while (_istdigit(*ptr)
-			 && *ptr > 0						// 07/28/99 AM.
-			)
-		{
-		++ptr;
-		++end;
+		else if (u_isdigit(c)) {
+			while (c && u_isdigit(c) && !isSingle(c)) {
+				lastEnd = end;
+				U8_NEXT(s, end, length, c);
+			}
+			end -= end - lastEnd;
+			typ = PNNUM;
 		}
-	--end;		// Back up to final digit char.
-	--ptr;
-	return;		// 07/28/99 AM.
+		else if (u_isUWhiteSpace(c)) {
+			if (c == '\n')
+				lineflag = true;
+			typ = PNWHITE;
+		}
+		else if (u_ispunct(c) || isPunct(c)) {
+			typ = PNPUNCT;
+		}
+		else {
+			typ = PNCTRL;
+		}
+		end--;
 	}
-else if (_istspace(*ptr))
-	{
-	// Assuming newline always present at end of line.				// 05/17/01 AM.
-	if (*ptr == '\n')															// 05/17/01 AM.
-		lineflag = true;	// Flag new line number.					// 05/17/01 AM.
-	typ = PNWHITE;
-	return;		// 07/28/99 AM.
+	else {
+		int whoops = 1;
 	}
-else if (_istpunct((_TUCHAR)*ptr))
-	{
-	typ = PNPUNCT;
-	return;		// 07/28/99 AM.
-	}
+}
 
-// NON ASCII CHAR.			// 07/28/99 AM.
 
-if (!bad_)						// 01/15/99 AM.
-	{
-	bad_ = true;					// 01/15/99 AM.
-//	_t_strstream gerrStr;
-//	gerrStr << _T("[Non-ASCII chars in file.]") << ends;
-//	errOut(&gerrStr,false);
-	}
-// Hack. 12/05/98 AM.
-//typ = PNPUNCT;
-//*ptr = '~';				// 07/28/99 AM. I didn't like @.
-typ = PNCTRL;																	// 07/19/00 AM.
+bool Tok::isPunct(UChar32 c) {
+	return (
+		(33 <= c && c <= 47) ||
+		(60 <= c && c <= 62) ||
+		(94 <= c && c <= 96) ||
+		(124 <= c && c <= 127)
+	);
+}
+
+
+bool Tok::isSingle(UChar32 c) {
+	return Tok::isChinese(c) || Tok::isEmoji(c);
+}
+
+
+bool Tok::isChinese(UChar32 c) {
+	return (
+		(0x4E00 <= c && c <= 0x9FFF) ||
+		(0x3400 <= c && c <= 0x4DBF) ||
+		(0x20000 <= c && c <= 0x2A6DF) ||
+		(0x2A700 <= c && c <= 0x2B73F) ||
+		(0x2B740 <= c && c <= 0x2B81F) ||
+		(0x2B820 <= c && c <= 0x2CEAF) ||
+		(0xF900 <= c && c <= 0xFAFF) ||
+		(0x2F800 <= c && c <= 0x2FA1F)
+	);
+}
+
+
+bool Tok::isEmoji(UChar32 c) {
+	return (
+		(0x1F600 <= c && c <= 0xE007F)
+	);
 }
 
 
@@ -491,8 +456,6 @@ if (len >= MAXSTR)					// FIX.	// 08/06/06 AM.
 // 01/26/99 AM. Building lowercase variant of sym here also.
 Sym *sym;
 _TCHAR *lcstr = 0;
-//if (!(sym = htab->hsym(str, len)))			// 01/26/99 AM.
-//if (!(sym = htab->hsym_kb(str, len)))			// 01/26/99 AM.
 if (!(sym = htab->hsym_kb(str, len,/*UP*/lcstr)))			// 01/26/99 AM.
 	{
 	_t_strstream gerrStr;
@@ -502,6 +465,5 @@ if (!(sym = htab->hsym_kb(str, len,/*UP*/lcstr)))			// 01/26/99 AM.
 	}
 
 return sym;								// 11/19/98 AM.
-//return sym->getStr();
-//return make_str(str, len);		// Make null terminated string.
 }
+

@@ -81,6 +81,7 @@ inputpass_ = 0;		// 08/23/02 AM.
 seq_ = 0;				// 07/24/01 AM.
 line_	= 0;				// 08/24/02 AM.
 inputline_ = 0;		// 08/24/02 AM.
+length = 0;
 
 // Make an empty list when creating the Parse object.				// 05/23/01 AM.
 // (That way, never have to check if it exists or not.			// 05/23/01 AM.

@@ -19,6 +19,8 @@ All rights reserved.
 //#include "tree.h"
 #include "lite/algo.h"
 #include "htab.h"
+#include "tok.h"
+#include <unicode/uchar.h>
 
 /********************************************
 * CLASS:	DICTTOK
@@ -48,27 +50,27 @@ public:
 	virtual void setup(_TCHAR *s_data);					// 12/04/98 AM.
 	bool Execute(Parse *, Seqn *);	// Perform the tokenization.
 	bool Tokenize(Parse *);	// Perform the tokenization.
-	void FirstToken(Tree<Pn> *tree, Htab *htab, /*DU*/ _TCHAR* *buf,
-										long &start, Node<Pn>* &last,
+	void FirstToken(Tree<Pn> *tree, Htab *htab, _TCHAR* *buf, const char* s, int32_t length,
+										int32_t &start, Node<Pn>* &last,
 										long &line	// Line number.		// 05/17/01 AM.
 										);
 
 	inline bool NextToken(
 			Tree<Pn> *tree,
 			Htab *htab,
-			/*DU*/
 			_TCHAR* *buf,
-			long &start,
+			const char* s,
+			int32_t length,
+			int32_t &start,
 			Node<Pn>* &last,
 			long &line			// Bookkeep line number.				// 05/17/01 AM.
 			);
 
 	inline void nextTok(
-			_TCHAR *buf,		// Start char of token.
-			long start,		// Start offset of token.
-			/*UP*/
-			long &end,		// End offset of token.
-			_TCHAR* &ptr,		// End char of token.
+			const char *s,		// Start char of token.
+			int32_t start,		// Start offset of token.
+			int32_t &end,		// End offset of token.
+			int32_t length,
 			enum Pntype &typ,	// Token type.
 			bool &lineflag		// Flag new line number.				// 05/17/01 AM.
 			);
@@ -93,7 +95,7 @@ public:
 
 	bool initTok(Parse *parse);
 	bool finTok();
-
+	bool isPunct(UChar32 c);
 
 	inline bool replaceNum(
 		Node<Pn> *node,
@@ -133,6 +135,8 @@ private:
 	Node<Pn> *line_;			// Current line node.
 //	Node<Pn> *word_;			// Current word node (if collecting "blobs").
 	Node<Pn> *tok_;			// Current literal token node.
+
+	Tok *token_;
 
 	// Track if whitespace was previous token. For NOSP attr.	// 08/16/11 AM.
 	bool prevwh_;				// If prev token was whitespace.		// 08/16/11 AM.

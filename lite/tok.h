@@ -20,6 +20,7 @@ All rights reserved.
 //#include "tree.h"
 #include "lite/algo.h"
 #include "htab.h"
+#include <unicode/uchar.h>
 
 /********************************************
 * CLASS:	TOK
@@ -47,40 +48,41 @@ public:
 	virtual void setup(_TCHAR *s_data);					// 12/04/98 AM.
 	bool Execute(Parse *, Seqn *);	// Perform the tokenization.
 	bool Tokenize(Parse *);	// Perform the tokenization.
-//	void FirstToken(Tree<Pn> *tree, Htab *htab, /*DU*/ _TCHAR* *buf,
-	void FirstToken(Tree<Pn> *tree, Htab *htab, /*DU*/ _TCHAR* *buf,
-										long &start, Node<Pn>* &last,
+	void FirstToken(Tree<Pn> *tree, Htab *htab, _TCHAR* *buf, const char* s, int32_t length,
+										int32_t &start, Node<Pn>* &last,
 										long &line	// Line number.		// 05/17/01 AM.
 										);
 
-//	bool NextToken(
 	bool NextToken(
 			Tree<Pn> *tree,
 			Htab *htab,
-			/*DU*/
 			_TCHAR* *buf,
-			long &start,
+			const char* s,
+			int32_t length,
+			int32_t &start,
 			Node<Pn>* &last,
 			long &line			// Bookkeep line number.				// 05/17/01 AM.
 			);
 
-//	void nextTok(
 	void nextTok(
-			_TCHAR *buf,		// Start char of token.
-			long start,		// Start offset of token.
-			/*UP*/
-			long &end,		// End offset of token.
-			_TCHAR* &ptr,		// End char of token.
+			const char *s,		// Start char of token.
+			int32_t start,		// Start offset of token.
+			int32_t &end,		// End offset of token.
+			int32_t length,
 			enum Pntype &typ,	// Token type.
 			bool &lineflag		// Flag new line number.				// 05/17/01 AM.
 			);
 
-//	Sym *internTok(
 	Sym *internTok(
 		_TCHAR *str,				// Ptr to string in a buffer.
 		long len,				// Length of string within buffer.
 		Htab *htab				// Hashed symbol table.		// 11/19/98 AM.
 		);
+
+	bool isPunct(UChar32 c);
+	bool isSingle(UChar32 c);
+	bool isChinese(UChar32 c);
+	bool isEmoji(UChar32 c);
 
 private:
 	//Parse *parse;			// The analyze instance that we're tokenizing for.
