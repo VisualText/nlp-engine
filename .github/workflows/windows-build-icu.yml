@@ -1,0 +1,84 @@
+
+name: Windows Create Released Asset
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  build_executable:
+    name: Windows Create NLP-ENGINE
+    runs-on: windows-latest
+
+    env:
+      VCPKG_DEFAULT_TRIPLET: x64-windows
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Vcpkg bootstrap Windows
+        run: bootstrap-vcpkg.bat
+        working-directory: vcpkg
+
+      - name: Install ICU
+        run: vcpkg install
+        working-directory: vcpkg
+
+      - name: List $RUNNER_WORKSPACE before build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+
+      - name: Make build directory
+        run: mkdir build
+
+      - name: Generate Solution Windows
+        run: cmake -B build -A Win32 -DCMAKE_BUILD_TYPE=Release -DVCPKG_BUILD_TYPE=release -DCMAKE_TOOLCHAIN_FILE='${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake'
+
+      - name: Cmake Build all targets Windows
+        run: cmake --build build --config Release --target nlp
+        
+      - name: Upload files
+        uses: actions/upload-artifact@v3
+        with:
+          name: nlpw
+          path: |
+            ${{ github.workspace }}/bin/Release/nlp.exe
+            ${{ github.workspace }}/vcpkg/buildtrees/icu/x64-windows-rel/lib/icudt69.dll
+            ${{ github.workspace }}/vcpkg/buildtrees/icu/x64-windows-rel/lib/icuuc69.dll
+
+  zip_files:
+    needs: build_executable
+    name: Zip Executable Files
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download a single artifact
+        uses: actions/download-artifact@v3
+        with:
+          path: ${{ github.workspace }}
+
+      - name: List $RUNNER_WORKSPACE before build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+
+      - name: Zip nlp and icu files
+        uses: papeloto/action-zip@v1
+        with:
+          files: nlpw/bin/Release/nlp.exe nlpw/vcpkg/buildtrees/icu/x64-windows-rel/lib/icudt69.dll nlpw/vcpkg/buildtrees/icu/x64-windows-rel/lib/icuuc69.dll
+          dest: nlpw.zip
+          
+      - name: Upload zip artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: nlpw
+          path: ${{ github.workspace }}/nlpw.zip
+        
+      - name: Attach Zip to Release
+        uses: fnkr/github-action-ghr@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GHR_PATH: nlpw.zip
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
