@@ -39,46 +39,21 @@ jobs:
 
       - name: Cmake Build all targets Linux
         run: cmake --build build/ --target all
-
-      - name: Upload files
-        uses: actions/upload-artifact@v3
+                
+      - uses: shogo82148/actions-upload-release-asset@v1
         with:
-          name: nlpm
-          path: |
-            ${{ github.workspace }}/bin/nlp.exe
-            ${{ github.workspace }}/vcpkg_installed/x64-osx/lib/libicutu.a
-            ${{ github.workspace }}/vcpkg_installed/x64-osx/lib/libicuuc.a
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "./bin/nlp.exe"
+          asset_name: "nlpm.exe"
 
-  zip_files:
-    needs: build_executable
-    name: Zip Executable Files
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download a single artifact
-        uses: actions/download-artifact@v3
+      - uses: shogo82148/actions-upload-release-asset@v1
         with:
-          path: ${{ github.workspace }}
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "./vcpkg_installed/x64-linux/lib/libicutu.a"
+          asset_name: "libicutum.a"
 
-      - name: List $RUNNER_WORKSPACE before build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
-
-      - name: Zip nlp and icu files
-        uses: papeloto/action-zip@v1
+      - uses: shogo82148/actions-upload-release-asset@v1
         with:
-          files: nlpm/bin/nlp.exe nlpm/vcpkg_installed/x64-osx/lib/libicutu.a nlpm/vcpkg_installed/x64-osx/lib/libicuuc.a
-          dest: nlpm.zip
-          
-      - name: Upload zip artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: nlpm
-          path: ${{ github.workspace }}/nlpm.zip
-        
-      - name: Attach Zip to Release
-        uses: fnkr/github-action-ghr@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        env:
-          GHR_PATH: nlpm.zip
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "./vcpkg_installed/x64-linux/lib/libicuuc.a"
+          asset_name: "libicuucm.a"
