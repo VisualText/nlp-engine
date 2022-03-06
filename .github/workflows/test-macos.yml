@@ -1,11 +1,8 @@
 name: Test MaxOS
 
 on:
-  push:
-    branches: [master]
-  pull_request:
-    types: [opened, synchronize, reopened]
-    
+  push
+  
 jobs:
   job:
     name: MacOS Compile Test

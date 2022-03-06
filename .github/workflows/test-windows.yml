@@ -2,10 +2,7 @@
 name: Test Windows
 
 on:
-  push:
-    branches: [master]
-  pull_request:
-    types: [opened, synchronize, reopened]
+  push
 
 jobs:
   job:
