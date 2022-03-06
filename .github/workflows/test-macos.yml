@@ -1,7 +1,10 @@
 name: Test MaxOS
 
 on:
-  push
+  push:
+    branches: [master]
+  pull_request:
+    types: [opened, synchronize, reopened]
   
 jobs:
   job:
@@ -36,3 +39,18 @@ jobs:
 
       - name: Cmake Build all targets Linux
         run: cmake --build build/ --target all
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: nlp.exe
+          path: bin
+          
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ibicutu.a
+          path: vcpkg/buildtrees/icu/x64-osx-rel/lib/libicutu.a
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: libicuuc.a
+          path: vcpkg/buildtrees/icu/x64-osx-rel/lib/libicuuc.a

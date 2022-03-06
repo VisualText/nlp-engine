@@ -2,12 +2,15 @@
 name: Test Windows
 
 on:
-  push
+  push:
+    branches: [master]
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   job:
     name: Windows Compile Test
-    runs-on: windows-latest
+    runs-on: windows-2019
 
     env:
       VCPKG_DEFAULT_TRIPLET: x64-windows
@@ -33,3 +36,18 @@ jobs:
 
       - name: Cmake Build all targets Windows
         run: cmake --build build --config Release --target nlp
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: nlp.exe
+          path: bin/Release
+          
+      - uses: actions/upload-artifact@v3
+        with:
+          name: icudt69.dll
+          path: vcpkg/buildtrees/icu/x64-windows-rel/lib/icudt69.dll
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: icuuc69.dll
+          path: vcpkg/buildtrees/icu/x64-windows-rel/lib/icuuc69.dll
