@@ -39,6 +39,10 @@ jobs:
 
       - name: Cmake Build all targets Linux
         run: cmake --build build/ --target all
+
+      - name: List $RUNNER_WORKSPACE before build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
                 
       - uses: shogo82148/actions-upload-release-asset@v1
         with:

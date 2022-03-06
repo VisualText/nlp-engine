@@ -56,4 +56,4 @@ jobs:
         with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: "./vcpkg/buildtrees/icu/x64-windows-rel/lib/icuuc69.dll"
-          asset_name: "icudt69.dll"
+          asset_name: "icuuc69.dll"
