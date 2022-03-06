@@ -40,21 +40,20 @@ jobs:
       - name: Cmake Build all targets Windows
         run: cmake --build build --config Release --target nlp
 
-      - name: Zip nlp and icu files
-        uses: papeloto/action-zip@v1
+      - uses: shogo82148/actions-upload-release-asset@v1
         with:
-          files: bin/Release/nlp.exe vcpkg/buildtrees/icu/x64-windows-rel/lib/icudt69.dll vcpkg/buildtrees/icu/x64-windows-rel/lib/icuuc69.dll
-          dest: nlpw.zip
-          
-      - name: Upload zip artifact
-        uses: actions/upload-artifact@v3
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "./bin/Release/nlp.exe"
+          asset_name: "nlpw.exe"
+
+      - uses: shogo82148/actions-upload-release-asset@v1
         with:
-          name: nlpw
-          path: ${{ github.workspace }}/nlpw.zip
-        
-      - name: Attach Zip to Release
-        uses: fnkr/github-action-ghr@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        env:
-          GHR_PATH: nlpw.zip
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "./vcpkg/buildtrees/icu/x64-windows-rel/lib/icudt69.dll"
+          asset_name: "icudt69.dll"
+
+      - uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "./vcpkg/buildtrees/icu/x64-windows-rel/lib/icuuc69.dll"
+          asset_name: "icudt69.dll"
