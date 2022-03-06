@@ -119,7 +119,7 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 #ifdef LINUX
 				_t_cout << "Version " << Version() << std::endl;
 #else
-				_t_cout << _T("1.10.4") << endl;
+				_t_cout << _T("1.10.5") << endl;
 #endif
 				return false;
 				}
