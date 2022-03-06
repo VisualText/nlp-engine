@@ -27,10 +27,6 @@ jobs:
       - name: Install ICU
         run: vcpkg install
         working-directory: vcpkg
-        
-      - name: List $RUNNER_WORKSPACE before build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
 
       - name: Make build directory
         run: mkdir build
