@@ -96,8 +96,8 @@ git submodule update --init --recursive
 ### Fetch the third-party libraries (via vcpkg)
 ```
 cd vcpkg
-bootstrap-vcpkg.bat
-vcpkg install icu
+./bootstrap-vcpkg.sh
+vcpkg install
 ```
 
 ### Create an out of source build folder
@@ -125,7 +125,7 @@ git submodule update --init --recursive
 ```
 cd vcpkg
 bootstrap-vcpkg.bat
-vcpkg install icu
+vcpkg install
 ```
 
 ### Create an out of source build folder
