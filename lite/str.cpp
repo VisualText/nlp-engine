@@ -1750,19 +1750,20 @@ if (end < start
  || len >= siz )
 	return false;
 
-UChar32 c;
+UChar32 c = 1;
 int32_t s = 0;
+int32_t sLast = 0;
 int32_t e = 0;
 int32_t i = 0;
 
-U8_NEXT(spd, s, length, c);
-i++;
-while (c && i<start) {
+while (c && i<=start) {
+	sLast = s;
 	U8_NEXT(spd, s, length, c);
 	i++;
 }
 e = s;
-i = 0;
+s = sLast;
+i = 1;
 while (c && i<len) {
 	U8_NEXT(spd, e, length, c);
 	i++;
