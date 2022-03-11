@@ -29,14 +29,8 @@ All rights reserved.
 #include "words/words.h"		// 10/16/00 AM.
 #include "words/wordarrs.h"	// 10/16/00 AM.
 
-#include "unicode/unistr.h"
-#include "unicode/uchar.h"
-#include "unicode/ustring.h"
-#include "unicode/uchriter.h"
-#include "unicode/coll.h"
-#include "unicode/ucasemap.h"
-#include <unicode/brkiter.h>
-#include <unicode/locid.h>
+#include "unicu.h"
+using namespace unicu;
 
 #ifdef UNICODE
 //#include "unicode/utypes.h"	// 03/03/05 AM.
@@ -486,11 +480,11 @@ if (empty(str))
 
 icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
 const UChar *strBuf = ustr.getTerminatedBuffer();
-icu::UCharCharacterIterator iter(strBuf, u_strlen(strBuf));
+icu::UCharCharacterIterator iter(strBuf, unicu::strLen(strBuf));
 num = 0;
 UChar c = iter.first();
 do {
-	if (!u_isdigit(c))
+	if (!unicu::isDigit(c))
 		return false;
 	num = 10 * num + char_to_digit(c);
 	c = iter.next();
@@ -523,11 +517,11 @@ if (empty(str))
 
 icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
 const UChar *strBuf = ustr.getTerminatedBuffer();
-icu::UCharCharacterIterator iter(strBuf, u_strlen(strBuf));
+icu::UCharCharacterIterator iter(strBuf, unicu::strLen(strBuf));
 num = 0;
 UChar c = iter.first();
 do {
-	if (!u_isdigit(c))
+	if (!unicu::isDigit(c))
 		return false;
 	num = 10 * num + char_to_digit(c);
 	c = iter.next();
@@ -557,10 +551,10 @@ bool all_uppercase(_TCHAR *str)
 {
 icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
 const UChar *strBuf = ustr.getTerminatedBuffer();
-icu::UCharCharacterIterator iter(strBuf, u_strlen(strBuf));
+icu::UCharCharacterIterator iter(strBuf, unicu::strLen(strBuf));
 UChar c = iter.first();
 do {
-	if (!u_isupper(c))
+	if (!unicu::isUpper(c))
 		return false;
 	c = iter.next();
 
@@ -574,7 +568,7 @@ while ((ch = *str++))
 	// 09/22/99 AM. Accepting accented ASCII chars as both uppercase and
 	// lowercase!
 	if (alphabetic((_TUCHAR)ch)									// 12/16/01 AM.
-		 && !is_upper((_TUCHAR)ch))								// 12/16/01 AM.
+		 && !icu::isUpper((_TUCHAR)ch))								// 12/16/01 AM.
 		return false;
 	}
 */
@@ -593,7 +587,7 @@ bool all_lowercase(_TCHAR *str)
 {
 icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
 const UChar *strBuf = ustr.getTerminatedBuffer();
-icu::UCharCharacterIterator iter(strBuf, u_strlen(strBuf));
+icu::UCharCharacterIterator iter(strBuf, unicu::strLen(strBuf));
 UChar c = iter.first();
 do {
 	if (!u_islower(c))
@@ -637,14 +631,14 @@ if (empty(str))
 
 icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
 const UChar *strBuf = ustr.getTerminatedBuffer();
-icu::UCharCharacterIterator iter(strBuf, u_strlen(strBuf));
+icu::UCharCharacterIterator iter(strBuf, unicu::strLen(strBuf));
 
 bool lower = false;
 bool upper = false;
 UChar c = iter.first();
 
 // If first char is uppercase, ignore it.
-if (u_isUAlphabetic(c) && is_upper(c))
+if (unicu::isAlphabetic(c) && unicu::isUpper(c))
 	{
 	if ((c = iter.next()) == icu::CharacterIterator::DONE)
 		return false;
@@ -652,9 +646,9 @@ if (u_isUAlphabetic(c) && is_upper(c))
 	}
 
 do {
-	if (u_isUAlphabetic(c))									// 12/16/01 AM.
+	if (unicu::isAlphabetic(c))									// 12/16/01 AM.
 		{
-		if (is_upper(c))									// 12/16/01 AM.
+		if (unicu::isUpper(c))									// 12/16/01 AM.
 			{
 			if (lower)
 				return true;
@@ -680,7 +674,7 @@ bool upper = false;
 
 // If first char is uppercase, ignore it.
 if (alphabetic((_TUCHAR)*str)										// 12/16/10 AM.
-	&& is_upper((_TUCHAR)*str))									// 12/16/01 AM.
+	&& icu::isUpper((_TUCHAR)*str))									// 12/16/01 AM.
 	{
 	if (!*++str)
 		return false;
@@ -690,7 +684,7 @@ for (ch = *str; ch; ch = *++str)
 	{
 	if (alphabetic((_TUCHAR)ch))									// 12/16/01 AM.
 		{
-		if (is_upper((_TUCHAR)ch))									// 12/16/01 AM.
+		if (icu::isUpper((_TUCHAR)ch))									// 12/16/01 AM.
 			{
 			if (lower)
 				return true;
@@ -1063,7 +1057,7 @@ if (!str || !*str || !arr || !*arr)
 
 icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
 const UChar *strBuf = ustr.getTerminatedBuffer();
-icu::UCharCharacterIterator iter(strBuf, u_strlen(strBuf));
+icu::UCharCharacterIterator iter(strBuf, unicu::strLen(strBuf));
 
 UErrorCode success = U_ZERO_ERROR;
 icu::Collator *collator = icu::Collator::createInstance("UTF-8", success);

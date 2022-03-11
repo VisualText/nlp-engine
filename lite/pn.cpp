@@ -55,7 +55,8 @@ static _TCHAR *Pntype_s[] =
 	_T("num"),
 	_T("punct"),
 	_T("white"),
-	_T("ctrl")
+	_T("ctrl"),
+	_T("emoji")
 	};
 
 // WARN! Numbers are octal.

@@ -72,6 +72,7 @@ _TCHAR *specialArr[] =															// 06/09/00 AM.
 	_T("_xCAP"),
 	_T("_xCAPLET"),																// 07/10/09 AM.
 	_T("_xCTRL"),																	// 07/24/00 AM.
+	_T("_xEMOJI"),
 	_T("_xEND"),
 	_T("_xEOF"),
 	_T("_xFEAT"),
@@ -2902,6 +2903,10 @@ for (ptr = arr; *ptr; ++ptr)
 			if (micro_ctrl(node, 0, nlppp))						// FIX.	// 08/09/02 AM.
 				return true;											// FIX.	// 08/09/02 AM.
 			break;
+		case XEMOJI:	// _xEMOJI
+			if (micro_emoji(node, 0, nlppp))
+				return true;
+			break;
 		case XSTART:	// _xSTART
 #ifdef OLD_031231
 // Problem is we're not flagging "don't advance to next node".	// 12/31/03 AM.
@@ -3917,6 +3922,19 @@ Pn *pn = &(((Node<Pn> *)node)->data);
 return ((pn->getType() == PNWHITE) ? true : false);
 }
 
+
+/********************************************
+* FN:		MICRO_EMOJI
+* CR:		03/11/22 Dd.
+* SUBJ:	Micro match of node to rule elt.
+********************************************/
+
+
+bool Arun::micro_emoji(NODE *node, const ELT *elt, Nlppp *nlppp)
+{
+Pn *pn = &(((Node<Pn> *)node)->data);
+return ((pn->getType() == PNEMOJI) ? true : false);
+}
 
 
 

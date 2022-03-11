@@ -60,6 +60,7 @@ enum specialType																// 06/09/00 AM.
 	XCAP,		// _xCAP
 	XCAPLET,    // _xLET                                        // 07/10/09 AM.
 	XCTRL,	// _xCTRL														// 07/24/00 AM.
+	XEMOJI,
 	XEND,		// _xEND
 	XEOF,		// _xEOF
 	XFEAT,	// _xFEAT [unimplemented]
@@ -344,6 +345,8 @@ public:
 	static bool micro_punct(NODE *,const ELT *,Nlppp *);			// 05/25/00 AM.
 	static bool micro_ctrl(NODE *,const ELT *,Nlppp *);			// 07/24/00 AM.
 	static bool micro_white(NODE *,const ELT *,Nlppp *);			// 05/25/00 AM.
+	static bool micro_emoji(NODE *,const ELT *,Nlppp *);
+
 //	static bool micro_feat(NODE *,const ELT *,Nlppp *);			// 05/25/00 AM.
 
 	// For special toks in match lists.									// 06/09/00 AM.

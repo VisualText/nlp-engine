@@ -40,12 +40,8 @@ All rights reserved.
 #include "nlp.h"				// 06/25/03 AM.
 #include "ivar.h"
 
-#include "unicode/unistr.h"
-#include <unicode/schriter.h>
-#include <unicode/uchriter.h>
-#include <unicode/utf8.h>
-
-using namespace icu;
+#include "unicu.h"
+using namespace unicu;
 
 #ifdef UNICODE
 #include "utypes.h"	// 03/03/05 AM.

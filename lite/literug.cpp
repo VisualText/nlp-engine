@@ -37,6 +37,9 @@ All rights reserved.
 #include "ana.h"
 #include "parse.h"
 
+#include "unicu.h"
+using namespace unicu;
+
 /********************************************
 * FN:		genSample
 * CR:		05/18/99 AM.
@@ -1802,15 +1805,19 @@ if (!smatches && !rmatches)
 		return true;
 
 	// MATCHING RAW ELT WITH GENERIC TYPE.						// 08/09/99 AM.
-	if (!_tcscmp(_T("_xALPHA"), sname) && alphabetic(*rname))	// 09/22/99 AM.
+	if (!_tcscmp(_T("_xALPHA"), sname) && unicu::isAlphabetic(*rname))	// 09/22/99 AM.
 		return true;
-	if (!_tcscmp(_T("_xNUM"), sname) && _istdigit((_TUCHAR)*rname))
+	if (!_tcscmp(_T("_xEMOJI"), sname) && unicu::isEmoji((_TUCHAR)*rname))
 		return true;
-	if (!_tcscmp(_T("_xPUNCT"), sname) && _istpunct((_TUCHAR)*rname))
+	if (!_tcscmp(_T("_xNUM"), sname) && unicu::isDigit((_TUCHAR)*rname))
 		return true;
-	if (!_tcscmp(_T("_xWHITE"), sname) && _istspace((_TUCHAR)*rname))
+	if (!_tcscmp(_T("_xPUNCT"), sname) && unicu::isPunct((_TUCHAR)*rname))
 		return true;
-	if (!_tcscmp(_T("_xBLANK"), sname) && _istspace((_TUCHAR)*rname))
+	if (!_tcscmp(_T("_xWHITE"), sname) && unicu::isWhiteSpace((_TUCHAR)*rname))
+		return true;
+	if (!_tcscmp(_T("_xBLANK"), sname) && unicu::isWhiteSpace((_TUCHAR)*rname))
+		return true;
+	if (!_tcscmp(_T("_xEMOJI"), sname) && unicu::isEmoji((_TUCHAR)*rname))
 		return true;
 	if (!_tcscmp(_T("_xCTRL"), sname) && _istcntrl((_TUCHAR)*rname))				// 07/24/00 AM.
 		return true;															// 07/24/00 AM.
@@ -2346,15 +2353,17 @@ if (!cmatches && !rmatches)
 		return true;
 
 	// MATCHING RAW ELT WITH GENERIC TYPE.				// 08/09/99 AM.
-	if (!_tcscmp(_T("_xALPHA"), cname) && alphabetic(*rname))	// 09/22/99 AM.
+	if (!_tcscmp(_T("_xALPHA"), cname) && unicu::isAlphabetic(*rname))	// 09/22/99 AM.
 		return true;
-	if (!_tcscmp(_T("_xNUM"), cname) && _istdigit((_TUCHAR)*rname))
+	if (!_tcscmp(_T("_xNUM"), cname) && unicu::isDigit((_TUCHAR)*rname))
 		return true;
-	if (!_tcscmp(_T("_xPUNCT"), cname) && _istpunct((_TUCHAR)*rname))
+	if (!_tcscmp(_T("_xPUNCT"), cname) && unicu::isPunct((_TUCHAR)*rname))
 		return true;
-	if (!_tcscmp(_T("_xWHITE"), cname) && _istspace((_TUCHAR)*rname))
+	if (!_tcscmp(_T("_xWHITE"), cname) && unicu::isWhiteSpace((_TUCHAR)*rname))
 		return true;
-	if (!_tcscmp(_T("_xBLANK"), cname) && _istspace((_TUCHAR)*rname))
+	if (!_tcscmp(_T("_xBLANK"), cname) && unicu::isWhiteSpace((_TUCHAR)*rname))
+		return true;
+	if (!_tcscmp(_T("_xEMOJI"), cname) && unicu::isEmoji((_TUCHAR)*rname))
 		return true;
 	if (!_tcscmp(_T("_xCTRL"), cname) && _istcntrl((_TUCHAR)*rname))				// 07/24/00 AM.
 		return true;															// 07/24/00 AM.
@@ -2730,16 +2739,18 @@ _TCHAR *Parse::tok_type(_TCHAR *str)
 {
 if (!str)
 	return 0;
-if (alphabetic(*str))			// 09/22/99 AM.
+if (unicu::isAlphabetic(*str))			// 09/22/99 AM.
 	return _T("_xALPHA");
-else if (_istdigit((_TUCHAR)*str))
+else if (unicu::isDigit((_TUCHAR)*str))
 	return _T("_xNUM");
-else if (_istpunct((_TUCHAR)*str))
+else if (unicu::isPunct((_TUCHAR)*str))
 	return _T("_xPUNCT");
-else if (_istspace((_TUCHAR)*str))
+else if (unicu::isWhiteSpace((_TUCHAR)*str))
 	return _T("_xWHITE");
 else if (_istcntrl((_TUCHAR)*str))														// 07/24/00 AM.
 	return _T("_xCTRL");															// 07/24/00 AM.
+else if (unicu::isEmoji((_TUCHAR)*str))
+	return _T("_xEMOJI");
 return 0;
 }
 
@@ -3172,18 +3183,20 @@ for (delt = dlist->getFirst(); delt; delt = delt->pRight)
 	str = arg->getStr();
 
 	// MATCHING LITERAL ELT WITH GENERIC TYPE.
-	if (!_tcscmp(_T("_xALPHA"), key) && alphabetic(*str))	// 09/22/99 AM.
+	if (!_tcscmp(_T("_xALPHA"), key) && unicu::isAlphabetic(*str))	// 09/22/99 AM.
 		return true;
-	if (!_tcscmp(_T("_xNUM"), key) && _istdigit((_TUCHAR)*str))
+	if (!_tcscmp(_T("_xNUM"), key) && unicu::isDigit((_TUCHAR)*str))
 		return true;
-	if (!_tcscmp(_T("_xPUNCT"), key) && _istpunct((_TUCHAR)*str))
+	if (!_tcscmp(_T("_xPUNCT"), key) && unicu::isPunct((_TUCHAR)*str))
 		return true;
-	if (!_tcscmp(_T("_xWHITE"), key) && _istspace((_TUCHAR)*str))
+	if (!_tcscmp(_T("_xWHITE"), key) && unicu::isPunct((_TUCHAR)*str))
 		return true;
-	if (!_tcscmp(_T("_xBLANK"), key) && _istspace((_TUCHAR)*str))
+	if (!_tcscmp(_T("_xBLANK"), key) && unicu::isWhiteSpace((_TUCHAR)*str))
+		return true;
+	if (!_tcscmp(_T("_xEMOJI"), key) && unicu::isEmoji((_TUCHAR)*str))
 		return true;
 	if (!_tcscmp(_T("_xCTRL"), key) && _istcntrl((_TUCHAR)*str))						// 07/24/00 AM.
-		return true;															// 07/24/00 AM.
+		return true;
 	}
 return 0;			// Arg not found.
 }
