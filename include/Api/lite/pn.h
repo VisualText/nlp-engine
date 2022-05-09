@@ -32,7 +32,8 @@ enum Pntype
 	PNNUM,				// Numeric token.
 	PNPUNCT,				// Punctuation token.
 	PNWHITE,				// Whitespace token.
-	PNCTRL				// Ignorable token.
+	PNCTRL,				// Ignorable token.
+	PNEMOJI
 	};
 
 // Forward references.

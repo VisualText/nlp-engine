@@ -2527,6 +2527,8 @@ else if (!_tcscmp(name, _T("_xBLANK")))	// Non-newline whitespace.	// 03/22/99 A
 	}
 else if (!_tcscmp(name, _T("_xPUNCT")))			// Punctuation token.// 12/04/98 AM.
 	return ((pn->getType() == PNPUNCT) ? true : false);
+else if (!_tcscmp(name, _T("_xEMOJI")))
+	return ((pn->getType() == PNEMOJI) ? true : false);
 else if (!_tcscmp(name, _T("_xANY")))	// Match any node.	// 12/08/98 AM.
 	return true;	// Always matches.
 else if (!_tcscmp(name, _T("_xCAP")))		// Match capitalized word. // 01/20/99 AM.
@@ -2656,6 +2658,8 @@ else if (!_tcscmp(ename, _T("_xBLANK")))	// Non-newline whitespace.	// 03/22/99 
 	}
 else if (!_tcscmp(ename, _T("_xPUNCT")))	// Punctuation token.
 	return (ntype == PNPUNCT) ? true : false;
+else if (!_tcscmp(ename, _T("_xEMOJI")))
+	return (ntype == PNEMOJI) ? true : false;
 else if (!_tcscmp(ename, _T("_xANY")))				// 12/08/98 AM.
 	return true;					// User is being silly, but do it anyway.
 else if (!_tcscmp(ename, _T("_xCAP")))	// Match capitalized word. // 01/20/99 AM.

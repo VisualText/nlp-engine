@@ -29,12 +29,8 @@ All rights reserved.
 #include "Eana.h"				// 02/26/01 AM.
 #include "nlp.h"				// 06/25/03 AM.
 
-#include "unicode/unistr.h"
-#include <unicode/schriter.h>
-#include <unicode/uchriter.h>
-#include <unicode/utf8.h>
-
-using namespace icu;
+#include "unicu.h"
+using namespace unicu;
 
 #ifdef UNICODE
 #ifdef LINUX
@@ -348,30 +344,33 @@ void Tok::nextTok(
 	U8_NEXT(s, end, length, c);
 
 	if (c) {
-		if (isSingle(c)) {
-			;
+		if (unicu::isEmoji(c)) {
+			typ = PNEMOJI;
 		}
-		else if (u_isUAlphabetic(c)) {
-			while (c && u_isUAlphabetic(c) && !isSingle(c)) {
+		else if (unicu::isChinese(c)) {
+			typ = PNALPHA;
+		}
+		else if (unicu::isAlphabetic(c)) {
+			while (c && unicu::isAlphabetic(c) && !unicu::isSingle(c)) {
 				lastEnd = end;
 				U8_NEXT(s, end, length, c);
 			}
 			end -= end - lastEnd;
 		}
-		else if (u_isdigit(c)) {
-			while (c && u_isdigit(c) && !isSingle(c)) {
+		else if (unicu::isDigit(c)) {
+			while (c && unicu::isDigit(c) && !unicu::isSingle(c)) {
 				lastEnd = end;
 				U8_NEXT(s, end, length, c);
 			}
 			end -= end - lastEnd;
 			typ = PNNUM;
 		}
-		else if (u_isUWhiteSpace(c)) {
+		else if (unicu::isWhiteSpace(c)) {
 			if (c == '\n')
 				lineflag = true;
 			typ = PNWHITE;
 		}
-		else if (u_ispunct(c) || isPunct(c)) {
+		else if (unicu::isPunct(c)) {
 			typ = PNPUNCT;
 		}
 		else {
@@ -383,43 +382,6 @@ void Tok::nextTok(
 		int whoops = 1;
 	}
 }
-
-
-bool Tok::isPunct(UChar32 c) {
-	return (
-		(33 <= c && c <= 47) ||
-		(60 <= c && c <= 62) ||
-		(94 <= c && c <= 96) ||
-		(124 <= c && c <= 127)
-	);
-}
-
-
-bool Tok::isSingle(UChar32 c) {
-	return Tok::isChinese(c) || Tok::isEmoji(c);
-}
-
-
-bool Tok::isChinese(UChar32 c) {
-	return (
-		(0x4E00 <= c && c <= 0x9FFF) ||
-		(0x3400 <= c && c <= 0x4DBF) ||
-		(0x20000 <= c && c <= 0x2A6DF) ||
-		(0x2A700 <= c && c <= 0x2B73F) ||
-		(0x2B740 <= c && c <= 0x2B81F) ||
-		(0x2B820 <= c && c <= 0x2CEAF) ||
-		(0xF900 <= c && c <= 0xFAFF) ||
-		(0x2F800 <= c && c <= 0x2FA1F)
-	);
-}
-
-
-bool Tok::isEmoji(UChar32 c) {
-	return (
-		(0x1F600 <= c && c <= 0xE007F)
-	);
-}
-
 
 /********************************************
 * FN:		INTERNTOK
