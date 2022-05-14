@@ -7337,6 +7337,7 @@ str_to_lower(str, lcstr);													// 09/28/00 AM.
 _TCHAR *istr = 0;
 
 long pos;
+_TCHAR buf2[1001];
 if (!binary_spell(lcstr, word_arrays[len],word_lengths[len], /*UP*/pos))
 	{
 	// Get corrected spell here.
@@ -7349,7 +7350,6 @@ if (!binary_spell(lcstr, word_arrays[len],word_lengths[len], /*UP*/pos))
 		return true;
 		}
 
-	_TCHAR buf2[1001];
 	buf2[0] = '\0';
 	str_spell_candidate(lcstr, buf, buf2);
 	Chars::destroy(lcstr);													// 09/28/00 AM.
