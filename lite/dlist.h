@@ -192,15 +192,17 @@ Dlist<DELTTYPE>::Dlist(const Dlist<DELTTYPE> &orig)	// 08/28/12 AM.
 //*gerr << "[Dlist copy constructor]" << endl;
 pFirst = pLast = 0;
 // Copy the list.
-DELTTYPE *tmp;				// 07/02/99 AM.
 Delt<DELTTYPE> *ptr;
 ptr = orig.pFirst;
 while (ptr)
 	{
 	if (ptr->data)			// 07/02/99 AM.
+		{
+		DELTTYPE *tmp;				// 07/02/99 AM.
 		tmp = new DELTTYPE(*(ptr->data));	// COPY OBJECT.	// 07/02/99 AM.
 	//rpush(&(ptr->data));		// 07/02/99 AM.
-	rpush(tmp);				// 07/02/99 AM.
+	    rpush(tmp);				// 07/02/99 AM.
+		}
 	ptr = ptr->pRight;
 	}
 

@@ -1346,6 +1346,7 @@ ostringstream *cbuf = (ostringstream *) cbufv;			// 06/30/05 AM.	// 09/28/19 AM.
 
 _t_ostream* sout = 0;
 _t_ofstream* fout = 0;
+_t_ostream *sdbg=0;																// 02/21/02 AM.
 
 if (!appdir || !*appdir)													// 03/10/99 AM.
 	{
@@ -1368,14 +1369,13 @@ if (!dir_exists(outdir))
 // Setting up ERROR OUTPUT FILE.											// 03/22/99 AM.
 _TCHAR errout[MAXMSG];															// 03/22/99 AM.
 
-if (!eana->getFsilent())													// 06/16/02 AM.
+//if (!eana->getFsilent())													// 06/16/02 AM.
 	{
 	_stprintf(errout, _T("%s%cerr.log"), outdir,								// 03/22/99 AM.
 				DIR_CH);															// 03/08/00 AM.
 	fileErr(errout, /*DU*/ fout, sout);
 
 	// Set up a debug,verbose,timing,etc. log file.					// 02/21/02 AM.
-	_t_ostream* sdbg = 0;																// 02/21/02 AM.
 	fileDbg(outdir,sdbg);													// 02/21/02 AM.
 	}
 
@@ -1776,7 +1776,8 @@ if (compiled)																	// 07/05/00 AM.
 	return;
 	}
 
-clock_t   s_time, e_time;
+clock_t s_time = 0;
+clock_t e_time;
 
 if (flogfiles)																	// 02/21/02 AM.
 	s_time = clock();															// 12/28/98 AM.

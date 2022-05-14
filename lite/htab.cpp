@@ -635,7 +635,7 @@ if (!str)
 // deleted.  If it's first in the list, list will be nonnull.
 Slist<Sym> *list;
 Selt<Sym> *pre;		// Prior element in list.
-Selt<Sym> *elt;		// The element itself.
+Selt<Sym> *elt = nullptr;		// The element itself.
 list = 0;
 if ((pre = hpre(str, /*UP*/ list)))
 	{

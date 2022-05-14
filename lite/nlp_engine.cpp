@@ -297,9 +297,7 @@ int NLP_ENGINE::analyze(
     bool compiled
 	)
 {   
-    int bad = NLP_ENGINE::init(analyzer,develop,silent,compiled);
-    if (bad)
-        return bad;
+    NLP_ENGINE::init(analyzer,develop,silent,compiled);
 
     readFiles(infile);
     const char *file;
@@ -370,9 +368,8 @@ int NLP_ENGINE::analyze(
     bool compiled
 	)
 {
-    int bad = NLP_ENGINE::init(analyzer,develop,silent,compiled);
-    if (bad)
-        return bad;
+ 
+    NLP_ENGINE::init(analyzer,develop,silent,compiled);
 
     // Analyzer can output to a stream.
     _TCHAR ofstr[MAXSTR];
@@ -415,9 +412,8 @@ int NLP_ENGINE::analyze(
     bool compiled
 	)
 {
-    int bad = NLP_ENGINE::init(analyzer,develop,silent,compiled);
-    if (bad)
-        return bad;
+ 
+    NLP_ENGINE::init(analyzer,develop,silent,compiled);
 
     // Analyzer can output to a stream.
     _TCHAR ofstr[MAXSTR];
@@ -528,7 +524,7 @@ int NLP_ENGINE::readFiles(_TCHAR *path)
 
     if (dpdf != NULL) {
         unsigned char isFile =0x8;
-        while (epdf = readdir(dpdf)) {
+        while ((epdf = readdir(dpdf))) {
             if (epdf->d_name[0] != '.' && epdf->d_type == isFile) {
                 _stprintf(fullPath, _T("%s%s%s"),path,DIR_STR,epdf->d_name);
                 m_files.push_back(fullPath);
