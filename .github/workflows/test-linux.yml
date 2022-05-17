@@ -37,6 +37,9 @@ jobs:
       - name: Cmake Build all targets Linux
         run: cmake --build build/ --target all
 
+      - name: Test executable --version
+        run: ./bin/nlp.exe --version || true
+
       - uses: actions/upload-artifact@v3
         with:
           name: nlp.exe

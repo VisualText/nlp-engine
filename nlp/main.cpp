@@ -15,6 +15,8 @@ All rights reserved.
 #include "lite/nlp_engine.h"
 #include "version.h"
 
+#define NLP_ENGINE_VERSION "1.11.2"
+
 bool cmdReadArgs(int,_TCHAR*argv[],_TCHAR*&,_TCHAR*&,_TCHAR*&,_TCHAR*&,bool&,bool&,bool&);
 void cmdHelpargs(_TCHAR*);
 
@@ -117,9 +119,10 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 			else if (!strcmp_i(ptr, _T("version")))
 				{
 #ifdef LINUX
-				_t_cout << "Version " << Version() << std::endl;
+				//_t_cout << "Version " << Version() << std::endl;
+				_t_cout << _T(NLP_ENGINE_VERSION) << endl;
 #else
-				_t_cout << _T("1.11.0") << endl;
+				_t_cout << _T(NLP_ENGINE_VERSION) << endl;
 #endif
 				return false;
 				}

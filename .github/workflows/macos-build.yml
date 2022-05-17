@@ -37,13 +37,13 @@ jobs:
       - name: Generate Solution MacOs
         run: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_BUILD_TYPE=release -DCMAKE_PREFIX_PATH=/usr/local/opt/icu4c -B build -S . -DCMAKE_CXX_FLAGS=-std=c++11
 
-      - name: Cmake Build all targets Linux
+      - name: Cmake Build all targets MacOS
         run: cmake --build build/ --target all
 
-      - name: List $RUNNER_WORKSPACE before build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
-                
+      #- name: List $RUNNER_WORKSPACE before build
+      #  run: find $RUNNER_WORKSPACE
+      #  shell: bash
+
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ github.event.release.upload_url }}

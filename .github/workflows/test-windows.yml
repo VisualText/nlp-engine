@@ -36,6 +36,9 @@ jobs:
 
       - name: Cmake Build all targets Windows
         run: cmake --build build --config Release --target nlp
+        
+      - name: Test executable --version
+        run: ./bin/Release/nlp.exe --version || true
 
       - uses: actions/upload-artifact@v3
         with:
