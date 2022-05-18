@@ -27,7 +27,6 @@ if(WIN32)
   #)
 else()
   file(GLOB icu_dyn ${CMAKE_SOURCE_DIR}/vcpkg/packages/icu_x64-windows/bin/*.o)
-  message(STATUS "ICU DLLS: ${icu_dyn}")
   add_executable(nlp.exe ${nlp_src})
   target_link_libraries(nlp.exe PUBLIC prim kbm consh words lite ${VERSION} ${icu_dyn})
   #target_link_libraries(nlp.exe PUBLIC prim kbm consh words lite odbc)
@@ -35,7 +34,7 @@ else()
   add_custom_command(TARGET nlp.exe
     PRE_LINK COMMAND bash ${CMAKE_SOURCE_DIR}/nlp/makeversion.sh -o ${VERSION}
   )
-  add_custom_command(TARGET nlp.exe
-    POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/bin/nlp.exe ${CMAKE_SOURCE_DIR}
-  )
+  #add_custom_command(TARGET nlp.exe
+  #  POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/bin/nlp.exe ${CMAKE_SOURCE_DIR}
+  #)
 endif()
