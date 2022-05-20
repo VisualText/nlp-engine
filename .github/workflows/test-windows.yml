@@ -39,6 +39,10 @@ jobs:
         
       - name: Test executable --version
         run: ./bin/Release/nlp.exe --version || true
+        
+      - name: List $RUNNER_WORKSPACE before build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
 
       - uses: actions/upload-artifact@v3
         with:
@@ -49,6 +53,11 @@ jobs:
         with:
           name: icudt69.dll
           path: vcpkg/buildtrees/icu/x64-windows-rel/lib/icudt69.dll
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: icuin69.dll
+          path: vcpkg/buildtrees/icu/x64-windows-rel/lib/icuin69.dll
 
       - uses: actions/upload-artifact@v3
         with:
