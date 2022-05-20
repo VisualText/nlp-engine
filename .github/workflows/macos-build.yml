@@ -40,9 +40,9 @@ jobs:
       - name: Cmake Build all targets MacOS
         run: cmake --build build/ --target all
 
-      #- name: List $RUNNER_WORKSPACE before build
-      #  run: find $RUNNER_WORKSPACE
-      #  shell: bash
+      - name: List $RUNNER_WORKSPACE before build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
 
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
@@ -55,6 +55,12 @@ jobs:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: "./vcpkg/buildtrees/icu/x64-osx-rel/lib/libicutu.a"
           asset_name: "libicutum.a"
+
+      - uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "./vcpkg/buildtrees/icu/x64-osx-rel/lib/libicui18n.a"
+          asset_name: "libicui18n.a"
 
       - uses: shogo82148/actions-upload-release-asset@v1
         with:

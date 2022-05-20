@@ -39,16 +39,25 @@ jobs:
 
       - name: Test executable --version
         run: ./bin/nlp.exe --version || true
+        
+      - name: List $RUNNER_WORKSPACE before build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
 
       - uses: actions/upload-artifact@v3
         with:
           name: nlp.exe
           path: bin
-          
+
       - uses: actions/upload-artifact@v3
         with:
           name: ibicutu.a
           path: vcpkg_installed/x64-linux/lib/libicutu.a
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: libicui18n.a
+          path: vcpkg_installed/x64-linux/lib/libicui18n.a
 
       - uses: actions/upload-artifact@v3
         with:
