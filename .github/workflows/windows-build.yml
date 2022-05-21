@@ -9,7 +9,7 @@ on:
 jobs:
   build_executable:
     name: Windows Create NLP-ENGINE
-    runs-on: windows-latest
+    runs-on: windows-2019
 
     env:
       VCPKG_DEFAULT_TRIPLET: x64-windows
@@ -26,10 +26,6 @@ jobs:
       - name: Install ICU
         run: vcpkg install
         working-directory: vcpkg
-
-      - name: List $RUNNER_WORKSPACE before build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
 
       - name: Make build directory
         run: mkdir build

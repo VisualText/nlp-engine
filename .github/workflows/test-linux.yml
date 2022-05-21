@@ -32,7 +32,7 @@ jobs:
         run: mkdir build
 
       - name: Generate Solution Linux
-        run: cmake -DCMAKE_BUILD_TYPE=Release -B build -S .
+        run: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_BUILD_TYPE=release -B build -S .
 
       - name: Cmake Build all targets Linux
         run: cmake --build build/ --target all
