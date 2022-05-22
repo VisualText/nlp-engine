@@ -48,18 +48,3 @@ jobs:
         with:
           name: nlp.exe
           path: bin/Release
-          
-      - uses: actions/upload-artifact@v3
-        with:
-          name: icudt69.dll
-          path: vcpkg/buildtrees/icu/x64-windows-rel/lib/icudt69.dll
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: icuin69.dll
-          path: vcpkg/buildtrees/icu/x64-windows-rel/lib/icuin69.dll
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: icuuc69.dll
-          path: vcpkg/buildtrees/icu/x64-windows-rel/lib/icuuc69.dll
