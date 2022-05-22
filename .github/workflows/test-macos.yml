@@ -59,10 +59,5 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: libicui18n.a
-          path: vcpkg/buildtrees/icu/x64-osx-rel/lib/libicui18n.a
-
-      - uses: actions/upload-artifact@v3
-        with:
           name: libicuuc.a
           path: vcpkg/buildtrees/icu/x64-osx-rel/lib/libicuuc.a

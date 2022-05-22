@@ -56,11 +56,5 @@ jobs:
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./vcpkg_installed/x64-linux/lib/libicui18n.a"
-          asset_name: "libicui18n.a"
-
-      - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
           asset_path: "./vcpkg_installed/x64-linux/lib/libicuuc.a"
           asset_name: "libicuuc.a"

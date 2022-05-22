@@ -59,11 +59,5 @@ jobs:
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./vcpkg/buildtrees/icu/x64-osx-rel/lib/libicui18n.a"
-          asset_name: "libicui18nm.a"
-
-      - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
           asset_path: "./vcpkg/buildtrees/icu/x64-osx-rel/lib/libicuuc.a"
           asset_name: "libicuucm.a"
