@@ -23,6 +23,6 @@ namespace unicu
     bool isEmoji(UChar32 c);
     bool isUpper(UChar32 c);
     bool isLower(UChar32 c);
-    int strLen(const UChar *s);
+    int strLen(const UChar *str);
 }
 

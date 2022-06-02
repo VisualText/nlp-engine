@@ -91,7 +91,7 @@ LIBPRIM_API DWORD run_silent(_TCHAR* strCMD);	// 09/15/08 AM.
 
 #include "func_defs.h"			// 12/21/01 AM.
 #include "nlp.h"					// 12/21/01 AM.
-#include	"ifunc.h"				// 12/21/01 AM.
+#include "ifunc.h"				// 12/21/01 AM.
 #include "iexpr.h"	// For unpackvar.	// 05/26/02 AM.
 #include "irule.h"				// 09/16/08 AM.
 #include "lite/vtrun.h"			// 08/28/02 AM.
@@ -106,6 +106,7 @@ LIBPRIM_API DWORD run_silent(_TCHAR* strCMD);	// 09/15/08 AM.
 #endif
 
 #include "fn.h"
+#include "unicu.h"
 
 /********************************************
 * FN:		FNCALL
@@ -5930,8 +5931,11 @@ if (!Arg::done((DELTS*)args, _T("strlength"),parse))
 
 if (!name1 || !*name1)														// 10/30/00 AM.
 	len = 0;																		// 10/30/00 AM.
-else																				// 10/30/00 AM.
-	len = _tcsclen(name1);
+else {
+	icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(name1));
+	const UChar *strBuf = ustr.getTerminatedBuffer();
+	len = unicu::strLen(strBuf);  //_tcsclen(name1);																		// 10/30/00 AM.
+}
 
 sem = new RFASem(len);
 
