@@ -20,6 +20,7 @@ namespace unicu
     bool isPunct128(UChar32 c);
     bool isSingle(UChar32 c);
     bool isChinese(UChar32 c);
+    bool isNepali(UChar32 c);
     bool isEmoji(UChar32 c);
     bool isUpper(UChar32 c);
     bool isLower(UChar32 c);
