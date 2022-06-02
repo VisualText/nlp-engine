@@ -350,13 +350,6 @@ void Tok::nextTok(
 		else if (unicu::isChinese(c)) {
 			typ = PNALPHA;
 		}
-		else if (unicu::isAlphabetic(c)) {
-			while (c && unicu::isAlphabetic(c) && !unicu::isSingle(c)) {
-				lastEnd = end;
-				U8_NEXT(s, end, length, c);
-			}
-			end -= end - lastEnd;
-		}
 		else if (unicu::isDigit(c)) {
 			while (c && unicu::isDigit(c) && !unicu::isSingle(c)) {
 				lastEnd = end;
@@ -365,13 +358,20 @@ void Tok::nextTok(
 			end -= end - lastEnd;
 			typ = PNNUM;
 		}
+		else if (unicu::isPunct(c)) {
+			typ = PNPUNCT;
+		}
+		else if (unicu::isAlphabetic(c)) {
+			while (c && unicu::isAlphabetic(c) && !unicu::isSingle(c)) {
+				lastEnd = end;
+				U8_NEXT(s, end, length, c);
+			}
+			end -= end - lastEnd;
+		}
 		else if (unicu::isWhiteSpace(c)) {
 			if (c == '\n')
 				lineflag = true;
 			typ = PNWHITE;
-		}
-		else if (unicu::isPunct(c)) {
-			typ = PNPUNCT;
 		}
 		else {
 			typ = PNCTRL;

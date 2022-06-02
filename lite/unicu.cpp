@@ -3,7 +3,7 @@
 using namespace unicu;
 
 bool unicu::isAlphabetic(UChar32 c) {
-	return u_isUAlphabetic(c);
+	return u_isUAlphabetic(c) || isNepali(c);
 }
 
 bool unicu::isDigit(UChar32 c) {
@@ -41,6 +41,12 @@ bool unicu::isChinese(UChar32 c) {
 		(0x2B820 <= c && c <= 0x2CEAF) ||
 		(0xF900 <= c && c <= 0xFAFF) ||
 		(0x2F800 <= c && c <= 0x2FA1F)
+	);
+}
+
+bool unicu::isNepali(UChar32 c) {
+	return (
+		(0x0900 <= c && c <= 0x097F)
 	);
 }
 
