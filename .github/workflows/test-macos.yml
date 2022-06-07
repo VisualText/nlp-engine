@@ -9,7 +9,7 @@ on:
 jobs:
   job:
     name: MacOS Compile Test
-    runs-on: macos-latest
+    runs-on: macOS-12
 
     env:
       VCPKG_DEFAULT_TRIPLET: x64-osx
