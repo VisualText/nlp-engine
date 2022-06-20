@@ -15732,6 +15732,8 @@ Tree<Pn> *tree = (Tree<Pn> *)parse->getTree();
 // DUMMY UP A NODE.
 long o_start = -1;
 long o_end = -1;
+long ustart = -1;	// [UNICODE]
+long uend = -1;	// [UNICODE]
 _TCHAR *text = 0;
 Sym *sym = parse->getSym(name_str);
 _TCHAR *str = sym->getStr();
@@ -15761,6 +15763,8 @@ else if (_istspace(*name_str))
 Node<Pn> *new_node = Pn::makeNode(
 	o_start,	// o_start
 	o_end,	// o_end
+	ustart,	// [UNICODE]
+	uend,	// [UNICODE]
 	typ,		// Node type
 	text,		// Pointer to text input buffer
 	str,		// Suggested concept str

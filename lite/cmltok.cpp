@@ -39,6 +39,8 @@ All rights reserved.
 *
 * OPT:	A tricky optimization is to use the given parse text buffer for the
 *			newly created text buffer.  (Copy back.)
+* [UNICODE]	Till we provide UNICODE input, all existing input samples are ANSI code.	06/18/22 AM.
+*			Therefore no reworking of code required yet. Put in hooks anyway.
 *
 *******************************************************************************/
 
@@ -244,6 +246,7 @@ page_ = line_ = word_ = tok_ = 0;
 firsttok_ = 0;
 
 fmpos_ = topos_ = 0;
+fmupos_ = toupos_ = 0;	// [UNICODE]	// 06/15/22 AM.
 
 // OPT: Use the input text buffer as both the from and the to.
 // Copy back into the same buffer.
@@ -264,11 +267,12 @@ lwords_ = ltoks_ = luppers_ = lcaps_ = llowers_ = lknowns_ = lunks_ = 0;
 // The allocated input buffer length.
 // Note that we'll be using less of it after removing CML information text.
 long len  = parse->length;
+long ulen = parse->ulength;	// [UNICODE]	// 06/15/22 AM.
 
 // CREATE PARSE TREE ROOT.
 _TCHAR *str = _T("_ROOT");
 Sym *sym = htab_->hsym(str);
-tree_ = Pn::makeTree(0, len-1, PNNODE, fmptr_, str, sym); // Create parse tree.
+tree_ = Pn::makeTree(0, len-1, 0, ulen-1, PNNODE, fmptr_, str, sym); // Create parse tree.
 parse->setTree(tree_);								// Update global data.
 
 if (!tree_)
@@ -310,6 +314,7 @@ if (!parse_ || !tree_ || !root_)
 // ADD A NEWLINE TO END THE RETEXT BUFFER.
 *toptr_++ = '\n';
 ++topos_;
+++toupos_;	// [UNICODE MOD]	// 06/15/22 AM.
 
 // UPDATE ROOT, LAST LINE AND LAST PAGE.
 updateLinenode(true);	// Update information for the current line node.
@@ -322,6 +327,8 @@ if (root_)
 	pn = root_->getData();
 	pn->setStart(0);
 	pn->setEnd(topos_);
+	pn->setUstart(0);	// [UNICODE]
+	pn->setUend(toupos_);	// [UNICODE]
 	}
 
 if (parse_->getEana()->getFlogfiles())
@@ -450,6 +457,7 @@ if (*fmptr_ == '\n')
 	// Get lookahead.
 	++fmptr_;
 	++fmpos_;
+	++fmupos_;	// [UNICODE MOD]	// 06/15/22 AM.
 	return true;
 	}
 
@@ -467,6 +475,7 @@ if (prevZ_ != Z_)
 		{
 		*toptr_++ = '\n';
 		++topos_;
+		++toupos_;	// [UNICODE MOD]	// 06/15/22 AM.
 		}
 	}
 
@@ -480,6 +489,7 @@ if (prevL1_ != L1_)
 		{
 		*toptr_++ = '\n';
 		++topos_;
+		++toupos_;	// [UNICODE MOD]	// 06/15/22 AM.
 		}
 	}
 
@@ -542,6 +552,7 @@ if (*fmptr_ != '\n')
 // Get lookahead.
 ++fmptr_;
 ++fmpos_;
+++fmupos_;	// [UNICODE MOD]	// 06/15/22 AM.
 
 return true;
 }
@@ -575,12 +586,15 @@ ptr_ = toptr_;	// Current position in "to" buffer.
 _TCHAR *str = toptr_;	// Save this.
 long len = 0;	// Token length.
 long o_start = topos_;	// Save start offset.
+long ulen = 0;	// [UNICODE]	// 06/15/22 AM.
+long ustart = toupos_;	// [UNICODE]	// 06/15/22 AM.
 
 // ALPHABETIC TOKEN
 if (alphabetic(*fmptr_))
 	{
 	*ptr_ = *fmptr_;
 	++len;
+	++ulen;	// [UNICODE MOD]	// 06/15/22 AM.
 	barcodeChar(*fmptr_);
 	bool any_lower = false;
 	bool any_upper = false;
@@ -593,6 +607,7 @@ if (alphabetic(*fmptr_))
 		++fmpos_;
 		*++ptr_ = *fmptr_;
 		++len;
+		++ulen;	// [UNICODE MOD]	// 06/15/22 AM.
 		barcodeChar(*fmptr_);
 		if (is_upper((_TUCHAR)*fmptr_))
 			any_upper = true;
@@ -603,9 +618,10 @@ if (alphabetic(*fmptr_))
 //	*++ptr_ = '\0';	// Terminate str.
 	// Make token.
 	// Attach to parse tree.
-	makeToknode(o_start,len,PNALPHA,toptr_);
+	makeToknode(o_start,len,ustart,ulen,PNALPHA,toptr_);
 	// Update state.
 	topos_ += len;
+	toupos_ += ulen;	// [UNICODE MOD]	// 06/15/22 AM.
 	toptr_ = ++ptr_;	// Sitting on the char position to fill next.
 	*toptr_ = '\0';	// Terminate string for spellcheck.
 	// From pointers are already at lookahead.
@@ -613,6 +629,7 @@ if (alphabetic(*fmptr_))
 	// Collect data.
 	wlen_ += len;
 	walphas_ += len;
+	// [UNICODE MOD]	// What to do about word length.	// 06/15/22 AM.
 
 	if (Arun::spellword(0,str))
 		{
@@ -662,8 +679,12 @@ if (*fmptr_ < 0)
 	*ptr_++ = *fmptr_++;
 	++fmpos_;
 	++len;
-	makeToknode(o_start,len,PNCTRL,toptr_);
+	++fmupos_;	// [UNICODE MOD]	// 06/15/22 AM.
+	++ulen;	// [UNICODE MOD]	// 06/15/22 AM.
+	makeToknode(o_start,len, ustart, ulen, PNCTRL,toptr_);	// [UNICODE]	// 06/15/22 AM.
 	++topos_;
+	++toupos_;	// [UNICODE MOD]	// 06/15/22 AM.
+
 	toptr_ = ptr_;
 	if (!lfirst_)
 		lfirst_ = _T("ctrl");
@@ -677,21 +698,26 @@ if (_istdigit(*fmptr_) && *fmptr_ > 0)
 	{
 	*ptr_ = *fmptr_;
 	++len;
+	++ulen;	// [UNICODE MOD]	// 06/15/22 AM.
 	barcodeChar(*fmptr_);
 	while (_istdigit(*++fmptr_) && *fmptr_ > 0)
 		{
 		++fmpos_;
 		*++ptr_ = *fmptr_;
 		++len;
+		++fmupos_;	// [UNICODE MOD]	// 06/15/22 AM.
+		++ulen;	// [UNICODE MOD]	// 06/15/22 AM.
 		barcodeChar(*fmptr_);
 		}
 	++fmpos_;
+	++fmupos_;	// [UNICODE MOD]	// 06/15/22 AM.
 //	*++ptr_ = '\0';	// Terminate str.
 	// Make token.
 	// Attach to parse tree.
-	makeToknode(o_start,len,PNNUM,toptr_);
+	makeToknode(o_start,len,ustart,ulen,PNNUM,toptr_);
 	// Update state.
 	topos_ += len;
+	++toupos_;	// [UNICODE MOD]	// 06/15/22 AM.
 	toptr_ = ++ptr_;	// Sitting on the char position to fill next.
 	// From pointers are already at lookahead.
 
@@ -716,9 +742,12 @@ if (_istpunct((_TUCHAR)*fmptr_))
 	*ptr_++ = *fmptr_++;
 	++fmpos_;
 	++len;
-	makeToknode(o_start,len,PNPUNCT,toptr_);
+	++fmupos_;	// [UNICODE MOD]	// 06/15/22 AM.
+	++ulen;	// [UNICODE MOD]	// 06/15/22 AM.
+	makeToknode(o_start,len,ustart,ulen,PNPUNCT,toptr_);
 	_TCHAR ch = *toptr_;
 	++topos_;
+	++toupos_;	// [UNICODE MOD]	// 06/15/22 AM.
 	toptr_ = ptr_;
 
 	// Collect data.
@@ -767,7 +796,9 @@ if (_istspace(*fmptr_))
 	*ptr_++ = *fmptr_++;
 	++fmpos_;
 	++len;
-	makeToknode(o_start,len,PNCTRL,toptr_);
+	++fmupos_;	// [UNICODE MOD]	// 06/15/22 AM.
+	++ulen;	// [UNICODE MOD]	// 06/15/22 AM.
+	makeToknode(o_start,len,ustart,ulen,PNCTRL,toptr_);
 	++topos_;
 	toptr_ = ptr_;
 
@@ -801,6 +832,7 @@ ptr_ = &(buf_[0]);
 while ((*++ptr_ = *++fmptr_))
 	{
 	++fmpos_;
+	++fmupos_;	// [UNICODE MOD]	// 06/15/22 AM.
 	if (*ptr_ == '|')
 		{
 		*ptr_ = '\0';	// Terminate.
@@ -816,6 +848,7 @@ if (!*fmptr_)	// If empty, error.
 // Slough the pipe char.
 ++fmptr_;
 ++fmpos_;
+++fmupos_;	// [UNICODE MOD]	// 06/15/22 AM.
 
 if (!str_to_long(buf_,/*UP*/ field))
 	return false;
@@ -871,6 +904,7 @@ if (*(fmptr_+1) == '/')	// END TAG.
 		{
 		++fmptr_;
 		++fmpos_;
+		++fmupos_;	// [UNICODE MOD]	// 06/15/22 AM.
 		}
 	endtag = true;
 	return true;
@@ -882,6 +916,7 @@ ptr_ = &(buf_[0]) - 1;	// Set up for loop.
 while ((*++ptr_ = *++fmptr_))
 	{
 	++fmpos_;
+	++fmupos_;	// [UNICODE MOD]	// 06/15/22 AM.
 	if (!alphabetic(*ptr_))
 		{
 		*ptr_ = '\0';	// Terminate.
@@ -903,6 +938,7 @@ ptr_ = &(buf_[0]) - 1;	// Set up for loop.
 while ((*++ptr_ = *++fmptr_))
 	{
 	++fmpos_;
+	++fmupos_;	// [UNICODE MOD]	// 06/15/22 AM.
 	if (*ptr_ == '\n')
 		return false;
 	if (!_istspace(*ptr_) && *ptr_ != '_')
@@ -921,6 +957,7 @@ ptr_ = &(buf_[0]);
 while ((*++ptr_ = *++fmptr_))
 	{
 	++fmpos_;
+	++fmupos_;	// [UNICODE MOD]	// 06/15/22 AM.
 	if (!_istdigit(*ptr_))
 		break;
 	// else separator, keep going.
@@ -954,6 +991,7 @@ if (*fmptr_ != '>')
 // Get past >.
 ++fmptr_;
 ++fmpos_;
+++fmupos_;	// [UNICODE MOD]	// 06/15/22 AM.
 
 if (!skipBlanks())
 	return false;
@@ -966,6 +1004,7 @@ if (*fmptr_ != '\n')
 // Get lookahead char for next line.
 ++fmptr_;
 ++fmpos_;
+++fmupos_;	// [UNICODE MOD]	// 06/15/22 AM.
 
 return true;
 
@@ -985,6 +1024,7 @@ while (*fmptr_ && _istspace(*fmptr_))
 	{
 	++fmptr_;
 	++fmpos_;
+	++fmupos_;	// [UNICODE MOD]	// 06/15/22 AM.
 	}
 
 return true;
@@ -1005,6 +1045,7 @@ while (*fmptr_ && _istspace(*fmptr_) && *fmptr_ != '\n')
 	{
 	++fmptr_;
 	++fmpos_;
+	++fmupos_;	// [UNICODE MOD]	// 06/15/22 AM.
 	}
 
 if (!fmptr_)
@@ -1033,6 +1074,8 @@ _TCHAR *str = sym->getStr();
 Node<Pn> *node = Pn::makeNode(
 	topos_,		// o_start
 	-1,			// o_end
+	toupos_,	// [UNICODE]	// 06/15/22 AM.
+	-1,	// [UNICODE]	// 06/15/22 AM.
 	PNNODE,		// Node type
 	toptr_,		// Pointer to text input buffer
 	str,			// Suggested concept str
@@ -1095,6 +1138,8 @@ _TCHAR *str = sym->getStr();
 Node<Pn> *node = Pn::makeNode(
 	topos_,		// o_start
 	-1,			// o_end
+	toupos_,	// [UNICODE]	// 06/15/22 AM.
+	-1,	// [UNICODE]	// 06/15/22 AM.
 	PNNODE,		// Node type
 	toptr_,		// Pointer to text input buffer
 	str,			// Suggested concept str
@@ -1166,6 +1211,8 @@ _TCHAR *str = sym->getStr();
 Node<Pn> *node = Pn::makeNode(
 	topos_,		// o_start
 	-1,			// o_end
+	toupos_,	// [UNICODE]	// 06/15/22 AM.
+	-1,	// [UNICODE]	// 06/15/22 AM.
 	PNNODE,		// Node type
 	toptr_,		// Pointer to text input buffer
 	str,			// Suggested concept str
@@ -1185,6 +1232,7 @@ if (word_)
 	// ADD A WHITESPACE TO THE RETEXT BUFFER.
 	*toptr_++ = ' ';
 	++topos_;
+	++toupos_;	// [UNICODE MOD]	// 06/15/22 AM.
 	}
 else	// FIRST WORD IN LINE.
 	{
@@ -1220,6 +1268,8 @@ return node;
 Node<Pn> *CMLTok::makeToknode(
 	long o_start,
 	long len,
+	long ustart,	// [UNICODE]	// [IGNORE]
+	long ulen,	// [UNICODE]	// [IGNORE]
 	enum Pntype typ,
 	_TCHAR *text	// Text buffer ptr.
 	)
@@ -1237,9 +1287,13 @@ _TCHAR *lcstr;
 Sym *sym = internTok(text,len,htab_,lcstr);
 _TCHAR *str = sym->getStr();
 
+long uend = ustart + ulen - 1;	// [UNICODE]
+
 Node<Pn> *node = Pn::makeNode(
 	o_start,			// o_start
 	o_end,			// o_end
+	ustart,	// [UNICODE]	// 06/15/22 AM.
+	uend,	// [UNICODE]	// 06/15/22 AM.
 	typ,			// Node type
 	text,			// Pointer to text input buffer
 	str,			// Suggested concept str

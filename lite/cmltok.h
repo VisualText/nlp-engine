@@ -86,6 +86,8 @@ public:
 	Node<Pn> *makeToknode(
 		long o_start,
 		long o_end,
+		long ustart,	// [UNICODE]	// 06/15/22 AM.
+		long uend,	// [UNICODE]	// 06/15/22 AM.
 		enum Pntype typ,
 		_TCHAR *text	// Text buffer ptr.
 		);
@@ -116,7 +118,10 @@ private:
 	long fmpos_;				// "From" position in text buffer.
 	_TCHAR *toptr_;			// "To" text buffer pointer.
 	_TCHAR *fmptr_;			// "From" text buffer pointer.
-	
+
+	long toupos_;	// [UNICODE]	// 06/15/22 AM.
+	long fmupos_;	// [UNICODE]	// 06/15/22 AM.
+
 	long lineno_;				// Track line number in input text buffer.
 
 	Node<Pn> *root_;			// Root node of parse tree.

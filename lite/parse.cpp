@@ -154,6 +154,7 @@ _TCHAR *Parse::getOutput()   {return output; }
 _TCHAR *Parse::getAppdir()	{return appdir_;}
 _TCHAR *Parse::getText()     {return text;   }
 long  Parse::getLength()	{return length; }
+long Parse::getUlength()	{return ulength;}	// [UNICODE]
 TREE *Parse::getTree() {return tree;   }
 LTREE *Parse::getLines(){return lines;  }
 Dlist<Ipair> *Parse::getVars()	{return vars_;}
@@ -224,6 +225,7 @@ else
 void Parse::setAppdir(_TCHAR *x)	{_tcscpy(appdir_, x);}			// 12/03/98 AM.
 void Parse::setText(_TCHAR *x)     {text   = x;}
 void Parse::setLength(long x)    {length = x;}
+void Parse::setUlength(long x)	{ulength = x;}	// [UNICODE]
 void Parse::setTree(TREE *x) {tree   = x;}
 void Parse::setLines(LTREE *x){lines  = x;}
 void Parse::setVerbose(bool x)   {verbose= x;}
@@ -318,13 +320,17 @@ bool Parse::readFile()
 {
 // Get file length.
 long len;
+long ulen;	// [UNICODE]
 _TCHAR *buf;
 
 // DOING DIRTY FILE CONVERSIONS!											// 07/18/00 AM.
 //read_file(input, /*UP*/ len, buf);									// 07/18/00 AM.
 //readConvert(input, buf, len, MAXSTR);								// 07/26/01 AM.
 readConvertU(input,buf,len,MAXLINE);	// BIG LINE.					// 07/26/01 AM.
+ulen = u_strlen(buf);	// [UNICODE]
+setUlength(ulen);	// [UNICODE]
 setLength(len);
+setUlength(ulen);	// [UNICODE]
 setText(buf);
 
 if (len <= 0)
@@ -361,6 +367,7 @@ bool Parse::copyBuffer(
 	)
 {
 _TCHAR *buf = 0;
+long ulen;	// [UNICODE]
 
 if (!inbuf || !*inbuf)
 	{
@@ -384,8 +391,12 @@ buf = Chars::create(len+1);
 _tcsnccpy(buf, inbuf, len);
 buf[len] = '\0';
 
+// Get Unicode byte length. [UNICODE]
+ulen = u_strlen(buf);	// [UNICODE]
+
 // Install buffer in parse object.
 setLength(len);
+setUlength(ulen);	// [UNICODE]
 setText(buf);
 
 if (Verbose())

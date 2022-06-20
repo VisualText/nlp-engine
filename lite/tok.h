@@ -49,7 +49,7 @@ public:
 	bool Execute(Parse *, Seqn *);	// Perform the tokenization.
 	bool Tokenize(Parse *);	// Perform the tokenization.
 	void FirstToken(Tree<Pn> *tree, Htab *htab, _TCHAR* *buf, const char* s, int32_t length,
-										int32_t &start, Node<Pn>* &last,
+										int32_t &start, int32_t &ustart, Node<Pn>* &last,
 										long &line	// Line number.		// 05/17/01 AM.
 										);
 
@@ -60,6 +60,7 @@ public:
 			const char* s,
 			int32_t length,
 			int32_t &start,
+			int32_t &ustart,	// [UNICODE]
 			Node<Pn>* &last,
 			long &line			// Bookkeep line number.				// 05/17/01 AM.
 			);
@@ -68,6 +69,7 @@ public:
 			const char *s,		// Start char of token.
 			int32_t start,		// Start offset of token.
 			int32_t &end,		// End offset of token.
+			int32_t &ulen,		// Unicode chars in token.	// [UNICODE]
 			int32_t length,
 			enum Pntype &typ,	// Token type.
 			bool &lineflag		// Flag new line number.				// 05/17/01 AM.

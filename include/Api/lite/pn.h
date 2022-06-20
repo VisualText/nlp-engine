@@ -75,6 +75,8 @@ public:
 	// Access
 	long getStart();
 	long getEnd();
+	long getUstart();	// [UNICODE]	// 06/15/22 AM.
+	long getUend();		// [UNICODE]	// 06/15/22 AM.
 	enum Pntype getType();
 	_TCHAR *getText();					// START OF NODE'S TEXT IN INPUT BUFFER.
 	_TCHAR *getName();					// GET NAME OF NODE.
@@ -95,11 +97,15 @@ public:
 	bool getBuilt() const;			// 05/25/01 AM.
 
 	void getTextStartEnd(_TCHAR* &, long &, long &);			// 12/29/99 AM.
+	void getTextUstartUend(_TCHAR* &, long &, long &);	// [UNICODE]	// 06/15/22 AM.
 
 	// Modify
 	void setStart(long);
 	void setEnd(long);
 	void setStartEnd(long, long);
+	void setUstart(long);	// [UNICODE]	// 06/15/22 AM.
+	void setUend(long);	// [UNICODE]	// 06/15/22 AM.
+	void setUstartUend(long, long);	// [UNICODE]	// 06/15/22 AM.
 	void setType(enum Pntype);
 	void setText(_TCHAR *);
 	void setName(_TCHAR *);
@@ -128,6 +134,8 @@ public:
 	static Tree<Pn> *makeTree(
 		long ostart,
 		long oend,
+		long ustart,	// [UNICODE]	// 06/15/22 AM.
+		long uend,	// [UNICODE]	// 06/15/22 AM.
 		enum Pntype typ,
 		_TCHAR *txt,
 		_TCHAR *name,
@@ -136,13 +144,17 @@ public:
 
 	
 	static Node<Pn> *makeNode(
-		long start, long end, enum Pntype, _TCHAR *, _TCHAR *, Sym * = 0,
+		long start, long end,
+		long ustart, long uend,	// [UNICODE]	// 06/15/22 AM.
+		enum Pntype, _TCHAR *, _TCHAR *, Sym * = 0,
 		long line=0,			// Line number for debug.				// 05/17/01 AM.
 		long=0,					// Pass number for code.				// 01/04/02 AM.
 		long=0					// Code lineno for debug.				// 01/04/02 AM.
 			);
 	static Node<Pn> *makeTnode(			// 10/09/99 AM.
-		long start, long end, enum Pntype, _TCHAR *, _TCHAR *, Sym * = 0,
+		long start, long end,
+		long ustart, long uend,	// [UNICODE]	// 06/15/22 AM.
+		enum Pntype, _TCHAR *, _TCHAR *, Sym * = 0,
 		long line=0,			// Line number for debug.				// 05/17/01 AM.
 		long=0,					// Pass number for code.				// 01/04/02 AM.
 		long=0					// Code lineno for debug.				// 01/04/02 AM.
@@ -171,6 +183,24 @@ public:
 		Node<Pn>* &n_end,		// End node that matched range.
 		Node<Pn>* &parent		// Parent containing the found phrase.
 		);
+	static bool findUoffsets(			// [UNICODE]	// 06/15/22 AM.
+		Node<Pn> *tree,
+		long ustart,			// Start offset sought.
+		long uend,				// End offset sought.
+		/*UP*/
+		Node<Pn>* &n_start,	// Start node that matched range.
+		Node<Pn>* &n_end,		// End node that matched range.
+		Node<Pn>* &parent		// Parent containing the found phrase.
+		);
+	static bool findUoffsetsRec(		// [UNICODE]	// 06/15/22 AM.
+		Node<Pn> *node,
+		long ustart,			// Start offset sought.
+		long uend,				// End offset sought.
+		/*UP*/
+		Node<Pn>* &n_start,	// Start node that matched range.
+		Node<Pn>* &n_end,		// End node that matched range.
+		Node<Pn>* &parent		// Parent containing the found phrase.
+		);
 
 	static void TraverseSetFlags(									// 05/25/01 AM.
 		const Node<Pn> *node,
@@ -181,6 +211,8 @@ public:
 private:
 	long Start;				// Start offset of node in text.
 	long End;				// End offset of node in text.
+	long Ustart;	// [UNICODE]	// 06/15/22 AM.
+	long Uend;	// [UNICODE]	// 06/15/22 AM.
 	_TCHAR *Text;				// Ptr to start of node's text in parse buffer.
 								// (May want this for nonterminal nodes also.)
 

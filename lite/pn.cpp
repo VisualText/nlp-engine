@@ -235,6 +235,8 @@ output
 	<< _T(" [")
 	<< pn.Start
 	<< _T(",") << pn.End
+	<< _T(",") << pn.Ustart	// [UNICODE]
+	<< _T(",") << pn.Uend		// [UNICODE]
 	<< _T(",") << pn.passnum_			// CODE PASSNUM.					// 01/04/02 AM.
 	<< _T(",") << pn.ruleline_			// CODE LINENO IN PASS FILE	// 01/04/02 AM.
 	<< _T(",") << Pntype_s[pn.Type]	// 11/13/99 AM.
@@ -317,6 +319,8 @@ return output;
 
 long			Pn::getStart()		{return Start;  }
 long			Pn::getEnd()		{return End;    }
+long			Pn::getUstart()		{return Ustart; }	// [UNICODE]
+long			Pn::getUend()		{return Uend; }	// [UNICODE]
 enum Pntype Pn::getType()		{return Type;   }
 _TCHAR		  *Pn::getText()		{return Text;   }
 _TCHAR		  *Pn::getName()		{return name_;  }
@@ -378,6 +382,8 @@ end = End;
 
 void Pn::setStart(long x)			 {Start   = x;}
 void Pn::setEnd(long x)				 {End     = x;}
+void Pn::setUstart(long x)			 {Ustart   = x;}
+void Pn::setUend(long x)			 {Uend     = x;}
 void Pn::setType(enum Pntype x)	 {Type    = x;}
 void Pn::setText(_TCHAR *x)			 {Text    = x;}
 void Pn::setName(_TCHAR *x)			 {name_   = x;}
@@ -497,7 +503,9 @@ if (count_)
 ********************************************/
 static Pn p;
 
-Node<Pn> *Pn::makeNode(long start, long end, enum Pntype type, _TCHAR *text,
+Node<Pn> *Pn::makeNode(long start, long end,
+	long ustart, long uend,	// [UNICODE]
+	enum Pntype type, _TCHAR *text,
 	_TCHAR *name, Sym *sym,
 	long line,				// Line number for debug.					// 05/17/01 AM.
 	long passnum,			// Pass number of code.						// 01/04/02 AM.
@@ -506,8 +514,11 @@ Node<Pn> *Pn::makeNode(long start, long end, enum Pntype type, _TCHAR *text,
 {
 Node<Pn> *node;
 
+
 p.Start = start;
 p.End   = end;
+p.Ustart = ustart;	// [UNICODE]
+p.Uend = uend;	// [UNICODE]
 p.Type  = type;
 p.Text  = text;
 p.name_ = name;
@@ -533,7 +544,9 @@ return node;
 * OPT:	A makeNode optimized for tokens.
 ********************************************/
 
-Node<Pn> *Pn::makeTnode(long start, long end, enum Pntype type, _TCHAR *text,
+Node<Pn> *Pn::makeTnode(long start, long end,
+	long ustart, long uend,	// [UNICODE]
+	enum Pntype type, _TCHAR *text,
 	_TCHAR *name, Sym *sym,
 	long line,				// Line number for debug.					// 05/17/01 AM.
 	long passnum,			// Pass number of code.						// 01/04/02 AM.
@@ -544,6 +557,8 @@ Node<Pn> *node;
 
 p.Start = start;
 p.End   = end;
+p.Ustart = ustart;	// [UNICODE]
+p.Uend = uend;	// [UNICODE]
 p.Type  = type;
 p.Text  = text;
 p.name_ = name;
@@ -576,6 +591,8 @@ return node;
 Tree<Pn> *Pn::makeTree(
 	long ostart,
 	long oend,
+	long ustart,	// [UNICODE]
+	long uend,	// [UNICODE]
 	enum Pntype typ,
 	_TCHAR *text,
 	_TCHAR *name,
@@ -583,7 +600,7 @@ Tree<Pn> *Pn::makeTree(
 	)
 {
 Node<Pn> *root;
-root = makeNode(ostart, oend, typ, text, name, sym,
+root = makeNode(ostart, oend, ustart, uend, typ, text, name, sym,
 						1);		// Root line number is 1!				// 05/17/01 AM.
 return new Tree<Pn>(root);
 }

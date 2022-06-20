@@ -110,6 +110,7 @@ public:
 	_TCHAR *getOutput();
 	_TCHAR *getText();
 	long  getLength();				// Length of input text.
+	long getUlength();	// [UNICODE]	// 06/15/22 AM.
 	TREE *getTree();
 	LTREE *getLines();
 	_TCHAR *getAppdir();				// 12/03/98 AM.
@@ -164,6 +165,7 @@ public:
 	void setOutput(_TCHAR *);
 	void setText(_TCHAR *);
 	void setLength(long);
+	void setUlength(long);	// [UNICODE]	// 06/15/22 AM.
 	void setTree(TREE *);
 	void setLines(LTREE *);
 	void setVerbose(bool);
@@ -537,6 +539,7 @@ private:
 	_TCHAR		outdir_[FNAME_SIZE];	// Intermediate out files.		// 03/10/99 AM.
 	_TCHAR     *text;					// The buffer for input text.
 	long		 length;					// Length of input text.
+	long	ulength;	// [UNICODE]	// 06/15/22 AM.
 	TREE *tree;					// The main parse tree.
 	LTREE *lines;					// Tree of text lines.
 	Dlist<Ipair> *vars_;				// List of user-created vars.	// 12/07/98 AM.

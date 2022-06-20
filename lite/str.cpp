@@ -3647,3 +3647,26 @@ delete[] q;
 return tmp;
 }
 
+
+/**************************************************
+*						U_STRLEN
+* FUN:	u_stringlen
+* SUBJ:	Unicode count of chars in a string.
+* CR:	06/17/22 AM.
+* RET:	len = length of string in unicode bytes.
+* NOTE:	Based on DDH code.
+*
+**************************************************/
+
+long u_strlen(
+	_TCHAR *name
+	)
+{
+if (!name || !*name)
+	return 0;
+
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(name));
+const UChar *strBuf = ustr.getTerminatedBuffer();
+return unicu::strLen(strBuf);
+// return _tcsclen(name1);	[BYTE LENGTH]
+}

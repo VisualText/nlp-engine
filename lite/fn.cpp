@@ -29,6 +29,8 @@ All rights reserved.
 #include <direct.h>	// For _mkdir										// 12/07/01 AM.
 #endif
 
+#include "unicu.h"
+
 #include "machine.h"
 #include "lite/lite.h"		// MOVE UP.	// 03/23/19 AM.
 #include "lite/global.h"	// MOVE UP.	// 03/23/19 AM.
@@ -106,7 +108,6 @@ LIBPRIM_API DWORD run_silent(_TCHAR* strCMD);	// 09/15/08 AM.
 #endif
 
 #include "fn.h"
-#include "unicu.h"
 
 /********************************************
 * FN:		FNCALL
@@ -5929,13 +5930,18 @@ if (!Arg::str1(_T("strlength"), /*UP*/ (DELTS*&)args, name1))
 if (!Arg::done((DELTS*)args, _T("strlength"),parse))
 	return false;
 
+/*
 if (!name1 || !*name1)														// 10/30/00 AM.
 	len = 0;																		// 10/30/00 AM.
 else {
 	icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(name1));
 	const UChar *strBuf = ustr.getTerminatedBuffer();
-	len = unicu::strLen(strBuf);  //_tcsclen(name1);																		// 10/30/00 AM.
+	len = unicu::strLen(strBuf);
+	//_tcsclen(name1);																		// 10/30/00 AM.
 }
+*/
+
+len = u_strlen(name1);	// [UNICODE]
 
 sem = new RFASem(len);
 
@@ -12701,6 +12707,8 @@ Tree<Pn> *tree = (Tree<Pn> *)parse->getTree();
 // DUMMY UP A NODE.
 long o_start = -1;
 long o_end = -1;
+long ustart = -1;	// [UNICODE]
+long uend = -1;	// [UNICODE]
 _TCHAR *text = 0;
 Sym *sym = parse->getSym(name_str);
 _TCHAR *str = sym->getStr();
@@ -12730,6 +12738,8 @@ else if (_istspace(*name_str))
 Node<Pn> *new_node = Pn::makeNode(
 	o_start,	// o_start
 	o_end,	// o_end
+	ustart,	// [UNICODE]
+	uend,	// [UNICODE]
 	typ,		// Node type
 	text,		// Pointer to text input buffer
 	str,		// Suggested concept str

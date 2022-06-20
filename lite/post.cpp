@@ -738,12 +738,15 @@ Isugg *sugg = nlppp->rule_->getSugg();	// Suggested elt.		// 01/13/00 AM.
 
 // Create a new node for the reduced rule.
 long o_start, o_end;
+long ustart, uend;	// [UNICODE]
 _TCHAR *text;
 Pn *tmp = nlppp->first_->getData();
 long line = tmp->line_;	// Line number for new node.				// 05/17/01 AM.
 o_start	= tmp->getStart();
 text		= tmp->getText();
 o_end		= nlppp->last_->getData()->getEnd();
+ustart = tmp->getUstart();	// [UNICODE]
+uend = nlppp->last_->getData()->getUend();	// [UNICODE]
 Node<Pn> *restart = tmp->restart_;						// RECOPT2.	// 07/20/06 AM.
 
 long ruleline = (nlppp->rule_ ? nlppp->rule_->getLine() : 0);	// 01/06/02 AM.
@@ -757,7 +760,9 @@ _TCHAR *str = sym->getStr();
 enum Pntype typ = nodetype(str);											// 05/01/03 AM.
 
 Node<Pn> *sub				// The new subtree.
-   = Pn::makeNode(o_start, o_end, typ, text, str, sym,
+   = Pn::makeNode(o_start, o_end,
+			ustart, uend,	// [UNICODE]
+   			typ, text, str, sym,
 							line,													// 05/17/01 AM.
 							parse->currpass_,		// Assoc code pass	// 01/04/02 AM.
 							ruleline					// Assoc rule line	// 01/06/02 AM.
@@ -1016,6 +1021,7 @@ long ruleline = (nlppp->rule_ ? nlppp->rule_->getLine() : 0);	// 01/06/02 AM.
 
 // Create a new node for the reduced rule.
 long o_start, o_end;
+long ustart, uend;	// [UNICODE]
 Pn *tmp;
 _TCHAR *text;
 tmp = nlppp->first_->getData();
@@ -1023,6 +1029,8 @@ long line = tmp->line_;	// Line number for new node.				// 05/17/01 AM.
 o_start	= tmp->getStart();
 text		= tmp->getText();
 o_end		= nlppp->last_->getData()->getEnd();
+ustart = tmp->getUstart();	// [UNICODE]
+uend = nlppp->last_->getData()->getUend();	// [UNICODE]
 Node<Pn> *restart = tmp->restart_;						// RECOPT2.	// 07/20/06 AM.
 
 Node<Pn> *sub;				// The new subtree.
@@ -1036,7 +1044,9 @@ str = sym->getStr();
 // Allowing retokenized alphas, etc.									// 05/01/03 AM.
 enum Pntype typ = nodetype(str);											// 05/01/03 AM.
 
-sub = Pn::makeNode(o_start, o_end, typ, text, str, sym,
+sub = Pn::makeNode(o_start, o_end,
+		ustart, uend,	// [UNICODE]
+		typ, text, str, sym,
 							line,													// 05/17/01 AM.
 							parse->currpass_,		// Assoc code pass	// 01/04/02 AM.
 							ruleline					// Assoc rule line	// 01/06/02 AM.
@@ -1237,6 +1247,7 @@ long ruleline = (nlppp->rule_ ? nlppp->rule_->getLine() : 0);	// 01/06/02 AM.
 
 // Create a new node for the reduced rule.
 long o_start, o_end;
+long ustart, uend;	// [UNICODE]
 Pn *tmp;
 _TCHAR *text;
 tmp = nlppp->first_->getData();
@@ -1244,6 +1255,8 @@ long line = tmp->line_;	// Line number for new node.				// 05/17/01 AM.
 o_start	= tmp->getStart();
 text		= tmp->getText();
 o_end		= nlppp->last_->getData()->getEnd();
+ustart = tmp->getUstart();	// [UNICODE]
+uend = nlppp->last_->getData()->getUend();	// [UNICODE]
 Node<Pn> *restart = tmp->restart_;						// RECOPT2.	// 07/20/06 AM.
 
 Node<Pn> *sub;				// The new subtree.
@@ -1257,7 +1270,9 @@ str = sym->getStr();
 // Allowing retokenized alphas, etc.									// 05/01/03 AM.
 enum Pntype typ = nodetype(str);											// 05/01/03 AM.
 
-sub = Pn::makeNode(o_start, o_end, typ, text, str, sym,
+sub = Pn::makeNode(o_start, o_end,
+			ustart, uend,	// [UNICODE]
+			typ, text, str, sym,
 							line,													// 05/17/01 AM.
 							parse->currpass_,		// Assoc code pass	// 01/04/02 AM.
 							ruleline			// Associated rule line		// 01/06/02 AM.
@@ -2199,6 +2214,8 @@ long line = tmp->line_;	// Line number for new node.				// 05/17/01 AM.
 long o_start	= tmp->getStart();
 _TCHAR *text		= tmp->getText();	// Start of group's text in input buffer.
 long o_end		= node2->getData()->getEnd();
+long ustart = tmp->getUstart();	// [UNICODE]
+long uend = node2->getData()->getUend();	// [UNICODE]
 
 // Till we keep track of the ord of rightmost in a rule match,
 // just set back to the beginning of the rule.		// RECOPT2.	// 07/21/06 AM.
@@ -2234,7 +2251,9 @@ Sym *sym = parse->getSym(name);			// Intern the name.
 assert(sym);
 _TCHAR *str = sym->getStr();
 // The new subtree.
-Node<Pn> *sub = Pn::makeNode(o_start, o_end, typ, text, str, sym,
+Node<Pn> *sub = Pn::makeNode(o_start, o_end,
+				ustart, uend,	// [UNICODE]
+				typ, text, str, sym,
 							line,													// 05/17/01 AM.
 							passnum,			// Associated code pass		// 08/09/02 AM.
 							ruleline			// Associated rule line		// 01/06/02 AM.
@@ -3077,6 +3096,7 @@ Delt<Iarg> *attr;
 // Do first attr separately.
 Pn *pn;
 long start, end;
+long ustart, uend;	// [UNICODE]
 _TCHAR *text;
 pn		= node->getData();
 
@@ -3088,6 +3108,8 @@ long line = pn->line_;	// Line number for new node.				// 05/17/01 AM.
 
 start = pn->getStart();
 end   = pn->getEnd();
+ustart = pn->getUstart();	// [UNICODE]
+uend = pn->getUend();	// [UNICODE]
 text	= pn->getText();
 Node<Pn> *restart = pn->restart_;		// RECOPT3		// FIX	// 08/16/08 AM.
 
@@ -3097,7 +3119,7 @@ _TCHAR *str = attr->getData()->getStr();									// 05/01/03 AM.
 // Allowing retokenized alphas, etc.									// 05/01/03 AM.
 enum Pntype typ = nodetype(str);											// 05/01/03 AM.
 
-node = Pn::makeNode(start,end,typ,text,
+node = Pn::makeNode(start,end,ustart,uend,typ,text,	// [UNICODE]
 				str,		// Name node using attr.
 				0,										// Get sym from where?
 				line,																// 05/17/01 AM.
@@ -3118,7 +3140,7 @@ for (attr = attr->Right(); attr; attr = attr->Right())
 	// Allowing retokenized alphas, etc.								// 05/01/03 AM.
 	typ = nodetype(str);														// 05/01/03 AM.
 
-	tmp = Pn::makeNode(start,end,typ,text,
+	tmp = Pn::makeNode(start,end,ustart,uend,typ,text,	// [UNICODE]
 				str,		// Name node using attr.						// 05/01/03 AM.
 				0,										// Get sym from where?
 				line,																// 05/17/01 AM.
@@ -5876,6 +5898,7 @@ if (!first || !last || empty(s_sugg))
 
 // Create a new node for the reduced rule.
 long o_start, o_end;
+long ustart, uend;	// [UNICODE]
 Pn *tmp;
 _TCHAR *text;
 tmp = first->getData();
@@ -5883,6 +5906,8 @@ long line = tmp->line_;	// Line number for new node.
 o_start	= tmp->getStart();
 text		= tmp->getText();
 o_end		= last->getData()->getEnd();
+ustart = tmp->getUstart();	// [UNICODE]
+uend = nlppp->last_->getData()->getUend();	// [UNICODE]
 Node<Pn> *restart = tmp->restart_;	// RECOPT2.	// 07/20/06 AM.
 
 long ruleline = 0;
@@ -5896,7 +5921,7 @@ _TCHAR *str = sym->getStr();
 enum Pntype typ = nodetype(str);
 
 Node<Pn> *sub				// The new subtree.
-   = Pn::makeNode(o_start, o_end, typ, text, str, sym,
+   = Pn::makeNode(o_start, o_end, ustart, uend, typ, text, str, sym,	// [UNICODE]
 							line,
 							parse->currpass_,		// Assoc code pass
 							ruleline					// Assoc rule line
@@ -5985,6 +6010,7 @@ const SUGG *sugg = nlppp->sugg_;
 
 // Create a new node for the reduced rule.
 long o_start, o_end;
+long ustart, uend;	// [UNICODE]
 Pn *tmp;
 _TCHAR *text;
 tmp = nlppp->first_->getData();
@@ -5992,6 +6018,8 @@ long line = tmp->line_;	// Line number for new node.				// 05/17/01 AM.
 o_start	= tmp->getStart();
 text		= tmp->getText();
 o_end		= nlppp->last_->getData()->getEnd();
+ustart = tmp->getUstart();	// [UNICODE]
+uend = nlppp->last_->getData()->getUend();	// [UNICODE]
 Node<Pn> *restart = tmp->restart_;	// RECOPT2.	// 07/20/06 AM.
 
 Node<Pn> *sub;				// The new subtree.
@@ -6006,7 +6034,7 @@ assert(sym);
 str = sym->getStr();
 // Allowing retokenized alphas, etc.									// 05/01/03 AM.
 enum Pntype typ = nodetype(str);											// 05/01/03 AM.
-sub = Pn::makeNode(o_start, o_end, typ, text, str, sym,
+sub = Pn::makeNode(o_start, o_end, ustart, uend, typ, text, str, sym,	// [UNICODE]
 							line,													// 05/17/01 AM.
 							nlppp->sugg_->passnum,							// 08/09/02 AM.
 							nlppp->sugg_->ruleline							// 08/09/02 AM.
@@ -6268,17 +6296,20 @@ if (!attrs  || !*attrs || !node)
 // Do first attr separately.
 Pn *pn;
 long start, end;
+long ustart, uend;	// [UNICODE]
 _TCHAR *text;
 pn		= node->getData();
 long line = pn->line_;	// Line number for new node.				// 05/17/01 AM.
 start = pn->getStart();
 end   = pn->getEnd();
+ustart = pn->getUstart();	// [UNICODE]
+uend = pn->getUend();	// [UNICODE]
 text	= pn->getText();
 
 _TCHAR *str = (_TCHAR *) *attrs;	// Name node using attr.			// 05/01/03 AM.
 // Allowing retokenized alphas, etc.									// 05/01/03 AM.
 enum Pntype typ = nodetype(str);											// 05/01/03 AM.
-node = Pn::makeNode(start,end,typ,text,
+node = Pn::makeNode(start,end,ustart,uend,typ,text,	// [UNICODE]
 				str,					// Name node using attr.			// 05/01/03 AM.
 				0,										// Get sym from where?
 				line,																// 05/17/01 AM.
@@ -6296,7 +6327,7 @@ for (++attrs; *attrs; ++attrs)
 	{
 	str = (_TCHAR *) *attrs;	// Name node using attr.				// 05/01/03 AM.
 	typ = nodetype(str);														// 05/01/03 AM.
-	tmp = Pn::makeNode(start,end,typ,text,
+	tmp = Pn::makeNode(start,end,ustart,uend,typ,text,	// [UNICODE]
 				str,																// 05/01/03 AM.
 				0,										// Get sym from where?
 				line,																// 05/17/01 AM.
@@ -6358,6 +6389,7 @@ const SUGG *sugg = nlppp->sugg_;	// Suggested elt.
 
 // Create a new node for the reduced rule.
 long o_start, o_end;
+long ustart, uend;	// [UNICODE]
 Pn *tmp;
 _TCHAR *text;
 tmp = nlppp->first_->getData();
@@ -6365,6 +6397,8 @@ long line = tmp->line_;	// Line number for new node.				// 05/17/01 AM.
 o_start	= tmp->getStart();
 text		= tmp->getText();
 o_end		= nlppp->last_->getData()->getEnd();
+ustart = tmp->getUstart();	// [UNICODE]
+uend = nlppp->last_->getData()->getUend();	// [UNICODE]
 Node<Pn> *restart = tmp->restart_;						// RECOPT2.	// 07/20/06 AM.
 
 //long ruleline = (nlppp->rule_ ? nlppp->rule_->getLine() : 0);	// 01/06/02 AM.
@@ -6377,7 +6411,7 @@ assert(sym);
 str = sym->getStr();
 // Allowing retokenized alphas, etc.									// 05/01/03 AM.
 enum Pntype typ = nodetype(str);											// 05/01/03 AM.
-sub = Pn::makeNode(o_start, o_end, typ, text, str, sym,
+sub = Pn::makeNode(o_start, o_end, ustart, uend, typ, text, str, sym,	// [UNICODE]
 							line,													// 05/17/01 AM.
 							nlppp->sugg_->passnum,							// 08/09/02 AM.
 							nlppp->sugg_->ruleline							// 08/09/02 AM.
