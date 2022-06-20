@@ -184,6 +184,8 @@ Node<Pn> *last = 0;			// Last token node.	// FIX. ZERO INIT.	// 08/28/11 AM.
 StringPiece sp(text_);
 const char *s = sp.data();
 
+int32_t ustart = 0;	// [UNICODE]
+
 prevwh_ = false;	// No whitespace before first token.	// 08/16/11 AM.
 
 // Bookkeep line numbers for debug.										// 05/17/01 AM.
@@ -191,12 +193,12 @@ long line = 1;
 long len  = parse->getLength();
 
 // Get first token and attach to tree.
-FirstToken(tree_, htab_, &buf, s, len, start, last, line);
+FirstToken(tree_, htab_, &buf, s, len, start, ustart, last, line);
 
 // Continue getting tokens.
 while (*buf)
 	{
-	if (!NextToken(tree_, htab_, &buf, s, len, start, last, line))
+	if (!NextToken(tree_, htab_, &buf, s, len, start, ustart, last, line))
 		return false;															// 01/26/02 AM.
 	}
 
@@ -265,17 +267,19 @@ tok_ = 0;
 //firsttok_ = 0;
 
 fmpos_ = 0;
+fmupos_ = 0;	// [UNICODE]	// 06/15/22 AM.
 
 fmptr_ = parse->text;
 
 // The allocated input buffer length.
 // Note that we'll be using less of it after removing information text.
 long len  = parse->length;
+long ulen = parse->ulength;	// [UNICODE]	// 06/15/22 AM.
 
 // CREATE PARSE TREE ROOT.
 _TCHAR *str = _T("_ROOT");
 Sym *sym = htab_->hsym(str);
-tree_ = Pn::makeTree(0, len-1, PNNODE, fmptr_, str, sym); // Create parse tree.
+tree_ = Pn::makeTree(0, len-1, 0, ulen-1, PNNODE, fmptr_, str, sym); // Create parse tree.
 parse->setTree(tree_);								// Update global data.
 
 if (!tree_)
@@ -347,6 +351,7 @@ void DICTTok::FirstToken(
 	const char* s,
 	int32_t length,
 	int32_t &start,
+	int32_t &ustart,
 	Node<Pn>* &last,
 	long &line					// Bookkeep line number.				// 05/17/01 AM.
 	)
@@ -355,9 +360,14 @@ int32_t end;
 enum Pntype typ;
 bool lineflag = false;														// 05/17/01 AM.
 
+ustart = 0;	// [UNICODE]
+int32_t uend = 0;	// [UNICODE]
+int32_t ulen = 0;	// [UNICODE]
+
 // Get first token information.
-token_->nextTok(s, start, end, length, typ, lineflag);
+token_->nextTok(s, start, end, ulen, length, typ, lineflag);
 int len = end-start+1;
+uend = ustart + ulen - 1;	// [UNICODE]
 
 /* Attach first node. */
 Sym *sym;
@@ -373,7 +383,7 @@ else
 	{
 sym = internTok(*buf, end-start+1, htab,/*UP*/lcstr);
 str = sym->getStr();
-last = Pn::makeTnode(start, end, typ, *buf, str, sym,				// 10/09/99 AM.
+last = Pn::makeTnode(start, end, ustart, uend, typ, *buf, str, sym,				// 10/09/99 AM.
 							line);												// 05/17/01 AM.
 
 // Lookup, add attrs, reduce, attach to tree.	// 07/31/11 AM
@@ -387,6 +397,7 @@ if (lineflag)		// First token was a newline!						// 05/17/01 AM.
 
 /* UP */
 start = ++end;	// Continue tokenizing from next char.
+ustart = ++uend;	// [UNICODE]
 *buf += len;
 }
 
@@ -405,6 +416,7 @@ bool DICTTok::NextToken(
 	const char* s,
 	int32_t length,
 	int32_t &start,
+	int32_t &ustart,	// [UNICODE]
 	Node<Pn>* &last,
 	long &line					// Bookkeep line number.				// 05/17/01 AM.
 	)
@@ -412,10 +424,13 @@ bool DICTTok::NextToken(
 int32_t end;
 enum Pntype typ;
 
+
 // Get next token information.
 bool lineflag = false;														// 05/17/01 AM.
-token_->nextTok(s, start, end, length, typ, lineflag);
+int32_t ulen = 0;	// [UNICODE]
+token_->nextTok(s, start, end, ulen, length, typ, lineflag);
 int32_t len = end-start+1;													// 05/17/01 AM.
+int32_t uend = ustart + ulen - 1;	// [UNICODE]
 
 /* Attach next node to list. */
 Sym *sym;
@@ -433,7 +448,7 @@ sym = internTok(*buf, end-start+1, htab,/*UP*/lcstr);
 str = sym->getStr();
 Node<Pn> *node;
 //node = Pn::makeNode(start, end, typ, *buf, str, sym);			// 10/09/99 AM.
-node = Pn::makeTnode(start, end, typ, *buf, str, sym,				// 10/09/99 AM.
+node = Pn::makeTnode(start, end, ustart, uend, typ, *buf, str, sym,				// 10/09/99 AM.
 							line);												// 05/17/01 AM.
 
 // CHECK NODE OVERFLOW.														// 01/24/02 AM.
@@ -457,6 +472,7 @@ if (lineflag)																	// 05/17/01 AM.
 
 /* UP */
 start = ++end;	// Continue tokenizing from next char.
+ustart = ++uend;	// [UNICODE]
 *buf += len;
 return true;																	// 01/26/02 AM.
 }

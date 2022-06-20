@@ -164,6 +164,7 @@ bool Tok::Tokenize(Parse *parse)
 	_TCHAR *text = parse->getText();
 	Tree<Pn> *tree = (Tree<Pn> *)parse->getTree();
 	long len  = parse->getLength();
+	int32_t ulen = parse->getUlength();	// [UNICODE]
 
 	if (tree)
 		{
@@ -181,7 +182,9 @@ bool Tok::Tokenize(Parse *parse)
 
 	_TCHAR *str = _T("_ROOT");				// 11/30/98 AM.
 	Sym *sym = htab->hsym(str);
-	tree = Pn::makeTree(0, len-1, PNNODE, text, str, sym); // Create parse tree.
+	int32_t ustart = 0;	// [UNICODE]
+	int32_t uend = ulen - 1;	// [UNICODE]
+	tree = Pn::makeTree(0, len-1, ustart, uend, PNNODE, text, str, sym); // Create parse tree.
 	parse->setTree(tree);								// Update global data.
 
 	// NEED TO MAKE THE ROOT NODE UNSEALED!	// 10/11/99 AM.
@@ -195,6 +198,7 @@ bool Tok::Tokenize(Parse *parse)
 
 	int32_t start = 0;			// Count offset of current char.
 	Node<Pn> *last = 0;			// Last token node.	// Preemptive init.	// 08/28/11 AM.
+	ustart = 0;	// Reset.	// [UNICODE]
 
 	// Bookkeep line numbers for debug.										// 05/17/01 AM.
 	long line = 1;
@@ -204,12 +208,12 @@ bool Tok::Tokenize(Parse *parse)
 	const char *s = sp.data();
 
 	// Get first token and attach to tree.
-	FirstToken(tree, htab, &buf, s, len, start, last, line);
+	FirstToken(tree, htab, &buf, s, len, start, ustart, last, line);
 
 	// Continue getting tokens.
 	while (start < len)
 		{
-		if (!NextToken(tree, htab, &buf, s, len, start, last, line))
+		if (!NextToken(tree, htab, &buf, s, len, start, ustart, last, line))
 			return false;															// 01/26/02 AM.
 		}
 	if (parse->getEana()->getFlogfiles())						// FIX	// 02/01/00 AM.
@@ -231,8 +235,9 @@ void Tok::FirstToken(
 	Htab *htab,
 	_TCHAR* *buf,
 	const char* s,
-	int32_t length,
+	int32_t length,	// Length of input text.
 	int32_t &start,
+	int32_t &ustart,	// [UNICODE]
 	Node<Pn>* &last,
 	long &line					// Bookkeep line number.				// 05/17/01 AM.
 	)
@@ -241,22 +246,28 @@ void Tok::FirstToken(
 	enum Pntype typ;
 	bool lineflag = false;														// 05/17/01 AM.
 
+	int32_t uend = 0;	// [UNICODE]
+	int32_t ulen = 0;	// [UNICODE]
+	ustart = 0;	// [UNICODE]
+
 	// Get first token information.
-	nextTok(s, start, end, length, typ, lineflag);
+	nextTok(s, start, end, ulen, length, typ, lineflag);
 	int len = end-start+1;
+	uend = ustart + ulen - 1;	// [UNICODE]
 
 	/* Attach first node. */
 	Sym *sym;
 	_TCHAR *str;
 	sym = internTok(*buf, len, htab);
 	str = sym->getStr();
-	last = Pn::makeTnode(start, end, typ, *buf, str, sym, line);												// 05/17/01 AM.
+	last = Pn::makeTnode(start, end, ustart, uend, typ, *buf, str, sym, line);												// 05/17/01 AM.
 	tree->firstNode(*last);	// Attach first node to tree.
 	if (lineflag)		// First token was a newline!						// 05/17/01 AM.
 		++line;																		// 05/17/01 AM.
 
 	/* UP */
 	start = ++end;	// Continue tokenizing from next char.
+	ustart = ++uend;	// [UNICODE]
 	*buf += len;
 }
 
@@ -275,6 +286,7 @@ bool Tok::NextToken(
 	const char* s,
 	int32_t length,
 	int32_t &start,
+	int32_t &ustart,	// [UNICODE]
 	Node<Pn>* &last,
 	long &line					// Bookkeep line number.				// 05/17/01 AM.
 	)
@@ -284,9 +296,12 @@ bool Tok::NextToken(
 	bool lineflag = false;
 	long e = end;
 
+
 	// Get next token information.
-	nextTok(s, start, end, length, typ, lineflag);
+	int32_t ulen = 0;	// [UNICODE]
+	nextTok(s, start, end, ulen, length, typ, lineflag);
 	int32_t len = end-start+1;
+	int32_t uend = ustart + ulen - 1;	// [UNICODE]
 
 	/* Attach next node to list. */
 	Sym *sym;
@@ -294,7 +309,7 @@ bool Tok::NextToken(
 	sym = internTok(*buf, end-start+1, htab);
 	str = sym->getStr();
 	Node<Pn> *node;
-	node = Pn::makeTnode(start, end, typ, *buf, str, sym, line);												// 05/17/01 AM.
+	node = Pn::makeTnode(start, end, ustart, uend, typ, *buf, str, sym, line);												// 05/17/01 AM.
 
 	// CHECK NODE OVERFLOW.														// 01/24/02 AM.
 	if (!node)																		// 01/24/02 AM.
@@ -312,6 +327,7 @@ bool Tok::NextToken(
 
 	/* UP */
 	start = ++end;	// Continue tokenizing from next char.
+	ustart = ++uend;	// [UNICODE]
 	*buf += len;
 	return true;													// 01/26/02 AM.
 }
@@ -329,11 +345,13 @@ void Tok::nextTok(
 	const char *s,		// Start char of token.
 	int32_t start,		// Start offset of token.
 	int32_t &end,		// End offset of token.
-	int32_t length,
+	int32_t &ulen,		// Number of chars in token.	// [UNICODE]
+	int32_t length,		// Length of input text.
 	enum Pntype &typ,	// Type of token.
 	bool &lineflag		// Flag new line number.						// 05/17/01 AM.
 	)
 {
+	ulen = 0;	// [UNICODE]
 	end = start;
 	typ = PNALPHA;
 	lineflag = false;
@@ -346,25 +364,30 @@ void Tok::nextTok(
 	if (c) {
 		if (unicu::isEmoji(c)) {
 			typ = PNEMOJI;
+			++ulen;	// [UNICODE]
 		}
 		else if (unicu::isChinese(c)) {
 			typ = PNALPHA;
+			++ulen;	// [UNICODE]
 		}
 		else if (unicu::isDigit(c)) {
 			while (c && unicu::isDigit(c) && !unicu::isSingle(c)) {
 				lastEnd = end;
 				U8_NEXT(s, end, length, c);
+				++ulen;	// [UNICODE]
 			}
 			end -= end - lastEnd;
 			typ = PNNUM;
 		}
 		else if (unicu::isPunct(c)) {
 			typ = PNPUNCT;
+			++ulen;	// [UNICODE]
 		}
 		else if (unicu::isAlphabetic(c)) {
 			while (c && unicu::isAlphabetic(c) && !unicu::isSingle(c)) {
 				lastEnd = end;
 				U8_NEXT(s, end, length, c);
+				++ulen;	// [UNICODE]
 			}
 			end -= end - lastEnd;
 		}
@@ -372,9 +395,11 @@ void Tok::nextTok(
 			if (c == '\n')
 				lineflag = true;
 			typ = PNWHITE;
+			++ulen;	// [UNICODE]
 		}
 		else {
 			typ = PNCTRL;
+			++ulen;	// [UNICODE]
 		}
 		end--;
 	}

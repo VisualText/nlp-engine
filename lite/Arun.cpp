@@ -5052,6 +5052,9 @@ long line = tmpf->line_;	// Line number for new node.				// 05/17/01 AM.
 o_start	= tmpf->getStart();
 text		= tmpf->getText();
 o_end		= nlppp->last_->getData()->getEnd();
+long ustart, uend;	// [UNICODE]	// 06/15/22 AM.
+ustart = tmpf->getUstart();	// [UNICODE]	// 06/15/22 AM.
+uend = tmpf->getUend();	// [UNICODE]	// 06/15/22 AM.
 
 Node<Pn> *sub;				// The new subtree.
 Sym *sym;
@@ -5060,7 +5063,7 @@ _TCHAR *str;
 sym = nlppp->parse_->getSym(nlppp->sugg_->name);			// Intern the name.
 assert(sym);
 str = sym->getStr();
-sub = Pn::makeNode(o_start, o_end, PNNODE, text, str, sym,
+sub = Pn::makeNode(o_start, o_end, ustart, uend, PNNODE, text, str, sym,
 							line,													// 05/17/01 AM.
 							nlppp->sugg_->passnum,							// 08/09/02 AM.
 							nlppp->sugg_->ruleline							// 08/09/02 AM.

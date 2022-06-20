@@ -12,6 +12,9 @@ All rights reserved.
 
 #ifndef STR_H_
 #define STR_H_
+
+# include "unicu.h"	// [UNICODE]
+
 # define UINT long	// 09/26/19 AM.
 
 class Parse;	// Forward reference.
@@ -218,5 +221,7 @@ long levenshtein_int(			// 03/06/07 AM.
 	_TCHAR *s1,
 	_TCHAR *s2
 	);
+
+long u_strlen(_TCHAR *name);	// [UNICODE]
 
 #endif
