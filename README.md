@@ -97,7 +97,7 @@ git submodule update --init --recursive
 ```
 cd vcpkg
 ./bootstrap-vcpkg.sh
-vcpkg install
+./vcpkg install
 ```
 
 ### Create an out of source build folder
