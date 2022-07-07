@@ -1,4 +1,4 @@
-name: Test MaxOS
+name: Test MacOS x64
 
 on:
   push:
@@ -8,8 +8,8 @@ on:
   
 jobs:
   job:
-    name: MacOS Compile Test
-    runs-on: macOS-12
+    name: MacOS x64 Compile Test
+    runs-on: macOS-latest
 
     env:
       VCPKG_DEFAULT_TRIPLET: x64-osx

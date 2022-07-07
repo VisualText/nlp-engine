@@ -1,0 +1,63 @@
+name: Test MacOS arm64
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    types: [opened, synchronize, reopened]
+  
+jobs:
+  job:
+    name: MacOS arm64 Compile Test
+    runs-on: macOS-arm
+
+    env:
+      VCPKG_DEFAULT_TRIPLET: arm64-osx
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Vcpkg bootstrap Shell
+        run: ./bootstrap-vcpkg.sh
+        shell: bash
+        working-directory: vcpkg
+
+      - name: Mac Install Brew
+        run: brew install automake
+
+      - name: Install ICU
+        run: vcpkg install
+        working-directory: vcpkg
+
+      - name: Make build directory
+        run: mkdir build
+
+      - name: Generate Solution MacOs
+        run: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_BUILD_TYPE=release -DCMAKE_PREFIX_PATH=/usr/local/opt/icu4c -B build -S . -DCMAKE_CXX_FLAGS=-std=c++11
+
+      - name: Cmake Build all targets MaxOs
+        run: cmake --build build/ --target all
+
+      - name: Test executable --version
+        run: ./bin/nlp.exe --version || true
+        
+      - name: List $RUNNER_WORKSPACE before build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: nlp.exe
+          path: bin
+          
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ibicutu.a
+          path: vcpkg/buildtrees/icu/arm64-osx-rel/lib/libicutu.a
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: libicuuc.a
+          path: vcpkg/buildtrees/icu/arm64-osx-rel/lib/libicuuc.a
