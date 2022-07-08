@@ -5,7 +5,7 @@
     "dependencies": [
       {
         "name": "icu",
-        "version>=": "70.0"
+        "version": "70.0"
       }
     ]
   }
