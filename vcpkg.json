@@ -3,6 +3,9 @@
     "name": "nlp-engine",
     "version": "1.10.0",
     "dependencies": [
-      "icu"
+      {
+        "name": "icu",
+        "version>=": "70.0"
+      }
     ]
   }
