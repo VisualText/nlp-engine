@@ -405,7 +405,7 @@ int NLP_ENGINE::analyze(
 // ANALYZE VARIANT FOR STRSTREAM I/O.  11/24/20 AM.
 int NLP_ENGINE::analyze(
     _TCHAR *analyzer,
-    istrstream *iss,
+    istringstream *iss,
     ostringstream *oss,
 	bool develop,
 	bool silent,

@@ -1458,7 +1458,7 @@ return parse;
 ********************************************/
 
 Parse *NLP::initAnalyze(
-	istrstream *iss,
+	istringstream *iss,
 	ostringstream *oss,
 	_TCHAR *appdir,
 	Eana *eana,
@@ -1566,7 +1566,11 @@ parse->setFbatchstart(fbatchstart_);					// FIX		// 05/19/08 AM.
 // Set up to parse given buffer.						// 02/06/00 AM.
 
 // Copy buffer into parse object.
-parse->copyBuffer(iss->str(), 0);	// Try this.	// 11/17/20 AM.
+std::string s = iss->str();
+_TCHAR *param = new _TCHAR[s.size()+1];
+param[s.size()] = 0;
+std::copy(s.begin(),s.end(),param);
+parse->copyBuffer(param, 0);	// Try this.	// 11/17/20 AM.
 
 // New manager for cout ostream.											// 05/04/03 AM.
 if (os)																			// 05/05/03 AM.
@@ -1877,7 +1881,7 @@ if (flogfiles)																	// 02/21/02 AM.
 ********************************************/
 
 void NLP::analyze(
-	istrstream *iss,	// Input strstream.
+	istringstream *iss,	// Input strstream.
 	ostringstream *oss,	// Output strstream.
 	_TCHAR *appdir,		// Directory holding analyzer.
 	bool flogfiles,		// Changing the meaning of this.
@@ -2308,7 +2312,7 @@ if (flogfiles)																	// 02/21/02 AM.
 ********************************************/
 
 void NLP::runAnalyzer(
-	istrstream *iss,
+	istringstream *iss,
 	ostringstream *oss,
 	_TCHAR *appdir,
 	bool flogfiles,	// Changing the meaning of this.

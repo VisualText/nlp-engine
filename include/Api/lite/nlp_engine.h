@@ -120,7 +120,7 @@ public:
 
     int analyze(
         _TCHAR *analyzer,
-        istrstream *iss,
+        istringstream *iss,
         ostringstream *oss,
         bool develop=false,
         bool silent=false,
