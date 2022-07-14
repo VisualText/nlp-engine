@@ -173,7 +173,7 @@ public:
 		);
 
 	void analyze(
-		istrstream *iss,	// Input strstream.
+		istringstream *iss,	// Input strstream.
 		ostringstream *oss,	// Output strstream.
 		_TCHAR *appdir = 0,		// Directory holding analyzer.
 		bool flogfiles = false,	// Changing the meaning of this.
@@ -264,7 +264,7 @@ public:
 		);
 
 	void runAnalyzer(
-		istrstream *iss,
+		istringstream *iss,
 		ostringstream *oss,
 		_TCHAR *appdir,
 		bool flogfiles,			// Changing the meaning of this.
@@ -305,7 +305,7 @@ public:
 		);
 
 	Parse *initAnalyze(
-		istrstream *iss,
+		istringstream *iss,
 		ostringstream *oss,
 		_TCHAR *appdir,
 		Eana *eana,

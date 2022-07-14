@@ -74,7 +74,7 @@ int _tmain( // 09/23/20 AM.
 "\n"
 "More than they know.";
 
-    istrstream ssi1(str);
+    istringstream ssi1(str);
     ostringstream sso1;
     _t_cout << _T("[analyzer: ") << anaParse << _T("]") << endl;
     _t_cout << _T("[input: ") << ssi1.str() << _T("]") << endl;
@@ -82,7 +82,7 @@ int _tmain( // 09/23/20 AM.
     _t_cout << _T("[output: ") << sso1.str() << _T("]") << endl;
     _t_cout << _T("[end: ") << anaParse << _T("]") << endl;
 
-    istrstream ssi2(str);
+    istringstream ssi2(str);
     ostringstream sso2;
     _t_cout << _T("[analyzer: ") << anaCorporate << _T("]") << endl;
     _t_cout << _T("[input: ") << ssi2.str() << _T("]") << endl;
@@ -90,7 +90,7 @@ int _tmain( // 09/23/20 AM.
     _t_cout << _T("[output: ") << sso2.str() << _T("]") << endl;
     _t_cout << _T("[end: ") << anaCorporate << _T("]") << endl;
 
-    istrstream ssi3("Strstream test.");
+    istringstream ssi3("Strstream test.");
     ostringstream sso3;
     _t_cout << _T("[analyzer: ") << anaNoop << _T("]") << endl;
     _t_cout << _T("[input: ") << ssi3.str() << _T("]") << endl;

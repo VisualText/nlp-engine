@@ -479,7 +479,7 @@ if (empty(str))
 	return false;
 
 icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
-const UChar *strBuf = ustr.getTerminatedBuffer();
+const UChar *strBuf = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
 icu::UCharCharacterIterator iter(strBuf, unicu::strLen(strBuf));
 num = 0;
 UChar c = iter.first();
@@ -516,7 +516,7 @@ if (empty(str))
 	return false;
 
 icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
-const UChar *strBuf = ustr.getTerminatedBuffer();
+const UChar *strBuf = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
 icu::UCharCharacterIterator iter(strBuf, unicu::strLen(strBuf));
 num = 0;
 UChar c = iter.first();
@@ -550,7 +550,7 @@ return true;
 bool all_uppercase(_TCHAR *str)
 {
 icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
-const UChar *strBuf = ustr.getTerminatedBuffer();
+const UChar *strBuf = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
 icu::UCharCharacterIterator iter(strBuf, unicu::strLen(strBuf));
 UChar c = iter.first();
 do {
@@ -586,7 +586,7 @@ return true;
 bool all_lowercase(_TCHAR *str)
 {
 icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
-const UChar *strBuf = ustr.getTerminatedBuffer();
+const UChar *strBuf = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
 icu::UCharCharacterIterator iter(strBuf, unicu::strLen(strBuf));
 UChar c = iter.first();
 do {
@@ -630,7 +630,7 @@ if (empty(str))
 	return false;
 
 icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
-const UChar *strBuf = ustr.getTerminatedBuffer();
+const UChar *strBuf = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
 icu::UCharCharacterIterator iter(strBuf, unicu::strLen(strBuf));
 
 bool lower = false;
@@ -1056,7 +1056,7 @@ if (!str || !*str || !arr || !*arr)
 	return false;
 
 icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
-const UChar *strBuf = ustr.getTerminatedBuffer();
+const UChar *strBuf = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
 icu::UCharCharacterIterator iter(strBuf, unicu::strLen(strBuf));
 
 UErrorCode success = U_ZERO_ERROR;
@@ -3666,7 +3666,7 @@ if (!name || !*name)
 	return 0;
 
 icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(name));
-const UChar *strBuf = ustr.getTerminatedBuffer();
+const UChar *strBuf = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
 return unicu::strLen(strBuf);
 // return _tcsclen(name1);	[BYTE LENGTH]
 }
