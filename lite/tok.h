@@ -40,6 +40,8 @@ public:
 
 	bool getBad();					// 01/15/99 AM.
 	void setBad(bool);			// 01/15/99 AM.
+	bool getSeparateChars();
+	void setSeparateChars(bool);
 
 	//Parse *getParse();
 	//void   setParse(Parse *);
@@ -89,6 +91,7 @@ public:
 private:
 	//Parse *parse;			// The analyze instance that we're tokenizing for.
 	bool bad_;					// If unknown char seen.	// 01/15/99 AM.
+	bool separateChars_;
 };
 
 
