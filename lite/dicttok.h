@@ -44,6 +44,7 @@ public:
 	void setBad(bool);			// 01/15/99 AM.
 	bool getZapwhite();        // 08/16/11 AM.
 	void setZapwhite(bool);    // 08/16/11 AM.
+	void setCharTok(bool);
 
 	//Parse *getParse();
 	//void   setParse(Parse *);
@@ -153,6 +154,7 @@ private:
 	// DICTOKZ variant.	Same, but ZAP WHITESPACE (don't put
 	// whitespace into the parse tree.)          // 08/16/11 AM.
 	bool zapwhite_;         // 08/16/11 AM.
+	bool separatechars_;
 
 	long totlines_;	// Count lines in text.
 	long tottabs_;		// Count tabs in text.

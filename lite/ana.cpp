@@ -599,6 +599,15 @@ else if ( !strcmp_i(s_algo, _T("dicttokz"))							// 08/16/11 AM.
 	if (gen)		// Gen'ing code for analyzer.							// 08/16/11 AM.
 		genDICTTokz(pass, gen);												// 08/16/11 AM.
 	}
+else if ( !strcmp_i(s_algo, _T("chartok"))							// 07/29/11 AM.
+		  )
+	{
+	DICTTok *dt = new DICTTok();
+	dt->setCharTok(true);
+	algo = dt;
+	if (gen)
+		genDICTTokz(pass, gen);	
+	}
 else if (	!strcmp_i(s_algo, _T("lines"))
 			|| !strcmp_i(s_algo, _T("line"))
 		  )

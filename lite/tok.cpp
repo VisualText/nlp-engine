@@ -56,6 +56,7 @@ Tok::Tok()			// Constructor
 	: Algo(algo_name /*, 0 */)
 {
 bad_ = false;					// 01/15/99 AM.
+separateChars_ = false;
 //parse = 0;
 }
 
@@ -94,7 +95,8 @@ bool		Tok::getBad()		{return bad_;}				// 01/15/99 AM.
 //void Tok::setParse(Parse *x) { parse = x; }
 void		Tok::setBad(bool x)	{bad_		= x;}			// 01/15/99 AM.
 
-
+bool		Tok::getSeparateChars()		{return separateChars_;}
+void		Tok::setSeparateChars(bool x)	{separateChars_		= x;}
 
 /********************************************
 * FN:		DUP
@@ -371,12 +373,16 @@ void Tok::nextTok(
 			++ulen;	// [UNICODE]
 		}
 		else if (unicu::isDigit(c)) {
-			while (c && unicu::isDigit(c) && !unicu::isSingle(c)) {
-				lastEnd = end;
-				U8_NEXT(s, end, length, c);
-				++ulen;	// [UNICODE]
+			if (getSeparateChars()) {
+				++ulen;
+			} else {
+				while (c && unicu::isDigit(c) && !unicu::isSingle(c)) {
+					lastEnd = end;
+					U8_NEXT(s, end, length, c);
+					++ulen;	// [UNICODE]
+				}
+				end -= end - lastEnd;				
 			}
-			end -= end - lastEnd;
 			typ = PNNUM;
 		}
 		else if (unicu::isPunct(c)) {
@@ -384,12 +390,16 @@ void Tok::nextTok(
 			++ulen;	// [UNICODE]
 		}
 		else if (unicu::isAlphabetic(c)) {
-			while (c && unicu::isAlphabetic(c) && !unicu::isSingle(c)) {
-				lastEnd = end;
-				U8_NEXT(s, end, length, c);
-				++ulen;	// [UNICODE]
+			if (getSeparateChars()) {
+				++ulen;
+			} else {
+				while (c && unicu::isAlphabetic(c) && !unicu::isSingle(c)) {
+					lastEnd = end;
+					U8_NEXT(s, end, length, c);
+					++ulen;	// [UNICODE]
+				}
+				end -= end - lastEnd;
 			}
-			end -= end - lastEnd;
 		}
 		else if (unicu::isWhiteSpace(c)) {
 			if (c == '\n')

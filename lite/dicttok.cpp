@@ -63,6 +63,7 @@ DICTTok::DICTTok()			// Constructor
 {
 bad_ = false;					// 01/15/99 AM.
 zapwhite_ = false;			// 08/16/11 AM.
+separatechars_ = false;
 //parse = 0;
 lines_ = tabs_ = 0;	// 08/16/11 AM.
 tottabs_ = 0;
@@ -109,6 +110,10 @@ void		DICTTok::setBad(bool x)	{bad_		= x;}			// 01/15/99 AM.
 void		DICTTok::setZapwhite(bool x)	{zapwhite_		= x;}			// 08/16/11 AM. AM.
 
 
+void DICTTok::setCharTok(bool x) {
+	separatechars_ = x;
+	token_->setSeparateChars(x);
+}
 
 /********************************************
 * FN:		DUP
