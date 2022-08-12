@@ -23,13 +23,48 @@ All rights reserved.
 *
 **************************************************/
 
-#ifdef _OBSO_
+int getutf8(
+	_t_istream *fp,
+	int cc
+	)
+{
+if (fp->eof())
+	return 0;
+
+if (cc <= 0x7F)						// Regular ascii text.
+	return 0;
+
+if ((cc & 0xE0) == 0xC0)				// 110xxxxx 10xxxxxx
+	{
+	return 1;
+	}
+else if ((cc & 0xF0) == 0xE0)		// 1110xxxx + 2
+	{
+	return 2;
+	}
+else if ((cc & 0xF1) == 0xF0)		// 11110xxx + 3 */
+	{
+	return 3;
+	}
+else if ((cc & 0xFD) == 0xF8)	// 111110xx + 4 */
+	{
+	return 4;
+	}
+else if ((cc & 0xFE) == 0xFC)	// 1111110x + 5 */
+	{
+	return 5;
+	}
+
+return 0;
+}
+
+/*
 _TCHAR getutf8(
 	_t_istream *fp
 	)
 {
-_TCHAR ch = NULL;
-int mb = fp->get();
+UChar32 ch = NULL;
+int cc = fp->get();
 
 if (fp->eof())
 	return NULL;
@@ -51,7 +86,7 @@ else if ((mb & 0xF0) == 0xE0)		// 1110xxxx + 2
 	mb = fp->get();
 	ch |= mb & 0x3F;
 	}
-else if ((mb & 0xF1) == 0xF0)		// 11110xxx + 3 */
+else if ((mb & 0xF1) == 0xF0)		// 11110xxx + 3
 	{
 	ch = (mb & 0x0F) << 18;
 	mb = fp->get();
@@ -61,7 +96,7 @@ else if ((mb & 0xF1) == 0xF0)		// 11110xxx + 3 */
 	mb = fp->get();
 	ch |= mb & 0x3F;
 	}
-else if ((mb & 0xFD) == 0xF8)	// 111110xx + 4 */
+else if ((mb & 0xFD) == 0xF8)	// 111110xx + 4
 	{
 	ch = (mb & 0x0F) << 24;
 	mb = fp->get();
@@ -73,7 +108,7 @@ else if ((mb & 0xFD) == 0xF8)	// 111110xx + 4 */
 	mb = fp->get();
 	ch |= mb & 0x3F;
 	}
-else if ((mb & 0xFE) == 0xFC)	// 1111110x + 5 */
+else if ((mb & 0xFE) == 0xFC)	// 1111110x + 5
 	{
 	ch = (mb & 0x0F) << 30;
 	mb = fp->get();
@@ -92,8 +127,9 @@ else
 
 return ch;
 }
+*/
 
-
+#ifdef _OBSO_
 /**************************************************
 *						U_READBOM
 * FUN:	u_readbom

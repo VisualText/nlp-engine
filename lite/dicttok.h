@@ -20,9 +20,6 @@ All rights reserved.
 #include "lite/algo.h"
 #include "htab.h"
 #include "tok.h"
-#include "unicu.h"
-
-using namespace unicu;
 
 /********************************************
 * CLASS:	DICTTOK

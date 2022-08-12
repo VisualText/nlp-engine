@@ -29,9 +29,6 @@ All rights reserved.
 #include "words/words.h"		// 10/16/00 AM.
 #include "words/wordarrs.h"	// 10/16/00 AM.
 
-#include "unicu.h"
-using namespace unicu;
-
 #ifdef UNICODE
 //#include "unicode/utypes.h"	// 03/03/05 AM.
 //#include "unicode/uchar.h"
