@@ -40,9 +40,6 @@ All rights reserved.
 #include "nlp.h"				// 06/25/03 AM.
 #include "ivar.h"
 
-#include "unicu.h"
-using namespace unicu;
-
 #ifdef UNICODE
 #include "utypes.h"	// 03/03/05 AM.
 #include "uchar.h"
@@ -573,6 +570,7 @@ switch (typ)
 		}
 		break;
 	case PNALPHA:
+	case PNEMOJI:
 		if (!prevwh_)
 			replaceNum(node,_T("NOSP"),1);
 		if (lines_)

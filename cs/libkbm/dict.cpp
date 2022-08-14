@@ -47,6 +47,7 @@ using namespace std;											// Upgrade	// 01/24/01 AM.
 /* #include "cc_var.h" */
 
 #include "kbm_priv.h"
+#include "prim/unicu.h"
 
 
 /**************************************************
@@ -192,14 +193,25 @@ _TCHAR *name = ((SYM*)sym)->str;											// 06/29/03 AM.
 dirty = true;																	// 06/29/03 AM.
 
 // 05/02/99 AM. Allowing nonalphabetic starts.
-_TUCHAR ch = *name;	// Handle extended ANSI.	// FIX.	// 10/08/99 AM.
-if (cg_alphabetic(ch))											// FIX.	// 10/08/99 AM.
+//UChar32 ch = *name;	// Handle extended ANSI.	// FIX.	// 10/08/99 AM.
+
+UChar32 ch;
+int32_t end = 0;
+int32_t length = 0;
+U8_NEXT(name, end, length, ch);
+
+if (unicu::isAlphabetic(ch))											// FIX.	// 10/08/99 AM.
 	hier  = acon_->c_dict_ALPHA;	// Root of index tree.			// 06/18/03 AM.
-else if (_istspace((_TUCHAR)ch))									// 05/02/99 AM.
+else if (unicu::isWhiteSpace(ch))									// 05/02/99 AM.
 	return acon_->con_add_word_first(name, acon_->c_nlp_WHT);	// 05/02/99 AM.
-else if (cg_punct(ch))		// Handle ANSI.		// 10/08/99 AM.
+else if (unicu::isPunct(ch))		// Handle ANSI.		// 10/08/99 AM.
 	return acon_->con_add_word_first(name, acon_->c_nlp_PUNCT);	// 05/02/99 AM.
-else if (_istdigit((_TUCHAR)ch))									// 05/13/99 AM.
+else if (unicu::isEmoji(ch))
+	{
+	hier = ACON::con_parent(acon_->c_dict_ALPHA);
+	hier = ACON::con_get_child(hier, _T("emoji"));
+	}
+else if (unicu::isDigit(ch))									// 05/13/99 AM.
 	{
 	// Hacking in a place for phrases that start with digit.
 	// 05/13/99 AM.

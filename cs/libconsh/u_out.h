@@ -14,6 +14,13 @@ All rights reserved.
 #ifndef U_OUT_H_
 #define U_OUT_H_
 
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <iostream>
+#include <fstream>
+#include <my_tchar.h>
+int getutf8(std::_t_istream *, int);
 
 #ifdef UNICODE
 

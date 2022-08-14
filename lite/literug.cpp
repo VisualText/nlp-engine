@@ -37,9 +37,6 @@ All rights reserved.
 #include "ana.h"
 #include "parse.h"
 
-#include "unicu.h"
-using namespace unicu;
-
 /********************************************
 * FN:		genSample
 * CR:		05/18/99 AM.

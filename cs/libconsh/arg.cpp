@@ -122,15 +122,12 @@ _TCHAR cc;						/* Char to process. 		*/
 bool ok;						/* Successful read.			*/
 LIST *end;						/* End of args list.		*/
 int len = 0;
+int ci = 0;
 
 *args = end = LNULL;
 alist->list_add_buf(buf);
 
-#ifdef UNICODE
-cc = getutf8(fp);
-#else
-cc = fp->get();					/* Lookahead char.			*/
-#endif
+cc = fp->get();
 
 if (fp->eof())																	// 12/18/01 AM.
 	return true;	// EOF is ok.											// 12/18/01 AM.
@@ -150,30 +147,18 @@ for (;;)						/* While getting args.		*/
       case '\n':
 		case '\r':				// FIX.  04/21/99 AM.
 			while (cc == '\r')	// 10/31/06 AM.
-#ifdef UNICODE
-				cc = getutf8(fp);	// 10/31/06 AM.
-#else
 				cc = fp->get();	// 10/31/06 AM.
-#endif
          if (!silent_f)		/* If echoing input. */
             args_pp(*args, out, buf);
          return(true);
       case ';':					/* Get comment.				*/
-#ifdef UNICODE
-			cc = getutf8(fp);
-#else
 			cc = fp->get();
-#endif
-         ok = arg_get_comment(fp, &cc);
+            ok = arg_get_comment(fp, &cc);
          break;
       case '"':					/* Get string arg.			*/
-#ifdef UNICODE
-			cc = getutf8(fp);
-#else
-         cc = fp->get();			/* Lookahead char.			*/
-#endif
+         ci = fp->get();
          ok = arg_get_str(fp, alist, out,								// 06/21/03 AM.
-													&cc, &buf, args, &end, len);	// 08/14/02 AM.
+													ci, &cc, &buf, args, &end, len);	// 08/14/02 AM.
          break;
       default:					/* Get regular arg.			*/
          ok = arg_get(fp, alist, &cc, &buf, args, &end, len);			// 08/14/02 AM.
@@ -238,11 +223,7 @@ for (;;)			/* While getting arg */
 
       *buf++ = cc;		/* Add char to current arg. */
       f_esc = 0;
-#ifdef UNICODE
-		cc = getutf8(fp);
-#else
-		cc = fp->get();
-#endif
+      cc = fp->get();
 		if (fp->eof())															// 12/18/01 AM.
 			cc = '\0';															// 12/18/01 AM.
       continue;
@@ -269,11 +250,7 @@ for (;;)			/* While getting arg */
          //*args = alist->list_add(*args, (long) *pos, end);
          *args = alist->list_add(*args, lenIn, end);
          while (cc == '\r')	// In case of cr-lf format.	// 10/31/06 AM.
-#ifdef UNICODE
-		cc = getutf8(fp);	// 10/31/06 AM.
-#else
-		cc = fp->get();	// 10/31/06 AM.
-#endif
+            cc = fp->get();
          *cup = cc;
          *pos = buf;
          len++;
@@ -283,11 +260,7 @@ for (;;)			/* While getting arg */
          len++;
          break;
       }
-#ifdef UNICODE
-	cc = getutf8(fp);
-#else
-	cc = fp->get();
-#endif
+   cc = fp->get();
    if (fp->eof())																// 12/18/01 AM.
 		cc = '\0';																// 12/18/01 AM.
    }
@@ -332,21 +305,13 @@ for (;;)			/* While getting arg */
       case '\n':
       case '\r':
 			while (cc == '\r')	// 10/31/06 AM.
-#ifdef UNICODE
-				cc = getutf8(fp);	// 10/31/06 AM.
-#else
-				cc = fp->get();	// 10/31/06 AM.
-#endif
+            cc = fp->get();	// 10/31/06 AM.
          *cup = cc;
          return(ok);
       default:
          break;
       }
-#ifdef UNICODE
-	cc = getutf8(fp);
-#else
-	cc = fp->get();
-#endif
+   cc = fp->get();
    if (fp->eof())																// 12/18/01 AM.
 		cc = '\0';																// 12/18/01 AM.
    }
@@ -371,6 +336,7 @@ arg_get_str(
 	ALIST *alist,		// List manager.									// 08/14/02 AM.
 	_t_ostream *out,		// Stream to echo to.							// 06/21/03 AM.
 	/*DU*/
+   int ci,
 	_TCHAR *cup,			/* Lookahead char.				*/
 	_TCHAR **pos,			/* Buffer for arg.				*/
 	LIST **args,
@@ -384,12 +350,13 @@ int f_esc;			/* If backslash escape pending. */
 bool ok;			/* If successful read.			*/
 
 ok = true;
-cc = *cup;
+cc = (_TCHAR)ci;
 if (fp->eof())																	// 12/18/01 AM.
 	cc = '\0';																	// 12/18/01 AM.
 buf = *pos;
 f_esc = 0;
 int lenIn = len;
+int extras = getutf8(fp,ci);
 
 for (;;)			/* While getting arg */
    {
@@ -404,11 +371,7 @@ for (;;)			/* While getting arg */
 
       *buf++ = cc;		/* Add char to current arg. */
       f_esc = 0;
-#ifdef UNICODE
-		cc = getutf8(fp);
-#else
-		cc = fp->get();
-#endif
+      cc = fp->get();
 		if (fp->eof())															// 12/18/01 AM.
 			cc = '\0';															// 12/18/01 AM.
       continue;
@@ -432,11 +395,7 @@ for (;;)			/* While getting arg */
          f_esc = 1;
          break;
       case '"':			/* Found end of string.		*/
-#ifdef UNICODE
-			cc = getutf8(fp);
-#else
-         cc = fp->get();	/* Lookahead char.			*/
-#endif
+			cc = fp->get();
 			if (fp->eof())														// 12/18/01 AM.
 				cc = '\0';														// 12/18/01 AM.
          if (!_istspace((_TUCHAR)cc))
@@ -452,15 +411,20 @@ for (;;)			/* While getting arg */
          len++;
          return(ok);
       default:
-         *buf++ = cc;	/* Add char to current arg. */
+         int i = 0;
+         *buf++ = cc;
          len++;
+         while (i++ < extras) {
+            cc = fp->get();
+            *buf++ = cc;
+            len++;
+         }
+         extras = 0;
          break;
       }
-#ifdef UNICODE
-	cc = getutf8(fp);
-#else
-	cc = fp->get();
-#endif
+   ci = fp->get();
+   cc = (_TCHAR)ci;
+   extras = getutf8(fp,ci);
    if (fp->eof())																// 12/18/01 AM.
 		cc = '\0';																// 12/18/01 AM.
    }
@@ -496,11 +460,7 @@ for (;;)
 			// 04/16/99 AM. Problems with macros in DLL libraries.
          //cc = getc(fp);		// 04/16/99 AM.
 			//cc = fgetc(fp);		// 04/16/99 AM.
-#ifdef UNICODE
-			cc = getutf8(fp);
-#else
-			cc = fp->get();				// 04/20/99 AM.
-#endif
+			cc = fp->get();
 			if (fp->eof())														// 12/18/01 AM.
 				cc = '\0';														// 12/18/01 AM.
          break;

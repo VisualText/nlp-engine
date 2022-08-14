@@ -29,7 +29,7 @@ All rights reserved.
 #include <direct.h>	// For _mkdir										// 12/07/01 AM.
 #endif
 
-#include "unicu.h"
+#include "prim/unicu.h"
 
 #include "machine.h"
 #include "lite/lite.h"		// MOVE UP.	// 03/23/19 AM.

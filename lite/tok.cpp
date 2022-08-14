@@ -29,7 +29,7 @@ All rights reserved.
 #include "Eana.h"				// 02/26/01 AM.
 #include "nlp.h"				// 06/25/03 AM.
 
-#include "unicu.h"
+#include "prim/unicu.h"
 using namespace unicu;
 
 #ifdef UNICODE

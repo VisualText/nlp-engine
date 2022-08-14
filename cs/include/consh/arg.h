@@ -1,5 +1,5 @@
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright Â© 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -7,11 +7,12 @@ All rights reserved.
 *
 *									ARG.H
 *
-* FILE:	conch.¹/arg.h
+* FILE:	conch.Â¹/arg.h
 * SUBJ:	Declarations for command-line parsing.
 * CR:	8/20/95 AM.
 *
 *******************************************************************************/
+#include "prim/unicu.h"
 
 extern LIBCONSH_API bool
 arg_get(
@@ -36,6 +37,7 @@ arg_get_str(
 	ALIST *alist,		// List manager.									// 08/14/02 AM.
 	_t_ostream *out,																// 06/21/03 AM.
 	/*DU*/
+	int ci,
 	_TCHAR *cup,			/* Lookahead char.				*/
 	_TCHAR **pos,			/* Buffer for arg.				*/
 	LIST **args,
