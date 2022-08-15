@@ -2,7 +2,7 @@
 
 ## Glitter Chat
 
-[![Join the chat at https://gitter.im/nlpppp/NLP-Engine](https://badges.gitter.im/nlpppp/NLP-Engine.svg)](https://gitter.im/nlpppp/NLP-Engine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) Join us on Glitter chat!
+[![Join the chat at https://gitter.im/NLPplusplus/NLP-Engine](https://badges.gitter.im/NLPplusplus/NLP-Engine.svg)](https://gitter.im/NLPplusplus/NLP-Engine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) Join us on Glitter chat!
 
 ## About
 
