@@ -1,4 +1,10 @@
-# nlp-engine
+# NLP Engine
+
+## Glitter Chat
+
+[![Join the chat at https://gitter.im/nlpppp/NLP-Engine](https://badges.gitter.im/nlpppp/NLP-Engine.svg)](https://gitter.im/nlpppp/NLP-Engine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) Join us on Glitter chat!
+
+## About
 
 The NLP engine is the engine that runs text analyzers writtein in [NLP++](http://visualtext.org). The nlp-engine runs on Linux, Windows, and MacOS. It can be called in two different ways:
 
