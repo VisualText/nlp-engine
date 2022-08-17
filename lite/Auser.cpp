@@ -11,7 +11,6 @@ All rights reserved.
 *******************************************************************************/
 
 #ifdef LINUX
-using namespace std;
 #endif
 #include "StdAfx.h"
 #include "machine.h"	// 10/25/06 AM.

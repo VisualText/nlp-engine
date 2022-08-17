@@ -13,7 +13,6 @@ All rights reserved.
 
 #include "StdAfx.h"
 #include <iostream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 #include "prim/libprim.h"
 #include "prim/dyn.h"
 typedef int ( * lpFunc1)();
@@ -31,10 +30,10 @@ LIBPRIM_API HINSTANCE load_dll(_TCHAR *path)
     if (hLibrary != NULL)
     {
     }
-//    else cerr << "Error in Load Library" << endl;				// 08/20/00 AM.
+//    else cerr << "Error in Load Library" << std::endl;				// 08/20/00 AM.
 	else
-		_t_cerr << _T("[Couldn't load library: ") << path					// 08/20/00 AM.
-			  << endl;
+		std::_t_cerr << _T("[Couldn't load library: ") << path					// 08/20/00 AM.
+			  << std::endl;
 return hLibrary;
 }
 

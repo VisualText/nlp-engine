@@ -23,7 +23,6 @@ All rights reserved.
 
 #include "StdAfx.h"
 #include <iostream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 #include "prim/libprim.h"
 
 #include <stdio.h>
@@ -507,23 +506,23 @@ return(tmp);
 * SUBJ:	Pretty-print a list of strings.
 * CR:	8/27/95 AM.
 *
-**************************************************/
+***************************************flush_t_***********/
 
 void ALIST::list_pp_strs(
 	LIST *args,
 //	FILE *out			// 04/20/99 AM.
-	_t_ostream *out,	// 04/20/99 AM.
+	std::_t_ostream *out,	// 04/20/99 AM.
 	_TCHAR *buf
 	)
 {
 while (args)
    {
    //fprintf(out, "\"%s\" ", (char *) args->val);				// 04/20/99 AM.
-	*out << _T("\"") << (ALIST::list_str(&args,buf)) << _T("\" ") << flush;	// 04/20/99 AM.
+	*out << _T("\"") << (ALIST::list_str(&args,buf)) << _T("\" ") << std::flush;	// 04/20/99 AM.
    args = args->next;
    }
 //fprintf(out, "\n");		// 04/20/99 AM.
-*out << endl;					// 04/20/99 AM.
+*out << std::endl;					// 04/20/99 AM.
 }
 
 

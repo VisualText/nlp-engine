@@ -1,6 +1,6 @@
 
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -8,7 +8,7 @@ All rights reserved.
 *
 *									CONSH_KB.C
 *
-* FILE:	consh.¹/consh_kb.c
+* FILE:	consh.ï¿½/consh_kb.c
 * SUBJ:	Consh-specific knowledge base handlers.
 * CR:	11/28/95 AM.
 *
@@ -19,7 +19,6 @@ All rights reserved.
 #include <stdlib.h>
 #include <string.h>			// 03/07/00 AM.
 #include <iostream>											// Upgrade.	// 01/30/01 AM.
-using namespace std;											// Upgrade.	// 01/30/01 AM.
 
 #include "prim/libprim.h"
 #include "prim/prim.h"

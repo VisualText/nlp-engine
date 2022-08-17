@@ -8,7 +8,6 @@
 
 #include <string>
 #include <vector>
-using namespace std;
 
 #include <windows.h>
 #include <wininet.h>

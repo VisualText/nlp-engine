@@ -17,7 +17,6 @@ All rights reserved.
 #include <stdlib.h>
 #include <iostream>											// Upgrade	// 01/24/01 AM.
 #include <fstream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 #include <ctype.h>
 #include <string.h>
 
@@ -45,16 +44,16 @@ if (Func4 != NULL)
 if (kb_setup(cg))
 //if (kb_static_setup(cg))	// SETUP COMPILED KB IN LINUX. // 02/19/19 AM.
   {
-	_t_cerr << _T("[call_kb_setup: Kb setup complete.]") << endl;	// 05/07/01 AM.
-	*cgerr << _T("call_kb_setup: Kb setup completed.") << endl;
+	std::_t_cerr << _T("[call_kb_setup: Kb setup complete.]") << std::endl;	// 05/07/01 AM.
+	*cgerr << _T("call_kb_setup: Kb setup completed.") << std::endl;
 	return true;	// 02/20/19 AM.
   
   }
 #endif
 else
 	{
-	_t_cerr << _T("[call_kb_setup: Error. No entry point.]") << endl;	// 05/07/01 AM.
-	*cgerr << _T("Error in call_kb_setup") << endl;
+	std::_t_cerr << _T("[call_kb_setup: Error. No entry point.]") << std::endl;	// 05/07/01 AM.
+	*cgerr << _T("Error in call_kb_setup") << std::endl;
 	}
 return false;
 }

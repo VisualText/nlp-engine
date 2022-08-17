@@ -25,7 +25,6 @@ All rights reserved.
 #include <stdlib.h>
 #include <iostream>											// Upgrade	// 01/24/01 AM.
 #include <fstream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 #include <ctype.h>
 
 #include "prim/libprim.h"
@@ -94,8 +93,8 @@ using namespace std;											// Upgrade	// 01/24/01 AM.
 #ifdef OLD_020815_
 bool ind_action(
 	LIST *args,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent,
 	CG *cg
@@ -192,8 +191,8 @@ return(ra_add(con, typ, ds, slot, val, from, to));
 
 bool ind_attr(
 	LIST *args,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent,
 	CG *cg
@@ -315,8 +314,8 @@ return(added);
 
 bool ind_nattr(
 	LIST *args,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent,
 	CG *cg
@@ -450,8 +449,8 @@ return(added);
 
 bool ind_wattr(
 	LIST *args,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent,
 	CG *cg
@@ -560,8 +559,8 @@ return(added);
 
 bool ind_childs(
 	LIST *args,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent,
 	CG *cg
@@ -630,8 +629,8 @@ return(true);
 
 bool ind_named_phrase(
 	LIST *args,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent,
 	CG *cg
@@ -734,8 +733,8 @@ return(true);
 
 bool ind_phrase(
 	LIST *args,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent,
 	CG *cg
@@ -857,8 +856,8 @@ return(true);
 
 bool ind_proxy(
 	LIST *args,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent
 	)
@@ -961,8 +960,8 @@ return(added);
 #ifdef OLD_020815_
 bool ind_rest(
 	LIST *args,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent,
 	CG *cg

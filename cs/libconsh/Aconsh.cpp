@@ -13,7 +13,6 @@ All rights reserved.
 #include "StdAfx.h"
 #include <stdlib.h>
 #include <iostream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 #include "consh/libconsh.h"
 
 #include "prim/libprim.h"

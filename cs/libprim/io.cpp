@@ -19,7 +19,6 @@ All rights reserved.
 
 #include "StdAfx.h"
 #include <fstream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -44,12 +43,12 @@ bool resolve_file_unix(_TCHAR*,_TCHAR*,_TCHAR*);	// 07/01/03 AM.
 
 LIBPRIM_API void
 //indent(int num, FILE *out)		// 04/20/99 AM.
-indent(int num, _t_ostream *out)		// 04/20/99 AM.
+indent(int num, std::_t_ostream *out)		// 04/20/99 AM.
 {
 while (num-- > 0)
    //fprintf(out, " ");				// 04/20/99 AM.
 	*out << _T(" ");						// 04/20/99 AM.
-*out << flush;							// 04/20/99 AM.
+*out << std::flush;							// 04/20/99 AM.
 }
 
 
@@ -65,7 +64,7 @@ while (num-- > 0)
 
 LIBPRIM_API _TCHAR
 //skip_blanks(char cc, FILE *fp)			// 04/20/99 AM.
-skip_blanks(_TCHAR cc, _t_istream *fp)		// 04/20/99 AM.
+skip_blanks(_TCHAR cc, std::_t_istream *fp)		// 04/20/99 AM.
 {
 for (;;)
    {
@@ -97,11 +96,11 @@ for (;;)
 LIBPRIM_API void
 //tab(int num, FILE *out)			// 04/20/99 AM.
 // Name conflicts with Gnu	// 10/27/06 AM.
-vttab(int num, _t_ostream *out)		// 04/20/99 AM.
+vttab(int num, std::_t_ostream *out)		// 04/20/99 AM.
 {
 while (num-- > 0)
    //fprintf(out, "\t");		// 04/20/99 AM.
-	*out << _T("\t") << flush;		// 04/20/99 AM.
+	*out << _T("\t") << std::flush;		// 04/20/99 AM.
 }
 
 /********************************************

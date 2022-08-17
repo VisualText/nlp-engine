@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright © 1998-2009 by Text Analysis International, Inc.
+Copyright ï¿½ 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 ********************************************************************************
 *
@@ -71,11 +71,11 @@ public:
 		);
 	bool		 st_pp(
 		//FILE *fp			// 04/20/99 AM.
-		_t_ostream *fp			// 04/20/99 AM.
+		std::_t_ostream *fp			// 04/20/99 AM.
 		);
 	void		 st_pp_all(
 		//FILE *fp			// 04/20/99 AM.
-		_t_ostream *fp			// 04/20/99 AM.
+		std::_t_ostream *fp			// 04/20/99 AM.
 		);
 	int		 st_seg_curr();
 	_TCHAR		*st_seg_p();

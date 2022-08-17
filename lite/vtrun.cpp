@@ -53,7 +53,6 @@ All rights reserved.
 #include <ctype.h>
 #include <iostream>											// Upgrade	// 01/24/01 AM.
 #include <fstream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 #include <string.h>
 #include "qkbm/libqkbm.h"
 #include "qkbm/defs.h"

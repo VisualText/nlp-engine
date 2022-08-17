@@ -1,5 +1,5 @@
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -7,7 +7,7 @@ All rights reserved.
 *
 *									HELP.C
 *
-* FILE:	consh.¹/help.c
+* FILE:	consh.ï¿½/help.c
 * SUBJ:	Help commands.
 * CR:	11/11/95 AM.
 *
@@ -19,7 +19,6 @@ All rights reserved.
 #include <stdlib.h>
 #include <iostream>											// Upgrade	// 01/24/01 AM.
 #include <fstream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 
 #include "prim/libprim.h"
 #include "prim/prim.h"

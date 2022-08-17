@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									SYM_GEN.C
 *
-* FILE:	consh.¹/sym_gen.c
+* FILE:	consh.ï¿½/sym_gen.c
 * SUBJ:	Generate symbol and conflict table code files, from Consh.
 * CR:	10/1/95 AM.
 *
@@ -21,7 +21,6 @@ All rights reserved.
 #include <stdio.h>
 #include <iostream>											// Upgrade	// 01/24/01 AM.
 #include <fstream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 
 #include "prim/libprim.h"
 //#include "prim/mach.h"

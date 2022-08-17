@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									PRET.C
 *
-* FILE:	consh.¹/pret.c
+* FILE:	consh.ï¿½/pret.c
 * SUBJ:	Pretty printers that mix modules.
 * CR:	3/30/96 AM.
 *
@@ -19,7 +19,6 @@ All rights reserved.
 
 #include "StdAfx.h"
 #include <iostream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

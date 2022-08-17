@@ -15,7 +15,6 @@ modified without written permission from Text Analysis International, Inc.
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
-using namespace std;
 #include <time.h>
 #include "machine-min.h"
 

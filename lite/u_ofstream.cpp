@@ -3,7 +3,6 @@ Copyright (c) 1998-2010 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 #include "StdAfx.h"
-//using namespace std;
 
 
 #include "machine.h"	// 10/25/06 AM.

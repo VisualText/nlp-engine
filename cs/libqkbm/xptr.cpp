@@ -19,7 +19,6 @@ All rights reserved.
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
-using namespace std;
 
 #include "qkbm/libqkbm.h"
 #include "qkbm/defs.h"

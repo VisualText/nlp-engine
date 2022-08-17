@@ -21,7 +21,6 @@ All rights reserved.
 #include "StdAfx.h"
 #include <ctype.h>		// 03/07/00 AM.
 #include <iostream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 #include "prim/libprim.h"
 #include "kbm/libkbm.h"
 
@@ -221,7 +220,7 @@ else if (unicu::isDigit(ch))									// 05/13/99 AM.
 	}
 else	// Catchall																// 06/19/03 AM.
 	{
-   _t_cerr << _T("[dict_add_word: Unhandled word=") << name << _T("]") << endl;
+   std::_t_cerr << _T("[dict_add_word: Unhandled word=") << name << _T("]") << std::endl;
 	hier = acon_->c_dict_ALPHA;											// 06/19/03 AM.
 	}
 
@@ -229,7 +228,7 @@ else	// Catchall																// 06/19/03 AM.
 index = dict_find_index(hier, name);
 if (!index)
    {
-   _t_cerr << _T("[dict_add_word: Failed on name=") << name << _T("]") << endl;
+   std::_t_cerr << _T("[dict_add_word: Failed on name=") << name << _T("]") << std::endl;
    return(CNULL);
    }
 
@@ -300,9 +299,9 @@ if (!subs || subs->kind == cWORD)
 result = _tcscmp(name, ACON::con_str(subs));
 if (result < 0)
    {
-   _t_cerr << _T("[dict_find_index: name=")
+   std::_t_cerr << _T("[dict_find_index: name=")
 		  << name << _T(" precedes first index=")
-		  << ACON::con_str(subs) << _T("]") << endl;
+		  << ACON::con_str(subs) << _T("]") << std::endl;
    return(CNULL);
    }
 else if (result == 0)

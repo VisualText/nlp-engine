@@ -14,8 +14,7 @@ modified without written permission from Text Analysis International, Inc.
 #include "StdAfx.h"
 #include <stdlib.h>
 #include <iostream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
-#include "consh/libconsh.h"
+u#include "consh/libconsh.h"
 
 #include "prim/libprim.h"
 #include "prim/prim.h"

@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									GEN.C
 *
-* FILE:	conan.¹/gen.c
+* FILE:	conan.ï¿½/gen.c
 * SUBJ:	Module for generating code.
 * NOTE:	Should separate primitives from consh_gen facilities.
 *		Some old stuff still infests these files.
@@ -24,7 +24,6 @@ All rights reserved.
 #include <string.h>
 #include <iostream>											// Upgrade	// 01/24/01 AM.
 #include <fstream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 
 #include "prim/libprim.h"
 #include "prim/prim.h"
@@ -62,7 +61,7 @@ int count,				/* Number of string table files.			*/
 //long ii;
 long off,				/* Offset in total string table.			*/
      max;				/* Size of string table segment.			*/
-_t_ofstream *s_fp;				/* File ptr for string table file.		*/
+std::_t_ofstream *s_fp;				/* File ptr for string table file.		*/
 _t_ifstream *w_fp;				/* Words file ptr.							*/
 
 max = SEG_SIZE;
@@ -78,7 +77,7 @@ _stprintf(s_nam, _T("%s.%s"), s_tab, tail);
 
 //if (!file_open(s_nam, "w", &s_fp))
 //   return;
-s_fp = new _t_ofstream(s_nam);			// 04/20/99 AM.
+s_fp = new std::_t_ofstream(s_nam);			// 04/20/99 AM.
 
 gen_array_hd(_T("char"), s_tab, _T(""), s_fp);			/* Start array.				*/
 *s_fp << _T("\"");							/* Start quote for string.	*/
@@ -95,12 +94,12 @@ while ((*w_fp >> buf) != _TEOF)
    _t_cout << _T("off=") << off
 		  << _T(", len=") << len
 		  << _T(", max=") << max
-		  << endl;
+		  << std::endl;
    _t_cout << _T("seg1=")
 		  << (off + (long)len)/max
 		  << _T(" seg2=")
 		  << off/max
-		  << endl;
+		  << std::endl;
    if ((((off + (long)len) / max) > (off / max))  || !(off % max))
       {
       
@@ -119,7 +118,7 @@ while ((*w_fp >> buf) != _TEOF)
 
       //if (!file_open(s_nam, "w", &s_fp))
       //   return;
-		s_fp = new _t_ofstream(s_nam);			// 04/20/99 AM.
+		s_fp = new std::_t_ofstream(s_nam);			// 04/20/99 AM.
 
       gen_array_hd(_T("char"), s_tab, _T(""), s_fp);		/* Start array.				*/
       *s_fp << _T("\"");							/* Start quote for string.	*/
@@ -167,12 +166,12 @@ gen_st_empty(
 	)
 {
 long ii;
-_t_ofstream *s_fp;			/* File ptr for string table file.		*/
+std::_t_ofstream *s_fp;			/* File ptr for string table file.		*/
 //int count;			/* Number of string table files.		*/
 
 //if (!file_open(s_nam, "w", &s_fp))
 //   return;
-s_fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+s_fp = new std::_t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
 
 gen_array_hd(_T("char"), s_tab, _T(""), s_fp);			/* Start array.				*/
 *s_fp << _T("\"");							/* Start quote for string.	*/
@@ -206,37 +205,37 @@ delete s_fp;
 void gen_array_decl(
 	_TCHAR *typ,
 	_TCHAR *nam,
-	_t_ofstream *fp
+	std::_t_ofstream *fp
 	)
 {
-*fp << typ << _T(" ") << nam << _T("[];") << endl;
+*fp << typ << _T(" ") << nam << _T("[];") << std::endl;
 }
 
 void gen_array_def(
 	_TCHAR *typ,
 	_TCHAR *nam,
 	_TCHAR *siz,
-	_t_ofstream *fp
+	std::_t_ofstream *fp
 	)
 {
-*fp << typ << _T(" ") << nam << _T("[") << siz << _T("];") << endl;
+*fp << typ << _T(" ") << nam << _T("[") << siz << _T("];") << std::endl;
 }
 
 void gen_array_hd(
 	_TCHAR *typ,
 	_TCHAR *nam,
 	_TCHAR *siz,
-	_t_ofstream *fp
+	std::_t_ofstream *fp
 	)
 {
-*fp << typ << _T(" ") << nam << _T("[") << siz << _T("]=\n   {") << endl;
+*fp << typ << _T(" ") << nam << _T("[") << siz << _T("]=\n   {") << std::endl;
 }
 
 void gen_array_tl(
-	_t_ofstream *fp
+	std::_t_ofstream *fp
 	)
 {
-*fp << _T("\n   };") << endl;
+*fp << _T("\n   };") << std::endl;
 }
 
 
@@ -249,7 +248,7 @@ void gen_array_tl(
 **************************************************/
 
 void gen_file_head(
-	_t_ofstream *fp
+	std::_t_ofstream *fp
 	)
 {
 _TCHAR str[80];
@@ -259,6 +258,6 @@ _stprintf(str, _T("%s"), _T("DUMMYDATE"));
 *fp << _T("/*** ")
 	 << str
 	 << _T(" AUTOMATICALLY GENERATED! EDITS WILL BE LOST. ***/")
-	 << endl;
+	 << std::endl;
 }
 

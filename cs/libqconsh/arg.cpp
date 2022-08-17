@@ -20,7 +20,6 @@ All rights reserved.
 #include <ctype.h>
 #include <iostream>											// Upgrade	// 01/24/01 AM.
 #include <fstream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 
 #include "u_out.h"					// 01/13/06 AM.
 #include "prim/libprim.h"
