@@ -16,7 +16,7 @@ All rights reserved.
 
 extern LIBCONSH_API bool
 arg_get(
-	_t_istream *fp,			/* Stream to read from.				*/
+	std::_t_istream *fp,			/* Stream to read from.				*/
 	ALIST *alist,		// List manager.									// 08/14/02 AM.
 	/*DU*/
 	_TCHAR *cup,			/* Lookahead char.					*/
@@ -27,15 +27,15 @@ arg_get(
 	);
 extern LIBCONSH_API bool
 arg_get_comment(
-	_t_istream *fp,			/* Stream to read from.				*/
+	std::_t_istream *fp,			/* Stream to read from.				*/
 	/*DU*/
 	_TCHAR *cup			/* Lookahead char.					*/
 	);
 extern LIBCONSH_API bool
 arg_get_str(
-	_t_istream *fp,			/* Stream to read from.			*/
+	std::_t_istream *fp,			/* Stream to read from.			*/
 	ALIST *alist,		// List manager.									// 08/14/02 AM.
-	_t_ostream *out,																// 06/21/03 AM.
+	std::_t_ostream *out,																// 06/21/03 AM.
 	/*DU*/
 	int ci,
 	_TCHAR *cup,			/* Lookahead char.				*/
@@ -47,13 +47,13 @@ arg_get_str(
 extern LIBCONSH_API void
 args_pp(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	_TCHAR *buf
 	);
 extern LIBCONSH_API bool
 args_read(
-	_t_istream *fp,						/* Stream to read.			*/
-	_t_ostream *out,						/* Stream to echo to.		*/
+	std::_t_istream *fp,						/* Stream to read.			*/
+	std::_t_ostream *out,						/* Stream to echo to.		*/
 	bool silent_f,					/* True if not echoing.		*/
 	ALIST *alist,		// List manager.									// 08/14/02 AM.
 	_TCHAR *buf,						/* Buffer for args.			*/

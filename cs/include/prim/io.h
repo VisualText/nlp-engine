@@ -14,10 +14,10 @@ All rights reserved.
 *******************************************************************************/
 
 extern LIBPRIM_API void
-indent(int num, _t_ostream *out);
+indent(int num, std::_t_ostream *out);
 
 extern LIBPRIM_API _TCHAR
-skip_blanks(_TCHAR cc, _t_istream *fp);
+skip_blanks(_TCHAR cc, std::_t_istream *fp);
 
 
 //extern LIBPRIM_API void

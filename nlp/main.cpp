@@ -15,7 +15,7 @@ All rights reserved.
 #include "lite/nlp_engine.h"
 #include "version.h"
 
-#define NLP_ENGINE_VERSION "1.19.1"
+#define NLP_ENGINE_VERSION "1.20.0"
 
 bool cmdReadArgs(int,_TCHAR*argv[],_TCHAR*&,_TCHAR*&,_TCHAR*&,_TCHAR*&,bool&,bool&,bool&);
 void cmdHelpargs(_TCHAR*);

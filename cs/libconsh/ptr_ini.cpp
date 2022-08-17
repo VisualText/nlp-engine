@@ -7,7 +7,6 @@ All rights reserved.
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 
 #include "prim/libprim.h"
 #include "prim/prim.h"

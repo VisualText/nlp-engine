@@ -1,5 +1,5 @@
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -7,7 +7,7 @@ All rights reserved.
 *
 *									GEN.H
 *
-* FILE:	conan.¹/gen.h
+* FILE:	conan.ï¿½/gen.h
 * SUBJ:	Declarations for code generation.
 * NOTE:	
 * CR:	5/06/95 AM.
@@ -17,25 +17,25 @@ All rights reserved.
 extern void gen_array_decl(
 	_TCHAR *typ,
 	_TCHAR *nam,
-	_t_ofstream *fp
+	std::_t_ofstream *fp
 	);
 extern void gen_array_def(
 	_TCHAR *typ,
 	_TCHAR *nam,
 	_TCHAR *siz,
-	_t_ofstream *fp
+	std::_t_ofstream *fp
 	);
 extern void gen_array_hd(
 	_TCHAR *typ,
 	_TCHAR *nam,
 	_TCHAR *siz,
-	_t_ofstream *fp
+	std::_t_ofstream *fp
 	);
 extern void gen_array_tl(
-	_t_ofstream *fp
+	std::_t_ofstream *fp
 	);
 extern void gen_file_head(
-	_t_ofstream *fp
+	std::_t_ofstream *fp
 	);
 extern void
 gen_st_empty(

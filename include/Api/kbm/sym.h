@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright © 1998-2009 by Text Analysis International, Inc.
+Copyright ï¿½ 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 ********************************************************************************
 *
@@ -100,12 +100,12 @@ public:
 		);
 	void	 sym_pp(
 		// FILE *out
-		_t_ostream *out				// 04/20/99 AM.
+		std::_t_ostream *out				// 04/20/99 AM.
 		);
 	SYM		**sym_seg_table();
 	void	 sym_stat(
 		//FILE *out
-		_t_ostream *out				// 04/20/99 AM.
+		std::_t_ostream *out				// 04/20/99 AM.
 		);
 
 

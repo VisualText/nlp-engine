@@ -25,7 +25,6 @@ All rights reserved.
 
 #include "StdAfx.h"
 #include <iostream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 #include "prim/libprim.h"
 #include "kbm/libkbm.h"
 
@@ -265,7 +264,7 @@ bool ACON::con_hard_ini(
 {
 if (seg_size <= 0)															// 05/05/01 AM.
 	{
-	_t_cerr << _T("[con_hard_ini: Error. Zero seg size.]") << endl;		// 05/07/01 AM.
+	std::_t_cerr << _T("[con_hard_ini: Error. Zero seg size.]") << std::endl;		// 05/07/01 AM.
 	return false;																// 05/05/01 AM.
 	}
 
@@ -426,7 +425,7 @@ return(Con_segs);
 
 void ACON::con_tab_pretty(
 	//FILE *out			// 04/20/99 AM.
-	_t_ostream *out		// 04/20/99 AM.
+	std::_t_ostream *out		// 04/20/99 AM.
 	)
 {
 int ii;
@@ -434,12 +433,12 @@ long jj, tot;
 CON *con;
 
 if (!out)	// 02/20/19 AM.
-  out = &_t_cout;	// 02/20/19 AM.
+  out = &std::_t_cout;	// 02/20/19 AM.
 
 //fprintf(out, "Concept Table\n");	// 04/20/99 AM.
 //fprintf(out, "-------------\n");	// 04/20/99 AM.
-*out << _T("Concept Table") << endl;		// 04/20/99 AM.
-*out << _T("-------------") << endl;		// 04/20/99 AM.
+*out << _T("Concept Table") << std::endl;		// 04/20/99 AM.
+*out << _T("-------------") << std::endl;		// 04/20/99 AM.
 tot = 0;
 for (ii = 0; ii <= Con_seg_curr; ii++)	/* For every segment. */
    {
@@ -454,7 +453,7 @@ for (ii = 0; ii <= Con_seg_curr; ii++)	/* For every segment. */
 			  << _T(": (")
 		     << con_kind_str(con)
 			  << _T(") ")
-			  << con_str(con) << endl;			// 04/20/99 AM.
+			  << con_str(con) << std::endl;			// 04/20/99 AM.
       ++tot;
       ++con;
       }
@@ -1031,7 +1030,7 @@ if (!_tcscmp(compo, _T("concept")))
 	return c_cg_CONCEPT;			// Return root of hierarchy.
 
 // We can be lenient and allow it to be a direct child of "concept", ie, root of hierarchy.
-_t_cerr << _T("[Path should start with \"concept\"]") << endl;
+std::_t_cerr << _T("[Path should start with \"concept\"]") << std::endl;
 return con_get_child(c_cg_CONCEPT, compo);
 }
 
@@ -1055,7 +1054,7 @@ CON *ACON::path_to_con(
 {
 if (!path || !*path)
 	{
-	_t_cerr << _T("[path_to_con: Warn: Given null path.]") << endl;
+	std::_t_cerr << _T("[path_to_con: Warn: Given null path.]") << std::endl;
 	return 0;
 	}
 
@@ -1079,7 +1078,7 @@ for (;;)
 			*bptr = '\0';
 			con = get_component(con, buf);	// Get final component of path, if any.
 			if (!con)
-				_t_cerr << _T("[path_to_con: Warn: Couldn't find con for path=") << path << _T("]") << endl;
+				std::_t_cerr << _T("[path_to_con: Warn: Couldn't find con for path=") << path << _T("]") << std::endl;
 			return con;			// Chars exhausted, return concept found.
 		case ' ':
 		case '\t':
@@ -1469,7 +1468,7 @@ _TCHAR *ACON::con_to_path(		// 04/29/99 AM.
 *buf = '\0';
 if (!con)
 	{
-	_t_cerr << _T("[con_to_path: Given null concept.]") << endl;
+	std::_t_cerr << _T("[con_to_path: Given null concept.]") << std::endl;
 	return (_TCHAR *) NULL;
 	}
 

@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									ST_GEN.C
 *
-* FILE:	consh.¹/st_gen.c
+* FILE:	consh.ï¿½/st_gen.c
 * SUBJ:	Generate string table code for Consh.
 * CR:	5/07/95 AM.
 * NOTE:	9/25/95 AM. Moved from st.c .
@@ -22,7 +22,6 @@ All rights reserved.
 #include <stdio.h>
 #include <iostream>											// Upgrade	// 01/24/01 AM.
 #include <fstream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 
 #include "prim/libprim.h"
 //#include "prim/mach.h"
@@ -278,7 +277,6 @@ gen_file_head(fp);
 //*fp << "#include <fstream.h>" << endl;			// 04/23/99 AM.
 *fp << _T("#include <iostream>") << endl;	// Upgrade.	// 01/24/01 AM.
 *fp << _T("#include <fstream>") << endl;	// Upgrade.	// 01/24/01 AM.
-*fp << _T("using namespace std;") << endl;	// Upgrade.	// 01/24/01 AM.
 *fp << _T("#include \"prim\\libprim.h\"") << endl;
 *fp << _T("#include \"prim\\prim.h\"") << endl;
 //*fp << "#include \"prim\\mach.h\"" << endl;			// 04/23/99 AM.
@@ -293,7 +291,6 @@ gen_file_head(fp);
 //*fp << "#include <fstream.h>" << endl;			// 04/23/99 AM.
 *fp << _T("#include <iostream>") << endl;	// Upgrade.	// 01/24/01 AM.
 *fp << _T("#include <fstream>") << endl;	// Upgrade.	// 01/24/01 AM.
-*fp << _T("using namespace std;") << endl;	// Upgrade.	// 01/24/01 AM.
 *fp << _T("#include \"prim/libprim.h\"") << endl;
 *fp << _T("#include \"prim/prim.h\"") << endl;
 //*fp << "#include \"prim/mach.h\"" << endl;			// 04/23/99 AM.

@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright © 1998-2009 by Text Analysis International, Inc.
+Copyright ï¿½ 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 ********************************************************************************
 *
@@ -93,7 +93,7 @@ public:
 	CON **con_seg_table();
 	void con_tab_pretty(
 		//FILE *out			// 04/20/99 AM.
-		_t_ostream *out		// 04/20/99 AM.
+		std::_t_ostream *out		// 04/20/99 AM.
 		);
 	ID con_count();
 	long con_curr_off();

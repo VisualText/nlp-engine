@@ -170,7 +170,7 @@ public:
 	attrs_pret(
 		PTR *attrs,
 		//FILE *out,		// 04/20/99 AM.
-		_t_ostream *out,		// 04/20/99 AM.
+		std::_t_ostream *out,		// 04/20/99 AM.
 		_TCHAR *indent		/* String for indenting. */
 		);
 	CON *attr_get_c();

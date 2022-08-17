@@ -19,7 +19,6 @@ All rights reserved.
 #include <stdlib.h>
 #include <iostream>											// Upgrade	// 01/24/01 AM.
 #include <fstream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 #include <ctype.h>
 #include <string.h>
 
@@ -32,12 +31,12 @@ const _TCHAR *strNULL = _T("");
 
 // A global output stream.
 // This way, output will be dynamically controlled.
-_t_ostream *cgout = &_t_cout;			// Default is standard output.
+std::_t_ostream *cgout = &std::_t_cout;			// Default is standard output.
 
 // Global error stream.
 // This way, error output will be dynamically controlled.
 //ostream *cgerr = &cerr;			// Default is standard error.
-_t_ofstream *cgerr = 0;	// 07/18/03 AM.
+std::_t_ofstream *cgerr = 0;	// 07/18/03 AM.
 
 /********************************************
 * FN:		CGFILEOUT
@@ -45,9 +44,9 @@ _t_ofstream *cgerr = 0;	// 07/18/03 AM.
 * SUBJ:	Set global output to a file.
 ********************************************/
 
-void cgfileOut(_TCHAR *fname, /*DU*/ _t_ofstream* &fout, _t_ostream* &sout)
+void cgfileOut(_TCHAR *fname, /*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout)
 {
-fout = new _t_ofstream(TCHAR2A(fname), ios::out);
+fout = new std::_t_ofstream(TCHAR2A(fname), std::ios::out);
 sout = cgout;				// Save current output stream.
 cgout = fout;				// Bind output to file.
 }
@@ -59,7 +58,7 @@ cgout = fout;				// Bind output to file.
 * SUBJ:	Reset global output.
 ********************************************/
 
-void cgresetOut(/*DU*/ _t_ofstream* &fout, _t_ostream* &sout)
+void cgresetOut(/*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout)
 {
 cgout = sout;				// Restore current output stream.
 delete fout;				// Done with file output stream.
@@ -77,10 +76,10 @@ sout = 0;
 //void cgfileErr(char *fname, /*DU*/ ofstream* &fout, ostream* &sout)
 void cgfileErr(_TCHAR *fname)	// 07/18/03 AM.
 {
-//fout = new ofstream(fname, ios::out);
+//fout = new ofstream(fname, std::ios::out);
 //sout = cgerr;				// Save current output stream.
 //cgerr = fout;				// Bind output to file.
-cgerr = new _t_ofstream(TCHAR2A(fname), ios::out);	// 07/18/03 AM.
+cgerr = new std::_t_ofstream(TCHAR2A(fname), std::ios::out);	// 07/18/03 AM.
 }
 
 

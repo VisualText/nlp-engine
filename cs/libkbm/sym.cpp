@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									SYM.C
 *
-* FILE:	consh.¹/sym.c
+* FILE:	consh.ï¿½/sym.c
 * SUBJ:	Symbol table manager for Conan.
 * NOTE:	For the compiled analyzer (i.e., Conan), implementing highly optimized
 *		(hopefully) (for Macintosh) primitive table managers from scratch.
@@ -39,7 +39,6 @@ All rights reserved.
 
 #include "StdAfx.h"
 #include <iostream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 #include "prim/libprim.h"
 #include "kbm/libkbm.h"
 
@@ -594,7 +593,7 @@ if (sym)
 void
 ASYM::sym_pp(
 	//FILE *out		// 04/20/99 AM.
-	_t_ostream *out	// 04/20/99 AM.
+	std::_t_ostream *out	// 04/20/99 AM.
 	)
 {
 int ii;
@@ -604,8 +603,8 @@ SYM *sym, *ptr;
 
 //fprintf(out, "Symbol Table\n");
 //fprintf(out, "------------\n");
-*out << _T("Symbol Table") << endl;
-*out << _T("------------") << endl;
+*out << _T("Symbol Table") << std::endl;
+*out << _T("------------") << std::endl;
 
 /* Traverse the symbol hash table, looking for nonempty locs. */
 count = 0;
@@ -626,7 +625,7 @@ for (ii = 0; ii < SYM_HASH_TOT; ii++)
             //fprintf(out, " %s", ptr->str);
 				*out << _T(" ") << ptr->str;
          //fprintf(out, "\n");
-			*out << endl;
+			*out << std::endl;
          }
       ++sym;
       if (count++ >= SYM_HASH_SIZE - 1)
@@ -730,7 +729,7 @@ return(Sym_segs);
 void
 ASYM::sym_stat(
 	//FILE *out		// 04/20/99 AM.
-	_t_ostream *out	// 04/20/99 AM.
+	std::_t_ostream *out	// 04/20/99 AM.
 	)
 {
 #ifdef _OBSOLETE_
@@ -752,22 +751,22 @@ _ftprintf(out, _T("Total filled size   = %ld\n"),
 	(long) (Conf_seg_p - Sym_segs[Conf_seg_curr] + (long) 1) );
 #endif
 
-*out << _T("Sym structure size  = ") << (int) sizeof(SYM) << endl;
-*out << _T("Sym segment size    = ") << SYM_SEG_SIZE << endl;
-*out << _T("Hash table size     = ") << SYM_HASH_SIZE << endl;
-*out << _T("# of hard hash segs = ") << SYM_HASH_TOT << endl;
-*out << _T("# of hard sym segs  = ") << SYM_SEGS_TOT << endl;
-*out << _T("# hard filled segs  = ") << CONF_SEG_CURR+1 << endl;
+*out << _T("Sym structure size  = ") << (int) sizeof(SYM) << std::endl;
+*out << _T("Sym segment size    = ") << SYM_SEG_SIZE << std::endl;
+*out << _T("Hash table size     = ") << SYM_HASH_SIZE << std::endl;
+*out << _T("# of hard hash segs = ") << SYM_HASH_TOT << std::endl;
+*out << _T("# of hard sym segs  = ") << SYM_SEGS_TOT << std::endl;
+*out << _T("# hard filled segs  = ") << CONF_SEG_CURR+1 << std::endl;
 *out << _T("Hard filled size    = ") <<
 	((long)CONF_SEG_CURR * SYM_SEG_SIZE) +
-	(long) (CONF_SEG_P - Sym_segs[CONF_SEG_CURR] + (long) 1) << endl;
-*out << _T("Number of segments  = ") << Sym_segs_tot << endl;
-*out << _T("Current conf seg    = ") << Conf_seg_curr << endl;
+	(long) (CONF_SEG_P - Sym_segs[CONF_SEG_CURR] + (long) 1) << std::endl;
+*out << _T("Number of segments  = ") << Sym_segs_tot << std::endl;
+*out << _T("Current conf seg    = ") << Conf_seg_curr << std::endl;
 *out << _T("Conflict offset     = ") <<
-               (long) (Conf_seg_p - Sym_segs[Conf_seg_curr]) << endl;
+               (long) (Conf_seg_p - Sym_segs[Conf_seg_curr]) << std::endl;
 *out << _T("Total filled size   = ") <<
 	(((long)Conf_seg_curr * SYM_SEG_SIZE) +
-	(long) (Conf_seg_p - Sym_segs[Conf_seg_curr] + (long) 1) ) << endl;
+	(long) (Conf_seg_p - Sym_segs[Conf_seg_curr] + (long) 1) ) << std::endl;
 
 }
 

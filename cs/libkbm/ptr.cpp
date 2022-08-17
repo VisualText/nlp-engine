@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									PTR.C
 *
-* FILE:	consh.¹/ptr.c
+* FILE:	consh.ï¿½/ptr.c
 * SUBJ:	Ptr table manager for Consh.
 * NOTE:	Analogous to concept table.
 *		'ptr' may be a bad choice of words.  In text, 'ptr' will mean a regular
@@ -22,7 +22,6 @@ All rights reserved.
 
 #include "StdAfx.h"
 #include <iostream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 #include "prim/libprim.h"
 #include "kbm/libkbm.h"
 

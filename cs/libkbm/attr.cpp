@@ -30,7 +30,6 @@ All rights reserved.
 #ifdef LINUX
 #include <sstream>
 #endif
-using namespace std;											// Upgrade	// 01/24/01 AM.
 #include "prim/libprim.h"
 #include "kbm/libkbm.h"
 
@@ -1004,7 +1003,7 @@ return(attr_as_add_end(con, slot_con));
 void AKBM::attrs_pret(
 	PTR *attrs,
 	//FILE *out,		// 04/20/99 AM.
-	_t_ostream *out,		// 04/20/99 AM.
+	std::_t_ostream *out,		// 04/20/99 AM.
 	_TCHAR *indent		/* String for indenting. */
 	)
 {
@@ -1021,7 +1020,7 @@ while (attrs)
    s_slot = ACON::con_str(slot);
    //fprintf(out, "%s%s ", indent, s_slot);			// 04/20/99 AM.
    //fflush(out);												// 04/20/99 AM.
-	*out << indent << s_slot << flush;					// 04/20/99 AM.
+	*out << indent << s_slot << std::flush;					// 04/20/99 AM.
    while (vals)
       {
       switch (vals->kind)
@@ -1036,7 +1035,7 @@ while (attrs)
          default:
 			// 04/20/99 AM.
         //fprintf(stderr, "[attrs_pret: Bad value kind=%d]\n", vals->kind);
-		  _t_cerr << _T("[attrs_pret: Bad value kind=") << vals->kind << endl;
+		  std::_t_cerr << _T("[attrs_pret: Bad value kind=") << vals->kind << std::endl;
             exit(1);
          }
       //fprintf(out, "%s ", str);	// 04/20/99 AM.
@@ -1044,7 +1043,7 @@ while (attrs)
       vals = vals->next;
       }
    //fprintf(out, "\n");		// 04/20/99 AM.
-	*out << endl;					// 04/20/99 AM.
+	*out << std::endl;					// 04/20/99 AM.
    attrs = attrs->next;
    }
 }

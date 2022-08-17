@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									PRIM.C
 *
-* FILE:	conan.¹/prim.c
+* FILE:	conan.ï¿½/prim.c
 * SUBJ:	Primitive utilities.
 * NOTE:	Machine dependencies should be localized in a file called mach.c,
 *		to the extent possible.  ifdefs should enable each machine and
@@ -24,7 +24,6 @@ All rights reserved.
 
 #include "StdAfx.h"
 #include <iostream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 #include "prim/libprim.h"
 
 #include <stdio.h>
@@ -53,8 +52,8 @@ for (;;)
    //fflush(stdout);
    //fflush(stdin);
    //scanf("%s", line);
-	_t_cout << _T("Proceed? (y or n) ") << flush;			// 04/20/99 AM.
-	_t_cin >> line;
+	std::_t_cout << _T("Proceed? (y or n) ") << std::flush;			// 04/20/99 AM.
+	std::_t_cin >> line;
    if (*line == 'y')
       return;
    exit(0);

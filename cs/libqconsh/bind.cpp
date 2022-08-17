@@ -1,5 +1,5 @@
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -7,7 +7,7 @@ All rights reserved.
 *
 *									BIND.C
 *
-* FILE:	consh.¹/bind.c
+* FILE:	consh.ï¿½/bind.c
 * SUBJ:	Bindings of C variables to knowledge base concepts.
 * NOTE:	
 * CR:	9/18/95 AM.
@@ -17,7 +17,6 @@ All rights reserved.
 #include "StdAfx.h"			// 04/26/99 AM.
 #include <stdio.h>
 #include <iostream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 #include "prim/libprim.h"
 #include "prim/prim.h"
 #include "prim/list_s.h"

@@ -15,7 +15,6 @@ All rights reserved.
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
-using namespace std;
 #include <time.h>
 #include "machine-min.h"
 

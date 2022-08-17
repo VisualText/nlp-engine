@@ -17,7 +17,6 @@ All rights reserved.
 
 #include <iostream>											// Upgrade.	// 01/24/01 AM.
 #include <fstream>											// Upgrade.	// 01/24/01 AM.
-using namespace std;											// Upgrade.	// 01/24/01 AM.
 #include <stdlib.h>
 
 #include "util.h"

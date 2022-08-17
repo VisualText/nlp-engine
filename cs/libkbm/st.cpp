@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									ST.C
 *
-* FILE:	conan.¹/st.c
+* FILE:	conan.ï¿½/st.c
 * SUBJ:	String table manager for Conch.
 * CR:	5/07/95 AM.
 * NOTE:	String table split into segments (Macintosh).
@@ -37,7 +37,6 @@ All rights reserved.
 
 #include "StdAfx.h"
 #include <iostream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 #include "prim/libprim.h"
 #include "kbm/libkbm.h"
 
@@ -430,7 +429,7 @@ if (str)
 bool
 AST::st_pp(
 	//FILE *fp			// 04/20/99 AM.
-	_t_ostream *fp			// 04/20/99 AM.
+	std::_t_ostream *fp			// 04/20/99 AM.
 	)
 {
 int ii;
@@ -439,7 +438,7 @@ _TCHAR *ptr;
 int flag;
 
 //fprintf(fp, "String Table:\n-------------\n");
-*fp << _T("String Table:\n-------------") << endl;
+*fp << _T("String Table:\n-------------") << std::endl;
 for (ii = 0; ii < St_segs_tot; ii++)
    {
    ptr = St_segs[ii];
@@ -449,11 +448,11 @@ for (ii = 0; ii < St_segs_tot; ii++)
       {
       if (!(count % STD_LINE))
          //fprintf(fp, "\n");
-			*fp << endl;
+			*fp << std::endl;
       if (ptr == St_seg_p + 1)	/* End of filled table. */
          {
          //fprintf(fp, "\n");
-			*fp << endl;
+			*fp << std::endl;
          return true;
          }
       if (*ptr)
@@ -489,7 +488,7 @@ return true;
 
 void AST::st_pp_all(
 	//FILE *fp			// 04/20/99 AM.
-	_t_ostream *fp			// 04/20/99 AM.
+	std::_t_ostream *fp			// 04/20/99 AM.
 	)
 {
 int ii;
@@ -506,11 +505,11 @@ for (ii = 0; ii < St_segs_tot; ii++)
       {
       if (!(count % STD_LINE))
          //fprintf(fp, "\n");
-			*fp << endl;
+			*fp << std::endl;
       if (!(count % 1000))
          {
          //printf("%ld\n", count);
-			*fp << count << endl;
+			*fp << count << std::endl;
          }
       if (*ptr)
          {

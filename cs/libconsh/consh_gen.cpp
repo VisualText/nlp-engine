@@ -3,7 +3,7 @@ Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -11,7 +11,7 @@ All rights reserved.
 *
 *									CONSH_GEN.C
 *
-* FILE:	conan.¹/consh_gen.c
+* FILE:	conan.ï¿½/consh_gen.c
 * SUBJ:	Module for generating code specifically for Consh.
 * CR:	10/7/95 AM.
 *
@@ -22,7 +22,6 @@ All rights reserved.
 #include <string.h>
 #include <iostream>											// Upgrade	// 01/24/01 AM.
 #include <fstream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 
 #include "prim/libprim.h"
 #include "prim/prim.h"
@@ -62,7 +61,7 @@ using namespace std;											// Upgrade	// 01/24/01 AM.
 
 void
 consh_gen_includes(
-	_t_ofstream *fp
+	std::_t_ofstream *fp
 	)
 {
 #ifdef LINUX
@@ -72,7 +71,6 @@ consh_gen_includes(
 //*fp << "#include <fstream.h>" << endl;								// 04/23/99 AM.
 *fp << _T("#include <iostream>") << endl;					// Upgrade.	// 01/24/01 AM.
 *fp << _T("#include <fstream>") << endl;					// Upgrade. // 01/24/01 AM.
-*fp << _T("using namespace std;") << endl;					// Upgrade.	// 01/24/01 AM.
 *fp << _T("#include \"prim\\libprim.h\"") << endl;
 //*fp << "#include \"prim\\mach.h\"" << endl;	// 04/23/99 AM.
 *fp << _T("#include \"prim\\prim.h\"") << endl;
@@ -101,7 +99,6 @@ consh_gen_includes(
 //*fp << "#include <fstream.h>" << endl;								// 04/23/99 AM.
 *fp << _T("#include <iostream>") << endl;					// Upgrade.	// 01/24/01 AM.
 *fp << _T("#include <fstream>") << endl;					// Upgrade. // 01/24/01 AM.
-*fp << _T("using namespace std;") << endl;					// Upgrade.	// 01/24/01 AM.
 *fp << _T("#include \"prim/libprim.h\"") << endl;
 //*fp << "#include \"prim/mach.h\"" << endl;	// 04/23/99 AM.
 *fp << _T("#include \"prim/prim.h\"") << endl;

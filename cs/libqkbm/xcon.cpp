@@ -16,7 +16,6 @@ All rights reserved.
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
-using namespace std;
 
 #include "depot.h"
 #include "curia.h"

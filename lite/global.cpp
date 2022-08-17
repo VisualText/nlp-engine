@@ -13,7 +13,6 @@ All rights reserved.
 #include "StdAfx.h"
 #include "machine.h"								// 02/21/02 AM.
 //#include <iostream> // 07/18/03 AM.
-//using namespace std;	// 07/18/03 AM.
 #include <math.h>									// 10/08/00 AM.
 #include <float.h>								// 12/17/99 AM.
 #include "u_out.h"		// 01/19/06 AM.
