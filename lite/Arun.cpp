@@ -7314,6 +7314,7 @@ if (!val)															// FIX.	// 04/28/01 AM.
 // Need to copy sem object for some types.							// 05/26/00 AM.
 // Code is taken from iexpr::eval()
 RFASem *nval = 0;
+CG *cg = nlppp->parse_->getAna()->getCG();
 switch(val->getType())
 	{
 	case RSSTR:
@@ -7342,7 +7343,7 @@ switch(val->getType())
 	case RS_KBCONCEPT:
 		CONCEPT *conc;															// 11/15/00 AM.
 		if ((conc = val->getKBconcept()))						// FIX.	// 11/15/00 AM.
-			nval = new RFASem(conc,RS_KBCONCEPT);
+			nval = new RFASem(conc,RS_KBCONCEPT,cg);
 		Var::setVal(pair, nval);
 		break;
 	case RS_KBPHRASE:
@@ -7643,6 +7644,7 @@ if (!val)
 
 RFASem *nval = 0;
 long numx;
+CG *cg = nlppp->parse_->getAna()->getCG();
 switch(val->getType())
 	{
 	case RSLONG:
@@ -7669,7 +7671,7 @@ switch(val->getType())
 		arg->setType(IASEM);
 		CONCEPT *conc;
 		if ((conc = val->getKBconcept()))
-			nval = new RFASem(conc,RS_KBCONCEPT);
+			nval = new RFASem(conc,RS_KBCONCEPT,cg);
 		arg->setSem(nval);
 		break;
 	case RS_KBPHRASE:
@@ -13476,7 +13478,7 @@ parr = arr;
 if (!descending)
 	while (--len >= 0)
 		{
-		sem = new RFASem(*parr,RS_KBCONCEPT);
+		sem = new RFASem(*parr,RS_KBCONCEPT,cg);
 		arg = new Iarg(sem);
 		dargs->rpush(arg);
 		++parr;
@@ -13484,7 +13486,7 @@ if (!descending)
 else
 	while (--len >= 0)
 		{
-		sem = new RFASem(*parr,RS_KBCONCEPT);
+		sem = new RFASem(*parr,RS_KBCONCEPT,cg);
 		arg = new Iarg(sem);
 		dargs->push(arg);
 		++parr;

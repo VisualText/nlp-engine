@@ -2996,7 +2996,7 @@ switch (type_)
 					arg->setType(IASEM);										// 10/14/00 AM.
 					CONCEPT *conc;												// 11/15/00 AM.
 					if ((conc = rval->getKBconcept()))						// 11/15/00 AM.
-						val = new RFASem(rval->getKBconcept(),RS_KBCONCEPT);
+						val = new RFASem(rval->getKBconcept(),RS_KBCONCEPT,NULL);
 					else
 						val = 0;													// 11/15/00 AM.
 					arg->setSem(val);											// 10/14/00 AM.
