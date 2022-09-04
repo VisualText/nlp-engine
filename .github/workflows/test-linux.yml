@@ -34,15 +34,15 @@ jobs:
       - name: Generate Solution Linux
         run: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_BUILD_TYPE=release -B build -S .
 
+      - name: List $RUNNER_WORKSPACE before build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+
       - name: Cmake Build all targets Linux
         run: cmake --build build/ --target all
 
       - name: Test executable --version
         run: ./bin/nlp.exe --version || true
-        
-      - name: List $RUNNER_WORKSPACE before build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
 
       - uses: actions/upload-artifact@v3
         with:
