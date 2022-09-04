@@ -164,7 +164,7 @@ CG *cg = nlppp->getParse()->getAna()->getCG();
 
 CONCEPT *root = cg->findRoot();
 
-return new RFASem(root, RS_KBCONCEPT);
+return new RFASem(root, RS_KBCONCEPT, cg);
 }
 
 
@@ -209,7 +209,7 @@ CONCEPT *conc = sem->getKBconcept();
 CONCEPT *child = cg->findConcept(conc, name);
 
 delete sem;													// MEM LEAK.	// 06/27/00 AM.
-return new RFASem(child, RS_KBCONCEPT);
+return new RFASem(child, RS_KBCONCEPT, cg);
 }
 
 // VARIANT.
@@ -243,7 +243,7 @@ CONCEPT *conc1 = sem->getKBconcept();
 CONCEPT *child = cg->findConcept(conc1, num);
 
 delete sem;													// MEM LEAK.	// 06/27/00 AM.
-return new RFASem(child, RS_KBCONCEPT);
+return new RFASem(child, RS_KBCONCEPT, cg);
 }
 
 // VARIANT (AMBIGUOUS)
@@ -817,7 +817,7 @@ if (!cg->findVal(conc1, name, /*UP*/ val))
 	}
 
 delete sem;
-return new RFASem(val, RS_KBCONCEPT);
+return new RFASem(val, RS_KBCONCEPT, cg);
 }
 
 RFASem *Arun::conval(
@@ -1145,7 +1145,7 @@ CG *cg = parse->getAna()->getCG();
 
 CONCEPT *conc = cg->wordIndex(str1);
 
-return new RFASem(conc, RS_KBCONCEPT);
+return new RFASem(conc, RS_KBCONCEPT, cg);
 }
 
 
@@ -1185,7 +1185,7 @@ CG *cg = parse->getAna()->getCG();
 
 CONCEPT *con = cg->pathConcept(path);
 
-return new RFASem(con, RS_KBCONCEPT);
+return new RFASem(con, RS_KBCONCEPT, cg);
 }
 
 
@@ -1246,7 +1246,7 @@ CONCEPT *conc = cg->findHierConcept(name, conc1);
 
 // Return appropriate value.
 delete hsem;												// MEM LEAK.	// 06/27/00 AM.
-return new RFASem(conc, RS_KBCONCEPT);
+return new RFASem(conc, RS_KBCONCEPT, cg);
 }
 
 
@@ -1778,7 +1778,7 @@ CONCEPT *conc = cg->Down(hier1);
 
 // Return appropriate value.
 delete hier_sem;											// MEM LEAK.	// 06/27/00 AM.
-return new RFASem(conc, RS_KBCONCEPT);
+return new RFASem(conc, RS_KBCONCEPT, cg);
 }
 
 
@@ -1821,7 +1821,7 @@ CONCEPT *conc = cg->Up(hier1);
 
 // Return appropriate value.
 delete hier_sem;											// MEM LEAK.	// 06/27/00 AM.
-return new RFASem(conc, RS_KBCONCEPT);
+return new RFASem(conc, RS_KBCONCEPT, cg);
 }
 
 
@@ -1865,7 +1865,7 @@ CONCEPT *conc = cg->Next(hier1);
 
 // Return appropriate value.
 delete hier_sem;											// MEM LEAK.	// 06/27/00 AM.
-return new RFASem(conc, RS_KBCONCEPT);
+return new RFASem(conc, RS_KBCONCEPT, cg);
 }
 
 
@@ -1908,7 +1908,7 @@ CONCEPT *conc = cg->Prev(hier1);
 
 // Return appropriate value.
 delete hier_sem;											// MEM LEAK.	// 06/27/00 AM.
-return new RFASem(conc, RS_KBCONCEPT);
+return new RFASem(conc, RS_KBCONCEPT, cg);
 }
 
 
@@ -2224,7 +2224,7 @@ CONCEPT *conc;
 cg->popVal(val, /*UP*/ conc);
 
 delete val_sem;
-return new RFASem(conc, RS_KBCONCEPT);
+return new RFASem(conc, RS_KBCONCEPT, cg);
 }
 
 
@@ -2271,7 +2271,7 @@ CG *cg = parse->getAna()->getCG();
 CONCEPT *conc = cg->makeConcept(conc1, name_str, pos_num);
 
 delete con_sem;											// MEM LEAK.	// 06/27/00 AM.
-return new RFASem(conc, RS_KBCONCEPT);
+return new RFASem(conc, RS_KBCONCEPT, cg);
 }
 
 
@@ -2417,7 +2417,7 @@ CONCEPT *conc = cg->addConcept(parent, child, pos_num);
 
 delete con_sem;											// MEM LEAK.	// 06/27/00 AM.
 delete child_sem;											// MEM LEAK.	// 06/27/00 AM.
-return new RFASem(conc, RS_KBCONCEPT);
+return new RFASem(conc, RS_KBCONCEPT, cg);
 }
 #endif
 
@@ -2994,7 +2994,7 @@ CG *cg = parse->getAna()->getCG();
 CONCEPT *conc = cg->getConcept(conc1, name_str);
 
 delete con_sem;											// MEM LEAK.	// 06/27/00 AM.
-return new RFASem(conc, RS_KBCONCEPT);
+return new RFASem(conc, RS_KBCONCEPT, cg);
 }
 
 // VARIANT
@@ -4390,7 +4390,7 @@ CONCEPT *node = sem1->getKBconcept();
 CONCEPT *conc = cg->nodeConcept(node);
 
 delete sem1;												// MEM LEAK.	// 06/28/00 AM.
-return new RFASem(conc, RS_KBCONCEPT);
+return new RFASem(conc, RS_KBCONCEPT, cg);
 }
 
 
@@ -4433,7 +4433,7 @@ CONCEPT *node = sem1->getKBconcept();
 CONCEPT *conc = cg->nodeOwner(node);
 
 delete sem1;
-return new RFASem(conc, RS_KBCONCEPT);
+return new RFASem(conc, RS_KBCONCEPT, cg);
 }
 
 /********************************************
@@ -4479,7 +4479,7 @@ CONCEPT *node = 0;
 node = cg->findNode(phr1, name1);
 
 delete sem1;												// MEM LEAK.	// 06/28/00 AM.
-return new RFASem(node, RS_KBCONCEPT);
+return new RFASem(node, RS_KBCONCEPT, cg);
 }
 
 
@@ -4516,7 +4516,7 @@ CONCEPT *node = 0;
 node = cg->findNode(phr1, num1);
 
 delete sem1;												// MEM LEAK.	// 06/28/00 AM.
-return new RFASem(node, RS_KBCONCEPT);
+return new RFASem(node, RS_KBCONCEPT, cg);
 }
 
 
@@ -4600,7 +4600,7 @@ CONCEPT *node = sem1->getKBconcept();
 CONCEPT *first = cg->listNode(node);
 
 delete sem1;												// MEM LEAK.	// 06/28/00 AM.
-return new RFASem(first, RS_KBCONCEPT);
+return new RFASem(first, RS_KBCONCEPT, cg);
 }
 
 
@@ -4643,7 +4643,7 @@ PHRASE *phr1 = sem1->getKBphrase();
 CONCEPT *node = cg->firstNode(phr1);
 
 delete sem1;												// MEM LEAK.	// 06/28/00 AM.
-return new RFASem(node, RS_KBCONCEPT);
+return new RFASem(node, RS_KBCONCEPT, cg);
 }
 
 
@@ -4686,7 +4686,7 @@ PHRASE *phr1 = sem1->getKBphrase();
 CONCEPT *node = cg->lastNode(phr1);
 
 delete sem1;												// MEM LEAK.	// 06/28/00 AM.
-return new RFASem(node, RS_KBCONCEPT);
+return new RFASem(node, RS_KBCONCEPT, cg);
 }
 
 
@@ -4786,7 +4786,7 @@ CG *cg = nlppp->getParse()->getAna()->getCG();
 
 CONCEPT *node = cg->addCnode(conc1, str);
 delete con_sem;											// MEM LEAK.	// 06/28/00 AM.
-return new RFASem(node, RS_KBCONCEPT);
+return new RFASem(node, RS_KBCONCEPT, cg);
 }
 
 
@@ -4824,7 +4824,7 @@ switch (n_sem->getType())
 		CONCEPT *node = cg->addCnode(conc1,n_sem->getKBconcept());	// 11/27/02 AM.
 		delete con_sem;															// 11/27/02 AM.
 		delete n_sem;																// 11/27/02 AM.
-		return new RFASem(node, RS_KBCONCEPT);
+		return new RFASem(node, RS_KBCONCEPT, cg);
 		}
 		break;
 	default:
@@ -4872,7 +4872,7 @@ CG *cg = nlppp->getParse()->getAna()->getCG();
 
 CONCEPT *node = cg->addNode(phr, str, num);
 delete phr_sem;											// MEM LEAK.	// 06/27/00 AM.
-return new RFASem(node, RS_KBCONCEPT);
+return new RFASem(node, RS_KBCONCEPT, cg);
 }
 
 
@@ -6674,7 +6674,7 @@ CG *cg = parse->getAna()->getCG();
 
 CONCEPT *wordConcept = cg->findWordConcept(str1);				// 06/29/03 AM.
 
-return new RFASem(wordConcept, RS_KBCONCEPT);
+return new RFASem(wordConcept, RS_KBCONCEPT, cg);
 }
 
 // VARIANT.
@@ -6713,7 +6713,7 @@ CG *cg = parse->getAna()->getCG();
 
 CONCEPT *wordConcept = cg->getWordConcept(str1);
 
-return new RFASem(wordConcept, RS_KBCONCEPT);
+return new RFASem(wordConcept, RS_KBCONCEPT, cg);
 }
 
 // VARIANT.
@@ -6859,7 +6859,7 @@ CG *cg = nlppp->getParse()->getAna()->getCG();
 
 CONCEPT *conc = cg->addWord(str);
 
-return new RFASem(conc, RS_KBCONCEPT);
+return new RFASem(conc, RS_KBCONCEPT, cg);
 }
 
 // VARIANT.
@@ -16598,7 +16598,7 @@ CONCEPT *wordConcept = cg->dictFirst();
 if (!wordConcept)
 	return 0;
 
-return new RFASem(wordConcept, RS_KBCONCEPT);
+return new RFASem(wordConcept, RS_KBCONCEPT, cg);
 }
 
 
@@ -16644,7 +16644,7 @@ CONCEPT *wordConcept = cg->dictNext(conc1);
 
 if (!wordConcept)
 	return 0;
-return new RFASem(wordConcept, RS_KBCONCEPT);
+return new RFASem(wordConcept, RS_KBCONCEPT, cg);
 }
 
 

@@ -921,6 +921,7 @@ RFASem *sem = 0;																// 05/21/01 AM.
 Node<Pn> *node;																// 05/21/01 AM.
 Pn *pn = 0;																		// 05/21/01 AM.
 CONCEPT *conc = 0;															// 05/21/01 AM.
+CG *cg = 0;
 Dlist<Iarg> *iargs=0;														// 08/08/02 AM.
 
 // FIX. Strings may have newlines and other junk.					// 05/10/07 AM.
@@ -1015,8 +1016,11 @@ switch (arg->getType())
 				// TODO: NEED CG OBJECT TO GET KB CONCEPTS.			// 05/21/01 AM.
 				if (!(conc = sem->getKBconcept()))						// 05/21/01 AM.
 					return;														// 05/21/01 AM.
+				_TCHAR buf[MAXSTR];
+				cg = sem->getCG();
+				cg->conceptName(conc, buf);
 				ofile << _T("concept:\"")										// 05/21/01 AM.
-						<< str(_T("<name>"))										// 05/21/01 AM.
+						<< buf
 						<< _T("\"")													// 05/21/01 AM.
 						<< flush;												// 05/21/01 AM.
 				break;															// 05/21/01 AM.
@@ -1024,7 +1028,7 @@ switch (arg->getType())
 			case RS_KBATTR:													// 05/21/01 AM.
 			case RS_KBVAL:														// 05/21/01 AM.
 				ofile << _T("kbobject:\"")										// 05/21/01 AM.
-						<< str(_T("<name>"))										// 05/21/01 AM.
+						<< _T("<name>")										// 05/21/01 AM.
 						<< _T("\"")													// 05/21/01 AM.
 						<< flush;												// 05/21/01 AM.
 				break;															// 05/21/01 AM.

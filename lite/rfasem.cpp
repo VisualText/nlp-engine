@@ -95,10 +95,11 @@ RFASem::RFASem(Iop   *x) : Sem() {val_.op_   = x; type_ = RSOP;  }
 
 ///////// KB HANDSHAKE
 
-RFASem::RFASem(void *x, enum RFASemtype type)
+RFASem::RFASem(void *x, enum RFASemtype type, CG *cg)
 	: Sem()
 {
 type_ = type;
+val_.cg_ = cg;
 switch (type)
 	{
 	case RS_KBCONCEPT:
@@ -433,8 +434,9 @@ Iop				*RFASem::getOp()		{return val_.op_;  }
 
 ////// KB HANDSHAKE			// 02/22/00 AM.
 CONCEPT			*RFASem::getKBconcept()	{return val_.kbconcept_;}
+CG				*RFASem::getCG()	{return val_.cg_;}
 PHRASE			*RFASem::getKBphrase()	{return val_.kbphrase_;}
-ATTR				*RFASem::getKBattr()		{return val_.kbattr_;}
+ATTR			*RFASem::getKBattr()	{return val_.kbattr_;}
 VAL				*RFASem::getKBval()		{return val_.kbval_;}
 
 //////  PARSE TREE OBJECTS

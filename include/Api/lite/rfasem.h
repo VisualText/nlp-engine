@@ -23,6 +23,11 @@ All rights reserved.
 //#include "ifile.h"
 //#include "lite/node.h"
 
+#include "consh/libconsh.h"
+#include "consh/cg.h"
+#include "htab.h"
+#include "kb.h"
+
 // Taken from cg.h .  // 02/22/00 AM.
 #ifndef CONCEPT
 typedef void CONCEPT;				// A concept.
@@ -158,7 +163,7 @@ public:
 	RFASem(Iop *);										// 11/09/99 AM.
 
 	// KB HANDSHAKE.									// 02/22/00 AM.
-	RFASem(void *, enum RFASemtype = RSNULL);	// 02/22/00 AM.
+	RFASem(void *, enum RFASemtype = RSNULL, CG * = NULL);
 
 	// PARSE TREE OBJECTS.							// 10/18/00 AM.
 	RFASem(Ipnode *);									// 10/18/00 AM.
@@ -208,6 +213,7 @@ public:
 
 	// KB Handshake.									// 02/22/00 AM.
 	CONCEPT *getKBconcept();						// 02/22/00 AM.
+	CG *getCG();
 	PHRASE  *getKBphrase();							// 02/22/00 AM.
 	ATTR	  *getKBattr();							// 02/22/00 AM.
 	VAL	  *getKBval();								// 02/22/00 AM.
@@ -326,6 +332,7 @@ private:
 
 		// KB OBJECTS.						// 02/22/00 AM.
 		CONCEPT *kbconcept_;
+		CG *cg_;
 		PHRASE *kbphrase_;
 		ATTR *kbattr_;
 		VAL *kbval_;

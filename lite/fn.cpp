@@ -815,6 +815,7 @@ sem = 0;
 Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 NLP *nlp = parse->getNLP();		// [DEGLOB]	// 10/15/20 AM.
 VTRun *vtrun = nlp->getVTRun();	// [DEGLOB]	// 10/15/20 AM.
+CG *cg = nlppp->parse_->getAna()->getCG();
 
 fnret = false;
 badname = true;
@@ -839,7 +840,7 @@ if (hdll && call_ucodeAction(hdll, func,args,&glob_Auser))
 	switch (glob_Auser.rettype_)
 		{
 		case RETCONCEPT:
-			sem = new RFASem(glob_Auser.retval_.kbconcept_, RS_KBCONCEPT);
+			sem = new RFASem(glob_Auser.retval_.kbconcept_, RS_KBCONCEPT, cg);
 			break;
 		case RETPHRASE:
 			sem = new RFASem(glob_Auser.retval_.kbphrase_, RS_KBPHRASE);
@@ -956,7 +957,7 @@ CG *cg = nlppp->parse_->getAna()->getCG();
 CONCEPT *root = cg->findRoot();
 
 if (root)															// FIX.	// 11/15/00 AM.
-	sem = new RFASem(root, RS_KBCONCEPT);
+	sem = new RFASem(root, RS_KBCONCEPT, cg);
 return true;
 }
 
@@ -1017,7 +1018,7 @@ else							// 2nd arg was num.
 	child = cg->findConcept(conc1, num1);
 
 if (child)															// FIX.	// 11/15/00 AM.
-	sem = new RFASem(child, RS_KBCONCEPT);
+	sem = new RFASem(child, RS_KBCONCEPT, cg);
 return true;
 }
 
@@ -1079,7 +1080,7 @@ attr = cg->findAttr(conc1, name1);
 if (!attr)			// No attr found is ok.					// FIX.	// 08/07/00 AM.
 	return true;													// FIX.	// 08/07/00 AM.
 
-sem = new RFASem(attr, RS_KBATTR);
+sem = new RFASem(attr, RS_KBATTR, cg);
 return true;
 }
 
@@ -1130,7 +1131,7 @@ ATTR *attr = 0;
 
 attr = cg->findAttrs(conc1);
 
-sem = new RFASem(attr, RS_KBATTR);
+sem = new RFASem(attr, RS_KBATTR, cg);
 return true;
 }
 
@@ -1577,7 +1578,7 @@ if (!cg->findVal(conc1, attr_str, /*UP*/ val))
 
 // Return as val type.
 if (val)																// FIX.	// 11/15/00 AM.
-	sem = new RFASem(val, RS_KBCONCEPT);
+	sem = new RFASem(val, RS_KBCONCEPT, cg);
 
 return true;
 }
@@ -1922,7 +1923,7 @@ CG *cg = parse->getAna()->getCG();
 CONCEPT *conc = cg->wordIndex(str1);
 
 if (conc)															// FIX.	// 11/15/00 AM.
-sem = new RFASem(conc, RS_KBCONCEPT);
+sem = new RFASem(conc, RS_KBCONCEPT, cg);
 return true;
 }
 
@@ -1965,7 +1966,7 @@ CG *cg = parse->getAna()->getCG();
 CONCEPT *con = cg->pathConcept(path);
 
 if (con)																// FIX.	// 11/15/00 AM.
-	sem = new RFASem(con, RS_KBCONCEPT);
+	sem = new RFASem(con, RS_KBCONCEPT, cg);
 return true;
 }
 
@@ -2027,7 +2028,7 @@ CONCEPT *conc = cg->findHierConcept(name_str, conc1);
 
 // Return appropriate value.
 if (conc)															// FIX.	// 11/15/00 AM.
-sem = new RFASem(conc, RS_KBCONCEPT);
+sem = new RFASem(conc, RS_KBCONCEPT, cg);
 
 return true;
 }
@@ -2301,7 +2302,7 @@ if (!conc)															// FIX.	// 10/10/00 AM.
 	return true;													// FIX.	// 10/10/00 AM.
 
 // Return appropriate value.
-sem = new RFASem(conc, RS_KBCONCEPT);
+sem = new RFASem(conc, RS_KBCONCEPT, cg);
 
 return true;
 }
@@ -2354,7 +2355,7 @@ CONCEPT *conc = cg->Up(hier1);
 
 // Return appropriate value.
 if (conc)															// FIX.	// 11/15/00 AM.
-	sem = new RFASem(conc, RS_KBCONCEPT);
+	sem = new RFASem(conc, RS_KBCONCEPT, cg);
 
 return true;
 }
@@ -2408,7 +2409,7 @@ CONCEPT *conc = cg->Next(hier1);
 if (!conc)															// FIX.	// 10/10/00 AM.
 	return true;													// FIX.	// 10/10/00 AM.
 // Return appropriate value.
-sem = new RFASem(conc, RS_KBCONCEPT);
+sem = new RFASem(conc, RS_KBCONCEPT, cg);
 
 return true;
 }
@@ -2463,7 +2464,7 @@ if (!conc)															// FIX.	// 10/10/00 AM.
 	return true;													// FIX.	// 10/10/00 AM.
 
 // Return appropriate value.
-sem = new RFASem(conc, RS_KBCONCEPT);
+sem = new RFASem(conc, RS_KBCONCEPT, cg);
 
 return true;
 }
@@ -2830,7 +2831,7 @@ cg->popVal(val, /*UP*/ conc);
 
 // Return appropriate value.
 if (conc)															// FIX.	// 11/15/00 AM.
-sem = new RFASem(conc, RS_KBCONCEPT);
+sem = new RFASem(conc, RS_KBCONCEPT, cg);
 
 return true;
 }
@@ -2897,7 +2898,7 @@ CONCEPT *conc = cg->makeConcept(conc1, name_str, pos_num);
 
 // Return as str type.
 if (conc)															// FIX.	// 11/15/00 AM.
-sem = new RFASem(conc, RS_KBCONCEPT);
+sem = new RFASem(conc, RS_KBCONCEPT, cg);
 
 return true;
 }
@@ -2977,7 +2978,7 @@ if (!conc)	// Error in adding concept.					// FIX.	// 08/07/00 AM.
 
 // Return as str type.
 if (conc)															// FIX.	// 11/15/00 AM.
-sem = new RFASem(conc, RS_KBCONCEPT);
+sem = new RFASem(conc, RS_KBCONCEPT, cg);
 
 return true;
 }
@@ -3371,7 +3372,7 @@ CONCEPT *conc = cg->getConcept(conc1, name_str);
 
 // Return as str type.
 if (conc)															// FIX.	// 11/15/00 AM.
-sem = new RFASem(conc, RS_KBCONCEPT);
+sem = new RFASem(conc, RS_KBCONCEPT, cg);
 
 return true;
 }
@@ -4546,7 +4547,7 @@ CONCEPT *node = sem1->getKBconcept();
 CONCEPT *conc = cg->nodeConcept(node);
 
 if (conc)															// FIX.	// 11/15/00 AM.
-sem = new RFASem(conc, RS_KBCONCEPT);
+sem = new RFASem(conc, RS_KBCONCEPT, cg);
 return true;
 }
 
@@ -4597,7 +4598,7 @@ CONCEPT *node = sem1->getKBconcept();
 CONCEPT *conc = cg->nodeOwner(node);
 
 if (conc)
-sem = new RFASem(conc, RS_KBCONCEPT);
+sem = new RFASem(conc, RS_KBCONCEPT, cg);
 return true;
 }
 
@@ -4657,7 +4658,7 @@ else							// 2nd arg was num.
 	node = cg->findNode(phr1, num1);
 
 if (node)															// FIX.	// 11/15/00 AM.
-sem = new RFASem(node, RS_KBCONCEPT);
+sem = new RFASem(node, RS_KBCONCEPT, cg);
 return true;
 }
 
@@ -4708,7 +4709,7 @@ CONCEPT *node = sem1->getKBconcept();
 CONCEPT *first = cg->listNode(node);
 
 if (first)															// FIX.	// 11/15/00 AM.
-	sem = new RFASem(first, RS_KBCONCEPT);
+	sem = new RFASem(first, RS_KBCONCEPT, cg);
 return true;
 }
 
@@ -4759,7 +4760,7 @@ PHRASE *phr1 = sem1->getKBphrase();
 CONCEPT *node = cg->firstNode(phr1);
 
 if (node)															// FIX.	// 11/15/00 AM.
-sem = new RFASem(node, RS_KBCONCEPT);
+sem = new RFASem(node, RS_KBCONCEPT, cg);
 return true;
 }
 
@@ -4810,7 +4811,7 @@ PHRASE *phr1 = sem1->getKBphrase();
 CONCEPT *node = cg->lastNode(phr1);
 
 if (node)															// FIX.	// 11/15/00 AM.
-sem = new RFASem(node, RS_KBCONCEPT);
+sem = new RFASem(node, RS_KBCONCEPT, cg);
 return true;
 }
 
@@ -4940,7 +4941,7 @@ switch (typ)																	// 11/27/02 AM.
 	}
 
 if (node)															// FIX.	// 11/15/00 AM.
-	sem = new RFASem(node, RS_KBCONCEPT);
+	sem = new RFASem(node, RS_KBCONCEPT, cg);
 
 return true;
 }
@@ -5002,7 +5003,7 @@ CG *cg = nlppp->parse_->getAna()->getCG();
 
 CONCEPT *node = cg->addNode(phr, str, num);
 if (node)															// FIX.	// 11/15/00 AM.
-sem = new RFASem(node, RS_KBCONCEPT);
+sem = new RFASem(node, RS_KBCONCEPT, cg);
 return true;
 }
 
@@ -5751,7 +5752,7 @@ CG *cg = parse->getAna()->getCG();
 CONCEPT *wordConcept = cg->findWordConcept(str1);					// 06/29/03 AM.
 
 if (wordConcept)													// FIX.	// 11/15/00 AM.
-sem = new RFASem(wordConcept, RS_KBCONCEPT);
+sem = new RFASem(wordConcept, RS_KBCONCEPT, cg);
 
 return true;
 }
@@ -5896,7 +5897,7 @@ CONCEPT *conc = cg->addWord(str);
 
 // Return as str type.
 if (conc)															// FIX.	// 11/15/00 AM.
-	sem = new RFASem(conc, RS_KBCONCEPT);
+	sem = new RFASem(conc, RS_KBCONCEPT, cg);
 
 return true;
 }
@@ -11364,7 +11365,7 @@ switch (array_sem->getType())
 		// Reuse the sem, rather than deleting and creating.		// 12/14/02 AM.
 //		sem = array_sem;														// 12/14/02 AM.
 		// CRASH. The above was not a good shortcut.					// 12/19/05 AM.
-		sem = new RFASem(array_sem->getKBconcept(),RS_KBCONCEPT);			// FIX.	// 12/19/05 AM.
+		sem = new RFASem(array_sem->getKBconcept(),RS_KBCONCEPT,cg);			// FIX.	// 12/19/05 AM.
 		return true;
 	default:
 		{
@@ -11641,7 +11642,7 @@ CG *cg = parse->getAna()->getCG();
 CONCEPT *wordConcept = cg->dictFirst();
 
 if (wordConcept)
-	sem = new RFASem(wordConcept, RS_KBCONCEPT);
+	sem = new RFASem(wordConcept, RS_KBCONCEPT, cg);
 
 return true;
 }
@@ -11693,7 +11694,7 @@ CONCEPT *conc1 = sem1->getKBconcept();
 CONCEPT *wordConcept = cg->dictNext(conc1);
 
 if (wordConcept)
-	sem = new RFASem(wordConcept, RS_KBCONCEPT);
+	sem = new RFASem(wordConcept, RS_KBCONCEPT, cg);
 
 return true;
 }
@@ -11890,7 +11891,7 @@ CG *cg = parse->getAna()->getCG();
 CONCEPT *wordConcept = cg->getWordConcept(str1);
 
 if (wordConcept)
-sem = new RFASem(wordConcept, RS_KBCONCEPT);
+sem = new RFASem(wordConcept, RS_KBCONCEPT, cg);
 
 return true;
 }
@@ -12503,7 +12504,7 @@ if (!returnConcept)
 	parse->errOut(true); // UNFIXED
 	}
 
-sem = new RFASem(returnConcept,RS_KBCONCEPT);
+sem = new RFASem(returnConcept,RS_KBCONCEPT,cg);
 
 return true;
 }
@@ -13151,7 +13152,7 @@ bool ok = true;	// Everything ok so far.
 
 // Record partial match.
 _TCHAR *key = _T("PARTMATCH");
-RFASem *csem = new RFASem(cc, RS_KBCONCEPT);
+RFASem *csem = new RFASem(cc, RS_KBCONCEPT,cg);
 Ivar::nodePushval(xx->getData(),key,csem,false,false);
 
 // TODO: See if node has been matched to current concept,
@@ -13167,11 +13168,11 @@ if (str && *str)	// FULL MATCH.
 	Ivar::nodeReplaceval(nn->getData(),_T("SAVE NODE"), semlast,false,false);
 
 	// Save last concept match on FIRST NODE.
-	RFASem *semlastc = new RFASem(cc,RS_KBCONCEPT);
+	RFASem *semlastc = new RFASem(cc,RS_KBCONCEPT,cg);
 	Ivar::nodeReplaceval(nn->getData(),_T("SAVE CON"), semlastc,false,false);
 
 	// Matched concepts in phrase hierarchy, on current node.
-	RFASem *sem1 = new RFASem(cc,RS_KBCONCEPT);
+	RFASem *sem1 = new RFASem(cc,RS_KBCONCEPT,cg);
 	Ivar::nodeReplaceval(xx->getData(),_T("MATCHCONS"), sem1,false,false);
 
 	// Array of matched values on FIRST NODE. "MATCHES"
