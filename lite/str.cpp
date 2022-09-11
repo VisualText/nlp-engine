@@ -3662,8 +3662,22 @@ long u_strlen(
 if (!name || !*name)
 	return 0;
 
-icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(name));
-const UChar *strBuf = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
-return unicu::strLen(strBuf);
+icu::StringPiece sp(name);
+const char *spd = sp.data();
+int32_t length = sp.length();
+
+UChar32 c = 1;
+int32_t i = 0;
+int len = 0;
+
+while (c && i<length) {
+	U8_NEXT(spd, i, length, c);
+	len++;
+}
+return len;
+
+//icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(name));
+//const UChar *strBuf = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
+//int len = unicu::strLen(strBuf);
 // return _tcsclen(name1);	[BYTE LENGTH]
 }
