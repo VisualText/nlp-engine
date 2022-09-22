@@ -93,7 +93,7 @@ To compile the nlp-engine for the Mac:
 * Install [VSCode](https://code.visualstudio.com/download)
 * Open the nlp-engine folder in VSCode
 * Install the [C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools), [CMake](https://marketplace.visualstudio.com/items?itemName=twxs.cmake), and [CMake Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools) extensions into VSCode
-* Intall [brew](http://brew.sh) to download mac-specific packages like clang
+* Install [brew](http://brew.sh) to download mac-specific packages like clang
 * Install the [clang c++ compiler](https://clang.llvm.org/get_started.html)
 * Select the "Clang kit" using the bottom status bar
 * Click on "Build" in the status bar
