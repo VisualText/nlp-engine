@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright © 1998-2009 by Text Analysis International, Inc.
+Copyright ï¿½ 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 ********************************************************************************
 *
@@ -84,7 +84,7 @@ public:
 		);
 
 	// So user actions can get hold of some data.
-	static _t_ostream *getOut(Parse *parse);
+	static std::_t_ostream *getOut(Parse *parse);
 
 	// UTILITIES
 	static bool codeLookup(													// 06/04/00 AM.
@@ -100,7 +100,7 @@ protected:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);				// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);				// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif

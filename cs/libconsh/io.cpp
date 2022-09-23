@@ -45,11 +45,11 @@ All rights reserved.
 
 void
 //lctab(int num, FILE *out)			// 04/20/99 AM.
-lctab(int num, _t_ostream *out)		// 04/20/99 AM.
+lctab(int num, std::_t_ostream *out)		// 04/20/99 AM.
 {
 while (num-- > 0)
    //fprintf(out, "\t");		// 04/20/99 AM.
-	*out << _T("\t") << flush;		// 04/20/99 AM.
+	*out << _T("\t") << std::flush;		// 04/20/99 AM.
 }
 
 
@@ -65,7 +65,7 @@ void
 rule_pret(
 	CON *atom,			/* Atomic concept for phrase.	*/
 	//FILE *out			// 04/20/99 AM.
-	_t_ostream *out,		// 04/20/99 AM.
+	std::_t_ostream *out,		// 04/20/99 AM.
 	CG *cg
 	)
 {
@@ -95,7 +95,7 @@ void
 phrase_pret(
 	CON *phr,
 	//FILE *out		// 04/20/99 AM.
-	_t_ostream *out,	// 04/20/99 AM.
+	std::_t_ostream *out,	// 04/20/99 AM.
 	CG *cg
 	)
 {
@@ -105,7 +105,7 @@ while (phr)
 	*out << cg->acon_->con_str_pret(phr) << _T(" ");		// 04/20/99 AM.
    phr = phr->next;
    }
-*out << flush;	// 04/20/99 AM.
+*out << std::flush;	// 04/20/99 AM.
 }
 
 
@@ -122,7 +122,7 @@ void
 con_pret(
 	CON *con,
 	//FILE *out		// 04/20/99 AM.
-	_t_ostream *out,	// 04/20/99 AM.
+	std::_t_ostream *out,	// 04/20/99 AM.
 	CG *cg
 	)
 {
@@ -131,7 +131,7 @@ CON *pc, *phr;
 if (!con)
    {
    //fprintf(out, "[No concept given.]\n");
-	*out << _T("[No concept given.]") << endl;
+	*out << _T("[No concept given.]") << std::endl;
    return;
    }
 
@@ -140,7 +140,7 @@ if (!con)
 	  << cg->acon_->con_kind_str(con)
 	  << _T(") ")
 	  << ACON::con_str(con)
-	  << endl;				// 04/20/99 AM.
+	  << std::endl;				// 04/20/99 AM.
 switch(con->kind)
    {
    case cPROXY:
@@ -149,7 +149,7 @@ switch(con->kind)
    case cWORD:
       if (con->up)
 			//fprintf(out, "    up: %s\n", con_str(con->up));
-			*out << _T("    up: ") << ACON::con_str(con->up) << endl;	// 04/20/99 AM.
+			*out << _T("    up: ") << ACON::con_str(con->up) << std::endl;	// 04/20/99 AM.
       //fprintf(out, "    down: ");
 		*out << _T("    down: ");
       pc = con->dn;
@@ -160,7 +160,7 @@ switch(con->kind)
          pc = pc->next;
          }
       //fprintf(out, "\n");
-		*out << endl;
+		*out << std::endl;
       
       /* Get phrase attr, if any.  Print out phrase. */
       phr = cg->acon_->con_phrase(con);
@@ -170,20 +170,20 @@ switch(con->kind)
 			*out << phr << _T(": ");
          phrase_pret(phr, out,cg);
          //fprintf(out, "\n");
-			*out << endl;
+			*out << std::endl;
          }
 		
 		// 08/31/99 AM. Print path for concept!
 		_TCHAR buf[1024];
 		cg->acon_->con_to_path(con, /*DU*/ buf);
-		*out << _T("path=") << buf << endl;
+		*out << _T("path=") << buf << std::endl;
 
       break;
    default:
       break;
    }
 //fprintf(out, "    Attrs:\n");
-*out << _T("    Attrs:") << endl;
+*out << _T("    Attrs:") << std::endl;
 cg->kbm_->attrs_pret(con->attrs, out, _T("     "));
 }
 
@@ -200,7 +200,7 @@ void
 rule_pret(
 	CON *atom,			/* Atomic concept for phrase.	*/
 	//FILE *out			// 04/20/99 AM.
-	_t_ostream *out		// 04/20/99 AM.
+	std::_t_ostream *out		// 04/20/99 AM.
 	)
 {
 CON *phr;
@@ -227,8 +227,8 @@ phrase_pret(phr, out,cg);
 bool
 f_exists(_TCHAR *fil)
 {
-//ifstream x(fil, ios::in | ios::nocreate);
-_t_ifstream x(TCHAR2A(fil), ios::in);									// Upgrade.	// 01/24/01 AM.
+//ifstream x(fil, std::ios::in | std::ios::nocreate);
+std::_t_ifstream x(TCHAR2A(fil), std::ios::in);									// Upgrade.	// 01/24/01 AM.
 if (x)
 	return true;
 else

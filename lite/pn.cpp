@@ -77,7 +77,7 @@ static const int bitBUILT= 010;		// BUILT flag.					// 05/25/01 AM.
 
 Pn::Pn()
 {
-//*gout << "[Pn: " << (long) this << "]" << endl;
+//*gout << "[Pn: " << (long) this << "]" << std::endl;
 Start = End = -1;
 Type = PNNULL;
 Text = 0;
@@ -106,7 +106,7 @@ Pn::Pn(long start, long end, enum Pntype type, _TCHAR *txt, _TCHAR *name,
 	long ruleline	// Rule line number for debug.					// 01/04/02 AM.
 	)
 {
-//*gout << "[Pn: " << (long) this << "]" << endl;
+//*gout << "[Pn: " << (long) this << "]" << std::endl;
 Start = start;
 End = end;
 Type = type;
@@ -130,7 +130,7 @@ restart_ = 0;					// 07/17/06 AM.
 
 Pn::~Pn()
 {
-//*gout << "[~Pn: " << (long) this << "]" << endl;
+//*gout << "[~Pn: " << (long) this << "]" << std::endl;
 
 // 11/17/98 AM.
 if (sem_)
@@ -149,7 +149,7 @@ if (dsem_)					// 08/01/99 AM.
 // Copy constructor.  10/26/98 AM.
 Pn::Pn(Pn &pn)
 {
-//*gout << "[Pn copy: " << (long) this << "]" << endl;
+//*gout << "[Pn copy: " << (long) this << "]" << std::endl;
 Start = pn.Start;
 End	= pn.End;
 Type	= pn.Type;
@@ -174,7 +174,7 @@ restart_ = pn.restart_;		// 07/17/06 AM.
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, const Pn &pn)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, const Pn &pn)
 {
 _TCHAR *buf;
 //long oend;
@@ -298,7 +298,7 @@ return output;
 }
 
 // 10/26/98 AM.
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Node<Pn> &node)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Node<Pn> &node)
 {
 Pn *pn;
 
@@ -447,9 +447,9 @@ void Pn::setStartEnd(long start, long end)
 {
 if (start < 0 || end < start)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[setStartEnd: Given bad value. start=")
-		  << start << _T(" , end=") << end << _T("]") << ends;
+		  << start << _T(" , end=") << end << _T("]") << std::ends;
 	errOut(&gerrStr,false);
 	return;
 	}
@@ -474,15 +474,15 @@ int Pn::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Pn::prettyCount(_t_ofstream *ofstr)
+void Pn::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Pn count=") << count_ << endl;
-	*gout << _T("Active Pn count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Pn count=") << count_ << ends;
+		*ofstr << _T("Active Pn count=") << count_ << std::endl;
+	*gout << _T("Active Pn count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Pn count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -861,8 +861,8 @@ while ((node = node->pRight)
 	r_node = node;			// Rightmost node so far.
 	}
 
-_t_strstream gerrStr;
-gerrStr << _T("[findOffsetsRec: Error]") << ends;
+std::_t_strstream gerrStr;
+gerrStr << _T("[findOffsetsRec: Error]") << std::ends;
 errOut(&gerrStr,false);
 return false;
 }

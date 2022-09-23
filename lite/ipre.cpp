@@ -77,8 +77,8 @@ Ipre *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Ipre object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Ipre object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -128,8 +128,8 @@ Ipre *to;
 to = this;
 if (&pre == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Ipre object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Ipre object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -150,26 +150,26 @@ return *this;
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Ipre &pre)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Ipre &pre)
 {
 output << _T("<") << pre.start_ << _T(",") << pre.end_ << _T("> ");
 // ADDING SEMICOLON.												// 02/17/00 AM.
-output << str(pre.name_) << _T("(") << pre.args_ << _T(");") << endl;
+output << str(pre.name_) << _T("(") << pre.args_ << _T(");") << std::endl;
 return output;
 }
 
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Dlist<Ipre> &list)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Dlist<Ipre> &list)
 {
 Delt<Ipre> *delt;
 Ipre *elt;
 delt = list.getFirst();
 elt  = delt->getData();
-output << *elt << endl;
+output << *elt << std::endl;
 while ((delt = delt->Right()))
 	{
 	elt = delt->getData();
-	output << *elt << endl;
+	output << *elt << std::endl;
 	}
 return output;
 }
@@ -201,7 +201,7 @@ void Ipre::setEnd(int x)	{end_		= x;}
 
 void Ipre::genPres(
 	Dlist<Ipre> *pres,
-	_t_ostream &ofile
+	std::_t_ostream &ofile
 	)
 {
 if (!pres)
@@ -212,7 +212,7 @@ Delt<Ipre> *dpre;
 for (dpre = pres->getFirst(); dpre; dpre = dpre->Right())
 	{
 	genPre(dpre->getData(), ofile);
-	ofile << endl;
+	ofile << std::endl;
 	}
 }
 
@@ -224,7 +224,7 @@ for (dpre = pres->getFirst(); dpre; dpre = dpre->Right())
 *********************************************/
 void Ipre::genPre(
 	Ipre *pre,
-	_t_ostream &ofile
+	std::_t_ostream &ofile
 	)
 {
 if (!pre)
@@ -235,15 +235,15 @@ ofile	<< _T("<")
 		<< _T(",")
 		<< pre->getEnd()
 		<< _T(">\t")
-		<< flush;
+		<< std::flush;
 
 // Rest is same as Iaction::genAction().
-ofile << pre->getName() << _T("(") << flush;
+ofile << pre->getName() << _T("(") << std::flush;
 if (pre->getArgs())
 	Iarg::genArgs(pre->getArgs(), _T(", "), ofile);
 
 // ADDING SEMICOLON AFTER PRE ACTION.	// 02/17/00 AM.
-ofile << _T(");") << flush;
+ofile << _T(");") << std::flush;
 }
 
 
@@ -271,15 +271,15 @@ Delt<Ipre> *d1 = list1->getFirst();
 Delt<Ipre> *d2 = list2->getFirst();
 if (!d1 && !d2)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Ipre::same: Empty lists.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Ipre::same: Empty lists.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
 if (!d1 || !d2)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Ipre::same: Empty list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Ipre::same: Empty list.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}

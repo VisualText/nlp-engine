@@ -126,7 +126,7 @@ return true;
 void Line::Gather(Parse *parse)
 {
 if (parse->Verbose())
-	*gout << _T("[Line Execute:]") << endl;
+	*gout << _T("[Line Execute:]") << std::endl;
 
 _TCHAR *text;
 Tree<Pn> *tree;
@@ -138,8 +138,8 @@ len  = parse->getLength();
 
 if (!tree)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Line Execute: No parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Line Execute: No parse tree.]") << std::ends;
 	errOut(&gerrStr,false);
 	return;
 	}
@@ -149,8 +149,8 @@ root = tree->getRoot();
 
 if (!root)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Line Execute: Empty parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Line Execute: Empty parse tree.]") << std::ends;
 	errOut(&gerrStr,false);
 	return;
 	}
@@ -185,7 +185,7 @@ while (node)
 //if (parse->Verbose())											// FIX	// 02/01/00 AM.
 if (parse->getEana()->getFlogfiles())						// FIX	// 02/01/00 AM.
 	{
-	*gout << _T("[Line Execute: before dump.]") << endl;
+	*gout << _T("[Line Execute: before dump.]") << std::endl;
 	ltree->Traverse(ltree->getRoot(), *gout);
 	}
 #endif
@@ -212,8 +212,8 @@ void Line::FirstLine(
 {
 if (!node)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[FirstLine: Empty parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[FirstLine: Empty parse tree.]") << std::ends;
 	errOut(&gerrStr,false);
 	return;
 	}

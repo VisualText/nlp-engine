@@ -33,9 +33,9 @@ class Starr;
 
 class Isugg : public Ielement
 {
-	friend _t_ostream &operator<<(_t_ostream &, Isugg &);					// 11/23/98 AM.
-	friend _t_ostream &operator<<(_t_ostream &output, Delt<Isugg> &);	// 11/23/98 AM.
-	friend _t_ostream &operator<<(_t_ostream &, Dlist<Isugg> &);		// 11/23/98 AM.
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Isugg &);					// 11/23/98 AM.
+	friend std::_t_ostream &operator<<(std::_t_ostream &output, Delt<Isugg> &);	// 11/23/98 AM.
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Dlist<Isugg> &);		// 11/23/98 AM.
 
 public:
 	Isugg(								// Default constructor.
@@ -73,7 +73,7 @@ public:
 	void fillDefaults();
 
 	// Class-wide member functions.
-	static void genSugg(Isugg *sugg, _t_ostream &ofile);
+	static void genSugg(Isugg *sugg, std::_t_ostream &ofile);
 	static bool same(Isugg *sugg1, Isugg *sugg2);					// 06/07/99 AM.
 
 	bool gen(_TCHAR *, Gen *,int,long);									// 08/09/02 AM.

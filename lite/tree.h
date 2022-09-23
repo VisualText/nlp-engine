@@ -113,19 +113,19 @@ int Tree<NODETYPE>::getCount() { return count_; }
 #ifndef STABLE_
 template<class NODETYPE>
 void Tree<NODETYPE>::prettyCount(_TCHAR *str,
-	_t_ofstream *ofstr)
+	std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
 		*ofstr << _T("Active Tree<") << str << _T("> count=")
-		  << count_ << endl;
+		  << count_ << std::endl;
 	*gout << _T("Active Tree<") << str << _T("> count=")
-		  << count_ << endl;
+		  << count_ << std::endl;
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("Active Tree<") << str << _T("> count=")
-		  << count_ << ends;
+		  << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -164,8 +164,8 @@ void Tree<NODETYPE>::insertUp(
 if (node.pUp || node.pLeft)
 	{
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[InsertUp: Given node already in another tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[InsertUp: Given node already in another tree.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -175,8 +175,8 @@ if (node.pUp || node.pLeft)
 if (&pos == pRoot)
 	{
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[InsertUp: Can't displace root of tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[InsertUp: Can't displace root of tree.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -207,8 +207,8 @@ void Tree<NODETYPE>::insertDown(
 if (node.pUp || node.pLeft)
 	{
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[InsertDown: Given node already in another tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[InsertDown: Given node already in another tree.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -240,8 +240,8 @@ void Tree<NODETYPE>::insertLeft(
 if (node.pUp || node.pLeft)
 	{
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[InsertLeft: Given node already in another tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[InsertLeft: Given node already in another tree.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -251,8 +251,8 @@ if (node.pUp || node.pLeft)
 if (&pos == pRoot)
 	{
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[InsertLeft: Can't displace root of tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[InsertLeft: Can't displace root of tree.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -292,8 +292,8 @@ void Tree<NODETYPE>::insertRight(
 if (node.pUp || node.pLeft)
 	{
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[InsertRight: Given node is in another tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[InsertRight: Given node is in another tree.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -303,8 +303,8 @@ if (node.pUp || node.pLeft)
 if (&pos == pRoot)
 	{
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[InsertRight: Root can't have siblings.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[InsertRight: Root can't have siblings.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -331,7 +331,7 @@ node.pLeft = &pos;
 template<class NODETYPE>
 void Tree<NODETYPE>::Traverse(
 	const Node<NODETYPE> *node,
-	_t_ostream &out,						// 12/01/98 AM.
+	std::_t_ostream &out,						// 12/01/98 AM.
 	bool root,
 	int indent
 	) const
@@ -342,7 +342,7 @@ if (node == 0)
 for (int ii = indent * INDENT_LEN; ii > 0; ii--)
 	out << _T(" ");
 
-out << node->data << endl;
+out << node->data << std::endl;
 
 Traverse(node->pDown, out, false, indent + 1);
 
@@ -401,8 +401,8 @@ void Tree<NODETYPE>::Dump() const
 if (!pRoot)
 	{
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Dump: No root for given tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Dump: No root for given tree.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -477,8 +477,8 @@ void Tree<NODETYPE>::deleteSubs(Node<NODETYPE> *start)
 if (!start)
 	{
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[deleteSubs: Given null list of nodes.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[deleteSubs: Given null list of nodes.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -518,8 +518,8 @@ tree = this;						// Just for clarity.
 if (!start)							// 11/26/98 AM. Allow null end of range.
 	{
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[exciseSubs: Given null node.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[exciseSubs: Given null node.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -558,8 +558,8 @@ else if (!start->pLeft)			// Replacing first node in phrase.
 	if (!(start->pUp))
 		{
 		{
-	_t_strstream gerrStr;
-	gerrStr << _T("[exciseSubs: Node not in a tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[exciseSubs: Node not in a tree.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -610,8 +610,8 @@ tree = this;						// Just for clarity.
 
 if (!start)							// 11/26/98 AM. Allow null end of range.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[spliceSubs: Given null node.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[spliceSubs: Given null node.]") << std::ends;
 	errOut(&gerrStr,false);
 
 	return;
@@ -687,8 +687,8 @@ for (;;)
 		break;
 	if (!(node = next))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[spliceSubs: Error]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[spliceSubs: Error]") << std::ends;
 		errOut(&gerrStr,false);
 		break;
 		}
@@ -791,8 +791,8 @@ tree = this;						// Just for clarity.
 
 if (!x_start || !y_start || !x_end || !y_end)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[replaceSubs: Given null node.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[replaceSubs: Given null node.]") << std::ends;
 	errOut(&gerrStr,false);
 
 	return;

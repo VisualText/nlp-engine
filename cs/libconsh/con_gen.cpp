@@ -186,7 +186,7 @@ fp = new std::_t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
 
 gen_file_head(fp);
 
-*fp << _T("extern bool cc_con_ini(void*);\n") << endl;					// 08/15/02 AM.
+*fp << _T("extern bool cc_con_ini(void*);\n") << std::endl;					// 08/15/02 AM.
 
 for (ii = 0; ii < segs_tot; ii++)
    {
@@ -237,32 +237,32 @@ fp = new std::_t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
 gen_file_head(fp);
 
 consh_gen_includes(fp);
-*fp << _T("\nbool cc_con_ini(void *xcg)") << endl;						// 05/05/01 AM.
-*fp << _T("{") << endl;
-*fp << _T("CON **segs;\n") << endl;
-*fp << _T("CG *cg = (CG *) xcg;") << endl;									// 08/15/02 AM.
-*fp << _T("segs = cg->acon_->con_seg_table();") << endl;				// 08/16/02 AM.
+*fp << _T("\nbool cc_con_ini(void *xcg)") << std::endl;						// 05/05/01 AM.
+*fp << _T("{") << std::endl;
+*fp << _T("CON **segs;\n") << std::endl;
+*fp << _T("CG *cg = (CG *) xcg;") << std::endl;									// 08/15/02 AM.
+*fp << _T("segs = cg->acon_->con_seg_table();") << std::endl;				// 08/16/02 AM.
 
 for (ii = 0; ii < segs_tot; ii++)
    *fp << _T("segs[") << ii << _T("] = &(")
-		 << tbase << ii << _T("[0]);") << endl;
+		 << tbase << ii << _T("[0]);") << std::endl;
 
-*fp << _T("bool ok = cg->acon_->con_hard_ini(") << endl;				// 08/15/02 AM.
-*fp << _T("   (long) ") << tsize << _T(",\t/* con seg size */") << endl;
-*fp << _T("   (int) ") << segs_tot << _T(",\t/* con segs tot */") << endl;
-*fp << _T("   (int) ") << tcurr << _T(",\t/* con seg curr */") << endl;
+*fp << _T("bool ok = cg->acon_->con_hard_ini(") << std::endl;				// 08/15/02 AM.
+*fp << _T("   (long) ") << tsize << _T(",\t/* con seg size */") << std::endl;
+*fp << _T("   (int) ") << segs_tot << _T(",\t/* con segs tot */") << std::endl;
+*fp << _T("   (int) ") << tcurr << _T(",\t/* con seg curr */") << std::endl;
 if (toff >= 0)									/* Table not empty. */
    *fp << _T("   &(")
 		 << tbase << tcurr
-		 << _T("[") << toff << _T("]),\t/* con seg p */") << endl;
+		 << _T("[") << toff << _T("]),\t/* con seg p */") << std::endl;
 else											/* Table empty.		*/
    *fp << _T("   &(")
-		 << tbase << tcurr << _T("[0]) - 1,\t/* con seg p */") << endl;
-*fp << _T("   (ID) ") << tcount << _T("\t/* concept count */") << endl;
+		 << tbase << tcurr << _T("[0]) - 1,\t/* con seg p */") << std::endl;
+*fp << _T("   (ID) ") << tcount << _T("\t/* concept count */") << std::endl;
 
-*fp << _T("   );") << endl;
-*fp << _T("return ok;") << endl;												// 05/05/01 AM.
-*fp << _T("}") << endl;
+*fp << _T("   );") << std::endl;
+*fp << _T("return ok;") << std::endl;												// 05/05/01 AM.
+*fp << _T("}") << std::endl;
 
 //if (!file_close(s_nam, fp))
 //   return;
@@ -327,7 +327,7 @@ if (pseg->kind)	/* If concept is present. */
          break;
       case cNO_CON:
       default:
-         _t_cerr << _T("[con_gen: Bad kind]") << endl;
+         std::_t_cerr << _T("[con_gen: Bad kind]") << std::endl;
          //prog_exit(1);					// 04/29/99 AM.
 			exit(1);								// 04/29/99 AM.
       }

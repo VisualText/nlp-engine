@@ -38,7 +38,7 @@ All rights reserved.
 
 #include "consh/libconsh.h"				// 04/29/99 AM.
 #include "consh/arg.h"
-_TCHAR skip_b(_TCHAR cc, _t_istream *fp);		// 04/20/99 AM.
+_TCHAR skip_b(_TCHAR cc, std::_t_istream *fp);		// 04/20/99 AM.
 
 
 
@@ -54,7 +54,7 @@ _TCHAR skip_b(_TCHAR cc, _t_istream *fp);		// 04/20/99 AM.
 LIBCONSH_API void
 args_pp(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
     _TCHAR *buf
 	)
 {
@@ -80,7 +80,7 @@ while ((str = ALIST::list_pop_buf(&args,buf)))						// 08/14/02 AM.
       *out << str << _T(" ");
 #endif
    }
-*out << endl;
+*out << std::endl;
 }
 
 
@@ -107,8 +107,8 @@ while ((str = ALIST::list_pop_buf(&args,buf)))						// 08/14/02 AM.
 
 LIBCONSH_API bool
 args_read(
-	_t_istream *fp,						/* Stream to read.			*/
-	_t_ostream *out,						/* Stream to echo to.		*/
+	std::_t_istream *fp,						/* Stream to read.			*/
+	std::_t_ostream *out,						/* Stream to echo to.		*/
 	bool silent_f,					/* True if not echoing.		*/
 	ALIST *alist,		// List manager.									// 08/14/02 AM.
 	_TCHAR *buf,						/* Buffer for args.			*/
@@ -186,7 +186,7 @@ return(ok);
 
 LIBCONSH_API bool
 arg_get(
-	_t_istream *fp,			/* Stream to read from.				*/
+	std::_t_istream *fp,			/* Stream to read from.				*/
 	ALIST *alist,		// List manager.									// 08/14/02 AM.
 	/*DU*/
 	_TCHAR *cup,			/* Lookahead char.					*/
@@ -216,7 +216,7 @@ for (;;)			/* While getting arg */
 		if (!cc)																	// 12/16/01 AM.
 //      if (cc == EOF)														// 12/16/01 AM.
          {
-         _t_cerr << _T("[arg_get: Can't escape EOF.]") << endl;
+         std::_t_cerr << _T("[arg_get: Can't escape EOF.]") << std::endl;
          return(false);
          }
 
@@ -263,7 +263,7 @@ for (;;)			/* While getting arg */
    if (fp->eof())																// 12/18/01 AM.
 		cc = '\0';																// 12/18/01 AM.
    }
-_t_cerr << _T("[arg_get: Program error.]") << endl;
+std::_t_cerr << _T("[arg_get: Program error.]") << std::endl;
 return(false);
 }
 
@@ -281,7 +281,7 @@ return(false);
 
 LIBCONSH_API bool
 arg_get_comment(
-	_t_istream *fp,			/* Stream to read from.				*/
+	std::_t_istream *fp,			/* Stream to read from.				*/
 	/*DU*/
 	_TCHAR *cup			/* Lookahead char.					*/
 	)
@@ -314,7 +314,7 @@ for (;;)			/* While getting arg */
    if (fp->eof())																// 12/18/01 AM.
 		cc = '\0';																// 12/18/01 AM.
    }
-_t_cerr << _T("[arg_get_comment: Program error.]") << endl;
+std::_t_cerr << _T("[arg_get_comment: Program error.]") << std::endl;
 return(false);
 }
 
@@ -331,9 +331,9 @@ return(false);
 
 LIBCONSH_API bool
 arg_get_str(
-	_t_istream *fp,			/* Stream to read from.			*/
+	std::_t_istream *fp,			/* Stream to read from.			*/
 	ALIST *alist,		// List manager.									// 08/14/02 AM.
-	_t_ostream *out,		// Stream to echo to.							// 06/21/03 AM.
+	std::_t_ostream *out,		// Stream to echo to.							// 06/21/03 AM.
 	/*DU*/
    int ci,
 	_TCHAR *cup,			/* Lookahead char.				*/
@@ -364,7 +364,7 @@ for (;;)			/* While getting arg */
 		if (!cc)																	// 12/16/01 AM.
 //      if (cc == EOF)														// 12/16/01 AM.
          {
-         *out << _T("[arg_get_str: Can't escape EOF.]") << endl;	// 06/21/03 AM.
+         *out << _T("[arg_get_str: Can't escape EOF.]") << std::endl;	// 06/21/03 AM.
          return(false);
          }
 
@@ -382,8 +382,8 @@ for (;;)			/* While getting arg */
 //    case EOF:																// 12/16/01 AM.
          *buf++ = '\0';
           *out																	// 06/21/03 AM.
-				<< _T("[arg_get_str: Error. EOF in middle of string.]") << endl;
-			*out << _T("[str=") << *pos << _T("]") << endl;						// 06/21/03 AM.
+				<< _T("[arg_get_str: Error. EOF in middle of string.]") << std::endl;
+			*out << _T("[str=") << *pos << _T("]") << std::endl;						// 06/21/03 AM.
          //*args = alist->list_add(*args, (long)*pos, end);
          *args = alist->list_add(*args, lenIn, end);
          *cup = cc;
@@ -399,7 +399,7 @@ for (;;)			/* While getting arg */
 				cc = '\0';														// 12/18/01 AM.
          if (!_istspace((_TUCHAR)cc))
             {
-            *out << _T("[arg_get_str: Arg glommed to end of string.]") << endl;
+            *out << _T("[arg_get_str: Arg glommed to end of string.]") << std::endl;
             return(false);
             }
          *buf++ = '\0';
@@ -427,7 +427,7 @@ for (;;)			/* While getting arg */
    if (fp->eof())																// 12/18/01 AM.
 		cc = '\0';																// 12/18/01 AM.
    }
-*out << _T("arg_get_str: Program error.") << endl;
+*out << _T("arg_get_str: Program error.") << std::endl;
 return(false);
 }
 
@@ -446,7 +446,7 @@ return(false);
 **************************************************/
 
 _TCHAR
-skip_b(_TCHAR cc, _t_istream *fp)		// 04/20/99 AM.
+skip_b(_TCHAR cc, std::_t_istream *fp)		// 04/20/99 AM.
 {
 if (fp->eof())																	// 12/18/01 AM.
 	return '\0';																// 12/18/01 AM.

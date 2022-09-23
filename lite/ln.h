@@ -26,7 +26,7 @@ All rights reserved.
 
 class Ln
 {
-	friend _t_ostream &operator<<(_t_ostream &, const Ln &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, const Ln &);
 
 public:
 	Ln();
@@ -59,7 +59,7 @@ private:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif

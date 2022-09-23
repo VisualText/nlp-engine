@@ -111,7 +111,7 @@ return (Algo &) *ptr;
 bool Angen::Execute(Parse *parse, Seqn *seqn)
 {
 if (parse->Verbose())
-	*gout << _T("[Angen:]") << endl;
+	*gout << _T("[Angen:]") << std::endl;
 
 Tree<Pn> *tree;
 
@@ -119,8 +119,8 @@ tree = (Tree<Pn> *)parse->getTree();
 
 if (!tree)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Angen: No parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Angen: No parse tree.]") << std::ends;
 	return errOut(&gerrStr,false,parse->getInputpass(),0);
 	}
 
@@ -129,8 +129,8 @@ root = tree->getRoot();
 
 if (!root)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Angen: Empty parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Angen: Empty parse tree.]") << std::ends;
 	return errOut(&gerrStr,false,parse->getInputpass(),0);
 	}
 
@@ -139,11 +139,11 @@ if (!root)
 Node<Pn> *node;
 if (!(node = root->Down()))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Angen: Pass file '")
 	  // << str(seqn->getRulesfilename())
 		  << str(parse->getInput())
-		  << _T("' not parsed.]") << ends;
+		  << _T("' not parsed.]") << std::ends;
 	return errOut(&gerrStr,false,parse->getInputpass(),0);
 	}
 
@@ -151,8 +151,8 @@ if (node->Right())
 	{
 	if (parse->getIntern())												// 05/26/01 AM.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Pass file has some unhandled text.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Pass file has some unhandled text.]") << std::ends;
 		errOut(&gerrStr,false,parse->getInputpass(),0);
 		}
 	}
@@ -166,24 +166,24 @@ RFASem *sem;
 sem = (RFASem *) pn->getSem();
 if (!sem)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Angen: No semantics for parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Angen: No semantics for parse tree.]") << std::ends;
 	return errOut(&gerrStr,false,parse->getInputpass(),0);
 	}
 
 // Could search for a _RULESFILE node at the top level here.
 if (sem->getType() != RSFILE)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Angen: Couldn't parse pass file.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Angen: Couldn't parse pass file.]") << std::ends;
 	return errOut(&gerrStr,false,parse->getInputpass(),0);
 	}
 
 Ifile *rulesfile;
 if (!(rulesfile = sem->getRulesfile()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Angen: No rules found in file.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Angen: No rules found in file.]") << std::ends;
 	return errOut(&gerrStr,false,parse->getInputpass(),0);
 	}
 
@@ -195,7 +195,7 @@ _TCHAR codefile[MAXSTR];														// 04/27/00 AM.
 int id = seqn->getPassnum();												// 04/27/00 AM.
 _stprintf(codefile, _T("%s%cpass%d.cpp"),										// 04/27/00 AM.
 			parse->getOutdir(), DIR_CH, id);
-_t_ofstream fcode(codefile, ios::out);										// 04/27/00 AM.
+_t_ofstream fcode(codefile, std::ios::out);										// 04/27/00 AM.
 
 // Create object to manage code generation.							// 05/08/00 AM.
 Gen gen(_T(""), &fcode, id, REGNULL);										// 05/08/00 AM.

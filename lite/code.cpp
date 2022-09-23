@@ -106,15 +106,15 @@ int Code::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Code::prettyCount(_t_ofstream *ofstr)
+void Code::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Code count=") << count_ << endl;
-	*gout << _T("Active Code count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Code count=") << count_ << ends;
+		*ofstr << _T("Active Code count=") << count_ << std::endl;
+	*gout << _T("Active Code count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Code count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -133,8 +133,8 @@ exitpass = false;																// 02/06/01 AM.
 
 if (!parse || !seqn)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[execCode: given no parser or pass information.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[execCode: given no parser or pass information.]") << std::ends;
 	parse->errOut(&gerrStr,false);
 	return;
 	}
@@ -144,7 +144,7 @@ Ifile *rulesfile = 0;
 if (!(rulesfile = seqn->getRulesfile()))
 	{
 	// Ok for the RFA passes not to have a pass file.
-	//*gerr << "[execCode: no pass file.]" << endl;
+	//*gerr << "[execCode: no pass file.]" << std::endl;
 	return;
 	}
 
@@ -152,7 +152,7 @@ if (!(rulesfile = seqn->getRulesfile()))
 Dlist<Iaction> *codes = 0;
 if (!(codes = rulesfile->getCodes()))
 	{
-	//cout << "[No code actions.]" << endl;
+	//cout << "[No code actions.]" << std::endl;
 	return;
 	}
 
@@ -179,12 +179,12 @@ for (daction = codes->getFirst(); daction; daction = daction->Right())
 	// Execute NLP++ code.												// 01/14/00 AM.
 	if ((rfasem = action->getSem()))									// 01/14/00 AM.
 		{
-		//*gerr << "[Code: Statements to execute.]" << endl;
+		//*gerr << "[Code: Statements to execute.]" << std::endl;
 
 		if (!(ok = rfasem->eval(&nlppp, /*UP*/ val)))
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Code actions: Error in NLP++.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Code actions: Error in NLP++.]") << std::ends;
 			parse->errOut(&gerrStr,false);
 			}
 
@@ -203,19 +203,19 @@ for (daction = codes->getFirst(); daction; daction = daction->Right())
 		{
 		if (badname)														// 01/14/00 AM.
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[Code actions: Error. Unknown action=")
 							<< action->getName() << _T("].")
-							<< ends;
+							<< std::ends;
 			parse->errOut(&gerrStr,false);
 			}
 
 		else
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[Post actions: Error in action=")
 							<< action->getName()
-							<< _T("].") << ends;
+							<< _T("].") << std::ends;
 			parse->errOut(&gerrStr,false);
 			}
 
@@ -250,8 +250,8 @@ bool Code::codeAction(Iaction *action, Parse *parse,
 badname = false;
 if (!action || !parse)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[codeAction: given null action or parse object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[codeAction: given null action or parse object.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -266,13 +266,13 @@ if (list)									// FIX.						// 02/22/00 AM.
 	args = list->getFirst();
 if (empty(str))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[codeAction: no action name.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[codeAction: no action name.]") << std::ends;
 	parse->errOut(&gerrStr,false);
 	return false;
 	}
 
-//cout << "str=" << str << endl;
+//cout << "str=" << str << std::endl;
 if (!_tcscmp(str, _T("var")))			// Variable creation action.
 	return codeVar(args, parse);
 else if (!_tcscmp(str, _T("varstrs")))									// 01/24/99 AM.
@@ -332,7 +332,7 @@ HINSTANCE hdll = parse->getHdll();
 if (hdll && call_ucodeAction(hdll, func,args,auser))				// 08/28/02 AM.
 	return true;
 
-//*gerr << "[Execute code action: Unknown action=" << func << "]." << endl;
+//*gerr << "[Execute code action: Unknown action=" << func << "]." << std::endl;
 #endif
 return false;
 }
@@ -354,7 +354,7 @@ bool Code::regCode(
 {
 //if (usercode_)																// 02/09/01 AM.
 //	{
-//	*gerr << "[regCode: Can only register one code action class.]" << endl;
+//	*gerr << "[regCode: Can only register one code action class.]" << std::endl;
 //	return false;
 //	}
 //usercode_ = code;															// 02/09/01 AM.
@@ -585,12 +585,12 @@ _TCHAR buf[MAXSTR];
 _stprintf(buf, _T("%s%c%s"), parse->getAna()->getDatadir(),		// 12/08/99 AM.
 													DIR_CH,						// 03/09/00 AM.
 													fname);						// 12/08/99 AM.
-//ifstream inFile(buf, ios::in | ios::nocreate);
-_t_ifstream inFile(TCHAR2CA(buf), ios::in);							// Upgrade.	// 01/24/01 AM.
+//ifstream inFile(buf, std::ios::in | std::ios::nocreate);
+std::_t_ifstream inFile(TCHAR2CA(buf), std::ios::in);							// Upgrade.	// 01/24/01 AM.
 if (!inFile)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("Could not open input file '") << buf << _T("'.") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Could not open input file '") << buf << _T("'.") << std::ends;
 	parse->errOut(&gerrStr,false);
 	return false;
 	}
@@ -616,8 +616,8 @@ for (;;)					// Traverse file and list.
 			sym->setLooked(true);		// It's been looked up.
 		else
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[String='") << str << _T("' has no lowercase sym.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[String='") << str << _T("' has no lowercase sym.]") << std::ends;
 			parse->errOut(&gerrStr,false);
 			}
 
@@ -635,7 +635,7 @@ for (;;)					// Traverse file and list.
 		}
 	else											// Match
 		{
-		//cout << "[Found match=" << str << "]" << endl;
+		//cout << "[Found match=" << str << "]" << std::endl;
 		// Get and update sym.
 		// 01/26/99 AM. Use line, since it is lowercase.
 		//str_to_lower(str, lcbuf);
@@ -667,7 +667,7 @@ return true;
 * RET:	True if ok, else false.
 * NOTE:	Should direct output to output file, if any.
 *			For synchronization of all outputs with dlls, threads, etc., do an
-*			endl or flush after every print out.
+*			std::endl or std::flush after every print out.
 ********************************************/
 
 bool Code::codePrint(
@@ -683,14 +683,14 @@ if (!Arg::done((DELTS*)args, _T("codePrint"),parse))
 	return false;
 
 // Use main output file, if open, else standard output.
-_t_ostream *fout = 0;			// "Real" output stream.
+std::_t_ostream *fout = 0;			// "Real" output stream.
 if (!(fout = Code::getOut(parse)))		// 03/23/99 AM
-	fout = &_t_cout;								// 03/23/99 AM
+	fout = &std::_t_cout;								// 03/23/99 AM
 	// Want to use gout here, but doesn't work.  check it out.
 
 // Print the string
 *fout << str;		// 03/23/99 AM.
-*fout << flush;	// 03/23/99 AM.
+*fout << std::flush;	// 03/23/99 AM.
 
 return true;
 }
@@ -725,7 +725,7 @@ if (!Var::val(var, parse, /*DU*/ st))
 
 // Print the string
 *gout << str(st);		// 03/23/99 AM.
-*gout << flush;		// 03/23/99 AM.
+*gout << std::flush;		// 03/23/99 AM.
 #endif
 
 // 01/25/99 AM.
@@ -735,9 +735,9 @@ if (!Var::vals(var, parse, /*UP*/ values))
 	return false;
 
 // Use main output file, if open, else standard output.
-_t_ostream *fout = 0;			// "Real" output stream.
+std::_t_ostream *fout = 0;			// "Real" output stream.
 if (!(fout = Code::getOut(parse)))		// 03/23/99 AM
-	fout = &_t_cout;								// 03/23/99 AM
+	fout = &std::_t_cout;								// 03/23/99 AM
 // Not sure why gout isn't working here.
 
 // Print out all values.
@@ -759,15 +759,15 @@ while (values)
 		{
 		case IASTR:															// 12/03/99 AM.
 			st = arg->getStr();											// 12/03/99 AM.
-			*fout << str(st) << flush;									// 03/23/99 AM.
+			*fout << str(st) << std::flush;									// 03/23/99 AM.
 			break;
 		case IANUM:															// 12/03/99 AM.
-			*fout << arg->getNum() << flush;							// 12/03/99 AM.
+			*fout << arg->getNum() << std::flush;							// 12/03/99 AM.
 			break;
 		default:
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[codePrintvar: Bad value]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[codePrintvar: Bad value]") << std::ends;
 			parse->errOut(&gerrStr,false);
 			}
 		// 12/03/99 AM.
@@ -824,14 +824,14 @@ Delt<Iarg> *values = 0;
 if (!Var::vals(var, parse, /*UP*/ values))
 	return false;
 
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, parse, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Fprintvar code action: file=") << fname << _T(" is closed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Fprintvar code action: file=") << fname << _T(" is closed.]") << std::ends;
 	parse->errOut(&gerrStr,false);
 	return false;
 	}
@@ -856,15 +856,15 @@ while (values)
 		{
 		case IASTR:															// 12/03/99 AM.
 			st = arg->getStr();											// 12/03/99 AM.
-			*ostr << str(st) << flush;
+			*ostr << str(st) << std::flush;
 			break;
 		case IANUM:															// 12/03/99 AM.
-			*ostr << arg->getNum() << flush;							// 12/03/99 AM.
+			*ostr << arg->getNum() << std::flush;							// 12/03/99 AM.
 			break;
 		default:
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[codeFprintvar: Bad value]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[codeFprintvar: Bad value]") << std::ends;
 			parse->errOut(&gerrStr,false);
 			}
 		// 12/03/99 AM.
@@ -909,14 +909,14 @@ Dlist<Ipair> *vars = parse->getVars();
 if (!vars)
 	return true;			// No variables is ok!
 
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, parse, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Gdump code action: file=") << fname << _T(" is closed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Gdump code action: file=") << fname << _T(" is closed.]") << std::ends;
 	parse->errOut(&gerrStr,false);
 	return false;
 	}
@@ -946,8 +946,8 @@ _TCHAR *str = 0;
 
 if (parse->getOut())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Startout code action: Output file already open.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Startout code action: Output file already open.]") << std::ends;
 	parse->errOut(&gerrStr,false);
 	return false;
 	}
@@ -958,14 +958,14 @@ _TCHAR *name = 0;
 if ((name = parse->getOutput()))
 	{
 	// Open the output file for APPENDING.
-	_t_ofstream *fout = 0;
-	fout = new _t_ofstream(TCHAR2CA(name), ios::app);
+	std::_t_ofstream *fout = 0;
+	fout = new std::_t_ofstream(TCHAR2CA(name), std::ios::app);
 	parse->setOut(fout);
 	parse->newostr(fout);			// Add to list of ostrs.		// 05/23/01 AM.
 	}
 else	// No output file.  Use standard out by default.
 	{
-	parse->setOut(&_t_cout);
+	parse->setOut(&std::_t_cout);
 	}
 
 return true;
@@ -994,15 +994,15 @@ _TCHAR *str = 0;
 
 
 // Close the output file.
-_t_ostream *tmp = parse->getOut();											// 05/23/01 AM.
+std::_t_ostream *tmp = parse->getOut();											// 05/23/01 AM.
 if (!tmp)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Stopout code action: No output file is open.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Stopout code action: No output file is open.]") << std::ends;
 	parse->errOut(&gerrStr,false);
 	return false;
 	}
-else if (tmp == &_t_cout)		// Program's "real" output is to standard output.
+else if (tmp == &std::_t_cout)		// Program's "real" output is to standard output.
 	;
 else
 	{
@@ -1025,7 +1025,7 @@ return true;
 * NOTE:	Function for hiding internals from user.
 ********************************************/
 
-_t_ostream *Code::getOut(
+std::_t_ostream *Code::getOut(
 	Parse *parse
 	)
 {
@@ -1062,39 +1062,39 @@ if (!Arg::done((DELTS*)args, _T("codeFileout"),parse))
 
 if (!fname)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[fileout: Error. Given null filename.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[fileout: Error. Given null filename.]") << std::ends;
 	parse->errOut(&gerrStr,false);
 	return false;
 	}
 
 Ipair *pair;
-_t_ostream *ostr;
+std::_t_ostream *ostr;
 bool exists,open,inuse,badname;
 if (!Var::filevar(fname,parse,										// 12/31/99 AM.
 									/*UP*/ pair,ostr,exists,open,inuse,badname))
 	{
 	if (inuse)
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[fileout: Error. var=") << fname << _T(" already in use.]")
-					<< ends;
+					<< std::ends;
 		parse->errOut(&gerrStr,false);
 		}
 
 	else if (badname)
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[fileout: Error. var=") << fname << _T(" is bad name.]")
-					<< ends;
+					<< std::ends;
 		parse->errOut(&gerrStr,false);
 		}
 
 	else
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[fileout: Error creating output var=")
-					<< fname << _T("]") << ends;
+					<< fname << _T("]") << std::ends;
 		parse->errOut(&gerrStr,false);
 		}
 
@@ -1103,9 +1103,9 @@ if (!Var::filevar(fname,parse,										// 12/31/99 AM.
 
 if (exists)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[fileout: Warning. output var=")
-			<< fname << _T(" exists.]") << ends;
+			<< fname << _T(" exists.]") << std::ends;
 	parse->errOut(&gerrStr,false);
 	return true;
 	}
@@ -1139,29 +1139,29 @@ if (!Arg::str1(_T("codePrlit"), ((DELTS*&)args), fname))
 	return false;
 if (!Arg::str1(_T("codePrlit"), ((DELTS*&)args), lit))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Missing literal arg in Prlit code action.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Missing literal arg in Prlit code action.]") << std::ends;
 	parse->errOut(&gerrStr,false);
 	return false;
 	}
 if (!Arg::done((DELTS*)args, _T("codePrlit"),parse))
 	return false;
 
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, parse, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Prlit code action: file=") << fname << _T(" is closed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Prlit code action: file=") << fname << _T(" is closed.]") << std::ends;
 	parse->errOut(&gerrStr,false);
 	return false;
 	}
 
 // Output the string to the file.
 if (lit && *lit)
-	*ostr << lit << flush;
+	*ostr << lit << std::flush;
 
 return true;
 }

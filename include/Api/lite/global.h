@@ -20,7 +20,6 @@ All rights reserved.
 #define IO_LIBRARIES_
 #include <iostream>											// Upgrade.	// 01/24/01 AM.
 #include <fstream>											// Upgrade.	// 01/24/01 AM.
-using namespace std;											// Upgrade.	// 01/24/01 AM.
 #endif
 
 // INCONSISTENCY WITH MS VISUAL C++ ON VARIOUS PCS.				// 02/02/01 AM.
@@ -77,15 +76,15 @@ typedef void PHRASE;					// A concept's phrase of nodes.
 // VC FEATURE.  BOMBS IF TRYING TO PRINT POINTER TO NULL.
 extern const _TCHAR *STRNULL;									// PORT.	// 03/08/00 AM.
 
-extern _t_ostream *gout;
-void fileOut(_TCHAR *fname, /*DU*/ _t_ofstream* &fout, _t_ostream* &sout);
-void fileApp(_TCHAR *fname, /*DU*/ _t_ofstream* &fout, _t_ostream* &sout); // 05/14/13 AM.
-//void fileOut(_t_strstream*, /*DU*/ _t_ofstream* &fout, _t_ostream* &sout);
-void resetOut(/*DU*/ _t_ofstream* &fout, _t_ostream* &sout);
+extern std::_t_ostream *gout;
+void fileOut(_TCHAR *fname, /*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout);
+void fileApp(_TCHAR *fname, /*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout); // 05/14/13 AM.
+//void fileOut(std::_t_strstream*, /*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout);
+void resetOut(/*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout);
 
-extern _t_ostream *gerr;														// 03/22/99 AM.
-void fileErr(_TCHAR *fname, /*DU*/ _t_ofstream* &fout, _t_ostream* &sout);
-void resetErr(/*DU*/ _t_ofstream* &fout, _t_ostream* &sout);
+extern std::_t_ostream *gerr;														// 03/22/99 AM.
+void fileErr(_TCHAR *fname, /*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout);
+void resetErr(/*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout);
 
 // A global verbose, debug, timing, stream.							// 02/21/02 AM.
 //extern ostream *dbgout;													// 08/26/02 AM.
@@ -104,7 +103,7 @@ extern LITE_API bool errOut(bool,										// 05/26/01 AM.
 						 long=0);												// 08/22/02 AM.
 
 extern LITE_API bool errOut(                                   // 02/25/05 AM.
-                   _t_strstream *,
+                   std::_t_strstream *,
                    bool,
                    long=0,
                    long=0);

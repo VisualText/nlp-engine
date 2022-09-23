@@ -426,15 +426,15 @@ int Regexp::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Regexp::prettyCount(_t_ofstream *ofstr)
+void Regexp::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Regexp count=") << count_ << endl;
-	*gout << _T("Active Regexp count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Regexp count=") << count_ << ends;
+		*ofstr << _T("Active Regexp count=") << count_ << std::endl;
+	*gout << _T("Active Regexp count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Regexp count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }

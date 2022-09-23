@@ -26,7 +26,7 @@ int String::count_ = 0;
 // Conversion constructor: Convert char * to String.
 String::String(const _TCHAR *s)
 {
-*gout << _T("Conversion constructor: ") << s << endl;
+*gout << _T("Conversion constructor: ") << s << std::endl;
 length_ = _tcsclen(s);					// Compute length.
 //sptr_	= new char[length_ + 1];	// Allocate storage.
 sptr_ = Chars::create(length_ + 1);
@@ -56,7 +56,7 @@ sptr_[length_] = '\0';					// Terminate string.
 // Copy constructor
 String::String(const String &copy)
 {
-*gout << _T("Copy constructor: ") << copy.sptr_ << endl;
+*gout << _T("Copy constructor: ") << copy.sptr_ << std::endl;
 length_ = copy.length_;				// Copy length.
 //sptr_ = new char[length_ + 1];	// Allocate storage.
 sptr_ = Chars::create(length_ + 1);
@@ -72,7 +72,7 @@ _tcscpy(sptr_, copy.sptr_);			// Copy string.
 // Destructor
 String::~String()
 {
-*gout << _T("Destructor: ") << sptr_ << endl;
+*gout << _T("Destructor: ") << sptr_ << std::endl;
 //delete [] sptr_;						// Reclaim string.
 Chars::destroy(sptr_);
 
@@ -96,14 +96,14 @@ int String::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void String::prettyCount(_t_ofstream *ofstr)
+void String::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active String count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active String count=") << count_ << ends;
+		*ofstr << _T("Active String count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active String count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -113,7 +113,7 @@ if (count_)
 // Overloaded '=' operator.  Avoids self-assignment.
 const String &String::operator=(const String &right)
 {
-*gout << _T("Operator= called.") << endl;
+*gout << _T("Operator= called.") << std::endl;
 if (&right != this)					// Avoid self-assignment.
 	{
 	//delete [] sptr_;					// Reclaim string.
@@ -124,7 +124,7 @@ if (&right != this)					// Avoid self-assignment.
 	_tcscpy(sptr_, right.sptr_);	// Copy string.
 	}
 else
-	*gout << _T("Attempted assignment of string to itself.") << endl;
+	*gout << _T("Attempted assignment of string to itself.") << std::endl;
 return *this;				// Enables concatenated strings.
 }
 
@@ -231,7 +231,7 @@ return sub;							// Return copy of sub string.
 int String::getLength() const { return length_; }
 
 // Overloaded output operator.
-_t_ostream &STDOPERATOR<<(_t_ostream &output, const String &s)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, const String &s)
 {
 #ifndef UNICODE
 output << s.sptr_;
@@ -245,7 +245,7 @@ return output;			// Enables concatenation.
 }
 
 // Overloaded input operator.
-_t_istream &operator>>(_t_istream &input, String &s)
+std::_t_istream &operator>>(std::_t_istream &input, String &s)
 {
 _TCHAR temp[1024];				// Buffer to store input.
 

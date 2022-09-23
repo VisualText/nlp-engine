@@ -65,60 +65,60 @@ consh_gen_includes(
 	)
 {
 #ifdef LINUX
-*fp << _T("#include \"stdafx.h\"") << endl;														// 06/28/00 AM.
-*fp << _T("#include <stdio.h>") << endl;
-*fp << _T("#include <stdlib.h>") << endl;
-//*fp << "#include <fstream.h>" << endl;								// 04/23/99 AM.
-*fp << _T("#include <iostream>") << endl;					// Upgrade.	// 01/24/01 AM.
-*fp << _T("#include <fstream>") << endl;					// Upgrade. // 01/24/01 AM.
-*fp << _T("#include \"prim\\libprim.h\"") << endl;
-//*fp << "#include \"prim\\mach.h\"" << endl;	// 04/23/99 AM.
-*fp << _T("#include \"prim\\prim.h\"") << endl;
-*fp << _T("#include \"prim\\str.h\"") << endl;
-//*fp << "#include \"cc_var.h\"" << endl;
-*fp << _T("#include \"kbm\\libkbm.h\"") << endl;
-*fp << _T("#include \"kbm\\st.h\"") << endl;
-*fp << _T("#include \"kbm\\sym_s.h\"") << endl;
-*fp << _T("#include \"kbm\\sym.h\"") << endl;
-*fp << _T("#include \"kbm\\con_s.h\"") << endl;
-*fp << _T("#include \"kbm\\con_.h\"") << endl;
-*fp << _T("#include \"kbm\\ptr_s.h\"") << endl;
-*fp << _T("#include \"kbm\\ptr.h\"") << endl;
-*fp << _T("#include \"consh/libconsh.h\"") << endl;						// 08/16/02 AM.
-*fp << _T("#include \"consh/cg.h\"") << endl;								// 08/16/02 AM.
-*fp << _T("#include \"") << consh_ST_BASE  << _T("_ini.h\"") << endl;
-*fp << _T("#include \"") << consh_SYM_BASE << _T("_ini.h\"") << endl;
-*fp << _T("#include \"") << consh_CON_BASE << _T("_ini.h\"") << endl;
-*fp << _T("#include \"") << consh_PTR_BASE << _T("_ini.h\"") << endl;
-*fp << _T("#include \"") << consh_CC_BASE  << _T("_code.h\"") << endl;
+*fp << _T("#include \"stdafx.h\"") << std::endl;														// 06/28/00 AM.
+*fp << _T("#include <stdio.h>") << std::endl;
+*fp << _T("#include <stdlib.h>") << std::endl;
+//*fp << "#include <fstream.h>" << std::endl;								// 04/23/99 AM.
+*fp << _T("#include <iostream>") << std::endl;					// Upgrade.	// 01/24/01 AM.
+*fp << _T("#include <fstream>") << std::endl;					// Upgrade. // 01/24/01 AM.
+*fp << _T("#include \"prim\\libprim.h\"") << std::endl;
+//*fp << "#include \"prim\\mach.h\"" << std::endl;	// 04/23/99 AM.
+*fp << _T("#include \"prim\\prim.h\"") << std::endl;
+*fp << _T("#include \"prim\\str.h\"") << std::endl;
+//*fp << "#include \"cc_var.h\"" << std::endl;
+*fp << _T("#include \"kbm\\libkbm.h\"") << std::endl;
+*fp << _T("#include \"kbm\\st.h\"") << std::endl;
+*fp << _T("#include \"kbm\\sym_s.h\"") << std::endl;
+*fp << _T("#include \"kbm\\sym.h\"") << std::endl;
+*fp << _T("#include \"kbm\\con_s.h\"") << std::endl;
+*fp << _T("#include \"kbm\\con_.h\"") << std::endl;
+*fp << _T("#include \"kbm\\ptr_s.h\"") << std::endl;
+*fp << _T("#include \"kbm\\ptr.h\"") << std::endl;
+*fp << _T("#include \"consh/libconsh.h\"") << std::endl;						// 08/16/02 AM.
+*fp << _T("#include \"consh/cg.h\"") << std::endl;								// 08/16/02 AM.
+*fp << _T("#include \"") << consh_ST_BASE  << _T("_ini.h\"") << std::endl;
+*fp << _T("#include \"") << consh_SYM_BASE << _T("_ini.h\"") << std::endl;
+*fp << _T("#include \"") << consh_CON_BASE << _T("_ini.h\"") << std::endl;
+*fp << _T("#include \"") << consh_PTR_BASE << _T("_ini.h\"") << std::endl;
+*fp << _T("#include \"") << consh_CC_BASE  << _T("_code.h\"") << std::endl;
 
 #else
-*fp << _T("#include \"StdAfx.h\"") << endl;														// 06/28/00 AM.
-*fp << _T("#include <stdio.h>") << endl;
-*fp << _T("#include <stdlib.h>") << endl;
-//*fp << "#include <fstream.h>" << endl;								// 04/23/99 AM.
-*fp << _T("#include <iostream>") << endl;					// Upgrade.	// 01/24/01 AM.
-*fp << _T("#include <fstream>") << endl;					// Upgrade. // 01/24/01 AM.
-*fp << _T("#include \"prim/libprim.h\"") << endl;
-//*fp << "#include \"prim/mach.h\"" << endl;	// 04/23/99 AM.
-*fp << _T("#include \"prim/prim.h\"") << endl;
-*fp << _T("#include \"prim/str.h\"") << endl;
-//*fp << "#include \"cc_var.h\"" << endl;
-*fp << _T("#include \"kbm/libkbm.h\"") << endl;
-*fp << _T("#include \"kbm/st.h\"") << endl;
-*fp << _T("#include \"kbm/sym_s.h\"") << endl;
-*fp << _T("#include \"kbm/sym.h\"") << endl;
-*fp << _T("#include \"kbm/con_s.h\"") << endl;
-*fp << _T("#include \"kbm/con_.h\"") << endl;
-*fp << _T("#include \"kbm/ptr_s.h\"") << endl;
-*fp << _T("#include \"kbm/ptr.h\"") << endl;
-*fp << _T("#include \"consh/libconsh.h\"") << endl;						// 08/16/02 AM.
-*fp << _T("#include \"consh/cg.h\"") << endl;								// 08/16/02 AM.
-*fp << _T("#include \"") << consh_ST_BASE  << _T("_ini.h\"") << endl;
-*fp << _T("#include \"") << consh_SYM_BASE << _T("_ini.h\"") << endl;
-*fp << _T("#include \"") << consh_CON_BASE << _T("_ini.h\"") << endl;
-*fp << _T("#include \"") << consh_PTR_BASE << _T("_ini.h\"") << endl;
-*fp << _T("#include \"") << consh_CC_BASE  << _T("_code.h\"") << endl;
+*fp << _T("#include \"StdAfx.h\"") << std::endl;														// 06/28/00 AM.
+*fp << _T("#include <stdio.h>") << std::endl;
+*fp << _T("#include <stdlib.h>") << std::endl;
+//*fp << "#include <fstream.h>" << std::endl;								// 04/23/99 AM.
+*fp << _T("#include <iostream>") << std::endl;					// Upgrade.	// 01/24/01 AM.
+*fp << _T("#include <fstream>") << std::endl;					// Upgrade. // 01/24/01 AM.
+*fp << _T("#include \"prim/libprim.h\"") << std::endl;
+//*fp << "#include \"prim/mach.h\"" << std::endl;	// 04/23/99 AM.
+*fp << _T("#include \"prim/prim.h\"") << std::endl;
+*fp << _T("#include \"prim/str.h\"") << std::endl;
+//*fp << "#include \"cc_var.h\"" << std::endl;
+*fp << _T("#include \"kbm/libkbm.h\"") << std::endl;
+*fp << _T("#include \"kbm/st.h\"") << std::endl;
+*fp << _T("#include \"kbm/sym_s.h\"") << std::endl;
+*fp << _T("#include \"kbm/sym.h\"") << std::endl;
+*fp << _T("#include \"kbm/con_s.h\"") << std::endl;
+*fp << _T("#include \"kbm/con_.h\"") << std::endl;
+*fp << _T("#include \"kbm/ptr_s.h\"") << std::endl;
+*fp << _T("#include \"kbm/ptr.h\"") << std::endl;
+*fp << _T("#include \"consh/libconsh.h\"") << std::endl;						// 08/16/02 AM.
+*fp << _T("#include \"consh/cg.h\"") << std::endl;								// 08/16/02 AM.
+*fp << _T("#include \"") << consh_ST_BASE  << _T("_ini.h\"") << std::endl;
+*fp << _T("#include \"") << consh_SYM_BASE << _T("_ini.h\"") << std::endl;
+*fp << _T("#include \"") << consh_CON_BASE << _T("_ini.h\"") << std::endl;
+*fp << _T("#include \"") << consh_PTR_BASE << _T("_ini.h\"") << std::endl;
+*fp << _T("#include \"") << consh_CC_BASE  << _T("_code.h\"") << std::endl;
 #endif
 }
 

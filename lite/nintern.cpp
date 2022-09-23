@@ -108,15 +108,15 @@ return (Algo &) *ptr;
 bool Nintern::Execute(Parse *parse, Seqn *seqn)
 {
 if (parse->Verbose())
-	*gout << _T("[Nintern:]") << endl;
+	*gout << _T("[Nintern:]") << std::endl;
 
 Tree<Pn> *tree = (Tree<Pn> *)parse->getTree();
 
 if (!tree)
 	{
 	parse->setIntern(false);	// Syntax error.						// 05/26/01 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[Nintern: No parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Nintern: No parse tree.]") << std::ends;
 	return errOut(&gerrStr,false,parse->getInputpass(),0);
 	}
 
@@ -126,8 +126,8 @@ root = tree->getRoot();
 if (!root)
 	{
 	parse->setIntern(false);	// Syntax error.						// 05/26/01 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[Nintern: Empty parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Nintern: Empty parse tree.]") << std::ends;
 	return errOut(&gerrStr,false,parse->getInputpass(),0);
 	}
 
@@ -136,11 +136,11 @@ Node<Pn> *node;
 if (!(node = root->Down()))
 	{
 	parse->setIntern(false);	// Syntax error.						// 05/26/01 AM.
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Nintern: Rules file '")
 	  // << str(seqn->getRulesfilename())
 		  << str(parse->getInput())
-		  << _T("' not parsed.]") << ends;
+		  << _T("' not parsed.]") << std::ends;
 	return errOut(&gerrStr,false,parse->getInputpass(),0);
 	}
 
@@ -148,9 +148,9 @@ if (node->Right())
 	{
 	if (parse->getIntern())													// 05/26/01 AM.
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Pass file has some unhandled text. Ignoring.]")
-				  << ends;
+				  << std::ends;
 		errOut(&gerrStr,false,parse->getInputpass(),0);
 		parse->setIntern(false);	// Syntax error.					// 05/26/01 AM.
 		}
@@ -159,7 +159,7 @@ if (node->Right())
 //	if (gui_.IsStatus(GUI_STATUS_INITIALIZING))		// TRYING		// 03/22/01 AM.
 //		gui_.SendMessage("Loading rules:",displayBuf);				// 03/22/01 AM.
 
-//	*gerr << "[Pass file has some unhandled text.]" << endl;
+//	*gerr << "[Pass file has some unhandled text.]" << std::endl;
 	}
 
 
@@ -171,8 +171,8 @@ sem = (RFASem *) pn->getSem();
 if (!sem)
 	{
 	parse->setIntern(false);	// Syntax error.						// 05/26/01 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[Nintern: No semantics for parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Nintern: No semantics for parse tree.]") << std::ends;
 	return errOut(&gerrStr,false,parse->getInputpass(),0);
 	}
 
@@ -180,8 +180,8 @@ if (!sem)
 if (sem->getType() != RSFILE)
 	{
 	parse->setIntern(false);	// Syntax error.						// 05/26/01 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[Nintern: Couldn't parse rules file.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Nintern: Couldn't parse rules file.]") << std::ends;
 	return errOut(&gerrStr,false,parse->getInputpass(),0);
 	}
 
@@ -189,8 +189,8 @@ Ifile *rulesfile;
 if (!(rulesfile = sem->getRulesfile()))
 	{
 	parse->setIntern(false);	// Syntax error.						// 05/26/01 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[Nintern: No rules found in file.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Nintern: No rules found in file.]") << std::ends;
 	return errOut(&gerrStr,false,parse->getInputpass(),0);
 	}
 
@@ -206,7 +206,7 @@ rules = rulesfile->intern(parse,false);		// Let rules file object internalize it
 if (!rules)
 	{
 //	strstream gerrStr(Errbuf,MAXSTR,ios::out);
-//	gerrStr << "[Nintern: No rules.]" << ends;
+//	gerrStr << "[Nintern: No rules.]" << std::ends;
 //	errOut(false,parse->getInputpass(),0);
 
 	// LOOKS LIKE THIS INTRODUCED A BUG.								// 03/07/02 AM.

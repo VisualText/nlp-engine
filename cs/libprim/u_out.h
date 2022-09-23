@@ -21,7 +21,6 @@ All rights reserved.
 #include <iostream>
 #include <fstream>
 #include <sstream>
-using namespace std;
 #endif
 
 #ifndef LINUX
@@ -55,7 +54,6 @@ _t_ostream &STDOPERATOR<<(_t_ostream &os, _TCHAR* &lpszBuffer);
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
-using namespace std;
 #ifdef LINUX
 #include <sstream>
 #else

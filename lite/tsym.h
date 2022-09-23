@@ -66,7 +66,7 @@ protected:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif
@@ -84,16 +84,16 @@ if (stab)
 	{
 	if (!(str_ = stab->addStr(str)))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[tSym: Couldn't create string.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[tSym: Couldn't create string.]") << std::ends;
 		errOut(&gerrStr,false);
 		return;
 		}
 	}
 else if (!empty(str))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[tSym: Can't intern string without a string table.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[tSym: Can't intern string without a string table.]") << std::ends;
 	errOut(&gerrStr,false);
 	return;
 	}
@@ -116,16 +116,16 @@ if (stab)
 	{
 	if (!(str_ = stab->addStr(str, len)))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[tSym: Couldn't create string.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[tSym: Couldn't create string.]") << std::ends;
 		errOut(&gerrStr,false);
 		return;
 		}
 	}
 else if (!empty(str) || (len > 0))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[tSym: Can't intern string without a string table.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[tSym: Can't intern string without a string table.]") << std::ends;
 	errOut(&gerrStr,false);
 	return;
 	}
@@ -196,15 +196,15 @@ int tSym<TYPE>::getCount() { return count_; }
 ********************************************/
 #ifndef STABLE_
 template<class TYPE>
-void tSym<TYPE>::prettyCount(_t_ofstream *ofstr)
+void tSym<TYPE>::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active tSym count=") << count_ << endl;
-	*gout << _T("Active tSym count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active tSym count=") << count_ << ends;
+		*ofstr << _T("Active tSym count=") << count_ << std::endl;
+	*gout << _T("Active tSym count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active tSym count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }

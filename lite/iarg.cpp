@@ -103,7 +103,7 @@ val_.str_ = str;
 
 #ifndef STABLE_
 ++count_;
-//*gerr << (long)this << "+" << count_ << endl;
+//*gerr << (long)this << "+" << count_ << std::endl;
 #endif
 }
 
@@ -127,7 +127,7 @@ val_.float_ = fnum;
 #endif
 }
 
-Iarg::Iarg(_t_ostream *outptr)
+Iarg::Iarg(std::_t_ostream *outptr)
 {
 type = IAOSTREAM;
 val_.out_ = outptr;
@@ -166,7 +166,7 @@ clear();			// 07/02/99 AM.
 
 #ifndef STABLE_
 --count_;
-//*gerr << (long)this << "-" << count_ << endl;
+//*gerr << (long)this << "-" << count_ << std::endl;
 #endif
 }
 
@@ -193,8 +193,8 @@ Iarg *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Iarg object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Iarg object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -289,7 +289,7 @@ switch (orig->type)
 /*******************************************/
 
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Iarg &arg)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Iarg &arg)
 {
 switch(arg.type)
 	{
@@ -329,7 +329,7 @@ return output;
 }
 
 /*******************************************/
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Delt<Iarg> &delt)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Delt<Iarg> &delt)
 {
 Iarg *arg;
 arg  = delt.getData();
@@ -339,7 +339,7 @@ return output;
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Dlist<Iarg> &list)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Dlist<Iarg> &list)
 {
 Delt<Iarg> *delt;
 delt = list.getFirst();
@@ -370,14 +370,14 @@ int Iarg::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Iarg::prettyCount(_t_ofstream *ofstr)
+void Iarg::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Iarg count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Iarg count=") << count_ << ends;
+		*ofstr << _T("Active Iarg count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Iarg count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -425,8 +425,8 @@ if (!list)
 
 #ifdef DEBUGGING_
 	{										// DEBUGGING!!!	// 04/08/02 AM>
-	_t_strstream gerrStr;
-	gerrStr << _T("[delete_top:]") << list << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[delete_top:]") << list << std::ends;
 	errOut(&gerrStr,false);
 	}
 #endif
@@ -626,8 +626,8 @@ _TCHAR *Iarg::getStr()
 {
 if (type != IASTR)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[getStr: Arg is not a string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[getStr: Arg is not a string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -638,8 +638,8 @@ long Iarg::getNum()
 {
 if (type != IANUM)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[getNum: Arg is not a num.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[getNum: Arg is not a num.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -650,20 +650,20 @@ float Iarg::getFloat()														// 08/17/01 AM.
 {
 if (type != IAFLOAT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[getFloat: Arg is not a float.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[getFloat: Arg is not a float.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0.0;
 	}
 return val_.float_;
 }
 
-_t_ostream *Iarg::getOstream()
+std::_t_ostream *Iarg::getOstream()
 {
 if (type != IAOSTREAM)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[getOstream: Arg is not an ostream ptr.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[getOstream: Arg is not an ostream ptr.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -679,8 +679,8 @@ switch (type)
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[getSem: Arg is not a sem.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[getSem: Arg is not a sem.]") << std::ends;
 		errOut(&gerrStr,false);
 		return 0;
 		}
@@ -709,8 +709,8 @@ void Iarg::setNum(long x)
 {
 if (type != IANUM)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[setNum: Arg is not a num.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[setNum: Arg is not a num.]") << std::ends;
 	errOut(&gerrStr,false);
 	return;
 	}
@@ -722,8 +722,8 @@ void Iarg::setFloat(float x)												 // 08/17/01 AM.
 {
 if (type != IAFLOAT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[setFloat: Arg is not a float.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[setFloat: Arg is not a float.]") << std::ends;
 	errOut(&gerrStr,false);
 	return;
 	}
@@ -735,20 +735,20 @@ void Iarg::setStr(_TCHAR *x)
 {
 if (type != IASTR)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[setStr: Arg is not a string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[setStr: Arg is not a string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return;
 	}
 val_.str_ = x;
 }
 
-void Iarg::setOstream(_t_ostream *x)
+void Iarg::setOstream(std::_t_ostream *x)
 {
 if (type != IAOSTREAM)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[setOstream: Arg is not an ostream ptr.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[setOstream: Arg is not an ostream ptr.]") << std::ends;
 	errOut(&gerrStr,false);
 	return;
 	}
@@ -764,8 +764,8 @@ switch (type)																	// 05/26/02 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[setSem: Arg is not a sem.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[setSem: Arg is not a sem.]") << std::ends;
 		errOut(&gerrStr,false);
 		return;
 		}
@@ -874,7 +874,7 @@ return 0;
 void Iarg::genArgs(
 	Dlist<Iarg> *args,
 	_TCHAR *sep,				// Separator string.  eg, ", "
-	_t_ostream &ofile,
+	std::_t_ostream &ofile,
 	bool trunc				// eg, if in a comment and want to truncate list.
 	)
 {
@@ -891,13 +891,13 @@ for (darg = darg->Right(); darg; darg = darg->Right())
 		{
 		if (trunc)																// 06/05/00 AM.
 			{
-			ofile << _T("...") << flush;
+			ofile << _T("...") << std::flush;
 			return;
 			}
-		ofile << endl;
+		ofile << std::endl;
 		count = 0;
 		}
-	ofile << sep << flush;
+	ofile << sep << std::flush;
 	genArg(darg->getData(), ofile);
 	}
 }
@@ -911,7 +911,7 @@ for (darg = darg->Right(); darg; darg = darg->Right())
 
 void Iarg::genArg(
 	Iarg *arg,
-	_t_ostream &ofile,
+	std::_t_ostream &ofile,
 	bool cast	// If true, display "(long)" etc.					// 10/01/01 AM.
 	)
 {
@@ -930,42 +930,42 @@ _TCHAR cbuf[MAXLINE];	// For converting to C string. // FIX.	// 02/19/08 AM.
 switch (arg->getType())
 	{
 	case IASTR:
-//		ofile << arg->getStr() << flush;		// 07/11/99 AM.
+//		ofile << arg->getStr() << std::flush;		// 07/11/99 AM.
 		// This may not be sufficient....
 		cbuf[0] = '\0';																// 05/10/07 AM.
 		clean_str(arg->getStr(), /*UP*/ cbuf);								// 05/10/07 AM.
 		ofile << _T("\"");								// 02/17/00 AM.
 		Iarg::genName(cbuf, ofile);
-		ofile << _T("\"") << flush;					// 02/17/00 AM.
+		ofile << _T("\"") << std::flush;					// 02/17/00 AM.
 		break;
 	case IANUM:
 		if (cast)																// 10/01/01 AM.
 			ofile <<_T("((long)")													// 10/01/01 AM.
 			<< arg->getNum()
 			<< _T(")")																// 09/09/01 AM.
-			<< flush;
+			<< std::flush;
 		else																		// 10/01/01 AM.
 		ofile
 			<< arg->getNum()
-			<< flush;
+			<< std::flush;
 		break;
 	case IAFLOAT:																// 08/17/01 AM.
 		if (cast)																// 10/01/01 AM.
 			ofile <<_T("((float)")												// 10/01/01 AM.
 				<< arg->getFloat()											// 08/17/01 AM.
 				<< _T(")")															// 09/09/01 AM.
-				<< flush;
+				<< std::flush;
 		else																		// 10/01/01 AM.
 		ofile
 				<< arg->getFloat()											// 08/17/01 AM.
-				<< flush;
+				<< std::flush;
 		break;																	// 08/17/01 AM.
 	case IAOSTREAM:
-		ofile << _T("<ostream>") << flush;
+		ofile << _T("<ostream>") << std::flush;
 		break;
 	case IASEM:
 	case IAREF:																	// 05/26/02 AM.
-//		ofile << "<sem>" << flush;											// 05/21/01 AM.
+//		ofile << "<sem>" << std::flush;											// 05/21/01 AM.
 		if (!(sem = arg->getSem()))										// 05/21/01 AM.
 			return;																// 05/21/01 AM.
 		switch (sem->getType())												// 05/21/01 AM.
@@ -977,30 +977,30 @@ switch (arg->getType())
 				clean_str(sem->getName(), /*UP*/ cbuf);				// 05/10/07 AM.
 				ofile << _T("\"");													// 05/21/01 AM.
 				Iarg::genName(cbuf, ofile);								// 05/21/01 AM.
-				ofile << _T("\"") << flush;										// 05/21/01 AM.
+				ofile << _T("\"") << std::flush;										// 05/21/01 AM.
 				break;															// 05/21/01 AM.
 			case RSLONG:														// 05/21/01 AM.
 				if (cast)														// 10/01/01 AM.
 					ofile <<_T("((long)")											// 10/01/01 AM.
 						<< sem->getLong()										// 05/21/01 AM.
 						<< _T(")")													// 09/09/01 AM.
-						<< flush;
+						<< std::flush;
 				else																// 10/01/01 AM.
 				ofile
 						<< sem->getLong()										// 05/21/01 AM.
-						<< flush;
+						<< std::flush;
 				break;															// 05/21/01 AM.
 			case RSFLOAT:														// 09/09/01 AM.
 				if (cast)														// 10/01/01 AM.
 					ofile <<_T("((float)")										// 10/01/01 AM.
 						<< sem->getFloat()									// 09/09/01 AM.
-						<< _T(")") << flush;										// 09/09/01 AM.
+						<< _T(")") << std::flush;										// 09/09/01 AM.
 				else																// 10/01/01 AM.
 				ofile 
 						<< sem->getFloat()									// 09/09/01 AM.
-						<< flush;												// 09/09/01 AM.
+						<< std::flush;												// 09/09/01 AM.
 			case RSOSTREAM:													// 05/21/01 AM.
-				ofile << _T("<ostream>") << flush;							// 05/21/01 AM.
+				ofile << _T("<ostream>") << std::flush;							// 05/21/01 AM.
 				break;															// 05/21/01 AM.
 			case RSNODE:														// 05/21/01 AM.
 				if (!(node = sem->getNode()))								// 05/21/01 AM.
@@ -1010,7 +1010,7 @@ switch (arg->getType())
 				ofile << _T("pnode:\"")											// 05/21/01 AM.
 						<< str(pn->getName())								// 05/21/01 AM.
 						<< _T("\"")													// 05/21/01 AM.
-						<< flush;												// 05/21/01 AM.
+						<< std::flush;												// 05/21/01 AM.
 				break;															// 05/21/01 AM.
 			case RS_KBCONCEPT:												// 05/21/01 AM.
 				// TODO: NEED CG OBJECT TO GET KB CONCEPTS.			// 05/21/01 AM.
@@ -1022,7 +1022,7 @@ switch (arg->getType())
 				ofile << _T("concept:\"")										// 05/21/01 AM.
 						<< buf
 						<< _T("\"")													// 05/21/01 AM.
-						<< flush;												// 05/21/01 AM.
+						<< std::flush;												// 05/21/01 AM.
 				break;															// 05/21/01 AM.
 			case RS_KBPHRASE:													// 05/21/01 AM.
 			case RS_KBATTR:													// 05/21/01 AM.
@@ -1030,21 +1030,21 @@ switch (arg->getType())
 				ofile << _T("kbobject:\"")										// 05/21/01 AM.
 						<< _T("<name>")										// 05/21/01 AM.
 						<< _T("\"")													// 05/21/01 AM.
-						<< flush;												// 05/21/01 AM.
+						<< std::flush;												// 05/21/01 AM.
 				break;															// 05/21/01 AM.
 			case RSARGS:														// 08/08/02 AM.
 				break;
 				{
 				// Choosing to flag this as an error -- no
 				// recursive lists, etc.									// 08/10/02 AM.
-				_t_strstream gerrStr;
-				gerrStr << _T("[genArg: Error. Multi-value in list.]") << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("[genArg: Error. Multi-value in list.]") << std::ends;
 				errOut(&gerrStr,false);
 				}
 			default:																// 05/21/01 AM.
 				{
-				_t_strstream gerrStr;
-				gerrStr << _T("[genArg: Error. Bad sem arg.]") << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("[genArg: Error. Bad sem arg.]") << std::ends;
 				errOut(&gerrStr,false);
 				}
 				// 05/21/01 AM.
@@ -1054,8 +1054,8 @@ switch (arg->getType())
 	case IANULL:
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[genArg: Bad arg.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[genArg: Bad arg.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -1072,20 +1072,20 @@ switch (arg->getType())
 *			07/11/99 AM. Moved here from Ielement.
 ********************************************/
 
-void Iarg::genName(_TCHAR *name, _t_ostream &ofile)
+void Iarg::genName(_TCHAR *name, std::_t_ostream &ofile)
 {
 if (!name || !*name)
 	return;
 if (*(name+1))			// Length greater than one.
 	{
-	ofile << name << flush;
+	ofile << name << std::flush;
 	return;
 	}
 
 // Handle special single char names.
   if (alphabetic(*name))		// 09/22/99 AM.
 	{
-	ofile << name << flush;
+	ofile << name << std::flush;
 	return;
 	}
 else if (_istpunct((_TUCHAR)*name))
@@ -1108,7 +1108,7 @@ switch(*name)
 	case ' ':  ofile << _T("\\ ");		break;
 	default:	  ofile << name;		break;
 	}
-ofile << flush;
+ofile << std::flush;
 }
 
 
@@ -1137,15 +1137,15 @@ Delt<Iarg> *darg1 = list1->getFirst();
 Delt<Iarg> *darg2 = list2->getFirst();
 if (!darg1 && !darg2)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Iarg::same: Empty lists.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Iarg::same: Empty lists.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
 if (!darg1 || !darg2)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Iarg::same: Empty list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Iarg::same: Empty list.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -1203,8 +1203,8 @@ switch (typ1)
 		return RFASem::same(arg1->getSem(), arg2->getSem());		// 02/16/00 AM.
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Iarg::same: Unhandled arg type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Iarg::same: Unhandled arg type.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 

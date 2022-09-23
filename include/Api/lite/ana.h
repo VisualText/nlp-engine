@@ -105,7 +105,7 @@ public:
 	void prettySeq();
 
 	void genAna(_TCHAR *dir = _T("."));											// 11/04/99 AM.
-	void genSeqfile(_t_ostream &ofile);								// 11/04/99 AM.
+	void genSeqfile(std::_t_ostream &ofile);								// 11/04/99 AM.
 
 	bool genTok(Seqn *pass, Gen *gen);									// 05/10/00 AM.
 	bool genCMLTok(Seqn *pass, Gen *gen);								// 08/18/08 AM.
@@ -143,7 +143,7 @@ private:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream*ofstr=0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream*ofstr=0);			// Pretty-print the count.
 private:
 	static int count_;					// Count nodes currently allocated.
 #endif

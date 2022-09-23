@@ -124,7 +124,7 @@ unintern();				// 01/15/99 AM.
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Seqn &seqn)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Seqn &seqn)
 {
 // Need some way to print each pass.
 Algo *aa;
@@ -210,8 +210,8 @@ if (rulesfile_)
 	rulesfile_->setSelects(x);
 else
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Seqn::setSelects -- no pass file.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Seqn::setSelects -- no pass file.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -233,14 +233,14 @@ int Seqn::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Seqn::prettyCount(_t_ofstream *ofstr)
+void Seqn::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Seqn count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Seqn count=") << count_ << ends;
+		*ofstr << _T("Active Seqn count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Seqn count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -273,9 +273,9 @@ if (!rules_file_name_ || !*rules_file_name_)
 _TCHAR fname[MAXSTR];
 //ostrstream *outStr = 0;													// 03/08/00 AM.
 //ofstream *fout = 0;														// 03/08/00 AM.
-//outStr = new ostrstream(fname, MAXSTR, ios::out);				// 03/08/00 AM.
-//*outStr << dir << "\\" << rules_file_name_ << ".nlp" << ends; // 03/08/00 AM.
-//fout = new ofstream(fname, ios::out);								// 03/08/00 AM.
+//outStr = new ostrstream(fname, MAXSTR, std::ios::out);				// 03/08/00 AM.
+//*outStr << dir << "\\" << rules_file_name_ << ".nlp" << std::ends; // 03/08/00 AM.
+//fout = new ofstream(fname, std::ios::out);								// 03/08/00 AM.
 
 #ifdef UNICODE
 wsprintf(fname, _T("%s%c%s%s"), dir, DIR_CH, rules_file_name_, _T(".nlp"));
@@ -283,10 +283,10 @@ wsprintf(fname, _T("%s%c%s%s"), dir, DIR_CH, rules_file_name_, _T(".nlp"));
 sprintf(fname, _T("%s%c%s%s"), dir, DIR_CH, rules_file_name_, _T(".nlp"));
 #else
 sprintf_s(fname, _T("%s%c%s%s"), dir, DIR_CH, rules_file_name_, _T(".nlp"));
-//_t_ostrstream outStr(fname, MAXSTR, ios::out);							// 03/08/00 AM.
-//outStr << dir << DIR_CH << rules_file_name_ << _T(".nlp") << ends; // 03/08/00 AM.
+//_t_ostrstream outStr(fname, MAXSTR, std::ios::out);							// 03/08/00 AM.
+//outStr << dir << DIR_CH << rules_file_name_ << _T(".nlp") << std::ends; // 03/08/00 AM.
 #endif
-_t_ofstream fout(TCHAR2CA(fname), ios::out);											// 03/08/00 AM.
+std::_t_ofstream fout(TCHAR2CA(fname), std::ios::out);											// 03/08/00 AM.
 
 
 _TCHAR fhead[1024];
@@ -322,8 +322,8 @@ Irule::genRulerecurses(rules_, _T(" "), fout);							// 03/08/00 AM.
 //Irule::genRuleblocks(rules_, " ", *fout);							// 03/08/00 AM.
 Irule::genRuleblocks(rules_, _T(" "), fout);								// 03/08/00 AM.
 
-//*fout << endl;				// Final cr just in case.				// 03/08/00 AM.
-fout << endl;				// Final cr just in case.					// 03/08/00 AM.
+//*fout << std::endl;				// Final cr just in case.				// 03/08/00 AM.
+fout << std::endl;				// Final cr just in case.					// 03/08/00 AM.
 
 //delete fout;
 //delete outStr;	// FIX MEM LEAK.										// 02/25/00 AM.
@@ -344,7 +344,7 @@ void Seqn::genFileheader(
 	_TCHAR *date,
 	_TCHAR *modified,
 	_TCHAR *note,
-	_t_ostream &ofile
+	std::_t_ostream &ofile
 	)
 {
 
@@ -356,7 +356,7 @@ ofile << _T("###############################################\n")
 		<< _T("# MODIFIED: ") << modified << _T("\n")
 		<< _T("# NOTE:     ") << note	   << _T("\n")
 		<< _T("###############################################")
-		<< endl;
+		<< std::endl;
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -520,7 +520,7 @@ return true;
 bool Seqn::genRecurses(
 	Dlist<Seqn> *seqs,
 	_TCHAR *sep,
-	_t_ostream &ofile
+	std::_t_ostream &ofile
 	)
 {
 if (!seqs)
@@ -553,8 +553,8 @@ bool Seqn::gen(
 {
 if (!seqs || !gen)
 	return false;
-_t_ofstream *fcode = gen->getFcode();
-_t_ofstream *fhead = gen->getFhead();
+std::_t_ofstream *fcode = gen->getFcode();
+std::_t_ofstream *fhead = gen->getFhead();
 if (!fcode || !fhead)
 	return false;
 
@@ -629,8 +629,8 @@ bool Seqn::genRecurse(
 {
 if (!seqs || !gen)
 	return false;
-_t_ofstream *fcode = gen->getFcode();
-_t_ofstream *fhead = gen->getFhead();
+std::_t_ofstream *fcode = gen->getFcode();
+std::_t_ofstream *fhead = gen->getFhead();
 _TCHAR *indent = gen->getIndent();
 int id = gen->getId();
 int eltid = gen->getEltid();

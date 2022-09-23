@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright © 1998-2009 by Text Analysis International, Inc.
+Copyright ï¿½ 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 ********************************************************************************
 *
@@ -106,7 +106,7 @@ private:
 public:
 	static int getCount();
 	static void prettyCount(_TCHAR * = _T(""),
-		_t_ofstream* =0);			// Pretty-print the count.
+		std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif

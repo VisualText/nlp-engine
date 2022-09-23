@@ -344,15 +344,15 @@ int NLP::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void NLP::prettyCount(_t_ofstream *ofstr)
+void NLP::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active NLP count=") << count_ << endl;
-	*gout << _T("Active NLP count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active NLP count=") << count_ << ends;
+		*ofstr << _T("Active NLP count=") << count_ << std::endl;
+	*gout << _T("Active NLP count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active NLP count=") << count_ << std::ends;
 	errOut(&gerrStr,false,0,0);
 	}
 }
@@ -401,8 +401,8 @@ verbose = false;
 
 if (!appdir || !*appdir || !dir_exists(appdir))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Lite init: Given bad appdir.]") << ends;			// 09/16/99 AM.
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Lite init: Given bad appdir.]") << std::ends;			// 09/16/99 AM.
 	errOut(&gerrStr,false,0,0);
 
 	nlp_clean(0);																// 12/14/98 AM.
@@ -421,9 +421,9 @@ if (!dir_exists(outdir))
 	make_dir(outdir);
 
 // Moved error reporting stream up here.								// 01/17/02 AM.
-_t_ostream *serr;																	// 03/22/99 AM.
-_t_ofstream *ferr;																// 03/22/99 AM.
-_t_ostream *sdbg=0;																// 02/21/02 AM.
+std::_t_ostream *serr;																	// 03/22/99 AM.
+std::_t_ofstream *ferr;																// 03/22/99 AM.
+std::_t_ostream *sdbg=0;																// 02/21/02 AM.
 _TCHAR errout[MAXMSG];															// 03/22/99 AM.
 //if (!silent)																	// 06/16/02 AM.
 	{
@@ -456,8 +456,8 @@ if (!datadir_ || !*datadir_)												// 12/08/99 AM.
 	taidir = _tgetenv(_T("TAI"));													// 12/08/99 AM.
 	if (!taidir)																// 12/08/99 AM.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Lite: No 'TAI' environment var.]") << ends;	// 12/08/99 AM.
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Lite: No 'TAI' environment var.]") << std::ends;	// 12/08/99 AM.
 		errOut(&gerrStr,false);
 		resetErr(ferr, serr);												// 01/17/02 AM.
 		resetDbg(sdbg);														// 02/21/02 AM.
@@ -469,8 +469,8 @@ if (!datadir_ || !*datadir_)												// 12/08/99 AM.
 
 if (!datadir_)																	// 12/08/99 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Lite: No 'TAI' environment var.]") << ends;		// 12/08/99 AM.
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Lite: No 'TAI' environment var.]") << std::ends;		// 12/08/99 AM.
 	errOut(&gerrStr,false);
 	resetErr(ferr, serr);													// 01/17/02 AM.
 	resetDbg(sdbg);															// 02/21/02 AM.
@@ -479,8 +479,8 @@ if (!datadir_)																	// 12/08/99 AM.
 	}
 if (!dir_exists(datadir_))													// 12/08/99 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Lite: No TAI environment directory.]") << ends;	// 12/08/99 AM.
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Lite: No TAI environment directory.]") << std::ends;	// 12/08/99 AM.
 	errOut(&gerrStr,false);
 	resetErr(ferr, serr);													// 01/17/02 AM.
 	resetDbg(sdbg);															// 02/21/02 AM.
@@ -521,10 +521,10 @@ _TCHAR *fname = _T("user");							// user.dll		// 01/21/06 AM.
 
 _stprintf(buf, _T("%s%cbin%c%s.dll"),									// 01/21/06 AM.
 											appdir,DIR_CH,DIR_CH,fname);	// 01/21/06 AM.
-_t_strstream gerrStr;
-gerrStr << _T("[Loading user project: ") << buf << _T("]") << ends;		// 01/17/02 AM.
+std::_t_strstream gerrStr;
+gerrStr << _T("[Loading user project: ") << buf << _T("]") << std::ends;		// 01/17/02 AM.
 errOut(&gerrStr,false);
-//*gout << "[Loading user project: " << buf << "]" << endl;		// 02/18/02 AM.
+//*gout << "[Loading user project: " << buf << "]" << std::endl;		// 02/18/02 AM.
 
 #ifndef LINUX
 hdll_ = load_dll(buf);
@@ -556,8 +556,8 @@ s_time = clock();																// 08/28/02 AM.
 // Note: User can install private versions, if he dares.			// 08/28/02 AM.
 if (!vtrun_)	// 08/28/02 AM.	// [DEGLOB]	// 10/15/20 AM.
 	{
-	_t_strstream gerrStr;						// 08/28/02 AM.
-	gerrStr << _T("[NLP: Error. VTRun not initialized.]") << ends;	// 08/28/02 AM.
+	std::_t_strstream gerrStr;						// 08/28/02 AM.
+	gerrStr << _T("[NLP: Error. VTRun not initialized.]") << std::ends;	// 08/28/02 AM.
 	errOut(&gerrStr,false);																// 08/28/02 AM.
 	resetErr(ferr, serr);													// 08/28/02 AM.
 	resetDbg(sdbg);															// 08/28/02 AM.
@@ -616,10 +616,10 @@ resetOut(fout, sout);
 rfa_->setHtab(htab_);			// Use the global hash table.		// 11/19/98 AM.
 
 e_time = clock();																// 12/28/98 AM.
-_t_strstream gerrStr1;
+std::_t_strstream gerrStr1;
 gerrStr1 << _T("[Build RFA time=")
 	  << (double) (e_time - s_time)/CLOCKS_PER_SEC
-	  << _T(" sec]") << ends;
+	  << _T(" sec]") << std::ends;
 errOut(&gerrStr1,false);
 s_time = e_time;
 
@@ -660,17 +660,17 @@ if (!ok && gui_.IsStatus(GUI_STATUS_ANALYZING))						// 07/19/00 AM.
 #else
 if (!ok)																			// 07/06/01 AM.
 	{
-	_t_strstream gerrStr3;						// 07/06/01 AM.
-	gerrStr3 << _T("[ERROR IN ANALYZER INIT.]") << ends;				// 07/06/01 AM.
+	std::_t_strstream gerrStr3;						// 07/06/01 AM.
+	gerrStr3 << _T("[ERROR IN ANALYZER INIT.]") << std::ends;				// 07/06/01 AM.
 	errOut(&gerrStr3,false);																// 07/06/01 AM.
 	}
 #endif
 
 #ifdef DIAGNOSTIC_
-_t_strstream gerrStr2;
+std::_t_strstream gerrStr2;
 gerrStr2 << _T("[Build RFB time=")											// 11/05/99 AM.
 	  << (double) (e_time - s_time)/CLOCKS_PER_SEC
-	  << _T(" sec]") << ends;
+	  << _T(" sec]") << std::ends;
 errOut(&gerrStr2,false);
 #endif
 s_time = e_time;																// 11/05/99 AM.
@@ -702,21 +702,21 @@ void *NLP::make_rfb(
 _TCHAR sequence[MAXSTR];
 _TCHAR outdir[MAXSTR];		// Intermed files.
 
-_t_ostream *sout;
-_t_ofstream *fout;
+std::_t_ostream *sout;
+std::_t_ofstream *fout;
 bool verbose = false;
 
 if (!appdir || !*appdir)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[make_rfb: Given no appdir.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[make_rfb: Given no appdir.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
 if (!rfbspecdir || !*rfbspecdir)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[make_rfb: Given no RFB spec dir.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[make_rfb: Given no RFB spec dir.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -729,11 +729,11 @@ _stprintf(sequence, _T("%s%canalyzer.seq"), rfbspecdir,					// 12/08/99 AM.
 // that doesn't use the RFB!												// 11/05/99 AM.
 if (!file_exists(sequence))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[File not found=") << sequence << _T("]")				// 03/08/00 AM.
 			  << _T("\n")
 			  << _T("[No RFB.  Using the RFA for parsing rules.]")
-			  << ends;
+			  << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -742,16 +742,16 @@ _stprintf(outdir, _T("%s%crfb%coutput"), appdir, DIR_CH,DIR_CH);		// 03/08/00 AM
 if (!dir_exists(outdir))
    {
 #ifdef DIAGNOSTIC_
-	_t_strstream gerrStr;
-	gerrStr << _T("[No RFB output dir=") << outdir << _T("]") << ends;	// 03/08/00 AM.
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[No RFB output dir=") << outdir << _T("]") << std::ends;	// 03/08/00 AM.
 	errOut(&gerrStr,false);
 #endif
 	make_dir(outdir);
 	}
 
-_t_ostream *serr;
-_t_ofstream *ferr;
-_t_ostream *sdbg=0;																// 02/21/02 AM.
+std::_t_ostream *serr;
+std::_t_ofstream *ferr;
+std::_t_ostream *sdbg=0;																// 02/21/02 AM.
 _TCHAR errout[1024];
 //if (!silent)																	// 06/16/02 AM.
 	{
@@ -785,11 +785,11 @@ fileOut(defout, /*DU*/ fout, sout);
 
 if (!(rfb->readSeqfile()))		// Read sequence file into buffer.
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Couldn't read RFB sequence file.]")
 			  << _T("\n")
 			  << _T("[file=") << sequence << _T("]")
-			  << ends;
+			  << std::ends;
 	errOut(&gerrStr,false);
 	resetOut(fout, sout);										// FIX	// 03/09/00 AM.
 	resetErr(ferr, serr);										// FIX	// 03/09/00 AM.
@@ -801,7 +801,7 @@ if (!(rfb->readSeqfile()))		// Read sequence file into buffer.
 if (develop)
 	{
 	*gout << _T("Sequence file is:\n");
-	*gout << rfb->getSeqbuf() << endl;
+	*gout << rfb->getSeqbuf() << std::endl;
 	}
 
 // Setup flags (verboseness, timing, etc) for parsing the rules files.
@@ -870,8 +870,8 @@ bool NLP::make_analyzer(
 	)
 {
 clock_t   s_time, e_time;
-_t_ostream *sout;
-_t_ofstream *fout;
+std::_t_ostream *sout;
+std::_t_ofstream *fout;
 bool verbose = false;
 bool ok;
 
@@ -879,8 +879,8 @@ s_time = clock();																// 12/28/98 AM.
 
 if (!appdir || !*appdir)													// 03/10/99 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[make_analyzer: Given no appdir.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[make_analyzer: Given no appdir.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;																// 06/15/99 AM.
 	}
@@ -895,9 +895,9 @@ if (!outdir)																	// 03/10/99 AM.
 if (!dir_exists(outdir))
 	make_dir(outdir);
 
-_t_ostream *serr=0;					// 03/22/99 AM.						// 06/16/02 AM.
-_t_ofstream *ferr=0;					// 03/22/99 AM.						// 06/16/02 AM.
-_t_ostream *sdbg=0;																// 02/21/02 AM.
+std::_t_ostream *serr=0;					// 03/22/99 AM.						// 06/16/02 AM.
+std::_t_ofstream *ferr=0;					// 03/22/99 AM.						// 06/16/02 AM.
+std::_t_ostream *sdbg=0;																// 02/21/02 AM.
 _TCHAR outd[MAXSTR];															// 02/21/02 AM.
 _stprintf(outd,_T("%s%c%s"), appdir,DIR_CH,_T("logs"));						// 02/21/02 AM.
 _TCHAR errout[MAXSTR];															// 03/22/99 AM.
@@ -911,8 +911,8 @@ _TCHAR errout[MAXSTR];															// 03/22/99 AM.
 	fileDbg(outd,sdbg);														// 02/21/02 AM.
 	}
 
-_t_strstream gerrStr;														// 02/25/05 AM.
-gerrStr << _T("[Date: ") << today() << _T("]") << ends;			// 05/26/01 AM.
+std::_t_strstream gerrStr;														// 02/25/05 AM.
+gerrStr << _T("[Date: ") << today() << _T("]") << std::ends;			// 05/26/01 AM.
 errOut(&gerrStr,false,0,0); 												// 02/25/05 AM.
 
 ////// SET UP TEXT ANALYZER.
@@ -960,8 +960,8 @@ if (compiled &&	// Running compiled ana and						// 07/03/00 AM.
 	// Perform user-defined initializations in USER Project.		// 07/28/03 AM.
 	user_ini();																	// 07/28/03 AM.
 
-	_t_strstream gerrStr;
-	gerrStr << _T("[Build analyzer time= (running compiled)]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Build analyzer time= (running compiled)]") << std::ends;
 	errOut(&gerrStr,false,0,0);
 	resetErr(ferr, serr);
 	resetDbg(sdbg);															// 02/21/02 AM.
@@ -976,8 +976,8 @@ if (fromkb)																		// 11/11/00 AM.
 		;		// Message is given in kbgetSeq.							// 08/01 01 AM.
 	else
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Read analyzer sequence from kb.]") << ends;	// 11/14/00 AM.
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Read analyzer sequence from kb.]") << std::ends;	// 11/14/00 AM.
 		errOut(&gerrStr,false,0,0);
 		}
 	}
@@ -994,7 +994,7 @@ if (!gotana)	// Haven't got ana sequence yet.						// 11/11/00 AM.
 if (develop)														// OPT	// 10/12/99 AM.
 	{
 	*gout << _T("Sequence file is:\n");
-	*gout << str(ana_->getSeqbuf()) << endl;							// 11/12/00 AM.
+	*gout << str(ana_->getSeqbuf()) << std::endl;							// 11/12/00 AM.
 	}
 
 // Setup flags (verboseness, timing, etc) for parsing the rules files.
@@ -1019,41 +1019,41 @@ if (compile)																	// 05/10/00 AM.
 	// Set up an output file for code generation.
 	_stprintf(buf, _T("%s%c%s%canalyzer.cpp"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *fcode = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	std::_t_ofstream *fcode = new std::_t_ofstream(TCHAR2CA(buf), std::ios::out);
 	_stprintf(buf, _T("%s%c%s%canalyzer.h"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *fhead = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	std::_t_ofstream *fhead = new std::_t_ofstream(TCHAR2CA(buf), std::ios::out);
 	_stprintf(buf, _T("%s%c%s%cdata.h"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *fdata = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	std::_t_ofstream *fdata = new std::_t_ofstream(TCHAR2CA(buf), std::ios::out);
 	_stprintf(buf, _T("%s%c%s%cauxiliary.cpp"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *faux = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	std::_t_ofstream *faux = new std::_t_ofstream(TCHAR2CA(buf), std::ios::out);
 
 	// 06/14/00 AM.
 	_stprintf(buf, _T("%s%c%s%cehash.cpp"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *ehash = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	std::_t_ofstream *ehash = new std::_t_ofstream(TCHAR2CA(buf), std::ios::out);
 	_stprintf(buf, _T("%s%c%s%cehead.h"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *ehead = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	std::_t_ofstream *ehead = new std::_t_ofstream(TCHAR2CA(buf), std::ios::out);
 	_stprintf(buf, _T("%s%c%s%cedata.h"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *edata = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	std::_t_ofstream *edata = new std::_t_ofstream(TCHAR2CA(buf), std::ios::out);
 
 	// 06/17/00 AM.
 	_stprintf(buf, _T("%s%c%s%crhash.cpp"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *rhash = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	std::_t_ofstream *rhash = new std::_t_ofstream(TCHAR2CA(buf), std::ios::out);
 	_stprintf(buf, _T("%s%c%s%crhead.h"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *rhead = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	std::_t_ofstream *rhead = new std::_t_ofstream(TCHAR2CA(buf), std::ios::out);
 	_stprintf(buf, _T("%s%c%s%crchain.h"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *rchain = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	std::_t_ofstream *rchain = new std::_t_ofstream(TCHAR2CA(buf), std::ios::out);
 	_stprintf(buf, _T("%s%c%s%crdata.h"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
-	_t_ofstream *rdata = new _t_ofstream(TCHAR2CA(buf), ios::out);
+	std::_t_ofstream *rdata = new std::_t_ofstream(TCHAR2CA(buf), std::ios::out);
 
 	gen = new Gen(_T(""), fcode,fhead,fdata,								// 05/10/00 AM.
 							faux);												// 06/05/00 AM.
@@ -1147,8 +1147,8 @@ if (compiled)		// User wants compiled ana.						// 07/02/00 AM.
 if (!ok)		// Asynchrony.													// 12/11/99 AM.
 	{
 // Commented out for Dave.													// 08/15/00 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[Errors in loading analyzer.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Errors in loading analyzer.]") << std::ends;
 	errOut(&gerrStr,false,0,0);
 
 	resetOut(fout, sout);													// 12/11/99 AM.
@@ -1171,10 +1171,10 @@ resetOut(fout, sout);
 user_ini();																		// 01/23/02 AM.
 
 e_time = clock();																// 12/28/98 AM.
-_t_strstream gerrStr1;
+std::_t_strstream gerrStr1;
 gerrStr1 << _T("[Build analyzer time=")
 	  << (double)(e_time - s_time)/CLOCKS_PER_SEC
-	  << _T(" sec]") << ends;
+	  << _T(" sec]") << std::ends;
 errOut(&gerrStr1,false,0,0);
 s_time = e_time;
 
@@ -1226,16 +1226,16 @@ _TCHAR *fname = _T("run");								// run.dll		// 01/23/06 AM.
 
 _stprintf(buf, _T("%s%cbin%c%s.dll"),									// 01/23/06 AM.
 						appdir,DIR_CH,DIR_CH,fname);						// 01/23/06 AM.
-_t_strstream gerrStr;
+std::_t_strstream gerrStr;
 gerrStr << _T("[Loading compiled analyzer ")							// 01/23/06 AM.
-												<< buf << _T("]") << ends;	// 01/23/06 AM.
+												<< buf << _T("]") << std::ends;	// 01/23/06 AM.
 errOut(&gerrStr,false);
 
 hrundll_ = load_dll(buf);
 if (!hrundll_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Couldn't load compiled analyzer.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Couldn't load compiled analyzer.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -1317,41 +1317,41 @@ Parse *NLP::initAnalyze(
 	_TCHAR *outdir,
 	_TCHAR *inbuf,		// Parse input buffer, if nonzero.			// 02/06/00 AM.
 	long len,			// Length of input buf, if partial.			// 02/06/00 AM.
-	_t_ostream *os,	// Rebinding of output stream.				// 05/11/02 AM.
+	std::_t_ostream *os,	// Rebinding of output stream.				// 05/11/02 AM.
 	void *cbufv,		// Output buffer stream, if outlen > 0.	// 10/10/03 AM.
 	long outlen,		// Output buffer max length.					// 05/11/02 AM.
 	bool retain			// If retaining hash,sym tables.				// 05/21/09 AM.
 	)
 {
-// BUG: cbufv is already an ostringstream at this point.	// 06/30/05 AM.
+// BUG: cbufv is already an std::ostringstream at this point.	// 06/30/05 AM.
 // WINDOWS:
 
 #ifndef LINUX
-_t_ostrstream *cbuf = (_t_ostrstream *) cbufv;			// 06/30/05 AM.
+std::_t_ostrstream *cbuf = (std::_t_ostrstream *) cbufv;			// 06/30/05 AM.
 #else
 // BUFFER/ARRAY STREAM ALREADY CREATED!!!	// 09/28/19 AM.
-ostringstream *cbuf = (ostringstream *) cbufv;			// 06/30/05 AM.	// 09/28/19 AM.
+std::ostringstream *cbuf = (std::ostringstream *) cbufv;			// 06/30/05 AM.	// 09/28/19 AM.
 
-// cerr << "initAnalyze in: " << ends;
-// cerr << "cbufv: *" << cbuf->str() << "*" << endl;
+// cerr << "initAnalyze in: " << std::ends;
+// cerr << "cbufv: *" << cbuf->str() << "*" << std::endl;
 #endif
 
 // ANCIENT STUFF HERE...	// 09/28/19 AM.
 #ifdef UNICODE
-//_t_ostrstream *cbuf = new _t_ostrstream((char*)cbufv,ios::out);			// 03/29/05 AM.
+//std::_t_ostrstream *cbuf = new std::_t_ostrstream((char*)cbufv,std::ios::out);			// 03/29/05 AM.
 #else
-//_t_ostrstream *cbuf = new _t_ostrstream((char*)cbufv,outlen,ios::out);	// 03/29/05 AM.
+//std::_t_ostrstream *cbuf = new std::_t_ostrstream((char*)cbufv,outlen,std::ios::out);	// 03/29/05 AM.
 #endif
-//_t_ostrstream *cbuf = (_t_ostrstream *) cbufv;								// 10/10/03 AM.
+//std::_t_ostrstream *cbuf = (std::_t_ostrstream *) cbufv;								// 10/10/03 AM.
 
-_t_ostream* sout = 0;
-_t_ofstream* fout = 0;
-_t_ostream *sdbg=0;																// 02/21/02 AM.
+std::_t_ostream* sout = 0;
+std::_t_ofstream* fout = 0;
+std::_t_ostream *sdbg=0;																// 02/21/02 AM.
 
 if (!appdir || !*appdir)													// 03/10/99 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[initAnalyze: Given no appdir.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[initAnalyze: Given no appdir.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -1458,44 +1458,44 @@ return parse;
 ********************************************/
 
 Parse *NLP::initAnalyze(
-	istringstream *iss,
-	ostringstream *oss,
+	std::istringstream *iss,
+	std::ostringstream *oss,
 	_TCHAR *appdir,
 	Eana *eana,
 	_TCHAR *outdir,
-	_t_ostream *os,	// Rebinding of output stream.
+	std::_t_ostream *os,	// Rebinding of output stream.
 	bool retain		// If retaining hash,sym tables.
 	)
 {
-// BUG: cbufv is already an ostringstream at this point.	// 06/30/05 AM.
+// BUG: cbufv is already an std::ostringstream at this point.	// 06/30/05 AM.
 // WINDOWS:
 
 #ifndef LINUX
-//_t_ostrstream *cbuf = (_t_ostrstream *) cbufv;
+//std::_t_ostrstream *cbuf = (std::_t_ostrstream *) cbufv;
 #else
 // BUFFER/ARRAY STREAM ALREADY CREATED!!!	// 09/28/19 AM.
-//ostringstream *cbuf = (ostringstream *) cbufv;			// 06/30/05 AM.	// 09/28/19 AM.
+//std::ostringstream *cbuf = (std::ostringstream *) cbufv;			// 06/30/05 AM.	// 09/28/19 AM.
 
-// cerr << "initAnalyze in: " << ends;
-// cerr << "cbufv: *" << cbuf->str() << "*" << endl;
+// cerr << "initAnalyze in: " << std::ends;
+// cerr << "cbufv: *" << cbuf->str() << "*" << std::endl;
 #endif
 
 // ANCIENT STUFF HERE...	// 09/28/19 AM.
 #ifdef UNICODE
-//_t_ostrstream *cbuf = new _t_ostrstream((char*)cbufv,ios::out);			// 03/29/05 AM.
+//std::_t_ostrstream *cbuf = new std::_t_ostrstream((char*)cbufv,std::ios::out);			// 03/29/05 AM.
 #else
-//_t_ostrstream *cbuf = new _t_ostrstream((char*)cbufv,outlen,ios::out);	// 03/29/05 AM.
+//std::_t_ostrstream *cbuf = new std::_t_ostrstream((char*)cbufv,outlen,std::ios::out);	// 03/29/05 AM.
 #endif
-//_t_ostrstream *cbuf = (_t_ostrstream *) cbufv;								// 10/10/03 AM.
+//std::_t_ostrstream *cbuf = (std::_t_ostrstream *) cbufv;								// 10/10/03 AM.
 
-_t_ostream* sout = 0;
-_t_ofstream* fout = 0;
-_t_ostream *sdbg=0;																// 02/21/02 AM.
+std::_t_ostream* sout = 0;
+std::_t_ofstream* fout = 0;
+std::_t_ostream *sdbg=0;																// 02/21/02 AM.
 
 if (!appdir || !*appdir)													// 03/10/99 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[initAnalyze: Given no appdir.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[initAnalyze: Given no appdir.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -1550,9 +1550,9 @@ parse->setHdll(hdll_);		// Handle to user.dll.					// 01/29/99 AM.
 
 // Set up output to buffer.
 #ifdef LINUX
-parse->setCbuf((ostringstream*)oss);			// Try this.	// 11/17/20 AM.
+parse->setCbuf((std::ostringstream*)oss);			// Try this.	// 11/17/20 AM.
 #else
-parse->setCbuf((_t_ostrstream*)oss);			// Try this.	// 11/17/20 AM.
+parse->setCbuf((std::_t_ostrstream*)oss);			// Try this.	// 11/17/20 AM.
 #endif
 //parse->setCbufmax(INFINITY);	// Try this.	// 11/17/20 AM.
 
@@ -1596,9 +1596,9 @@ bool NLP::cleanAnalyze(
 	bool retain		// If retaining hash and sym tables.			// 07/03/03 AM.
 	)
 {
-_t_ostream *sout;
-_t_ofstream *fout;
-_t_ostream *sdbg=0;																// 02/21/02 AM.
+std::_t_ostream *sout;
+std::_t_ofstream *fout;
+std::_t_ostream *sdbg=0;																// 02/21/02 AM.
 if (!parse)
 	return false;
 
@@ -1606,10 +1606,10 @@ sout = parse->getSout();
 fout = parse->getFout();
 
 #ifdef PERFORM_
-//*fout << "SYSTEM HASH" << endl;
+//*fout << "SYSTEM HASH" << std::endl;
 //Htab *htab = (Htab *)vtrun_->htab_;	// 06/24/03 AM.	// [DEGLOB]	// 10/15/20 AM.
 //htab->pretty(fout);															// 06/24/03 AM.
-//*fout << "\n\nLOCAL HASH" << endl;
+//*fout << "\n\nLOCAL HASH" << std::endl;
 //htab_->pretty(fout);
 #endif
 
@@ -1636,8 +1636,8 @@ bool ftimepass = parse->eana_->getFtimepass();							// 06/26/03 AM.
 double tot = (double)(e_time - s_time)/CLOCKS_PER_SEC;				// 06/26/03 AM.
 if (ftimepass)																		// 06/26/03 AM.
 	{
-	_t_strstream gerrStr;														// 02/25/05 AM.
-	gerrStr	<< _T("[Clean time: ") << tot << _T(" sec]") << ends;			// 06/26/03 AM.
+	std::_t_strstream gerrStr;														// 02/25/05 AM.
+	gerrStr	<< _T("[Clean time: ") << tot << _T(" sec]") << std::ends;			// 06/26/03 AM.
 	logOut(&gerrStr,false);														// 02/25/05 AM.
 	}
 
@@ -1726,7 +1726,7 @@ void NLP::analyze(
 	_TCHAR *inbuf,		// If != 0, analyzing BUFFER					// 02/11/00 AM.
 	long len,			// If != 0, then buffer length				// 02/11/00 AM.
 	bool compiled,		// If running compiled analyzer.				// 07/05/00 AM.
-	_t_ostream *os,		// Rebinding of output stream.				// 05/05/02 AM.
+	std::_t_ostream *os,		// Rebinding of output stream.				// 05/05/02 AM.
 	_TCHAR *outbuf,		// Output buffer, if outlen > 0.				// 05/07/02 AM.
 	long outlen,			// Output buffer max length.				// 05/07/02 AM.
 	_TCHAR *datum			// Pass info to G("$datum").					// 03/13/03 AM.
@@ -1742,18 +1742,18 @@ void NLP::analyze(
 outbuf[0] = L'\0';
 #ifdef LINUX
 // How to return to outbuf.	// 10/26/06 AM.
-//_t_ostrstream ocbuf;
-//_t_ostrstream *pbuf = 0;
+//std::_t_ostrstream ocbuf;
+//std::_t_ostrstream *pbuf = 0;
 //pbuf = &ocbuf;
-//ostringstream ocbuf(outbuf, outlen, ios::out);							// 05/11/02 AM.	// 09/28/19 AM.
-ostringstream ocbuf(outbuf, ios_base::app);							// 09/28/19 AM.
-ostringstream *pbuf = 0;														// 05/13/02 AM.	// 09/28/19 AM.
+//std::ostringstream ocbuf(outbuf, outlen, std::ios::out);							// 05/11/02 AM.	// 09/28/19 AM.
+std::ostringstream ocbuf(outbuf, std::ios_base::app);							// 09/28/19 AM.
+std::ostringstream *pbuf = 0;														// 05/13/02 AM.	// 09/28/19 AM.
 if (outbuf && outlen > 1)													// 05/13/02 AM.	// 09/28/19 AM.
 	pbuf = &ocbuf;																// 05/13/02 AM.	// 09/28/19 AM.
 #else
-//_t_ostrstream ocbuf(outbuf, outlen, ios::out);							// 05/11/02 AM.
-_t_ostrstream ocbuf(outbuf, ios::app);							// 09/28/19 AM.
-_t_ostrstream *pbuf = 0;														// 05/13/02 AM.
+//std::_t_ostrstream ocbuf(outbuf, outlen, std::ios::out);							// 05/11/02 AM.
+std::_t_ostrstream ocbuf(outbuf, std::ios::app);							// 09/28/19 AM.
+std::_t_ostrstream *pbuf = 0;														// 05/13/02 AM.
 if (outbuf && outlen > 1)													// 05/13/02 AM.
 	pbuf = &ocbuf;																// 05/13/02 AM.
 #endif
@@ -1769,7 +1769,7 @@ if (compiled)																	// 07/05/00 AM.
 														);
 
 #ifdef UNICODE
-	// No Unicode analog to ostringstream, so copy buffer.				// 04/15/06 AM.
+	// No Unicode analog to std::ostringstream, so copy buffer.				// 04/15/06 AM.
 	long siz = ocbuf.str().size();											// 04/15/06 AM.
 	if (siz >= outlen)	// Overflow.										// 04/15/06 AM.
 		siz = outlen - 1;															// 04/15/06 AM.
@@ -1805,8 +1805,8 @@ if (!(parse = initAnalyze(input,output,appdir,eana,outdir,		// 10/13/99 AM.
 									os, pbuf, outlen							// 05/11/02 AM.
 									)))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Analyze: Couldn't create parse instance.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Analyze: Couldn't create parse instance.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete eana;																// 07/23/01 AM.
 	return;
@@ -1841,10 +1841,10 @@ delete eana;			// MOVED AFTER CLEANANALYZE.					// 07/19/03 AM.
 fbatchstart_ = false;										// FIX		// 05/19/08 AM.
 
 if (pbuf)																		// 05/13/02 AM.
-	*pbuf << ends;		// Terminate buffer.								// 05/11/02 AM.
+	*pbuf << std::ends;		// Terminate buffer.								// 05/11/02 AM.
 
 #ifdef UNICODE
-// No Unicode analog to ostringstream, so copy buffer.				// 04/14/06 AM.
+// No Unicode analog to std::ostringstream, so copy buffer.				// 04/14/06 AM.
 long siz = ocbuf.str().size();											// 04/15/06 AM.
 if (siz >= outlen)	// Overflow.										// 04/15/06 AM.
 	siz = outlen - 1;															// 04/15/06 AM.
@@ -1855,19 +1855,19 @@ outbuf[siz] = '\0';															// 04/15/06 AM.
 if (flogfiles)																	// 02/21/02 AM.
 	{
 	e_time = clock();
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Exec analyzer time=")
 		  << (double) (e_time - s_time)/CLOCKS_PER_SEC
-		  << _T(" sec]") << ends;
+		  << _T(" sec]") << std::ends;
 	errOut(&gerrStr,false);
 	s_time = e_time;
 	}
 
 #ifdef PERFORM_
-//*gout << "SYSTEM HASH" << endl;
+//*gout << "SYSTEM HASH" << std::endl;
 //Htab *htab = (Htab *)vtrun_->htab_;	// 06/24/03 AM.	// [DEGLOB]	// 10/15/20 AM.
 //htab->pretty(gout);															// 06/24/03 AM.
-//*gout << "\n\nLOCAL HASH" << endl;
+//*gout << "\n\nLOCAL HASH" << std::endl;
 //htab_->pretty(gout);
 #endif
 }
@@ -1881,14 +1881,14 @@ if (flogfiles)																	// 02/21/02 AM.
 ********************************************/
 
 void NLP::analyze(
-	istringstream *iss,	// Input strstream.
-	ostringstream *oss,	// Output strstream.
+	std::istringstream *iss,	// Input strstream.
+	std::ostringstream *oss,	// Output strstream.
 	_TCHAR *appdir,		// Directory holding analyzer.
 	bool flogfiles,		// Changing the meaning of this.
 	bool silent,		// Silent run mode.
 	_TCHAR *outdir,		// Intermed files.
 	bool compiled,		// If running compiled analyzer.
-	_t_ostream *os,		// Rebinding of output stream.				// 05/05/02 AM.
+	std::_t_ostream *os,		// Rebinding of output stream.				// 05/05/02 AM.
 	_TCHAR *datum		// Pass info to G("$datum").
 	)
 {
@@ -1926,8 +1926,8 @@ Parse *parse = 0;																// 05/13/99 AM.
 
 if (!(parse = initAnalyze(iss,oss,appdir,eana,outdir)))	// 11/17/20 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Analyze: Couldn't create parse instance.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Analyze: Couldn't create parse instance.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete eana;																// 07/23/01 AM.
 	return;
@@ -1964,7 +1964,7 @@ fbatchstart_ = false;										// FIX		// 05/19/08 AM.
 // Terminate buffer.	// 11/17/20 AM.
 
 #ifdef UNICODE
-// No Unicode analog to ostringstream, so copy buffer.				// 04/14/06 AM.
+// No Unicode analog to std::ostringstream, so copy buffer.				// 04/14/06 AM.
 long siz = ocbuf.str().size();											// 04/15/06 AM.
 if (siz >= outlen)	// Overflow.										// 04/15/06 AM.
 	siz = outlen - 1;															// 04/15/06 AM.
@@ -1975,19 +1975,19 @@ outbuf[siz] = '\0';															// 04/15/06 AM.
 if (flogfiles)																	// 02/21/02 AM.
 	{
 	e_time = clock();
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Exec analyzer time=")
 		  << (double) (e_time - s_time)/CLOCKS_PER_SEC
-		  << _T(" sec]") << ends;
+		  << _T(" sec]") << std::ends;
 	errOut(&gerrStr,false);
 	s_time = e_time;
 	}
 
 #ifdef PERFORM_
-//*gout << "SYSTEM HASH" << endl;
+//*gout << "SYSTEM HASH" << std::endl;
 //Htab *htab = (Htab *)vtrun_->htab_;	// 06/24/03 AM.	// [DEGLOB]	// 10/15/20 AM.
 //htab->pretty(gout);															// 06/24/03 AM.
-//*gout << "\n\nLOCAL HASH" << endl;
+//*gout << "\n\nLOCAL HASH" << std::endl;
 //htab_->pretty(gout);
 #endif
 }
@@ -2010,7 +2010,7 @@ void *NLP::apiInitAnalyze(
 	_TCHAR *outdir,		// Interned files.								// 03/10/99 AM.
 	_TCHAR *inbuf,		// If != 0, analyzing BUFFER					// 02/11/00 AM.
 	long len,				// If != 0, then buffer length			// 02/11/00 AM.
-	_t_ostream *os,		// Rebinding of output stream.				// 05/13/02 AM.
+	std::_t_ostream *os,		// Rebinding of output stream.				// 05/13/02 AM.
 	_TCHAR *outbuf,		// Output buffer, if outlen > 0.				// 05/13/02 AM.
 	long outlen			// Output buffer max length.					// 05/13/02 AM.
 	)
@@ -2029,16 +2029,16 @@ eana->setFlogfiles(flogfiles);											// 07/23/01 AM.
 
 // To avoid any output string stream bugs, keeping this			// 05/11/02 AM.
 // object here. (G++ bug reported way back.)							// 05/11/02 AM.
-//_t_ostrstream ocbuf(outbuf, outlen, ios::out);							// 05/11/02 AM.
-_t_ostrstream *pbuf = 0;														// 05/13/02 AM.
+//std::_t_ostrstream ocbuf(outbuf, outlen, std::ios::out);							// 05/11/02 AM.
+std::_t_ostrstream *pbuf = 0;														// 05/13/02 AM.
 if (outbuf && outlen > 1)													// 05/13/02 AM.
 //	pbuf = &ocbuf;																// 05/13/02 AM.
 #ifdef UNICODE
-	pbuf = new _t_ostrstream(outbuf,ios::out);						// 02/20/05 AM.
+	pbuf = new std::_t_ostrstream(outbuf,std::ios::out);						// 02/20/05 AM.
 #elif LINUX
-	pbuf = new _t_ostrstream(outbuf,ios_base::out);
+	pbuf = new std::_t_ostrstream(outbuf,std::ios_base::out);
 #else
-	pbuf = new _t_ostrstream(outbuf,ios::out);				// 02/20/05 AM.
+	pbuf = new std::_t_ostrstream(outbuf,std::ios::out);				// 02/20/05 AM.
 #endif
 
 Parse *parse = 0;																// 05/13/99 AM.
@@ -2145,13 +2145,13 @@ Parse *prs = (Parse *) parse;
 Eana *eana = prs->getEana();
 
 #ifdef LINUX
-ostringstream* cbuf = prs->getCbuf();											// 09/28/19 AM.
+std::ostringstream* cbuf = prs->getCbuf();											// 09/28/19 AM.
 #else
-_t_ostream *cbuf = prs->getCbuf();											// 05/13/02 AM.
+std::_t_ostream *cbuf = prs->getCbuf();											// 05/13/02 AM.
 #endif
 
 if (cbuf)																		// 05/13/02 AM.
-	*cbuf << ends;		// Terminate buffer.								// 05/13/02 AM.
+	*cbuf << std::ends;		// Terminate buffer.								// 05/13/02 AM.
 
 // PRINT OUT THE FINAL PARSE TREE.										// 08/05/01 AM.
 if (eana->getFlogfinal())													// 08/05/01 AM.
@@ -2176,8 +2176,8 @@ bool NLP::apiSetpopupdata(_TCHAR *x)
 {
 if (popupdat_)	// Not cleared from prior invocation of popup.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Warning: Data from GUI popup was never used.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Warning: Data from GUI popup was never used.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -2204,14 +2204,14 @@ void NLP::runAnalyzer(
 	_TCHAR *outdir,		// Interned files.
 	_TCHAR *inbuf,		// If != 0, analyzing BUFFER
 	long len,				// If != 0, then buffer length
-	_t_ostream *os,		// Rebinding of output stream.				// 05/13/02 AM.
+	std::_t_ostream *os,		// Rebinding of output stream.				// 05/13/02 AM.
 	void *cbufv,		// Output buffer stream, if outlen > 0.	// 10/10/03 AM.
 	long outlen,			// Output buffer max length.				// 05/13/02 AM.
 	_TCHAR *datum			// Pass info to G("$datum").					// 03/13/03 AM.
 	)
 {
 
-_t_ostrstream *cbuf = (_t_ostrstream *) cbufv;					// 10/10/03 AM.
+std::_t_ostrstream *cbuf = (std::_t_ostrstream *) cbufv;					// 10/10/03 AM.
 
 clock_t   s_time, e_time;
 
@@ -2237,8 +2237,8 @@ if (!(parse = initAnalyze(input,output,appdir,&eana,outdir,
 									os, cbuf, outlen							// 05/13/02 AM.
 									)))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Analyze: Couldn't create parse instance.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Analyze: Couldn't create parse instance.]") << std::ends;
 	errOut(&gerrStr,false);
 	return;
 	}
@@ -2259,7 +2259,7 @@ parse->setFbatchstart(fbatchstart_);									// 05/16/08 AM.
 if (parse->getText())
 	{
 #ifdef RUNEMBED_
-  cout << "runAnalyzer: RUNEMBED_ calling run_analyzer(parse)" << endl;
+  cout << "runAnalyzer: RUNEMBED_ calling run_analyzer(parse)" << std::endl;
   run_analyzer(parse);
 #else
 #ifndef LINUX
@@ -2274,12 +2274,12 @@ if (parse->getText())
 	}
 
 #ifdef LINUX
-ostringstream *cbf = parse->getCbuf();										// 09/28/19 AM.
+std::ostringstream *cbf = parse->getCbuf();										// 09/28/19 AM.
 #else
-_t_ostream *cbf = parse->getCbuf();										// 04/25/05 AM.
+std::_t_ostream *cbf = parse->getCbuf();										// 04/25/05 AM.
 #endif
 if (cbf)																			// 05/13/02 AM.
-	*cbf << ends;		// Terminate buffer.								// 05/13/02 AM.
+	*cbf << std::ends;		// Terminate buffer.								// 05/13/02 AM.
 
 e_time = clock();
 
@@ -2293,10 +2293,10 @@ fbatchstart_ = false;														// 05/16/08 AM.
 
 if (flogfiles)																	// 02/21/02 AM.
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Exec analyzer time=")
 		  << (double) (e_time - s_time)/CLOCKS_PER_SEC
-		  << _T(" sec]") << ends;
+		  << _T(" sec]") << std::ends;
 	errOut(&gerrStr,false);
 	s_time = e_time;
 	}
@@ -2312,18 +2312,18 @@ if (flogfiles)																	// 02/21/02 AM.
 ********************************************/
 
 void NLP::runAnalyzer(
-	istringstream *iss,
-	ostringstream *oss,
+	std::istringstream *iss,
+	std::ostringstream *oss,
 	_TCHAR *appdir,
 	bool flogfiles,	// Changing the meaning of this.
 	bool silent,		// Silent run mode.
 	_TCHAR *outdir,		// Interned files.
-	_t_ostream *os,		// Rebinding of output stream.
+	std::_t_ostream *os,		// Rebinding of output stream.
 	_TCHAR *datum			// Pass info to G("$datum").
 	)
 {
 
-_t_ostrstream *cbuf = (_t_ostrstream *) oss;	// 11/17/20 AM.
+std::_t_ostrstream *cbuf = (std::_t_ostrstream *) oss;	// 11/17/20 AM.
 
 clock_t   s_time, e_time;
 
@@ -2346,8 +2346,8 @@ Parse *parse = 0;
 
 if (!(parse = initAnalyze(iss,oss,appdir,&eana,outdir,os)))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Analyze: Couldn't create parse instance.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Analyze: Couldn't create parse instance.]") << std::ends;
 	errOut(&gerrStr,false);
 	return;
 	}
@@ -2368,7 +2368,7 @@ parse->setFbatchstart(fbatchstart_);									// 05/16/08 AM.
 if (parse->getText())
 	{
 #ifdef RUNEMBED_
-  cout << "runAnalyzer: RUNEMBED_ calling run_analyzer(parse)" << endl;
+  cout << "runAnalyzer: RUNEMBED_ calling run_analyzer(parse)" << std::endl;
   run_analyzer(parse);
 #else
 #ifndef LINUX
@@ -2382,12 +2382,12 @@ if (parse->getText())
 #endif
 	}
 #ifdef LINUX
-ostringstream *cbf = parse->getCbuf();										// 09/28/19 AM.
+std::ostringstream *cbf = parse->getCbuf();										// 09/28/19 AM.
 #else
-_t_ostream *cbf = parse->getCbuf();										// 04/25/05 AM.
+std::_t_ostream *cbf = parse->getCbuf();										// 04/25/05 AM.
 #endif
 if (cbf)																			// 05/13/02 AM.
-	*cbf << ends;		// Terminate buffer.								// 05/13/02 AM.
+	*cbf << std::ends;		// Terminate buffer.								// 05/13/02 AM.
 
 e_time = clock();
 
@@ -2401,10 +2401,10 @@ fbatchstart_ = false;														// 05/16/08 AM.
 
 if (flogfiles)																	// 02/21/02 AM.
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Exec analyzer time=")
 		  << (double) (e_time - s_time)/CLOCKS_PER_SEC
-		  << _T(" sec]") << ends;
+		  << _T(" sec]") << std::ends;
 	errOut(&gerrStr,false);
 	s_time = e_time;
 	}
@@ -2535,13 +2535,13 @@ return true;
 *			08/26/02 AM. Moved here.  Part of removing globals.
 ********************************************/
 
-void NLP::fileDbg(_TCHAR *dirname, _t_ostream* &sdbg)
+void NLP::fileDbg(_TCHAR *dirname, std::_t_ostream* &sdbg)
 {
 sdbg = dbgout_;			// Save the current debug stream.
 
 _TCHAR fname[MAXSTR];
 _stprintf(fname, _T("%s%c%s"), dirname, DIR_CH, _T("dbg.log"));
-dbgout_ = new _t_ofstream(TCHAR2CA(fname), ios::out);
+dbgout_ = new std::_t_ofstream(TCHAR2CA(fname), std::ios::out);
 }
 
 
@@ -2552,12 +2552,12 @@ dbgout_ = new _t_ofstream(TCHAR2CA(fname), ios::out);
 * NOTE:	08/26/02 AM. Moved here.  Part of removing globals.
 ********************************************/
 
-void NLP::resetDbg(_t_ostream* &sdbg)
+void NLP::resetDbg(std::_t_ostream* &sdbg)
 {
 #ifdef OLD_
 if (!dbgout_)
   {
-  *gerr << _T("0 0 [Error: Debug output can't be reset.]") << endl;
+  *gerr << _T("0 0 [Error: Debug output can't be reset.]") << std::endl;
   return;
   }
 #endif
@@ -2585,21 +2585,21 @@ if (dbgout_)																	// 06/30/03 AM.
 *dbgout_																			// 02/21/02 AM.
 //*gout																			// 02/21/02 AM.
 		<< Errbuf		// Should rename Errbuf everywhere.
-		<< endl;
+		<< std::endl;
 return retval;
 
 }
 
 // VARIANT.	For Unicode, and to remove global buffer.				// 02/25/05 AM.
 bool NLP::logOut(
-	_t_strstream *st,		// Error message to print.
+	std::_t_strstream *st,		// Error message to print.
 	bool retval				// Value to return.
 	)
 {
 if (dbgout_)
 *dbgout_
 		<< st->str()
-		<< endl;
+		<< std::endl;
 #ifndef UNICODE
 #ifndef LINUX
 st->freeze(false);	// 07/01/05 AM.
@@ -2618,7 +2618,7 @@ return retval;
 * NOTE:	02/14/00 AM. Some reorganizing of this fn.
 ********************************************/
 
-LITE_API void object_counts(_t_ofstream *ofstr)
+LITE_API void object_counts(std::_t_ofstream *ofstr)
 {
 #ifdef OLDY_
 NLP::prettyCount(ofstr);			// 12/14/98 AM.

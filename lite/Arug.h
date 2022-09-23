@@ -15,7 +15,6 @@ All rights reserved.
 #ifndef ARUG_H_
 #define ARUG_H_
 //#include <iostream>											// Upgrade.	// 01/24/01 AM.
-using namespace std;											// Upgrade.	// 01/24/01 AM.
 #include <assert.h>
 #include "lite/lite.h"
 //#include "mode.h"				// 12/10/99 AM.

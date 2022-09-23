@@ -48,7 +48,7 @@ extern char BOM_UTF8[];
 
 Var::Var()
 {
-*gout << _T("[DON'T CREATE OBJECTS OF Var CLASS.]") << endl;
+*gout << _T("[DON'T CREATE OBJECTS OF Var CLASS.]") << std::endl;
 }
 
 /*******************************************/
@@ -108,8 +108,8 @@ dlist = parse->getVars();
 bool ok = true;
 ok = create(name, val, /*DU*/ dlist,pairx);
 parse->setVars(dlist);
-//cout << "Vars:" << endl;
-//cout << *(parse->getVars()) << endl;
+//cout << "Vars:" << std::endl;
+//cout << *(parse->getVars()) << std::endl;
 return ok;
 }
 
@@ -137,8 +137,8 @@ dlist = parse->getVars();
 bool ok = true;
 ok = createstrs(name, /*DU*/ dlist);
 parse->setVars(dlist);
-//cout << "Vars:" << endl;
-//cout << *(parse->getVars()) << endl;
+//cout << "Vars:" << std::endl;
+//cout << *(parse->getVars()) << std::endl;
 return ok;
 }
 
@@ -200,7 +200,7 @@ return ok;
 bool Var::setVal(
 	_TCHAR *name,
 	Parse *parse,
-	_t_ostream *ostr)
+	std::_t_ostream *ostr)
 {
 if (!name || !parse)
 	return false;
@@ -263,7 +263,7 @@ return ok;
 * NOTE:	08/03/99 AM. Overhaul.
 ********************************************/
 
-bool Var::val(_TCHAR *name, Parse *parse, /*DU*/ _t_ostream* &ostr)
+bool Var::val(_TCHAR *name, Parse *parse, /*DU*/ std::_t_ostream* &ostr)
 {
 ostr = 0;
 if (!name || !parse)
@@ -391,9 +391,9 @@ Delt<Ipair> *dpair = 0;						// 11/17/99 AM.
 Var::find(name, dlist, /*DU*/ pairx);
 if (pairx)			// In list already.
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Var::create: Variable=") << name << _T("already declared.]")
-		  << ends;
+		  << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -448,9 +448,9 @@ Ipair *pairx = 0;
 Var::find(name, dlist, /*DU*/ pairx);
 if (pairx)			// In list already.
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Var::create: Variable=") << name << _T("already declared.]")
-		  << ends;
+		  << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -492,9 +492,9 @@ Ipair *pairx = 0;
 Var::find(name, dlist, /*DU*/ pairx);
 if (pairx)			// In list already.
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Var::createstrs: Variable=") << name << _T("already declared.]")
-		  << ends;
+		  << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -515,8 +515,8 @@ else
 	Ipair::addDelt(dlist, name, args);
 	}
 
-//cout << "Vars:" << endl;
-//cout << *(parse->getVars()) << endl;
+//cout << "Vars:" << std::endl;
+//cout << *(parse->getVars()) << std::endl;
 return true;
 }
 
@@ -537,7 +537,7 @@ Ipair *pairx = 0;
 Var::find(name, dlist, /*DU*/ pairx);
 if (!pairx)			// Var doesn't exist yet.
 	{
-	// *gerr << "[Var::inc: Variable=" << name << " not found.]" << endl;
+	// *gerr << "[Var::inc: Variable=" << name << " not found.]" << std::endl;
 	// If var not found, create it.  If no list, create it.		// 08/31/00 AM.
 	Iarg *val;																	// 08/31/00 AM.
 	val = new Iarg((long) 1);		// Start with +1.					// 08/31/00 AM.
@@ -572,8 +572,8 @@ switch (arg->getType())											// 11/03/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Var::inc: Bad value type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Var::inc: Bad value type.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -593,7 +593,7 @@ switch (arg->getType())											// 11/03/99 AM.
 //arg->setStr(str);									// 11/03/99 AM.
 arg->setNum(num);										// 11/03/99 AM.
 
-//cout << "str=" << str << endl;
+//cout << "str=" << str << std::endl;
 
 return true;
 }
@@ -625,7 +625,7 @@ Var::find(name, dlist, /*DU*/ pairx);
 if (!pairx)			// Absent from list.
 	{
 	// *gerr << "[Var::addNum: Creating var=" << name << ".]"
-	//	  << endl;
+	//	  << std::endl;
 	// Give it the initial value of numb.
 	Iarg *val;
 	val = new Iarg(numb);
@@ -648,7 +648,7 @@ assert(arg);
 // Convert to number.
 //if (arg->getType() != IANUM)								// 11/03/99 AM.
 //	{
-//	*gerr << "[Var::inc: Bad value type.]" << endl;
+//	*gerr << "[Var::inc: Bad value type.]" << std::endl;
 //	return false;
 //	}
 //long num;
@@ -668,8 +668,8 @@ switch (arg->getType())											// 11/03/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Var::inc: Bad value type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Var::inc: Bad value type.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -713,7 +713,7 @@ if (!pairx)			// In list already.
 	Var::createstrs(name, /*DU*/ dlist);								// 06/06/00 AM.
 	Var::find(name,dlist,/*DU*/ pairx);									// 06/06/00 AM.
 	//*gerr << "[Var::addStrs: Variable=" << name << " not found.]"
-	//	  << endl;
+	//	  << std::endl;
 	//return false;
 	}
 
@@ -933,7 +933,7 @@ return true;
 
 bool Var::setVal(
 	Ipair *pairx,
-	_t_ostream *ostr
+	std::_t_ostream *ostr
 	)
 {
 if (!pairx)
@@ -1126,7 +1126,7 @@ return true;
 
 bool Var::setVal(
 	_TCHAR *name,
-	_t_ostream *ostr,
+	std::_t_ostream *ostr,
 	/*DU*/
 	Dlist<Ipair>* &dlist
 	)
@@ -1138,9 +1138,9 @@ Ipair *pairx = 0;
 Var::find(name, dlist, /*DU*/ pairx);
 if (!pairx)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Var::setVal: Variable=") << name << _T(" not found.]")
-		  << ends;
+		  << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -1152,8 +1152,8 @@ assert(args);
 
 if (args->getFirst())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Variable=") << name << _T(" is already set.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Variable=") << name << _T(" is already set.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -1664,8 +1664,8 @@ pairx = 0;
 
 if (!name)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Var::find: given null name.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Var::find: given null name.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -1707,7 +1707,7 @@ Ipair *pairx = 0;
 Var::find(name, dlist, /*DU*/ pairx);
 if (!pairx)
 	{
-	//*gerr << "[Var::val: Variable=" << name << " not found.]" << endl;
+	//*gerr << "[Var::val: Variable=" << name << " not found.]" << std::endl;
 	return false;
 	}
 
@@ -1731,7 +1731,7 @@ Ipair *pairx = 0;
 Var::find(name, dlist, /*DU*/ pairx);
 if (!pairx)
 	{
-	//*gerr << "[Var::val: Variable=" << name << " not found.]" << endl;
+	//*gerr << "[Var::val: Variable=" << name << " not found.]" << std::endl;
 	return false;
 	}
 
@@ -1769,7 +1769,7 @@ assert(arg);
 
 //if (arg->getType() != IASTR)											// 11/03/99 AM.
 //	{
-//	*gerr << "[Var::val: Bad value type.]" << endl;
+//	*gerr << "[Var::val: Bad value type.]" << std::endl;
 //	return false;
 //	}
 
@@ -1791,8 +1791,8 @@ switch (arg->getType())														// 11/03/99 AM.
 		_stprintf(buf, _T("%f"), arg->getFloat());							// 08/17/01 AM.
 		break;																	// 08/17/01 AM.
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Var::inc: Bad value type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Var::inc: Bad value type.]") << std::ends;
 		errOut(&gerrStr,false);
 		return false;
 	}
@@ -1837,7 +1837,7 @@ assert(arg);
 // Convert to number.
 //if (arg->getType() != IASTR)								// 11/03/99 AM.
 //	{
-//	*gerr << "[Var::val: Bad value type.]" << endl;	// 09/20/99 AM.
+//	*gerr << "[Var::val: Bad value type.]" << std::endl;	// 09/20/99 AM.
 //	return false;
 //	}
 
@@ -1856,8 +1856,8 @@ switch (arg->getType())											// 11/03/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Var::inc: Bad value type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Var::inc: Bad value type.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -1903,8 +1903,8 @@ switch (arg->getType())
 		fnum = arg->getFloat();
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Var::inc: Bad value type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Var::inc: Bad value type.]") << std::ends;
 		return errOut(&gerrStr,false);
 	}
 return true;
@@ -1918,7 +1918,7 @@ return true;
 * NOTE:	08/03/99 AM. Overhaul.
 ********************************************/
 
-bool Var::val(_TCHAR *name, Dlist<Ipair> *dlist, /*DU*/ _t_ostream* &ostr)
+bool Var::val(_TCHAR *name, Dlist<Ipair> *dlist, /*DU*/ std::_t_ostream* &ostr)
 {
 ostr = 0;
 if (!name || !dlist)
@@ -1928,7 +1928,7 @@ Ipair *pairx = 0;
 Var::find(name, dlist, /*DU*/ pairx);
 if (!pairx)
 	{
-	//*gerr << "[Var::val: Variable=" << name << " not found.]" << endl;
+	//*gerr << "[Var::val: Variable=" << name << " not found.]" << std::endl;
 	return false;
 	}
 
@@ -1942,7 +1942,7 @@ return Var::val(pairx, /*DU*/ ostr);
 * SUBJ:	Fetch a variable's value.
 ********************************************/
 
-bool Var::val(Ipair *pairx, /*DU*/ _t_ostream* &ostr)
+bool Var::val(Ipair *pairx, /*DU*/ std::_t_ostream* &ostr)
 {
 ostr = 0;
 
@@ -1964,8 +1964,8 @@ assert(arg);
 // Convert to ostream ptr.
 if (arg->getType() != IAOSTREAM)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Var::val: Bad value type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Var::val: Bad value type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -2012,7 +2012,7 @@ Var::find(name, dlist, /*DU*/ pairx);
 if (!pairx)			// In list already.
 	{
 	//*gerr << "Var::vals: Variable=" << name << " not found.]"
-	//	  << endl;
+	//	  << std::endl;
 	return false;
 	}
 
@@ -2038,8 +2038,8 @@ assert(arg);
 
 if (arg->getType() != IASTR)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Var::getStr: Bad value type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Var::getStr: Bad value type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -2253,7 +2253,7 @@ return strcmp_i(ar1->getStr(), ar2->getStr());
 * SUBJ:	Dump variable list to stream.
 ********************************************/
 
-bool Var::dump(Dlist<Ipair> *vars, _t_ostream *ostr)
+bool Var::dump(Dlist<Ipair> *vars, std::_t_ostream *ostr)
 {
 if (!ostr)
 	return false;
@@ -2277,7 +2277,7 @@ for (dpair = vars->getFirst(); dpair; dpair = dpair->Right())
 	*ostr << name << _T(" = ");
 	if (!list)
 		{
-		*ostr << endl;
+		*ostr << std::endl;
 		continue;
 		}
 	for (darg = list->getFirst(); darg; darg = darg->Right())
@@ -2297,7 +2297,7 @@ for (dpair = vars->getFirst(); dpair; dpair = dpair->Right())
 				break;
 			}
 		}
-	*ostr << endl;
+	*ostr << std::endl;
 	}
 return true;
 }
@@ -2322,7 +2322,7 @@ bool Var::filevar(
 	Parse *parse,
 	/*UP*/
 	Ipair* &pairx,				// The variable-value pair.
-	_t_ostream* &ostr,			// Var's ostream value.
+	std::_t_ostream* &ostr,			// Var's ostream value.
 	bool &exists,				// True if ostream var was already present.
 	bool &open,					// True if ostream already open.
 	bool &inuse,				// True if var in use for a non-ostream value.
@@ -2331,8 +2331,8 @@ bool Var::filevar(
 {
 if (!parse)	// 05/20/09 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[filevar: No parse structure.'") << _T("']") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[filevar: No parse structure.'") << _T("']") << std::ends;
 	errOut(&gerrStr,false);
 	return false;	// 05/20/09 AM.
 	}
@@ -2341,8 +2341,8 @@ ostr = 0;
 exists = open = inuse = badname = false;
 if (!fname)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't open empty filename.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't open empty filename.]") << std::ends;
 	errOut(&gerrStr,false);
 	badname = true;
 	return false;
@@ -2394,7 +2394,7 @@ _stprintf(buf, _T("%s%c%s"), parse->getOutdir(),DIR_CH, fname);	 // 03/10/99 AM.
 parse->internStr(buf, /*UP*/ str);
 
 // Open the output file for APPENDING.
-ostr = new _t_ofstream(TCHAR2CA(str), ios::app);
+ostr = new std::_t_ofstream(TCHAR2CA(str), std::ios::app);
 #ifdef UNICODE
 *ostr << BOM_UTF8;
 #endif
@@ -2428,7 +2428,7 @@ Ipair *pairx;
 Dlist<Iarg> *dargs;
 Delt<Iarg> *darg;
 Iarg *arg;
-_t_ostream *ostr;
+std::_t_ostream *ostr;
 RFASem *sem;
 for (delt = dlist->getFirst(); delt; delt = delt->Right())
 	{
@@ -2497,8 +2497,8 @@ for (dpair = fmlist->getFirst(); dpair; dpair = dpair->Right())
 	// If destination has variable name, abort the copy.
 	if (!Var::find(name, tolist, /*DU*/ topair))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[copy_vars: Error in copying '") << name << _T("']") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[copy_vars: Error in copying '") << name << _T("']") << std::ends;
 		errOut(&gerrStr,false);
 		return false;
 		}
@@ -2506,9 +2506,9 @@ for (dpair = fmlist->getFirst(); dpair; dpair = dpair->Right())
 	// Don't even bother issuing a warning.				// FIX.	// 11/27/01 AM.
 //	if (topair)
 //		{
-//		strstream gerrStr(Errbuf,MAXSTR,ios::out);
+//		strstream gerrStr(Errbuf,MAXSTR,std::ios::out);
 //		gerrStr << "[copy_vars: Variable '" << name << "' already assigned.]"
-//				<< ends;
+//				<< std::ends;
 //		return errOut(false);
 //		}
 
@@ -2519,8 +2519,8 @@ for (dpair = fmlist->getFirst(); dpair; dpair = dpair->Right())
 	vals = Iarg::copy_args(fmpair->getVals());			// FIX.	// 05/18/01 AM.
 	if (!Var::setVals(name, vals, /*DU*/ tolist))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[copy_vars: Error during copy.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[copy_vars: Error during copy.]") << std::ends;
 		errOut(&gerrStr,false);
 		return false;
 		}

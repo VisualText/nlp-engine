@@ -62,15 +62,15 @@ class Gen
 	friend class Ireturn;				// 03/07/02 AM.
 //	friend class tHtab;
 
-	friend _t_ostream &operator<<(_t_ostream &, Gen &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Gen &);
 
 public:
 	Gen(										// Default constructor.
 		_TCHAR *indent		 = _T(""),		// Amount to indent code.
-		_t_ofstream *fcode	 = 0,				// Main output file.
-		_t_ofstream *fhead  = 0,				// Header output file.
-		_t_ofstream *fdata  = 0,				// Data output file.
-		_t_ofstream *faux   = 0,				// Auxiliary output.		// 06/05/00 AM.
+		std::_t_ofstream *fcode	 = 0,				// Main output file.
+		std::_t_ofstream *fhead  = 0,				// Header output file.
+		std::_t_ofstream *fdata  = 0,				// Data output file.
+		std::_t_ofstream *faux   = 0,				// Auxiliary output.		// 06/05/00 AM.
 		int id = 0,							// Id for numbering.
 		NlpppRegion region = REGNULL	// Pass file region being gen'd.
 		);
@@ -91,19 +91,19 @@ public:
 
 	// Access
 	_TCHAR *getIndent();
-	_t_ofstream *getFcode();
-	_t_ofstream *getFhead();
-	_t_ofstream *getFdata();
-	_t_ofstream *getFaux();
-	_t_ofstream *getEhash();
-	_t_ofstream *getEdata();
-	_t_ofstream *getEhead();
-	_t_ofstream *getRhash();
-	_t_ofstream *getRchain();
-	_t_ofstream *getRdata();
-	_t_ofstream *getRhead();
-	_t_ofstream *getPassc();   // 04/03/09 AM.
-	_t_ofstream *getPassh();   // 04/03/09 AM.
+	std::_t_ofstream *getFcode();
+	std::_t_ofstream *getFhead();
+	std::_t_ofstream *getFdata();
+	std::_t_ofstream *getFaux();
+	std::_t_ofstream *getEhash();
+	std::_t_ofstream *getEdata();
+	std::_t_ofstream *getEhead();
+	std::_t_ofstream *getRhash();
+	std::_t_ofstream *getRchain();
+	std::_t_ofstream *getRdata();
+	std::_t_ofstream *getRhead();
+	std::_t_ofstream *getPassc();   // 04/03/09 AM.
+	std::_t_ofstream *getPassh();   // 04/03/09 AM.
 	int getId();
 	int getRuleid();															// 05/12/00 AM.
 	int getEltid();															// 05/12/00 AM.
@@ -114,19 +114,19 @@ public:
 
 	// Modify
 	void setIndent(_TCHAR *);
-	void setFcode(_t_ofstream *);
-	void setFhead(_t_ofstream *);
-	void setFdata(_t_ofstream *);
-	void setFaux(_t_ofstream *);
-	void setEhash(_t_ofstream *);
-	void setEdata(_t_ofstream *);
-	void setEhead(_t_ofstream *);
-	void setRhash(_t_ofstream *);
-	void setRchain(_t_ofstream *);
-	void setRdata(_t_ofstream *);
-	void setRhead(_t_ofstream *);
-	void setPassc(_t_ofstream *);  // 04/03/09 AM.
-	void setPassh(_t_ofstream *);  // 04/03/09 AM.
+	void setFcode(std::_t_ofstream *);
+	void setFhead(std::_t_ofstream *);
+	void setFdata(std::_t_ofstream *);
+	void setFaux(std::_t_ofstream *);
+	void setEhash(std::_t_ofstream *);
+	void setEdata(std::_t_ofstream *);
+	void setEhead(std::_t_ofstream *);
+	void setRhash(std::_t_ofstream *);
+	void setRchain(std::_t_ofstream *);
+	void setRdata(std::_t_ofstream *);
+	void setRhead(std::_t_ofstream *);
+	void setPassc(std::_t_ofstream *);  // 04/03/09 AM.
+	void setPassh(std::_t_ofstream *);  // 04/03/09 AM.
 	void setId(int);
 	void setRuleid(int);														// 05/12/00 AM.
 	void setEltid(int);														// 05/12/00 AM.
@@ -140,33 +140,33 @@ public:
 	bool reset();				// Finish up, set up for next time.	// 05/16/00 AM.
 
 	// Class-wide member functions.
-	static void eol(_t_ofstream*);												// 04/04/03 AM.
-	static void nl(_t_ofstream*);												// 04/04/03 AM.
+	static void eol(std::_t_ofstream*);												// 04/04/03 AM.
+	static void nl(std::_t_ofstream*);												// 04/04/03 AM.
 
 protected:
 	_TCHAR *indent_;							// How much to indent code.
-	_t_ofstream *fcode_;						// Main output file.
-	_t_ofstream *fhead_;						// Header output file.
-	_t_ofstream *fdata_;						// Data output file.
+	std::_t_ofstream *fcode_;						// Main output file.
+	std::_t_ofstream *fhead_;						// Header output file.
+	std::_t_ofstream *fdata_;						// Data output file.
 
 	// An auxiliary code file, because analyzer.cpp is getting too long
 	// for the Visual C++ compiler (65K limit on line numbers).
-	_t_ofstream *faux_;						// Pres and other funs.		// 06/05/00 AM.
+	std::_t_ofstream *faux_;						// Pres and other funs.		// 06/05/00 AM.
 
 	// File for elt hash tables and associated string tables.	// 06/14/00 AM.
-	_t_ofstream *ehash_;															// 06/14/00 AM.
-	_t_ofstream *edata_;															// 06/14/00 AM.
-	_t_ofstream *ehead_;		// Header file for ehash.					// 06/14/00 AM.
+	std::_t_ofstream *ehash_;															// 06/14/00 AM.
+	std::_t_ofstream *edata_;															// 06/14/00 AM.
+	std::_t_ofstream *ehead_;		// Header file for ehash.					// 06/14/00 AM.
 
 	// For total rule hashing.												// 06/16/00 AM.
-	_t_ofstream *rhash_;		// For rule hash table.						// 06/16/00 AM.
-	_t_ofstream *rchain_;	// For conflict chain.						// 06/17/00 AM.
-	_t_ofstream *rdata_;		// For rule number arrays.					// 06/16/00 AM.
-	_t_ofstream *rhead_;		// Header file.								// 06/16/00 AM.
+	std::_t_ofstream *rhash_;		// For rule hash table.						// 06/16/00 AM.
+	std::_t_ofstream *rchain_;	// For conflict chain.						// 06/17/00 AM.
+	std::_t_ofstream *rdata_;		// For rule number arrays.					// 06/16/00 AM.
+	std::_t_ofstream *rhead_;		// Header file.								// 06/16/00 AM.
 
 	// GENERATING EACH PASS IN SEPARATE FILE.                      // 04/03/09 AM.
-	_t_ofstream *passc_;    // For code of current pass.           // 04/03/09 AM.
-	_t_ofstream *passh_;    // Header file only for current pass.  // 04/03/09 AM.
+	std::_t_ofstream *passc_;    // For code of current pass.           // 04/03/09 AM.
+	std::_t_ofstream *passh_;    // Header file only for current pass.  // 04/03/09 AM.
 
 	int id_;									// Numbering id (eg, pass number).
 	int ruleid_;							// Numbering id (rule number).
@@ -188,7 +188,7 @@ protected:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;					// Count objects currently allocated.
 #endif

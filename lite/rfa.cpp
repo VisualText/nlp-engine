@@ -86,14 +86,14 @@ int RFA::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void RFA::prettyCount(_t_ofstream *ofstr)
+void RFA::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active RFA count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active RFA count=") << count_ << ends;
+		*ofstr << _T("Active RFA count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active RFA count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -137,7 +137,7 @@ Seqn *seqn;																		// 11/04/99 AM.
 Algo *algo;
 
 if (rfa.Verbose())															// 02/21/02 AM.
-	*gout << _T("\n**********\nBUILDING RFA\n**********") << endl;
+	*gout << _T("\n**********\nBUILDING RFA\n**********") << std::endl;
 
 // Build sequence of passes for RFA.
 rfa.makeSeq();
@@ -247,7 +247,7 @@ rfa.addSeq(delt);
 
 if (rfa.Verbose())
 	{
-	*gout << _T("rfa sequence = ") << endl;
+	*gout << _T("rfa sequence = ") << std::endl;
 	rfa.prettySeq();
 	}
 }
@@ -294,7 +294,7 @@ if (!(file = rfa_fix_file_name(specdir, file, _T("nlp")))) {
 	return false;
 }
 
-_t_ifstream x(TCHAR2A(file), ios::in);
+std::_t_ifstream x(TCHAR2A(file), std::ios::in);
 if (!x) {
 	if (!(file = rfa_fix_file_name(specdir, fileOrig, _T("pat")))) {
 		return false;
@@ -302,21 +302,21 @@ if (!x) {
 }
 
 if (debug)					// 10/13/99 AM.
-	*gout << _T("Rules file name=") << file << endl;
+	*gout << _T("Rules file name=") << file << std::endl;
 
 parse.setInput(file);		// Input rules file for the parse.
 //delete [] file;				// 11/19/98 AM.
 Chars::destroy(file);
 
 if (debug)
-	*gout << _T("\n\nRULES-FILE ANALYZER!") << endl;
+	*gout << _T("\n\nRULES-FILE ANALYZER!") << std::endl;
 
 //parse.setVerbose(rfa.Verbose());			// 10/13/99 AM.
 if (verbose)
 	{
 	*gout << _T("\n*******************************")
 	     << _T("\n             RULES FILE")
-		  << _T("\n*******************************") << endl;
+		  << _T("\n*******************************") << std::endl;
 	}
 if (!parse.readFile())				// READ RULES FILE TO BUFFER.
 	return false;
@@ -340,13 +340,13 @@ if (verbose)						// 10/13/99 AM.
 	{
 	*gout << _T("\n********************************")
 	     << _T("\nFINAL PARSE TREE FOR RULES FILE:")
-		  << _T("\n********************************") << endl;
+		  << _T("\n********************************") << std::endl;
 	((Tree<Pn> *)parse.getTree())->Dump();
 	}
 
 // CLEAN TEXT-ANALYSIS OF RULES FILE.
 if (debug)
-	*gout << _T("Cleaning up analysis of rules file.") << endl;
+	*gout << _T("Cleaning up analysis of rules file.") << std::endl;
 
 parse.clean();
 
@@ -395,8 +395,8 @@ Tree<Pn> *tree = (Tree<Pn> *)parse.getTree();
 
 if (!tree)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rfa_output: No parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rfa_output: No parse tree.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -406,8 +406,8 @@ root = tree->getRoot();
 
 if (!root)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rfa_output: Empty parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rfa_output: Empty parse tree.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -417,8 +417,8 @@ if (!root)
 Node<Pn> *node;
 if (!(node = root->Down()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rfa_output: No rules in tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rfa_output: No rules in tree.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -430,15 +430,15 @@ RFASem *sem;
 sem = (RFASem *) pn->getSem();
 if (!sem)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rfa_output: No semantics for parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rfa_output: No semantics for parse tree.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
 if (sem->getType() != RSFILE)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rfa_output: Couldn't parse rules file.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rfa_output: Couldn't parse rules file.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -446,16 +446,16 @@ if (sem->getType() != RSFILE)
 Ifile *rulesfile;
 if (!(rulesfile = sem->getRulesfile()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rfa_output: No rules found in file.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rfa_output: No rules found in file.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
 
 if (!sem->getRules())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rfa_output: No rules.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rfa_output: No rules.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -467,7 +467,7 @@ pn->setSem(0);
 
 //if (parse.Verbose())						// 10/13/99 AM.
 if (parse.getEana()->getFdebug())		// 10/13/99 AM.
-	*gout << _T("[rfa_output: Attached rules to current pass.]") << endl;
+	*gout << _T("[rfa_output: Attached rules to current pass.]") << std::endl;
 
 // Only return the rules when rules file recognized, and when all that
 // is removed from the parse tree.
@@ -607,7 +607,7 @@ if (rfa.Verbose())
 	{
 	Irule::genRuleblocks(rules, _T(" "), *gout);					// 11/04/99 AM.
 	//*gout << *rules;												// 11/04/99 AM.
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -811,7 +811,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 
@@ -1099,7 +1099,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, 0, trig);
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -1229,7 +1229,7 @@ Seqn *RFA::rfa_listarg(Ana &rfa)
 //Algo *algo;
 
 if (rfa.Verbose())
-	*gout << _T("Recursive rules for list arguments.") << endl;
+	*gout << _T("Recursive rules for list arguments.") << std::endl;
 
 Dlist<Irule> *rules;					// List of rules for current pass.
 rules = new Dlist<Irule>();		// Create empty rules list.
@@ -1370,7 +1370,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pat algo to the RFA pass sequence.
@@ -1517,7 +1517,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -1546,7 +1546,7 @@ Seqn *RFA::rfa_argtolist(Ana &rfa)
 //Algo *algo;
 
 if (rfa.Verbose())
-	*gout << _T("Recursive rules for a pair's singleton value.") << endl;
+	*gout << _T("Recursive rules for a pair's singleton value.") << std::endl;
 
 Dlist<Irule> *rules;					// List of rules for current pass.
 rules = new Dlist<Irule>();		// Create empty rules list.
@@ -1604,7 +1604,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -1708,7 +1708,7 @@ posts = 0;
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -1855,7 +1855,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts, trig);	// Create and add rule to l
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -1885,7 +1885,7 @@ Seqn *RFA::rfa_littopair(Ana &rfa)
 //Algo *algo;
 
 if (rfa.Verbose())
-	*gout << _T("Recursive rules for creating a pair.") << endl;
+	*gout << _T("Recursive rules for creating a pair.") << std::endl;
 
 Dlist<Irule> *rules;					// List of rules for current pass.
 rules = new Dlist<Irule>();		// Create empty rules list.
@@ -1944,7 +1944,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 Seqn *pass;
@@ -2057,7 +2057,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -2225,7 +2225,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts, trig);	// Create and add rule to l
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -2255,7 +2255,7 @@ Seqn *RFA::rfa_rulelt(Ana &rfa)
 //Algo *algo;
 
 if (rfa.Verbose())
-	*gout << _T("Recursive rules for fixing up rule elements in a wildcard.") << endl;
+	*gout << _T("Recursive rules for fixing up rule elements in a wildcard.") << std::endl;
 
 Dlist<Irule> *rules;					// List of rules for current pass.
 rules = new Dlist<Irule>();		// Create empty rules list.
@@ -2376,7 +2376,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -2407,7 +2407,7 @@ Seqn *RFA::rfa_elt(Ana &rfa)
 //Algo *algo;
 
 if (rfa.Verbose())
-	*gout << _T("Recursive rules for phrase elements in a wildcard.") << endl;
+	*gout << _T("Recursive rules for phrase elements in a wildcard.") << std::endl;
 
 Dlist<Irule> *rules;					// List of rules for current pass.
 rules = new Dlist<Irule>();		// Create empty rules list.
@@ -2467,7 +2467,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -2499,7 +2499,7 @@ Seqn *RFA::rfa_rulelts(Ana &rfa)
 //Algo *algo;
 
 if (rfa.Verbose())
-	*gout << _T("Recursive pass for collecting rule elts in a wildcard.") << endl;
+	*gout << _T("Recursive pass for collecting rule elts in a wildcard.") << std::endl;
 
 Dlist<Irule> *rules;					// List of rules for current pass.
 rules = new Dlist<Irule>();		// Create empty rules list.
@@ -2559,7 +2559,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -2591,7 +2591,7 @@ Seqn *RFA::rfa_sugg(Ana &rfa)
 //Algo *algo;
 
 if (rfa.Verbose())
-	*gout << _T("Recursive pass for suggested element.") << endl;
+	*gout << _T("Recursive pass for suggested element.") << std::endl;
 
 Dlist<Irule> *rules;					// List of rules for current pass.
 rules = new Dlist<Irule>();		// Create empty rules list.
@@ -2650,7 +2650,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -2828,7 +2828,7 @@ trig = 0;
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -2918,7 +2918,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts, trig);// Create and add rule to li
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -2948,7 +2948,7 @@ Seqn *RFA::rfa_littoaction(Ana &rfa)
 //Algo *algo;
 
 if (rfa.Verbose())
-	*gout << _T("Recursive rules for creating an action.") << endl;
+	*gout << _T("Recursive rules for creating an action.") << std::endl;
 
 Dlist<Irule> *rules;					// List of rules for current pass.
 rules = new Dlist<Irule>();		// Create empty rules list.
@@ -3010,7 +3010,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 Seqn *pass;
@@ -3033,7 +3033,7 @@ Seqn *RFA::rfa_littopre(Ana &rfa)
 //Algo *algo;
 
 if (rfa.Verbose())
-	*gout << _T("Recursive rules for creating a pre action.") << endl;
+	*gout << _T("Recursive rules for creating a pre action.") << std::endl;
 
 Dlist<Irule> *rules;					// List of rules for current pass.
 rules = new Dlist<Irule>();		// Create empty rules list.
@@ -3095,7 +3095,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 Seqn *pass;
@@ -3343,7 +3343,7 @@ func = 0;
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -3451,7 +3451,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -3537,7 +3537,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -3623,7 +3623,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -3709,7 +3709,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -3855,7 +3855,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -3947,7 +3947,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -4034,7 +4034,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -4142,7 +4142,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -4228,7 +4228,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -4329,7 +4329,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.
@@ -4420,7 +4420,7 @@ Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 
@@ -4617,7 +4617,7 @@ Irule::addDelt(rules, phr, sugg1, 0, 0, 0, trig);
 if (rfa.Verbose())
 	{
 	*gout << *rules;
-	*gout << _T("******************************") << endl;
+	*gout << _T("******************************") << std::endl;
 	}
 
 // Attach pass rules to current pass.

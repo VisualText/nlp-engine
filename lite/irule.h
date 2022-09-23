@@ -46,11 +46,11 @@ class Parse;								// 08/23/02 AM.
 
 class Irule
 {
-	friend _t_ostream &operator<<(_t_ostream &, Irule &);
-	friend _t_ostream &operator<<(_t_ostream &, Delt<Irule> &);	// 10/26/98 AM.
-	friend _t_ostream &operator<<(_t_ostream &, Dlist<Irule> &);
-	friend _t_ostream &operator<<(_t_ostream &, Selt<Irule> &);		// 12/19/98 AM.
-	friend _t_ostream &operator<<(_t_ostream &, Slist<Irule> &);	// 12/19/98 AM.
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Irule &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Delt<Irule> &);	// 10/26/98 AM.
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Dlist<Irule> &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Selt<Irule> &);		// 12/19/98 AM.
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Slist<Irule> &);	// 12/19/98 AM.
 
 public:
 	Irule(									// Default constructor.
@@ -194,22 +194,22 @@ public:
 	static bool genRuleblocks(									// 11/04/99 AM.
 		Dlist<Irule> *rules,
 		_TCHAR *sep,			// Element separator.
-		_t_ostream &ofile
+		std::_t_ostream &ofile
 		);
 	static bool genRulerecurses(									// 11/04/99 AM.
 		Dlist<Irule> *rules,
 		_TCHAR *sep,			// Element separator.
-		_t_ostream &ofile
+		std::_t_ostream &ofile
 		);
 
 	static void genRules(													// 05/30/99 AM.
 		Dlist<Irule> *rules,
 		_TCHAR *sep,																// 11/04/99 AM.
-		_t_ostream &ofile
+		std::_t_ostream &ofile
 		);
 	virtual void genRule(													// 06/22/99 AM.
 		_TCHAR *sep,																// 11/04/99 AM.
-		_t_ostream &ofile,
+		std::_t_ostream &ofile,
 		bool trunc=false														// 06/05/00 AM.
 		);
 
@@ -244,7 +244,7 @@ public:
 	static bool genHash(Dlist<Irule> *, Gen *);						// 06/14/00 AM.
 	bool genHash(Gen *);														// 06/14/00 AM.
 	static bool genMusts(Slist<Irule>*,Gen*);							// 06/16/00 AM.
-	static long genConflicts(Slist<Irule>*,_t_ostream*);				// 06/17/00 AM.
+	static long genConflicts(Slist<Irule>*,std::_t_ostream*);				// 06/17/00 AM.
 private:
 	Dlist<Ielt> *phrase_;				// Rule's phrase of elements.
 	Isugg *sugg_;						// Rule's suggested concept.
@@ -275,7 +275,7 @@ private:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;				// Count nodes currently allocated.
 #endif

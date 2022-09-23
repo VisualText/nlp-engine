@@ -42,7 +42,7 @@ protected:					// Accessible by derived classes.
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif

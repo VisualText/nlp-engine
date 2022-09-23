@@ -49,19 +49,19 @@ All rights reserved.
 
 bool
 help_add(
-	_t_ostream *out
+	std::_t_ostream *out
 	)
 {
-*out << _T("CMD   ARGS         DESCR") << endl;
-*out << _T("-------------------------------------------------") << endl;
-*out << _T("add   attr CON SLOT VAL KIND  Add attribute to concept.") << endl;
-*out << _T("add   con NAME CON    Add concept NAME in hierarchy under CON.") << endl;
-*out << _T("add   empty ......    Add empty concept.") << endl;
-*out << _T("add   hier name1 [..] Add path to hierarchy.") << endl;
-*out << _T("add   punct ........  Add the punctuation chars to kb.") << endl;
-*out << _T("add   root .........  Add root of concept hierarchy.") << endl;
-*out << _T("add   white ........  Add the whitespace char to kb.") << endl;
-*out << _T("add   word WORD ....  Add WORD to kb.") << endl;
+*out << _T("CMD   ARGS         DESCR") << std::endl;
+*out << _T("-------------------------------------------------") << std::endl;
+*out << _T("add   attr CON SLOT VAL KIND  Add attribute to concept.") << std::endl;
+*out << _T("add   con NAME CON    Add concept NAME in hierarchy under CON.") << std::endl;
+*out << _T("add   empty ......    Add empty concept.") << std::endl;
+*out << _T("add   hier name1 [..] Add path to hierarchy.") << std::endl;
+*out << _T("add   punct ........  Add the punctuation chars to kb.") << std::endl;
+*out << _T("add   root .........  Add root of concept hierarchy.") << std::endl;
+*out << _T("add   white ........  Add the whitespace char to kb.") << std::endl;
+*out << _T("add   word WORD ....  Add WORD to kb.") << std::endl;
 return true;
 }
 
@@ -77,18 +77,18 @@ return true;
 
 bool
 help_ind(
-	_t_ostream *out
+	std::_t_ostream *out
 	)
 {
-*out << _T("CMD   ARGS         DESCR") << endl;
-*out << _T("-------------------------------------------------") << endl;
-*out << _T("ind   action ........ Add a rule-action to concept.") << endl;
-*out << _T("ind   rest .......... Add a restriction to analyzer pass.") << endl;
-*out << _T("ind   attr .......... Add attribute to concept.") << endl;
-*out << _T("ind   wattr ......... Add attribute to word-concept.") << endl;
-*out << _T("ind   childs ........ Add children to hierarchy concept.") << endl;
-*out << _T("ind   named_phrase .. Add named phrase to concept.") << endl;
-*out << _T("ind   phrase ........ Add phrase to concept.") << endl;
-*out << _T("ind   proxy ......... OBSOLETE. Use ind attr.") << endl;
+*out << _T("CMD   ARGS         DESCR") << std::endl;
+*out << _T("-------------------------------------------------") << std::endl;
+*out << _T("ind   action ........ Add a rule-action to concept.") << std::endl;
+*out << _T("ind   rest .......... Add a restriction to analyzer pass.") << std::endl;
+*out << _T("ind   attr .......... Add attribute to concept.") << std::endl;
+*out << _T("ind   wattr ......... Add attribute to word-concept.") << std::endl;
+*out << _T("ind   childs ........ Add children to hierarchy concept.") << std::endl;
+*out << _T("ind   named_phrase .. Add named phrase to concept.") << std::endl;
+*out << _T("ind   phrase ........ Add phrase to concept.") << std::endl;
+*out << _T("ind   proxy ......... OBSOLETE. Use ind attr.") << std::endl;
 return true;
 }

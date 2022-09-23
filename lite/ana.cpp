@@ -218,15 +218,15 @@ int Ana::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Ana::prettyCount(_t_ofstream *ostr)
+void Ana::prettyCount(std::_t_ofstream *ostr)
 {
 if (count_)
 	{
 	if (ostr)
-		*ostr << _T("Active Ana count=") << count_ << endl;
-	*gout << _T("Active Ana count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Ana count=") << count_ << ends;
+		*ostr << _T("Active Ana count=") << count_ << std::endl;
+	*gout << _T("Active Ana count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Ana count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -249,10 +249,10 @@ read_file(seqfile_, /*UP*/ len, buf);
 if (len <= 0)
 	{
 	// Should throw an exception!
-	_t_strstream gerrStr;
-	gerrStr << _T("[No analyzer sequence file.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[No analyzer sequence file.]") << std::ends;
 	errOut(&gerrStr,false);
-	gerrStr << _T("[file=") << seqfile_ << _T("]") << ends;
+	gerrStr << _T("[file=") << seqfile_ << _T("]") << std::ends;
 	errOut(&gerrStr,false);
 
 	//exit(1);			// 06/15/99 AM.
@@ -264,8 +264,8 @@ setSeqbuf(buf);
 
 if (Verbose())
 	{
-	*gout << _T("Length of input file is ") << len << endl;
-	*gout << _T("\nInput text is:\n") << buf << endl;
+	*gout << _T("Length of input file is ") << len << std::endl;
+	*gout << _T("\nInput text is:\n") << buf << std::endl;
 	}
 return true;
 }
@@ -296,9 +296,9 @@ void Ana::parseSeq(bool verbose)
 if (!seqbuf_)
 	{
 	if (verbose_)																// 02/19/02 AM.
-		*gout << _T("[parseSeq: No analyzer sequence buffer.]") << endl;
-	_t_strstream gerrStr;						// 02/19/02 AM.
-	gerrStr << _T("[parseSeq: No analyzer sequence buffer.]") << ends;
+		*gout << _T("[parseSeq: No analyzer sequence buffer.]") << std::endl;
+	std::_t_strstream gerrStr;						// 02/19/02 AM.
+	gerrStr << _T("[parseSeq: No analyzer sequence buffer.]") << std::ends;
 	errOut(&gerrStr,false);																// 02/19/02 AM.
 	//exit(1);			// 06/15/99 AM.
 	return;				// 06/15/99 AM.
@@ -352,9 +352,9 @@ while (*buf)	// For each line of file.
 
 	if (!alphabetic(*token))		// 09/22/99 AM.
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Bad algorithm in sequence file=")
-				  << token << _T("]") << ends;
+				  << token << _T("]") << std::ends;
 		errOut(&gerrStr,false);
 
 		//exit(1);				// 06/15/99 AM.
@@ -389,8 +389,8 @@ line:
 		// Process current line's pass.
 //		if (verbose)															// 02/19/02 AM.
 //			{
-//			*gout << "algo=" << algo << endl;
-//			*gout << "data=" << str(data) << endl;
+//			*gout << "algo=" << algo << std::endl;
+//			*gout << "data=" << str(data) << std::endl;
 //			}
 
 		// ADD TO INTERNAL ANALYZER SEQUENCE.
@@ -464,8 +464,8 @@ Dlist<Seqn> *slist;
 slist = getSeqlist();
 if (!slist)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[No steps in analyzer sequence.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[No steps in analyzer sequence.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -524,15 +524,15 @@ bool Ana::internPass(Seqn *pass, Ana &rfa,
 {
 if (!pass)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[internPass: empty pass.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[internPass: empty pass.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;															// 12/11/99 AM.
 	}
 if (pass->getAlgo() || pass->getRules() || pass->getRulesfile())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[internPass: Internalized objects present in pass.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[internPass: Internalized objects present in pass.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false; 
 	}
@@ -542,8 +542,8 @@ _TCHAR *s_data = 0;
 
 s_algo = pass->getAlgoname();
 s_data = pass->getRulesfilename();
-//cout << "[Internpass: pass file name=" << s_data << "]" << endl;
-//cout << "[Pass id=" << (long) pass << "]" << endl;
+//cout << "[Internpass: pass file name=" << s_data << "]" << std::endl;
+//cout << "[Pass id=" << (long) pass << "]" << std::endl;
 
 Algo *algo;
 Dlist<Irule> *rules;
@@ -558,8 +558,8 @@ if (gen)		// Gen'ing code for analyzer.								// 05/10/00 AM.
 
 if (empty(s_algo))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[internPass: Given empty algorithm.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[internPass: Given empty algorithm.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;																// 12/11/99 AM.
 	}
@@ -625,9 +625,9 @@ else if (!strcmp_i(s_algo, _T("nlp")))
 
 	if (empty(s_data))
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[In sequence file: Pat pass missing pass file.]")
-				  << ends;
+				  << std::ends;
 		errOut(&gerrStr,false);
 		return false;															// 12/11/99 AM.
 		}
@@ -640,12 +640,12 @@ else if (!strcmp_i(s_algo, _T("nlp")))
 								/*UP*/ rulesfile))
 		{
 		// Couldn't parse pass file for this pass.
-//		strstream gerrStr(Errbuf,MAXSTR,ios::out);
+//		strstream gerrStr(Errbuf,MAXSTR,std::ios::out);
 //		if (s_data && *s_data)												// 05/26/01 AM.
 //			gerrStr << "[Bad pass=" << s_data							// 05/26/01 AM.
-//					  << ". Skipping.]" << ends;							// 05/26/01 AM.
+//					  << ". Skipping.]" << std::ends;							// 05/26/01 AM.
 //		else																		// 05/26/01 AM.
-//			gerrStr << "[Bad pass=" << s_algo << ". Skipping.]" << ends;
+//			gerrStr << "[Bad pass=" << s_algo << ". Skipping.]" << std::ends;
 //		return errOut(false,currseqpass,0);
 		return false;															// 05/26/01 AM.
 		}
@@ -661,9 +661,9 @@ else if (!strcmp_i(s_algo, _T("rec")))				// 11/08/99 AM.
 	{
 	if (empty(s_data))
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[In sequence file: Rec pass missing pass file.]")
-				  << ends;
+				  << std::ends;
 		errOut(&gerrStr,false);
 		return false;														// 12/11/99 AM.
 		}
@@ -674,12 +674,12 @@ else if (!strcmp_i(s_algo, _T("rec")))				// 11/08/99 AM.
 								/*UP*/ rulesfile))							// 11/08/99 AM.
 		{
 		// Couldn't parse pass file for this pass.
-//		strstream gerrStr(Errbuf,MAXSTR,ios::out);
+//		strstream gerrStr(Errbuf,MAXSTR,std::ios::out);
 //		if (s_data && *s_data)												// 05/26/01 AM.
 //			gerrStr << "[Bad pass=" << s_data							// 05/26/01 AM.
-//					  << ". Skipping.]" << ends;							// 05/26/01 AM.
+//					  << ". Skipping.]" << std::ends;							// 05/26/01 AM.
 //		else																		// 05/26/01 AM.
-//			gerrStr << "[Bad pass=" << s_algo << ". Skipping.]" << ends;
+//			gerrStr << "[Bad pass=" << s_algo << ". Skipping.]" << std::ends;
 //		return errOut(false,currseqpass,0);
 		return false;															// 05/26/01 AM.
 		}
@@ -749,8 +749,8 @@ void Ana::uninternPass(Seqn *pass)
 {
 if (!pass)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[uninternPass: empty pass.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[uninternPass: empty pass.]") << std::ends;
 	errOut(&gerrStr,false);
 	return;
 	}
@@ -787,8 +787,8 @@ bool Ana::parseRulesfile(
 {
 if (empty(file))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[parseRulesfile: Given NULL pass file name.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[parseRulesfile: Given NULL pass file name.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -834,7 +834,7 @@ while (ptr)
 	*gout << *pass << _T(" ");
 	ptr = ptr->Right();
 	}
-*gout << endl << endl;
+*gout << std::endl << std::endl;
 }
 
 
@@ -853,9 +853,9 @@ _TCHAR fname[FILENAME_MAX*2];
 // G++ BUGS.																	// 03/08/00 AM.
 //ostrstream *outStr = 0;													// 03/08/00 AM.
 //ofstream *fout = 0;														// 03/08/00 AM.
-//outStr = new ostrstream(fname, MAXSTR, ios::out);				// 03/08/00 AM.
-//*outStr << this->getSpecdir() << "\\tmp.seq" << ends;			// 03/08/00 AM.
-//fout = new ofstream(fname, ios::out);								// 03/08/00 AM.
+//outStr = new ostrstream(fname, MAXSTR, std::ios::out);				// 03/08/00 AM.
+//*outStr << this->getSpecdir() << "\\tmp.seq" << std::ends;			// 03/08/00 AM.
+//fout = new ofstream(fname, std::ios::out);								// 03/08/00 AM.
 
 #ifdef UNICODE
 wsprintf(fname, _T("%s%c%s"), this->getSpecdir(), DIR_CH, _T("tmp.seq"));
@@ -864,7 +864,7 @@ sprintf(fname, _T("%s%c%s"), this->getSpecdir(), DIR_CH, _T("tmp.seq"));
 #else
 sprintf_s(fname, _T("%s%c%s"), this->getSpecdir(), DIR_CH, _T("tmp.seq"));
 #endif
-_t_ofstream fout(TCHAR2CA(fname), ios::out);											// 03/08/00 AM.
+std::_t_ofstream fout(TCHAR2CA(fname), std::ios::out);											// 03/08/00 AM.
 
 // Write out the sequence file.
 //genSeqfile(*fout);							// 11/04/99 AM.			// 03/08/00 AM.
@@ -884,11 +884,11 @@ copy_file(fname, this->getSeqfile());	// Copy to sequence file.
 * NOTE:	Pulling out the guts of writeSeqfile.
 ********************************************/
 
-void Ana::genSeqfile(_t_ostream &ofile)
+void Ana::genSeqfile(std::_t_ostream &ofile)
 {
 // Print the file's header comment.
 if (this->getComment())
-	ofile << _T("# ") << this->getComment() << endl;
+	ofile << _T("# ") << this->getComment() << std::endl;
 
 // Traverse the sequence. Write to a temp file.  When successful,
 // copy to the default analyzer.seq file.
@@ -905,7 +905,7 @@ for (delt = this->getSeq(); delt; delt = delt->Right())
 		{
 		ofile << _T("\t# ")
 				<< seqn->getComment()
-				<< endl;
+				<< std::endl;
 		}
 	}
 }
@@ -934,9 +934,9 @@ _TCHAR fname[MAXSTR];
 // WORKAROUND FOR G++ BUG.													// 03/08/00 AM.
 //ostrstream *outStr = 0;													// 03/08/00 AM.
 //ofstream *fout = 0;														// 03/08/00 AM.
-//outStr = new ostrstream(fname, MAXSTR, ios::out);				// 03/08/00 AM.
-//*outStr << dir << "\\" << DEFAULT_SEQFILE << ends;				// 03/08/00 AM.
-//fout = new ofstream(fname, ios::out);								// 03/08/00 AM.
+//outStr = new ostrstream(fname, MAXSTR, std::ios::out);				// 03/08/00 AM.
+//*outStr << dir << "\\" << DEFAULT_SEQFILE << std::ends;				// 03/08/00 AM.
+//fout = new ofstream(fname, std::ios::out);								// 03/08/00 AM.
 
 #ifdef UNICODE
 wsprintf(fname, _T("%s%c%s"), dir, DIR_CH, DEFAULT_SEQFILE);
@@ -945,7 +945,7 @@ sprintf(fname, _T("%s%c%s"), dir, DIR_CH, DEFAULT_SEQFILE);
 #else
 sprintf_s(fname, _T("%s%c%s"), dir, DIR_CH, DEFAULT_SEQFILE);
 #endif
-_t_ofstream fout(TCHAR2CA(fname), ios::out);											// 03/08/00 AM.
+std::_t_ofstream fout(TCHAR2CA(fname), std::ios::out);											// 03/08/00 AM.
 
 //genSeqfile(*fout);	// Write out the sequence file.				// 03/08/00 AM.
 genSeqfile(fout);		// Write out the sequence file.				// 03/08/00 AM.
@@ -975,8 +975,8 @@ for (delt = seqlist_->getFirst(); delt; delt = delt->Right())
 
 bool Ana::genTok(Seqn *pass, Gen *gen)
 {
-_t_ofstream *fcode = gen->getFcode();
-_t_ofstream *fhead = gen->getFhead();
+std::_t_ofstream *fcode = gen->getFcode();
+std::_t_ofstream *fhead = gen->getFhead();
 long id = pass->getPassnum();
 
 // Write out prototype.
@@ -1008,8 +1008,8 @@ return true;
 
 bool Ana::genCMLTok(Seqn *pass, Gen *gen)
 {
-_t_ofstream *fcode = gen->getFcode();
-_t_ofstream *fhead = gen->getFhead();
+std::_t_ofstream *fcode = gen->getFcode();
+std::_t_ofstream *fhead = gen->getFhead();
 long id = pass->getPassnum();
 
 // Write out prototype.
@@ -1042,8 +1042,8 @@ return true;
 
 bool Ana::genDICTTok(Seqn *pass, Gen *gen)
 {
-_t_ofstream *fcode = gen->getFcode();
-_t_ofstream *fhead = gen->getFhead();
+std::_t_ofstream *fcode = gen->getFcode();
+std::_t_ofstream *fhead = gen->getFhead();
 long id = pass->getPassnum();
 
 // Write out prototype.
@@ -1076,8 +1076,8 @@ return true;
 
 bool Ana::genDICTTokz(Seqn *pass, Gen *gen)
 {
-_t_ofstream *fcode = gen->getFcode();
-_t_ofstream *fhead = gen->getFhead();
+std::_t_ofstream *fcode = gen->getFcode();
+std::_t_ofstream *fhead = gen->getFhead();
 long id = pass->getPassnum();
 
 // Write out prototype.
@@ -1109,8 +1109,8 @@ return true;
 
 bool Ana::genLines(Seqn *pass, Gen *gen)
 {
-_t_ofstream *fcode = gen->getFcode();
-_t_ofstream *fhead = gen->getFhead();
+std::_t_ofstream *fcode = gen->getFcode();
+std::_t_ofstream *fhead = gen->getFhead();
 long id = pass->getPassnum();
 
 // Write out prototype.
@@ -1144,43 +1144,43 @@ bool Ana::kbgetSeq()
 {
 if (seqlist_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[kbgetSeq: Warning: Analyzer already has sequence.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[kbgetSeq: Warning: Analyzer already has sequence.]") << std::ends;
 	return errOut(&gerrStr,true);	// Recovery: use the existing sequence.	
 	}
 
 if (!cg_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[kbgetSeq: No kb loaded.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[kbgetSeq: No kb loaded.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 CONCEPT *con = 0;
 if (!(con = cg_->findRoot()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[kbgetSeq: Kb error(1).]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[kbgetSeq: Kb error(1).]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 if (!(con = cg_->findConcept(con,_T("sys"))))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[kbgetSeq: Kb error(2).]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[kbgetSeq: Kb error(2).]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 bool flag = false;			// 06/29/03 AM.
 if (!(con = cg_->findConcept(con,_T("gui"))))
 	{
-//	strstream gerrStr(Errbuf,MAXSTR,ios::out);
-//	gerrStr << "[Note: No analyzer sequence in the kb.]" << ends;
+//	strstream gerrStr(Errbuf,MAXSTR,std::ios::out);
+//	gerrStr << "[Note: No analyzer sequence in the kb.]" << std::ends;
 //	return errOut(false);
 	}
 else	// 06/29/03 AM.
 	flag = true;	// 06/29/03 AM.
 if (!(con = cg_->findConcept(con,_T("spec"))))
 	{
-//	strstream gerrStr(Errbuf,MAXSTR,ios::out);
-//	gerrStr << "[Note: No analyzer sequence in the kb.]" << ends;
+//	strstream gerrStr(Errbuf,MAXSTR,std::ios::out);
+//	gerrStr << "[Note: No analyzer sequence in the kb.]" << std::ends;
 //	return errOut(false);
 	}
 else	// 06/29/03 AM.
@@ -1188,8 +1188,8 @@ else	// 06/29/03 AM.
 
 if (flag)	// 06/29/03 AM.
 	{
-	_t_strstream gerrStr;	// 06/29/03 AM.
-	gerrStr << _T("[Ignoring analyzer sequence in the kb.]") << ends;
+	std::_t_strstream gerrStr;	// 06/29/03 AM.
+	gerrStr << _T("[Ignoring analyzer sequence in the kb.]") << std::ends;
 	errOut(&gerrStr,false);		 // 06/29/03 AM.
 	}
 

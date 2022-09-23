@@ -125,8 +125,8 @@ Ielt *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Ielt object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Ielt object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -203,8 +203,8 @@ dest->rename_ = orig->rename_;
 dest->group_	= orig->group_;											// 09/23/00 AM.
 if (orig->passes_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Ielt: NOT COPYING SEQUENCE. Unimplemented for now.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Ielt: NOT COPYING SEQUENCE. Unimplemented for now.]") << std::ends;
 	errOut(&gerrStr,false);
 
 	dest->passes_ = 0;
@@ -238,7 +238,7 @@ dest->layers_ = orig->layers_;						// 05/06/00 AM.
 /*******************************************/
 
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Ielt &elt)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Ielt &elt)
 {
 // 11/11/98 AM. Printing some internal data.
 bool flag = false;				// If something prior was printed.
@@ -455,7 +455,7 @@ return output;
 }
 
 /*******************************************/
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Delt<Ielt> &delt)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Delt<Ielt> &delt)
 {
 Ielt *elt;
 elt  = delt.getData();
@@ -465,7 +465,7 @@ return output;
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Dlist<Ielt> &list)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Dlist<Ielt> &list)
 {
 Delt<Ielt> *delt;
 delt = list.getFirst();
@@ -723,8 +723,8 @@ Delt<Ielt> *delt;
 
 if (max && min > max)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Warning: Min greater than max.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Warning: Min greater than max.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -811,8 +811,8 @@ Delt<Ielt> *delt;
 
 if (max && min > max)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Warning: Min greater than max.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Warning: Min greater than max.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -876,8 +876,8 @@ bool fmin=false, fmax=false, frep=false;	// 03/22/99 AM.
 // Interning attrs_ list into layers_ list.						// 05/06/00 AM.
 if (elt->layers_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Intern: elt already interned.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Intern: elt already interned.]") << std::ends;
 	parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 	return;
 	}
@@ -950,24 +950,24 @@ for (dpair = list->getFirst(); dpair; dpair = dpair->Right())
 				}
 			else if (elt->min_ == num)
 				{
-				_t_strstream gerrStr;
-				gerrStr << _T("[Redundant MIN key. Ignoring.]") << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("[Redundant MIN key. Ignoring.]") << std::ends;
 //				errOut(false,parse->getInputpass());	// 04/03/03 AM.
 				parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 				}
 
 			else
 				{
-				_t_strstream gerrStr;
-				gerrStr << _T("[MIN key conflicts with prior settings.]") << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("[MIN key conflicts with prior settings.]") << std::ends;
 				parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 				}
 
 			}
 		else
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[intern: Error with min key's value.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[intern: Error with min key's value.]") << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 		}
@@ -1002,21 +1002,21 @@ for (dpair = list->getFirst(); dpair; dpair = dpair->Right())
 				}
 			else if (elt->max_ == num)
 				{
-				_t_strstream gerrStr;
-				gerrStr << _T("[Redundant MAX key. Ignoring.]") << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("[Redundant MAX key. Ignoring.]") << std::ends;
 				parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 				}
 			else
 				{
-				_t_strstream gerrStr;
-				gerrStr << _T("[MAX key conflicts with prior settings.]") << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("[MAX key conflicts with prior settings.]") << std::ends;
 				parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 				}
 			}
 		else
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[intern: Error with max key's value.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[intern: Error with max key's value.]") << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 		}
@@ -1034,16 +1034,16 @@ for (dpair = list->getFirst(); dpair; dpair = dpair->Right())
 			}
 		else if (elt->min_ == 0 && elt->max_ == 1)
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[OPTIONAL key is redundant. Ignoring.]")
-						  << ends;
+						  << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 		else
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[OPTIONAL key clashes with prior settings. Ignoring.]")
-						  << ends;
+						  << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 
@@ -1060,16 +1060,16 @@ for (dpair = list->getFirst(); dpair; dpair = dpair->Right())
 			}
 		else if (elt->min_ == 0 && elt->max_ == 0)
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[STAR key is redundant. Ignoring.]")
-						  << ends;
+						  << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 		else
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[STAR key clashes with prior settings. Ignoring.]")
-						  << ends;
+						  << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 		}
@@ -1085,16 +1085,16 @@ for (dpair = list->getFirst(); dpair; dpair = dpair->Right())
 			}
 		else if (elt->min_ == 1 && elt->max_ == 0)
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[PLUS key is redundant. Ignoring.]")
-						  << ends;
+						  << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 		else
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[PLUS key clashes with prior settings. Ignoring.]")
-						  << ends;
+						  << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 		}
@@ -1110,16 +1110,16 @@ for (dpair = list->getFirst(); dpair; dpair = dpair->Right())
 			}
 		else if (elt->min_ == 1 && elt->max_ == 1)
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[ONE key is redundant. Ignoring.]")
-						  << ends;
+						  << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 		else
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[ONE key clashes with prior settings. Ignoring.]")
-						  << ends;
+						  << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 		}
@@ -1181,15 +1181,15 @@ for (dpair = list->getFirst(); dpair; dpair = dpair->Right())
 		{
 		if (vals)
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Values after singlet key ignored.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Values after singlet key ignored.]") << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 
 		if (elt->getTree())								// 03/17/99 AM.
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[SINGLET and TREE are incompatible.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[SINGLET and TREE are incompatible.]") << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 
@@ -1201,8 +1201,8 @@ for (dpair = list->getFirst(); dpair; dpair = dpair->Right())
 		{
 		if (vals)
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Values after lookahead key ignored.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Values after lookahead key ignored.]") << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 
@@ -1214,15 +1214,15 @@ for (dpair = list->getFirst(); dpair; dpair = dpair->Right())
 		{
 		if (vals)
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Values after tree key ignored.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Values after tree key ignored.]") << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 
 		if (elt->getSinglet())
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[SINGLET and TREE are incompatible.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[SINGLET and TREE are incompatible.]") << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 
@@ -1234,15 +1234,15 @@ for (dpair = list->getFirst(); dpair; dpair = dpair->Right())
 		{
 		if (vals)
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Values after xsinglet key ignored.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Values after xsinglet key ignored.]") << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 
 		if (elt->getTree() || elt->getXtree() || elt->getSinglet())
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Conflicting (x)singlet and (x)tree keys.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Conflicting (x)singlet and (x)tree keys.]") << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 
@@ -1253,15 +1253,15 @@ for (dpair = list->getFirst(); dpair; dpair = dpair->Right())
 		{
 		if (vals)
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Values after xtree key ignored.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Values after xtree key ignored.]") << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 
 		if (elt->getTree() || elt->getXsinglet() || elt->getSinglet())
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Conflicting (x)singlet and (x)tree keys.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Conflicting (x)singlet and (x)tree keys.]") << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 
@@ -1282,8 +1282,8 @@ for (dpair = list->getFirst(); dpair; dpair = dpair->Right())
 			elt->rename_ = iarg->getStr();
 		else
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Problem with rename key's value.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Problem with rename key's value.]") << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 		}
@@ -1302,8 +1302,8 @@ for (dpair = list->getFirst(); dpair; dpair = dpair->Right())
 			elt->group_ = iarg->getStr();									// 09/23/00 AM.
 		else
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Problem with group key's value.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Problem with group key's value.]") << std::ends;
 			parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 			}
 			// 09/23/00 AM.
@@ -1311,10 +1311,10 @@ for (dpair = list->getFirst(); dpair; dpair = dpair->Right())
 	else if (!strcmp_i(key, _T("base"))
 			   || !strcmp_i(key, _T("unsealed")))	// 10/11/99 AM.
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[The ") << key << _T(" key")
 				  << _T(" is disallowed in a rule phrase. Ignoring.]")
-				  << ends;
+				  << std::ends;
 		parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 		}
 	else if (!strcmp_i(key, _T("dejunk"))								// 09/09/11 AM.
@@ -1323,8 +1323,8 @@ for (dpair = list->getFirst(); dpair; dpair = dpair->Right())
 		{
 		if (vals)																// 09/09/11 AM.
 			{
-			_t_strstream gerrStr;			// 09/09/11 AM.
-			gerrStr << _T("[Values after dejunk key ignored.]") << ends;
+			std::_t_strstream gerrStr;			// 09/09/11 AM.
+			gerrStr << _T("[Values after dejunk key ignored.]") << std::ends;
 			parse->errOut(&gerrStr,false,true);										// 09/09/11 AM.
 			}
 		elt->setDejunk(true);												// 09/09/11 AM.
@@ -1337,16 +1337,16 @@ for (dpair = list->getFirst(); dpair; dpair = dpair->Right())
 		{
 		if (vals)																// 01/28/05 AM.
 			{
-			_t_strstream gerrStr;			// 01/28/05 AM.
-			gerrStr << _T("[Values after deaccent key ignored.]") << ends;
+			std::_t_strstream gerrStr;			// 01/28/05 AM.
+			gerrStr << _T("[Values after deaccent key ignored.]") << std::ends;
 			parse->errOut(&gerrStr,false,true);										// 01/28/05 AM.
 			}
 		elt->setDeaccent(true);												// 01/28/05 AM.
 		}
 	else
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Unknown element key=") << key << _T("]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Unknown element key=") << key << _T("]") << std::ends;
 		parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 		}
 	}
@@ -1374,16 +1374,16 @@ if (elt->max_ == -1 && elt->min_ == -1)
 	elt->fillDefaults();
 else if (elt->max_ == -1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Only min key has been set.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Only min key has been set.]") << std::ends;
 	parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 
 	max_ = 0;			// Recover.  max is a "don't care".
 	}
 else if (elt->max_ == -1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Only max key has been set.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Only max key has been set.]") << std::ends;
 	parse->errOut(&gerrStr,false,true);					// 04/03/03 AM.
 
 	min_ = 0;			// Recover. min is a "don't care".
@@ -1469,7 +1469,7 @@ for (velt = vals->getFirst(); velt; velt = velt->Right())
 		seq = selt->getData();
 		if (!strcmp_i(name, seq->getName()))
 			{
-			//*gout << "[Found named pass=" << name << ".]" << endl;
+			//*gout << "[Found named pass=" << name << ".]" << std::endl;
 			// Make a copy of the pass.
 			tmp = new Seqn();
 			tmp->setRules(seq->getRules());
@@ -1669,8 +1669,8 @@ if (list)
 	{
 	if (list->getFirst())
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[pruneList: List should be empty]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[pruneList: List should be empty]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -1715,8 +1715,8 @@ for (delt = dlist->getFirst(); delt; delt = delt->Right())
 delt = dlist->getLast();												// 04/03/03 AM.
 elt  = delt->getData();													// 04/03/03 AM.
 parse->inputline_ = elt->line_;										// 04/03/03 AM.
-_t_strstream gerrStr;
-gerrStr << _T("[hashable: Rule may be entirely optional.]") << ends;
+std::_t_strstream gerrStr;
+gerrStr << _T("[hashable: Rule may be entirely optional.]") << std::ends;
 parse->errOut(&gerrStr,false,true);		// 04/03/03 AM.
 
 return true;		// Rule appears hashable, anyway.
@@ -1821,8 +1821,8 @@ for (darg = dlist->getFirst(); darg; darg = darg->Right())
 	str = arg->getStr();
 	if (special(str))		// Todo: Remove this code.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[rhashes: Error]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[rhashes: Error]") << std::ends;
 		errOut(&gerrStr,false);
 		return false;
 		}
@@ -1855,8 +1855,8 @@ if (elt->getMin() == 0)
 
 if (elt->wild())			// Todo: Remove this code.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rhash: Error]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rhash: Error]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;			// Must match against every node.
 	}
@@ -1873,8 +1873,8 @@ if (elt->matches_ || elt->fails_)
 // Todo: Remove this code.
 if (special(elt->getName()))	// Stuff like "_xWHITE".
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rhash: Error]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rhash: Error]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -1914,7 +1914,7 @@ for (delt = dlist->getFirst(); delt; delt = delt->Right())
 	if (done)
 		return true;		// Done hashing rule.
 	}
-//*gerr << "[rhash: Rule may be entirely optional.]" << endl;
+//*gerr << "[rhash: Rule may be entirely optional.]" << std::endl;
 return true;
 }
 
@@ -1936,8 +1936,8 @@ bool Ielt::hashRule(
 {
 if (!str || !htab || !rule)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hashRule: Given null data.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hashRule: Given null data.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -1982,7 +1982,7 @@ return true;
 void Ielt::genPhrase(
 	Dlist<Ielt> *phr,
 	_TCHAR *sep,				// Elt separation.							// 11/04/99 AM.
-	_t_ostream &ofile,
+	std::_t_ostream &ofile,
 	bool trunc																	// 06/05/00 AM.
 	)
 {
@@ -2000,7 +2000,7 @@ Ielt *elt;
 for (delt = phr->getFirst(); delt; delt = delt->Right())
 	{
 	elt = delt->getData();
-	ofile << sep << flush;
+	ofile << sep << std::flush;
 	genElt(elt, esep, ofile, trunc);
 	}
 }
@@ -2016,7 +2016,7 @@ for (delt = phr->getFirst(); delt; delt = delt->Right())
 void Ielt::genElt(
 	Ielt *elt,
 	_TCHAR *sep,								// 11/04/99 AM.
-	_t_ostream &ofile,
+	std::_t_ostream &ofile,
 	bool trunc								// 06/05/00 AM.
 	)
 {
@@ -2299,7 +2299,7 @@ if ((seqs = elt->getPasses()))				// 11/04/99 AM.
 	ofile << _T(")");
 	}
 if (seen)
-	ofile << s_end << flush;
+	ofile << s_end << std::flush;
 }
 
 
@@ -2313,7 +2313,7 @@ if (seen)
 bool Ielt::genPhraserecurses(
 	Dlist<Ielt> *phrase,
 	_TCHAR *sep,			// Element separator.
-	_t_ostream &ofile)
+	std::_t_ostream &ofile)
 {
 if (!phrase)
 	return false;
@@ -2340,7 +2340,7 @@ return true;
 
 bool Ielt::genEltrecurses(
 	_TCHAR *sep,			// Element separator.
-	_t_ostream &ofile)
+	std::_t_ostream &ofile)
 {
 // Get list of recurse sequences.
 Dlist<Seqn> *seqs = getPasses();
@@ -2355,13 +2355,13 @@ for (dseq = seqs->getFirst(); dseq; dseq = dseq->Right())
 	if (!rules)
 		continue;
 
-	ofile << _T("@RECURSE ") << seq->getName() << endl;
+	ofile << _T("@RECURSE ") << seq->getName() << std::endl;
 
 	// Generate recurse rule blocks.
 	// (And these shouldn't have recurses,.)
 	Irule::genRuleblocks(rules, sep, ofile);
-	ofile << endl
-			<< _T("@@RECURSE ") << seq->getName() << endl << endl;
+	ofile << std::endl
+			<< _T("@@RECURSE ") << seq->getName() << std::endl << std::endl;
 	}
 
 return true;
@@ -2393,15 +2393,15 @@ delt1 = list1->getFirst();
 delt2 = list2->getFirst();
 if (!delt1 && !delt2)	// FIX	// 07/31/99 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Empty lists.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Empty lists.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
 if (!delt1 || !delt2)	// FIX	// 07/31/99 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Empty list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Empty list.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -2626,8 +2626,8 @@ Dlist<Iarg> *matches = getMatches();
 
 if (matches && _tcscmp(_T("_xWILD"), name))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Matches in nonwild elt. Ignoring.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Matches in nonwild elt. Ignoring.]") << std::ends;
 	errOut(&gerrStr,false);
 
 	matches = 0;
@@ -2761,7 +2761,7 @@ return genRight(first, gen);												// 05/25/00 AM.
 
 bool Ielt::genMatchelt(Delt<Ielt> *delt, _TCHAR *fnname, _TCHAR *matchfn, Gen *gen)
 {
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 int eltid = gen->eltid_;
 
 *fcode << _T("\t\t");
@@ -2809,7 +2809,7 @@ bool Ielt::genSpecialelt(
 	Gen *gen
 	)
 {
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 int eltid = gen->eltid_;
 
 *fcode << _T("\t\t");
@@ -2833,12 +2833,12 @@ return true;
 
 bool Ielt::genTrigger(Delt<Ielt> *trig, Gen *gen)
 {
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 
 if (!trig)
 	{
-	*fcode << endl
-			<< _T("// ERROR in genTrigger.") << endl;
+	*fcode << std::endl
+			<< _T("// ERROR in genTrigger.") << std::endl;
 	return false;
 	}
 
@@ -2847,8 +2847,8 @@ Ielt *ielt = trig->getData();
 
 if (ielt->wild())
 	{
-	*fcode << endl
-			<< _T("// ERROR: wildcard in genTrigger.") << endl;
+	*fcode << std::endl
+			<< _T("// ERROR: wildcard in genTrigger.") << std::endl;
 	return false;
 	}
 
@@ -2919,7 +2919,7 @@ else
 	special_fn = _T("special_right");
 	}
 
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 Ielt *ielt = elt->getData();
 _TCHAR *name = ielt->name_;
 
@@ -2991,19 +2991,19 @@ else if (!_tcscmp(name, _T("LET")))						// 07/10/09 AM.
 	micro = _T("Arun::micro_let");						// 07/10/09 AM.
 else if (!_tcscmp(name, _T("FEAT")))
 	{
-	*fcode << _T("\n// [Error. _xFEAT unimplemented.]\nERROR;") << endl;
+	*fcode << _T("\n// [Error. _xFEAT unimplemented.]\nERROR;") << std::endl;
 
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error. _xFEAT unimplemented.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error. _xFEAT unimplemented.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
 else
 	{
-	*fcode << _T("\n// [Error. Unknown type=") << name-2 << _T(".]\nERROR;") << endl;
+	*fcode << _T("\n// [Error. Unknown type=") << name-2 << _T(".]\nERROR;") << std::endl;
 
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error. Unknown type=") << name-2 << _T(".]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error. Unknown type=") << name-2 << _T(".]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -3031,9 +3031,9 @@ void Ielt::genEltlist(
 	Gen *gen)
 {
 // Ch from ostream.	// 04/04/03 AM.
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
-_t_ofstream *fdata = gen->passh_;	// 04/04/09 AM.
-_t_ofstream *fhead = gen->fhead_;
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ofstream *fdata = gen->passh_;	// 04/04/09 AM.
+std::_t_ofstream *fhead = gen->fhead_;
 
 Iarg *arg;
 Delt<Iarg> *darg;
@@ -3058,7 +3058,7 @@ for (; darg; darg = darg->Right())
 #ifdef GENPRETTY_
 	if (++count >= 10)														// 06/05/00 AM.
 		{
-		*fdata << endl;
+		*fdata << std::endl;
 		count = 0;
 		}
 #endif
@@ -3068,7 +3068,7 @@ for (; darg; darg = darg->Right())
 Gen::eol(fdata);																// 04/04/03 AM.
 
 // Declare it.
-//*fhead << "extern const _TCHAR *" << buf << "[];" << endl;
+//*fhead << "extern const _TCHAR *" << buf << "[];" << std::endl;
 }
 
 /********************************************
@@ -3084,9 +3084,9 @@ void Ielt::genEltspecial(
 	_TCHAR *buf,
 	Gen *gen)
 {
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
-_t_ofstream *fdata = gen->passh_;	// 04/04/09 AM.
-_t_ofstream *fhead = gen->fhead_;
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ofstream *fdata = gen->passh_;	// 04/04/09 AM.
+std::_t_ofstream *fhead = gen->fhead_;
 
 Iarg *arg;
 Delt<Iarg> *darg;
@@ -3109,7 +3109,7 @@ for (; darg; darg = darg->Right())
 #ifdef GENPRETTY_
 	if (++count >= 20)
 		{
-		*fdata << endl;
+		*fdata << std::endl;
 		count = 0;
 		}
 #endif
@@ -3130,7 +3130,7 @@ Gen::eol(fdata);																// 04/04/03 AM.
 
 void Ielt::genEltstarr(Starr *starr, _TCHAR *buf, Gen *gen)
 {
-_t_ofstream *fdata = gen->passh_;	// 04/04/09 AM.
+std::_t_ofstream *fdata = gen->passh_;	// 04/04/09 AM.
 
 if (!starr)
 	return;
@@ -3145,7 +3145,7 @@ while (--tmp)
 #ifdef GENPRETTY_
 	if (++count >= 10)														// 06/05/00 AM.
 		{
-		*fdata << endl;
+		*fdata << std::endl;
 		count = 0;
 		}
 #endif
@@ -3154,7 +3154,7 @@ while (--tmp)
 *fdata << _T("};");	// 04/04/03 AM.
 Gen::eol(fdata);																// 04/04/03 AM.
 
-//*fhead << "extern const _TCHAR *" << buf << "[];" << endl;
+//*fhead << "extern const _TCHAR *" << buf << "[];" << std::endl;
 }
 
 
@@ -3171,7 +3171,7 @@ void Ielt::genElts(Dlist<Ielt> *phrase, _TCHAR *buf, Gen *gen)
 // First generate arrays for each element.
 genEltarrays(phrase, gen);
 
-_t_ofstream *fdata = gen->passh_;	// 04/04/09 AM.
+std::_t_ofstream *fdata = gen->passh_;	// 04/04/09 AM.
 int id = gen->id_;
 int recid = gen->recid_;	// 0 if not in a recurse minipass.	// 05/31/00 AM.
 int ruleid = gen->ruleid_;
@@ -3327,7 +3327,7 @@ bool Ielt::genEltarrays(Dlist<Ielt> *list, Gen *gen)
 int id = gen->id_;
 int recid = gen->recid_;													// 05/31/00 AM.
 int ruleid = gen->ruleid_;
-_t_ofstream *fdata = gen->passh_;	// 04/04/09 AM.
+std::_t_ofstream *fdata = gen->passh_;	// 04/04/09 AM.
 
 // Generate arrays for lists of ids.
 _TCHAR a_attrs[128];
@@ -3634,8 +3634,8 @@ return true;
 
 bool Ielt::genHash(Gen *gen)
 {
-_t_ostream *ehash = gen->ehash_;	// File for outputting element hash tables.
-_t_ostream *edata = gen->edata_;	// File for element hash lists.
+std::_t_ostream *ehash = gen->ehash_;	// File for outputting element hash tables.
+std::_t_ostream *edata = gen->edata_;	// File for element hash lists.
 
 // Got to name the tables.
 // EMATCH_PASS_REC_RULE_ELT

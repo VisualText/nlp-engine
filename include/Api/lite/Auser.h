@@ -57,7 +57,7 @@ class Ana;
 
 class LITE_API Auser
 {
-	friend _t_ostream &operator<<(_t_ostream &, Auser &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Auser &);
 	friend class Fn;
 	friend class user;			// In USER.DLL.
 
@@ -90,7 +90,7 @@ public:
 	void retNode(NODE *);
 	void retStr(_TCHAR *);
 	void retLong(long);
-	void retOstr(_t_ostream *);
+	void retOstr(std::_t_ostream *);
 	void retBool(bool);
 
 	void retConcept(CONCEPT *);
@@ -142,7 +142,7 @@ protected:
 
 		_TCHAR *str_;
 		long long_;
-		_t_ostream *ostr_;
+		std::_t_ostream *ostr_;
 		bool bool_;
 		} retval_;
 
@@ -150,7 +150,7 @@ protected:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;					// Count nodes currently allocated.
 #endif

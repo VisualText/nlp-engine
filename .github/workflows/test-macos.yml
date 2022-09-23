@@ -23,8 +23,11 @@ jobs:
         run: ./bootstrap-vcpkg.sh
         shell: bash
         working-directory: vcpkg
+        
+      - name: Install autoconf-archive
+        run: brew install autoconf-archive
 
-      - name: Mac Install Brew
+      - name: Install Brew
         run: brew install automake
 
       - name: Install ICU

@@ -82,7 +82,7 @@ class LITE_API Nlppp
 	friend class Iwhilestmt;					// OPT			// 02/13/02 AM.
 	friend class Ireturn;						// OPT			// 03/07/02 AM.
 	friend class Ifunc;							// OPT			// 03/07/02 AM.
-	friend _t_ostream &operator<<(_t_ostream &, Nlppp &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Nlppp &);
 
 public:
 	Nlppp(											// Default constructor.
@@ -322,7 +322,7 @@ protected:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;					// Count objects currently allocated.
 #endif

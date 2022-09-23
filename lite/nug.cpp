@@ -56,8 +56,8 @@ NUG *Nug::makeVar(
 {
 if (!s_typ || !name)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[makeVar: Null inputs.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[makeVar: Null inputs.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -67,8 +67,8 @@ enum Ivartype typ;
 typ = Ivar::Vartype(*s_typ);		// Use first letter of typestring.
 if (typ == NULLVAR)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[makeVar: Bad variable type=") << s_typ << _T("]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[makeVar: Bad variable type=") << s_typ << _T("]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -95,8 +95,8 @@ NUG *Nug::makeAssign(
 {
 if (!lhs || !rhs)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[makeAssign: Null inputs.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[makeAssign: Null inputs.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -122,8 +122,8 @@ NUG *Nug::makeExprstmt(
 {
 if (!expr)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[makeExprstmt: Null input.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[makeExprstmt: Null input.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -149,8 +149,8 @@ NUG *Nug::makeInc(
 {
 if (!var)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[makeInc: Null inputs.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[makeInc: Null inputs.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}

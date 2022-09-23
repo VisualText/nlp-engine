@@ -71,7 +71,7 @@ bool dirt;	// 06/29/03 AM.
 
 if (cg->cg_CONCEPT)
    {
-   _t_cerr << _T("[con_add_root: Root concept of kb already exists.]") << endl;
+   std::_t_cerr << _T("[con_add_root: Root concept of kb already exists.]") << std::endl;
    return;
    }
 

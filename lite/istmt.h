@@ -31,9 +31,9 @@ class RFASem;
 class Istmt
 {
 	// Derived types should print themselves.						// 12/27/99 AM.
-	friend _t_ostream &operator<<(_t_ostream &, Istmt &);
-	friend _t_ostream &operator<<(_t_ostream &, Selt<Istmt> &);
-	friend _t_ostream &operator<<(_t_ostream &, Slist<Istmt> &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Istmt &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Selt<Istmt> &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Slist<Istmt> &);
 
 public:
 	Istmt(											// Default constructor.
@@ -51,7 +51,7 @@ public:
 	virtual void copy(const Istmt *orig);
 
 	// A semi-principled workaround to the operator overload problem.
-	virtual void print(_t_ostream &);
+	virtual void print(std::_t_ostream &);
 
 	const Istmt &operator=(const Istmt &);	// Assignment.
 
@@ -64,7 +64,7 @@ public:
 	void setLine(long);														// 03/12/02 AM.
 
 	// General.
-	virtual void genStmt(_t_ostream &ofile);
+	virtual void genStmt(std::_t_ostream &ofile);
 	virtual bool same(Istmt *stmt1, Istmt *stmt2) = 0;
 
 	virtual bool eval(Nlppp *, /*UP*/ RFASem* &) = 0;
@@ -87,7 +87,7 @@ protected:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;					// Count objects currently allocated.
 #endif

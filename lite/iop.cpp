@@ -107,8 +107,8 @@ Iop *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Iop object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Iop object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -141,7 +141,7 @@ dest->type_ = orig->type_;
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Iop &op)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Iop &op)
 {
 _TCHAR *str;
 if ((str = Iop::Optype(op.type_)) && *str)
@@ -185,14 +185,14 @@ int Iop::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Iop::prettyCount(_t_ofstream *ofstr)
+void Iop::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Iop count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Iop count=") << count_ << ends;
+		*ofstr << _T("Active Iop count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Iop count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -209,10 +209,10 @@ if (count_)
 * SUBJ:	Generate op to a rules file.
 *********************************************/
 void Iop::genOp(
-	_t_ostream &ofile
+	std::_t_ostream &ofile
 	)
 {
-ofile << this << flush;
+ofile << this << std::flush;
 }
 
 

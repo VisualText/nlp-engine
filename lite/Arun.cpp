@@ -107,8 +107,8 @@ bool Arun::tokenize(
 	int num									// Pass number.				// 05/21/00 AM.
 	)
 {
-_t_ofstream *fout;				// File pass output.
-_t_ostream *sout;					// For restoring output stream.
+std::_t_ofstream *fout;				// File pass output.
+std::_t_ostream *sout;					// For restoring output stream.
 clock_t s_time;
 _TCHAR *pretname;
 _TCHAR *salgo = _T("tokenize");
@@ -140,8 +140,8 @@ bool Arun::cmltokenize(
 	int num									// Pass number.
 	)
 {
-_t_ofstream *fout;				// File pass output.
-_t_ostream *sout;					// For restoring output stream.
+std::_t_ofstream *fout;				// File pass output.
+std::_t_ostream *sout;					// For restoring output stream.
 clock_t s_time;
 _TCHAR *pretname;
 //_TCHAR *salgo = _T("tokenize");
@@ -175,8 +175,8 @@ bool Arun::dicttok(
 	int num									// Pass number.
 	)
 {
-_t_ofstream *fout;				// File pass output.
-_t_ostream *sout;					// For restoring output stream.
+std::_t_ofstream *fout;				// File pass output.
+std::_t_ostream *sout;					// For restoring output stream.
 clock_t s_time;
 _TCHAR *pretname;
 //_TCHAR *salgo = _T("tokenize");
@@ -211,8 +211,8 @@ bool Arun::dicttokz(
 	int num									// Pass number.
 	)
 {
-_t_ofstream *fout;				// File pass output.
-_t_ostream *sout;					// For restoring output stream.
+std::_t_ofstream *fout;				// File pass output.
+std::_t_ostream *sout;					// For restoring output stream.
 clock_t s_time;
 _TCHAR *pretname;
 //_TCHAR *salgo = _T("tokenize");
@@ -246,8 +246,8 @@ bool Arun::lines(
 	int num									// Pass number.				// 05/21/00 AM.
 	)
 {
-_t_ofstream *fout;				// File pass output.
-_t_ostream *sout;					// For restoring output stream.
+std::_t_ofstream *fout;				// File pass output.
+std::_t_ostream *sout;					// For restoring output stream.
 clock_t s_time;
 _TCHAR *pretname;
 _TCHAR *salgo = _T("lines");
@@ -288,8 +288,8 @@ bool Arun::patExecute(
 #endif
 	)
 {
-_t_ofstream *fout;				// File pass output.
-_t_ostream *sout;					// For restoring output stream.
+std::_t_ofstream *fout;				// File pass output.
+std::_t_ostream *sout;					// For restoring output stream.
 clock_t s_time;
 _TCHAR *pretname;
 _TCHAR *salgo = _T("nlp");
@@ -339,8 +339,8 @@ bool Arun::recExecute(
 #endif
 	)
 {
-_t_ofstream *fout;				// File pass output.
-_t_ostream *sout;					// For restoring output stream.
+std::_t_ofstream *fout;				// File pass output.
+std::_t_ostream *sout;					// For restoring output stream.
 clock_t s_time;
 _TCHAR *pretname;
 _TCHAR *salgo = _T("rec");															// 06/13/00 AM.
@@ -2879,15 +2879,15 @@ for (ptr = arr; *ptr; ++ptr)
 			break;
 		case XFEAT:	// _xFEAT [unimplemented]
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Error: _xFEAT unimplemented, Ignoring.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Error: _xFEAT unimplemented, Ignoring.]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			}
 			break;
 		case XNIL:		// _xNIL
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Error: _xNIL in a match list. Ignoring.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Error: _xNIL in a match list. Ignoring.]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			}
 			break;
@@ -2923,8 +2923,8 @@ for (ptr = arr; *ptr; ++ptr)
 			break;
 		case XWILD:	// _xWILD
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Error: _xWILD in a match list.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Error: _xWILD in a match list.]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			}
 
@@ -2932,8 +2932,8 @@ for (ptr = arr; *ptr; ++ptr)
 			break;
 		default:
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Error: Bad special token in match_special_tok.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Error: Bad special token in match_special_tok.]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			}
 
@@ -4357,8 +4357,8 @@ _TCHAR ch;
 buf = pn->getName();
 if (!(ch = *buf))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Cap pre action: Node with no text.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Cap pre action: Node with no text.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	// RECOVER. GET OUT OF THIS PASS.  // Else infinite loop possible.	// 04/15/10 AM.
 	nlppp->exitpass_ = true;	// RECOVER.	// 04/15/10 AM.
@@ -4437,9 +4437,9 @@ bool Arun::lengthr(
 {
 if (len1 < 0 || len2 < 0 || (len1 > len2))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[LENGTHR pre action: Bad range (") << len1 << _T(",") << len2
-		  << _T(")]") << ends;
+		  << _T(")]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -4470,9 +4470,9 @@ bool Arun::numrange(
 if (len1 < 0 || len2 < 0 || (len1 > len2))				// FIX.	// 06/24/02 AM.
 //							|| len2 > nlppp->len_				// FIX.	// 06/24/02 AM.
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[NUMRANGE pre action: Bad range (") << len1 << _T(",") << len2
-		  << _T(")]") << ends;
+		  << _T(")]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -4484,8 +4484,8 @@ _TCHAR *str;
 str = pn->getName();
 if (!str_to_long(str, /*UP*/ num))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[NUMRANGE pre action: Bad num=") << str << _T("]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[NUMRANGE pre action: Bad num=") << str << _T("]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -5011,33 +5011,33 @@ bool Arun::singlezap(
 {
 if (!nlppp->first_ || !nlppp->last_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[singlezap: Null first or last node in range.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->red_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[singlezap: Rule already reduced.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->used_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[singlezap: Collect already used.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 
 if (!nlppp->coll_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[singlezap: No collected nodes.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[singlezap: No collected nodes.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -5328,8 +5328,8 @@ if (!keep)	// Only keeping node2
 // List goes from nodes to node2.
 if (!nodes)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listadd: Error..]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listadd: Error..]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	// RECOVER. GET OUT OF THIS PASS.  // Else infinite loop possible.	// 04/15/10 AM.
 	nlppp->exitpass_ = true;	// RECOVER.	// 04/15/10 AM.
@@ -5454,8 +5454,8 @@ if (!keep)			// Not keeping intervening nodes.		// 12/14/99 AM.
 // Place node1 under node2.
 if (!node1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listAddleft: Error..]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listAddleft: Error..]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	// RECOVER. GET OUT OF THIS PASS.  // Else infinite loop possible.	// 04/15/10 AM.
 	nlppp->exitpass_ = true;	// RECOVER.	// 04/15/10 AM.
@@ -5735,8 +5735,8 @@ if (nlppp->nlookahead_)										// 09/16/08 AM.
 	if (to >= nlppp->nlookahead_)							// 09/16/08 AM.
 		{
 		to = (nlppp->nlookahead_ - 1);					// 09/16/08 AM.
-		_t_strstream gerrStr;
-		gerrStr << _T("[group: Cannot group lookahead node.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[group: Cannot group lookahead node.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		// RECOVER. GET OUT OF THIS PASS.  // Else infinite loop possible.	// 04/14/10 AM.
 		nlppp->exitpass_ = true;	// RECOVER.	// 04/14/10 AM.
@@ -5747,8 +5747,8 @@ if (nlppp->nlookahead_)										// 09/16/08 AM.
 else if (to > nlppp->len_)									// 09/16/08 AM.
 	{
 	to = nlppp->len_;											// 09/16/08 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[group: 2nd number too large.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[group: 2nd number too large.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	// RECOVER. GET OUT OF THIS PASS.  // Else infinite loop possible.	// 04/14/10 AM.
 	nlppp->exitpass_ = true;	// RECOVER.	// 04/14/10 AM.
@@ -5757,8 +5757,8 @@ else if (to > nlppp->len_)									// 09/16/08 AM.
 	}
 if (from > to)													// 09/16/08 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[group: FROM is greater than TO.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[group: FROM is greater than TO.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	// RECOVER. GET OUT OF THIS PASS.  // Else infinite loop possible.	// 04/14/10 AM.
 	nlppp->exitpass_ = true;	// RECOVER.	// 04/14/10 AM.
@@ -5772,8 +5772,8 @@ if (!node1 && !node2)
 	return 0;
 if (!node1 || !node2)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: group post action.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: group post action.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	// RECOVER. GET OUT OF THIS PASS.  // Else infinite loop possible.	// 04/15/10 AM.
 	nlppp->exitpass_ = true;	// RECOVER.	// 04/15/10 AM.
@@ -6044,8 +6044,8 @@ bool Arun::excise(
 // MAKE SURE EXCISING PRIOR TO LOOKAHEAD POSITION.			// FIX	// 09/06/08 AM.
 if (nlppp->nlookahead_ && to >= nlppp->nlookahead_)		// FIX	// 09/06/08 AM.
 	{
-	_t_strstream gerrStr;														// 09/06/08 AM.
-	gerrStr << _T("[Excise action: Cannot excise lookahead node(s).]") << ends;
+	std::_t_strstream gerrStr;														// 09/06/08 AM.
+	gerrStr << _T("[Excise action: Cannot excise lookahead node(s).]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);									// 09/06/08 AM.
 	// RECOVER. GET OUT OF THIS PASS.  // Else infinite loop possible.	// 04/15/10 AM.
 	nlppp->exitpass_ = true;	// RECOVER.	// 04/15/10 AM.
@@ -6060,8 +6060,8 @@ if (!node1 && !node2)
 	return true;
 if (!node1 || !node2)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: excise post action.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: excise post action.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	// RECOVER. GET OUT OF THIS PASS.  // Else infinite loop possible.	// 04/15/10 AM.
 	nlppp->exitpass_ = true;	// RECOVER.	// 04/15/10 AM.
@@ -6225,7 +6225,7 @@ bool Arun::print(
 {
 if (!str || !*str)
 	return false;
-_t_cout << str << flush;
+std::_t_cout << str << std::flush;
 return true;
 }
 
@@ -6249,7 +6249,7 @@ if (!Pat::args_range(num1,num2,nlppp->coll_,nlppp->len_,nlppp,
 								/*UP*/ node1,node2))
 	return false;
 
-return Pat::printr(node1,node2,&_t_cout,nlppp);
+return Pat::printr(node1,node2,&std::_t_cout,nlppp);
 }
 
 /********************************************
@@ -6270,11 +6270,11 @@ if (!str || !*str)
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Prlit: Couldn't output to file.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Prlit: Couldn't output to file.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	// RECOVER. GET OUT OF THIS PASS.  // Else infinite loop possible.	// 04/15/10 AM.
 	nlppp->exitpass_ = true;	// RECOVER.	// 04/15/10 AM.
@@ -6284,8 +6284,8 @@ if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Prlit post action: file=") << fname << _T(" is closed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Prlit post action: file=") << fname << _T(" is closed.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	// RECOVER. GET OUT OF THIS PASS.  // Else infinite loop possible.	// 04/15/10 AM.
 	nlppp->exitpass_ = true;	// RECOVER.	// 04/15/10 AM.
@@ -6295,7 +6295,7 @@ if (ostr == 0)
 
 // Output the string to the file.
 if (str && *str)
-	*ostr << str << flush;
+	*ostr << str << std::flush;
 
 return true;
 }
@@ -6324,14 +6324,14 @@ if (!Pat::args_range(num1,num2,nlppp->coll_,nlppp->len_,nlppp,/*UP*/ node1,node2
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Prrange post action: file=") << fname << _T(" is closed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Prrange post action: file=") << fname << _T(" is closed.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -6361,14 +6361,14 @@ if (num <= 0 || num > nlppp->len_)
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Prrange post action: file=") << fname << _T(" is closed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Prrange post action: file=") << fname << _T(" is closed.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -6413,7 +6413,7 @@ len = n2 - n1 + 1;
 while (len--
 		 && *str)																// 04/30/01 AM.
 	*ostr << *str++;
-*ostr << flush;
+*ostr << std::flush;
 
 return true;
 }
@@ -6440,14 +6440,14 @@ if (num <= 0 || num > nlppp->len_)
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Prrange post action: file=") << fname << _T(" is closed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Prrange post action: file=") << fname << _T(" is closed.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -6484,7 +6484,7 @@ len = n2 - n1 + 1;
 while (len--
 		 && *str)																// 04/30/01 AM.
 	*ostr << *str++;
-*ostr << flush;
+*ostr << std::flush;
 
 return true;
 }
@@ -6513,14 +6513,14 @@ if (ord <= 0 || ord > nlppp->len_)
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Prxtree post action: file=") << fname << _T(" is closed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Prxtree post action: file=") << fname << _T(" is closed.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -6564,7 +6564,7 @@ while (len--
 	*ostr << *str++;
 if (poststr && *poststr)													// 04/30/01 AM.
 	*ostr << poststr;
-*ostr << flush;
+*ostr << std::flush;
 
 return true;
 }
@@ -6590,15 +6590,15 @@ if (ord <= 0 || ord > nlppp->len_)
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Ndump: file=") << fname << _T(" is closed.]")
-			<< ends;
+			<< std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -6620,7 +6620,7 @@ Pn *pn = node->getData();
 _TCHAR *buf = pn->pnStr();
 *ostr << _T("$text=")
 		<< ::str(buf)																// 04/30/01 AM.
-		<< endl;
+		<< std::endl;
 Chars::destroy(buf);
 
 
@@ -6653,15 +6653,15 @@ if (ord < 0)
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Xdump: file=") << fname << _T(" is closed.]")
-			<< ends;
+			<< std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -6682,9 +6682,9 @@ else								// Get component.
 	tmp = select->pathNth(ord);
 	if (!tmp)
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Xdump: Couldn't find node X(") << ord
-					<< _T(").]") << ends;
+					<< _T(").]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		return false;
 		}
@@ -6719,15 +6719,15 @@ if (!fname || !*fname)
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Gdump: file=") << fname << _T(" is closed.]")
-			<< ends;
+			<< std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -6760,15 +6760,15 @@ if (!fname || !*fname)
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Sdump: file=") << fname << _T(" is closed.]")
-			<< ends;
+			<< std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -6975,8 +6975,8 @@ else		// Implicit NOOP, excise, or other reduces.
 	{
 	if (nlppp->sem_ || nlppp->dsem_)
 		{
-	//	strstream gerrStr(Errbuf,MAXSTR,ios::out);
-	//	gerrStr << "[No rule reduce. Can't attach semantic data.]" << ends;
+	//	strstream gerrStr(Errbuf,MAXSTR,std::ios::out);
+	//	gerrStr << "[No rule reduce. Can't attach semantic data.]" << std::ends;
 	//	nlppp->parse_->errOut(false);
 
 		if (nlppp->sem_)
@@ -7225,8 +7225,8 @@ RFASem *Arun::n(
 Node<Pn> *pnode = 0;
 if (!Ipnode::eval(RUNNODEPNODE,num,nlppp,/*UP*/pnode)) // FIX	// 04/29/01 AM.
 	{
-//	strstream gerrStr(Errbuf,MAXSTR,ios::out);
-//	gerrStr << "[n(): Couldn't fetch node.]" << ends;
+//	strstream gerrStr(Errbuf,MAXSTR,std::ios::out);
+//	gerrStr << "[n(): Couldn't fetch node.]" << std::ends;
 //	nlppp->parse_->errOut(false);
 	return 0;
 	}
@@ -7245,8 +7245,8 @@ RFASem *Arun::x(
 Node<Pn> *pnode = 0;
 if (!Ipnode::eval(CONTEXTPNODE, num, nlppp, /*UP*/ pnode))
 	{
-//	strstream gerrStr(Errbuf,MAXSTR,ios::out);
-//	gerrStr << "[x(): Couldn't fetch node.]" << ends;
+//	strstream gerrStr(Errbuf,MAXSTR,std::ios::out);
+//	gerrStr << "[x(): Couldn't fetch node.]" << std::ends;
 //	nlppp->parse_->errOut(false);
 	return 0;
 	}
@@ -7264,8 +7264,8 @@ RFASem *Arun::s(
 Node<Pn> *pnode = 0;
 if (!Ipnode::eval(SUGGESTEDPNODE, 0, nlppp, /*UP*/ pnode))
 	{
-//	strstream gerrStr(Errbuf,MAXSTR,ios::out);
-//	gerrStr << "[s(): Couldn't fetch node.]" << ends;
+//	strstream gerrStr(Errbuf,MAXSTR,std::ios::out);
+//	gerrStr << "[s(): Couldn't fetch node.]" << std::ends;
 //	nlppp->parse_->errOut(false);
 	return 0;
 	}
@@ -7445,13 +7445,13 @@ Var::setVal(pair, val);
 return val;
 }
 
-_t_ostream *Arun::assign(														// 11/20/02 AM.
+std::_t_ostream *Arun::assign(														// 11/20/02 AM.
 	int typ,
 	_TCHAR *varname,
 	int nelt,
 	long index,
 	Nlppp *nlppp,
-	_t_ostream *val)
+	std::_t_ostream *val)
 {
 if (index >= 0)
 	return iassign(typ,varname,nelt,index,nlppp,val);
@@ -7567,13 +7567,13 @@ if (!flag)
 return assign(typ,varname,nelt,index,nlppp,val);
 }
 
-_t_ostream *Arun::assign(														// 11/20/02 AM.
+std::_t_ostream *Arun::assign(														// 11/20/02 AM.
 	int typ,
 	_TCHAR *varname,
 	int nelt,
 	RFASem *index_sem,
 	Nlppp *nlppp,
-	_t_ostream *val
+	std::_t_ostream *val
 	)
 {
 if (!index_sem)
@@ -7632,8 +7632,8 @@ Dlist<Iarg> *vals = pair->getVals();
 
 if (!vals)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: No values for var='") << varname << _T("']") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: No values for var='") << varname << _T("']") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return val;
 	}
@@ -7697,8 +7697,8 @@ switch(val->getType())
 	case RSARGS:	// ARRAY VALUES (uncopied).
 		// Should not be here.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Copying array -- Error.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Copying array -- Error.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 		break;
@@ -7709,8 +7709,8 @@ switch(val->getType())
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Bad rhs type in assignment.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Bad rhs type in assignment.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 		break;
@@ -7738,8 +7738,8 @@ Dlist<Iarg> *vals = pair->getVals();
 
 if (!vals)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: No values for var='") << varname << _T("']") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: No values for var='") << varname << _T("']") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return val;
 	}
@@ -7771,8 +7771,8 @@ Dlist<Iarg> *vals = pair->getVals();
 
 if (!vals)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: No values for var='") << varname << _T("']") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: No values for var='") << varname << _T("']") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return val;
 	}
@@ -7804,8 +7804,8 @@ Dlist<Iarg> *vals = pair->getVals();
 
 if (!vals)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: No values for var='") << varname << _T("']") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: No values for var='") << varname << _T("']") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return val;
 	}
@@ -7817,13 +7817,13 @@ arg->setStr(val);
 return val;
 }
 
-_t_ostream *Arun::iassign(										// 11/20/02 AM.
+std::_t_ostream *Arun::iassign(										// 11/20/02 AM.
 	int typ,
 	_TCHAR *varname,
 	int nelt,
 	long index,
 	Nlppp *nlppp,
-	_t_ostream *val)
+	std::_t_ostream *val)
 {
 Ipair *pair;
 Ivar::getVar((enum Ivartype)typ,varname,nelt,nlppp,/*UP*/pair);
@@ -7836,8 +7836,8 @@ Dlist<Iarg> *vals = pair->getVals();
 
 if (!vals)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: No values for var='") << varname << _T("']") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: No values for var='") << varname << _T("']") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return val;
 	}
@@ -7868,8 +7868,8 @@ Dlist<Iarg> *vals = pair->getVals();
 
 if (!vals)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: No values for var='") << varname << _T("']") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: No values for var='") << varname << _T("']") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return val;
 	}
@@ -7960,8 +7960,8 @@ switch (sem1->getType())													// 08/17/01 AM.
 			}
 		// FALL THROUGH!!														// 07/11/03 AM.
 	default:																		// 08/17/01 AM.
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in plus(sem,long)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in plus(sem,long)]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		delete sem1;				// Memory leak.						// 05/27/00 AM.
 		return 0;
@@ -7970,8 +7970,8 @@ else if (num == 0)	// NULL-NULL case.					// FIX.	// 07/11/03 AM.
 	return new RFASem((long)0);								// FIX.	// 07/11/03 AM.
 else																				// 03/13/02 AM.
 	{
-	_t_strstream gerrStr;						// 03/13/02 AM.
-	gerrStr << _T("[Error: Empty value in plus(sem,long)]") << ends;
+	std::_t_strstream gerrStr;						// 03/13/02 AM.
+	gerrStr << _T("[Error: Empty value in plus(sem,long)]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);																// 03/13/02 AM.
 	sem = new RFASem(num);													// 03/13/02 AM.
 	}
@@ -7993,8 +7993,8 @@ if (sem1)																		// 03/13/02 AM.
 			res = sem1->getFloat() + fnum;
 			break;
 		default:
-			_t_strstream gerrStr;
-			gerrStr << _T("[Error: Bad sem type in plus(sem,float)]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Error: Bad sem type in plus(sem,float)]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			delete sem1;
 			return 0;
@@ -8003,8 +8003,8 @@ if (sem1)																		// 03/13/02 AM.
 	}
 else																				// 03/13/02 AM.
 	{
-	_t_strstream gerrStr;						// 03/13/02 AM.
-	gerrStr << _T("[Error: Empty value in plus(sem,flt)]") << ends;	// 03/13/02 AM.
+	std::_t_strstream gerrStr;						// 03/13/02 AM.
+	gerrStr << _T("[Error: Empty value in plus(sem,flt)]") << std::ends;	// 03/13/02 AM.
 	nlppp->parse_->errOut(&gerrStr,false);																// 03/13/02 AM.
 	return fnum;																// 03/13/02 AM.
 	}
@@ -8025,8 +8025,8 @@ if (sem->getType() == RSLONG && sem->getLong() == 0)
 	semstr = _T("");
 else if (sem->getType() != RSSTR)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad sem type in plus(sem,str)]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad sem type in plus(sem,str)]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	delete sem;				// Memory leak.								// 05/27/00 AM.
 	return 0;
@@ -8144,8 +8144,8 @@ switch (sem1->getType())
 
 if (!ok)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad types in '+' operation.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad types in '+' operation.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	}
 
@@ -8174,8 +8174,8 @@ _TCHAR *Arun::plus(_TCHAR*str1, long num, Nlppp *nlppp)				// 07/11/03 AM.
 // Assume string is interned.
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad type in plus(str,num)]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad type in plus(str,num)]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return 0;
 	}
@@ -8187,8 +8187,8 @@ _TCHAR *Arun::plus(long num, _TCHAR *str1, Nlppp *nlppp)				// 07/11/03 AM.
 // Assume string is interned.
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad type in plus(str,num)]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad type in plus(str,num)]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return 0;
 	}
@@ -8205,8 +8205,8 @@ else if (sem->getType() == RSLONG && sem->getLong() == 0)
 	semstr = _T("");
 else if (sem->getType() != RSSTR)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad sem type in plus(str,sem)]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad sem type in plus(str,sem)]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	delete sem;				// Memory leak.								// 05/27/00 AM.
 	return 0;
@@ -8263,8 +8263,8 @@ if (sem2)																		// 03/13/02 AM.
 				}
 			// FALL THROUGH.													// 07/11/03 AM.
 		default:																	// 08/17/01 AM.
-			_t_strstream gerrStr;
-			gerrStr << _T("[Error: Bad sem type in plus(long,sem)]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Error: Bad sem type in plus(long,sem)]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			delete sem2;				// Memory leak.					// 05/27/00 AM.
 			return 0;
@@ -8295,8 +8295,8 @@ if (sem2)																		// 03/13/02 AM.
 			res = sem2->getFloat() + fnum;
 			break;
 		default:
-			_t_strstream gerrStr;
-			gerrStr << _T("[Error: Bad sem type in plus(float,sem)]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Error: Bad sem type in plus(float,sem)]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			delete sem2;
 			return 0;
@@ -8364,8 +8364,8 @@ if (sem1)																		// 03/13/02 AM.
 			}
 			break;
 		default:
-			_t_strstream gerrStr;
-			gerrStr << _T("[Error: Bad sem type in plus(sem)]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Error: Bad sem type in plus(sem)]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			delete sem1;
 			return 0;
@@ -8374,8 +8374,8 @@ if (sem1)																		// 03/13/02 AM.
 	}
 else																				// 03/13/02 AM.
 	{
-	_t_strstream gerrStr;						// 03/13/02 AM.
-	gerrStr << _T("[Error: Empty val in plus(sem)]") << ends;			// 03/13/02 AM.
+	std::_t_strstream gerrStr;						// 03/13/02 AM.
+	gerrStr << _T("[Error: Empty val in plus(sem)]") << std::ends;			// 03/13/02 AM.
 	nlppp->parse_->errOut(&gerrStr,false);																// 03/13/02 AM.
 	}
 return sem;	// "no-op"
@@ -8388,19 +8388,19 @@ return sem;	// "no-op"
 * SUBJ:	NLP++ output operator, compiled runtime.
 ********************************************/
 
-_t_ostream *Arun::out(_TCHAR *fname, RFASem *sem, Nlppp *nlppp)
+std::_t_ostream *Arun::out(_TCHAR *fname, RFASem *sem, Nlppp *nlppp)
 {
 Ipair *pair;
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 bool exists,open,inuse,badname;
 if (!sem)																		// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
 if (!Var::filevar(fname,nlppp->getParse(),
 			/*UP*/ pair,ostr,exists,open,inuse,badname))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[out: Error. Couldn't make var=")
-			<< fname << _T("]") << ends;
+			<< fname << _T("]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	delete sem;												// MEM LEAK.	// 06/12/00 AM.
 	return 0;
@@ -8411,17 +8411,17 @@ delete sem;				// No one using sem past this point.		// 05/27/00 AM.
 return ostr;
 }
 
-_t_ostream *Arun::out(_TCHAR *fname, _TCHAR *str, Nlppp *nlppp)
+std::_t_ostream *Arun::out(_TCHAR *fname, _TCHAR *str, Nlppp *nlppp)
 {
 Ipair *pair;
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 bool exists,open,inuse,badname;
 if (!Var::filevar(fname,nlppp->getParse(),
 			/*UP*/ pair,ostr,exists,open,inuse,badname))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[out: Error. Couldn't make var=")
-			<< fname << _T("]") << ends;
+			<< fname << _T("]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return 0;
 	}
@@ -8431,17 +8431,17 @@ if (str && *str																// 04/30/01 AM.
 return ostr;
 }
 
-_t_ostream *Arun::out(_TCHAR *fname, long num, Nlppp *nlppp)
+std::_t_ostream *Arun::out(_TCHAR *fname, long num, Nlppp *nlppp)
 {
 Ipair *pair;
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 bool exists,open,inuse,badname;
 if (!Var::filevar(fname,nlppp->getParse(),
 			/*UP*/ pair,ostr,exists,open,inuse,badname))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[out: Error. Couldn't make var=")
-			<< fname << _T("]") << ends;
+			<< fname << _T("]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return 0;
 	}
@@ -8450,17 +8450,17 @@ return ostr;
 }
 
 
-_t_ostream *Arun::out(_TCHAR *fname, bool flag, Nlppp *nlppp)			// 07/11/03 AM.
+std::_t_ostream *Arun::out(_TCHAR *fname, bool flag, Nlppp *nlppp)			// 07/11/03 AM.
 {
 Ipair *pair;
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 bool exists,open,inuse,badname;
 if (!Var::filevar(fname,nlppp->getParse(),
 			/*UP*/ pair,ostr,exists,open,inuse,badname))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[out: Error. Couldn't make var=")
-			<< fname << _T("]") << ends;
+			<< fname << _T("]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return 0;
 	}
@@ -8470,17 +8470,17 @@ return ostr;
 
 
 
-_t_ostream *Arun::out(_TCHAR *fname, float num, Nlppp *nlppp)			// 08/19/01 AM.
+std::_t_ostream *Arun::out(_TCHAR *fname, float num, Nlppp *nlppp)			// 08/19/01 AM.
 {
 Ipair *pair;
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 bool exists,open,inuse,badname;
 if (!Var::filevar(fname,nlppp->getParse(),
 			/*UP*/ pair,ostr,exists,open,inuse,badname))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[out: Error. Couldn't make var=")
-			<< fname << _T("]") << ends;
+			<< fname << _T("]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return 0;
 	}
@@ -8489,7 +8489,7 @@ if (ostr)																		// 08/04/02 AM.
 return ostr;
 }
 
-_t_ostream *Arun::out(RFASem *ostrsem, RFASem *sem, Nlppp *nlppp)
+std::_t_ostream *Arun::out(RFASem *ostrsem, RFASem *sem, Nlppp *nlppp)
 {
 if (!ostrsem)
 	{
@@ -8499,7 +8499,7 @@ if (!ostrsem)
 	}
 
 // PRINT ACCORDING TO ITS TYPE.
-_t_ostream *ostr=0;
+std::_t_ostream *ostr=0;
 _TCHAR *str;
 switch(ostrsem->getType())													// 08/07/02 AM.
 	{
@@ -8514,8 +8514,8 @@ switch(ostrsem->getType())													// 08/07/02 AM.
 //		ruleError(line_,nlppp);
 //		nlppp->line_ = Linenum = line_;
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[unimplemented RSVAR in output op.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[unimplemented RSVAR in output op.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 		if (sem)
@@ -8528,9 +8528,9 @@ switch(ostrsem->getType())													// 08/07/02 AM.
 			{
 //			ruleError(line_,nlppp);
 //			nlppp->line_ = Linenum = line_;
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[Error. Can't output to empty file.]")
-					  << ends;
+					  << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			if (sem)
 				delete sem;
@@ -8545,9 +8545,9 @@ switch(ostrsem->getType())													// 08/07/02 AM.
 			{
 //			ruleError(line_,nlppp);
 //			nlppp->line_ = Linenum = line_;
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[Output op: Error. Couldn't make var=")
-					  << str << _T("]") << ends;
+					  << str << _T("]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			if (sem)
 				delete sem;
@@ -8558,8 +8558,8 @@ switch(ostrsem->getType())													// 08/07/02 AM.
 	case RSNAME:
 	default:																		// 08/07/02 AM.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Out: bad output stream.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Out: bad output stream.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		if (sem)
 			delete sem;
@@ -8582,13 +8582,13 @@ delete sem;				// No one using sem past this point.		// 05/27/00 AM.
 return ostr;																	// 08/19/01 AM.
 }
 
-_t_ostream *Arun::out(RFASem *ostrsem, _TCHAR *str, Nlppp *nlppp)
+std::_t_ostream *Arun::out(RFASem *ostrsem, _TCHAR *str, Nlppp *nlppp)
 {
 if (!ostrsem)
 	return 0;
 
 // PRINT ACCORDING TO ITS TYPE.
-_t_ostream *ostr=0;
+std::_t_ostream *ostr=0;
 _TCHAR *fstr;
 switch(ostrsem->getType())													// 08/07/02 AM.
 	{
@@ -8603,8 +8603,8 @@ switch(ostrsem->getType())													// 08/07/02 AM.
 //		ruleError(line_,nlppp);
 //		nlppp->line_ = Linenum = line_;
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[unimplemented RSVAR in output op.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[unimplemented RSVAR in output op.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 		delete ostrsem;
@@ -8615,9 +8615,9 @@ switch(ostrsem->getType())													// 08/07/02 AM.
 			{
 //			ruleError(line_,nlppp);
 //			nlppp->line_ = Linenum = line_;
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[Error. Can't output to empty file.]")
-					  << ends;
+					  << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			delete ostrsem;
 			return 0;
@@ -8630,9 +8630,9 @@ switch(ostrsem->getType())													// 08/07/02 AM.
 			{
 //			ruleError(line_,nlppp);
 //			nlppp->line_ = Linenum = line_;
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[Output op: Error. Couldn't make var=")
-					  << fstr << _T("]") << ends;
+					  << fstr << _T("]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			delete ostrsem;
 			return 0;
@@ -8641,8 +8641,8 @@ switch(ostrsem->getType())													// 08/07/02 AM.
 	case RSNAME:
 	default:																		// 08/07/02 AM.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Out: bad output stream.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Out: bad output stream.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		delete ostrsem;
 		return 0;
@@ -8662,13 +8662,13 @@ delete ostrsem;																// 08/19/01 AM.
 return ostr;																	// 08/19/01 AM.
 }
 
-_t_ostream *Arun::out(RFASem *ostrsem, long num, Nlppp *nlppp)
+std::_t_ostream *Arun::out(RFASem *ostrsem, long num, Nlppp *nlppp)
 {
 if (!ostrsem)
 	return 0;
 
 // PRINT ACCORDING TO ITS TYPE.
-_t_ostream *ostr=0;
+std::_t_ostream *ostr=0;
 _TCHAR *str;
 switch(ostrsem->getType())													// 08/07/02 AM.
 	{
@@ -8683,8 +8683,8 @@ switch(ostrsem->getType())													// 08/07/02 AM.
 //		ruleError(line_,nlppp);
 //		nlppp->line_ = Linenum = line_;
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[unimplemented RSVAR in output op.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[unimplemented RSVAR in output op.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 		delete ostrsem;
@@ -8695,9 +8695,9 @@ switch(ostrsem->getType())													// 08/07/02 AM.
 			{
 //			ruleError(line_,nlppp);
 //			nlppp->line_ = Linenum = line_;
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[Error. Can't output to empty file.]")
-					  << ends;
+					  << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			delete ostrsem;
 			return 0;
@@ -8710,9 +8710,9 @@ switch(ostrsem->getType())													// 08/07/02 AM.
 			{
 //			ruleError(line_,nlppp);
 //			nlppp->line_ = Linenum = line_;
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[Output op: Error. Couldn't make var=")
-					  << str << _T("]") << ends;
+					  << str << _T("]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			delete ostrsem;
 			return 0;
@@ -8721,8 +8721,8 @@ switch(ostrsem->getType())													// 08/07/02 AM.
 	case RSNAME:
 	default:																		// 08/07/02 AM.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Out: bad output stream.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Out: bad output stream.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		delete ostrsem;
 		return 0;
@@ -8738,13 +8738,13 @@ return ostr;																	// 08/19/01 AM.
 
 
 // VARIANT.																		// 07/11/03 AM.
-_t_ostream *Arun::out(RFASem *ostrsem, bool flag, Nlppp *nlppp)	// 07/11/03 AM.
+std::_t_ostream *Arun::out(RFASem *ostrsem, bool flag, Nlppp *nlppp)	// 07/11/03 AM.
 {
 if (!ostrsem)
 	return 0;
 
 // PRINT ACCORDING TO ITS TYPE.
-_t_ostream *ostr=0;
+std::_t_ostream *ostr=0;
 _TCHAR *str;
 switch(ostrsem->getType())
 	{
@@ -8759,8 +8759,8 @@ switch(ostrsem->getType())
 //		ruleError(line_,nlppp);
 //		nlppp->line_ = Linenum = line_;
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[unimplemented RSVAR in output op.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[unimplemented RSVAR in output op.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 		delete ostrsem;
@@ -8771,9 +8771,9 @@ switch(ostrsem->getType())
 			{
 //			ruleError(line_,nlppp);
 //			nlppp->line_ = Linenum = line_;
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[Error. Can't output to empty file.]")
-					  << ends;
+					  << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			delete ostrsem;
 			return 0;
@@ -8786,9 +8786,9 @@ switch(ostrsem->getType())
 			{
 //			ruleError(line_,nlppp);
 //			nlppp->line_ = Linenum = line_;
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[Output op: Error. Couldn't make var=")
-					  << str << _T("]") << ends;
+					  << str << _T("]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			delete ostrsem;
 			return 0;
@@ -8797,8 +8797,8 @@ switch(ostrsem->getType())
 	case RSNAME:
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Out: bad output stream.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Out: bad output stream.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		delete ostrsem;
 		return 0;
@@ -8813,13 +8813,13 @@ return ostr;
 }
 
 
-_t_ostream *Arun::out(RFASem *ostrsem, float num, Nlppp *nlppp)	// 08/19/01 AM.
+std::_t_ostream *Arun::out(RFASem *ostrsem, float num, Nlppp *nlppp)	// 08/19/01 AM.
 {
 if (!ostrsem)
 	return 0;
 
 // PRINT ACCORDING TO ITS TYPE.
-_t_ostream *ostr=0;
+std::_t_ostream *ostr=0;
 _TCHAR *str;
 switch(ostrsem->getType())													// 08/07/02 AM.
 	{
@@ -8834,8 +8834,8 @@ switch(ostrsem->getType())													// 08/07/02 AM.
 //		ruleError(line_,nlppp);
 //		nlppp->line_ = Linenum = line_;
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[unimplemented RSVAR in output op.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[unimplemented RSVAR in output op.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 		delete ostrsem;
@@ -8846,9 +8846,9 @@ switch(ostrsem->getType())													// 08/07/02 AM.
 			{
 //			ruleError(line_,nlppp);
 //			nlppp->line_ = Linenum = line_;
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[Error. Can't output to empty file.]")
-					  << ends;
+					  << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			delete ostrsem;
 			return 0;
@@ -8861,9 +8861,9 @@ switch(ostrsem->getType())													// 08/07/02 AM.
 			{
 //			ruleError(line_,nlppp);
 //			nlppp->line_ = Linenum = line_;
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[Output op: Error. Couldn't make var=")
-					  << str << _T("]") << ends;
+					  << str << _T("]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			delete ostrsem;
 			return 0;
@@ -8872,8 +8872,8 @@ switch(ostrsem->getType())													// 08/07/02 AM.
 	case RSNAME:
 	default:																		// 08/07/02 AM.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Out: bad output stream.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Out: bad output stream.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		delete ostrsem;
 		return 0;
@@ -8888,7 +8888,7 @@ return ostr;																	// 08/19/01 AM.
 }
 
 
-_t_ostream *Arun::out(_t_ostream *ostr, RFASem *sem, Nlppp *nlppp)	// 08/19/01 AM.
+std::_t_ostream *Arun::out(std::_t_ostream *ostr, RFASem *sem, Nlppp *nlppp)	// 08/19/01 AM.
 {
 if (!sem)
 	return ostr;
@@ -8899,7 +8899,7 @@ delete sem;
 return ostr;
 }
 
-_t_ostream *Arun::out(_t_ostream *ostr, _TCHAR *str, Nlppp *nlppp)
+std::_t_ostream *Arun::out(std::_t_ostream *ostr, _TCHAR *str, Nlppp *nlppp)
 {
 if (str && *str																// 04/30/01 AM.
 		  && ostr)																// 08/04/02 AM.
@@ -8907,21 +8907,21 @@ if (str && *str																// 04/30/01 AM.
 return ostr;
 }
 
-_t_ostream *Arun::out(_t_ostream *ostr, long num, Nlppp *nlppp)
+std::_t_ostream *Arun::out(std::_t_ostream *ostr, long num, Nlppp *nlppp)
 {
 if (ostr)																		// 08/04/02 AM.
 	*ostr << num;
 return ostr;
 }
 
-_t_ostream *Arun::out(_t_ostream *ostr, bool flag, Nlppp *nlppp)		// 07/11/03 AM.
+std::_t_ostream *Arun::out(std::_t_ostream *ostr, bool flag, Nlppp *nlppp)		// 07/11/03 AM.
 {
 if (ostr)
 	*ostr << (flag ? 1 : 0);
 return ostr;
 }
 
-_t_ostream *Arun::out(_t_ostream *ostr, float num, Nlppp *nlppp)		// 08/19/01 AM.
+std::_t_ostream *Arun::out(std::_t_ostream *ostr, float num, Nlppp *nlppp)		// 08/19/01 AM.
 {
 if (ostr)																		// 08/04/02 AM.
 	*ostr << num;
@@ -8948,7 +8948,7 @@ bool res = truth(sem);	// THIS DELETES SEM!.			// FIX.	// 06/07/00 AM.
 return res;
 }
 
-bool Arun::stmt(_t_ostream *ostr)
+bool Arun::stmt(std::_t_ostream *ostr)
 {
 return true;
 }
@@ -9005,8 +9005,8 @@ switch (sem1->getType())													// 08/17/01 AM.
 		}
 		break;
 	default:																		// 08/17/01 AM.
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in minus(sem,long)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in minus(sem,long)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem1;
 		return 0;
@@ -9031,8 +9031,8 @@ switch (sem1->getType())
 		res = sem1->getFloat() - fnum;
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in minus(sem,float)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in minus(sem,float)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem1;
 		return 0;
@@ -9146,8 +9146,8 @@ switch (sem1->getType())
 
 if (!ok)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad types in '-' operation.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad types in '-' operation.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -9180,8 +9180,8 @@ switch (sem2->getType())													// 08/17/01 AM.
 		}
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in minus(long,sem)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in minus(long,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem2;
 		return 0;
@@ -9206,8 +9206,8 @@ switch (sem2->getType())
 		res = fnum - sem2->getFloat();
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in minus(float,sem)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in minus(float,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem2;
 		return 0;
@@ -9273,8 +9273,8 @@ switch (sem1->getType())													// 08/18/01 AM.
 		}
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in minus(sem)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in minus(sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem1;
 		return 0;
@@ -9313,8 +9313,8 @@ switch (sem1->getType())
 		}
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in times(sem,long)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in times(sem,long)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem1;
 		return 0;
@@ -9338,8 +9338,8 @@ switch (sem1->getType())
 		res = sem1->getFloat() * fnum;
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in times(sem,float)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in times(sem,float)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem1;
 		return 0;
@@ -9420,8 +9420,8 @@ else
 
 if (!ok)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad types in '*' operation.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad types in '*' operation.]") << std::ends;
 	errOut(&gerrStr,false);
 	sem = new RFASem((long) 0);	// Recover.							// 03/13/02 AM.
 	}
@@ -9456,8 +9456,8 @@ switch (sem2->getType())
 		}
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in times(long,sem)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in times(long,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem2;
 		return 0;
@@ -9481,8 +9481,8 @@ switch (sem2->getType())
 		res = fnum * sem2->getFloat();
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in times(float,sem)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in times(float,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem2;
 		return 0;
@@ -9517,8 +9517,8 @@ RFASem *Arun::divide(RFASem *sem1, long num)
 RFASem *sem=0;
 if (!num)																		// 03/13/02 AM.
 	{
-	_t_strstream gerrStr;						// 03/13/02 AM.
-	gerrStr << _T("[Error: Divide by zero in divide(sem,long)]") << ends;
+	std::_t_strstream gerrStr;						// 03/13/02 AM.
+	gerrStr << _T("[Error: Divide by zero in divide(sem,long)]") << std::ends;
 	errOut(&gerrStr,false);																// 03/13/02 AM.
 	if (sem1)																	// 03/13/02 AM.
 		delete sem1;															// 03/13/02 AM.
@@ -9542,8 +9542,8 @@ switch (sem1->getType())
 		}
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in divide(sem,long)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in divide(sem,long)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem1;
 		return 0;
@@ -9567,8 +9567,8 @@ xx = (xx - (float)0.0000003);
 if (xx <= (float)0.0)										// 06/11/03 AM.
 #endif
 	{
-	_t_strstream gerrStr;						// 03/13/02 AM.
-	gerrStr << _T("[Error: Divide by zero in divide(sem,flt)]") << ends;
+	std::_t_strstream gerrStr;						// 03/13/02 AM.
+	gerrStr << _T("[Error: Divide by zero in divide(sem,flt)]") << std::ends;
 	errOut(&gerrStr,false);																// 03/13/02 AM.
 	if (sem1)																	// 03/13/02 AM.
 		delete sem1;															// 03/13/02 AM.
@@ -9594,8 +9594,8 @@ switch (sem1->getType())
 		}
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in divide(sem,float)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in divide(sem,float)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem1;
 		return 0;
@@ -9609,8 +9609,8 @@ bool ok = true;
 // Need better checking here...											// 03/13/02 AM.
 if (!sem2)																		// 03/13/02 AM.
 	{
-	_t_strstream gerrStr;						// 03/13/02 AM.
-	gerrStr << _T("[Error: Divide by zero in divide(sem,sem)]") << ends;
+	std::_t_strstream gerrStr;						// 03/13/02 AM.
+	gerrStr << _T("[Error: Divide by zero in divide(sem,sem)]") << std::ends;
 	errOut(&gerrStr,false);																// 03/13/02 AM.
 	if (sem1)																	// 03/13/02 AM.
 		delete sem1;															// 03/13/02 AM.
@@ -9674,8 +9674,8 @@ switch (sem1->getType())
 
 if (!ok)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad types in '/' operation.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad types in '/' operation.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -9695,8 +9695,8 @@ RFASem *Arun::divide(long num, RFASem *sem2)
 RFASem *sem=0;
 if (!sem2)																		// 03/13/02 AM.
 	{
-	_t_strstream gerrStr;						// 03/13/02 AM.
-	gerrStr << _T("[Error: Divide by zero in divide(num,sem)]") << ends;
+	std::_t_strstream gerrStr;						// 03/13/02 AM.
+	gerrStr << _T("[Error: Divide by zero in divide(num,sem)]") << std::ends;
 	errOut(&gerrStr,false);																// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
 	}
@@ -9716,8 +9716,8 @@ switch (sem2->getType())
 		}
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in divide(long,sem)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in divide(long,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem2;
 		return 0;
@@ -9730,8 +9730,8 @@ float Arun::divide(float fnum, RFASem *sem2)
 {
 if (!sem2)																		// 03/13/02 AM.
 	{
-	_t_strstream gerrStr;						// 03/13/02 AM.
-	gerrStr << _T("[Error: Divide by zero in divide(fnum,sem)]") << ends;
+	std::_t_strstream gerrStr;						// 03/13/02 AM.
+	gerrStr << _T("[Error: Divide by zero in divide(fnum,sem)]") << std::ends;
 	errOut(&gerrStr,false);																// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
 	}
@@ -9752,8 +9752,8 @@ switch (sem2->getType())
 		}
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in divide(float,sem)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in divide(float,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem2;
 		return 0;
@@ -9792,8 +9792,8 @@ if (!sem)																		// 03/13/02 AM.
 
 if (sem->getType() != RSLONG)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad sem type in rem(sem,long)]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad sem type in rem(sem,long)]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;
 	return 0;
@@ -9834,8 +9834,8 @@ switch (sem1->getType())
 
 if (!ok)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad types in '%' operation.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad types in '%' operation.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -9856,8 +9856,8 @@ if (!sem)																		// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
 if (sem->getType() != RSLONG)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad sem type in rem(long,sem)]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad sem type in rem(long,sem)]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;
 	return 0;
@@ -9881,8 +9881,8 @@ if (!sem)																		// 03/13/02 AM.
 
 if (sem->getType() != RSLONG)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad sem type in conf(sem,long)]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad sem type in conf(sem,long)]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;
 	return 0;
@@ -9924,8 +9924,8 @@ switch (sem1->getType())
 
 if (!ok)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad types in '%%' operation.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad types in '%%' operation.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -9947,8 +9947,8 @@ if (!sem)																		// 03/13/02 AM.
 
 if (sem->getType() != RSLONG)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad sem type in conf(long,sem)]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad sem type in conf(long,sem)]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;
 	return 0;
@@ -9990,8 +9990,8 @@ switch (sem->getType())														// 08/18/01 AM.
 
 if (num)	// If not 0.														// 12/12/02 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad sem type in eq(sem,long)]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad sem type in eq(sem,long)]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;
 	return 0;
@@ -10029,8 +10029,8 @@ switch (sem->getType())														// 12/12/02 AM.
 		break;																	// 12/12/02 AM.
 	default:																		// 12/12/02 AM.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in eq(sem,long)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in eq(sem,long)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -10056,8 +10056,8 @@ switch (sem->getType())
 		res = (sem->getFloat() == num);
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in eq(sem,float)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in eq(sem,float)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -10080,8 +10080,8 @@ switch (sem->getType())
 	case RSLONG:	// Zeroed out long is ok.							// 06/06/00 AM.
 		if (sem->getLong())
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Error: Bad sem type in eq(sem,str)]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Error: Bad sem type in eq(sem,str)]") << std::ends;
 			errOut(&gerrStr,false);
 			delete sem;
 			return 0;
@@ -10092,8 +10092,8 @@ switch (sem->getType())
 		return 0;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in eq(sem,str)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in eq(sem,str)]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -10308,8 +10308,8 @@ switch (sem1->getType())
 
 if (!ok)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad types in '==' operation.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad types in '==' operation.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -10362,8 +10362,8 @@ switch (sem->getType())
 		res = (num == sem->getFloat());
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in eq(long,sem)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in eq(long,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -10395,8 +10395,8 @@ switch (sem->getType())
 	case RSLONG:	// Zeroed out long is ok.							// 06/06/00 AM.
 		if (sem->getLong())
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Error: Num and str type in '==']") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Error: Num and str type in '==']") << std::ends;
 			errOut(&gerrStr,false);
 			delete sem;
 			return 0;
@@ -10407,16 +10407,16 @@ switch (sem->getType())
 		return 0;
 	case RSARGS:																// 08/08/02 AM.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Multivalued variable in '==']") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Multivalued variable in '==']") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
 		}	
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Incompatible type with str in '==']") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Incompatible type with str in '==']") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -10478,8 +10478,8 @@ switch (sem->getType())														// 08/18/01 AM.
 
 if (num)	// If not 0.														// 12/12/02 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad sem type in ne(sem,long)]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad sem type in ne(sem,long)]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;
 	return 0;
@@ -10516,8 +10516,8 @@ switch (sem->getType())														// 12/12/02 AM.
 		break;																	// 12/12/02 AM.
 	default:																		// 12/12/02 AM.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in ne(sem,long)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in ne(sem,long)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -10543,8 +10543,8 @@ switch (sem->getType())
 		res = (sem->getFloat() != num);
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in ne(sem,float)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in ne(sem,float)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -10759,8 +10759,8 @@ switch (sem1->getType())
 
 if (!ok)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad types in '!=' operation.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad types in '!=' operation.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -10797,8 +10797,8 @@ switch (sem->getType())
 		res = (num != sem->getFloat());
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in ne(float,sem)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in ne(float,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -10838,8 +10838,8 @@ switch (sem->getType())
 	case RSLONG:	// Zeroed out long is ok.
 		if (sem->getLong())
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Error: Bad sem type in ne(sem,str)]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Error: Bad sem type in ne(sem,str)]") << std::ends;
 			errOut(&gerrStr,false);
 			delete sem;
 			return true;											// FIX	// 09/16/08 AM.
@@ -10850,8 +10850,8 @@ switch (sem->getType())
 		return true;		// One empty, one not.
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in ne(str,sem)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in ne(str,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -10918,8 +10918,8 @@ switch (sem->getType())														// 08/18/01 AM.
 		res = (sem->getFloat() > num);									// 08/18/01 AM.
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in gt(sem,long)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in gt(sem,long)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -10944,8 +10944,8 @@ switch (sem->getType())
 		res = (sem->getFloat() > num);
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in gt(sem,float)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in gt(sem,float)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11035,8 +11035,8 @@ switch (sem1->getType())
 
 if (!ok)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad types in '>' operation.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad types in '>' operation.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -11066,8 +11066,8 @@ switch (sem->getType())														// 08/18/01 AM.
 		res = (num > sem->getFloat());
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in gt(long,sem)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in gt(long,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11091,8 +11091,8 @@ switch (sem->getType())
 		res = (num > sem->getFloat());
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in gt(float,sem)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in gt(float,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11138,8 +11138,8 @@ switch (sem->getType())														// 08/18/01 AM.
 		res = (sem->getFloat() < num);									// 08/18/01 AM.
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in lt(sem,long)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in lt(sem,long)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11163,8 +11163,8 @@ switch (sem->getType())
 		res = (sem->getFloat() < num);
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in lt(sem,float)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in lt(sem,float)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11256,8 +11256,8 @@ switch (sem1->getType())
 
 if (!ok)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad types in '<' operation.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad types in '<' operation.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -11287,8 +11287,8 @@ switch (sem->getType())														// 08/18/01 AM.
 		res = (num < sem->getFloat());
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in lt(long,sem)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in lt(long,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11312,8 +11312,8 @@ switch (sem->getType())
 		res = (num < sem->getFloat());
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in lt(float,sem)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in lt(float,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11360,8 +11360,8 @@ switch (sem->getType())														// 08/18/01 AM.
 		res = (sem->getFloat() >= num);									// 08/18/01 AM.
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in ge(sem,long)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in ge(sem,long)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11385,8 +11385,8 @@ switch (sem->getType())
 		res = (sem->getFloat() >= num);
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in ge(sem,float)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in ge(sem,float)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11478,8 +11478,8 @@ switch (sem1->getType())
 
 if (!ok)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad types in '>=' operation.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad types in '>=' operation.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -11509,8 +11509,8 @@ switch (sem->getType())														// 08/18/01 AM.
 		res = (num >= sem->getFloat());
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in ge(long,sem)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in ge(long,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11534,8 +11534,8 @@ switch (sem->getType())
 		res = (num >= sem->getFloat());
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in ge(float,sem)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in ge(float,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11582,8 +11582,8 @@ switch (sem->getType())														// 08/18/01 AM.
 		res = (sem->getFloat() <= num);									// 08/18/01 AM.
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in le(sem,long)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in le(sem,long)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11607,8 +11607,8 @@ switch (sem->getType())
 		res = (sem->getFloat() <= num);
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in le(sem,float)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in le(sem,float)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11701,8 +11701,8 @@ switch (sem1->getType())
 
 if (!ok)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad types in '<=' operation.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: Bad types in '<=' operation.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -11732,8 +11732,8 @@ switch (sem->getType())														// 08/18/01 AM.
 		res = (num <= sem->getFloat());
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in le(long,sem)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in le(long,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11757,8 +11757,8 @@ switch (sem->getType())
 		res = (num <= sem->getFloat());
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in le(float,sem)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in le(float,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11836,8 +11836,8 @@ switch (sem->getType())													// 06/11/00 AM.
 		break;
 	case RSNUM:				// Not allowing this.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Num as string in and(sem,long)]")	<< ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Num as string in and(sem,long)]")	<< std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -11851,8 +11851,8 @@ switch (sem->getType())													// 06/11/00 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in and(sem,long)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in and(sem,long)]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -12086,8 +12086,8 @@ switch (sem->getType())														// 06/11/00 AM.
 		break;
 	case RSNUM:				// Not allowing this.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Num as string in or(sem,long)]")	<< ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Num as string in or(sem,long)]")	<< std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -12095,8 +12095,8 @@ switch (sem->getType())														// 06/11/00 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in or(sem,long)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Bad sem type in or(sem,long)]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -12281,8 +12281,8 @@ if (!sem)																		// 03/13/02 AM.
 // Creates variable with init value of zero, if not found.
 if (!Iexpr::inc(sem, nlppp, /*UP*/ num))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: increment operator.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: increment operator.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	}
 
@@ -12342,8 +12342,8 @@ if (index >= 0)	// INDEXED ARRAY VALUE.								// 07/15/03 AM.
 
 else if (darg->Right())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't increment multi-valued variable.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't increment multi-valued variable.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return num;
 	}
@@ -12373,8 +12373,8 @@ switch (arg->getType())
 		num = semarg->sem_to_long(ok);	// FETCH.					// 07/05/06 AM.
 		if (!ok)
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Can't increment non-numeric variable.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Can't increment non-numeric variable.]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			return 0;															// 07/05/06 AM.
 			}
@@ -12429,8 +12429,8 @@ if (!sem)																		// 03/13/02 AM.
 // Creates variable with init value of zero, if not found.
 if (!Iexpr::dec(sem, nlppp, /*UP*/ num))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: decrement operator.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: decrement operator.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	}
 
@@ -12489,8 +12489,8 @@ if (index >= 0)	// INDEXED ARRAY VALUE.								// 07/15/03 AM.
 
 else if (darg->Right())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't decrement multi-valued variable.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't decrement multi-valued variable.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return num;
 	}
@@ -12520,8 +12520,8 @@ switch (arg->getType())
 		num = semarg->sem_to_long(ok);	// FETCH.					// 07/05/06 AM.
 		if (!ok)
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Can't decrement non-numeric variable.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Can't decrement non-numeric variable.]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			return 0;															// 07/05/06 AM.
 			}
@@ -12568,8 +12568,8 @@ long num = 0L;
 // Creates variable with init value of zero, if not found.
 if (!Iexpr::vtnot(sem, 0, /*UP*/ num))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: unary 'not' operator.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: unary 'not' operator.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -12633,8 +12633,8 @@ if (!vals || !(darg = vals->getFirst()))
 	}
 if (darg->Right())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't increment multi-valued variable.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't increment multi-valued variable.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return ret;
 	}
@@ -12692,8 +12692,8 @@ if (!vals || !(darg = vals->getFirst()))
 	}
 if (darg->Right())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't decrement multi-valued variable.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't decrement multi-valued variable.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return ret;
 	}
@@ -12834,8 +12834,8 @@ Parse *parse = nlppp->parse_;
 
 if (parse->getOut())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Startout code action: Output file already open.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Startout code action: Output file already open.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -12846,14 +12846,14 @@ _TCHAR *name = 0;
 if ((name = parse->getOutput()))
 	{
 	// Open the output file for APPENDING.
-	_t_ofstream *fout = 0;
-	fout = new _t_ofstream(TCHAR2CA(name), ios::app);
+	std::_t_ofstream *fout = 0;
+	fout = new std::_t_ofstream(TCHAR2CA(name), std::ios::app);
 	parse->setOut(fout);
 	parse->newostr(fout);			// Add to list of ostrs.		// 05/23/01 AM.
 	}
 else	// No output file.  Use standard out by default.
 	{
-	parse->setOut(&_t_cout);
+	parse->setOut(&std::_t_cout);
 	}
 
 return true;
@@ -12886,15 +12886,15 @@ Parse *parse = nlppp->parse_;
 
 
 // Close the output file.
-_t_ostream *tmp = parse->getOut();											// 05/23/01 AM.
+std::_t_ostream *tmp = parse->getOut();											// 05/23/01 AM.
 if (!tmp)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Stopout code action: No output file is open.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Stopout code action: No output file is open.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
-else if (tmp == &_t_cout)		// Program's "real" output is to standard output.
+else if (tmp == &std::_t_cout)		// Program's "real" output is to standard output.
 	;
 else
 	{
@@ -12937,39 +12937,39 @@ Parse *parse = nlppp->parse_;
 
 if (!fname || !*fname)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[fileout: Error. Given null filename.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[fileout: Error. Given null filename.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 
 Ipair *pair;
-_t_ostream *ostr;
+std::_t_ostream *ostr;
 bool exists,open,inuse,badname;
 if (!Var::filevar(fname,parse,										// 12/31/99 AM.
 									/*UP*/ pair,ostr,exists,open,inuse,badname))
 	{
 	if (inuse)
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[fileout: Error. var=") << fname << _T(" already in use.]")
-					<< ends;
+					<< std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 
 	else if (badname)
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[fileout: Error. var=") << fname << _T(" is bad name.]")
-					<< ends;
+					<< std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 
 	else
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[fileout: Error creating output var=")
-					<< fname << _T("]") << ends;
+					<< fname << _T("]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 
@@ -12978,9 +12978,9 @@ if (!Var::filevar(fname,parse,										// 12/31/99 AM.
 
 if (exists)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[fileout: Warning. output var=")
-			<< fname << _T(" exists.]") << ends;
+			<< fname << _T(" exists.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return true;
 	}
@@ -13025,9 +13025,9 @@ else								// Get component.
 	tmp = select->pathNth(ord);
 	if (!tmp)
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Xrename: Couldn't find node X(") << ord
-					<< _T(").]") << ends;
+					<< _T(").]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		return false;
 		}
@@ -13154,15 +13154,15 @@ Delt<Iarg> *values = 0;
 if (!Var::vals(var, parse, /*UP*/ values))
 	return false;
 
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, parse, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Fprintvar code action: file=") << fname
-			  << _T(" is closed.]") << ends;
+			  << _T(" is closed.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -13187,15 +13187,15 @@ while (values)
 		{
 		case IASTR:
 			st = arg->getStr();
-			*ostr << ::str(st) << flush;
+			*ostr << ::str(st) << std::flush;
 			break;
 		case IANUM:
-			*ostr << arg->getNum() << flush;
+			*ostr << arg->getNum() << std::flush;
 			break;
 		default:
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[codeFprintvar: Bad value]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[codeFprintvar: Bad value]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			}
 
@@ -13367,8 +13367,8 @@ switch (sem->getType())														// 08/08/02 AM.
 		break;
 	case RSARGS:																// 08/08/02 AM.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Can't get string from multivalued var.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Can't get string from multivalued var.]") << std::ends;
 		errOut(&gerrStr,false);
 		return 0;
 		}
@@ -13376,8 +13376,8 @@ switch (sem->getType())														// 08/08/02 AM.
 		break;
 	}
 
-_t_strstream gerrStr;
-gerrStr << _T("[Error: Bad sem type in sem_to_str]") << ends;
+std::_t_strstream gerrStr;
+gerrStr << _T("[Error: Bad sem type in sem_to_str]") << std::ends;
 errOut(&gerrStr,false);
 return 0;
 }
@@ -13391,7 +13391,7 @@ return 0;
 * NOTE:	Convenience function.
 ********************************************/
 
-_t_ostream *Arun::sem_to_ostream(
+std::_t_ostream *Arun::sem_to_ostream(
 	RFASem *sem
 	)
 {
@@ -13404,8 +13404,8 @@ switch (sem->getType())
 		return sem->getOstream();
 	case RSARGS:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Can't get ostream from multivalued var.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Can't get ostream from multivalued var.]") << std::ends;
 		errOut(&gerrStr,false);
 		return 0;
 		}
@@ -13413,8 +13413,8 @@ switch (sem->getType())
 		break;
 	}
 
-_t_strstream gerrStr;
-gerrStr << _T("[Error: Bad sem type in sem_to_ostream]") << ends;
+std::_t_strstream gerrStr;
+gerrStr << _T("[Error: Bad sem type in sem_to_ostream]") << std::ends;
 errOut(&gerrStr,false);
 return 0;
 }

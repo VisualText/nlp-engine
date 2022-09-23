@@ -91,8 +91,8 @@ Ireturn *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Ireturn object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Ireturn object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -127,7 +127,7 @@ dest->expr_ = orig->expr_;	// Assignment operator.
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Ireturn &returnstmt)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Ireturn &returnstmt)
 {
 output << _T("return ");
 if (returnstmt.expr_)
@@ -137,7 +137,7 @@ return output;
 }
 
 // Workaround to calling overloaded << in derived classes.
-void Ireturn::print(_t_ostream &output)
+void Ireturn::print(std::_t_ostream &output)
 {
 output << *this;
 }
@@ -172,14 +172,14 @@ int Ireturn::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Ireturn::prettyCount(_t_ofstream *ofstr)
+void Ireturn::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Ireturn count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Ireturn count=") << count_ << ends;
+		*ofstr << _T("Active Ireturn count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Ireturn count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -196,10 +196,10 @@ if (count_)
 * SUBJ:	Generate returnstmt to a rules file.
 *********************************************/
 void Ireturn::genReturnstmt(
-	_t_ostream &ofile
+	std::_t_ostream &ofile
 	)
 {
-ofile << this << flush;
+ofile << this << std::flush;
 }
 
 
@@ -296,18 +296,18 @@ return ok;
 
 bool Ireturn::genEval(Gen *gen)
 {
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 _TCHAR *indent = gen->indent_;
 
 if (gen->region_ != REGDECL)												// 03/12/02 AM.
 	{
-	_t_strstream gerrStr;						// 03/12/02 AM.
-	gerrStr << _T("[Gen: Return not in function.]") << ends;			// 03/12/02 AM.
+	std::_t_strstream gerrStr;						// 03/12/02 AM.
+	gerrStr << _T("[Gen: Return not in function.]") << std::ends;			// 03/12/02 AM.
 	errOut(&gerrStr,false);																// 03/12/02 AM.
-	*fcode << endl																// 03/12/02 AM.
+	*fcode << std::endl																// 03/12/02 AM.
 			 << _T("// ERROR: Return not in user-defined NLP++ fn.")	// 03/12/02 AM.
-			 << endl;															// 03/12/02 AM.
-	*fcode << _T("bad_code_gen_on_return;") << endl;	// Break code.	// 03/12 02 AM.
+			 << std::endl;															// 03/12/02 AM.
+	*fcode << _T("bad_code_gen_on_return;") << std::endl;	// Break code.	// 03/12 02 AM.
 	return false;																// 03/12/02 AM.
 	}
 
@@ -322,7 +322,7 @@ enum RFASemtype typ = RSNULL;
 *fcode << indent << _T("return Arun::ret(nlppp,loc,locstrs,");					// 03/11/02 AM.
 if (!expr_->genEval(gen))
 	{
-	*fcode << _T("// ERROR in returnstmt.") << endl;
+	*fcode << _T("// ERROR in returnstmt.") << std::endl;
 	return false;
 	}
 *fcode << _T(");");

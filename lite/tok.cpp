@@ -156,7 +156,7 @@ return Tokenize(parse);
 bool Tok::Tokenize(Parse *parse)
 {
 	if (parse->Verbose())
-		*gout << _T("[Tokenize:]") << endl;
+		*gout << _T("[Tokenize:]") << std::endl;
 
 	// Reset.  No bad chars seen yet.
 	bad_ = false;					// 01/15/99 AM.
@@ -170,15 +170,15 @@ bool Tok::Tokenize(Parse *parse)
 
 	if (tree)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Tokenize: Parse tree exists. Skipping tokenization.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Tokenize: Parse tree exists. Skipping tokenization.]") << std::ends;
 		errOut(&gerrStr,false);
 		return true;		// Assuming this is ok.							// 01/26/02 AM.
 		}
 	if (!text)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Tokenize: Given no text.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Tokenize: Given no text.]") << std::ends;
 		return errOut(&gerrStr,false);													// 01/26/02 AM.
 		}
 
@@ -316,9 +316,9 @@ bool Tok::NextToken(
 	// CHECK NODE OVERFLOW.														// 01/24/02 AM.
 	if (!node)																		// 01/24/02 AM.
 		{
-		_t_strstream gerrStr;						// 01/24/02 AM.
+		std::_t_strstream gerrStr;						// 01/24/02 AM.
 		gerrStr << _T("[Node overflow at ") << start << _T(" chars, ")		// 01/24/02 AM.
-			<< last->getCount() << _T(" nodes.]") << ends;					// 01/24/02 AM.
+			<< last->getCount() << _T(" nodes.]") << std::ends;					// 01/24/02 AM.
 		return errOut(&gerrStr,false,0,0);												// 01/26/02 AM.
 		}
 
@@ -435,8 +435,8 @@ Sym *Tok::internTok(
 {
 if (empty(str) || len <= 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[internTok: Given bad string or length.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[internTok: Given bad string or length.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -444,8 +444,8 @@ if (empty(str) || len <= 0)
 // If token too long, truncate.	// FIX.	// 08/06/06 AM.
 if (len >= MAXSTR)					// FIX.	// 08/06/06 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Intern Token: Too long -- truncating.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Intern Token: Too long -- truncating.]") << std::ends;
 	errOut(&gerrStr,false);
 	len = MAXSTR - 1;	// Recover.	// FIX.	// 08/06/06 AM.
 	}
@@ -455,8 +455,8 @@ Sym *sym;
 _TCHAR *lcstr = 0;
 if (!(sym = htab->hsym_kb(str, len,/*UP*/lcstr)))			// 01/26/99 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Intern Token: Failed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Intern Token: Failed.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}

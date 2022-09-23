@@ -110,14 +110,14 @@ return (Algo &) *ptr;
 bool Intern::Execute(Parse *parse, Seqn *seqn)
 {
 if (parse->Verbose())
-	*gout << _T("[Intern:]") << endl;
+	*gout << _T("[Intern:]") << std::endl;
 
 Tree<Pn> *tree = (Tree<Pn> *) parse->getTree();
 
 if (!tree)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Intern: No parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Intern: No parse tree.]") << std::ends;
 	return errOut(&gerrStr,false,parse->getInputpass(),0);
 	}
 
@@ -126,8 +126,8 @@ root = tree->getRoot();
 
 if (!root)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Intern: Empty parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Intern: Empty parse tree.]") << std::ends;
 	return errOut(&gerrStr,false,parse->getInputpass(),0);
 	}
 
@@ -136,11 +136,11 @@ if (!root)
 Node<Pn> *node;
 if (!(node = root->Down()))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Intern: Rules file '")
 	  // << str(seqn->getRulesfilename())
 		  << str(parse->getInput())					// 03/05/99 AM.
-		  << _T("' not parsed.]") << ends;
+		  << _T("' not parsed.]") << std::ends;
 	return errOut(&gerrStr,false,parse->getInputpass(),0);
 	}
 
@@ -148,8 +148,8 @@ if (node->Right())
 	{
 	if (parse->getIntern())													// 05/26/01 AM.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Pass file has some unhandled text.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Pass file has some unhandled text.]") << std::ends;
 		errOut(&gerrStr,false,parse->getInputpass(),0);
 		}
 	}
@@ -163,24 +163,24 @@ RFASem *sem;
 sem = (RFASem *) pn->getSem();
 if (!sem)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Intern: No semantics for parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Intern: No semantics for parse tree.]") << std::ends;
 	return errOut(&gerrStr,false,parse->getInputpass(),0);
 	}
 
 // Could search for a _RULESFILE node at the top level here.
 if (sem->getType() != RSFILE)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Intern: Couldn't parse rules file.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Intern: Couldn't parse rules file.]") << std::ends;
 	return errOut(&gerrStr,false,parse->getInputpass(),0);
 	}
 
 Ifile *rulesfile;
 if (!(rulesfile = sem->getRulesfile()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Intern: No rules found in file.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Intern: No rules found in file.]") << std::ends;
 	return errOut(&gerrStr,false,parse->getInputpass(),0);
 	}
 
@@ -196,8 +196,8 @@ rules = rulesfile->intern(parse); // Let rules file object internalize itself.
 //if (!(rules = sem->getRules()))			// 12/17/98 AM. Bug!
 if (!rules)											// 12/17/98 AM. Fix.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Intern: No rules.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Intern: No rules.]") << std::ends;
 	return errOut(&gerrStr,false,parse->getInputpass(),0);
 	}
 

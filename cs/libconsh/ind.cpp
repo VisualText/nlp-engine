@@ -113,7 +113,7 @@ long ord;			/* Ordinality of proxy in con's phrase. */
 
 if (args)
    {
-   *out << _T("Too many args in IND ACTION command.") << endl;
+   *out << _T("Too many args in IND ACTION command.") << std::endl;
    return(false);
    }
 
@@ -210,7 +210,7 @@ ALIST *alist = cg->alist_;
 
 if (args)
    {
-   *out << _T("Too many args in IND ATTR command.") << endl;
+   *out << _T("Too many args in IND ATTR command.") << std::endl;
    return(false);
    }
 
@@ -334,7 +334,7 @@ ALIST *alist = cg->alist_;
 
 if (args)
    {
-   *out << _T("Too many args in IND ATTR command.") << endl;
+   *out << _T("Too many args in IND ATTR command.") << std::endl;
    return(false);
    }
 
@@ -468,7 +468,7 @@ ALIST *alist = cg->alist_;
 
 if (args)
    {
-   *out << _T("Too many args in IND ATTR command.") << endl;
+   *out << _T("Too many args in IND ATTR command.") << std::endl;
    return(false);
    }
 
@@ -575,7 +575,7 @@ ALIST *alist = cg->alist_;
 
 if (args)
    {
-   *out << _T("Too many args in IND CHILDS command.") << endl;
+   *out << _T("Too many args in IND CHILDS command.") << std::endl;
    return(false);
    }
 
@@ -596,7 +596,7 @@ if (!ok)
    }
 
 if (!ends || _tcscmp(_T("end"), ALIST::list_str(&ends,buf)))
-   *out << _T("ind childs: Missing 'end ind'.") << endl;
+   *out << _T("ind childs: Missing 'end ind'.") << std::endl;
 alist->list_free(ends, LNULL);
 
 /* ADD CHILDREN TO HIERARCHY */
@@ -648,7 +648,7 @@ ALIST *alist = cg->alist_;
 
 if (args)
    {
-   *out << _T("Too many args in IND ATTR command.") << endl;
+   *out << _T("Too many args in IND ATTR command.") << std::endl;
    return(false);
    }
 
@@ -674,7 +674,7 @@ for (;;)
 
    if (list->next)
       {
-      _t_cerr << _T("ind named_phrase: Not handling multi-word names.") << endl;
+      std::_t_cerr << _T("ind named_phrase: Not handling multi-word names.") << std::endl;
       alist->list_free(list, LNULL);
       return(false);
       }
@@ -686,10 +686,10 @@ for (;;)
    
    if (count > MAX_PHRASE_ELTS)
       {
-      _t_cerr << _T("ind named_phrase: More than ")
+      std::_t_cerr << _T("ind named_phrase: More than ")
 			  << MAX_PHRASE_ELTS
 			  << _T(" elements.")
-			  << endl;
+			  << std::endl;
       return(false);
       }
    }
@@ -752,7 +752,7 @@ ALIST *alist = cg->alist_;
 
 if (args)
    {
-   *out << _T("Too many args in IND ATTR command.") << endl;
+   *out << _T("Too many args in IND ATTR command.") << std::endl;
    return(false);
    }
 
@@ -760,7 +760,7 @@ if (args)
 ok = ui_read_con(_T("con>  "), in, out, i_flag, silent,cg, /*UP*/ &con);
 if (!ok)
 	{
-	*cgerr << _T("[ind phrase: Can't read concept.]") << endl;
+	*cgerr << _T("[ind phrase: Can't read concept.]") << std::endl;
 	return(false);
 	}
 
@@ -774,7 +774,7 @@ for (;;)
    ok  = args_read(in, out, silent,alist, buf,CMD_SIZE, &list);
    if (!ok)
 		{
-		*cgerr << _T("[ind phrase: Can't get elt.]") << endl;
+		*cgerr << _T("[ind phrase: Can't get elt.]") << std::endl;
 		return(false);
 		}
    
@@ -788,7 +788,7 @@ for (;;)
    alist->list_free(list, LNULL);
    if (!ok)
 		{
-		*cgerr << _T("[ind phrase: Can't convert path to con.]") << endl;
+		*cgerr << _T("[ind phrase: Can't convert path to con.]") << std::endl;
 		return(false);
 		}
    
@@ -799,14 +799,14 @@ for (;;)
 			  <<_T("ind phrase: More than ")
 			  << MAX_PHRASE_ELTS
 			  << _T(" elements.")
-			  << endl;
+			  << std::endl;
       return(false);
       }
    }
 
 if (!count)
 	{
-	*cgerr << _T("[ind phrase: No count.]") << endl;	// 10/05/99 AM.
+	*cgerr << _T("[ind phrase: No count.]") << std::endl;	// 10/05/99 AM.
 	return(false);
 	}
 
@@ -873,7 +873,7 @@ long ord;			/* Ordinality of proxy in phrase. */
 
 if (args)
    {
-   *out << _T("Too many args in IND PROXY command.") << endl;
+   *out << _T("Too many args in IND PROXY command.") << std::endl;
    return(false);
    }
 
@@ -980,7 +980,7 @@ long ord;			/* Ordinality of proxy in con's phrase. */
 
 if (args)
    {
-   *out << _T("Too many args in IND ACTION command.") << endl;
+   *out << _T("Too many args in IND ACTION command.") << std::endl;
    return(false);
    }
 

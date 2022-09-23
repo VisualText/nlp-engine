@@ -92,8 +92,8 @@ Mode *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Mode object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Mode object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -108,7 +108,7 @@ return *this;
 /*******************************************/
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Mode &mode)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Mode &mode)
 {
 output << _T("mode(");
 if (mode.getLit())
@@ -317,14 +317,14 @@ int Mode::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Mode::prettyCount(_t_ofstream *ofstr)
+void Mode::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Mode count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Mode count=") << count_ << ends;
+		*ofstr << _T("Active Mode count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Mode count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }

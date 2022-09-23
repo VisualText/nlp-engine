@@ -433,7 +433,7 @@ long jj, tot;
 CON *con;
 
 if (!out)	// 02/20/19 AM.
-  out = &std::_t_cout;	// 02/20/19 AM.
+  out = &(std::_t_cout);	// 02/20/19 AM.
 
 //fprintf(out, "Concept Table\n");	// 04/20/99 AM.
 //fprintf(out, "-------------\n");	// 04/20/99 AM.

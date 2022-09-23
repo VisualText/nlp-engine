@@ -121,14 +121,14 @@ int PostRFA::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void PostRFA::prettyCount(_t_ofstream *ofstr)
+void PostRFA::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active PostRFA count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active PostRFA count=") << count_ << ends;
+		*ofstr << _T("Active PostRFA count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active PostRFA count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -152,15 +152,15 @@ bool PostRFA::postRFAname(
 
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA name action: One arg required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA name action: One arg required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA name action: Semantic object already built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA name action: Semantic object already built.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -169,8 +169,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if ((args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA name action: More than one arg given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA name action: More than one arg given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -188,8 +188,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA name action: Arg must be string.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA name action: Arg must be string.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		return false;
 		}
@@ -216,11 +216,11 @@ Node<Pn> *nelt;
 nelt = coll1->Down();
 
 if (Verbose())
-	*gout << _T("   [Executing RFA name action.]") << endl;
+	*gout << _T("   [Executing RFA name action.]") << std::endl;
 
 if (Debug())
 	{
-	*gout << _T("token=") << *nelt << endl;
+	*gout << _T("token=") << *nelt << std::endl;
 	}
 
 ////////////////////////
@@ -260,15 +260,15 @@ bool PostRFA::postRFAnum(
 
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA num action: One arg required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA num action: One arg required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA num action: Semantic object already built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA num action: Semantic object already built.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -277,8 +277,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if ((args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA num action: More than one arg given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA num action: More than one arg given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -296,8 +296,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA num action: Arg must be string.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA num action: Arg must be string.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		return false;
 		}
@@ -325,11 +325,11 @@ Node<Pn> *nelt;
 nelt = coll1->Down();
 
 if (Verbose())
-	*gout << _T("   [Executing RFA num action.]") << endl;
+	*gout << _T("   [Executing RFA num action.]") << std::endl;
 
 if (Debug())
 	{
-	*gout << _T("token=") << *nelt << endl;
+	*gout << _T("token=") << *nelt << std::endl;
 	}
 
 ////////////////////////
@@ -349,7 +349,7 @@ RFASem *rfasem;
 //long num;											// 11/15/99 AM.
 //if (!str_to_long(name, /*UP*/ num))			// 11/15/99 AM.
 //	{
-//	*gout << "[Couldn't convert to num=" << name << "]" << endl;
+//	*gout << "[Couldn't convert to num=" << name << "]" << std::endl;
 //	return false;
 //	}
 //rfasem = new RFASem(num);						// 11/15/99 AM.
@@ -380,15 +380,15 @@ bool PostRFA::postRFAfloat(
 
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA float action: Two args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA float action: Two args required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA float action: Semantic object already built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA float action: Semantic object already built.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -397,8 +397,8 @@ Iarg *arg1 = args->getData();
 
 if (!(args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA float action: Missing arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA float action: Missing arg.]") << std::ends;
 	return nlppp->parse_->errOut(&gerrStr,false,true);
 	}
 
@@ -406,8 +406,8 @@ Iarg *arg2 = args->getData();
 
 if ((args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA float action: Too many args.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA float action: Too many args.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -424,8 +424,8 @@ switch (arg1->getType())
 			return false;
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA float action: Arg must be string.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA float action: Arg must be string.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		return false;
 	}
@@ -442,8 +442,8 @@ switch (arg2->getType())
 			return false;
 		break;
 	default:
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA float action: Arg must be string.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA float action: Arg must be string.]") << std::ends;
 		return nlppp->parse_->errOut(&gerrStr,false,true);
 	}
 
@@ -477,11 +477,11 @@ nelt1 = coll1->Down();
 nelt2 = coll2->Down();
 
 if (Verbose())
-	*gout << _T("   [Executing RFA float action.]") << endl;
+	*gout << _T("   [Executing RFA float action.]") << std::endl;
 
 if (Debug())
 	{
-	*gout << _T("token=") << *nelt1 << _T(".") << *nelt2 << endl;
+	*gout << _T("token=") << *nelt1 << _T(".") << *nelt2 << std::endl;
 	}
 
 ////////////////////////
@@ -502,8 +502,8 @@ part2 = pn->getName();
 float num = 0.0;
 if (!convert_to_float(part1,part2, /*UP*/ num))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA float action: Couldn't build float number.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA float action: Couldn't build float number.]") << std::ends;
 	return nlppp->parse_->errOut(&gerrStr,false,true);
 	}
 
@@ -534,15 +534,15 @@ bool PostRFA::postRFAnonlit(
 
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA nonlit action: One arg required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA nonlit action: One arg required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA nonlit action: Semantic object already built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA nonlit action: Semantic object already built.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -551,8 +551,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if ((args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA nonlit action: More than one arg given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA nonlit action: More than one arg given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -570,8 +570,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA nonlit action: Arg must be string.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA nonlit action: Arg must be string.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		return false;
 		}
@@ -598,11 +598,11 @@ Node<Pn> *nelt;
 nelt = coll1->Down();
 
 if (Verbose())
-	*gout << _T("   [Executing RFA nonlit action.]") << endl;
+	*gout << _T("   [Executing RFA nonlit action.]") << std::endl;
 
 if (Debug())
 	{
-	*gout << _T("token=") << *nelt << endl;
+	*gout << _T("token=") << *nelt << std::endl;
 	}
 
 ////////////////////////
@@ -660,15 +660,15 @@ bool PostRFA::postRFAstr(
 
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA str action: One arg required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA str action: One arg required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA str action: Semantic object already built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA str action: Semantic object already built.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -677,8 +677,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if ((args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA str action: More than one arg given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA str action: More than one arg given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -696,8 +696,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA str action: Arg must be string.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA str action: Arg must be string.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		return false;
 		}
@@ -729,21 +729,21 @@ nend  = coll1->eDown();
 // Also, case where nend == 0.
 if (!nelts || !nend)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA str action: Unhandled null case.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA str action: Unhandled null case.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 
 
 if (Verbose())
-	*gout << _T("   [Executing RFA str action.]") << endl;
+	*gout << _T("   [Executing RFA str action.]") << std::endl;
 
 if (Debug())
 	{
 	*gout << _T("elements=");
 	Pn::prettyNodes(nelts);
-	*gout << endl;
+	*gout << std::endl;
 	}
 
 ////////////////////////
@@ -790,8 +790,8 @@ for (; nelts != bound; nelts = nelts->Right())
 		// WARN: ptr is modified to be at end of new string.
 		if (!strcat_e(ptr, tmpstr, count))								// 09/23/00 AM.
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA str action: Failed to build string.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA str action: Failed to build string.]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false,true);
 			return false;
 			}
@@ -805,8 +805,8 @@ for (; nelts != bound; nelts = nelts->Right())
 		len = pn->getEnd() - pn->getStart() + 1;
 		if (!strncat_e(ptr, text, len, count))
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA str action: Failed to build string.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA str action: Failed to build string.]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false,true);
 			return false;
 			}
@@ -832,7 +832,7 @@ str_to_cstr(buf, /*UP*/ cbuf);											// 08/19/00 AM.
 
 
 // Internalize the string in hash and string table. (Don't really need hash.)
-//*gout << "[postRFAstr: str=\"" << buf << "\"]" << endl;
+//*gout << "[postRFAstr: str=\"" << buf << "\"]" << std::endl;
 Sym *sym = 0;
 _TCHAR *str = 0;				// 12/04/98 AM.
 if (!empty(cbuf))																// 08/19/00 AM.
@@ -874,15 +874,15 @@ bool PostRFA::postRFAarg(
 
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA arg action: One arg required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA arg action: One arg required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA arg action: Semantic object already built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA arg action: Semantic object already built.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -892,8 +892,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if (args->Right())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA arg action: More than one arg given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA arg action: More than one arg given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -911,8 +911,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA arg action: Arg must be string.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA arg action: Arg must be string.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		return false;
 		}
@@ -921,8 +921,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 // Check self-consistency.
 if (num1 <= 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Bad num]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Bad num]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -935,8 +935,8 @@ while (--num1 > 0)
 	{
 	if (!(colls = colls->Right()))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Bad collect.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Bad collect.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		return false;
 		}
@@ -956,8 +956,8 @@ nname = coll1->Down();
 RFASem *semname;
 if (!(semname = (RFASem *) nname->getData()->getSem()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA arg action: No semantic object for name.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA arg action: No semantic object for name.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -982,8 +982,8 @@ switch (semname->getType())											// 11/15/99 AM.
 		str = semname->getNum();										// 12/18/99 AM.
 		if (!str_to_long(str, /*UP*/ num))							// 12/18/99 AM.
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA arg: Couldn't convert to num.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA arg: Couldn't convert to num.]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false,true);
 			return false;													// 12/18/99 AM.
 			}
@@ -994,8 +994,8 @@ switch (semname->getType())											// 11/15/99 AM.
 	case RSSTR:
 		if (!(name = semname->getName()))
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Semname problem.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Semname problem.]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false,true);
 			return false;
 			}
@@ -1003,8 +1003,8 @@ switch (semname->getType())											// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA arg action: Bad semantic type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA arg action: Bad semantic type.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		return false;
 		}
@@ -1040,15 +1040,15 @@ bool PostRFA::postRFAargtolist(
 
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA argtolist action: One arg required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA argtolist action: One arg required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA argtolist action: Semantic object already built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA argtolist action: Semantic object already built.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1058,8 +1058,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if (args->Right())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA argtolist action: More than one arg given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA argtolist action: More than one arg given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1077,8 +1077,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA argtolist action: Arg must be string.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA argtolist action: Arg must be string.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		return false;
 		}
@@ -1087,8 +1087,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 // Check self-consistency.
 if (num1 <= 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Bad num]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Bad num]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1101,8 +1101,8 @@ while (--num1 > 0)
 	{
 	if (!(colls = colls->Right()))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Bad collect.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Bad collect.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		return false;
 		}
@@ -1122,8 +1122,8 @@ niarg = coll1->Down();
 RFASem *semiarg;
 if (!(semiarg = (RFASem *) niarg->getData()->getSem()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA argtolist action: No semantic object for arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA argtolist action: No semantic object for arg.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1133,8 +1133,8 @@ Iarg *iarg;
 
 if (!(iarg = semiarg->getArg()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Sem arg problem.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Sem arg problem.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1198,8 +1198,8 @@ if (semstart)													// 11/15/99 AM.
 			if (!str_to_long(semstart->getNum(), lstart))
 				{
 				nlppp->parse_->setIntern(false);	// Syntax error.	// 05/26/01 AM.
-				_t_strstream gerrStr;
-				gerrStr << _T("[RFA range action: Nonnumeric start.]") << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("[RFA range action: Nonnumeric start.]") << std::ends;
 				return nlppp->parse_->errOut(&gerrStr,false,true);
 				}
 			break;
@@ -1208,8 +1208,8 @@ if (semstart)													// 11/15/99 AM.
 			break;
 		default:
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA range action: Bad start sem object.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA range action: Bad start sem object.]") << std::ends;
 			return nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 		}
@@ -1218,8 +1218,8 @@ if (semstart)													// 11/15/99 AM.
 	}
 else
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA range action: No start sem object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA range action: No start sem object.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1231,8 +1231,8 @@ if (semend)													// 11/15/99 AM.
 			if (!str_to_long(semend->getNum(), lend))
 				{
 				nlppp->parse_->setIntern(false);	// Syntax error.	// 05/26/01 AM.
-				_t_strstream gerrStr;
-				gerrStr << _T("[RFA range action: Nonnumeric end.]") << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("[RFA range action: Nonnumeric end.]") << std::ends;
 				return nlppp->parse_->errOut(&gerrStr,false,true);
 				}
 			break;
@@ -1241,8 +1241,8 @@ if (semend)													// 11/15/99 AM.
 			break;
 		default:
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA range action: Bad end sem object.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA range action: Bad end sem object.]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false,true);
 			return false;
 			}
@@ -1252,8 +1252,8 @@ if (semend)													// 11/15/99 AM.
 	}
 else
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA range action: No end sem object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA range action: No end sem object.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1300,15 +1300,15 @@ bool PostRFA::postRFAlist(
 {
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA list action: One arg required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA list action: One arg required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA list action: Semantic object already built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA list action: Semantic object already built.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1317,8 +1317,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if ((args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA list action: More than one arg given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA list action: More than one arg given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1336,8 +1336,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA list action: Arg must be string.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA list action: Arg must be string.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		return false;
 		}
@@ -1370,20 +1370,20 @@ if (!nargs && !nend)			// Handling zero args.	// 06/16/99 AM.
 
 if (!nargs || !nend)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA list action: Unhandled null case.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA list action: Unhandled null case.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 
 if (Verbose())
-	*gout << _T("   [Executing RFA list action.]") << endl;
+	*gout << _T("   [Executing RFA list action.]") << std::endl;
 
 if (Debug())
 	{
 	*gout << _T("args=");
 	Pn::prettyNodes(nargs);
-	*gout << endl;
+	*gout << std::endl;
 	}
 
 ////////////////////////
@@ -1408,8 +1408,8 @@ for (; nargs != bound; nargs = nargs->Right())
 	semarg = (RFASem *) pn->getSem();
 	if (!semarg || (semarg->getType() != RSARG))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA list action: Non-argument in list.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA list action: Non-argument in list.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		//delete iargs;					// 11/21/98 AM.
 		Dlist<Iarg>::DeleteDlistAndData(iargs);	// 11/21/98 AM.
@@ -1480,22 +1480,22 @@ else
 // (ie, are they _LIT and _LIST.  If not, fail.)
 if (sempre && sempre->getType() != RSARGS)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA action action: Bad semantic type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA action action: Bad semantic type.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (semname->getType() != RSNAME)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA action action: Bad semantic type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA action action: Bad semantic type.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (semlist && semlist->getType() != RSARGS)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA action action: Bad semantic type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA action action: Bad semantic type.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1587,15 +1587,15 @@ bool PostRFA::postRFAlittopair(
 
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA littopair action: One arg required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA littopair action: One arg required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA littopair action: Semantic object already built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA littopair action: Semantic object already built.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1605,8 +1605,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if (args->Right())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA littopair action: More than one arg given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA littopair action: More than one arg given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1624,8 +1624,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA littopair action: Arg must be string.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA littopair action: Arg must be string.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 
@@ -1635,8 +1635,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 // Check self-consistency.
 if (num1 <= 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Bad num]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Bad num]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1649,8 +1649,8 @@ while (--num1 > 0)
 	{
 	if (!(colls = colls->Right()))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Bad collect.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Bad collect.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		return false;
 		}
@@ -1670,8 +1670,8 @@ nlit = coll1->Down();
 RFASem *semlit;
 if (!(semlit = (RFASem *) nlit->getData()->getSem()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA littopair action: No semantic object for lit.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA littopair action: No semantic object for lit.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1681,8 +1681,8 @@ _TCHAR *name;
 
 if (!(name = semlit->getName()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Sem lit problem.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Sem lit problem.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1722,15 +1722,15 @@ bool PostRFA::postRFApair(
 
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA pair action: Two args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA pair action: Two args required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA pair action: Semantic object already built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA pair action: Semantic object already built.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1741,8 +1741,8 @@ Iarg *arg2;
 arg1 = args->getData();
 if (!(args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA pair action: Missing second argument.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA pair action: Missing second argument.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1750,8 +1750,8 @@ arg2 = args->getData();
 
 if (args->Right())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA pair action: More than two args given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA pair action: More than two args given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1769,8 +1769,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA pair action: Arg1 must be string.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA pair action: Arg1 must be string.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 
@@ -1789,8 +1789,8 @@ switch (arg2->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA pair action: Arg2 must be string.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA pair action: Arg2 must be string.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 
@@ -1843,8 +1843,8 @@ if (!(semval = (RFASem *) nval->getData()->getSem()))
 // (ie, are they _KEY and _VAL.  If not, fail.)
 if (semkey->getType() != RSNAME || semval->getType() != RSARGS)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA pair action: Bad semantic type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA pair action: Bad semantic type.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1895,15 +1895,15 @@ bool PostRFA::postRFApairs(
 
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA pairs action: One arg required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA pairs action: One arg required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA pairs action: Semantic object already built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA pairs action: Semantic object already built.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1912,8 +1912,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if ((args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA pairs action: More than one arg given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA pairs action: More than one arg given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -1931,8 +1931,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA pairs action: Arg must be string.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA pairs action: Arg must be string.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 
@@ -1963,7 +1963,7 @@ nend  = coll1->eDown();
 
 if (!npair || !nend)
 	{
-//	*gerr << "[RFA pairs action: Unhandled null case.]" << endl;
+//	*gerr << "[RFA pairs action: Unhandled null case.]" << std::endl;
 //	return false;
 	// Empty pairs.  // 06/04/99 AM.
 	nlppp->sem_ = 0;				// Try this.
@@ -1971,13 +1971,13 @@ if (!npair || !nend)
 	}
 
 if (Verbose())
-	*gout << _T("   [Executing RFA pairs action.]") << endl;
+	*gout << _T("   [Executing RFA pairs action.]") << std::endl;
 
 if (Debug())
 	{
 	*gout << _T("pairs=");
 	Pn::prettyNodes(npair);
-	*gout << endl;
+	*gout << std::endl;
 	}
 
 
@@ -2003,8 +2003,8 @@ for (; npair != bound; npair = npair->Right())
 	sempair = (RFASem *) pn->getSem();
 	if (!sempair || (sempair->getType() != RSPAIR))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA pair action: Non-pair in list.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA pair action: Non-pair in list.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 
 		//delete ipairs;
@@ -2145,15 +2145,15 @@ if (!args_1or2(_T("nonlitelt"), args, nlppp->collect_, nlppp->sem_, /*DU*/ nname
 RFASem *semname, *sempairs;
 if (!(semname = (RFASem *) nname->getData()->getSem()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA nonlit elt action: No semantic object for name.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA nonlit elt action: No semantic object for name.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (npairs)
 	{
-	*gout << _T("npairs=") << *npairs << endl;
-	*gout << _T("data=") << *(npairs->getData()) << endl;
+	*gout << _T("npairs=") << *npairs << std::endl;
+	*gout << _T("data=") << *(npairs->getData()) << std::endl;
 	sempairs = (RFASem *) npairs->getData()->getSem();
 	}
 else
@@ -2170,8 +2170,8 @@ _TCHAR *name;
 
 if (sempairs && !(pairs = sempairs->getPairs()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Sempairs problem.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Sempairs problem.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -2179,8 +2179,8 @@ else
 	pairs = 0;
 if (!(name = semname->getName()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Semname problem.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Semname problem.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -2234,15 +2234,15 @@ bool PostRFA::postRFAelement(
 
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA element action: Two args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA element action: Two args required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA element action: Semantic object already built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA element action: Semantic object already built.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -2252,8 +2252,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if (!(args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA element action: Two args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA element action: Two args required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -2263,8 +2263,8 @@ arg2 = args->getData();
 
 if (args->Right())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA element action: More than two args given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA element action: More than two args given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -2281,8 +2281,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA element action: Arg1 must be numeric.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA element action: Arg1 must be numeric.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 
@@ -2301,8 +2301,8 @@ switch (arg2->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA element action: Arg2 must be numeric.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA element action: Arg2 must be numeric.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 
@@ -2369,7 +2369,7 @@ if (sempairs)
 	{
 	if (!(pairs = sempairs->getPairs()))
 		{
-		*gout << _T("[RFA pairs action: No pairs.]") << endl;
+		*gout << _T("[RFA pairs action: No pairs.]") << std::endl;
 		}
 	}
 if (!(name = semname->getName()))
@@ -2424,15 +2424,15 @@ bool PostRFA::postRFAelt(
 
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA elt action: One arg required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA elt action: One arg required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA elt action: Semantic object already built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA elt action: Semantic object already built.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -2441,8 +2441,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if ((args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA elt action: More than one arg given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA elt action: More than one arg given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -2459,8 +2459,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA elt action: Arg must be numeric.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA elt action: Arg must be numeric.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 
@@ -2488,13 +2488,13 @@ Node<Pn> *nelt;
 nelt = coll1->Down();
 
 if (Verbose())
-	*gout << _T("   [Executing RFA elt action.]") << endl;
+	*gout << _T("   [Executing RFA elt action.]") << std::endl;
 
 if (Debug())
 	{
 	*gout << _T("element=") << *nelt;
 //	Pn::prettyNodes(nelt);
-	*gout << endl;
+	*gout << std::endl;
 	}
 
 ////////////////////////
@@ -2542,15 +2542,15 @@ bool PostRFA::postRFArulelts(
 
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA rulelts action: One arg required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA rulelts action: One arg required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA rulelts action: Semantic object already built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA rulelts action: Semantic object already built.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -2559,8 +2559,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if ((args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA rulelts action: More than one arg given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA rulelts action: More than one arg given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -2578,8 +2578,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA rulelts action: Arg1 must be numeric.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA rulelts action: Arg1 must be numeric.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 
@@ -2610,20 +2610,20 @@ nend  = coll1->eDown();
 
 if (!nelts || !nend)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA rulelts action: Unhandled null case.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA rulelts action: Unhandled null case.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 
 if (Verbose())
-	*gout << _T("   [Executing RFA rulelts action.]") << endl;
+	*gout << _T("   [Executing RFA rulelts action.]") << std::endl;
 
 if (Debug())
 	{
 	*gout << _T("elements=");
 	Pn::prettyNodes(nelts);
-	*gout << endl;
+	*gout << std::endl;
 	}
 
 ////////////////////////
@@ -2691,15 +2691,15 @@ bool PostRFA::postRFAsugg(
 
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA sugg action: One arg required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA sugg action: One arg required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA sugg action: Semantic object already built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA sugg action: Semantic object already built.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -2708,8 +2708,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if ((args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA sugg action: More than one arg given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA sugg action: More than one arg given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -2727,8 +2727,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA sugg action: Arg1 must be numeric.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA sugg action: Arg1 must be numeric.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 
@@ -2757,13 +2757,13 @@ Node<Pn> *nelt;
 nelt = coll1->Down();
 
 if (Verbose())
-	*gout << _T("   [Executing RFA sugg action.]") << endl;
+	*gout << _T("   [Executing RFA sugg action.]") << std::endl;
 
 if (Debug())
 	{
 	*gout << _T("element=");
 	Pn::prettyNodes(nelt);
-	*gout << endl;
+	*gout << std::endl;
 	}
 
 ////////////////////////
@@ -2822,15 +2822,15 @@ bool PostRFA::postRFArule(
 
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA rule action: Two args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA rule action: Two args required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA rule action: Semantic object already built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA rule action: Semantic object already built.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -2839,8 +2839,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if (!(args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA rule action: Two args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA rule action: Two args required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -2850,8 +2850,8 @@ arg2 = args->getData();
 
 if (args->Right())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA rule action: More than two args given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA rule action: More than two args given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -2869,8 +2869,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA rule action: Arg1 must be numeric.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA rule action: Arg1 must be numeric.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 
@@ -2889,8 +2889,8 @@ switch (arg2->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA rule action: Arg2 must be numeric.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA rule action: Arg2 must be numeric.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 
@@ -2928,14 +2928,14 @@ nsugg = coll1->Down();
 nphrase = coll2->Down();
 
 if (Verbose())
-	*gout << _T("   [Executing RFA rule action.]") << endl;
+	*gout << _T("   [Executing RFA rule action.]") << std::endl;
 
 if (Debug())
 	{
-	*gout << _T("sugg=") << *nsugg << endl;
+	*gout << _T("sugg=") << *nsugg << std::endl;
 	*gout << _T("phrase=");
 	Pn::prettyNodes(nphrase);
-	*gout << endl;
+	*gout << std::endl;
 	}
 
 ////////////////////////
@@ -2948,8 +2948,8 @@ if (!nphrase)																	// 02/14/02 AM.
 		nlppp->parse_->inputline_											// 08/24/02 AM.
 				= nlppp->node_->getData()->getLine();					// 02/14/02 AM.
 		}
-	_t_strstream gerrStr;						// 02/14/02 AM.
-	gerrStr << _T("[Error: Could not read rule.]") << ends;			// 02/14/02 AM.
+	std::_t_strstream gerrStr;						// 02/14/02 AM.
+	gerrStr << _T("[Error: Could not read rule.]") << std::ends;			// 02/14/02 AM.
 	return nlppp->parse_->errOut(&gerrStr,false,true);			// 02/14/02 AM.
 	}
 
@@ -2961,16 +2961,16 @@ RFASem *semphrase;
 semphrase = (RFASem *) pn->getSem();
 if (!semphrase)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA rule action: No phrase.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA rule action: No phrase.]") << std::ends;
 	return nlppp->parse_->errOut(&gerrStr,false,true);
 	}
 if (semphrase->getType() != RSPHRASE)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Wrong type for semantic phrase object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Wrong type for semantic phrase object.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
-	gerrStr << _T("[type=") << ((int) semphrase->getType()) << _T("]") << ends;
+	gerrStr << _T("[type=") << ((int) semphrase->getType()) << _T("]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -3019,7 +3019,7 @@ if (Debug())
 	{
 	*gout << _T("RFA RULE ACTION: RULE = ");
 	*gout << *rule;
-	*gout << endl;
+	*gout << std::endl;
 	}
 
 RFASem *rfasem;
@@ -3047,15 +3047,15 @@ bool PostRFA::postRFArules(
 
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA rules action: One arg required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA rules action: One arg required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA rules action: Semantic object already built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA rules action: Semantic object already built.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -3064,8 +3064,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if ((args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA rules action: More than one arg given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA rules action: More than one arg given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -3083,8 +3083,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA rulesaction action: Arg must be numeric.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA rulesaction action: Arg must be numeric.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 
@@ -3115,20 +3115,20 @@ nend  = coll1->eDown();
 
 if (!nrule || !nend)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA rules action: Unhandled null case.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA rules action: Unhandled null case.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 
 if (Verbose())
-	*gout << _T("   [Executing RFA rules action.]") << endl;
+	*gout << _T("   [Executing RFA rules action.]") << std::endl;
 
 if (Debug())
 	{
 	*gout << _T("rules=");
 	Pn::prettyNodes(nrule);
-	*gout << endl;
+	*gout << std::endl;
 	}
 
 ////////////////////////
@@ -3174,7 +3174,7 @@ for (; nrule != bound; nrule = nrule->Right())
 	}
 
 if (Debug())
-	*gout << _T("RFA RULES ACTION: RULES = ") << *rules << endl;
+	*gout << _T("RFA RULES ACTION: RULES = ") << *rules << std::endl;
 
 RFASem *rfasem;
 rfasem = new RFASem(rules);
@@ -3211,8 +3211,8 @@ if (!args_1(_T("actions"), args, nlppp->collect_, nlppp->sem_, /*DU*/ nlit, nend
 RFASem *semlit;
 if (!(semlit = (RFASem *) nlit->getData()->getSem()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA littoaction action: No semantic object for lit.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA littoaction action: No semantic object for lit.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -3222,8 +3222,8 @@ _TCHAR *name;
 
 if (!(name = semlit->getName()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Sem lit problem.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Sem lit problem.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -3289,9 +3289,9 @@ for (; nstart != bound; nstart = nstart->Right())
 	assert(pn);
 	if (!(semaction = (RFASem *) pn->getSem()))			// 11/08/99 AM.
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[RFA actions action: Null action in list.]")
-				  << ends;
+				  << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		Dlist<Iaction>::DeleteDlistAndData(iactions);
 		return false;
@@ -3316,10 +3316,10 @@ for (; nstart != bound; nstart = nstart->Right())
 			break;
 		case RSPRE:
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr <<
 				_T("[RFA actions action: Pre-action not ok in check,post actions.]")
-					<< ends;
+					<< std::ends;
 			nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 
@@ -3327,8 +3327,8 @@ for (; nstart != bound; nstart = nstart->Right())
 			return false;
 		default:
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA actions action: Non-action in list.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA actions action: Non-action in list.]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 
@@ -3392,8 +3392,8 @@ for (; nstart != bound; nstart = nstart->Right())
 	semaction = (RFASem *) pn->getSem();
 	if (!semaction || (semaction->getType() != RSPRE))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA pres action: Non pre action in list.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA pres action: Non pre action in list.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 
 		Dlist<Ipre>::DeleteDlistAndData(iactions);
@@ -3466,9 +3466,9 @@ for (; nstart != bound; nstart = nstart->Right())
 	semaction = (RFASem *) pn->getSem();
 	if (semaction && (semaction->getType() == RSPRE))
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[RFA code action: Pre-action not ok here.]")
-				  << ends;
+				  << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 
 		Dlist<Iaction>::DeleteDlistAndData(iactions);
@@ -3476,8 +3476,8 @@ for (; nstart != bound; nstart = nstart->Right())
 		}
 	if (!semaction || (semaction->getType() != RSACTION))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA code action: Non-action in list.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA code action: Non-action in list.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 
 		//delete iactions;
@@ -3523,15 +3523,15 @@ bool PostRFA::postRFAnodes(
 {
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA nodes action: One arg required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA nodes action: One arg required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA nodes action: Semantic object already built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA nodes action: Semantic object already built.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -3540,8 +3540,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if (!(args = args->Right()))			// 03/25/99 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA nodes action: Missing nodes/multi arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA nodes action: Missing nodes/multi arg.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -3561,8 +3561,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA nodes action: Arg1 must be numeric.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA nodes action: Arg1 must be numeric.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		return false;
 		}
@@ -3570,8 +3570,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 
 if (arg2->getType() != IASTR)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA nodes action: Arg must be string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA nodes action: Arg must be string.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -3589,9 +3589,9 @@ if (_tcscmp(ltype, _T("nodes"))
 	 && _tcscmp(ltype, _T("path"))				// 10/19/99 AM.
 	 )
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[rfanodes: 2nd arg must be 'nodes', 'multi', or 'path'.]")
-			<< ends;
+			<< std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -3614,20 +3614,20 @@ nnls = coll1->Down();
 nend  = coll1->eDown();
 if (!nnls || !nend)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA nodes action: Unhandled null case.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA nodes action: Unhandled null case.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 
 if (Verbose())
-	*gout << _T("   [Executing RFA nodes action.]") << endl;
+	*gout << _T("   [Executing RFA nodes action.]") << std::endl;
 
 if (Debug())
 	{
 	*gout << _T("args=");
 	Pn::prettyNodes(nnls);
-	*gout << endl;
+	*gout << std::endl;
 	}
 
 ////////////////////////
@@ -3652,8 +3652,8 @@ for (; nnls != bound; nnls = nnls->Right())
 	semnl = (RFASem *) pn->getSem();
 	if (!semnl || (semnl->getType() != RSNAME))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA nodes action: Non-name in list.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA nodes action: Non-name in list.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 
 		//delete iargs;					// 11/21/98 AM.
@@ -3722,8 +3722,8 @@ if (!args_1(_T("select"), args, nlppp->collect_, nlppp->sem_, /*DU*/ nnodes, nen
 RFASem *semnodes;
 if (!(semnodes = (RFASem *) nnodes->getData()->getSem()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA select action: No semantic object for nodes.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA select action: No semantic object for nodes.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -3777,33 +3777,33 @@ if (nposts)
 if (nrules)
 	semrules = (RFASem *) nrules->getData()->getSem();
 //if (!sempres || !semposts || !semrules)
-//	*gerr << "[RFA region action: Missing semantic object. Ignored.]" << endl;
+//	*gerr << "[RFA region action: Missing semantic object. Ignored.]" << std::endl;
 
 if (sempres && sempres->getType() != RSPRES)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA region action: Bad pre semantic object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA region action: Bad pre semantic object.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (semchecks && semchecks->getType() != RSACTIONS)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA region action: Bad check semantic object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA region action: Bad check semantic object.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (semposts && semposts->getType() != RSACTIONS)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA region action: Bad post semantic object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA region action: Bad post semantic object.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (semrules && semrules->getType() != RSRULES)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA region action: Bad rules semantic object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA region action: Bad rules semantic object.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -3900,8 +3900,8 @@ for (; nstart != bound; nstart = nstart->Right())
 	semregion = (RFASem *) pn->getSem();
 	if (!semregion || (semregion->getType() != RSREGION))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA regions action: Non-region in list.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA regions action: Non-region in list.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 
 		delete (Slist<Iregion> *) iregions;
@@ -3953,9 +3953,9 @@ if (!args_0to3(_T("recurse"), args, nlppp->collect_, nlppp->sem_, /*DU*/ nname,n
 
 if (nname <= (void *)0)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA recurse action: Argument for region name is required.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -3978,30 +3978,30 @@ if (ncheck)
 
 if (!semname)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA recurse action: Missing semantic object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA recurse action: Missing semantic object.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 
 if (/*semname &&*/ semname->getType() != RSNAME)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA recurse action: Bad name semantic object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA recurse action: Bad name semantic object.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (semregs && semregs->getType() != RSREGIONS)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA recurse action: Bad regions semantic object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA recurse action: Bad regions semantic object.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (semcheck && semcheck->getType() != RSNAME)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA recurse action: Bad check semantic object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA recurse action: Bad check semantic object.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -4042,16 +4042,16 @@ if (semcheck)
 // Some semantic checking.
 if (check && strcmp_i(name, check))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA recurse action: Nonmatching names in region=(")
-		  << name << _T(",") << check << _T(").  Please fix.]") << ends;
+		  << name << _T(",") << check << _T(").  Please fix.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	}
 if (!regs)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA recurse action: No rules found in recurse region.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	}
 
@@ -4108,8 +4108,8 @@ for (; nstart != bound; nstart = nstart->Right())
 	semrecurse = (RFASem *) pn->getSem();
 	if (!semrecurse || (semrecurse->getType() != RSRECURSE))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA recurses action: Non-recurse in list.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA recurses action: Non-recurse in list.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 
 		delete (Slist<Irecurse> *) irecurses;
@@ -4164,9 +4164,9 @@ if (!nregions
 	 && !ncode																	// 08/31/00 AM.
 	 && !ndecl )																// 12/19/01 AM.
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA rulesfile action: Requiring rules or code in file.]")
-			  << ends;
+			  << std::ends;
 	return nlppp->parse_->errOut(&gerrStr,false,true);
 	}
 
@@ -4191,14 +4191,14 @@ if (nregions)
 
 if (semdecl && semdecl->getType() != RSARGS)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA rulesfile action: Bad @decl semantic object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA rulesfile action: Bad @decl semantic object.]") << std::ends;
 	return nlppp->parse_->errOut(&gerrStr,false,true);
 	}
 if (semcode && semcode->getType() != RSACTIONS)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA rulesfile action: Bad code semantic object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA rulesfile action: Bad code semantic object.]") << std::ends;
 	return nlppp->parse_->errOut(&gerrStr,false,true);
 	}
 //if (semselect && semselect->getType() != RSARGS)		// 03/25/99 AM.
@@ -4208,20 +4208,20 @@ if (semselect
     && semselect->getType() != RSPATH						// 10/19/99 AM.
 	 )
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA rulesfile action: Bad select semantic object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA rulesfile action: Bad select semantic object.]") << std::ends;
 	return nlppp->parse_->errOut(&gerrStr,false,true);
 	}
 if (semrecs && semrecs->getType() != RSRECURSES)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA rulesfile action: Bad recurses semantic object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA rulesfile action: Bad recurses semantic object.]") << std::ends;
 	return nlppp->parse_->errOut(&gerrStr,false,true);
 	}
 if (semregions && semregions->getType() != RSREGIONS)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA rulesfile action: Bad regions semantic object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA rulesfile action: Bad regions semantic object.]") << std::ends;
 	return nlppp->parse_->errOut(&gerrStr,false,true);
 	}
 
@@ -4297,12 +4297,12 @@ nlppp->sem_ = rfasem;
 // Shutting this down for now.		// 12/25/98 AM.
 // Should be put in a more generic place.
 /*
-*gout << endl
+*gout << std::endl
 		<< "*********************\n"
 		<< " INTERNAL RULES FILE\n"
 		<< "*********************"
-		<< endl;
-*gout << *ifile << endl;
+		<< std::endl;
+*gout << *ifile << std::endl;
 */
 return true;
 }
@@ -4336,16 +4336,16 @@ if (!args_1(_T("movesem"), args, nlppp->collect_, nlppp->sem_, /*DU*/ nstart, ne
 
 if (!nstart)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA movesem action: Requires one argument.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA movesem action: Requires one argument.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
 if (nstart != nend)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA movesem action: Can't handle multiple nodes.]")
-			<< ends;
+			<< std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -4356,7 +4356,7 @@ RFASem *semchild;
 if (!(semchild = (RFASem *) pnchild->getSem()))
 	{
 	//*gerr << "[RFA movesem action: Node has no semantics to move.]"
-	//		<< endl;
+	//		<< std::endl;
 	//return false;
 	return true;		// Treating this as ok.
 	}
@@ -4406,7 +4406,7 @@ if (!(sem = (RFASem *) pn->getSem()))
 	// FIX. Allow empty statements.										// 08/01/00 AM.
 	// "Statement" could be a _NUM or _STR.
 	// But not handling these useless cases for now.
-//	*gerr << "[RFB makestmt: No semantics in expr. Unimplemented.]" << endl;
+//	*gerr << "[RFB makestmt: No semantics in expr. Unimplemented.]" << std::endl;
 //	return false;				// 08/01/00 AM.
 	}
 
@@ -4431,8 +4431,8 @@ switch (sem->getType())
 		{
 		nlppp->parse_->inputline_											// 08/24/02 AM.
 					= pn->getLine();// Line num in INPUT pass file.	// 05/29/01 AM.
-		_t_strstream gerrStr;					// 05/29/01 AM.
-		gerrStr << _T("[Warning: Missing ';']") << ends;					// 05/29/01 AM.
+		std::_t_strstream gerrStr;					// 05/29/01 AM.
+		gerrStr << _T("[Warning: Missing ';']") << std::ends;					// 05/29/01 AM.
 		nlppp->parse_->errOut(&gerrStr,true,true);
 										// Pass num of INPUT pass file.	// 05/29/01 AM.
 		// Convert to expr statement type.
@@ -4522,8 +4522,8 @@ Slist<Istmt> *block = 0;			// 12/15/99 AM.
 Istmt *stmt = 0, *stmt1 = 0;
 if (!(semstmts = (RFASem *) pnstmts->getSem()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA addstmt action: No semantics in stmts.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA addstmt action: No semantics in stmts.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -4561,8 +4561,8 @@ else
 			break;
 		default:
 			{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA addstmt action: Bad stmts semantic object.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA addstmt action: Bad stmts semantic object.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 
@@ -4574,7 +4574,7 @@ else
 if (!(semstmt = (RFASem *) pnstmt->getSem()))
 	{
 	// FIX. Handling empty statements.									// 08/01/00 AM.
-//	*gerr << "[RFA addstmt action: No semantics in stmt.]" << endl;
+//	*gerr << "[RFA addstmt action: No semantics in stmt.]" << std::endl;
 //	return false;											// FIX.			// 08/01/00 AM.
 	}
 else
@@ -4586,8 +4586,8 @@ else
 			{
 			nlppp->parse_->inputline_										// 08/24/02 AM.
 					= pnstmt->getLine();// Line num in INPUT file.	// 05/29/01 AM.
-			_t_strstream gerrStr;				// 05/29/01 AM.
-			gerrStr << _T("[Warning: Missing ';']") << ends;				// 05/29/01 AM.
+			std::_t_strstream gerrStr;				// 05/29/01 AM.
+			gerrStr << _T("[Warning: Missing ';']") << std::ends;				// 05/29/01 AM.
 			nlppp->parse_->errOut(&gerrStr,true,true);// Pass num of INPUT file.	// 05/29/01 AM.
 			}
 			// Build stmt semantic object.
@@ -4611,8 +4611,8 @@ else
 			break;
 		default:
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA addstmt action: Bad stmt semantic object.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA addstmt action: Bad stmt semantic object.]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 
@@ -4665,9 +4665,9 @@ if (!(semcond = (RFASem *) pncond->getSem()))
 	{
 	// Condition could be a _NUM or _STR.
 	// But not handling these useless cases for now.
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ifstmt action: No semantics in cond. Unimplemented.]")
-			  << ends;
+			  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 
 	return false;
@@ -4685,8 +4685,8 @@ else
 			break;
 		default:
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA ifstmt action: Bad cond semantic object.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA ifstmt action: Bad cond semantic object.]") << std::ends;
 			return nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 		}
@@ -4696,7 +4696,7 @@ if (!(semif = (RFASem *) pnif->getSem()))
 	{
 	// FIX. ALLOWING EMPTY IF STATEMENTS.							// 08/01/00 AM.
 	// Could be _NUM, _STR. Unimplemented.
-//	*gerr << "[RFA ifstmt action: No semantics in if-part. Unimplemented.]" << endl;
+//	*gerr << "[RFA ifstmt action: No semantics in if-part. Unimplemented.]" << std::endl;
 //	return false;									// FIX.				// 08/01/00 AM.
 	}
 else
@@ -4711,8 +4711,8 @@ else
 			{
 			nlppp->parse_->inputline_										// 08/24/02 AM.
 						= pnif->getLine();// Line num in INPUT file.	// 05/29/01 AM.
-			_t_strstream gerrStr;				// 05/29/01 AM.
-			gerrStr << _T("[Warning: Missing ';']") << ends;				// 05/29/01 AM.
+			std::_t_strstream gerrStr;				// 05/29/01 AM.
+			gerrStr << _T("[Warning: Missing ';']") << std::ends;				// 05/29/01 AM.
 			nlppp->parse_->errOut(&gerrStr,true,true);// Pass num of INPUT file.	// 05/29/01 AM.
 			}
 			// Converting to stmt type, so that code gen
@@ -4725,9 +4725,9 @@ else
 			break;		// These are ok.  Nothing to do.
 		default:
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[RFA ifstmt action: Bad if-part semantic object.]")
-					  << ends;
+					  << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 
@@ -4780,8 +4780,8 @@ Iifstmt *stmt = 0;
 RFASem *elsepart = 0;
 if (!(semifstmt = (RFASem *) pnifstmt->getSem()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA ifelse action: No semantics in if-statement.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA ifelse action: No semantics in if-statement.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -4789,22 +4789,22 @@ else
 	{
 	if (semifstmt->getType() != RSSTMT)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA ifelse action: Bad if-stmt semantic object.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA ifelse action: Bad if-stmt semantic object.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		return false;
 		}
 	if (!(stmt = (Iifstmt *)(semifstmt->getStmt())))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA ifelse action: No if-statement object.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA ifelse action: No if-statement object.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		return false;
 		}
 	if (_tcscmp(_T("ifstmt"), stmt->getType()))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA ifelse action: Non if-statement.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA ifelse action: Non if-statement.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 		return false;
 		}
@@ -4813,8 +4813,8 @@ else
 if (!(semelse = (RFASem *) pnelse->getSem()))
 	{
 	// Could be _NUM, _STR. Unimplemented.
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA ifelse action: No semantics in else-part. Unimplemented.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA ifelse action: No semantics in else-part. Unimplemented.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -4829,8 +4829,8 @@ else
 			break;		// These are ok.  Nothing to do.
 		default:
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA ifelse action: Bad else-part sem object.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA ifelse action: Bad else-part sem object.]") << std::ends;
 			return nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 		}
@@ -4882,8 +4882,8 @@ if (!(semcond = (RFASem *) pncond->getSem()))
 	{
 	// Condition could be a _NUM or _STR.
 	// But not handling these useless cases for now.
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA whilestmt action: No semantics in cond. Unimplemented.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA whilestmt action: No semantics in cond. Unimplemented.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -4900,9 +4900,9 @@ else
 			break;
 		default:
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[RFA whilestmt action: Bad cond semantic object.]")
-					  << ends;
+					  << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false,true);
 			return false;
 			}
@@ -4926,8 +4926,8 @@ else
 			{
 			nlppp->parse_->inputline_										// 08/24/02 AM.
 					= pnblock->getLine();// Line num in INPUT file.	// 05/29/01 AM.
-			_t_strstream gerrStr;				// 05/29/01 AM.
-			gerrStr << _T("[Warning: Missing ';']") << ends;				// 05/29/01 AM.
+			std::_t_strstream gerrStr;				// 05/29/01 AM.
+			gerrStr << _T("[Warning: Missing ';']") << std::ends;				// 05/29/01 AM.
 			nlppp->parse_->errOut(&gerrStr,true,true);// Pass num of INPUT file.	// 05/29/01 AM.
 			}
 			// Converting to stmt type, so that code gen
@@ -4940,8 +4940,8 @@ else
 			break;		// These are ok.  Nothing to do.
 		default:
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA whilestmt action: Bad semantic object.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA whilestmt action: Bad semantic object.]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 
@@ -5011,8 +5011,8 @@ if (!(semexpr = (RFASem *) pnexpr->getSem()))
 	{
 	// Expr could be a _NUM or _STR.
 	// But not handling yet.
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA returnstmt action: Num,str return. Unimplemented.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA returnstmt action: Num,str return. Unimplemented.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
@@ -5026,9 +5026,9 @@ else
 			break;
 		default:
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[RFA returnstmt action: Bad expr semantic object.]")
-					  << ends;
+					  << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false,true);
 			return false;
 			}
@@ -5096,16 +5096,16 @@ if (!(semlhs = (RFASem *) pnlhs->getSem()))
 		// Build numeric sem object.
 		if (!str_to_long(str, /*UP*/ num))
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA expr action: Bad num in lhs.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA expr action: Bad num in lhs.]") << std::ends;
 			return nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 		semlhs = new RFASem(num);
 		}
 	else
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA expr action: Bad lhs.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA expr action: Bad lhs.]") << std::ends;
 		return nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 	}
@@ -5118,8 +5118,8 @@ else
 			// Converting to a pure numeric type.		// 11/15/99 AM.
 			if (!str_to_long(semlhs->getName(), /*UP*/ num))
 				{
-				_t_strstream gerrStr;
-				gerrStr << _T("[RFA expr action: Bad numeric in lhs.]") << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("[RFA expr action: Bad numeric in lhs.]") << std::ends;
 				return nlppp->parse_->errOut(&gerrStr,false,true);
 				}
 			semlhs->setType(RSLONG);
@@ -5133,8 +5133,8 @@ else
 			break;			// These are ok.
 		default:
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA expr action: Bad lhs expr.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA expr action: Bad lhs expr.]") << std::ends;
 			return nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 		}
@@ -5148,8 +5148,8 @@ if (!(semop = (RFASem *) pnop->getSem()))
 	Chars::destroy(tstr);								// FIX.		// 02/11/00 AM.
 	if (*(str+1))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA expr action: Bad multi-char operator.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA expr action: Bad multi-char operator.]") << std::ends;
 		return nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 	enum Ioptype optype = NULLOP;
@@ -5168,16 +5168,16 @@ if (!(semop = (RFASem *) pnop->getSem()))
 			break;
 		case '!':
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA expr action: '!' can't be binary op.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA expr action: '!' can't be binary op.]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 
 			return false;
 		default:
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA expr action: Bad single-char operator.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA expr action: Bad single-char operator.]") << std::ends;
 			return nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 		}
@@ -5189,8 +5189,8 @@ else
 	// Check for appropriate sem object.
 	if (semop->getType() != RSOP)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA expr action: Bad sem object for operator.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA expr action: Bad sem object for operator.]") << std::ends;
 		return nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 	// For the object, take its particular structure.
@@ -5206,16 +5206,16 @@ else
 			break;	// These are ok.
 		case DECOP: case INCOP: case NOTOP:
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[RFA expr action: '") << Iop::Optype(iop->getType())
-					  << _T("' can't be a binary operator.]") << ends;
+					  << _T("' can't be a binary operator.]") << std::ends;
 			return nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 		case NULLOP:
 		default:
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA expr action: Bad operator.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA expr action: Bad operator.]") << std::ends;
 			return nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 		}
@@ -5240,16 +5240,16 @@ if (!(semrhs = (RFASem *) pnrhs->getSem()))
 		// Build numeric sem object.
 		if (!str_to_long(str, /*UP*/ num))
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA expr action: Bad num in rhs.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA expr action: Bad num in rhs.]") << std::ends;
 			return nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 		semrhs = new RFASem(num);
 		}
 	else
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA expr action: Bad rhs.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA expr action: Bad rhs.]") << std::ends;
 		return nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 	}
@@ -5262,8 +5262,8 @@ else
 			// Converting to a pure numeric type.		// 11/15/99 AM.
 			if (!str_to_long(semrhs->getName(), /*UP*/ num))
 				{
-				_t_strstream gerrStr;
-				gerrStr << _T("[RFA expr action: Bad numeric in rhs.]") << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("[RFA expr action: Bad numeric in rhs.]") << std::ends;
 				return nlppp->parse_->errOut(&gerrStr,false,true);
 				}
 			semrhs->setType(RSLONG);
@@ -5277,8 +5277,8 @@ else
 			break;			// These are ok.
 		default:
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA expr action: Bad rhs expr.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA expr action: Bad rhs expr.]") << std::ends;
 			return nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 		}
@@ -5338,8 +5338,8 @@ if (!(semop = (RFASem *) pnop->getSem()))
 	Chars::destroy(tstr);								// FIX.		// 02/11/00 AM.
 	if (*(str+1))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA unary action: Bad multi-char operator.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA unary action: Bad multi-char operator.]") << std::ends;
 		return nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 	enum Ioptype optype = NULLOP;
@@ -5350,16 +5350,16 @@ if (!(semop = (RFASem *) pnop->getSem()))
 		case '-':	optype = MINUSOP;		break;
 		case '<': case '>': case '/': case '*':
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[RFA unary action: '")
 							<< *str
-							<< _T("' can't be a unary op.]") << ends;
+							<< _T("' can't be a unary op.]") << std::ends;
 			return nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 		default:
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA unary action: Bad single-char operator.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA unary action: Bad single-char operator.]") << std::ends;
 			return nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 		}
@@ -5371,8 +5371,8 @@ else
 	// Check for appropriate sem object.
 	if (semop->getType() != RSOP)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA unary action: Bad sem object for operator.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA unary action: Bad sem object for operator.]") << std::ends;
 		return nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 
@@ -5388,9 +5388,9 @@ else
 			break;			// These are ok.
 		default:
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[RFA postunary action: '") << Iop::Optype(iop->getType())
-							<< _T("' can't be a post operator.]") << ends;
+							<< _T("' can't be a post operator.]") << std::ends;
 			return nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 		}
@@ -5415,16 +5415,16 @@ if (!(semrhs = (RFASem *) pnrhs->getSem()))
 		// Build numeric sem object.
 		if (!str_to_long(str, /*UP*/ num))
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA unary action: Bad num in expr.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA unary action: Bad num in expr.]") << std::ends;
 			return nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 		semrhs = new RFASem(num);
 		}
 	else
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA unary action: Bad expr.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA unary action: Bad expr.]") << std::ends;
 		return nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 	}
@@ -5437,8 +5437,8 @@ else
 			// Convert to LONG.												// 06/05/00 AM.
 			if (!str_to_long(semrhs->getNum(), num))					// 06/05/00 AM.
 				{
-				_t_strstream gerrStr;
-				gerrStr << _T("[Postunary: Couldn't convert to number.]") << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("[Postunary: Couldn't convert to number.]") << std::ends;
 				return nlppp->parse_->errOut(&gerrStr,false,true);
 				}
 			delete semrhs;		// Delete the old one.					// 06/05/00 AM.
@@ -5453,8 +5453,8 @@ else
 			break;			// These are ok.
 		default:
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA unary action: Bad expr.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA unary action: Bad expr.]") << std::ends;
 			return nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 		}
@@ -5508,8 +5508,8 @@ _TCHAR *str, *tstr;
 
 if (!(semrhs = (RFASem *) pnrhs->getSem()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA postunary action: Bad expr.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA postunary action: Bad expr.]") << std::ends;
 	return nlppp->parse_->errOut(&gerrStr,false,true);
 	}
 else
@@ -5525,14 +5525,14 @@ else
 		case RSACTION:															// 01/13/00 AM.
 		case RSPNODE:															// 11/15/01 AM.
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA postunary action: Expr must be a variable.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA postunary action: Expr must be a variable.]") << std::ends;
 			return nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 		default:
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFA postunary action: Bad expr.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFA postunary action: Bad expr.]") << std::ends;
 			return nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 		}
@@ -5545,14 +5545,14 @@ if (!(semop = (RFASem *) pnop->getSem()))
 	Chars::destroy(tstr);								// FIX.		// 02/11/00 AM.
 	if (*(str+1))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA postunary action: Bad multi-char operator.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA postunary action: Bad multi-char operator.]") << std::ends;
 		return nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 	else	// Single-char ops are bad also.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA postunary action: Operator must be ++ or --]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA postunary action: Operator must be ++ or --]") << std::ends;
 		return nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 	}
@@ -5561,8 +5561,8 @@ else
 	// Check for appropriate sem object.
 	if (semop->getType() != RSOP)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA postunary action: Bad sem object for operator.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA postunary action: Bad sem object for operator.]") << std::ends;
 		return nlppp->parse_->errOut(&gerrStr,false,true);
 		}
 	// For the object, take its particular structure.
@@ -5574,9 +5574,9 @@ else
 			break;			// These are ok.
 		default:
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[RFA postunary action: '") << Iop::Optype(iop->getType())
-							<< _T("' can't be a post operator.]") << ends;
+							<< _T("' can't be a post operator.]") << std::ends;
 			return nlppp->parse_->errOut(&gerrStr,false,true);
 			}
 		}
@@ -5638,14 +5638,14 @@ else
 // (ie, are they _LIT and _LIST.  If not, fail.)
 if (semname->getType() != RSNAME)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA var action: Bad semantic type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA var action: Bad semantic type.]") << std::ends;
 	return nlppp->parse_->errOut(&gerrStr,false,true);
 	}
 if (semlist && semlist->getType() != RSARGS)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA var action: Bad semantic type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA var action: Bad semantic type.]") << std::ends;
 	return nlppp->parse_->errOut(&gerrStr,false,true);
 	}
 
@@ -5680,8 +5680,8 @@ long num = 0;		// Important init.	// FIX.		// 11/24/99 AM.
 Delt<Iarg> *darg;
 if (!(darg = iargs->getFirst()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA var action: No variable name.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA var action: No variable name.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 
 	Dlist<Iarg>::DeleteDlistAndData(iargs);	// FIX.			// 02/13/00 AM.
@@ -5690,8 +5690,8 @@ if (!(darg = iargs->getFirst()))
 namearg = darg->getData();
 if (namearg->getType() != IASTR)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA var action: No variable name.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA var action: No variable name.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 
 	Dlist<Iarg>::DeleteDlistAndData(iargs);	// FIX.			// 02/13/00 AM.
@@ -5703,8 +5703,8 @@ if ((darg = darg->Right()))	// If there's a second arg.
 	{
 	if (darg->Right())
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA var action: Too many arguments.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA var action: Too many arguments.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 
 		Dlist<Iarg>::DeleteDlistAndData(iargs);	// FIX.		// 02/13/00 AM.
@@ -5713,8 +5713,8 @@ if ((darg = darg->Right()))	// If there's a second arg.
 	numarg = darg->getData();
 	if (!numarg->fetchNum(/*UP*/ num))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA var action: Bad number arg.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA var action: Bad number arg.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false,true);
 
 		Dlist<Iarg>::DeleteDlistAndData(iargs);	// FIX.		// 02/13/00 AM.
@@ -5726,8 +5726,8 @@ enum Ivartype typ;
 typ = Ivar::Vartype(typestr[0]);		// Use first letter of typestring.
 if (typ == NULLVAR)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA var action: Bad variable name=") << typestr << _T("]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA var action: Bad variable name=") << typestr << _T("]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 
 	Dlist<Iarg>::DeleteDlistAndData(iargs);	// FIX.			// 02/13/00 AM.
@@ -5771,8 +5771,8 @@ if (!args_0to2(_T("op"),args,nlppp->collect_,nlppp->sem_, /*DU*/ n1,n2))
 
 if (!n1 || !n2)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA op action: Only handles two-char operators.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA op action: Only handles two-char operators.]") << std::ends;
 	return nlppp->parse_->errOut(&gerrStr,false,true);
 	}
 
@@ -5790,14 +5790,14 @@ _TCHAR *txt2 = pn2->getName();
 
 if (!txt1 || !*txt1 || !txt2 || !*txt2)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA op action: Operator must be two single chars.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA op action: Operator must be two single chars.]") << std::ends;
 	return nlppp->parse_->errOut(&gerrStr,false,true);
 	}
 if (*(txt1+1) || *(txt2+1))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA op action: Two single chars need for operator.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA op action: Two single chars need for operator.]") << std::ends;
 	return nlppp->parse_->errOut(&gerrStr,false,true);
 	}
 
@@ -5808,8 +5808,8 @@ _stprintf(opstr, _T("%c%c"), *txt1, *txt2);	// Glom the chars together.
 enum Ioptype typ = Iop::Optype(opstr);
 if (typ == NULLOP)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA op action: Bad operator type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA op action: Bad operator type.]") << std::ends;
 	return nlppp->parse_->errOut(&gerrStr,false,true);
 	}
 
@@ -5849,18 +5849,18 @@ bool PostRFA::args_1(
 {
 if (!args)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: One arg required.]") << ends;
+		  << _T(" action: One arg required.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 if (sem)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-	     << _T(" action: Semantic object already built.]") << ends;
+	     << _T(" action: Semantic object already built.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -5868,10 +5868,10 @@ Iarg *arg1;
 arg1 = args->getData();
 if ((args = args->Right()))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: More than one arg given.]") << ends;
+		  << _T(" action: More than one arg given.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -5888,10 +5888,10 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[RFA ")
 				  << action
-				  << _T(" action: Arg must be numeric.]") << ends;
+				  << _T(" action: Arg must be numeric.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -5920,19 +5920,19 @@ if (!nstart && !nend)
 	return true;				// Empty arg is ok.
 if (!nstart || !nend)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Unhandled null case.]") << ends;
+		  << _T(" action: Unhandled null case.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
 if (Verbose())
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("   [Executing RFA ")
 		  << action
-		  << _T(" action.]") << ends;
+		  << _T(" action.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -5941,7 +5941,7 @@ if (Debug())
 	{
 	*gout << _T("nodes=");
 	Pn::prettyNodes(nstart);
-	*gout << endl;
+	*gout << std::endl;
 	}
 return true;
 }
@@ -5966,18 +5966,18 @@ bool PostRFA::args_1or2(
 {
 if (!args)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: One or two args required.]") << ends;
+		  << _T(" action: One or two args required.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 if (sem)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Semantic object already built.]") << ends;
+		  << _T(" action: Semantic object already built.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -5996,10 +5996,10 @@ else
 
 if (args->Right())
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: More than two args given.]") << ends;
+		  << _T(" action: More than two args given.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 long num1;
@@ -6015,10 +6015,10 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[RFA ")
 				  << action
-				  << _T(" action: Arg1 must be numeric.]") << ends;
+				  << _T(" action: Arg1 must be numeric.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -6037,10 +6037,10 @@ if (arg2)
 			break;
 		default:
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[RFA ")
 						  << action
-						  << _T(" action: Arg2 must be numeric.]") << ends;
+						  << _T(" action: Arg2 must be numeric.]") << std::ends;
 			return errOut(&gerrStr,false);
 			}
 		}
@@ -6111,18 +6111,18 @@ node1 = node2 = 0;
 
 if (!args)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Two args required, not zero.]") << ends;
+		  << _T(" action: Two args required, not zero.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 if (sem)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Semantic object already built.]") << ends;
+		  << _T(" action: Semantic object already built.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -6131,19 +6131,19 @@ Iarg *arg2;
 arg1 = args->getData();
 if (!(args = args->Right()))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Two args required, not one.]") << ends;
+		  << _T(" action: Two args required, not one.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 arg2 = args->getData();
 if (args->Right())
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: More than three args given.]") << ends;
+		  << _T(" action: More than three args given.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 long num1;
@@ -6159,10 +6159,10 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[RFA ")
 				  << action
-				  << _T(" action: Arg1 must be numeric.]") << ends;
+				  << _T(" action: Arg1 must be numeric.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -6179,10 +6179,10 @@ switch (arg2->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[RFA ")
 				  << action
-				  << _T(" action: Arg2 must be numeric.]") << ends;
+				  << _T(" action: Arg2 must be numeric.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -6198,10 +6198,10 @@ colls = collect->getRoot();
 len = colls->length();
 if (num1 > len || num2 > len)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Numerical arg too large.]") << ends;
+		  << _T(" action: Numerical arg too large.]") << std::ends;
 	errOut(&gerrStr,false);	// RECOVER. // 08/22/11 AM.
 	if (num1 > len) num1 = len;	// RECOVER. // 08/22/11 AM.
 	if (num2 > len) num2 = len;	// RECOVER. // 08/22/11 AM.
@@ -6247,19 +6247,19 @@ node1 = node2 = 0;
 
 if (!args)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Two args required, not zero.]") << ends;
+		  << _T(" action: Two args required, not zero.]") << std::ends;
 	//return errOut(&gerrStr,false);	// 09/21/13 AM.
 	return nlppp->parse_->errOut(&gerrStr,false,true);	// 09/21/13 AM.
 	}
 if (sem)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Semantic object already built.]") << ends;
+		  << _T(" action: Semantic object already built.]") << std::ends;
 	//return errOut(&gerrStr,false);	// 09/21/13 AM.
 	return nlppp->parse_->errOut(&gerrStr,false,true);	// 09/21/13 AM.
 	}
@@ -6269,20 +6269,20 @@ Iarg *arg2;
 arg1 = args->getData();
 if (!(args = args->Right()))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Two args required, not one.]") << ends;
+		  << _T(" action: Two args required, not one.]") << std::ends;
 	//return errOut(&gerrStr,false);	// 09/21/13 AM.
 	return nlppp->parse_->errOut(&gerrStr,false,true);	// 09/21/13 AM.
 	}
 arg2 = args->getData();
 if (args->Right())
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: More than three args given.]") << ends;
+		  << _T(" action: More than three args given.]") << std::ends;
 	//return errOut(&gerrStr,false);	// 09/21/13 AM.
 	return nlppp->parse_->errOut(&gerrStr,false,true);	// 09/21/13 AM.
 	}
@@ -6300,10 +6300,10 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[RFA ")
 				  << action
-				  << _T(" action: Arg1 must be numeric.]") << ends;
+				  << _T(" action: Arg1 must be numeric.]") << std::ends;
 	//return errOut(&gerrStr,false);	// 09/21/13 AM.
 	return nlppp->parse_->errOut(&gerrStr,false,true);	// 09/21/13 AM.
 		}
@@ -6321,10 +6321,10 @@ switch (arg2->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[RFA ")
 				  << action
-				  << _T(" action: Arg2 must be numeric.]") << ends;
+				  << _T(" action: Arg2 must be numeric.]") << std::ends;
 	//return errOut(&gerrStr,false);	// 09/21/13 AM.
 	return nlppp->parse_->errOut(&gerrStr,false,true);	// 09/21/13 AM.
 		}
@@ -6341,10 +6341,10 @@ colls = collect->getRoot();
 len = colls->length();
 if (num1 > len || num2 > len)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Numerical arg too large.]") << ends;
+		  << _T(" action: Numerical arg too large.]") << std::ends;
 //	errOut(&gerrStr,false);	// RECOVER. // 08/22/11 AM.
 	nlppp->parse_->errOut(&gerrStr,false,true);	// 09/21/13 AM.
 	if (num1 > len) num1 = len;	// RECOVER. // 08/22/11 AM.
@@ -6352,9 +6352,9 @@ if (num1 > len || num2 > len)
 	}
 if (num1 > num2)					// Preemptive.	// 09/26/99 AM.
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ") << action
-		   << _T(" action: Bad range.]") << ends;
+		   << _T(" action: Bad range.]") << std::ends;
 	//return errOut(&gerrStr,false);	// 09/21/13 AM.
 	return nlppp->parse_->errOut(&gerrStr,false,true);	// 09/21/13 AM.
 	}
@@ -6430,18 +6430,18 @@ node1 = node2 = node3 = 0;
 
 if (!args)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Three args required, not zero.]") << ends;
+		  << _T(" action: Three args required, not zero.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 if (sem)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Semantic object already built.]") << ends;
+		  << _T(" action: Semantic object already built.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -6451,28 +6451,28 @@ Iarg *arg3;
 arg1 = args->getData();
 if (!(args = args->Right()))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Three args required, not one.]") << ends;
+		  << _T(" action: Three args required, not one.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 arg2 = args->getData();
 if (!(args=args->Right()))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Three args required, not two.]") << ends;
+		  << _T(" action: Three args required, not two.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 arg3 = args->getData();
 if (args->Right())
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: More than three args given.]") << ends;
+		  << _T(" action: More than three args given.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -6489,10 +6489,10 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[RFA ")
 				  << action
-				  << _T(" action: Arg1 must be numeric.]") << ends;
+				  << _T(" action: Arg1 must be numeric.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -6509,10 +6509,10 @@ switch (arg2->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[RFA ")
 				  << action
-				  << _T(" action: Arg2 must be numeric.]") << ends;
+				  << _T(" action: Arg2 must be numeric.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -6529,10 +6529,10 @@ switch (arg3->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[RFA ")
 				  << action
-				  << _T(" action: Arg3 must be numeric.]") << ends;
+				  << _T(" action: Arg3 must be numeric.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 	}
@@ -6550,10 +6550,10 @@ colls = collect->getRoot();
 len = colls->length();
 if (num1 > len || num2 > len || num3 > len)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Numerical arg too large.]") << ends;
+		  << _T(" action: Numerical arg too large.]") << std::ends;
 	errOut(&gerrStr,false);	// RECOVER. // 08/22/11 AM.
 	if (num1 > len) num1 = len;	// RECOVER. // 08/22/11 AM.
 	if (num2 > len) num2 = len;	// RECOVER. // 08/22/11 AM.
@@ -6604,18 +6604,18 @@ node1 = node2 = node3 = node4 = node5 = 0;
 
 if (!args)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Five args required, not zero.]") << ends;
+		  << _T(" action: Five args required, not zero.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 if (sem)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Semantic object already built.]") << ends;
+		  << _T(" action: Semantic object already built.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -6623,46 +6623,46 @@ Iarg *arg1,*arg2,*arg3,*arg4,*arg5;
 arg1 = args->getData();
 if (!(args = args->Right()))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Five args required, not one.]") << ends;
+		  << _T(" action: Five args required, not one.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 arg2 = args->getData();
 if (!(args=args->Right()))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Five args required, not two.]") << ends;
+		  << _T(" action: Five args required, not two.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 arg3 = args->getData();
 if (!(args=args->Right()))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Five args required, not three.]") << ends;
+		  << _T(" action: Five args required, not three.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 arg4 = args->getData();
 if (!(args=args->Right()))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Five args required, not four.]") << ends;
+		  << _T(" action: Five args required, not four.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 arg5 = args->getData();
 if (args->Right())
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: More than five args given.]") << ends;
+		  << _T(" action: More than five args given.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -6679,10 +6679,10 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[RFA ")
 				  << action
-				  << _T(" action: Arg1 must be numeric.]") << ends;
+				  << _T(" action: Arg1 must be numeric.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -6699,10 +6699,10 @@ switch (arg2->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[RFA ")
 				  << action
-				  << _T(" action: Arg2 must be numeric.]") << ends;
+				  << _T(" action: Arg2 must be numeric.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -6719,10 +6719,10 @@ switch (arg3->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[RFA ")
 				  << action
-				  << _T(" action: Arg3 must be numeric.]") << ends;
+				  << _T(" action: Arg3 must be numeric.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -6739,10 +6739,10 @@ switch (arg4->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[RFA ")
 				  << action
-				  << _T(" action: Arg4 must be numeric.]") << ends;
+				  << _T(" action: Arg4 must be numeric.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -6759,10 +6759,10 @@ switch (arg5->getType())
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[RFA ")
 				  << action
-				  << _T(" action: Arg5 must be numeric.]") << ends;
+				  << _T(" action: Arg5 must be numeric.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -6777,10 +6777,10 @@ colls = collect->getRoot();
 len = colls->length();
 if (num1 > len || num2 > len || num3 > len || num4 > len || num5 > len)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Numerical arg too large.]") << ends;
+		  << _T(" action: Numerical arg too large.]") << std::ends;
 	errOut(&gerrStr,false);	// RECOVER. // 08/22/11 AM.
 	if (num1 > len) num1 = len;	// RECOVER. // 08/22/11 AM.
 	if (num2 > len) num2 = len;	// RECOVER. // 08/22/11 AM.
@@ -6837,18 +6837,18 @@ node1 = node2 = node3 = node4 = 0;
 
 if (!args)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Four args required, not zero.]") << ends;
+		  << _T(" action: Four args required, not zero.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 if (sem)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Semantic object already built.]") << ends;
+		  << _T(" action: Semantic object already built.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -6859,37 +6859,37 @@ Iarg *arg4;
 arg1 = args->getData();
 if (!(args = args->Right()))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Four args required, not one.]") << ends;
+		  << _T(" action: Four args required, not one.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 arg2 = args->getData();
 if (!(args=args->Right()))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Four args required, not two.]") << ends;
+		  << _T(" action: Four args required, not two.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 arg3 = args->getData();
 if (!(args=args->Right()))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Four args required, not three.]") << ends;
+		  << _T(" action: Four args required, not three.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 arg4 = args->getData();
 if (args->Right())
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: More than four args given.]") << ends;
+		  << _T(" action: More than four args given.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -6906,10 +6906,10 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[RFA ")
 				  << action
-				  << _T(" action: Arg1 must be numeric.]") << ends;
+				  << _T(" action: Arg1 must be numeric.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -6926,10 +6926,10 @@ switch (arg2->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[RFA ")
 				  << action
-				  << _T(" action: Arg2 must be numeric.]") << ends;
+				  << _T(" action: Arg2 must be numeric.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -6946,10 +6946,10 @@ switch (arg3->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[RFA ")
 				  << action
-				  << _T(" action: Arg3 must be numeric.]") << ends;
+				  << _T(" action: Arg3 must be numeric.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -6966,10 +6966,10 @@ switch (arg4->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[RFA ")
 				  << action
-				  << _T(" action: Arg4 must be numeric.]") << ends;
+				  << _T(" action: Arg4 must be numeric.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -6985,10 +6985,10 @@ colls = collect->getRoot();
 len = colls->length();
 if (num1 > len || num2 > len || num3 > len || num4 > len)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[RFA ")
 		  << action
-		  << _T(" action: Numerical arg too large.]") << ends;
+		  << _T(" action: Numerical arg too large.]") << std::ends;
 	errOut(&gerrStr,false);	// RECOVER. // 08/22/11 AM.
 	if (num1 > len) num1 = len;	// RECOVER. // 08/22/11 AM.
 	if (num2 > len) num2 = len;	// RECOVER. // 08/22/11 AM.
@@ -7080,14 +7080,14 @@ bool PostRFA::postRFBarg(
 
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFB arg action: One arg required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFB arg action: One arg required.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFB arg action: Semantic object already built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFB arg action: Semantic object already built.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -7096,8 +7096,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if (args->Right())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFB arg action: More than one arg given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFB arg action: More than one arg given.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -7114,8 +7114,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFB arg action: Arg must be string.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFB arg action: Arg must be string.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -7123,8 +7123,8 @@ switch (arg1->getType())				// 11/15/99 AM.
 // Check self-consistency.
 if (num1 <= 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Bad num]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Bad num]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -7136,8 +7136,8 @@ while (--num1 > 0)
 	{
 	if (!(colls = colls->Right()))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Bad collect.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Bad collect.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -7156,8 +7156,8 @@ nname = coll1->Down();
 RFASem *semname;
 if (!(semname = (RFASem *) nname->getData()->getSem()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFB arg action: No semantic object for name.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFB arg action: No semantic object for name.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -7182,8 +7182,8 @@ switch (semname->getType())												// 11/15/99 AM.
 		str = semname->getNum();											// 12/18/99 AM.
 		if (!str_to_long(str, /*UP*/ num))								// 12/18/99 AM.
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[RFB arg: Couldn't convert to num.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[RFB arg: Couldn't convert to num.]") << std::ends;
 			return errOut(&gerrStr,false);
 			}
 		iarg = new Iarg(num);											// 12/18/99 AM.
@@ -7193,16 +7193,16 @@ switch (semname->getType())												// 11/15/99 AM.
 	case RSSTR:
 		if (!(name = semname->getName()))
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Semname problem.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Semname problem.]") << std::ends;
 			return errOut(&gerrStr,false);
 			}
 		iarg = new Iarg(name);
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFB arg action: Bad semantic type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFB arg action: Bad semantic type.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -7249,8 +7249,8 @@ if (!args_0to2(_T("scopefncallstart"),args,nlppp->collect_,nlppp->sem_,
 
 if (!n1 || !n2)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[scopefncallstart: Two args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[scopefncallstart: Two args required.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -7267,8 +7267,8 @@ if (!(semscope = (RFASem *) n1->getData()->getSem()))
 // (ie, are they _LIT and _LIST.  If not, fail.)
 if (semscope->getType() != RSNAME)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[scopefncallstart: Bad semantic type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[scopefncallstart: Bad semantic type.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -7290,8 +7290,8 @@ if (!(semname = (RFASem *) n2->getData()->getSem()))
 // (ie, are they _LIT and _LIST.  If not, fail.)
 if (semname->getType() != RSNAME)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[scopefncallstart: Bad semantic type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[scopefncallstart: Bad semantic type.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -7336,8 +7336,8 @@ bool PostRFA::postRFBfncallstart(
 {
 if (args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[fncallstart: Takes zero arguments.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[fncallstart: Takes zero arguments.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -7359,8 +7359,8 @@ if (!(semname = (RFASem *) pn->getSem()))								// 05/17/01 AM.
 // (ie, are they _LIT and _LIST.  If not, fail.)
 if (semname->getType() != RSNAME)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[fncallstart: Bad semantic type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[fncallstart: Bad semantic type.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -7392,8 +7392,8 @@ else if (!strcmp_i(name,_T("succeed"))									// 08/18/08 AM.
 
 	if (x)																		// 08/18/08 AM.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Call to '" << name << "' not allowed in a function.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Call to '" << name << "' not allowed in a function.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 	}
@@ -7451,21 +7451,21 @@ Slist<Iexpr> *fn = 0;
 Iexpr *expr = 0;
 if (!(semfn = (RFASem *) pnfn->getSem()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA addarg action: No semantics in fn.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA addarg action: No semantics in fn.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 if (!(semexpr = (RFASem *) pnexpr->getSem()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA addarg action: No semantics in expr.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA addarg action: No semantics in expr.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
 if (semfn->getType() != RSACTION)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[RFA addarg action: Bad sem for fn.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA addarg action: Bad sem for fn.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -7511,8 +7511,8 @@ switch (semexpr->getType())
 		str = semexpr->getNum();
 		if (!str_to_long(str, /*UP*/ num))
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[addarg: Couldn't convert to num.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[addarg: Couldn't convert to num.]") << std::ends;
 			return errOut(&gerrStr,false);
 			}
 		iarg = new Iarg(num);
@@ -7521,8 +7521,8 @@ switch (semexpr->getType())
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[addarg: Unhandled arg type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[addarg: Unhandled arg type.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -7568,8 +7568,8 @@ bool PostRFA::postRFAvarfn(
 {
 if (args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[varfn: Takes zero args.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[varfn: Takes zero args.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -7584,8 +7584,8 @@ if (!(semfn = (RFASem *) pn->getSem()))
 
 if (semfn->getType() != RSACTION)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[varfn: Bad semantic type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[varfn: Bad semantic type.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -7638,9 +7638,9 @@ switch (iarg->getType())													// 10/18/00 AM.
 		{
 		nlppp->parse_->inputline_											// 08/24/02 AM.
 					= pn->getLine();											// 05/26/01 AM.
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Error: 1st arg of var must be num or str.]")	// 05/26/01 AM.
-				  << ends;														// 05/26/01 AM.
+				  << std::ends;														// 05/26/01 AM.
 		errOut(&gerrStr,false,nlppp->parse_->getInputpass());					// 05/26/01 AM.
 		// REPAIR ERROR, SO PARSE CAN CONTINUE!						// 05/26/01 AM.
 		// For the purpose of finding further errors.)				// 05/26/01 AM.
@@ -7659,8 +7659,8 @@ if (darg)
 		{
 		nlppp->parse_->inputline_											// 08/24/02 AM.
 					= pn->getLine();											// 05/26/01 AM.
-		_t_strstream gerrStr;
-		gerrStr << _T("[varfn: Second arg must be a number.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[varfn: Second arg must be a number.]") << std::ends;
 		nlppp->parse_->setIntern(false);	// Syntax error found.	// 05/26/01 AM.
 //		return errOut(false,nlppp->parse_->getInputpass());		// 05/26/01 AM.
 		return
@@ -7675,8 +7675,8 @@ if (darg && darg->Right())
 	{
 	nlppp->parse_->inputline_												// 08/24/02 AM.
 				= pn->getLine();												// 05/26/01 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[varfn: Only 2 args allowed in var.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[varfn: Only 2 args allowed in var.]") << std::ends;
 	nlppp->parse_->setIntern(false);	// Syntax error found.		// 05/26/01 AM.
 	return errOut(&gerrStr,false,nlppp->parse_->getInputpass());									// 05/26/01 AM.
 	}
@@ -7689,8 +7689,8 @@ typ = Ivar::Vartype(*typestr);		// Use first letter of typestring.
 if (typ == NULLVAR)
 	{
 	nlppp->parse_->setIntern(false);	// Syntax error found.	// 05/26/01 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[varfn: Bad variable name=") << typestr << _T("]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[varfn: Bad variable name=") << typestr << _T("]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 // Should check if variable type is compatible with numeric 2nd arg....
@@ -7723,21 +7723,21 @@ bool PostRFA::postRFApnode(
 {
 if (!typestr || ord < 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[pnode: Error.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[pnode: Error.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 if (*typestr == 'G')
 	{
 	nlppp->parse_->setIntern(false);	// Syntax error found.	// 05/26/01 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[pnode: G() doesn't eval to pnode.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[pnode: G() doesn't eval to pnode.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 if (darg)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[pnode: Too many args.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[pnode: Too many args.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -7749,16 +7749,16 @@ switch (typ)
 		if (numflag && !ord)
 			{
 			nlppp->parse_->setIntern(false);	// Syntax error.	// 05/26/01 AM.
-			_t_strstream gerrStr;
-			gerrStr << _T("[pnode: Ignoring 0 in S(0)]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[pnode: Ignoring 0 in S(0)]") << std::ends;
 			errOut(&gerrStr,false);
 			}
 
 		else if (numflag)
 			{
 			nlppp->parse_->setIntern(false);	// Syntax error.	// 05/26/01 AM.
-			_t_strstream gerrStr;
-			gerrStr << _T("[pnode: S() takes no arg.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[pnode: S() takes no arg.]") << std::ends;
 			return errOut(&gerrStr,false);
 			}
 		break;
@@ -7771,8 +7771,8 @@ switch (typ)
 	default:
 		{
 		nlppp->parse_->setIntern(false);	// Syntax error.			// 05/26/01 AM.
-		_t_strstream gerrStr;
-		gerrStr << _T("[pnode: Bad var name=") << typestr << _T("]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[pnode: Bad var name=") << typestr << _T("]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -7802,14 +7802,14 @@ bool PostRFA::postRFAvarfnarray(
 {
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[varfnarray: Two args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[varfnarray: Two args required.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[varfnarray: Semantic object already built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[varfnarray: Semantic object already built.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -7819,16 +7819,16 @@ Iarg *arg2;
 arg1 = args->getData();
 if (!(args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[varfnarray: Missing second argument.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[varfnarray: Missing second argument.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 arg2 = args->getData();
 
 if (args->Right())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[varfnarray: More than two args given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[varfnarray: More than two args given.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -7846,8 +7846,8 @@ switch (arg1->getType())
 	default:
 		{
 		nlppp->parse_->setIntern(false);	// Syntax error.			// 05/26/01 AM.
-		_t_strstream gerrStr;
-		gerrStr << _T("[varfnarray: Arg1 must be num.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[varfnarray: Arg1 must be num.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -7866,8 +7866,8 @@ switch (arg2->getType())
 	default:
 		{
 		nlppp->parse_->setIntern(false);	// Syntax error.			// 05/26/01 AM.
-		_t_strstream gerrStr;
-		gerrStr << _T("[varfnarray: Arg2 must be num.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[varfnarray: Arg2 must be num.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -7912,8 +7912,8 @@ if (!(semfn = (RFASem *) pn->getSem()))
 
 if (semfn->getType() != RSACTION)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[varfnarray: Bad semantic type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[varfnarray: Bad semantic type.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -7954,8 +7954,8 @@ Dlist<Iarg> *iargs = action->getArgs();
 if (!iargs)
 	{
 	nlppp->parse_->setIntern(false);	// Syntax error.				// 05/26/01 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[varfnarray: Var has no args.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[varfnarray: Var has no args.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -7964,8 +7964,8 @@ Iarg *iarg;
 if (!darg)
 	{
 	nlppp->parse_->setIntern(false);	// Syntax error.				// 05/26/01 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[varfnarray: Var has no args.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[varfnarray: Var has no args.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -7974,8 +7974,8 @@ iarg = darg->getData();
 if (iarg->getType() != IASTR)
 	{
 	nlppp->parse_->setIntern(false);	// Syntax error.				// 05/26/01 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[varfnarray: First arg of var must be a string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[varfnarray: First arg of var must be a string.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -7990,8 +7990,8 @@ if (darg)
 	if (iarg->getType() != IANUM)
 		{
 		nlppp->parse_->setIntern(false);	// Syntax error.			// 05/26/01 AM.
-		_t_strstream gerrStr;
-		gerrStr << _T("[varfnarray: Second arg must be a number.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[varfnarray: Second arg must be a number.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 
@@ -8002,8 +8002,8 @@ if (darg)
 if (darg && darg->Right())
 	{
 	nlppp->parse_->setIntern(false);	// Syntax error.				// 05/26/01 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[varfnarray: Only 2 args allowed in var.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[varfnarray: Only 2 args allowed in var.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -8012,8 +8012,8 @@ typ = Ivar::Vartype(*typestr);		// Use first letter of typestring.
 if (typ == NULLVAR)
 	{
 	nlppp->parse_->setIntern(false);	// Syntax error.				// 05/26/01 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[varfnarray: Bad variable name=") << typestr << _T("]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[varfnarray: Bad variable name=") << typestr << _T("]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -8117,14 +8117,14 @@ bool PostRFA::postRFArulemark(
 {
 if (args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rfarulemark: Error. Requires zero args.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rfarulemark: Error. Requires zero args.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 if (!nlppp)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rfarulemark: Error. No global parse structure.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rfarulemark: Error. No global parse structure.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -8160,9 +8160,9 @@ if (!args_1(_T("rfbunmatchedpunct"), args, nlppp->collect_, nlppp->sem_,
 
 if (nstart != nend)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[rfbunmatchedpunct: Internal error. Multinode match.]")
-			<< ends;
+			<< std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -8200,8 +8200,8 @@ nlppp->parse_->setIntern(false);	// Syntax error.					// 05/26/01 AM.
 nlppp->parse_->inputline_													// 08/24/02 AM.
 	= pn->getLine();			// Line number in INPUT pass file.
 //sprintf_s(Errbuf, "[Error: Unmatched %s.]", cname);				// 05/29/01 AM.
-_t_strstream gerrStr;							// 05/29/01 AM.
-gerrStr << _T("[Syntax error at '") << *name << _T("'.]") << ends;		// 05/29/01 AM.
+std::_t_strstream gerrStr;							// 05/29/01 AM.
+gerrStr << _T("[Syntax error at '") << *name << _T("'.]") << std::ends;		// 05/29/01 AM.
 return errOut(&gerrStr,true,nlppp->parse_->getInputpass());
 														// Pass num of INPUT pass file.
 }
@@ -8234,9 +8234,9 @@ if (!args_1(_T("rfberror"), args, nlppp->collect_, nlppp->sem_,
 
 if (!nstart)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[rfbunmatchedpunct: Internal error. Must match a node.]")
-			<< ends;
+			<< std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -8248,8 +8248,8 @@ if (!pn)
 parse->setIntern(false);	// Syntax error.
 parse->inputline_													// 08/24/02 AM.
 	= pn->getLine();			// Line number in INPUT pass file.
-_t_strstream gerrStr;
-gerrStr << _T("[Syntax error.]") << ends;
+std::_t_strstream gerrStr;
+gerrStr << _T("[Syntax error.]") << std::ends;
 return parse->errOut(&gerrStr,true,true);
 											// Pass num of INPUT pass file.
 }
@@ -8301,8 +8301,8 @@ if (!(fncall = semfn->getAction()))
 _TCHAR *name = fncall->getName();
 if (!name || !*name)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rfbdecl: Error. No function name.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rfbdecl: Error. No function name.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -8313,9 +8313,9 @@ if ((pargs = fncall->getArgs()))
 	// CHECK ON AND CONDENSE PARAMS PROGRAMMATICALLY.				// 03/09/02 AM.
 	if (!rfbParams(pargs,nlppp,/*UP*/params))							// 03/09/02 AM.
 		{
-		_t_strstream gerrStr;					// 03/09/02 AM.
+		std::_t_strstream gerrStr;					// 03/09/02 AM.
 		gerrStr << _T("[rfbdecl: Error in function parameters.]")		// 03/09/02 AM.
-				<< ends;															// 03/09/02 AM.
+				<< std::ends;															// 03/09/02 AM.
 		return errOut(&gerrStr,false);												// 03/09/02 AM.
 		}
 	}
@@ -8449,8 +8449,8 @@ for (; nstart != bound; nstart = nstart->Right())
 	semdecl = (RFASem *) pn->getSem();
 	if (!semdecl || (semdecl->getType() != RSFUNC))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFB decls action: Non-function in @DECL.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFB decls action: Non-function in @DECL.]") << std::ends;
 		errOut(&gerrStr,false);
 
 		//delete iactions;

@@ -15,8 +15,6 @@ All rights reserved.
 #ifndef DSEM_H_
 #define DSEM_H_
 
-//#include <iostream>											// Upgrade.	// 01/24/01 AM.
-//using namespace std;											// Upgrade.	// 01/24/01 AM.
 #include <assert.h>
 
 // Forward references
@@ -68,11 +66,11 @@ public:
 		Parse *parse
 		);
 	static bool setVal(
-		_TCHAR *name, Pn *pn, Parse *parse, _t_ostream *ostr);
+		_TCHAR *name, Pn *pn, Parse *parse, std::_t_ostream *ostr);
 	static bool val(
 		_TCHAR *name, Pn *pn, Parse *parse, /*DU*/ _TCHAR* &str);
 	static bool val(
-		_TCHAR *name, Pn *pn, Parse *parse, /*DU*/ _t_ostream* &ostr);
+		_TCHAR *name, Pn *pn, Parse *parse, /*DU*/ std::_t_ostream* &ostr);
 	static bool vals(
 		_TCHAR *name, Pn *pn, Parse *parse, /*DU*/ Delt<Iarg>* &values);
 	static bool vals(

@@ -38,7 +38,7 @@ MIT License
 
 
 NLP_ENGINE::NLP_ENGINE(
-    string workingFolder,
+    std::string workingFolder,
 	bool silent
 	)
 {
@@ -54,9 +54,9 @@ NLP_ENGINE::NLP_ENGINE(
         _stprintf(logfile,"%s",_T("vtrun_logfile.out"));
         _stprintf(rfbdir,"data/rfb/spec");
     }
-    _t_cout << _T("[logfile: ") << logfile << _T("]") << endl;
+    std::_t_cout << _T("[logfile: ") << logfile << _T("]") << std::endl;
  
-    _t_cout << _T("[rfbdir: ") << rfbdir << _T("]") << endl;
+    std::_t_cout << _T("[rfbdir: ") << rfbdir << _T("]") << std::endl;
  
 // if (!VTRun_Ptr)  // [DEGLOB]	// 10/15/20 AM.
     {
@@ -159,7 +159,7 @@ int NLP_ENGINE::init(
     
     strcpy(str,m_anadir);
     if (stat(m_anadir,&st) != 0) {
-        _t_cerr << _T("[analyzer directory not found: ") << m_anadir << _T("]") << endl;
+        std::_t_cerr << _T("[analyzer directory not found: ") << m_anadir << _T("]") << std::endl;
         return 0;
     }
     
@@ -169,11 +169,11 @@ int NLP_ENGINE::init(
         _stprintf(m_ananame,_T("%s"),ana);           
     }
 
-	_t_cout << _T("[analyzer directory: ") << m_anadir << _T("]") << endl;
-    _t_cout << _T("[analyzer name: ") << m_ananame << _T("]") << endl; 
+	std::_t_cout << _T("[analyzer directory: ") << m_anadir << _T("]") << std::endl;
+    std::_t_cout << _T("[analyzer name: ") << m_ananame << _T("]") << std::endl; 
 
     _stprintf(m_rfbdir, _T("%s%cdata%crfb%cspec"),m_workingFolder,DIR_CH,DIR_CH,DIR_CH);
-    _t_cout << _T("[rfb file: ") << m_rfbdir << _T("]") << endl;
+    std::_t_cout << _T("[rfb file: ") << m_rfbdir << _T("]") << std::endl;
 
 #ifdef LINUX
     _TCHAR *tmp = _T("./tmp");
@@ -183,19 +183,19 @@ int NLP_ENGINE::init(
     _stprintf(m_logfile, _T("%s%cvisualtext.log"),tmp,DIR_CH);
     if (!silent) {
         NLP_ENGINE::createDir(tmp);
-        _t_cout << _T("[log file: ") << m_logfile << _T("]") << endl;
+        std::_t_cout << _T("[log file: ") << m_logfile << _T("]") << std::endl;
     }
 
     _stprintf(m_specdir, _T("%s%sspec"), m_anadir, DIR_STR);
-    _t_cout << _T("[spec directory: ") << m_specdir << _T("]") << endl;
+    std::_t_cout << _T("[spec directory: ") << m_specdir << _T("]") << std::endl;
 
     _stprintf(m_seqfile, _T("%s%sanalyzer.seq"),m_specdir,DIR_STR);
-    _t_cout << _T("[spec file: ") << m_seqfile << _T("]") << endl;
+    std::_t_cout << _T("[spec file: ") << m_seqfile << _T("]") << std::endl;
  
     _stprintf(m_outdir, _T("%s%s%s"), m_anadir,DIR_STR,_T("output"));
     if (!silent) {
         NLP_ENGINE::createDir(m_outdir);
-        _t_cout << _T("[output directory: ") << m_outdir << _T("]") << endl;
+        std::_t_cout << _T("[output directory: ") << m_outdir << _T("]") << std::endl;
     }
 
     /////////////////////////////////////////////////
@@ -208,13 +208,13 @@ int NLP_ENGINE::init(
 //    if (m_nlp = VTRun_Ptr->findAna(analyzer))   // [DEGLOB]	// 10/15/20 AM.
     if ((m_nlp = m_vtrun->findAna(analyzer)))   // [DEGLOB]	// 10/15/20 AM.
         {
-        _t_cout << _T("Analyzer found: ") << analyzer << analyzer << endl;
-        _t_cout << _T("[TODO: RELOAD ANALYZER (NLP) INTO NLPENGINE HERE.]") << analyzer << endl;
+        std::_t_cout << _T("Analyzer found: ") << analyzer << analyzer << std::endl;
+        std::_t_cout << _T("[TODO: RELOAD ANALYZER (NLP) INTO NLPENGINE HERE.]") << analyzer << std::endl;
         // return 1;    // If reloading same analyzer, done init....
         m_cg = m_nlp->getCG();
 
  
-        //    _t_cout << _T("Analyzer not found: ") << analyzer << endl;
+        //    std::_t_cout << _T("Analyzer not found: ") << analyzer << std::endl;
         }
     else
         {
@@ -239,14 +239,14 @@ int NLP_ENGINE::init(
 
         if (!m_cg)                                                       // 07/21/03 AM.
         {
-            _t_cerr << _T("[Couldn't make knowledge base.]") << endl;  // 07/21/03 AM.
+            std::_t_cerr << _T("[Couldn't make knowledge base.]") << std::endl;  // 07/21/03 AM.
             m_vtrun->rmAna(m_nlp);  // 09/27/20 AM.
             m_vtrun->deleteNLP(m_nlp);                                     // 07/21/03 AM.
     //        VTRun::deleteVTRun(m_vtrun);                                 // 07/21/03 AM.
             return -1;
         }
 
-        _t_cerr << _T("[Loaded knowledge base.]") << endl;             // 02/19/19 AM.
+        std::_t_cerr << _T("[Loaded knowledge base.]") << std::endl;             // 02/19/19 AM.
 
         /////////////////////////////////////////////////
         // BUILD ANALYZER APPLICATION
@@ -260,7 +260,7 @@ int NLP_ENGINE::init(
             false,               // false == Don't compile during load.
             compiled))           // Compiled/interp analyzer.
             {
-            _t_cerr << _T("[Couldn't build analyzer.]") << endl;
+            std::_t_cerr << _T("[Couldn't build analyzer.]") << std::endl;
             m_vtrun->rmAna(m_nlp);  // 09/27/20 AM.
             m_vtrun->deleteNLP(m_nlp);                                     // 07/21/03 AM.
     //        VTRun::deleteVTRun(m_vtrun);                                 // 07/21/03 AM.
@@ -310,10 +310,10 @@ int NLP_ENGINE::analyze(
             _stprintf(m_infile, _T("%s"),file);
         else
             _stprintf(m_infile, _T("%s%sinput%s%s"),m_anadir,DIR_STR,DIR_STR,file);
-        _t_cout << _T("[infile path: ") << m_infile << _T("]") << endl;
+        std::_t_cout << _T("[infile path: ") << m_infile << _T("]") << std::endl;
 
         _stprintf(m_outfile, _T("%s%soutfile.txt"),m_anadir,DIR_STR);
-        _t_cout << _T("[outfile path: ") << m_outfile << _T("]") << endl;
+        std::_t_cout << _T("[outfile path: ") << m_outfile << _T("]") << std::endl;
 
         bool create = true;
         if (outdir) {
@@ -327,7 +327,7 @@ int NLP_ENGINE::analyze(
             _stprintf(m_outdir, _T("%s_log"),file);
             NLP_ENGINE::createDir(m_outdir);
         }
-        _t_cout << _T("[outdir path: ") << m_outdir << _T("]") << endl;
+        std::_t_cout << _T("[outdir path: ") << m_outdir << _T("]") << std::endl;
 
         // Analyzer can output to a stream.
         _TCHAR ofstr[MAXSTR];
@@ -336,7 +336,7 @@ int NLP_ENGINE::analyze(
         #else
         _stprintf(ofstr,_T("e:\\dummy.txt"));
         #endif
-        _t_ofstream os(TCHAR2CA(ofstr), ios::out);						// 08/07/02 AM.
+        std::_t_ofstream os(TCHAR2CA(ofstr), std::ios::out);						// 08/07/02 AM.
 
         // Testing output to buffer.
         _TCHAR obuf[MAXSTR];
@@ -378,12 +378,12 @@ int NLP_ENGINE::analyze(
     #else
     _stprintf(ofstr,_T("e:\\dummy.txt"));
     #endif
-    _t_ofstream os(TCHAR2CA(ofstr), ios::out);
+    std::_t_ofstream os(TCHAR2CA(ofstr), std::ios::out);
     
-    _t_cout << _T("[infile path: ") << m_infile << _T("]") << endl;
-    _t_cout << _T("[outfile path: ") << m_outfile << _T("]") << endl;
+    std::_t_cout << _T("[infile path: ") << m_infile << _T("]") << std::endl;
+    std::_t_cout << _T("[outfile path: ") << m_outfile << _T("]") << std::endl;
 
-//_t_cout << _T("BEFORE ANALYSIS: ") << endl; // 09/27/20 AM.
+//std::_t_cout << _T("BEFORE ANALYSIS: ") << std::endl; // 09/27/20 AM.
 //object_counts();    // TESTING analysis cleanup.    // 09/27/20 AM.
 
     m_nlp->analyze(m_infile, m_outfile, m_anadir, m_develop,
@@ -397,7 +397,7 @@ int NLP_ENGINE::analyze(
         outlen	   // 05/11/02 AM.
         );
 
-//_t_cout << _T("AFTER ANALYSIS: ") << endl; // 09/27/20 AM.
+//std::_t_cout << _T("AFTER ANALYSIS: ") << std::endl; // 09/27/20 AM.
 //object_counts();    // TESTING analysis cleanup.    // 09/27/20 AM.
     return 0;
 }
@@ -405,8 +405,8 @@ int NLP_ENGINE::analyze(
 // ANALYZE VARIANT FOR STRSTREAM I/O.  11/24/20 AM.
 int NLP_ENGINE::analyze(
     _TCHAR *analyzer,
-    istringstream *iss,
-    ostringstream *oss,
+    std::istringstream *iss,
+    std::ostringstream *oss,
 	bool develop,
 	bool silent,
     bool compiled
@@ -422,9 +422,9 @@ int NLP_ENGINE::analyze(
     #else
     _stprintf(ofstr,_T("e:\\dummy.txt"));
     #endif
-    _t_ofstream os(TCHAR2CA(ofstr), ios::out);
+    std::_t_ofstream os(TCHAR2CA(ofstr), std::ios::out);
 
-//_t_cout << _T("BEFORE ANALYSIS: ") << endl; // 09/27/20 AM.
+//std::_t_cout << _T("BEFORE ANALYSIS: ") << std::endl; // 09/27/20 AM.
 //object_counts();    // TESTING analysis cleanup.    // 09/27/20 AM.
 
     m_nlp->analyze(
@@ -440,7 +440,7 @@ int NLP_ENGINE::analyze(
         );
 
 
-//_t_cout << _T("AFTER ANALYSIS: ") << endl; // 09/27/20 AM.
+//std::_t_cout << _T("AFTER ANALYSIS: ") << std::endl; // 09/27/20 AM.
 //object_counts();    // TESTING analysis cleanup.    // 09/27/20 AM.
     return 0;
 }
@@ -459,7 +459,7 @@ int NLP_ENGINE::close()
 //    VTRun_Ptr = 0;      // Clear out static var.        // 09/27/20 AM.
     VTRun::deleteVTRun(m_vtrun);    // [DEGLOB]	// 10/15/20 AM.
     m_vtrun = 0;    // [DEGLOB]	// 10/15/20 AM.
-    _t_cout << _T("[AFTER VTRUN DELETE: ]") << endl;    // 09/27/20 AM.
+    std::_t_cout << _T("[AFTER VTRUN DELETE: ]") << std::endl;    // 09/27/20 AM.
 
     // Report memory leaks to standard output.
     object_counts();    // 09/27/20 AM.
@@ -495,7 +495,7 @@ int NLP_ENGINE::createDir(_TCHAR *dirPath) {
 #else
 	    CreateDirectory(dirPath,NULL);
 #endif
-	    _t_cout << _T("[Creating output directory: ") << dirPath << _T("]") << endl;
+	    std::_t_cout << _T("[Creating output directory: ") << dirPath << _T("]") << std::endl;
 	}
     return 0;
 }

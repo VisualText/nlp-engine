@@ -118,14 +118,14 @@ int Starr::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Starr::prettyCount(_t_ofstream *ofstr)
+void Starr::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Starr count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Starr count=") << count_ << ends;
+		*ofstr << _T("Active Starr count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Starr count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -142,8 +142,8 @@ if (&right != this)					// Avoid self-assignment.
 	}
 else
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("Attempted assignment of starr to itself.") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Attempted assignment of starr to itself.") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -166,7 +166,7 @@ void	Starr::setLength(int x)	{length_	= x;}
 
 
 // Overloaded output operator.
-_t_ostream &STDOPERATOR<<(_t_ostream &output, const Starr &s)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, const Starr &s)
 {
 int ii = s.length_;
 _TCHAR **ptr = s.arr_;

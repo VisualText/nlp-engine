@@ -57,8 +57,8 @@ class LITE_API Pn
 	friend class Arun;													// OPT	// 05/16/00 AM.
 	friend class Ivar;													// OPT	// 06/04/00 AM.
 	friend class Pat;														// OPT	// 05/17/01 AM.
-	friend _t_ostream &operator<<(_t_ostream &, const Pn &);
-	friend _t_ostream &operator<<(_t_ostream &, Node<Pn> &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, const Pn &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Node<Pn> &);
 
 public:
 
@@ -259,7 +259,7 @@ private:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif

@@ -29,8 +29,8 @@ All rights reserved.
 
 class Ipre : public Iaction
 {
-	friend _t_ostream &operator<<(_t_ostream &, Ipre &pre);
-	friend _t_ostream &operator<<(_t_ostream &, Dlist<Ipre> &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Ipre &pre);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Dlist<Ipre> &);
 
 public:
 	Ipre(
@@ -61,8 +61,8 @@ public:
 	static bool same(Dlist<Ipre> *list1, Dlist<Ipre> *list2); //06/07/99 AM.
 	static bool same(Ipre *pre1, Ipre *pre2);			// 06/07/99 AM.
 
-	static void genPres(Dlist<Ipre> *pres, _t_ostream &ofile);// 07/06/99AM.
-	static void genPre(Ipre *pre, _t_ostream &ofile);			 // 07/06/99 AM.
+	static void genPres(Dlist<Ipre> *pres, std::_t_ostream &ofile);// 07/06/99AM.
+	static void genPre(Ipre *pre, std::_t_ostream &ofile);			 // 07/06/99 AM.
 
 private:
 	int start_;				// First rule elt covered by action.	// 11/29/98 AM.

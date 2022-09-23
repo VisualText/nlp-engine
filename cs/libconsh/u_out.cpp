@@ -24,7 +24,7 @@ All rights reserved.
 **************************************************/
 
 int getutf8(
-	_t_istream *fp,
+	std::_t_istream *fp,
 	int cc
 	)
 {

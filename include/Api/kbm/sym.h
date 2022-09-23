@@ -88,7 +88,7 @@ public:
 		int seg_curr,
 		SYM *seg_p
 		);
-	long	 sym_hash(register _TCHAR *str);
+	long	 sym_hash(_TCHAR *str);
 	long	 sym_hash_size();
 	int		 sym_hash_tot();
 // void	 sym_ini();

@@ -88,8 +88,8 @@ Iwhilestmt *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Iwhilestmt object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Iwhilestmt object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -128,7 +128,7 @@ dest->block_	= orig->block_;
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Iwhilestmt &whilestmt)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Iwhilestmt &whilestmt)
 {
 output << _T("while (");
 if (whilestmt.cond_)
@@ -142,7 +142,7 @@ return output;
 }
 
 // Workaround to calling overloaded << in derived classes.
-void Iwhilestmt::print(_t_ostream &output)
+void Iwhilestmt::print(std::_t_ostream &output)
 {
 output << *this;
 }
@@ -179,14 +179,14 @@ int Iwhilestmt::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Iwhilestmt::prettyCount(_t_ofstream *ofstr)
+void Iwhilestmt::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Iwhilestmt count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Iwhilestmt count=") << count_ << ends;
+		*ofstr << _T("Active Iwhilestmt count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Iwhilestmt count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -203,10 +203,10 @@ if (count_)
 * SUBJ:	Generate whilestmt to a rules file.
 *********************************************/
 void Iwhilestmt::genWhilestmt(
-	_t_ostream &ofile
+	std::_t_ostream &ofile
 	)
 {
-ofile << this << flush;
+ofile << this << std::flush;
 }
 
 
@@ -244,8 +244,8 @@ bool Iwhilestmt::eval(Nlppp *nlppp, /*UP*/ RFASem* &val)
 val = 0;
 if (!cond_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[whilestmt eval: Error. Not allowing infinite loop.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[whilestmt eval: Error. Not allowing infinite loop.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -264,8 +264,8 @@ for (;;)				// EXECUTE THE WHILE-LOOP.
 		{
 		if (!ok)
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[whilestmt: Error(1).]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[whilestmt: Error(1).]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			}
 				// 10/18/00 AM.
@@ -286,8 +286,8 @@ for (;;)				// EXECUTE THE WHILE-LOOP.
 			{
 			if (!ok)
 				{
-				_t_strstream gerrStr;
-				gerrStr << _T("[whilestmt: Error(2).]") << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("[whilestmt: Error(2).]") << std::ends;
 				nlppp->parse_->errOut(&gerrStr,false);
 				}
 			// 10/18/00 AM.
@@ -363,8 +363,8 @@ for (;;)				// EXECUTE THE WHILE-LOOP.
 			if (!nlppp->insidefn_)											// 03/12/02 AM.
 				{
 				nlppp->parse_->line_ = line_;								// 08/24/02 AM.
-				_t_strstream gerrStr;			// 03/09/02 AM.
-				gerrStr << _T("[Return statement not in a function.]") << ends;
+				std::_t_strstream gerrStr;			// 03/09/02 AM.
+				gerrStr << _T("[Return statement not in a function.]") << std::ends;
 				nlppp->parse_->errOut(&gerrStr,false);								// 03/09/02 AM.
 				ok = false;														// 03/09/02 AM.
 				}
@@ -378,8 +378,8 @@ for (;;)				// EXECUTE THE WHILE-LOOP.
 			}
 		if (!ok)																	// 10/10/00 AM.
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[whilestmt: Error(3).]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[whilestmt: Error(3).]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 
 				// 10/18/00 AM.
@@ -409,8 +409,8 @@ for (;;)				// EXECUTE THE WHILE-LOOP.
 					goto done;													// 02/13/02 AM.
 				default:															// 02/13/02 AM.
 					{
-					_t_strstream gerrStr;		// 02/13/02 AM.
-					gerrStr << _T("[Error: fail() in bad region.]") << ends;
+					std::_t_strstream gerrStr;		// 02/13/02 AM.
+					gerrStr << _T("[Error: fail() in bad region.]") << std::ends;
 					nlppp->parse_->errOut(&gerrStr,false);							// 02/13/02 AM.
 					}
 					break;														// 02/13/02 AM.
@@ -444,8 +444,8 @@ return ok;
 
 bool Iwhilestmt::genEval(Gen *gen)
 {
-//_t_ofstream *fcode = gen->fcode_;
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+//std::_t_ofstream *fcode = gen->fcode_;
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 _TCHAR *indent = gen->indent_;
 
 if (!cond_)
@@ -466,7 +466,7 @@ enum RFASemtype typ = RSNULL;
 *fcode << indent << _T("while (Arun::truth(");				// FIX!	// 04/29/01 AM.
 if (!cond_->genEval(gen))
 	{
-	*fcode << _T("\n// ERROR in whilestmt condition.") << endl;
+	*fcode << _T("\n// ERROR in whilestmt condition.") << std::endl;
 	return false;
 	}
 *fcode << _T("))");
@@ -481,7 +481,7 @@ gen->setIndent(newindent);
 Gen::nl(fcode);																// 04/04/03 AM.
 if (!block_->genEval(gen))
 	{
-	*fcode << _T("\n// ERROR in whilestmt block.") << endl;
+	*fcode << _T("\n// ERROR in whilestmt block.") << std::endl;
 	gen->setIndent(indent);			// Restore.
 	return false;
 	}

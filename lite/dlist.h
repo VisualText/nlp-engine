@@ -17,7 +17,7 @@ All rights reserved.
 #define DLIST_HI
 #include <assert.h>
 #ifdef LINUX
-//#include <_t_strstream.h>
+//#include <std::_t_strstream.h>
 #include <sstream>
 #else
 #ifdef UNICODE
@@ -113,7 +113,7 @@ private:
 public:
 	static int getCount();
 	static void prettyCount(_TCHAR * = _T(""),
-							_t_ofstream* = 0);			// Pretty-print the count.
+							std::_t_ofstream* = 0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif
@@ -161,8 +161,8 @@ pFirst = pLast = delt;
 #ifndef STABLE_
 if (delt->pLeft || delt->pRight)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Dlist: Given element is part of another list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Dlist: Given element is part of another list.]") << std::ends;
 	errOut(&gerrStr,false);
 
 	delt->pLeft = delt->pRight = 0;
@@ -189,7 +189,7 @@ template<class DELTTYPE>
 Dlist<DELTTYPE>::Dlist(const Dlist<DELTTYPE> &orig)	// 08/28/12 AM.
 // (The above is same form as LINUX version.)	// 03/20/19 AM.
 {
-//*gerr << "[Dlist copy constructor]" << endl;
+//*gerr << "[Dlist copy constructor]" << std::endl;
 pFirst = pLast = 0;
 // Copy the list.
 Delt<DELTTYPE> *ptr;
@@ -264,23 +264,23 @@ int Dlist<DELTTYPE>::getCount() { return count_; }
 #ifndef STABLE_
 template<class DELTTYPE>
 void Dlist<DELTTYPE>::prettyCount(_TCHAR *str,
-	_t_ofstream *ofstr)
+	std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("Active Dlist<") << str << _T("> count=")
-		  << count_ << ends;
+		  << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 
 	*gout << _T("Active Dlist<") << str << _T("> count=")
-		  << count_ << endl;
+		  << count_ << std::endl;
 
 	if (ofstr)
 		*ofstr << _T("Active Dlist<") << str << _T("> count=")
-		  << count_ << endl;
+		  << count_ << std::endl;
 	}
 }
 #endif
@@ -314,8 +314,8 @@ void Dlist<DELTTYPE>::push(Delt<DELTTYPE> *delt)
 #ifndef STABLE_
 if (delt->pLeft || delt->pRight)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[push: Given element is part of another list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[push: Given element is part of another list.]") << std::ends;
 	errOut(&gerrStr,false);
 
 	delt->pLeft = 0;
@@ -369,8 +369,8 @@ void Dlist<DELTTYPE>::rpush(Delt<DELTTYPE> *delt)
 {
 if (delt->pLeft || delt->pRight)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rpush: Given element is part of a list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rpush: Given element is part of a list.]") << std::ends;
 	errOut(&gerrStr,false);
 
 	delt->pLeft = delt->pRight = 0;
@@ -541,16 +541,16 @@ void Dlist<DELTTYPE>::insertLeft(
 {
 if (!delt || !pos)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[InsertLeft: Given NULL ptr]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[InsertLeft: Given NULL ptr]") << std::ends;
 	errOut(&gerrStr,false);
 
 	return;
 	}
 if (delt->pLeft || delt->pRight)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[InsertLeft: Given elt is in another list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[InsertLeft: Given elt is in another list.]") << std::ends;
 	errOut(&gerrStr,false);
 
 	return;
@@ -583,16 +583,16 @@ void Dlist<DELTTYPE>::insertRight(
 {
 if (!delt || !pos)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[insertRight: Given NULL element.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[insertRight: Given NULL element.]") << std::ends;
 	errOut(&gerrStr,false);
 
 	return;
 	}
 if (delt->pLeft || delt->pRight)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[insertRight: Element in another list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[insertRight: Element in another list.]") << std::ends;
 	errOut(&gerrStr,false);
 
 	return;
@@ -643,8 +643,8 @@ else
 		{
 		if (!list || !(list = list->pRight))
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[insertAfter: Position longer than list.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[insertAfter: Position longer than list.]") << std::ends;
 			errOut(&gerrStr,false);
 
 			Delt<DELTTYPE>::DeleteDeltAndData(delt);
@@ -684,8 +684,8 @@ else
 		{
 		if (!list || !(list = list->pRight))
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[insertAfter: Position longer than list.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[insertAfter: Position longer than list.]") << std::ends;
 			errOut(&gerrStr,false);
 
 			return 0;
@@ -864,8 +864,8 @@ while (--ord)
 	{
 	if (!list || !(list = list->pRight))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[spliceAfter: Position longer than list.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[spliceAfter: Position longer than list.]") << std::ends;
 		errOut(&gerrStr,false);
 
 		return 0;
@@ -934,8 +934,8 @@ void Dlist<DELTTYPE>::Traverse(
 {
 for (; delt; delt = delt->pRight)
 // This was a fix from the LINUX code.	// 03/20/19 AM.
-//	_t_cout << pn->data < _T(" ");
-	_t_cout << delt->data < _T(" ");
+//	std::_t_cout << pn->data < _T(" ");
+	std::_t_cout << delt->data < _T(" ");
 }
 
 
@@ -1031,8 +1031,8 @@ if (!delt)
 	return;
 if (delt->pLeft)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[DelDlistAndData: Given sublist is not detached.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[DelDlistAndData: Given sublist is not detached.]") << std::ends;
 	errOut(&gerrStr,false);
 
 	return;

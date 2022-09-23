@@ -111,8 +111,8 @@ bool Rec::Execute(Parse *parse, Seqn *seqn)
 
 if (!parse || !seqn)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Rec pass given no parser or pass information.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Rec pass given no parser or pass information.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -141,8 +141,8 @@ if (!tree
 // || lines
    )
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Rec pass given no parse tree data.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Rec pass given no parse tree data.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -151,8 +151,8 @@ Node<Pn> *root;
 root = tree->getRoot();
 if (!root)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Rec pass: Tree has no root.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Rec pass: Tree has no root.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -161,8 +161,8 @@ Dlist<Irule> *rulelist;
 rulelist = seqn->getRules();
 if (!rulelist)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Rec pass given no rules.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Rec pass given no rules.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -171,8 +171,8 @@ Delt<Irule> *rules;
 rules = rulelist->getFirst();
 if (!rules)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Rec pass: No rules in list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Rec pass: No rules in list.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -283,7 +283,7 @@ for (dselect = selects->getFirst(); dselect; dselect = dselect->Right())
 	select = dselect->getData();
 	if (!strcmp_i(name, select->getStr()))		// Found one.
 		{
-		//*gout << "[FOUND SELECT NODE]" << endl;
+		//*gout << "[FOUND SELECT NODE]" << std::endl;
 		if (!RecmatchSelect(node, rules, parse))
 			return false;
 		goto listmanager;
@@ -345,7 +345,7 @@ for (dselect = selects->getFirst(); dselect; dselect = dselect->Right())
 	select = dselect->getData();
 	if (!strcmp_i(name, select->getStr()))		// Found one.
 		{
-		//*gout << "[FOUND SELECT NODE]" << endl;
+		//*gout << "[FOUND SELECT NODE]" << std::endl;
 		if (!RecmatchSelect(node, musts, htab, parse))
 			return false;
 		goto listmanager;
@@ -480,7 +480,7 @@ for (;;)							// WHILE RECURSING....
 		// For each rule in the rules list.
 		prule = rules;				// Reset the rules list.
 		if (Debug())
-			*gout << _T(" Matching on node:") << *node << endl;
+			*gout << _T(" Matching on node:") << *node << std::endl;
 
 		//if (!Pat::matchRules(node,start,end,parse,select,
 		//					/*DU*/ prule,collect,first,last,sem,dsem))
@@ -635,7 +635,7 @@ for (;;)							// WHILE RECURSING.....
 		prule = Pat::resetRules(node, musts, htab, /*DU*/ rules);
 
 		if (Debug())
-			*gout << _T(" Matching on node:") << *node << endl;
+			*gout << _T(" Matching on node:") << *node << std::endl;
 
 		// For each rule in the rules list.
 		//if (!Pat::matchRules(node, start, end, parse,select,
@@ -815,15 +815,15 @@ if (state_matched)												// 01/23/05 AM.
 		if (state_count)											// 01/23/05 AM.
 			{
 			parse->line_ = state_line;							// 01/23/05 AM.
-			_t_strstream gerrStr;
-			gerrStr << _T("[Possible infinite loop.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Possible infinite loop.]") << std::ends;
 			parse->errOut(&gerrStr,false);					// 01/23/05 AM.
 			}
 		if (state_count2)											// 01/23/05 AM.
 			{
 			parse->line_ = state_line2;						// 01/23/05 AM.
-			_t_strstream gerrStr;
-			gerrStr << _T("[Possible infinite loop.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Possible infinite loop.]") << std::ends;
 			parse->errOut(&gerrStr,false);					// 01/23/05 AM.
 			}
 		return true;	// Flag infinite loop.
@@ -951,8 +951,8 @@ bool Rec::Execute(
 
 if (!parse)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Rec pass given no parser or pass information.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Rec pass given no parser or pass information.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -987,8 +987,8 @@ if (!tree
 // || !lines
    )
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Rec pass given no parse tree data.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Rec pass given no parse tree data.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -998,8 +998,8 @@ Node<Pn> *root;
 root = tree->pRoot;
 if (!root)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Rec pass: Tree has no root.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Rec pass: Tree has no root.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -1060,8 +1060,8 @@ switch (pass->seltype)			// Type of traversal.				// 06/08/00 AM.
 		break;											// FIX.	// 08/04/03 AM.
 	case SELECTPREMULTI:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Rec: Premulti select traversal unimplemented.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Rec: Premulti select traversal unimplemented.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -1069,8 +1069,8 @@ switch (pass->seltype)			// Type of traversal.				// 06/08/00 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Rec: Bad select traversal type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Rec: Bad select traversal type.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -1109,7 +1109,7 @@ while (*pselect)
 	{
 	if (!strcmp_i(name, *pselect))		// Found one.
 		{
-		//*gout << "[FOUND SELECT NODE]" << endl;
+		//*gout << "[FOUND SELECT NODE]" << std::endl;
 //		matchNodes(node->Down(),0,rules,parse,node);
 		if (!matchNodes(node->Down(),0,parse,pass,node))					// 11/18/02 AM.
 			return false;																// 11/18/02 AM.
@@ -1217,7 +1217,7 @@ for (;;)							// WHILE RECURSING....
 		// For each rule in the rules list.
 		//prule = rules;				// Reset the rules list.
 		//if (Debug())
-		//	*gout << " Matching on node:" << *node << endl;
+		//	*gout << " Matching on node:" << *node << std::endl;
 
 		if (!Pat::matchRules(nlppp, pass->rules))
 			{
@@ -1375,8 +1375,8 @@ bool Rec::Hexecute(
 
 if (!parse)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Rec pass given no parser or pass information.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Rec pass given no parser or pass information.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -1412,8 +1412,8 @@ if (!tree
 // || !lines
    )
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Rec pass given no parse tree data.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Rec pass given no parse tree data.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -1423,8 +1423,8 @@ Node<Pn> *root;
 root = tree->pRoot;
 if (!root)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Rec pass: Tree has no root.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Rec pass: Tree has no root.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -1485,8 +1485,8 @@ switch (pass->seltype)			// Type of traversal.
 		break;											// FIX.	// 08/04/03 AM.
 	case SELECTPREMULTI:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Rec: Premulti select traversal unimplemented.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Rec: Premulti select traversal unimplemented.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -1494,8 +1494,8 @@ switch (pass->seltype)			// Type of traversal.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Rec: Bad select traversal type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Rec: Bad select traversal type.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -1534,7 +1534,7 @@ while (*pselect)
 	{
 	if (!strcmp_i(name, *pselect))		// Found one.
 		{
-		//*gout << "[FOUND SELECT NODE]" << endl;
+		//*gout << "[FOUND SELECT NODE]" << std::endl;
 //		matchNodes(node->Down(),0,rules,parse,node);
 		if (!HmatchNodes(node->Down(),0,parse,pass,node))					// 11/18/02 AM.
 			return false;																// 11/18/02 AM.

@@ -159,8 +159,8 @@ Irule *to;
 to = this;
 if (&rule == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Irule object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Irule object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -288,7 +288,7 @@ dest->line_ = orig->line_;							// 05/26/01 AM.
 /*******************************************/
 
 // Whoever wants to can print the actions out separately.
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Irule &rule)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Irule &rule)
 {
 if (!rule.sugg_ || !rule.phrase_)
 	{
@@ -297,9 +297,9 @@ if (!rule.sugg_ || !rule.phrase_)
 	}
 
 //if (rule.pre_)
-//	output << "pre: " << *(rule.pre_) << endl;
+//	output << "pre: " << *(rule.pre_) << std::endl;
 //if (rule.post_)
-//	output << "post_: " << *(rule.post_) << endl;
+//	output << "post_: " << *(rule.post_) << std::endl;
 
 // Note: Can't get trigger info to the phrase elt! 11/22/98 AM.
 long ord;
@@ -314,7 +314,7 @@ return output;
 }
 
 // 10/26/98 AM.
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Delt<Irule> &delt)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Delt<Irule> &delt)
 {
 Irule *rr;
 rr = delt.getData();
@@ -322,18 +322,18 @@ output << *rr;
 return output;
 }
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Dlist<Irule> &list)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Dlist<Irule> &list)
 {
 Delt<Irule> *delt;
 Irule *rr;
 if (!(delt = list.getFirst()))
 	return output;
 rr   = delt->getData();
-output << *rr << endl;
+output << *rr << std::endl;
 while ((delt = delt->Right()))
 	{
 	rr = delt->getData();
-	output << *rr << endl;
+	output << *rr << std::endl;
 	}
 
 return output;
@@ -342,7 +342,7 @@ return output;
 /*******************************************/
 
 // 12/19/98 AM.
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Selt<Irule> &selt)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Selt<Irule> &selt)
 {
 Irule *rr;
 rr = selt.getData();
@@ -351,18 +351,18 @@ return output;
 }
 
 // 12/19/98 AM.
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Slist<Irule> &list)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Slist<Irule> &list)
 {
 Selt<Irule> *selt;
 Irule *rr;
 if (!(selt = list.getFirst()))
 	return output;
 rr   = selt->getData();
-output << *rr << endl;
+output << *rr << std::endl;
 while ((selt = selt->Right()))
 	{
 	rr = selt->getData();
-	output << *rr << endl;
+	output << *rr << std::endl;
 	}
 
 return output;
@@ -424,14 +424,14 @@ int Irule::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Irule::prettyCount(_t_ofstream *ofstr)
+void Irule::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Irule count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Irule count=") << count_ << ends;
+		*ofstr << _T("Active Irule count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Irule count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -463,8 +463,8 @@ trig = trigger_;
 if ((phr = phrase_) && (sgg = sugg_))
 	return true;
 
-_t_strstream gerrStr;
-gerrStr << _T("[Irule::unpack: Empty data.]") << ends;
+std::_t_strstream gerrStr;
+gerrStr << _T("[Irule::unpack: Empty data.]") << std::ends;
 errOut(&gerrStr,false);
 
 return false;
@@ -703,8 +703,8 @@ for (delt = phrase->getFirst(); delt; delt = delt->Right())
 			}
 		else
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Rule can't have multiple lookaheads.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Rule can't have multiple lookaheads.]") << std::ends;
 //			parse->errOut(false,true);	// 05/27/07 AM.
 			errOut(&gerrStr,false, parse->getInputpass(),// FIX.	// 11/12/01 AM.
 						parse->getInputline());	// 05/27/07 AM.
@@ -722,8 +722,8 @@ for (delt = phrase->getFirst(); delt; delt = delt->Right())
 			}
 		else
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Rule can't have multiple triggers.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Rule can't have multiple triggers.]") << std::ends;
 //			parse->errOut(false,true);	// 05/27/07 AM.
 			errOut(&gerrStr,false, parse->getInputpass(),// FIX.	// 11/12/01 AM.
 						parse->getInputline());	// 05/27/07 AM.
@@ -985,7 +985,7 @@ for (; selt2; selt2 = selt2->Right())
 bool Irule::genRuleblocks(
 	Dlist<Irule> *rules,
 	_TCHAR *sep,			// Element separator.
-	_t_ostream &ofile)
+	std::_t_ostream &ofile)
 {
 if (!rules)
 	return false;
@@ -1005,29 +1005,29 @@ posts  = rule->getPost();
 for (;;)							// For each region of rules.
 	{
 	// At a new rule region, so print out actions.
-	ofile << endl;
+	ofile << std::endl;
 	if (pres  && pres->getFirst())
 		{
-		ofile << _T("@PRE") << endl;
+		ofile << _T("@PRE") << std::endl;
 		Ipre::genPres(pres, ofile);
 		}
 	if (checks && checks->getFirst())
 		{
-		ofile << _T("@CHECK") << endl;
+		ofile << _T("@CHECK") << std::endl;
 		Iaction::genActions(checks, ofile);
 		}
 	if (posts && posts->getFirst())
 		{
-		ofile << _T("@POST") << endl;
+		ofile << _T("@POST") << std::endl;
 		Iaction::genActions(posts, ofile);
 		}
 
-	ofile << _T("@RULES") << endl;
+	ofile << _T("@RULES") << std::endl;
 
 
 	// Print out the first rule of new region.
 	rule->genRule(sep, ofile);
-	ofile << endl;
+	ofile << std::endl;
 
 	// Now compare actions of successive rules.  As long as they're the
 	// same, print them in the same region.
@@ -1049,7 +1049,7 @@ for (;;)							// For each region of rules.
 			{
 			// Actions same.  Just print out the current rule.
 			test->genRule(sep, ofile);
-			ofile << endl;
+			ofile << std::endl;
 			}
 		else
 			{
@@ -1076,7 +1076,7 @@ return false;		// Shouldn't get down here.
 bool Irule::genRulerecurses(
 	Dlist<Irule> *rules,
 	_TCHAR *sep,			// Element separator.
-	_t_ostream &ofile)
+	std::_t_ostream &ofile)
 {
 // Traverse rules to get their recurse regions.
 Delt<Irule> *drule;
@@ -1106,7 +1106,7 @@ return true;
 void Irule::genRules(
 	Dlist<Irule> *rules,
 	_TCHAR *sep,			// Element separator.	// 11/04/99 AM.
-	_t_ostream &ofile)
+	std::_t_ostream &ofile)
 {
 if (!rules)
 	return;
@@ -1116,34 +1116,34 @@ bool start = true;			// Start a new region.
 for (drule = rules->getFirst(); drule; drule = drule->Right())
 	{
 	rule = drule->getData();
-	ofile << endl;															// 11/04/99 AM.
+	ofile << std::endl;															// 11/04/99 AM.
 
 	// TODO: If actions, print them here.
 	if (rule->getPre()  && rule->getPre()->getFirst())	// 09/20/99 AM.
 		{
-		ofile << _T("@PRE") << endl;
+		ofile << _T("@PRE") << std::endl;
 		Ipre::genPres(rule->getPre(), ofile);
 		start = true;
 		}
 	if (rule->getChecks() && rule->getChecks()->getFirst())	// 09/20/99 AM.
 		{
-		ofile << _T("@CHECK") << endl;										// 11/04/99 AM.
+		ofile << _T("@CHECK") << std::endl;										// 11/04/99 AM.
 		Iaction::genActions(rule->getChecks(), ofile);			// 11/04/99 AM.
 		start = true;
 		}
 	if (rule->getPost() && rule->getPost()->getFirst())		// 09/20/99 AM.
 		{
-		ofile << _T("@POST") << endl;
+		ofile << _T("@POST") << std::endl;
 		Iaction::genActions(rule->getPost(), ofile);
 		start = true;
 		}
 
-	ofile << _T("@RULES") << endl;
+	ofile << _T("@RULES") << std::endl;
 
 
 	// Print out the rule here.
 	rule->genRule(sep, ofile);				// 11/04/99 AM.
-	ofile << endl;
+	ofile << std::endl;
 	start = false;
 	}
 }
@@ -1159,7 +1159,7 @@ for (drule = rules->getFirst(); drule; drule = drule->Right())
 
 void Irule::genRule(
 	_TCHAR *sep,			// Elt separator (" ", "\n\t")				// 11/04/99 AM.
-	_t_ostream &ofile,
+	std::_t_ostream &ofile,
 	bool trunc																	// 06/05/00 AM.
 	)
 {
@@ -1175,8 +1175,8 @@ if (rule->sample_)				// 06/16/99 AM.
 	_TCHAR buf[1024];
 	pretty_str(rule->sample_,buf, 1024);
 	ofile << _T("\n# Ex:\t")						// 11/04/99 AM.
-			<< buf << endl;					// 09/04/99 AM.
-	//ofile << rule->sample_ << endl;	// 09/04/99 AM.
+			<< buf << std::endl;					// 09/04/99 AM.
+	//ofile << rule->sample_ << std::endl;	// 09/04/99 AM.
 	}
 
 Isugg *sugg;
@@ -1188,7 +1188,7 @@ ofile << _T(" <-");		// Generate rule ARROW.
 // Generate phrase.
 Ielt::genPhrase(rule->getPhrase(), sep, ofile, trunc);
 
-ofile << sep << _T("@@") << flush;		// Generate rule termination.
+ofile << sep << _T("@@") << std::flush;		// Generate rule termination.
 }
 
 
@@ -1217,15 +1217,15 @@ Delt<Irule> *d1 = list1->getFirst();
 Delt<Irule> *d2 = list2->getFirst();
 if (!d1 && !d2)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Irule::same: Empty lists.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Irule::same: Empty lists.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
 if (!d1 || !d2)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Irule::same: Empty list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Irule::same: Empty list.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -1304,7 +1304,7 @@ for (drule = list->getFirst(); drule; drule = drule->Right())
 		if (same(drule->getData(), rule))
 			{
 			// Remove redundant rule.
-			//*gerr << "[FOUND REDUNDANT!]" << endl;
+			//*gerr << "[FOUND REDUNDANT!]" << std::endl;
 			list->Dlist<Irule>::exciseElt(test);
 			Irule::deleteOwning(rule);					// 07/03/99 AM.
 			Delt<Irule>::DeleteDeltAndData(test);	// 07/03/99 AM.
@@ -1661,7 +1661,7 @@ for (delt = dlist->getFirst(); delt; delt = delt->Right())
 
 bool Irule::gen(Gen *gen)
 {
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 gen->region_ = REGRULE;		// Says that we're in a rule.
 _TCHAR indent[64];
 _TCHAR *saveindent = gen->indent_;
@@ -1717,7 +1717,7 @@ else
 *fcode << lookahead_ << _T(",");												// 06/10/00 AM.
 											
 *fcode << _T("nlppp);");
-//		 << endl;																// 05/17/00 AM.
+//		 << std::endl;																// 05/17/00 AM.
 Gen::nl(fcode);																// 04/04/03 AM.
 
 long id = num_;
@@ -1775,14 +1775,14 @@ if (gen->label_)	// @CHECK region had a SUCCEED action.			// 06/06/00 AM.
 	{
 	_TCHAR label[64];
 	_stprintf(label, _T("L%d_%d_%d"), gen->id_,gen->recid_,gen->ruleid_);
-	*fcode << endl;			// Just in case.							// 04/04/03 AM.
-	*fcode << label << _T(":") << endl;
+	*fcode << std::endl;			// Just in case.							// 04/04/03 AM.
+	*fcode << label << _T(":") << std::endl;
 	gen->label_ = false;		// RESET.									// 06/06/00 AM.
 	}
 
 // If there were check actions, then generate a cleanup of local vars, etc. // 05/20/08 AM.
 if (found)																		// 05/20/08 AM.
-  *fcode << indent << _T("Arun::checkend(nlppp);") << endl;		// 05/20/08 AM.
+  *fcode << indent << _T("Arun::checkend(nlppp);") << std::endl;		// 05/20/08 AM.
 
 gen->region_ = REGPOST;
 genPost(post_, gen);
@@ -1801,12 +1801,12 @@ return true;
 
 bool Irule::genPost(Dlist<Iaction> *posts, Gen *gen)
 {
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 
 long id = num_;
 
 // Need to generate code for all the post action tree.
-//*fcode << "\t\t" << "exec_actions(nlppp);" << endl;
+//*fcode << "\t\t" << "exec_actions(nlppp);" << std::endl;
 _TCHAR *indent = _T("\t\t");
 
 // Modeled on postActions.
@@ -1818,7 +1818,7 @@ if (!posts)																		// 08/09/02 AM.
 			 << _T("if (!Arun::matched_rule(nlppp,false)) return false;");// 05/19/08 AM.
 else																				// 08/09/02 AM.
 	*fcode << indent															// 08/09/02 AM.
-			 << _T("if (!Arun::matched_rule(nlppp,true)) return false;") << endl;// 05/19/08 AM.
+			 << _T("if (!Arun::matched_rule(nlppp,true)) return false;") << std::endl;// 05/19/08 AM.
 Gen::nl(fcode);																// 04/04/03 AM.
 
 // Walk the rule phrase elements and gen their actions here.
@@ -1846,7 +1846,7 @@ if (posts)
 	Gen::nl(fcode);														// 09/15/08 AM.
 	}
 
-//*fcode << indent << "// Traverse post actions." << endl;
+//*fcode << indent << "// Traverse post actions." << std::endl;
 Delt<Iaction> *dpost;
 Iaction *post;
 RFASem *rfasem, *val = 0;
@@ -1857,7 +1857,7 @@ for (dpost = posts->getFirst(); dpost; dpost = dpost->Right())
 	if ((rfasem = post->getSem()))
 		{
 		rfasem->genEval(gen);	// GENERATE CODE FOR NLP++.
-		//*fcode << indent << "if (val) delete val;" << endl;
+		//*fcode << indent << "if (val) delete val;" << std::endl;
 		continue;
 		}
 	// Well, we do reach here when actions look like "fn()".
@@ -1891,7 +1891,7 @@ return true;
 
 bool Irule::genChecks(Dlist<Iaction> *checks, Gen *gen)
 {
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 
 //long id = num_;
 
@@ -1908,7 +1908,7 @@ Gen::nl(fcode);														// 09/15/08 AM.
 /////////////////////////////////////////////
 // Traverse the actions themselves here.
 /////////////////////////////////////////////
-//*fcode << indent << "// Traverse post actions." << endl;
+//*fcode << indent << "// Traverse post actions." << std::endl;
 Delt<Iaction> *dcheck;
 Iaction *check;
 RFASem *rfasem, *val = 0;
@@ -1921,7 +1921,7 @@ for (dcheck = checks->getFirst(); dcheck; dcheck = dcheck->Right())
 		{
 		found = true;	// 05/20/08 AM.
 		rfasem->genEval(gen);	// GENERATE CODE FOR NLP++.
-		//*fcode << indent << "if (val) delete val;" << endl;
+		//*fcode << indent << "if (val) delete val;" << std::endl;
 		continue;
 		}
 	// Well, we do reach here when actions look like "fn()".
@@ -1949,7 +1949,7 @@ return found;	// 05/20/08 AM.
 
 bool Irule::genCodes(Dlist<Iaction> *codes, Gen *gen)
 {
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 
 //long id = num_;
 
@@ -1967,7 +1967,7 @@ Gen::nl(fcode);														// 09/15/08 AM.
 /////////////////////////////////////////////
 // Traverse the actions themselves here.
 /////////////////////////////////////////////
-//*fcode << indent << "// Traverse post actions." << endl;
+//*fcode << indent << "// Traverse post actions." << std::endl;
 Delt<Iaction> *dcode;
 Iaction *code;
 RFASem *rfasem, *val = 0;
@@ -1978,7 +1978,7 @@ for (dcode = codes->getFirst(); dcode; dcode = dcode->Right())
 	if ((rfasem = code->getSem()))
 		{
 		rfasem->genEval(gen);	// GENERATE CODE FOR NLP++.
-		//*fcode << indent << "if (val) delete val;" << endl;
+		//*fcode << indent << "if (val) delete val;" << std::endl;
 		continue;
 		}
 	// Well, we do reach here when actions look like "fn()".
@@ -2012,17 +2012,17 @@ if (!phrase)
 if (!Ielt::phraseActions(phrase))
 	return true;
 
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 _TCHAR *indent = gen->indent_;
 
-//*fcode << indent << "// Exec Phrase" << endl;
+//*fcode << indent << "// Exec Phrase" << std::endl;
 
 // Using array indexing rather than traversing the collect.		// 05/23/00 AM.
 int count = 0;																	// 05/23/00 AM.
-//*fcode << indent << "pcoll = Arun::get_colls(nlppp);" << endl;// 05/23/00 AM.
+//*fcode << indent << "pcoll = Arun::get_colls(nlppp);" << std::endl;// 05/23/00 AM.
 
 // Walk the rule elements, generating their "pair" actions.
-//*fcode << indent << "Pn *data;" << endl;
+//*fcode << indent << "Pn *data;" << std::endl;
 
 
 Delt<Ielt> *delt;
@@ -2053,8 +2053,8 @@ for (delt = phrase->getFirst(); delt; delt = delt->Right())
 		}
 	if ((ren = elt->getRename()))
 		{
-//		*fcode << indent << "// For each node matched by rule elt...." << endl;
-//		*fcode << indent << "// Could collapse nodes then rename...." << endl;
+//		*fcode << indent << "// For each node matched by rule elt...." << std::endl;
+//		*fcode << indent << "// Could collapse nodes then rename...." << std::endl;
 //		*fcode << indent << "Arun::set_node_name(pcoll,"			// 05/23/00 AM.
 		*fcode << indent << _T("Arun::set_node_name(")					// 05/23/00 AM.
 				 << count  << _T(",")												// 05/23/00 AM.
@@ -2076,7 +2076,7 @@ for (delt = phrase->getFirst(); delt; delt = delt->Right())
 		// This is already done in generating the array for all elts.
 		// Ielt::genEltstarr(starr, a_attrs, gen);					// 05/31/00 AM.
 
-//		*fcode << indent << "//Layering that takes array of names." << endl;
+//		*fcode << indent << "//Layering that takes array of names." << std::endl;
 		*fcode << indent
 //			<< "Arun::layer_elt(pcoll,"									// 05/23/00 AM.
 			<< _T("Arun::layer_elt(")											// 05/23/00 AM.
@@ -2087,7 +2087,7 @@ for (delt = phrase->getFirst(); delt; delt = delt->Right())
 		}
 	//if (delt->Right())														// 05/23/00 AM.
 	//	*fcode << indent														// 05/23/00 AM.
-	//			 << "pcoll = Arun::next_node(pcoll);" << endl;		// 05/23/00 AM.
+	//			 << "pcoll = Arun::next_node(pcoll);" << std::endl;		// 05/23/00 AM.
 	}
 
 return true;
@@ -2142,8 +2142,8 @@ return false;
 
 bool Irule::genPres(Dlist<Irule> *rules, Gen *gen)
 {
-_t_ofstream *faux = gen->faux_;
-_t_ofstream *fhead = gen->fhead_;
+std::_t_ofstream *faux = gen->faux_;
+std::_t_ofstream *fhead = gen->fhead_;
 int id = gen->id_;
 _TCHAR *indent;
 
@@ -2233,7 +2233,7 @@ return true;
 
 bool Irule::genRule(Dlist<Irule> *rules, _TCHAR *rulebuf, Gen *gen)
 {
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 
 *fcode << _T("bool ") << rulebuf;
 Gen::nl(fcode);																// 04/04/03 AM.
@@ -2295,7 +2295,7 @@ Gen::nl(fcode);																// 04/04/03 AM.
 *fcode << indent << _T("}");
 Gen::nl(fcode);																// 04/04/03 AM.
 
-//*fcode << "nlppp->node_ = node;" << endl;
+//*fcode << "nlppp->node_ = node;" << std::endl;
 *fcode << _T("return false;");
 Gen::nl(fcode);																// 04/04/03 AM.
 *fcode << _T("}");
@@ -2364,8 +2364,8 @@ long len = musts->getLength();											// 06/19/00 AM.
 if (len <= 0)																	// 06/19/00 AM.
 	return true;			// Ok, but no code.							// 06/19/00 AM.
 
-_t_ofstream *rdata = gen->rdata_;
-_t_ofstream *rhead = gen->rhead_;
+std::_t_ofstream *rdata = gen->rdata_;
+std::_t_ofstream *rhead = gen->rhead_;
 
 _TCHAR *mustname = _T("must");		// For single organizing struct.	// 06/19/00 AM.
 _TCHAR *mustsname = _T("musts");			// For array of rule numbers.		// 06/19/00 AM.
@@ -2377,7 +2377,7 @@ _TCHAR mustsbuf[MAXSTR];
 _stprintf(mustsbuf, _T("%s%d_%d"), mustsname, gen->id_,gen->recid_);
 _stprintf(mustbuf, _T("%s%d_%d"), mustname, gen->id_, gen->recid_);
 
-//*rhead << "extern const int " << mustsbuf << "[];" << endl;
+//*rhead << "extern const int " << mustsbuf << "[];" << std::endl;
 
 *rdata << _T("const int ")
 		 << mustsbuf
@@ -2390,7 +2390,7 @@ for (selt = musts->getFirst(); selt; selt = selt->Right())
 #ifdef GENPRETTY_
 	if (++count == maxline)
 		{
-		*rdata << endl << _T("\t");
+		*rdata << std::endl << _T("\t");
 		count = 0;
 		}
 #endif
@@ -2424,7 +2424,7 @@ return true;
 * NOTE:	Generate rule number for each rule in chain.
 ********************************************/
 
-long Irule::genConflicts(Slist<Irule> *list, _t_ostream *ostr)
+long Irule::genConflicts(Slist<Irule> *list, std::_t_ostream *ostr)
 {
 if (!list || !ostr)
 	return false;

@@ -19,8 +19,8 @@ All rights reserved.
 
 class String
 {
-	friend _t_ostream &operator<<(_t_ostream &, const String &);
-	friend _t_istream &operator>>(_t_istream &, String &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, const String &);
+	friend std::_t_istream &operator>>(std::_t_istream &, String &);
 public:
 	String(const _TCHAR * = _T(""));		// Conversion constructor.
 											// Also, default constructor.
@@ -48,7 +48,7 @@ private:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif

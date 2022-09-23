@@ -1,5 +1,5 @@
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -7,7 +7,7 @@ All rights reserved.
 *
 *									CONSH_GEN.H
 *
-* FILE:	conan.¹/consh_gen.h
+* FILE:	conan.ï¿½/consh_gen.h
 * SUBJ:	Declarations for Consh code generation.
 * CR:	10/7/95 AM.
 *
@@ -15,5 +15,5 @@ All rights reserved.
 
 extern void
 consh_gen_includes(
-	_t_ofstream *fp
+	std::_t_ofstream *fp
 	);

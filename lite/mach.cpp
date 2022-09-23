@@ -115,15 +115,15 @@ compiled = false;	// INTERP ANALYZER BY DEFAULT.					// 07/05/00 AM.
 for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 	{
 	// For each command line argument.
-	//*gout << "command arg=" << *parg << endl;
+	//*gout << "command arg=" << *parg << std::endl;
 	ptr = *parg;
 	if (*ptr == '/' || *ptr == '-')	// DOS or UNIX style arg.
 		{
 		if (flag)
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[Error in command line args for ") << argv[0]
-						  << _T("]") << ends;
+						  << _T("]") << std::ends;
 			errOut(&gerrStr,false);
 			return false;
 			}
@@ -138,8 +138,8 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 			{
 			if (compiledck)
 				{
-				_t_strstream gerrStr;
-				gerrStr << _T("[Ignoring extra /compiled or /interp flag.]") << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("[Ignoring extra /compiled or /interp flag.]") << std::ends;
 				errOut(&gerrStr,false);
 				}
 
@@ -153,8 +153,8 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 			{
 			if (compiledck)
 				{
-				_t_strstream gerrStr;
-				gerrStr << _T("[Ignoring extra /compiled or /interp flag.]") << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("[Ignoring extra /compiled or /interp flag.]") << std::ends;
 				errOut(&gerrStr,false);
 				}
 
@@ -171,9 +171,9 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 			{
 			if (input)
 				{
-				_t_strstream gerrStr;
+				std::_t_strstream gerrStr;
 				gerrStr << _T("[") << argv[0] << _T(": Input file specified twice.]")
-						  << ends;
+						  << std::ends;
 				errOut(&gerrStr,false);
 				dosHelpargs(argv[0]);
 				return false;
@@ -186,9 +186,9 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 			{
 			if (output)
 				{
-				_t_strstream gerrStr;
+				std::_t_strstream gerrStr;
 				gerrStr << _T("[") << argv[0]
-						  << _T(": Output file specified twice.]") << ends;
+						  << _T(": Output file specified twice.]") << std::ends;
 				errOut(&gerrStr,false);
 				dosHelpargs(argv[0]);
 				return false;
@@ -202,8 +202,8 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 		{
 		if (input && output)
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[") << argv[0] << _T(": Extra arguments.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[") << argv[0] << _T(": Extra arguments.]") << std::ends;
 			errOut(&gerrStr,false);
 			dosHelpargs(argv[0]);
 			return false;
@@ -227,11 +227,11 @@ return true;
 
 LITE_API void dosHelpargs(_TCHAR *name)
 {
-_t_cout << name
+std::_t_cout << name
 << _T(" [/INTERP][/COMPILED][/IN infile] [/OUT outfile] [/DEV] [infile [outfile]]")
-	  << endl
+	  << std::endl
 	  << _T("Note: /INTERP, the interpreted analyzer, is default.")
-	  << endl;
+	  << std::endl;
 }
 
 ////////////////////////////////////////////////////////////
@@ -271,8 +271,8 @@ _TCHAR cwd[MAXSTR];
 #ifndef LINUX
 if(_tgetcwd( cwd, MAXSTR) == NULL)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[dir_exists: Couldn't get working dir.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[dir_exists: Couldn't get working dir.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}

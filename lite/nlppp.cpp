@@ -149,8 +149,8 @@ Nlppp *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Nlppp object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Nlppp object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -268,9 +268,9 @@ dest->rmost_ = orig->rmost_;
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Nlppp &nlppp)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Nlppp &nlppp)
 {
-output << _T("[NLPPP object]") << endl;
+output << _T("[NLPPP object]") << std::endl;
 
 return output;
 }
@@ -397,14 +397,14 @@ int Nlppp::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Nlppp::prettyCount(_t_ofstream *ofstr)
+void Nlppp::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Nlppp count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Nlppp count=") << count_ << ends;
+		*ofstr << _T("Active Nlppp count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Nlppp count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }

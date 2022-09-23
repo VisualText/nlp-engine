@@ -19,10 +19,13 @@ jobs:
         with:
           submodules: true
 
-      - name: Vcpkg bootstrap Shell
+      - name: Vcpkg Bootstrap Shell
         run: ./bootstrap-vcpkg.sh
         shell: bash
         working-directory: vcpkg
+
+      - name: Install autoconf-archive
+        run: sudo apt-get install -y autoconf-archive
 
       - name: Install ICU
         run: vcpkg install

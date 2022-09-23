@@ -114,11 +114,11 @@ if (!parse)																		// 04/28/01 AM.
 Gen *gen = parse->getAna()->getGen();									// 04/28/01 AM.
 if (!gen)																		// 04/28/01 AM.
 	return false;			// Couldn't gen code and compile.		// 01/26/02 AM.
-_t_ofstream *fcode = gen->getFcode();										// 04/28/01 AM.
+std::_t_ofstream *fcode = gen->getFcode();										// 04/28/01 AM.
 int id = gen->getId();														// 04/28/01 AM.
 
 if (parse->Verbose())
-	*gout << _T("[Genhash:]") << endl;
+	*gout << _T("[Genhash:]") << std::endl;
 
 Tree<Pn> *tree;
 
@@ -126,12 +126,12 @@ tree = (Tree<Pn> *)parse->getTree();
 
 if (!tree)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Genhash: No parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Genhash: No parse tree.]") << std::ends;
 	errOut(&gerrStr,false,parse->getInputpass(),0);
 
-	*fcode << endl
-				<< _T("// ERROR in pass ") << id << _T(".") << endl;			// 04/28/01 AM.
+	*fcode << std::endl
+				<< _T("// ERROR in pass ") << id << _T(".") << std::endl;			// 04/28/01 AM.
 	return false;
 	}
 
@@ -140,12 +140,12 @@ root = tree->getRoot();
 
 if (!root)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Genhash: Empty parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Genhash: Empty parse tree.]") << std::ends;
 	errOut(&gerrStr,false,parse->getInputpass(),0);
 
-	*fcode << endl
-				<< _T("// ERROR in pass ") << id << _T(".") << endl;			// 04/28/01 AM.
+	*fcode << std::endl
+				<< _T("// ERROR in pass ") << id << _T(".") << std::endl;			// 04/28/01 AM.
 	return false;
 	}
 
@@ -153,12 +153,12 @@ if (!root)
 Node<Pn> *node;
 if (!(node = root->Down()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Genhash: Pass file not parsed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Genhash: Pass file not parsed.]") << std::ends;
 	errOut(&gerrStr,false,parse->getInputpass(),0);
 
-	*fcode << endl
-				<< _T("// ERROR in pass ") << id << _T(".") << endl;			// 04/28/01 AM.
+	*fcode << std::endl
+				<< _T("// ERROR in pass ") << id << _T(".") << std::endl;			// 04/28/01 AM.
 	return false;
 	}
 
@@ -166,8 +166,8 @@ if (node->Right())
 	{
 	if (parse->getIntern())													// 05/26/01 AM.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Pass file has some unhandled text.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Pass file has some unhandled text.]") << std::ends;
 		errOut(&gerrStr,false,parse->getInputpass(),0);
 		}
 	}
@@ -181,36 +181,36 @@ RFASem *sem;
 sem = (RFASem *) pn->getSem();
 if (!sem)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Genhash: No semantics for parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Genhash: No semantics for parse tree.]") << std::ends;
 	errOut(&gerrStr,false,parse->getInputpass(),0);
 
-	*fcode << endl
-				<< _T("// ERROR in pass ") << id << _T(".") << endl;			// 04/28/01 AM.
+	*fcode << std::endl
+				<< _T("// ERROR in pass ") << id << _T(".") << std::endl;			// 04/28/01 AM.
 	return false;
 	}
 
 // Could search for a _RULESFILE node at the top level here.
 if (sem->getType() != RSFILE)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Genhash: Couldn't parse pass file.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Genhash: Couldn't parse pass file.]") << std::ends;
 	errOut(&gerrStr,false,parse->getInputpass(),0);
 
-	*fcode << endl
-				<< _T("// ERROR in pass ") << id << _T(".") << endl;			// 04/28/01 AM.
+	*fcode << std::endl
+				<< _T("// ERROR in pass ") << id << _T(".") << std::endl;			// 04/28/01 AM.
 	return false;
 	}
 
 Ifile *rulesfile;
 if (!(rulesfile = sem->getRulesfile()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Genhash: No rules found in file.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Genhash: No rules found in file.]") << std::ends;
 	errOut(&gerrStr,false,parse->getInputpass(),0);
 
-	*fcode << endl
-				<< _T("// ERROR in pass ") << id << _T(".") << endl;			// 04/28/01 AM.
+	*fcode << std::endl
+				<< _T("// ERROR in pass ") << id << _T(".") << std::endl;			// 04/28/01 AM.
 	return false;
 	}
 
@@ -219,7 +219,7 @@ Dlist<Irule> *rules = rulesfile->getRules();
 // GENERATE PASS EVEN IF ZERO RULES.									// 01/09/01 AM.
 //if (!rules)
 //	{
-//	*gerr << "[Genhash: No rules.]" << endl;
+//	*gerr << "[Genhash: No rules.]" << std::endl;
 //	return;
 //	}
 

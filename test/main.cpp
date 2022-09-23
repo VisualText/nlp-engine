@@ -30,7 +30,7 @@ int _tmain( // 09/23/20 AM.
     _stprintf(anaNoop,"%s",_T("noop"));
     _stprintf(workingFolder,"%s",_T("./"));
  
-    _t_cout << _T("[Create runtime manager.]") << endl;
+    std::_t_cout << _T("[Create runtime manager.]") << std::endl;
     GetCurrentDir(workingFolder, FILENAME_MAX);
     std::string current_working_dir(workingFolder);
     NLP_ENGINE *nlpEngine = new NLP_ENGINE(workingFolder);
@@ -74,29 +74,29 @@ int _tmain( // 09/23/20 AM.
 "\n"
 "More than they know.";
 
-    istringstream ssi1(str);
-    ostringstream sso1;
-    _t_cout << _T("[analyzer: ") << anaParse << _T("]") << endl;
-    _t_cout << _T("[input: ") << ssi1.str() << _T("]") << endl;
+    std::istringstream ssi1(str);
+    std::ostringstream sso1;
+    std::_t_cout << _T("[analyzer: ") << anaParse << _T("]") << std::endl;
+    std::_t_cout << _T("[input: ") << ssi1.str() << _T("]") << std::endl;
     nlpEngine->analyze(anaParse,&ssi1,&sso1);
-    _t_cout << _T("[output: ") << sso1.str() << _T("]") << endl;
-    _t_cout << _T("[end: ") << anaParse << _T("]") << endl;
+    std::_t_cout << _T("[output: ") << sso1.str() << _T("]") << std::endl;
+    std::_t_cout << _T("[end: ") << anaParse << _T("]") << std::endl;
 
-    istringstream ssi2(str);
-    ostringstream sso2;
-    _t_cout << _T("[analyzer: ") << anaCorporate << _T("]") << endl;
-    _t_cout << _T("[input: ") << ssi2.str() << _T("]") << endl;
+    std::istringstream ssi2(str);
+    std::ostringstream sso2;
+    std::_t_cout << _T("[analyzer: ") << anaCorporate << _T("]") << std::endl;
+    std::_t_cout << _T("[input: ") << ssi2.str() << _T("]") << std::endl;
     nlpEngine->analyze(anaCorporate,&ssi2,&sso2);
-    _t_cout << _T("[output: ") << sso2.str() << _T("]") << endl;
-    _t_cout << _T("[end: ") << anaCorporate << _T("]") << endl;
+    std::_t_cout << _T("[output: ") << sso2.str() << _T("]") << std::endl;
+    std::_t_cout << _T("[end: ") << anaCorporate << _T("]") << std::endl;
 
-    istringstream ssi3("Strstream test.");
-    ostringstream sso3;
-    _t_cout << _T("[analyzer: ") << anaNoop << _T("]") << endl;
-    _t_cout << _T("[input: ") << ssi3.str() << _T("]") << endl;
+    std::istringstream ssi3("Strstream test.");
+    std::ostringstream sso3;
+    std::_t_cout << _T("[analyzer: ") << anaNoop << _T("]") << std::endl;
+    std::_t_cout << _T("[input: ") << ssi3.str() << _T("]") << std::endl;
     nlpEngine->analyze(anaNoop,&ssi3,&sso3);
-    _t_cout << _T("[output: ") << sso3.str() << _T("]") << endl;
-    _t_cout << _T("ok") << endl;
+    std::_t_cout << _T("[output: ") << sso3.str() << _T("]") << std::endl;
+    std::_t_cout << _T("ok") << std::endl;
 
     delete nlpEngine;
 }

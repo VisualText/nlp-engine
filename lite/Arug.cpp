@@ -42,8 +42,8 @@ All rights reserved.
 
 Arug::Arug()
 {
-_t_strstream gerrStr;
-gerrStr << _T("[DON'T CREATE OBJECTS OF Arug CLASS.]") << ends;
+std::_t_strstream gerrStr;
+gerrStr << _T("[DON'T CREATE OBJECTS OF Arug CLASS.]") << std::ends;
 errOut(&gerrStr,false);
 }
 
@@ -145,7 +145,7 @@ void Arug::prettyRules(ARULES *rules)
 {
 Dlist<Irule> *tmp;
 tmp = (Dlist<Irule> *) rules;
-_t_cout << *tmp;
+std::_t_cout << *tmp;
 }
 
 
@@ -273,23 +273,23 @@ if (!(seq = dseq->getData()))
 	return false;
 
 // Get pass name.
-//*gout << "name=" << fname << endl;
+//*gout << "name=" << fname << std::endl;
 
 Dlist<Irule> *rules;
 if (!(rules = seq->getRules()))
 	return false;
 
 // Open file for writing.
-_t_ofstream ofile(TCHAR2CA(fname), ios::out);
+std::_t_ofstream ofile(TCHAR2CA(fname), std::ios::out);
 
 // File header.
-ofile << _T("\n# AUTOMATICALLY GENERATED! EDITS WILL BE LOST!") << endl;
-ofile << _T("# FILE: ") << fname << endl;
-ofile << _T("# TIME: ") << today1() << endl;	// 08/31/99 AM.
+ofile << _T("\n# AUTOMATICALLY GENERATED! EDITS WILL BE LOST!") << std::endl;
+ofile << _T("# FILE: ") << fname << std::endl;
+ofile << _T("# TIME: ") << today1() << std::endl;	// 08/31/99 AM.
 	// WORKAROUND.	// 02/25/00 AM.
 
 // Traverse selects.
-ofile << _T("@NODES") << flush;
+ofile << _T("@NODES") << std::flush;
 
 Dlist<Iarg> *sels;
 Delt<Iarg> *dsel;
@@ -300,7 +300,7 @@ for (dsel = sels->getFirst(); dsel; dsel = dsel->Right())
 	sel = dsel->getData();
 	ofile << _T(" ") << sel->getStr();
 	}
-ofile << endl;
+ofile << std::endl;
 
 // Traverse rules list.
 // (Each rule owns its actions, etc. in this variant.)
@@ -308,7 +308,7 @@ ofile << endl;
 Irule::genRuleblocks(rules, _T(" "), ofile);						// 11/04/99 AM.
 
 // File footer.
-ofile << endl;
+ofile << std::endl;
 
 
 return true;

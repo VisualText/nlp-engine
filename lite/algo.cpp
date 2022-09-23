@@ -103,15 +103,15 @@ int Algo::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Algo::prettyCount(_t_ofstream *ostr)
+void Algo::prettyCount(std::_t_ofstream *ostr)
 {
 if (count_)
 	{
 	if (ostr)
-		*ostr << _T("Active Algo count=") << count_ << endl;
-	*gout << _T("Active Algo count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Algo count=") << count_ << ends;
+		*ostr << _T("Active Algo count=") << count_ << std::endl;
+	*gout << _T("Active Algo count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Algo count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -149,8 +149,8 @@ algo = 0;
 
 if (!s_algo)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[userAlgo: Given no algorithm name.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[userAlgo: Given no algorithm name.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -165,16 +165,16 @@ for (ptr = algos_.getFirst(); ptr; ptr = ptr->Right())
 	alg = ptr->getData();
 	if (!strcmp_i(s_algo, alg->getName()))
 		{
-		//cout << "[Found registered algorithm name.]" << endl;
+		//cout << "[Found registered algorithm name.]" << std::endl;
 		algo = &(alg->dup());		// Duplicate the derived algo object.
 		algo->setup(s_data);			// Do any setups for this algorithm.
 		return true;
 		}
 	}
 
-_t_strstream gerrStr;
+std::_t_strstream gerrStr;
 gerrStr << _T("[Unknown analyzer pass=") << s_algo << _T(". Skipping.]")
-  << ends;
+  << std::ends;
 errOut(&gerrStr,false);
 
 return false;

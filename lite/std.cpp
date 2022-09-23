@@ -35,9 +35,9 @@ long len=0;
 /* Open a file */
 // CHANGING THIS TO A BETTER MEASURE.									// 07/18/00 AM.
 #ifdef LINUX
-_t_ifstream x;					// 10/26/06 AM.
-x.open(fname,ios::binary);	// 10/26/06 AM.
-x.seekg(0,ios::end);			// 10/26/06 AM.
+std::_t_ifstream x;					// 10/26/06 AM.
+x.open(fname,std::ios::binary);	// 10/26/06 AM.
+x.seekg(0,std::ios::end);			// 10/26/06 AM.
 len = x.tellg();				// 10/26/06 AM.
 x.close();						// 10/26/06 AM.
 #else
@@ -57,10 +57,10 @@ if (result == 0) {
 //_close(fh);
 
 #endif
-//cout << "[file_size: len=" << len << "]" << endl;
+//cout << "[file_size: len=" << len << "]" << std::endl;
 if (len <= 0)
    {
-	_t_cout << _T("[file_size: Empty or no file=") << fname << _T("]") << endl;
+	std::_t_cout << _T("[file_size: Empty or no file=") << fname << _T("]") << std::endl;
 	len = 0;
 	}
 

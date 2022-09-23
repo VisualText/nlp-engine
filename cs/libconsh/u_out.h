@@ -29,7 +29,6 @@ int getutf8(std::_t_istream *, int);
 #include <iostream>
 #include <fstream>
 #include <sstream>
-using namespace std;
 
 #include <windows.h>
 #include <tchar.h>
@@ -92,7 +91,6 @@ public:
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
-using namespace std;
 #ifdef LINUX
 #include <sstream>
 #else

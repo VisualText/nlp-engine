@@ -83,17 +83,17 @@ if (rules_)
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Irecurse &irecurse)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Irecurse &irecurse)
 {
-output << _T("@recurse") << str(irecurse.name_) << endl;
+output << _T("@recurse") << str(irecurse.name_) << std::endl;
 if (irecurse.regions_)
 	output << *(irecurse.regions_);
-output << _T("@@recurse") << str(irecurse.name_) << endl;
+output << _T("@@recurse") << str(irecurse.name_) << std::endl;
 return output;
 }
 
 /*******************************************/
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Selt<Irecurse> &selt)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Selt<Irecurse> &selt)
 {
 Irecurse *dat;
 dat = selt.getData();
@@ -103,7 +103,7 @@ return output;
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Slist<Irecurse> &list)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Slist<Irecurse> &list)
 {
 Selt<Irecurse> *selt;
 Irecurse *dat;
@@ -155,14 +155,14 @@ int Irecurse::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Irecurse::prettyCount(_t_ofstream *ofstr)
+void Irecurse::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Irecurse count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Irecurse count=") << count_ << ends;
+		*ofstr << _T("Active Irecurse count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Irecurse count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -273,7 +273,7 @@ if (!name_ || !rules_)
 _TCHAR rulebuf[MAXSTR];
 _stprintf(rulebuf, _T("recurse%d_%d(int ruleno,bool &done,Nlppp *nlppp)"),
 	gen->id_, gen->recid_);
-*(gen->fhead_) << _T("bool ") << rulebuf << _T(";") << endl;
+*(gen->fhead_) << _T("bool ") << rulebuf << _T(";") << std::endl;
 
 gen->region_ = REGPRE;
 Irule::genPres(rules_, gen);

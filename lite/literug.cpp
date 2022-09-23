@@ -84,12 +84,12 @@ ok = Pn::findOffsets(root, start, end,
 									/*UP*/ n_start, n_end, parent);
 if (!ok)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[COULDN'T FIND SAMPLE IN PARSE TREE.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[COULDN'T FIND SAMPLE IN PARSE TREE.]") << std::ends;
 	::errOut(&gerrStr,false);
 	return false;			// Failed to find phrase in tree.
 	}
-_t_cout << _T("[FOUND SAMPLE IN TREE!]") << endl;
+std::_t_cout << _T("[FOUND SAMPLE IN TREE!]") << std::endl;
 
 // Intern the conname, which comes from who knows where.
 _TCHAR buf[1024];
@@ -196,8 +196,8 @@ ok = Pn::findOffsets(root, start, end,
 									/*UP*/ n_start, n_end, parent);
 if (!ok)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[COULDN'T FIND SAMPLE IN PARSE TREE.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[COULDN'T FIND SAMPLE IN PARSE TREE.]") << std::ends;
 	::errOut(&gerrStr,false);
 	return false;			// Failed to find phrase in tree.
 	}
@@ -206,7 +206,7 @@ if (!ok)
 if (!nixContext(/*DU*/ n_start, n_end, parent))
 	return false;
 
-_t_cout << _T("[FOUND SAMPLE IN TREE!]") << endl;
+std::_t_cout << _T("[FOUND SAMPLE IN TREE!]") << std::endl;
 
 // Convert concept name to a nonterminal.
 _TCHAR buf[1024];
@@ -516,8 +516,8 @@ for (label = labels; label; label = cg->Next(label))
 	// Get label's samples.
 	if (!(samples = cg->findPhrase(label)))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Label has no samples.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Label has no samples.]") << std::ends;
 		::errOut(&gerrStr,false);
 
 		continue;
@@ -529,8 +529,8 @@ for (label = labels; label; label = cg->Next(label))
 		{
 		cg->conceptName(sample, buf);
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("  Sample=") << buf << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("  Sample=") << buf << std::ends;
 		::errOut(&gerrStr,false);
 		}
 
@@ -557,8 +557,8 @@ for (label = labels; label; label = cg->Next(label))
 		// A proper sample has been found.
 		++count;											// 07/16/99 AM.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Embedded sample found]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Embedded sample found]") << std::ends;
 		::errOut(&gerrStr,false);
 		}
 
@@ -766,8 +766,8 @@ for (node = n_start; node; node = node->Right())
 		break;						// Wrap it up.
 	else if (pn->getStart() < start || pn->getEnd() > end)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[labelOffsets: Error. Bad overlap of samples.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[labelOffsets: Error. Bad overlap of samples.]") << std::ends;
 		::errOut(&gerrStr,false);
 		return false;
 		}
@@ -779,8 +779,8 @@ for (node = n_start; node; node = node->Right())
 
 if (!first)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[labelOffsets: Error in finding sample.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[labelOffsets: Error in finding sample.]") << std::ends;
 	::errOut(&gerrStr,false);
 	return false;
 	}
@@ -903,8 +903,8 @@ while (list)
 		cmp = cmpGroup(daction, sptr, /*UP*/ err);
 		if (err)
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Error in group actions.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Error in group actions.]") << std::ends;
 			::errOut(&gerrStr,false);
 
 			// Todo: Fix up or delete actions here.
@@ -924,8 +924,8 @@ while (list)
 				cmp = cmpGroup(daction, sptr, /*UP*/ err);
 				if (err)
 					{
-					_t_strstream gerrStr;
-					gerrStr << _T("[Error in group actions.]") << ends;
+					std::_t_strstream gerrStr;
+					gerrStr << _T("[Error in group actions.]") << std::ends;
 					::errOut(&gerrStr,false);
 
 					// Todo: Fix up or delete actions here.
@@ -979,8 +979,8 @@ err = false;
 if (!dptr || !sptr)
 	{
 	err = true;
-	_t_strstream gerrStr;
-	gerrStr << _T("[cmpGroup: Overlapping labels within a sample.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[cmpGroup: Overlapping labels within a sample.]") << std::ends;
 	::errOut(&gerrStr,false);
 	return 0;
 	}
@@ -1030,8 +1030,8 @@ else if (dnum < snum)
 	return -1;
 else // dnum == snum
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[cmpGroup: Overlapping labels for one sample.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[cmpGroup: Overlapping labels for one sample.]") << std::ends;
 	::errOut(&gerrStr,false);
 	err = true;
 	return 0;
@@ -1332,7 +1332,7 @@ for (delt = lphr->getFirst(); delt; delt = delt->Right())
 	if (str_equal(name, _T("_xWILD")) && (matches = elt->getMatches()))
 		{
 		// If there's a token variant, get the token type and generalize.
-		//*gerr << "buildGen: Not handling match list yet.]" << endl;
+		//*gerr << "buildGen: Not handling match list yet.]" << std::endl;
 		//return false;
 
 		// 07/11/99 AM. Generalize if token type found.
@@ -1366,8 +1366,8 @@ for (delt = lphr->getFirst(); delt; delt = delt->Right())
 		{
 		if (!(name = tok_type(name)))		// 07/03/99 AM.
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("buildGen: Unknown token type.") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("buildGen: Unknown token type.") << std::ends;
 			::errOut(&gerrStr,false);
 
 			if (phr)																// 12/28/00 AM.
@@ -1464,7 +1464,7 @@ for (drule = list->getFirst(); drule; drule = drule->Right())
 		if (Irule::same(crule, rule))
 			{
 			// Remove redundant rule.
-			//*gerr << "[FOUND REDUNDANT!]" << endl;
+			//*gerr << "[FOUND REDUNDANT!]" << std::endl;
 			list->Dlist<Irule>::exciseElt(test);
 
 			// Transfer the DOWN list from the excised rule.
@@ -1519,8 +1519,8 @@ for (dgen = gens->getFirst(); dgen; dgen = dgen->Right())
 	{
 	if (!splitGen(dgen->getData(), /*DU*/ splits))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[splitGens: Error in splitting.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[splitGens: Error in splitting.]") << std::ends;
 		::errOut(&gerrStr,false);
 		ok = false;
 		}
@@ -2264,8 +2264,8 @@ if (celt->getClosed())			// A closed-set elt.		// 07/16/99 AM.
 		Dlist<Iarg> *matches;
 		if (!(matches = celt->getMatches()))
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[foldElt: Closed-set folding error.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[foldElt: Closed-set folding error.]") << std::ends;
 			::errOut(&gerrStr,false);
 
 			// Should have a list built.  Recover by building it.
@@ -3172,8 +3172,8 @@ for (delt = dlist->getFirst(); delt; delt = delt->pRight)
 	arg = delt->getData();
 	if (arg->getType() != IASTR)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[intersectKinds: Nonstring arg.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[intersectKinds: Nonstring arg.]") << std::ends;
 		::errOut(&gerrStr,false);
 		return false;
 		}

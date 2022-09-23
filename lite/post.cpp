@@ -134,8 +134,8 @@ if (!posts)			// No post actions.  Execute pass default.
 	// Not allowing lookahead with single() reduce.				// 12/18/03 AM.
 	if (nlppp->rule_->getLookahead())								// 12/18/03 AM.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Single: Lookahead modifier not allowed.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Single: Lookahead modifier not allowed.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		nlppp->exitpass_ = true;
 		return false;
@@ -191,13 +191,13 @@ for (dpost = posts->getFirst(); dpost; dpost = dpost->Right())
 
 	if ((rfasem = post->getSem()))	// 11/99 AM.
 		{
-		//*gerr << "[Statements to execute.]" << endl;
+		//*gerr << "[Statements to execute.]" << std::endl;
 		//Nlppp nlppp(rule,collect,parse,nlppp->select_,			// 11/19/99 AM.
 		//									first,last,node,start,end,sem,dsem);
 		if (!(ok = rfasem->eval(nlppp, /*UP*/ val)))					// 11/99 AM.
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Post actions: Error in NLP++.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Post actions: Error in NLP++.]") << std::ends;
 			errOut(&gerrStr,false, parse->currpass_,parse->line_);			// 03/05/03 AM.
 //			errOut(false);
 			ok = false;												// FIX.	// 12/18/03 AM.
@@ -296,7 +296,7 @@ bool Pat::postAction(
 	)
 {
 //if (Debug())
-//	*gout << "  [Execute post action...]" << endl;
+//	*gout << "  [Execute post action...]" << std::endl;
 
 nlppp->parse_->line_ = post->getLine();								// 08/24/02 AM.
 
@@ -544,7 +544,7 @@ else if (!strcmp_i(func, _T("varfnarray")))								// 10/13/00 AM.
 else if (!strcmp_i(func, _T("noop")))					// NO-OP to override default.
 	{
 	// if (parse->Verbose())												// 09/16/99 AM.
-	//	*gout << "   [NOOP!]" << endl;									// 09/16/99 AM.
+	//	*gout << "   [NOOP!]" << std::endl;									// 09/16/99 AM.
 
 	// Flag that rule is a noop on parse tree.						// 12/15/99 AM.
 	// To keep REC pass from infinite looping.						// 12/15/99 AM.
@@ -603,7 +603,7 @@ else if (nlppp->after_)	// 05/15/12 AM.
 #endif
 
 //if (Debug())
-//	*gout << endl;
+//	*gout << std::endl;
 nlppp->start_ = nlppp->node_
 	= nlppp->after_;	// Set up for continued matching.			// 12/14/03 AM.
 if (nlppp->after_)	// 02/14/13 AM.
@@ -614,7 +614,7 @@ if (nlppp->after_)	// 02/14/13 AM.
 // If collect was consumed, set its nodes to NULL, so callers won't delete.
 if (nlppp->used_)
 	{
-	*gout << _T("[Final post action: Zeroing collect tracking object.]") << endl;
+	*gout << _T("[Final post action: Zeroing collect tracking object.]") << std::endl;
 	nlppp->collect_->setRoot(0);
 	nlppp->collect_->setLast(0);
 	}
@@ -655,7 +655,7 @@ else		// Implicit NOOP, excise, or other reduces.				// 11/21/99 AM.
 		nlppp->parse_->line_ = rule->getLine();						// 08/24/02 AM.
 		// Removing this warning, since using S for local vars.	// 11/28/01 AM.
 //		strstream gerrStr(Errbuf,MAXSTR,ios::out);
-//		gerrStr << "[Warning: No rule reduce. Can't attach S variables.]" << ends;
+//		gerrStr << "[Warning: No rule reduce. Can't attach S variables.]" << std::ends;
 //		errOut(false);
 
 		if (nlppp->sem_)														// 11/17/99 AM.
@@ -695,32 +695,32 @@ bool Pat::redSingle(
 {
 if (args)																		// 05/26/01 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[single: Takes 0 args.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[single: Takes 0 args.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	}
 
 if (!nlppp->first_ || !nlppp->last_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Single-tier reduce: Null first or last node in range.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->red_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Single-tier reduce: Rule already reduced.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->used_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Single-tier reduce: Collect already used.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -728,8 +728,8 @@ if (nlppp->used_)
 Node<Pn> *nodes;
 if (!nlppp->collect_ || !(nodes = nlppp->collect_->getRoot()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Single-tier reduce: No collected nodes.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Single-tier reduce: No collected nodes.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -983,25 +983,25 @@ bool Pat::redMerge(
 {
 if (!nlppp->first_ || !nlppp->last_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[redMerge: Null first or last node in range.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->red_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[redMerge: Rule already reduced.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->used_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[redMerge: Collect already used.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1009,8 +1009,8 @@ if (nlppp->used_)
 Node<Pn> *nodes;
 if (!nlppp->collect_ || !(nodes = nlppp->collect_->getRoot()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[redMerge: No collected nodes.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[redMerge: No collected nodes.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1209,25 +1209,25 @@ bool Pat::redSinglezap(
 {
 if (!nlppp->first_ || !nlppp->last_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[redSinglezap: Null first or last node in range.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->red_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[redSinglezap: Rule already reduced.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->used_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[redSinglezap: Collect already used.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1235,8 +1235,8 @@ if (nlppp->used_)
 Node<Pn> *nodes;
 if (!nlppp->collect_ || !(nodes = nlppp->collect_->getRoot()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[redSinglezap: No collected nodes.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[redSinglezap: No collected nodes.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1342,37 +1342,37 @@ bool Pat::postListadd(
 {
 if (!nlppp->first_ || !nlppp->last_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listadd: Null first or last node in range.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listadd: Null first or last node in range.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listadd: 2 or 3 args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listadd: 2 or 3 args required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->red_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listadd: Rule already reduced.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listadd: Rule already reduced.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->used_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listadd: Collect already used.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listadd: Collect already used.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 
 if (!nlppp->collect_ || !nlppp->collect_->getRoot())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listadd: No collected nodes.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listadd: No collected nodes.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1385,8 +1385,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if (!(args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listadd: 2 or 3 args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listadd: 2 or 3 args required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1401,8 +1401,8 @@ if ((args = args->Right()))												// 12/14/99 AM.
 	arg3 = args->getData();												// 12/14/99 AM.
 	if (args->Right())
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[listadd: Too many args.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[listadd: Too many args.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		return false;
 		}
@@ -1422,8 +1422,8 @@ switch (arg1->getType())
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[listadd: Arg1 must be numeric.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[listadd: Arg1 must be numeric.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 
@@ -1442,8 +1442,8 @@ switch (arg2->getType())
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[listadd: Arg2 must be numeric.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[listadd: Arg2 must be numeric.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 
@@ -1462,8 +1462,8 @@ if (arg3)							// Keep flag arg present.		// 12/14/99 AM.
 		case IANUM:																// 12/14/99 AM.
 		default:
 			{
-		_t_strstream gerrStr;
-		gerrStr << _T("[listadd: Optional arg3 must be true/false.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[listadd: Optional arg3 must be true/false.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 
@@ -1478,8 +1478,8 @@ if (arg3)							// Keep flag arg present.		// 12/14/99 AM.
 		keep = false;															// 12/14/99 AM.
 	else
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[listadd: Arg 3 must be true/false.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[listadd: Arg 3 must be true/false.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 	// 12/14/99 AM.
 		return false;															// 12/14/99 AM.
@@ -1515,8 +1515,8 @@ while (--num1 > 0)
 	{
 	if (!(colls = colls->Right()))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[listadd: Collect error.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[listadd: Collect error.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		return false;
 		}
@@ -1526,15 +1526,15 @@ if (!(coll1 = colls))
 
 if (!(node1 = coll1->Down()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listadd: List elt must be nonoptional.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listadd: List elt must be nonoptional.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (node1 != coll1->eDown())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listadd: List elt must match a single node.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listadd: List elt must match a single node.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1543,8 +1543,8 @@ while (num2-- > 0)
 	{
 	if (!(colls = colls->Right()))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[listadd: Collect error.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[listadd: Collect error.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		return false;
 		}
@@ -1554,15 +1554,15 @@ if (!(coll2 = colls))
 
 if (!(node2 = coll2->Down()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listadd: Item elt must be nonoptional.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listadd: Item elt must be nonoptional.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (node2 != coll2->eDown())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listadd: Item elt must match a single node.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listadd: Item elt must match a single node.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1570,8 +1570,8 @@ if (node2 != coll2->eDown())
 Node<Pn> *childs = node1->Down();
 if (!childs)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listadd: List node has no children.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listadd: List node has no children.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1619,8 +1619,8 @@ if (!keep)	// Only keeping node2							// 12/14/99 AM.
 // List goes from nodes to node2.								// 12/14/99 AM.
 if (!nodes)																// 12/14/99 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listadd: Error..]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listadd: Error..]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1696,8 +1696,8 @@ while (--num1 > 0)
 	{
 	if (!(colls = colls->Right()))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[listAddleft: Collect error.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[listAddleft: Collect error.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		return false;
 		}
@@ -1707,15 +1707,15 @@ if (!(coll1 = colls))
 
 if (!(node1 = coll1->Down()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listAddleft: Item elt must be nonoptional.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listAddleft: Item elt must be nonoptional.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (node1 != coll1->eDown())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listAddleft: Item elt must match a single node.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listAddleft: Item elt must match a single node.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1724,8 +1724,8 @@ while (num2-- > 0)
 	{
 	if (!(colls = colls->Right()))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[listAddleft: Collect error.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[listAddleft: Collect error.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		return false;
 		}
@@ -1735,15 +1735,15 @@ if (!(coll2 = colls))
 
 if (!(node2 = coll2->Down()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listAddleft: List elt must be nonoptional.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listAddleft: List elt must be nonoptional.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (node2 != coll2->eDown())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listAddleft: List elt must match a single node.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listAddleft: List elt must match a single node.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1751,8 +1751,8 @@ if (node2 != coll2->eDown())
 Node<Pn> *childs = node2->Down();
 if (!childs)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listAddleft: List node has no children.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listAddleft: List node has no children.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1813,8 +1813,8 @@ if (!keep)			// Not keeping intervening nodes.		// 12/14/99 AM.
 // Place node1 under node2.
 if (!node1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listAddleft: Error..]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listAddleft: Error..]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1893,29 +1893,29 @@ bool Pat::postGroup(
 {
 if (!nlppp->first_ || !nlppp->last_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[postGroup: Null first or last node in range.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[postGroup: Null first or last node in range.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[postGroup: Three args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[postGroup: Three args required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->red_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[postGroup: Rule already reduced.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[postGroup: Rule already reduced.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->used_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[postGroup: Collect already used.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[postGroup: Collect already used.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1923,8 +1923,8 @@ if (nlppp->used_)
 Node<Pn> *nodes;
 if (!nlppp->collect_ || !(nodes = nlppp->collect_->getRoot()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[postGroup: No collected nodes.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[postGroup: No collected nodes.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1937,8 +1937,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if (!(args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[postGroup: Three args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[postGroup: Three args required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1948,8 +1948,8 @@ arg2 = args->getData();
 
 if (!(args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[postGroup: Three args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[postGroup: Three args required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1959,8 +1959,8 @@ arg3 = args->getData();
 
 if (args->Right())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[postGroup: More than three args given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[postGroup: More than three args given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1978,8 +1978,8 @@ switch (arg1->getType())		// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[postGroup: Arg1 must be numeric.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[postGroup: Arg1 must be numeric.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 
@@ -1998,8 +1998,8 @@ switch (arg2->getType())		// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[postGroup: Arg2 must be numeric.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[postGroup: Arg2 must be numeric.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 
@@ -2008,8 +2008,8 @@ switch (arg2->getType())		// 11/15/99 AM.
 
 if (arg3->getType() != IASTR)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[postGroup: Label arg must be string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[postGroup: Label arg must be string.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -2023,22 +2023,22 @@ if (nlppp->nlookahead_)											// 09/16/08 AM.
 	if (num2 >= nlppp->nlookahead_)							// 09/16/08 AM.
 		{
 		num2 = (nlppp->nlookahead_ - 1);						// 09/16/08 AM.
-		_t_strstream gerrStr;
-		gerrStr << _T("[group: Cannot group lookahead node.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[group: Cannot group lookahead node.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 	}
 else if (num2 > nlppp->len_)									// 09/16/08 AM.
 	{
 	num2 = nlppp->len_;											// 09/16/08 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[group: 2nd number too large.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[group: 2nd number too large.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	}
 if (num1 > num2)													// 09/16/08 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[group: FROM is greater than TO.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[group: FROM is greater than TO.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;													// 09/16/08 AM.
 	}
@@ -2088,8 +2088,8 @@ while (num2-- > 0)
 	// of a collect to be nonnull and the end to be null, do the following:
 	if (colls->Down() && !colls->eDown())
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[postGroup: collect with null end found.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[postGroup: collect with null end found.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 
 		node2 = 0;
@@ -2312,22 +2312,22 @@ bool Pat::postExcise(
 
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Excise post action: Two args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Excise post action: Two args required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->red_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Excise post action: Rule already reduced.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Excise post action: Rule already reduced.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->used_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Excise post action: Collect already used.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Excise post action: Collect already used.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -2336,8 +2336,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if (!(args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Excise post action: Two args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Excise post action: Two args required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -2347,12 +2347,12 @@ arg2 = args->getData();
 
 if (args->Right())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Excise post action: More than two args given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Excise post action: More than two args given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 
 //	node = nodeRight(node, end);
-//	if (Debug()) *gout << endl;
+//	if (Debug()) *gout << std::endl;
 	return false;
 	}
 
@@ -2374,8 +2374,8 @@ switch (arg1->getType())
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Excise post action: Arg1 must be numeric.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Excise post action: Arg1 must be numeric.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 
@@ -2396,8 +2396,8 @@ switch (arg2->getType())
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Excise post action: Arg2 must be numeric.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Excise post action: Arg2 must be numeric.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 
@@ -2411,8 +2411,8 @@ if (!num1 || !num2 || num1 > num2)
 // MAKE SURE EXCISING PRIOR TO THE LOOKAHEAD POSITION.	// FIX	// 09/06/08 AM.
 if (nlppp->nlookahead_ && num2 >= nlppp->nlookahead_)		// FIX	// 09/06/08 AM.
 	{
-	_t_strstream gerrStr;														// 09/06/08 AM.
-	gerrStr << _T("[Excise action: Cannot excise lookahead node(s).]") << ends;
+	std::_t_strstream gerrStr;														// 09/06/08 AM.
+	gerrStr << _T("[Excise action: Cannot excise lookahead node(s).]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);									// 09/06/08 AM.
 	return false;																	// 09/06/08 AM.
 	}
@@ -2449,8 +2449,8 @@ while (num2-- > 0)
 	// of a collect to be nonnull and the end to be null, do the following:
 	if (colls->Down() && !colls->eDown())
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[postExcise: collect with null end found.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[postExcise: collect with null end found.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 
 		node2 = 0;
@@ -2465,8 +2465,8 @@ coll2 = colls;																	// 03/31/01 AM.
 
 //if (Debug())
 //	{
-//	*gout << "   [Executing EXCISE action.]" << endl;
-//	*gout << "   [Excising " << *node1 << " to " << *node2 << endl;
+//	*gout << "   [Executing EXCISE action.]" << std::endl;
+//	*gout << "   [Excising " << *node1 << " to " << *node2 << std::endl;
 //	}
 
 if (!node1)																		// 03/31/01 AM.
@@ -2474,8 +2474,8 @@ if (!node1)																		// 03/31/01 AM.
 
 if (!node2)																		// 03/31/01 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[excise: Error. Internal error.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[excise: Error. Internal error.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 			// 03/31/01 AM.
 	return false;																// 03/31/01 AM.
@@ -2558,22 +2558,22 @@ bool Pat::postSplice(
 
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Splice post action: Two args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Splice post action: Two args required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->red_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Splice post action: Rule already reduced.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Splice post action: Rule already reduced.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->used_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Splice post action: Collect already used.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Splice post action: Collect already used.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -2582,8 +2582,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if (!(args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Splice post action: Two args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Splice post action: Two args required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -2593,12 +2593,12 @@ arg2 = args->getData();
 
 if (args->Right())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Splice post action: More than two args given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Splice post action: More than two args given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 
 //	node = nodeRight(node, end);
-//	if (Debug()) *gout << endl;
+//	if (Debug()) *gout << std::endl;
 	return false;
 	}
 
@@ -2615,8 +2615,8 @@ switch (arg1->getType())		// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Splice post action: Arg1 must be numeric.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Splice post action: Arg1 must be numeric.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 
@@ -2635,8 +2635,8 @@ switch (arg2->getType())		// 11/15/99 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Splice post action: Arg2 must be numeric.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Splice post action: Arg2 must be numeric.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 
@@ -2676,8 +2676,8 @@ while (num2-- > 0)
 	// of a collect to be nonnull and the end to be null, do the following:
 	if (colls->Down() && !colls->eDown())
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[postSplice: collect with null end found.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[postSplice: collect with null end found.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 
 		node2 = 0;
@@ -2691,8 +2691,8 @@ while (num2-- > 0)
 
 //if (Debug())
 //	{
-//	*gout << "   [Executing SPLICE action.]" << endl;
-//	*gout << "   [Splicing " << *node1 << " to " << *node2 << endl;
+//	*gout << "   [Executing SPLICE action.]" << std::endl;
+//	*gout << "   [Splicing " << *node1 << " to " << *node2 << std::endl;
 //	}
 
 Node<Pn> *newstart,*newend;											// 07/19/02 AM.
@@ -2730,21 +2730,21 @@ bool Pat::postSetbase(
 {
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Setbase post action: Two args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Setbase post action: Two args required.]") << std::ends;
 	return nlppp->parse_->errOut(&gerrStr,false);
 	}
 if (nlppp->red_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Setbase post action: Rule already reduced.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Setbase post action: Rule already reduced.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->used_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Setbase post action: Collect already used.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Setbase post action: Collect already used.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -2753,8 +2753,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if (!(args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Setbase post action: Two args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Setbase post action: Two args required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -2764,8 +2764,8 @@ arg2 = args->getData();
 
 if (args->Right())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Setbase post action: More than two args given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Setbase post action: More than two args given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -2784,8 +2784,8 @@ switch (arg1->getType())
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Setbase post action: Arg1 must be numeric.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Setbase post action: Arg1 must be numeric.]") << std::ends;
 		return postErrout(false,nlppp);									// 11/20/01 AM.
 //		return errOut(false);												// 11/20/01 AM.
 		}
@@ -2799,8 +2799,8 @@ switch (arg2->getType())
 	case IANUM:
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Setbase post action: Arg2 must be string.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Setbase post action: Arg2 must be string.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 
@@ -2818,8 +2818,8 @@ else if (!strcmp_i(_T("false"), flagstr))
 	flag = false;
 else
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Setbase action: arg 2 must be \"true\"/\"false\".]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Setbase action: arg 2 must be \"true\"/\"false\".]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -2844,8 +2844,8 @@ if (!node1)	// 03/27/00 AM.
 
 if (node1 != node2)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Setbase action: Bad collect.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Setbase action: Bad collect.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -2873,22 +2873,22 @@ bool Pat::postSetunsealed(
 {
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Setunsealed post action: Two args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Setunsealed post action: Two args required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->red_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Setunsealed post action: Rule already reduced.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Setunsealed post action: Rule already reduced.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->used_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Setunsealed post action: Collect already used.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Setunsealed post action: Collect already used.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -2897,8 +2897,8 @@ Iarg *arg1;
 arg1 = args->getData();
 if (!(args = args->Right()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Setunsealed post action: Two args required.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Setunsealed post action: Two args required.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -2908,8 +2908,8 @@ arg2 = args->getData();
 
 if (args->Right())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Setunsealed post action: More than two args given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Setunsealed post action: More than two args given.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -2928,8 +2928,8 @@ switch (arg1->getType())
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Setunsealed post action: Arg1 must be numeric.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Setunsealed post action: Arg1 must be numeric.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		return false;
 		}
@@ -2943,8 +2943,8 @@ switch (arg2->getType())
 	case IANUM:
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Setunsealed post action: Arg2 must be string.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Setunsealed post action: Arg2 must be string.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 
@@ -2962,9 +2962,9 @@ else if (!strcmp_i(_T("false"), flagstr))
 	flag = false;
 else
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Setunsealed action: arg 2 must be \"true\"/\"false\".]")
-			  << ends;
+			  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -2986,8 +2986,8 @@ node2 = colls->eDown();	// Try to get end of range.
 
 if (!node1 || node1 != node2)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Setunsealed action: Bad collect.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Setunsealed action: Bad collect.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -3015,7 +3015,7 @@ if (!node || !attrs)
 	return node;
 
 //if (Debug())
-//	*gout << "   [Layering]" << endl;
+//	*gout << "   [Layering]" << std::endl;
 
 // Move node's semantics up to top node in layering chain.
 Node<Pn> *tmp;				// The new subtree.
@@ -3088,7 +3088,7 @@ if (!attrs  || !node)
 	return;
 
 //if (Debug())
-//	*gout << "   [Layering (for phrase elts)]" << endl;
+//	*gout << "   [Layering (for phrase elts)]" << std::endl;
 
 // For each attr, make a reduction.
 Delt<Iarg> *attr;
@@ -3184,7 +3184,7 @@ bool Pat::Recurse(
 	)
 {
 //if (Debug())
-//	*gout << "   [IN RECURSE]" << endl;
+//	*gout << "   [IN RECURSE]" << std::endl;
 
 if (!pcoll || !ruleset || !parse)
 	return false;
@@ -3311,7 +3311,7 @@ bool Pat::Recurse(
 	)
 {
 //if (Debug())
-//	*gout << "   [IN RECURSE]" << endl;
+//	*gout << "   [IN RECURSE]" << std::endl;
 
 if (!pcoll || !parse)
 	return false;
@@ -3444,25 +3444,25 @@ bool Pat::execPhrase(
 {
 if (!nlppp->first_ || !nlppp->last_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[execPhrase: Null first or last node in range.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->red_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[execPhrase: Rule already reduced.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->used_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[execPhrase: Collect already used.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -3470,8 +3470,8 @@ if (nlppp->used_)
 Node<Pn> *nodes;
 if (!nlppp->collect_ || !(nodes = nlppp->collect_->getRoot()))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[execPhrase: No collected nodes.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[execPhrase: No collected nodes.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -3489,8 +3489,8 @@ for (pcoll = nodes; pcoll; pcoll = pcoll->Right())
 	ielt = data->getRulelt();
 	if (!ielt)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[execPhrase: Collect has no rule element.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[execPhrase: Collect has no rule element.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 
 		// CLEAN UP.
@@ -3509,7 +3509,7 @@ for (pcoll = nodes; pcoll; pcoll = pcoll->Right())
 		;	// DEBUGGING!!!	// 07/24/07 AM.
 
 //	if (ren && Debug())
-//		*gout << "   rename=" << str(ren) << endl;
+//		*gout << "   rename=" << str(ren) << std::endl;
 
 	// 11/09/98 AM. Upgrading to execute a list of passes,
 	// each with a ruleset. (Seqn objects contain only ruleset now.)
@@ -3521,7 +3521,7 @@ for (pcoll = nodes; pcoll; pcoll = pcoll->Right())
 	if ((passes = elt->getPasses()))
 		{
 //		if (Debug())
-//			*gout << "   ruleset present" << endl;
+//			*gout << "   ruleset present" << std::endl;
 		for (dpass = passes->getFirst(); dpass; dpass = dpass->Right())
 			{
 			pass    = dpass->getData();
@@ -3569,7 +3569,7 @@ for (pcoll = nodes; pcoll; pcoll = pcoll->Right())
 	if ((attrs = elt->getAttrs()))
 		{
 //		if (Debug())
-//			*gout << "   layering elt" << endl;
+//			*gout << "   layering elt" << std::endl;
 		layerElt(pcoll, attrs, elt, nlppp->parse_, /*DU*/ nlppp->first_, nlppp->last_);
 		}
 	}
@@ -3601,7 +3601,7 @@ bool Pat::layerElt(
 	)
 {
 //if (Debug())
-//	*gout << "   [IN LAYERELT]" << endl;
+//	*gout << "   [IN LAYERELT]" << std::endl;
 
 if (!pcoll || !attrs || !parse)
 	return false;
@@ -3661,8 +3661,8 @@ while (node && node != after)
 
 	if (!top || !bottom)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[layerElt: Error.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[layerElt: Error.]") << std::ends;
 		parse->errOut(&gerrStr,false);
 
 		return false;				// Something went wrong.
@@ -3694,8 +3694,8 @@ newlast = top;
 
 if (!newfirst || !newlast)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[layerElt: Error.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[layerElt: Error.]") << std::ends;
 	parse->errOut(&gerrStr,false);
 	return false;
 	}
@@ -3764,8 +3764,8 @@ long ord = 0;						// Rule element.
 static bool bpostAddstrs = false;
 if (!bpostAddstrs)															// 01/04/02 AM.
 	{
-	_t_strstream gerrStr;						// 01/04/02 AM.
-	gerrStr << _T("[postAddstrs: Obsolete function.]") << ends;		// 01/04/02 AM.
+	std::_t_strstream gerrStr;						// 01/04/02 AM.
+	gerrStr << _T("[postAddstrs: Obsolete function.]") << std::ends;		// 01/04/02 AM.
 	bpostAddstrs = true;														// 01/04/02 AM.
 	}
 
@@ -3786,8 +3786,8 @@ if (!Pat::collectNth(nlppp->collect_, ord, /*UP*/ nstart, nend)
 	 || !nend		// 03/05/99 AM.
 	 )
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[postAddstrs: failed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[postAddstrs: failed.]") << std::ends;
 	return nlppp->parse_->errOut(&gerrStr,false);
 	}
 
@@ -3862,8 +3862,8 @@ if (!Pat::collectNth(nlppp->collect_, ord, /*UP*/ nstart, nend)
 	 || !nend		// 03/05/99 AM.
 	 )
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[postXaddlen: failed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[postXaddlen: failed.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -3982,8 +3982,8 @@ if (!Pat::collectNth(nlppp->collect_, ord, /*UP*/ nstart, nend)
 	 || !nend		// 03/05/99 AM.
 	 )
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[postXaddNvar: failed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[postXaddNvar: failed.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -4058,9 +4058,9 @@ else								// Get component.
 	tmp = select->pathNth(ord);
 	if (!tmp)
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Xrename: Couldn't find node X(") << ord
-					<< _T(").]") << ends;
+					<< _T(").]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		return false;
 		}
@@ -4256,8 +4256,8 @@ if (!Pat::collectNth(nlppp->collect_, ord, /*UP*/ nstart, nend)
 	 || !nend
 	 )
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[postNinc: failed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[postNinc: failed.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -4297,9 +4297,9 @@ if (!Arg::str1(_T("postPrint"), (DELTS*&)args, str))
 if (!Arg::done(args, _T("postPrint"),nlppp->parse_))
 	return false;
 
-// Print the sucker.  Always use flush or endl.
+// Print the sucker.  Always use std::flush or std::endl.
 if (str && *str)
-	_t_cout << str << flush;
+	std::_t_cout << str << std::flush;
 
 return true;
 }
@@ -4330,7 +4330,7 @@ if (!Arg::num1(_T("postPrintr"), (DELTS*&)args, ord2))
 if (!Arg::done(args, _T("postPrintr"),nlppp->parse_))
 	return false;
 
-return printr(ord1, ord2, nlppp->collect_, nlppp->parse_, &_t_cout);
+return printr(ord1, ord2, nlppp->collect_, nlppp->parse_, &std::_t_cout);
 }
 
 
@@ -4358,26 +4358,26 @@ if (!Arg::done(args, _T("postPrlit"),nlppp->parse_))
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Prlit: Couldn't output to file.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Prlit: Couldn't output to file.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Prlit post action: file=") << fname << _T(" is closed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Prlit post action: file=") << fname << _T(" is closed.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 
 // Output the string to the file.
 if (lit && *lit)
-	*ostr << lit << flush;
+	*ostr << lit << std::flush;
 
 return true;
 }
@@ -4413,14 +4413,14 @@ if (!Arg::done(args, _T("postPrrange"),nlppp->parse_))
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Prrange post action: file=") << fname << _T(" is closed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Prrange post action: file=") << fname << _T(" is closed.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -4457,14 +4457,14 @@ if (!Arg::done(args, _T("postPrchild"),nlppp->parse_))
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Prrange post action: file=") << fname << _T(" is closed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Prrange post action: file=") << fname << _T(" is closed.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -4477,8 +4477,8 @@ nstart = nend = 0;
 if (!Pat::collectNth(nlppp->collect_, ord, /*UP*/ nstart, nend)
 	 || (nstart && !nend))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Prchild: failed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Prchild: failed.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -4517,7 +4517,7 @@ len = n2 - n1 + 1;
 // Print the thing.
 while (len--)
 	*ostr << *str++;
-*ostr << flush;
+*ostr << std::flush;
 
 return true;
 }
@@ -4552,14 +4552,14 @@ if (!Arg::done(args, _T("postPrtree"),nlppp->parse_))
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Prtree post action: file=") << fname << _T(" is closed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Prtree post action: file=") << fname << _T(" is closed.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -4572,8 +4572,8 @@ nstart = nend = 0;
 if (!Pat::collectNth(nlppp->collect_, ord, /*UP*/ nstart, nend)
 	 || (nstart && !nend))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Prtree: failed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Prtree: failed.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -4603,7 +4603,7 @@ len = n2 - n1 + 1;
 // Print the thing.
 while (len--)
 	*ostr << *str++;
-*ostr << flush;
+*ostr << std::flush;
 
 return true;
 }
@@ -4645,14 +4645,14 @@ if (!Arg::done(args, _T("postPrxtree"),nlppp->parse_))
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Prxtree post action: file=") << fname << _T(" is closed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Prxtree post action: file=") << fname << _T(" is closed.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -4665,8 +4665,8 @@ nstart = nend = 0;
 if (!Pat::collectNth(nlppp->collect_, ord, /*UP*/ nstart, nend)
 	 || (nstart && !nend))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Prxtree: failed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Prxtree: failed.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -4701,7 +4701,7 @@ if (!len)
 while (len--)
 	*ostr << *str++;
 *ostr << poststr;
-*ostr << flush;
+*ostr << std::flush;
 
 return true;
 }
@@ -4736,15 +4736,15 @@ if (!Arg::done(args, _T("postFprintnvar"),nlppp->parse_))
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Fprintnvar post action: file=") << fname << _T(" is closed.]")
-			<< ends;
+			<< std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -4757,8 +4757,8 @@ nstart = nend = 0;
 if (!Pat::collectNth(nlppp->collect_, ord, /*UP*/ nstart, nend)
 	 || (nstart && !nend))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Fprintnvar: Unimplemented multiple nodes.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Fprintnvar: Unimplemented multiple nodes.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -4781,7 +4781,7 @@ Iarg *arg;				// Just handle first val, for now.
 darg = list->getFirst();
 if (!darg)
 	{
-	*ostr << _T("   ") << flush;		// Default formatting.
+	*ostr << _T("   ") << std::flush;		// Default formatting.
 	return true;
 	}
 arg = darg->getData();
@@ -4806,7 +4806,7 @@ else if (arg->getType() == IANUM)
 	}
 else
 	return true;
-*ostr << flush;
+*ostr << std::flush;
 
 return true;
 }
@@ -4840,15 +4840,15 @@ if (!Arg::done(args, _T("postFprintxvar"),nlppp->parse_))
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Fprintxvar post action: file=") << fname << _T(" is closed.]")
-			<< ends;
+			<< std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -4868,9 +4868,9 @@ else								// Get component.
 	tmp = select->pathNth(ord);
 	if (!tmp)
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Couldn't find ") << ord
-					<< _T("th component of path.]") << ends;
+					<< _T("th component of path.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		return false;
 		}
@@ -4892,7 +4892,7 @@ Iarg *arg;				// Just handle first val, for now.
 darg = list->getFirst();
 if (!darg)
 	{
-	*ostr << _T("   ") << flush;		// Default formatting.
+	*ostr << _T("   ") << std::flush;		// Default formatting.
 	return true;
 	}
 arg = darg->getData();
@@ -4917,7 +4917,7 @@ else if (arg->getType() == IANUM)
 	}
 else
 	return true;
-*ostr << flush;
+*ostr << std::flush;
 
 return true;
 }
@@ -4948,15 +4948,15 @@ if (!Arg::done(args, _T("postFprintgvar"),nlppp->parse_))
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Fprintxvar post action: file=") << fname << _T(" is closed.]")
-			<< ends;
+			<< std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -4976,7 +4976,7 @@ Iarg *arg;				// Just handle first val, for now.
 darg = list;
 if (!darg)
 	{
-	*ostr << _T("   ") << flush;		// Default formatting.
+	*ostr << _T("   ") << std::flush;		// Default formatting.
 	return true;
 	}
 arg = darg->getData();
@@ -5001,7 +5001,7 @@ else if (arg->getType() == IANUM)
 	}
 else
 	return true;
-*ostr << flush;
+*ostr << std::flush;
 
 return true;
 }
@@ -5037,15 +5037,15 @@ if (!Arg::done(args, _T("Ndump"),nlppp->parse_))
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Ndump: file=") << fname << _T(" is closed.]")
-			<< ends;
+			<< std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -5058,8 +5058,8 @@ nstart = nend = 0;
 if (!Pat::collectNthnew(nlppp->collect_, ord, /*UP*/ nstart, nend)
 	 || (nstart && !nend))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Ndump: Unimplemented multiple nodes.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Ndump: Unimplemented multiple nodes.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -5067,8 +5067,8 @@ if (!nstart)
 	return true;			// Absent is ok.
 if (nstart != nend)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Ndump: Not handling multiple nodes.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Ndump: Not handling multiple nodes.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -5079,7 +5079,7 @@ Pn *pn = nstart->getData();
 
 // DUMP THE NODE TEXT ALSO!									// 12/14/99 AM.
 _TCHAR *buf = pn->pnStr();		// FIX.						// 02/14/00 AM.
-*ostr << _T("$text=") << buf << endl;							// 12/14/99 AM.
+*ostr << _T("$text=") << buf << std::endl;							// 12/14/99 AM.
 Chars::destroy(buf);				// FIX.						// 02/14/00 AM.
 
 
@@ -5121,15 +5121,15 @@ if (!Arg::done(args, _T("Xdump"),nlppp->parse_))
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Xdump: file=") << fname << _T(" is closed.]")
-			<< ends;
+			<< std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -5150,9 +5150,9 @@ else								// Get component.
 	tmp = select->pathNth(ord);
 	if (!tmp)
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Xdump: Couldn't find ") << ord
-					<< _T("th component of path.]") << ends;
+					<< _T("th component of path.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		return false;
 		}
@@ -5193,15 +5193,15 @@ if (!Arg::done(args, _T("Gdump"),nlppp->parse_))
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Gdump: file=") << fname << _T(" is closed.]")
-			<< ends;
+			<< std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -5239,15 +5239,15 @@ if (!Arg::done(args, _T("Sdump"),nlppp->parse_))
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Sdump: file=") << fname << _T(" is closed.]")
-			<< ends;
+			<< std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -5275,7 +5275,7 @@ bool Pat::printr(
 	long ord2,
 	Tree<Pn> *collect,
 	Parse *parse,
-	_t_ostream *ostr
+	std::_t_ostream *ostr
 	)
 {
 _TCHAR *str = 0;
@@ -5288,7 +5288,7 @@ if (!getr(ord1, ord2, collect, parse, /*DU*/ str, len))
 // Print the text range.
 while (len--)
 	*ostr << *str++;
-*ostr << flush;
+*ostr << std::flush;
 return true;
 }
 
@@ -5303,7 +5303,7 @@ return true;
 bool Pat::printr(
 	Node<Pn> *node1,
 	Node<Pn> *node2,
-	_t_ostream *ostr,
+	std::_t_ostream *ostr,
 	Nlppp *nlppp
 	)
 {
@@ -5330,7 +5330,7 @@ long len = n2 - n1 + 1;
 // Print the text range.
 while (len--)
 	*ostr << *str++;
-*ostr << flush;
+*ostr << std::flush;
 return true;
 }
 
@@ -5363,8 +5363,8 @@ nstart1 = nend1 = 0;
 if (!Pat::collectNth(collect, ord1, /*UP*/ nstart1, nend1)
 	 || (nstart1 && !nend1))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[getr: failed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[getr: failed.]") << std::ends;
 	parse->errOut(&gerrStr,false);
 	return false;
 	}
@@ -5373,8 +5373,8 @@ nstart2 = nend2 = 0;
 if (!Pat::collectNth(collect, ord2, /*UP*/ nstart2, nend2)
 	 || (nstart2 && !nend2))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[getr: failed.(2)]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[getr: failed.(2)]") << std::ends;
 	parse->errOut(&gerrStr,false);
 	return false;
 	}
@@ -5437,14 +5437,14 @@ if (!Arg::done(args, _T("postPranchor"),nlppp->parse_))
 
 // Get the filename variable.
 // Get its value, which is an output stream.
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (!Var::val(fname, nlppp->parse_, /*DU*/ ostr))
 	return false;
 
 if (ostr == 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Pranchor post action: file=") << fname << _T(" is closed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Pranchor post action: file=") << fname << _T(" is closed.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -5456,8 +5456,8 @@ _TCHAR url[MAXSTR];
 getr(ord1, ord2, nlppp->collect_, nlppp->parse_, /*DU*/ strng, len);
 if (len >= MAXSTR)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[postPranchor: URL string overflow.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[postPranchor: URL string overflow.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -5476,7 +5476,7 @@ if (service && server)			// Absolute URL.
 	{
 	_tcsnccpy(url, strng, len);			// Restore url string.
 	url[len] = '\0';
-	*ostr << url << flush;
+	*ostr << url << std::flush;
 	return true;
 	}
 
@@ -5522,12 +5522,12 @@ if (bservice && bserver)			// Base URL is absolute.
 				<< server  << _T("/")
 				<< dirs    << _T("/")
 				<< str(file)
-				<< flush;
+				<< std::flush;
 	else
 		*ostr << service << _T("://")
 				<< server  << _T("/")
 				<< str(file)
-				<< flush;
+				<< std::flush;
 	return true;
 	}
 
@@ -5535,9 +5535,9 @@ if (bservice && bserver)			// Base URL is absolute.
 // TODO: Get document URL here!
 // (May want to print URL even if can't get the doc url.)
 
-_t_strstream gerrStr;
+std::_t_strstream gerrStr;
 gerrStr << _T("[Base URL is relative. Getting document URL unimplemented.]")
-  << ends;
+  << std::ends;
 nlppp->parse_->errOut(&gerrStr,false);
 return true;
 }
@@ -5625,8 +5625,8 @@ if (!nstart && !nend)
 	return true;				// Empty is ok.
 if (!nstart || !nend)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[collectNth: Bad collect]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[collectNth: Bad collect]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;				// Not allowing this case.
 	}
@@ -5676,8 +5676,8 @@ if (!nstart && !nend)
 	return true;				// Empty is ok.
 if (!nstart || !nend)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[collectNthnew: Bad collect]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[collectNthnew: Bad collect]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;				// Not allowing this case.
 	}
@@ -5750,8 +5750,8 @@ while (--ord)
 	node = node->Right();
 if (!node)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Lookahead error.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Lookahead error.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -5772,7 +5772,7 @@ while ((node = node->Right()))
 		return true;
 		}
 	}
-//*gerr << "[Couldn't find lookahead node.]" << endl;
+//*gerr << "[Couldn't find lookahead node.]" << std::endl;
 return true;				// Preemptive fix.			// 12/18/99 AM.
 // Could be at end of file or phrase.
 // All elts to right of lookahead could be optional.
@@ -5807,8 +5807,8 @@ while (--ord)
 	node = node->Right();
 if (!node)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[updateLookahead: Error.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[updateLookahead: Error.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -5819,8 +5819,8 @@ if ((tmp = node->Down()))
 	nlppp->after_ = tmp;
 	return true;
 	}
-_t_strstream gerrStr;
-gerrStr << _T("[updateLookahead: Error.]") << ends;
+std::_t_strstream gerrStr;
+gerrStr << _T("[updateLookahead: Error.]") << std::ends;
 nlppp->parse_->errOut(&gerrStr,false);
 return false;
 }
@@ -5852,8 +5852,8 @@ Node<Pn> *parent = node1->Up();
 Node<Pn> *nxt = node2->Right();
 if (!parent)	// Can't excise root of entire tree.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't excise root of parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't excise root of parse tree.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -5982,25 +5982,25 @@ bool Pat::single(
 {
 if (!nlppp->first_ || !nlppp->last_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Single-tier reduce: Null first or last node in range.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->red_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Single-tier reduce: Rule already reduced.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->used_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Single-tier reduce: Collect already used.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -6098,7 +6098,7 @@ bool Pat::layerElt(
 	)
 {
 //if (Debug())
-//	*gout << "   [IN LAYERELT]" << endl;
+//	*gout << "   [IN LAYERELT]" << std::endl;
 
 if (!pcoll || !attrs || !*attrs || !parse)
 	return false;
@@ -6153,8 +6153,8 @@ while (node && node != after)
 
 	if (!top || !bottom)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[layerElt: Error.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[layerElt: Error.]") << std::ends;
 		parse->errOut(&gerrStr,false);
 		return false;				// Something went wrong.
 		}
@@ -6184,8 +6184,8 @@ newlast = top;
 
 if (!newfirst || !newlast)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[layerElt: Error.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[layerElt: Error.]") << std::ends;
 	parse->errOut(&gerrStr,false);
 	return false;
 	}
@@ -6221,7 +6221,7 @@ Node<Pn> *Pat::Layering(
 if (!node || !attrs || !*attrs)
 	return node;
 
-//if (Debug()) *gout << "   [Layering]" << endl;
+//if (Debug()) *gout << "   [Layering]" << std::endl;
 
 // Move node's semantics up to top node in layering chain.
 Node<Pn> *tmp;				// The new subtree.
@@ -6291,7 +6291,7 @@ if (!attrs  || !*attrs || !node)
 	return;
 
 //if (Debug())
-//	*gout << "   [Layering (for phrase elts)]" << endl;
+//	*gout << "   [Layering (for phrase elts)]" << std::endl;
 
 // Do first attr separately.
 Pn *pn;
@@ -6362,25 +6362,25 @@ bool Pat::merge(
 {
 if (!nlppp->first_ || !nlppp->last_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[redMerge: Null first or last node in range.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->red_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[redMerge: Rule already reduced.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
 if (nlppp->used_)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[redMerge: Collect already used.]")
-		  << ends;
+		  << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}

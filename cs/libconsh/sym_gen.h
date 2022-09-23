@@ -1,5 +1,5 @@
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -7,7 +7,7 @@ All rights reserved.
 *
 *									SYM_GEN.H
 *
-* FILE:	consh.¹/sym_gen.h
+* FILE:	consh.ï¿½/sym_gen.h
 * SUBJ:	Declarations for sym table code generation.
 * NOTE:	
 * CR:	10/5/95 AM.
@@ -36,6 +36,6 @@ extern void sym_gen_ini(
 extern void
 sym_gen_struct(
 	SYM *pseg,
-	_t_ofstream *fp,
+	std::_t_ofstream *fp,
 	CG *cg
 	);

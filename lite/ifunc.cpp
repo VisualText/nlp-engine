@@ -128,8 +128,8 @@ Ifunc *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Ifunc object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Ifunc object to itself.]") << std::ends;
 	errOut(&gerrStr,false,0,0);
 	return *this;
 	}
@@ -176,7 +176,7 @@ dest->body_ = orig->body_;	// Need copy constructor.....
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Ifunc &func)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Ifunc &func)
 {
 #ifndef UNICODE
 output << str(func.name_) << _T("(");
@@ -194,10 +194,10 @@ if (func.params_)
 if (func.body_)
 	output << *(func.body_);
 output << _T(")");
-output << endl << _T("{");
+output << std::endl << _T("{");
 if (func.body_)
 	output << *(func.body_);
-output << endl << _T("}") << endl;
+output << std::endl << _T("}") << std::endl;
 return output;
 }
 
@@ -242,14 +242,14 @@ int Ifunc::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Ifunc::prettyCount(_t_ofstream *ofstr)
+void Ifunc::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Ifunc count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Ifunc count=") << count_ << ends;
+		*ofstr << _T("Active Ifunc count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Ifunc count=") << count_ << std::ends;
 	errOut(&gerrStr,false,0,0);
 	}
 }
@@ -453,9 +453,9 @@ for (delt = list->getFirst(); delt; delt = delt->Right())
 	// Check that function name is not already in builtin table.
 	if (htbuilt->hfind(name))
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Can't use built-in NLP++ function name='")
-				<< name << _T("']") << ends;
+				<< name << _T("']") << std::ends;
 		errOut(&gerrStr,false,currseqpass,line);
 		ok = false;
 		continue;
@@ -464,9 +464,9 @@ for (delt = list->getFirst(); delt; delt = delt->Right())
 	// Check that function name is not already in user-defined table.
 	if (ht->hfind(name))
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Multiply defined user function name='")
-				<< name << _T("']") << ends;
+				<< name << _T("']") << std::ends;
 		errOut(&gerrStr,false,currseqpass,line);
 		ok = false;
 		continue;
@@ -547,9 +547,9 @@ Parse *parse = nlppp->parse_;												// 08/22/02 AM.
 
 if (++(nlppp->depth_) > MAX_DEPTH)	// Push nesting level.		// 03/12/02 AM.
 	{
-	_t_strstream gerrStr;						// 03/12/02 AM.
+	std::_t_strstream gerrStr;						// 03/12/02 AM.
 	gerrStr << _T("[Error: Too deeply nested function '")				// 03/12/02 AM.
-		<< name_ << _T("']") << ends;											// 03/12/02 AM.
+		<< name_ << _T("']") << std::ends;											// 03/12/02 AM.
 	parse->errOut(&gerrStr,false);													// 08/22/02 AM.
 	return false;													// FIX.	// 10/05/04 AM.
 	}
@@ -575,8 +575,8 @@ if (args && params_)															// 03/10/02 AM.
 	// Traverse and align args with params, as well as possible.
 	locals = bindParams(args, params_->getFirst(), nlppp);		// 03/10/02 AM.
 	
-//	strstream gerrStr(Errbuf,MAXSTR,ios::out);
-//	gerrStr << "[Ignoring args in user-defined function.]" << ends;
+//	strstream gerrStr(Errbuf,MAXSTR,std::ios::out);
+//	gerrStr << "[Ignoring args in user-defined function.]" << std::ends;
 //	errOut(false);																// 03/09/02 AM.
 	}
 nlppp->locals_ = locals;	// "Push onto stack".					// 03/10/02 AM.
@@ -606,9 +606,9 @@ long saveline = parse->line_;												// 02/02/05 AM.
 parse->line_ = line_;														// 02/02/05 AM.
 if (!body_->eval(nlppp, /*UP*/ sem))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Error executing user-defined function '")
-		<< name_ << _T("']") << ends;
+		<< name_ << _T("']") << std::ends;
 	parse->errOut(&gerrStr,false);													// 08/22/02 AM.
 	ok = false;																	// 03/09/02 AM.
 	}
@@ -653,9 +653,9 @@ if (!args && !params)														// 07/02/02 AM.
 	return 0;																	// 07/02/02 AM.
 if (!args || !params)	// Unequal lengths.
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Warning(1). Bad number of arguments to function '")
-		<< name_ << _T("']") << ends;
+		<< name_ << _T("']") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);											// 08/22/02 AM.
 	}
 
@@ -690,9 +690,9 @@ for (; args && params;											// FIX.	// 07/02/02 AM.
 
 if (args || params)	// Unequal lengths.
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Warning(2). Bad number of arguments to function '")
-		<< name_ << _T("']") << ends;
+		<< name_ << _T("']") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);											// 08/22/02 AM.
 	}
 return locals;
@@ -714,8 +714,8 @@ bool Ifunc::genDecls(Dlist<Iarg> *decls, Gen *gen)
 if (!decls)
 	return true;	// No user-defined functions is ok.
 
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
-_t_ofstream *fhead = gen->fhead_;
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ofstream *fhead = gen->fhead_;
 
 Delt<Iarg> *darg = decls->getFirst();
 Iarg *iarg;
@@ -807,7 +807,7 @@ return true;
 * SUBJ:	Gen code for function declaration.
 *********************************************/
 
-bool Ifunc::gen(_t_ostream *fcode, Gen *gen)
+bool Ifunc::gen(std::_t_ostream *fcode, Gen *gen)
 {
 return true;
 }

@@ -29,7 +29,7 @@ Sem::Sem(			// Constructor.
 {
 #ifndef STABLE_
 ++count_;
-//*gerr << (long)this << "+" << count_ << endl;
+//*gerr << (long)this << "+" << count_ << std::endl;
 #endif
 }
 
@@ -37,7 +37,7 @@ Sem::~Sem()
 {
 #ifndef STABLE_
 --count_;
-//*gerr << (long)this << "-" << count_ << endl;
+//*gerr << (long)this << "-" << count_ << std::endl;
 #endif
 }
 
@@ -67,15 +67,15 @@ int Sem::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Sem::prettyCount(_t_ofstream *ofstr)
+void Sem::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Sem count=") << count_ << endl;
-	*gout << _T("Active Sem count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Sem count=") << count_ << ends;
+		*ofstr << _T("Active Sem count=") << count_ << std::endl;
+	*gout << _T("Active Sem count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Sem count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }

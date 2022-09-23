@@ -82,8 +82,8 @@ Ipair *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Ipair object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Ipair object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -122,7 +122,7 @@ if (orig->vals_)
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Ipair &pairx)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Ipair &pairx)
 {
 output << pairx.key;
 if (pairx.vals_)
@@ -131,7 +131,7 @@ return output;
 }
 
 /*******************************************/
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Delt<Ipair> &delt)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Delt<Ipair> &delt)
 {
 Ipair *data;
 data = delt.getData();
@@ -141,7 +141,7 @@ return output;
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Dlist<Ipair> &list)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Dlist<Ipair> &list)
 {
 Delt<Ipair> *delt;
 Ipair *rr;
@@ -189,14 +189,14 @@ int Ipair::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Ipair::prettyCount(_t_ofstream *ofstr)
+void Ipair::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Ipair count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Ipair count=") << count_ << ends;
+		*ofstr << _T("Active Ipair count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Ipair count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }

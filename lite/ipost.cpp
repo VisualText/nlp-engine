@@ -78,8 +78,8 @@ Ipost *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Ipost object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Ipost object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -119,33 +119,33 @@ dest = this;
 /*******************************************/
 
 #ifdef IPOST_OVERRIDE_
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Iaction &action)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Iaction &action)
 {
 #ifndef UNICODE
-output << str(action.name) << _T("(") << action.args << _T(")") << endl;
+output << str(action.name) << _T("(") << action.args << _T(")") << std::endl;
 #else
 char *lpstr8;																	// 01/28/06 AM.
 u_to_mbcs((LPCWSTR)str(action.name_), CP_UTF8, (LPCTSTR*&)lpstr8);// 01/28/06 AM.
 output << lpstr8;																// 01/28/06 AM.
 u_delete((LPCTSTR*&)lpstr8);												// 01/28/06 AM.
-output << _T("(") << action.args << _T(")") << endl;				// 01/28/06 AM.
+output << _T("(") << action.args << _T(")") << std::endl;				// 01/28/06 AM.
 #endif
 
 return output;
 }
 #endif
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Dlist<Ipost> &list)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Dlist<Ipost> &list)
 {
 Delt<Ipost> *delt;
 Ipost *elt;
 delt = list.getFirst();
 elt  = delt->getData();
-output << *elt << endl;
+output << *elt << std::endl;
 while ((delt = delt->Right()))
 	{
 	elt = delt->getData();
-	output << *elt << endl;
+	output << *elt << std::endl;
 	}
 return output;
 }
@@ -270,55 +270,55 @@ first = last = -1;
 label = 0;
 if (!act)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[unpackGroup: Given null action.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[unpackGroup: Given null action.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
 if (strcmp_i(act->getName(), _T("group")))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[unpackGroup: Action is '") << act->getName()
-			<< _T("', not GROUP.]") << ends;
+			<< _T("', not GROUP.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
 Dlist<Iarg> *args = act->getArgs();
 if (!args)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[unpackGroup: No args in GROUP action.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[unpackGroup: No args in GROUP action.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
 Delt<Iarg> *darg_first = args->getFirst();
 if (!darg_first)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[unpackGroup: Empty args list in GROUP action.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[unpackGroup: Empty args list in GROUP action.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
 Delt<Iarg> *darg_last = darg_first->Right();
 if (!darg_last)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[unpackGroup: Missing args in GROUP action.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[unpackGroup: Missing args in GROUP action.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
 Delt<Iarg> *darg_label = darg_last->Right();
 if (!darg_label)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[unpackGroup: Missing arg in GROUP action.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[unpackGroup: Missing arg in GROUP action.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
 if (darg_label->Right())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[unpackGroup: Too many args in GROUP action.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[unpackGroup: Too many args in GROUP action.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -328,8 +328,8 @@ if (darg_label->Right())
 Iarg *arg_first = darg_first->getData();
 if (arg_first->getType() != IANUM)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[unpackGroup: Start arg not numeric.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[unpackGroup: Start arg not numeric.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -337,8 +337,8 @@ if (arg_first->getType() != IANUM)
 Iarg *arg_last = darg_last->getData();
 if (arg_last->getType() != IANUM)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[unpackGroup: End arg not numeric.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[unpackGroup: End arg not numeric.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -346,8 +346,8 @@ if (arg_last->getType() != IANUM)
 Iarg *arg_label = darg_label->getData();
 if (arg_label->getType() != IASTR)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[unpackGroup: Label arg not string type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[unpackGroup: Label arg not string type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -356,8 +356,8 @@ if (arg_label->getType() != IASTR)
 _TCHAR *str = arg_label->getStr();
 if (!str || !*str)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[unpackGroup: Label string is empty.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[unpackGroup: Label string is empty.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -365,8 +365,8 @@ int num1 = arg_first->getNum();
 int num2 = arg_last->getNum();
 if (num1 <= 0 || num2 <= 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[unpackGroup: Range must be positive integers.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[unpackGroup: Range must be positive integers.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}

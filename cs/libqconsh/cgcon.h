@@ -19,7 +19,6 @@ All rights reserved.
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
-using namespace std;
 #endif
 
 // Maximum depth of hierarchy.	// 03/08/07 AM.

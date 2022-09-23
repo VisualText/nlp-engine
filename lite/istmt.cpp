@@ -93,8 +93,8 @@ Istmt *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Istmt object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Istmt object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -126,21 +126,21 @@ dest = this;
 /*******************************************/
 
 // 12/27/99 AM. The derived types should print themselves.
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Istmt &stmt)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Istmt &stmt)
 {
 // Workaround to print derived classes.				// 12/27/99 AM.
 stmt.print(output);											// 12/27/99 AM.
 return output;
 }
 
-void Istmt::print(_t_ostream &output)
+void Istmt::print(std::_t_ostream &output)
 {
-output << _T("[Base Istmt class]") << endl;
+output << _T("[Base Istmt class]") << std::endl;
 }
 
 /*******************************************/
 /*******************************************/
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Selt<Istmt> &selt)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Selt<Istmt> &selt)
 {
 Istmt *dat;
 dat = selt.getData();
@@ -150,7 +150,7 @@ return output;
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Slist<Istmt> &list)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Slist<Istmt> &list)
 {
 Selt<Istmt> *selt;
 Istmt *dat;
@@ -201,14 +201,14 @@ int Istmt::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Istmt::prettyCount(_t_ofstream *ofstr)
+void Istmt::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Istmt count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Istmt count=") << count_ << ends;
+		*ofstr << _T("Active Istmt count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Istmt count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -225,10 +225,10 @@ if (count_)
 * SUBJ:	Generate stmt to a rules file.
 *********************************************/
 void Istmt::genStmt(
-	_t_ostream &ofile
+	std::_t_ostream &ofile
 	)
 {
-//ofile << this << flush;
+//ofile << this << std::flush;
 }
 
 /********************************************
@@ -310,8 +310,8 @@ for (selt = stmts->getFirst(); selt; selt = selt->Right())
 	nlppp->parse_->line_ = stmt->line_;									// 03/13/03 AM.
 	if (!stmt->eval(nlppp, /*UP*/ sval))	// USE DERIVED CLASS.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error in stmts.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error in stmts.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		ok = false;
 		}
@@ -321,8 +321,8 @@ for (selt = stmts->getFirst(); selt; selt = selt->Right())
 		if (!nlppp->insidefn_)												// 03/12/02 AM.
 			{
 //			nlppp->parse_->line_ = stmt->getLine();					// 08/24/02 AM.
-			_t_strstream gerrStr;
-			gerrStr << _T("[Return statement not in a function.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Return statement not in a function.]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			ok = false;
 			}

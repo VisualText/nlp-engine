@@ -430,12 +430,12 @@ return true;																	// 05/05/01 AM.
 #ifdef OLD_030629_
 long
 ASYM::sym_hash(
-	register _TCHAR *str			// 10/05/99 AM.
+	_TCHAR *str			// 10/05/99 AM.
 	)
 {
-register _TUCHAR ch;					// 10/05/99 AM.
-register long hash;
-register long warp;
+_TUCHAR ch;					// 10/05/99 AM.
+long hash;
+long warp;
 
 warp = 1;
 hash = 0;
@@ -451,7 +451,7 @@ return(hash % SYM_HASH_SIZE);
 #endif
 
 // Overhauling to conform to hashing in lite.dll					// 06/29/03 AM.
-long ASYM::sym_hash(register _TCHAR *str)								// 06/29/03 AM.
+long ASYM::sym_hash(_TCHAR *str)								// 06/29/03 AM.
 {
 if (!str || !*str)															// 06/29/03 AM.
 	{
@@ -459,10 +459,10 @@ if (!str || !*str)															// 06/29/03 AM.
 	return 0;			// Reserving zero for bad strings, empty string.
 	}
 
-register _TUCHAR ch;													// 10/05/99 AM.
-register unsigned long val=0;												// 06/29/03 AM.
-register unsigned long warp=113;											// 06/29/03 AM.
-register unsigned long ii=1;												// 06/29/03 AM.
+_TUCHAR ch;													// 10/05/99 AM.
+unsigned long val=0;												// 06/29/03 AM.
+unsigned long warp=113;											// 06/29/03 AM.
+unsigned long ii=1;												// 06/29/03 AM.
 
 while ((ch = *str++) != '\0')
 	{

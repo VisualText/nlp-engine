@@ -48,9 +48,9 @@ class Ielt : public Ielement
 {
 	friend class Pat;						// OPT									// 05/16/00 AM.
 
-	friend _t_ostream &operator<<(_t_ostream &, Ielt &);
-	friend _t_ostream &operator<<(_t_ostream &output, Delt<Ielt> &);
-	friend _t_ostream &operator<<(_t_ostream &, Dlist<Ielt> &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Ielt &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &output, Delt<Ielt> &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Dlist<Ielt> &);
 
 public:
 	Ielt(									// Default constructor.
@@ -243,24 +243,24 @@ public:
 	static void genPhrase(													// 05/30/99 AM.
 		Dlist<Ielt> *phr,
 		_TCHAR *sep,																// 11/04/99 AM.
-		_t_ostream &ofile,
+		std::_t_ostream &ofile,
 		bool trunc
 		);
 	static void genElt(														// 05/30/99 AM.
 		Ielt *elt,
 		_TCHAR *sep,																// 11/04/99 AM.
-		_t_ostream &ofile,
+		std::_t_ostream &ofile,
 		bool trunc
 		);
 
 	static bool genPhraserecurses(										// 11/04/99 AM.
 		Dlist<Ielt> *phrase,
 		_TCHAR *sep,			// Element separator.
-		_t_ostream &ofile
+		std::_t_ostream &ofile
 		);
 	bool genEltrecurses(												// 11/04/99 AM.
 		_TCHAR *sep,			// Element separator.
-		_t_ostream &ofile
+		std::_t_ostream &ofile
 		);
 	static void genEltlist(Dlist<Iarg> *,_TCHAR *,Gen *);			// 05/04/00 AM.
 	static void genEltspecial(												// 06/09/00 AM.

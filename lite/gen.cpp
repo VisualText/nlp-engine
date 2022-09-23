@@ -43,10 +43,10 @@ int Gen::count_ = 0;
 
 Gen::Gen(						// Default constructor.
 	_TCHAR *indent,				// Amount to indent code.
-	_t_ofstream *fcode,			// Main output file.
-	_t_ofstream *fhead,			// Header output file.
-	_t_ofstream *fdata,			// Data output file.
-	_t_ofstream *faux,			// Auxiliary output file.				// 06/05/00 AM.
+	std::_t_ofstream *fcode,			// Main output file.
+	std::_t_ofstream *fhead,			// Header output file.
+	std::_t_ofstream *fdata,			// Data output file.
+	std::_t_ofstream *faux,			// Auxiliary output file.				// 06/05/00 AM.
 	int id,						// Id for numbering.
 	NlpppRegion region		// Pass file region being gen'd.
 	)
@@ -133,8 +133,8 @@ Gen *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Gen object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Gen object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -207,9 +207,9 @@ dest->nlp_		= orig->nlp_;
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Gen &gen)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Gen &gen)
 {
-output << _T("[GEN object]") << endl;
+output << _T("[GEN object]") << std::endl;
 
 return output;
 }
@@ -231,19 +231,19 @@ return output;
 
 
 _TCHAR				*Gen::getIndent()		{return indent_;}
-_t_ofstream			*Gen::getFcode()		{return fcode_;}
-_t_ofstream			*Gen::getFhead()		{return fhead_;}
-_t_ofstream			*Gen::getFdata()		{return fdata_;}
-_t_ofstream			*Gen::getFaux()		{return faux_;}
-_t_ofstream			*Gen::getEhash()		{return ehash_;}
-_t_ofstream			*Gen::getEdata()		{return edata_;}
-_t_ofstream			*Gen::getEhead()		{return ehead_;}
-_t_ofstream			*Gen::getRhash()		{return rhash_;}
-_t_ofstream			*Gen::getRchain()		{return rchain_;}
-_t_ofstream			*Gen::getRdata()		{return rdata_;}
-_t_ofstream			*Gen::getRhead()		{return rhead_;}
-_t_ofstream			*Gen::getPassc()		{return passc_;}
-_t_ofstream			*Gen::getPassh()		{return passh_;}
+std::_t_ofstream			*Gen::getFcode()		{return fcode_;}
+std::_t_ofstream			*Gen::getFhead()		{return fhead_;}
+std::_t_ofstream			*Gen::getFdata()		{return fdata_;}
+std::_t_ofstream			*Gen::getFaux()		{return faux_;}
+std::_t_ofstream			*Gen::getEhash()		{return ehash_;}
+std::_t_ofstream			*Gen::getEdata()		{return edata_;}
+std::_t_ofstream			*Gen::getEhead()		{return ehead_;}
+std::_t_ofstream			*Gen::getRhash()		{return rhash_;}
+std::_t_ofstream			*Gen::getRchain()		{return rchain_;}
+std::_t_ofstream			*Gen::getRdata()		{return rdata_;}
+std::_t_ofstream			*Gen::getRhead()		{return rhead_;}
+std::_t_ofstream			*Gen::getPassc()		{return passc_;}
+std::_t_ofstream			*Gen::getPassh()		{return passh_;}
 int				 Gen::getId()			{return id_;}
 int				 Gen::getRuleid()		{return ruleid_;}
 int				 Gen::getEltid()		{return eltid_;}
@@ -258,19 +258,19 @@ NLP				*Gen::getNLP()			{return nlp_;}
 ********************************************/
 
 void	Gen::setIndent(_TCHAR *x)					{indent_ = x;}
-void	Gen::setFcode(_t_ofstream *x)				{fcode_	= x;}
-void	Gen::setFhead(_t_ofstream *x)				{fhead_	= x;}
-void	Gen::setFdata(_t_ofstream *x)				{fdata_	= x;}
-void	Gen::setFaux(_t_ofstream *x)				{faux_	= x;}
-void	Gen::setEhash(_t_ofstream *x)				{ehash_	= x;}
-void	Gen::setEdata(_t_ofstream *x)				{edata_	= x;}
-void	Gen::setEhead(_t_ofstream *x)				{ehead_	= x;}
-void	Gen::setRhash(_t_ofstream *x)				{rhash_	= x;}
-void	Gen::setRchain(_t_ofstream *x)			{rchain_	= x;}
-void	Gen::setRdata(_t_ofstream *x)				{rdata_	= x;}
-void	Gen::setRhead(_t_ofstream *x)				{rhead_	= x;}
-void	Gen::setPassc(_t_ofstream *x)				{passc_	= x;}
-void	Gen::setPassh(_t_ofstream *x)				{passh_	= x;}
+void	Gen::setFcode(std::_t_ofstream *x)				{fcode_	= x;}
+void	Gen::setFhead(std::_t_ofstream *x)				{fhead_	= x;}
+void	Gen::setFdata(std::_t_ofstream *x)				{fdata_	= x;}
+void	Gen::setFaux(std::_t_ofstream *x)				{faux_	= x;}
+void	Gen::setEhash(std::_t_ofstream *x)				{ehash_	= x;}
+void	Gen::setEdata(std::_t_ofstream *x)				{edata_	= x;}
+void	Gen::setEhead(std::_t_ofstream *x)				{ehead_	= x;}
+void	Gen::setRhash(std::_t_ofstream *x)				{rhash_	= x;}
+void	Gen::setRchain(std::_t_ofstream *x)			{rchain_	= x;}
+void	Gen::setRdata(std::_t_ofstream *x)				{rdata_	= x;}
+void	Gen::setRhead(std::_t_ofstream *x)				{rhead_	= x;}
+void	Gen::setPassc(std::_t_ofstream *x)				{passc_	= x;}
+void	Gen::setPassh(std::_t_ofstream *x)				{passh_	= x;}
 void	Gen::setId(int x)							{id_		= x;}
 void	Gen::setRuleid(int x)					{ruleid_	= x;}
 void	Gen::setEltid(int x)						{eltid_	= x;}
@@ -292,15 +292,15 @@ int Gen::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Gen::prettyCount(_t_ofstream *ofstr)
+void Gen::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Gen count=") << count_ << endl;
-	*gout << _T("Active Gen count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Gen count=") << count_ << ends;
+		*ofstr << _T("Active Gen count=") << count_ << std::endl;
+	*gout << _T("Active Gen count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Gen count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -345,66 +345,66 @@ return true;
 bool Gen::writeHeaders()
 {
 // Should write date and time stamp.
-*fcode_ << _T("// Automatically generated: ") << today() << endl;
-*fhead_ << _T("// Automatically generated: ") << today() << endl;
-*fdata_ << _T("// Automatically generated: ") << today() << endl;
-*faux_  << _T("// Automatically generated: ") << today() << endl;
+*fcode_ << _T("// Automatically generated: ") << today() << std::endl;
+*fhead_ << _T("// Automatically generated: ") << today() << std::endl;
+*fdata_ << _T("// Automatically generated: ") << today() << std::endl;
+*faux_  << _T("// Automatically generated: ") << today() << std::endl;
 
-*fdata_ << _T("// INCLUDED IN ANALYZER.CPP ONLY.") << endl;
+*fdata_ << _T("// INCLUDED IN ANALYZER.CPP ONLY.") << std::endl;
 
-//*fcode_ << "#include \"stdafx.h\"" << endl;
-*fcode_ << _T("#include \"analyzer.h\"") << endl;
-*fcode_ << _T("#include \"ehead.h\"") << endl;
-*fcode_ << _T("#include \"rhead.h\"") << endl;
-*fcode_ << _T("#include \"data.h\"") << endl;
-*fcode_ << _T("#include \"..\\user\\user.h\"") << endl;				// 02/13/01 AM.
-*fcode_ << _T("#include \"..\\user\\Ucode.h\"") << endl;				// 02/13/01 AM.
+//*fcode_ << "#include \"stdafx.h\"" << std::endl;
+*fcode_ << _T("#include \"analyzer.h\"") << std::endl;
+*fcode_ << _T("#include \"ehead.h\"") << std::endl;
+*fcode_ << _T("#include \"rhead.h\"") << std::endl;
+*fcode_ << _T("#include \"data.h\"") << std::endl;
+*fcode_ << _T("#include \"..\\user\\user.h\"") << std::endl;				// 02/13/01 AM.
+*fcode_ << _T("#include \"..\\user\\Ucode.h\"") << std::endl;				// 02/13/01 AM.
 
 // analyzer.h file
-//*fhead_ << "#include \"stdafx.h\"" << endl;
+//*fhead_ << "#include \"stdafx.h\"" << std::endl;
 #ifndef LINUX
-*fhead_ << _T("#include <windows.h>") << endl;
+*fhead_ << _T("#include <windows.h>") << std::endl;
 #endif
-*fhead_ << _T("#include <stdlib.h>") << endl;
-*fhead_ << _T("#include <stdio.h>") << endl;
-*fhead_ << _T("#include <tchar.h>") << endl;				// Unicode	// 02/07/05 AM.
-*fhead_ << _T("#include <my_tchar.h>") << endl;			// Unicode	// 02/07/05 AM.
-*fhead_ << _T("#include <streamClasses.h>") << endl;	// Unicode	// 02/07/05 AM.
-*fhead_ << _T("#include \"lite\\Arun.h\"") << endl;
-*fhead_ << endl;
+*fhead_ << _T("#include <stdlib.h>") << std::endl;
+*fhead_ << _T("#include <stdio.h>") << std::endl;
+*fhead_ << _T("#include <tchar.h>") << std::endl;				// Unicode	// 02/07/05 AM.
+*fhead_ << _T("#include <my_tchar.h>") << std::endl;			// Unicode	// 02/07/05 AM.
+*fhead_ << _T("#include <streamClasses.h>") << std::endl;	// Unicode	// 02/07/05 AM.
+*fhead_ << _T("#include \"lite\\Arun.h\"") << std::endl;
+*fhead_ << std::endl;
 
-*faux_ << _T("#include \"analyzer.h\"") << endl;
-*faux_ << endl;
+*faux_ << _T("#include \"analyzer.h\"") << std::endl;
+*faux_ << std::endl;
 
-*ehash_  << _T("// Automatically generated: ") << today() << endl;
-*ehash_ << _T("#include \"analyzer.h\"") << endl;							// 02/07/05 AM.
-*ehash_ << _T("#include \"ehead.h\"") << endl;
-*ehash_ << _T("#include \"edata.h\"") << endl;
+*ehash_  << _T("// Automatically generated: ") << today() << std::endl;
+*ehash_ << _T("#include \"analyzer.h\"") << std::endl;							// 02/07/05 AM.
+*ehash_ << _T("#include \"ehead.h\"") << std::endl;
+*ehash_ << _T("#include \"edata.h\"") << std::endl;
 
-*ehead_  << _T("// Automatically generated: ") << today() << endl;
-*ehead_ << _T("#include <stdlib.h>") << endl;
-*ehead_ << _T("#include <stdio.h>") << endl;
-*ehead_ << _T("#include \"lite\\Arun.h\"") << endl;
+*ehead_  << _T("// Automatically generated: ") << today() << std::endl;
+*ehead_ << _T("#include <stdlib.h>") << std::endl;
+*ehead_ << _T("#include <stdio.h>") << std::endl;
+*ehead_ << _T("#include \"lite\\Arun.h\"") << std::endl;
 
-*edata_  << _T("// Automatically generated: ") << today() << endl;
-*edata_ << _T("// INCLUDED IN EHASH.CPP ONLY.") << endl;
+*edata_  << _T("// Automatically generated: ") << today() << std::endl;
+*edata_ << _T("// INCLUDED IN EHASH.CPP ONLY.") << std::endl;
 
-*rhash_  << _T("// Automatically generated: ") << today() << endl;
-*rhash_ << _T("#include \"analyzer.h\"") << endl;							// 02/07/05 AM.
-*rhash_ << _T("#include \"rhead.h\"") << endl;
-*rhash_ << _T("#include \"rdata.h\"") << endl;
-*rhash_ << _T("#include \"rchain.h\"") << endl;
+*rhash_  << _T("// Automatically generated: ") << today() << std::endl;
+*rhash_ << _T("#include \"analyzer.h\"") << std::endl;							// 02/07/05 AM.
+*rhash_ << _T("#include \"rhead.h\"") << std::endl;
+*rhash_ << _T("#include \"rdata.h\"") << std::endl;
+*rhash_ << _T("#include \"rchain.h\"") << std::endl;
 
-*rchain_  << _T("// Automatically generated: ") << today() << endl;
-*rchain_ << _T("// INCLUDED IN RHASH.CPP ONLY.") << endl;
+*rchain_  << _T("// Automatically generated: ") << today() << std::endl;
+*rchain_ << _T("// INCLUDED IN RHASH.CPP ONLY.") << std::endl;
 
-*rhead_  << _T("// Automatically generated: ") << today() << endl;
-*rhead_ << _T("#include <stdlib.h>") << endl;
-*rhead_ << _T("#include <stdio.h>") << endl;
-*rhead_ << _T("#include \"lite\\Arun.h\"") << endl;
+*rhead_  << _T("// Automatically generated: ") << today() << std::endl;
+*rhead_ << _T("#include <stdlib.h>") << std::endl;
+*rhead_ << _T("#include <stdio.h>") << std::endl;
+*rhead_ << _T("#include \"lite\\Arun.h\"") << std::endl;
 
-*rdata_  << _T("// Automatically generated: ") << today() << endl;
-*rdata_ << _T("// INCLUDED IN RHASH.CPP ONLY.") << endl;
+*rdata_  << _T("// Automatically generated: ") << today() << std::endl;
+*rdata_ << _T("// INCLUDED IN RHASH.CPP ONLY.") << std::endl;
 
 return true;
 }
@@ -420,12 +420,12 @@ return true;
 *			so omitting newlines by default, unless GENPRETTY_ is defined.
 ********************************************/
 
-void Gen::eol(_t_ofstream *ostr)
+void Gen::eol(std::_t_ofstream *ostr)
 {
 #ifdef GENPRETTY_
-*ostr << endl;
+*ostr << std::endl;
 #else
-*ostr << flush;
+*ostr << std::flush;
 #endif
 }
 
@@ -440,7 +440,7 @@ void Gen::eol(_t_ofstream *ostr)
 *			so omitting newlines by default, unless GENPRETTY_ is defined.
 ********************************************/
 
-void Gen::nl(_t_ofstream *ostr)
+void Gen::nl(std::_t_ofstream *ostr)
 {
 #ifdef GENPRETTY_
 *ostr << _T("\n");

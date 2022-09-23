@@ -24,7 +24,10 @@ jobs:
         shell: bash
         working-directory: vcpkg
 
-      - name: Mac Install Brew
+      - name: Install autoconf-archive
+        run: brew install autoconf-archive
+
+      - name: Install automake
         run: brew install automake
 
       - name: Install ICU

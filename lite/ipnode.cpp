@@ -103,8 +103,8 @@ Ipnode *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Ipnode object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Ipnode object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -139,7 +139,7 @@ dest->num_  = orig->num_;
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Ipnode &ipnode)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Ipnode &ipnode)
 {
 switch (ipnode.type_)
 	{
@@ -197,14 +197,14 @@ int Ipnode::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Ipnode::prettyCount(_t_ofstream *ofstr)
+void Ipnode::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Ipnode count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Ipnode count=") << count_ << ends;
+		*ofstr << _T("Active Ipnode count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Ipnode count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -221,10 +221,10 @@ if (count_)
 * SUBJ:	Generate var to a rules file.
 *********************************************/
 void Ipnode::genPnode(
-	_t_ostream &ofile
+	std::_t_ostream &ofile
 	)
 {
-ofile << this << flush;
+ofile << this << std::flush;
 }
 
 
@@ -338,9 +338,9 @@ switch (typ)
 			tmp = select->pathNth(num);
 			if (!tmp)
 				{
-				_t_strstream gerrStr;
+				std::_t_strstream gerrStr;
 				gerrStr << _T("[Couldn't find node X(") << num
-									<< _T(").]") << ends;
+									<< _T(").]") << std::ends;
 				errOut(&gerrStr,false);
 				return false;
 				}
@@ -380,8 +380,8 @@ switch (typ)
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[makePnode: Bad type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[makePnode: Bad type.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -400,7 +400,7 @@ return true;
 
 bool Ipnode::genEval(Gen *gen)
 {
-_t_ostream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ostream *fcode = gen->passc_;	// 04/03/09 AM.
 long num = getNum();
 *fcode << _T("Arun::");
 switch (getType())
@@ -415,8 +415,8 @@ switch (getType())
 		*fcode << _T("n(") << num << _T(",nlppp)");
 		break;
 	default:
-		*fcode << _T("ERROR();") << endl;										// 05/04/01 AM.
-		*fcode << _T("// [ipnode: Bad node type.]") << endl;			// 05/04/01 AM.
+		*fcode << _T("ERROR();") << std::endl;										// 05/04/01 AM.
+		*fcode << _T("// [ipnode: Bad node type.]") << std::endl;			// 05/04/01 AM.
 		return false;
 	}
 return true;

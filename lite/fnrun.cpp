@@ -106,8 +106,8 @@ long fact = -1;
 
 if (num1 < 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[fnFactorial: Given bad value.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[fnFactorial: Given bad value.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;														// FIX.	// 08/11/02 AM.
 	}
@@ -119,8 +119,8 @@ else
 		if ((double)fact > ((double)LONG_MAX / (double)num1))
 			{
 			// Overflow.
-			_t_strstream gerrStr;
-			gerrStr << _T("[factorial: Overflow.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[factorial: Overflow.]") << std::ends;
 			errOut(&gerrStr,false);
 			return 0;												// FIX.	// 08/11/02 AM.
 			}
@@ -199,8 +199,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[findconcept: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[findconcept: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;												// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -233,8 +233,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[findconcept: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[findconcept: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;												// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -316,8 +316,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[findattr: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[findattr: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;												// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -377,8 +377,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[findattr: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[findattr: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;												// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -422,8 +422,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem->getType() != RS_KBATTR)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[attrname: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[attrname: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;												// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -477,8 +477,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem->getType() != RS_KBATTR)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[attrname: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[attrname: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;												// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -519,8 +519,8 @@ if (!sem || !name || !*name || !nlppp)
 
 if (sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[findvals: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[findvals: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;												// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -580,8 +580,8 @@ if (!sem || !name || !*name || !nlppp)
 
 if (sem->getType() == RSLONG && sem->getLong() == 0)	// 05/15/08 AM.
 	{
-	_t_strstream gerrStr;	// 05/15/08 AM.
-	gerrStr << _T("[numval: Given no concept.]") << ends;	// 05/15/08 AM.
+	std::_t_strstream gerrStr;	// 05/15/08 AM.
+	gerrStr << _T("[numval: Given no concept.]") << std::ends;	// 05/15/08 AM.
 	errOut(&gerrStr,false);	// 05/15/08 AM.
 	delete sem;	// 05/15/08 AM.
 	// RECOVER. GET OUT OF THIS PASS.  // Else infinite loop possible.	// 04/15/10 AM.
@@ -592,8 +592,8 @@ if (sem->getType() == RSLONG && sem->getLong() == 0)	// 05/15/08 AM.
 
 if (sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[numval: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[numval: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;												// MEM LEAK.	// 06/27/00 AM.
 	return 0;														// FIX.	// 08/11/02 AM.
@@ -659,8 +659,8 @@ if (!sem || !name || !*name || !nlppp)
 
 if (sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[fltval: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[fltval: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;
 	return 0;
@@ -725,8 +725,8 @@ if (!sem || !name || !*name || !nlppp)
 
 if (sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strval: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strval: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;												// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -798,8 +798,8 @@ if (!sem || !name || !*name || !nlppp)
 
 if (sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[conval: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[conval: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;												// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -867,8 +867,8 @@ if (!csem || !name || !*name || !hsem || !nlppp)
 
 if (csem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[inheritval: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[inheritval: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete csem;											// MEM LEAK.	// 06/27/00 AM.
 	delete hsem;											// MEM LEAK.	// 06/27/00 AM.
@@ -878,8 +878,8 @@ CONCEPT *conc = csem->getKBconcept();
 
 if (hsem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[inheritval: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[inheritval: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete csem;											// MEM LEAK.	// 06/27/00 AM.
 	delete hsem;											// MEM LEAK.	// 06/27/00 AM.
@@ -961,8 +961,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[conceptname: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[conceptname: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;												// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -1009,8 +1009,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[conceptpath: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[conceptpath: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;												// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -1229,8 +1229,8 @@ if (!name || !*name || !hsem || !nlppp)
 
 if (hsem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[findhierconcept: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[findhierconcept: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete hsem;											// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -1296,8 +1296,8 @@ if (!hsem || !name || !*name || !val_str || !*val_str || !nlppp)
 
 if (hsem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[attrexists: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[attrexists: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete hsem;											// MEM LEAK.	// 06/27/00 AM.
 	return false;
@@ -1406,8 +1406,8 @@ if (!attr_str || !*attr_str || !val_str || !*val_str || !nlppp)
 
 if (con_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[attrwithval: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[attrwithval: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete con_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return false;
@@ -1522,8 +1522,8 @@ if (!hsem || !attr_str || !*attr_str
 
 if (hsem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[attrchange: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[attrchange: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete hsem;											// MEM LEAK.	// 06/27/00 AM.
 	return false;
@@ -1761,8 +1761,8 @@ if (!hier_sem || !nlppp)
 
 if (hier_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[down: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[down: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete hier_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -1805,8 +1805,8 @@ if (!hier_sem || !nlppp)
 
 if (hier_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[up: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[up: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete hier_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -1848,8 +1848,8 @@ if (!hier_sem || !nlppp)
 
 if (hier_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[next: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[next: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete hier_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -1892,8 +1892,8 @@ if (!hier_sem || !nlppp)
 
 if (hier_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[prev: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[prev: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete hier_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -1936,8 +1936,8 @@ if (!attr_sem || !nlppp)
 
 if (attr_sem->getType() != RS_KBATTR)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[nextattr: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[nextattr: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete attr_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -1985,8 +1985,8 @@ if (!val_sem || !nlppp)
 
 if (val_sem->getType() != RS_KBVAL)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[nextval: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[nextval: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete val_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -2035,8 +2035,8 @@ if (!val_sem || !nlppp)
 
 if (val_sem->getType() != RS_KBVAL)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[getsval: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[getsval: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete val_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -2095,8 +2095,8 @@ if (!val_sem || !nlppp)
 
 if (val_sem->getType() != RS_KBVAL)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[getstrval: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[getstrval: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete val_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -2153,8 +2153,8 @@ if (!val_sem || !nlppp)
 
 if (val_sem->getType() != RS_KBVAL)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[getnumval: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[getnumval: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete val_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -2203,8 +2203,8 @@ if (!val_sem || !nlppp)
 
 if (val_sem->getType() != RS_KBVAL)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[getconval: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[getconval: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete val_sem;
 	return 0;
@@ -2256,8 +2256,8 @@ if (!con_sem || !name_str || !*name_str || pos_num < 0  || !nlppp)
 
 if (con_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[makeconcept: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[makeconcept: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete con_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -2389,8 +2389,8 @@ if (!con_sem || !child_sem || pos_num < 0 || !nlppp)
 
 if (con_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[addconcept: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[addconcept: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete con_sem;										// MEM LEAK.	// 06/27/00 AM.
 	delete child_sem;										// MEM LEAK.	// 06/27/00 AM.
@@ -2399,8 +2399,8 @@ if (con_sem->getType() != RS_KBCONCEPT)
 CONCEPT *parent = con_sem->getKBconcept();
 if (child_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[addconcept: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[addconcept: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete con_sem;										// MEM LEAK.	// 06/27/00 AM.
 	delete child_sem;										// MEM LEAK.	// 06/27/00 AM.
@@ -2446,8 +2446,8 @@ if (!con_sem || !name_str || !*name_str || !nlppp)
 
 if (con_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[addattr: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[addattr: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete con_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -2509,8 +2509,8 @@ if (!con_sem || !attr_str || !*attr_str || !nlppp)
 
 if (con_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[addsval: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[addsval: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete con_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return false;
@@ -2638,8 +2638,8 @@ if (!con_sem || !attr_str || !*attr_str || !nlppp)
 
 if (con_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[addstrval: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[addstrval: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete con_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return false;
@@ -2753,8 +2753,8 @@ if (!con_sem || !attr_str || !*attr_str || !nlppp)
 
 if (con_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[addnumval: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[addnumval: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete con_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return false;
@@ -2888,8 +2888,8 @@ if (con_sem->getType() != RS_KBCONCEPT)
 	delete con_sem;												// FIX.	// 05/06/01 AM.
 	if (val_sem)													// FIX.	// 05/06/01 AM.
 		delete val_sem;											// FIX.	// 05/06/01 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[addconval: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[addconval: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -2900,8 +2900,8 @@ if (val_sem->getType() == RSLONG											// 08/08/02 AM.
 	{
 	delete con_sem;															// 08/08/02 AM.
 	delete val_sem;															// 08/08/02 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[addconval: Given no concept to add.]") << ends;	// 08/08/02 AM.
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[addconval: Given no concept to add.]") << std::ends;	// 08/08/02 AM.
 	errOut(&gerrStr,false);																// 08/08/02 AM.
 	return false;																// 08/08/02 AM.
 	}
@@ -2910,8 +2910,8 @@ if (val_sem->getType() != RS_KBCONCEPT)
 	{
 	delete con_sem;												// FIX.	// 05/06/01 AM.
 	delete val_sem;												// FIX.	// 05/06/01 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[addconval: Bad semantic arg(2).]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[addconval: Bad semantic arg(2).]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -2979,8 +2979,8 @@ if (!con_sem || !name_str || !*name_str || !nlppp)
 
 if (con_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[getconcept: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[getconcept: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete con_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -3033,8 +3033,8 @@ if (!con_sem || !nlppp)
 
 if (con_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rmconcept: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rmconcept: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete con_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return false;
@@ -3083,8 +3083,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rmchild: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rmchild: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
 	return false;
@@ -3116,8 +3116,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rmchild: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rmchild: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
 	return false;
@@ -3200,8 +3200,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rmvals: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rmvals: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
 	return false;
@@ -3260,8 +3260,8 @@ CG *cg = parse->getAna()->getCG();
 // Get attr from sem.
 if (sem1->getType() != RS_KBATTR)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rmval: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rmval: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
 	delete sem2;											// MEM LEAK.	// 06/27/00 AM.
@@ -3272,8 +3272,8 @@ ATTR *attr = sem1->getKBattr();
 // Get val from sem.
 if (sem2->getType() != RS_KBVAL)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rmval: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rmval: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
 	delete sem2;											// MEM LEAK.	// 06/27/00 AM.
@@ -3316,8 +3316,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rmattr: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rmattr: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
 	return false;
@@ -3376,8 +3376,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rmattrval: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rmattrval: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
 	return false;
@@ -3475,8 +3475,8 @@ if (!con_sem || !nlppp)
 
 if (con_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rmchildren: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rmchildren: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete con_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return false;
@@ -3512,8 +3512,8 @@ if (!con_sem || !nlppp)
 
 if (con_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[prunephrases: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[prunephrases: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete con_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return false;
@@ -3570,8 +3570,8 @@ switch (con_sem->getType())												// 08/08/02 AM.
 	case RSLONG:																// 08/08/02 AM.
 		if (con_sem->getLong() == 0)										// 08/08/02 AM.
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[replaceval: Given no concept.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[replaceval: Given no concept.]") << std::ends;
 			errOut(&gerrStr,false);
 			delete con_sem;
 			// RECOVER. GET OUT OF THIS PASS.  // Else infinite loop possible.	// 04/15/10 AM.
@@ -3584,8 +3584,8 @@ switch (con_sem->getType())												// 08/08/02 AM.
 		break;
 	}
 
-_t_strstream gerrStr;
-gerrStr << _T("[replaceval: Bad concept.]") << ends;
+std::_t_strstream gerrStr;
+gerrStr << _T("[replaceval: Bad concept.]") << std::ends;
 errOut(&gerrStr,false);
 delete con_sem;								// MEM LEAK.	// 06/27/00 AM.
 	// RECOVER. GET OUT OF THIS PASS.  // Else infinite loop possible.	// 04/15/10 AM.
@@ -3613,8 +3613,8 @@ if (!con_sem || !attr_str || !*attr_str || !nlppp)
 // Long value == 0 is ok.	// FIX.	// 05/15/08 AM.
 if (con_sem->getType() == RSLONG && con_sem->getLong() == 0)	// 05/15/08 AM.
 	{
-	_t_strstream gerrStr;	// 05/15/08 AM.
-	gerrStr << _T("[replaceval: Given no concept.]") << ends;	// 05/15/08 AM.
+	std::_t_strstream gerrStr;	// 05/15/08 AM.
+	gerrStr << _T("[replaceval: Given no concept.]") << std::ends;	// 05/15/08 AM.
 	errOut(&gerrStr,false);	// 05/15/08 AM.
 	delete con_sem;	// 05/15/08 AM.
 	// RECOVER. GET OUT OF THIS PASS.  // Else infinite loop possible.	// 04/15/10 AM.
@@ -3625,8 +3625,8 @@ if (con_sem->getType() == RSLONG && con_sem->getLong() == 0)	// 05/15/08 AM.
 
 if (con_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[replaceval: Bad concept.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[replaceval: Bad concept.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete con_sem;										// MEM LEAK.	// 06/27/00 AM.
 	// RECOVER. GET OUT OF THIS PASS.  // Else infinite loop possible.	// 04/15/10 AM.
@@ -3665,8 +3665,8 @@ if (!con_sem || !attr_str || !*attr_str || !val_sem || !nlppp)
 // Long value == 0 is ok.	// FIX.	// 05/15/08 AM.
 if (con_sem->getType() == RSLONG && con_sem->getLong() == 0)	// 05/15/08 AM.
 	{
-	_t_strstream gerrStr;	// 05/15/08 AM.
-	gerrStr << _T("[replaceval: Given no concept.]") << ends;	// 05/15/08 AM.
+	std::_t_strstream gerrStr;	// 05/15/08 AM.
+	gerrStr << _T("[replaceval: Given no concept.]") << std::ends;	// 05/15/08 AM.
 	errOut(&gerrStr,false);	// 05/15/08 AM.
 	delete con_sem;	// 05/15/08 AM.
 	delete val_sem;	// 05/15/08 AM.
@@ -3678,8 +3678,8 @@ if (con_sem->getType() == RSLONG && con_sem->getLong() == 0)	// 05/15/08 AM.
 
 if (con_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[replaceval: Bad concept.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[replaceval: Bad concept.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete con_sem;
 	delete val_sem;
@@ -3734,8 +3734,8 @@ switch (val_sem->getType())
 		return cg->replaceVal(conc1, attr_str, val_node);			// 10/30/00 AM.
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[replaceval: Bad concept value.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[replaceval: Bad concept value.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -3799,8 +3799,8 @@ if (!con_sem || !str || !*str || !nlppp)
 
 if (con_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[renameconcept: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[renameconcept: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete con_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return false;
@@ -3857,8 +3857,8 @@ if (!con_sem || num <= 0 || !str || !*str || !nlppp)
 
 if (con_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[renamechild: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[renamechild: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete con_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return false;
@@ -3981,8 +3981,8 @@ if (!con_sem || !attr_str || !*attr_str || !str || !*str || !nlppp)
 
 if (con_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[renameattr: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[renameattr: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete con_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return false;
@@ -4092,8 +4092,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[movecleft: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[movecleft: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
 	return false;
@@ -4132,8 +4132,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[movecright: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[movecright: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
 	return false;
@@ -4173,8 +4173,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[findphrase: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[findphrase: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
 	return NULL;	// 09/26/19 AM.
@@ -4216,8 +4216,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[sortphrase: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[sortphrase: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
 	return false;
@@ -4256,8 +4256,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[sortchilds: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[sortchilds: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;
 	return false;
@@ -4297,8 +4297,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[sorthier: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[sorthier: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;
 	return false;
@@ -4338,8 +4338,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[phraselength: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[phraselength: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -4379,8 +4379,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[nodeconcept: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[nodeconcept: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -4422,8 +4422,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[nodeowner: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[nodeowner: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;
 	return NULL;	// 09/26/19 AM.
@@ -4467,8 +4467,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBPHRASE)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[findnode: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[findnode: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
 	return NULL;	// 09/26/19 AM.
@@ -4504,8 +4504,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBPHRASE)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[findnode: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[findnode: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
 	return NULL;	// 09/26/19 AM.
@@ -4589,8 +4589,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[listnode: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[listnode: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -4632,8 +4632,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBPHRASE)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[firstnode: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[firstnode: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -4675,8 +4675,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBPHRASE)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[lastnode: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[lastnode: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -4714,8 +4714,8 @@ if (!con_sem || !str || !*str || !nlppp)
 
 if (con_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[makephrase: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[makephrase: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete con_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -4773,8 +4773,8 @@ if (!con_sem || !str || !*str || !nlppp)
 
 if (con_sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[addcnode: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[addcnode: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete con_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return 0;
@@ -4859,8 +4859,8 @@ if (!phr_sem || !str || !*str || num <= 0 || !nlppp)
 
 if (phr_sem->getType() != RS_KBPHRASE)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[addnode: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[addnode: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete phr_sem;										// MEM LEAK.	// 06/27/00 AM.
 	return NULL;	// 09/26/19 AM.
@@ -4989,8 +4989,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rmnode: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rmnode: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/28/00 AM.
 	return false;
@@ -5030,8 +5030,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBPHRASE)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rmphrase: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rmphrase: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/28/00 AM.
 	return false;
@@ -5070,8 +5070,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rmcphrase: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rmcphrase: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/28/00 AM.
 	return false;
@@ -5114,8 +5114,8 @@ CG *cg = parse->getAna()->getCG();
 // Get object from sem.
 if (sem1->getType() != RS_KBPHRASE)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[renamenode: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[renamenode: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/28/00 AM.
 	return false;
@@ -5149,8 +5149,8 @@ CG *cg = parse->getAna()->getCG();
 // Get object from sem.
 if (sem1->getType() != RS_KBPHRASE)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[renamenode: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[renamenode: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;											// MEM LEAK.	// 06/28/00 AM.
 	return false;
@@ -5661,8 +5661,8 @@ _TCHAR *name1 = name1_sem->sem_to_str();
 delete name1_sem;
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strequal: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strequal: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -5684,8 +5684,8 @@ _TCHAR *name1 = name1_sem->sem_to_str();
 delete name1_sem;
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strequal: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strequal: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -5704,8 +5704,8 @@ bool Arun::strequal(		// 07/11/03 AM.
 {
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strequal: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strequal: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -5724,8 +5724,8 @@ bool Arun::strequal(		// 07/11/03 AM.
 {
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strequal: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strequal: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -5743,8 +5743,8 @@ bool Arun::strequal(		// 07/11/03 AM.
 {
 if (num1 != 0 || num2 != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strequal: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strequal: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -5841,8 +5841,8 @@ _TCHAR *name1 = name1_sem->sem_to_str();
 delete name1_sem;
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strnotequal: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strnotequal: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
@@ -5864,8 +5864,8 @@ _TCHAR *name1 = name1_sem->sem_to_str();
 delete name1_sem;
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strnotequal: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strnotequal: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
@@ -5884,8 +5884,8 @@ bool Arun::strnotequal(		// 07/11/03 AM.
 {
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strnotequal: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strnotequal: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
@@ -5904,8 +5904,8 @@ bool Arun::strnotequal(		// 07/11/03 AM.
 {
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strnotequal: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strnotequal: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
@@ -5923,8 +5923,8 @@ bool Arun::strnotequal(		// 07/11/03 AM.
 {
 if (num1 != 0 || num2 != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strnotequal: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strnotequal: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
@@ -6021,8 +6021,8 @@ _TCHAR *name1 = name1_sem->sem_to_str();
 delete name1_sem;
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strequalnocase: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strequalnocase: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -6044,8 +6044,8 @@ _TCHAR *name1 = name1_sem->sem_to_str();
 delete name1_sem;
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strequalnocase: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strequalnocase: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -6064,8 +6064,8 @@ bool Arun::strequalnocase(		// 07/11/03 AM.
 {
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strequalnocase: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strequalnocase: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -6084,8 +6084,8 @@ bool Arun::strequalnocase(		// 07/11/03 AM.
 {
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strequalnocase: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strequalnocase: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -6103,8 +6103,8 @@ bool Arun::strequalnocase(		// 07/11/03 AM.
 {
 if (num1 != 0 || num2 != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strequalnocase: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strequalnocase: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -6200,8 +6200,8 @@ _TCHAR *name1 = name1_sem->sem_to_str();
 delete name1_sem;
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strnotequalnocase: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strnotequalnocase: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
@@ -6223,8 +6223,8 @@ _TCHAR *name1 = name1_sem->sem_to_str();
 delete name1_sem;
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strnotequalnocase: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strnotequalnocase: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
@@ -6243,8 +6243,8 @@ bool Arun::strnotequalnocase(		// 07/11/03 AM.
 {
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strnotequalnocase: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strnotequalnocase: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
@@ -6263,8 +6263,8 @@ bool Arun::strnotequalnocase(		// 07/11/03 AM.
 {
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strnotequalnocase: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strnotequalnocase: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
@@ -6282,8 +6282,8 @@ bool Arun::strnotequalnocase(		// 07/11/03 AM.
 {
 if (num1 != 0 || num2 != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strnotequalnocase: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strnotequalnocase: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
@@ -6381,8 +6381,8 @@ _TCHAR *name1 = name1_sem->sem_to_str();
 delete name1_sem;
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strgreaterthan: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strgreaterthan: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
@@ -6404,8 +6404,8 @@ _TCHAR *name1 = name1_sem->sem_to_str();
 delete name1_sem;
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strgreaterthan: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strgreaterthan: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -6424,8 +6424,8 @@ bool Arun::strgreaterthan(		// 07/11/03 AM.
 {
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strgreaterthan: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strgreaterthan: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -6444,8 +6444,8 @@ bool Arun::strgreaterthan(		// 07/11/03 AM.
 {
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strgreaterthan: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strgreaterthan: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
@@ -6463,8 +6463,8 @@ bool Arun::strgreaterthan(		// 07/11/03 AM.
 {
 if (num1 != 0 || num2 != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strgreaterthan: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strgreaterthan: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -6561,8 +6561,8 @@ _TCHAR *name1 = name1_sem->sem_to_str();
 delete name1_sem;
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strlessthan: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strlessthan: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -6584,8 +6584,8 @@ _TCHAR *name1 = name1_sem->sem_to_str();
 delete name1_sem;
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strlessthan: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strlessthan: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
@@ -6604,8 +6604,8 @@ bool Arun::strlessthan(		// 07/11/03 AM.
 {
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strlessthan: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strlessthan: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
@@ -6624,8 +6624,8 @@ bool Arun::strlessthan(		// 07/11/03 AM.
 {
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strlessthan: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strlessthan: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -6643,8 +6643,8 @@ bool Arun::strlessthan(		// 07/11/03 AM.
 {
 if (num1 != 0 || num2 != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strlessthan: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strlessthan: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -7879,8 +7879,8 @@ if (!nlppp || num1 < 0)
 
 if (!nlppp->coll_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[lasteltnode: Warning. No collected nodes.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[lasteltnode: Warning. No collected nodes.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -7922,8 +7922,8 @@ if (num1 < 0)
 
 if (!nlppp->coll_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[lasteltnode: Warning. No collected nodes.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[lasteltnode: Warning. No collected nodes.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -8229,8 +8229,8 @@ Parse *parse = nlppp->getParse();
 Tree<Pn> *tree = (Tree<Pn> *)parse->getTree();
 if (!tree)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[pnroot: Couldn't fetch parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[pnroot: Couldn't fetch parse tree.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -8238,8 +8238,8 @@ if (!tree)
 Node<Pn> *root = tree->getRoot();
 if (!root)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[pnroot: Couldn't fetch root of parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[pnroot: Couldn't fetch root of parse tree.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -8420,8 +8420,8 @@ if (!nlppp || !pnode)
 
 if (!str1 || !*str1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[pnrename: Warning. Given no rename string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[pnrename: Warning. Given no rename string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -8556,8 +8556,8 @@ if (!nlppp || num1 < 1)											// FIX.	// 04/29/01 AM.
 
 if (!name1 || !*name1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[varinlist: Warning. Given no var name.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[varinlist: Warning. Given no var name.]") << std::ends;
 	errOut(&gerrStr,false);
 	return NULL;	// 09/26/19 AM.
 	}
@@ -8712,15 +8712,15 @@ if (!nlppp)
 
 if (!filepath || !*filepath)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[topdir: Empty filepath.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[topdir: Empty filepath.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
 
 // INCOMPLETE, UNATTACHED..... 10/20/00 AM.
-_t_strstream gerrStr;
-gerrStr << _T("[topdir: Unimplemented function.]") << ends;
+std::_t_strstream gerrStr;
+gerrStr << _T("[topdir: Unimplemented function.]") << std::ends;
 errOut(&gerrStr,false);
 
 return 0;
@@ -8760,8 +8760,8 @@ if (!nlppp)
 
 if (!filepath || !*filepath)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[unpackdirs: Empty filepath.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[unpackdirs: Empty filepath.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -8811,8 +8811,8 @@ if (!nlppp)
 
 if (!sem1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rmattrs: Warning. Given no concept.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rmattrs: Warning. Given no concept.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
@@ -8824,8 +8824,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem1->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rmattrs: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rmattrs: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem1;	// MEM LEAK.	// 05/14/08 AM.
 	return false;
@@ -8860,8 +8860,8 @@ if (!nlppp)
 
 if (!name1 || !*name1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strclean: Warning. Given no str.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strclean: Warning. Given no str.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -8918,8 +8918,8 @@ if (!nlppp)
 
 if (!name1 || !*name1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strtrim: Warning. Given no str.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strtrim: Warning. Given no str.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -8976,8 +8976,8 @@ if (!nlppp || !startstr || !*startstr)
 
 if (!name1 || !*name1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strstartswith: Warning. Given no str.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strstartswith: Warning. Given no str.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;																// 08/05/21 Dd
 	}
@@ -9005,8 +9005,8 @@ _TCHAR *name1 = sem_to_str(name1_sem);
 delete name1_sem;
 if (!name1 || !*name1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strstartswith: Warning. Given no str.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strstartswith: Warning. Given no str.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -9032,8 +9032,8 @@ _TCHAR *startstr = sem_to_str(start_sem);
 delete start_sem;
 if (!startstr || !*startstr)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strstartswith: Warning. Given no str.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strstartswith: Warning. Given no str.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -9072,8 +9072,8 @@ delete name1_sem;
 delete start_sem;
 if (!startstr || !*startstr || !name1 || !*name1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strstartswith: Warning. Given no str.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strstartswith: Warning. Given no str.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -9086,7 +9086,7 @@ return str_starts_with(name1, startstr);
 /********************************************
 * FN:		STRENDSWITH
 * CR:		01/08/01 AM.
-* SUBJ:	Checks to see if the string ends with the given ending.
+* SUBJ:	Checks to see if the string std::ends with the given ending.
 * RET:	True if ok, else false.
 *			UP - returns true if string has ending, else false.
 * FORMS:	strendswith(str,end_str)
@@ -9104,8 +9104,8 @@ if (!nlppp || !ending || !*ending)
 
 if (!name1 || !*name1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strendswith: Warning. Given no str.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strendswith: Warning. Given no str.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;																// 04/28/01 AM.
 	}
@@ -9132,8 +9132,8 @@ _TCHAR *name1 = sem_to_str(name1_sem);
 delete name1_sem;
 if (!name1 || !*name1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strendswith: Warning. Given no str.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strendswith: Warning. Given no str.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -9159,8 +9159,8 @@ _TCHAR *ending = sem_to_str(ending_sem);
 delete ending_sem;
 if (!ending || !*ending)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strendswith: Warning. Given no str.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strendswith: Warning. Given no str.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -9199,8 +9199,8 @@ delete name1_sem;
 delete ending_sem;
 if (!ending || !*ending || !name1 || !*name1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strendswith: Warning. Given no str.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strendswith: Warning. Given no str.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -9233,15 +9233,15 @@ if (!nlppp)
 
 if (!name1 || !*name1 || !ch_str || !*ch_str)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strchr: Warning: Given no str or char.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strchr: Warning: Given no str or char.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
 if (ch_str[1])
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strchr: Warning: 2nd arg must be string of length 1.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strchr: Warning: 2nd arg must be string of length 1.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -9336,15 +9336,15 @@ if (!nlppp)
 
 if (!name1 || !*name1 || !ch_str || !*ch_str)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strchrcount: Warning: Given no str or char.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strchrcount: Warning: Given no str or char.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
 if (ch_str[1])
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strchrcount: Warning: 2nd arg must be string of length 1.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strchrcount: Warning: 2nd arg must be string of length 1.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -9434,15 +9434,15 @@ if (!nlppp)
 
 if (!name1 || !*name1 || !ch_str || !*ch_str)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strrchr: Warning: Given no str or char.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strrchr: Warning: Given no str or char.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
 if (ch_str[1])
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strrchr: Warning: 2nd arg must be string of length 1.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strrchr: Warning: 2nd arg must be string of length 1.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -9534,16 +9534,16 @@ if (!nlppp)
 
 if (wrapSize < 4)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strwrap: Warning: Wrap size too small.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strwrap: Warning: Wrap size too small.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
 
 if (!name1 || !*name1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strwrap: Warning. Given no str.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strwrap: Warning. Given no str.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -9641,8 +9641,8 @@ if (!nlppp || !oldStr || !*oldStr
 
 if (!name1 || !*name1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strsubst: Warning. Given no str.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strsubst: Warning. Given no str.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -9961,15 +9961,15 @@ for (ii = 0; ii < 2; ++ii)  // Check out each of the three flags.
 		{
 		if (napp)
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[openfile: Redundant 'app' mode.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[openfile: Redundant 'app' mode.]") << std::ends;
 			errOut(&gerrStr,false);
 			}
 
 		if (nate)
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[openfile: Incompatible modes 'ate' and 'app'.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[openfile: Incompatible modes 'ate' and 'app'.]") << std::ends;
 			errOut(&gerrStr,false);
 			return 0;
 			}
@@ -9979,15 +9979,15 @@ for (ii = 0; ii < 2; ++ii)  // Check out each of the three flags.
 		{
 		if (nate)
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[openfile: Redundant 'ate' mode.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[openfile: Redundant 'ate' mode.]") << std::ends;
 			errOut(&gerrStr,false);
 			}
 
 		if (nate)
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[openfile: Incompatible modes 'app' and 'ate'.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[openfile: Incompatible modes 'app' and 'ate'.]") << std::ends;
 			errOut(&gerrStr,false);
 			return 0;
 			}
@@ -9997,8 +9997,8 @@ for (ii = 0; ii < 2; ++ii)  // Check out each of the three flags.
 		{
 		if (nnocreate)
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[openfile: Redundant 'nocreate' mode.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[openfile: Redundant 'nocreate' mode.]") << std::ends;
 			errOut(&gerrStr,false);
 			}
 
@@ -10008,8 +10008,8 @@ for (ii = 0; ii < 2; ++ii)  // Check out each of the three flags.
 		{
 		if (nnoreplace)
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[openfile: Redundant 'noreplace' mode.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[openfile: Redundant 'noreplace' mode.]") << std::ends;
 			errOut(&gerrStr,false);
 			}
 
@@ -10019,8 +10019,8 @@ for (ii = 0; ii < 2; ++ii)  // Check out each of the three flags.
 		{
 		if (nbinary)
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[openfile: Redundant 'binary' mode.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[openfile: Redundant 'binary' mode.]") << std::ends;
 			errOut(&gerrStr,false);
 			}
 
@@ -10032,8 +10032,8 @@ for (ii = 0; ii < 2; ++ii)  // Check out each of the three flags.
 // eg, write, but don't create and don't overwrite is a bad combo!
 if (!napp && !nate && nnoreplace && nnocreate)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[openfile: Modes disallow writing out a file.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[openfile: Modes disallow writing out a file.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -10048,8 +10048,8 @@ bool absolute = ( (*(fname+1) == ':') ? true : false);
 
 if (!fname || !*fname)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[openfile: Error. Given null filename.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[openfile: Error. Given null filename.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -10061,15 +10061,15 @@ std::_Ios_Openmode modes;
 int modes = 0;
 #endif
 if (napp)
-	modes |= ios::app;
+	modes |= std::ios::app;
 if (nate)
-	modes |= ios::ate;
+	modes |= std::ios::ate;
 //if (nnocreate)
-//	modes |= ios::nocreate;
+//	modes |= std::ios::nocreate;
 //if (nnoreplace)
-//	modes |= ios::noreplace;
+//	modes |= std::ios::noreplace;
 if (nbinary)
-	modes |= ios::binary;
+	modes |= std::ios::binary;
 
 Parse *parse = nlppp->getParse();
 // Set up proper path for file.
@@ -10085,15 +10085,15 @@ else					// Absolute path.
 	parse->internStr(fname, /*UP*/ str);
 
 // Open the output file.
-_t_ostream *ostr = new _t_ofstream(TCHAR2CA(str), modes);
+std::_t_ostream *ostr = new std::_t_ofstream(TCHAR2CA(str), modes);
 parse->newostr(ostr);			// Add to list of ostrs.			// 05/23/01 AM.
 
 if (!ostr)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[openfile: Couldn't create output stream.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[openfile: Couldn't create output stream.]") << std::ends;
 	errOut(&gerrStr,false);
-	gerrStr << _T("[file=") << str << _T("]") << ends;
+	gerrStr << _T("[file=") << str << _T("]") << std::ends;
 	errOut(&gerrStr,false);
 	return NULL;	// 09/26/19 AM.
 	}
@@ -10594,13 +10594,13 @@ if (!nlppp)
 
 if (sem->getType() != RSOSTREAM)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[closefile: Error. Given bad arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[closefile: Error. Given bad arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;
 	return false;
 	}
-_t_ostream *ostr = sem->getOstream();
+std::_t_ostream *ostr = sem->getOstream();
 delete sem;
 //delete ostr;	// DELETE THE OSTREAM.
 nlppp->parse_->deleteostr(ostr);	// Rm from list and delete.	// 05/23/01 AM.
@@ -10609,7 +10609,7 @@ return true;
 
 bool Arun::closefile(
 	Nlppp *nlppp,
-	_t_ostream *ostr
+	std::_t_ostream *ostr
 	)
 {
 if (!ostr)
@@ -10617,8 +10617,8 @@ if (!ostr)
 if (!nlppp)
 	{
 //	delete ostr;																// 05/23/01 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[Internal error. Can't delete ostream.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Internal error. Can't delete ostream.]") << std::ends;
 	errOut(&gerrStr,false);
 	// 05/23/01 AM.
 	return false;
@@ -11084,8 +11084,8 @@ if (!nlppp || fieldsize < 1)
 
 if (!sptr || !*sptr)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[LJ: Warning. Given no str.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[LJ: Warning. Given no str.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -11382,8 +11382,8 @@ if (!nlppp)
 
 if (numerator < 0 || denominator < 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[percentstr: Not handling negative nums.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[percentstr: Not handling negative nums.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -11499,8 +11499,8 @@ if (!nlppp)
 
 if (hits < 0 || tot < 0 || factor < 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hitconf: Not handling negative nums.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hitconf: Not handling negative nums.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;														// FIX.	// 08/11/02 AM.
 	}
@@ -11740,8 +11740,8 @@ bool Arun::exitpass(
 {
 if (!nlppp)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[exitpass: Error.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[exitpass: Error.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
@@ -11782,8 +11782,8 @@ _TCHAR *Arun::today(
 {
 if (!nlppp)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[today: Error.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[today: Error.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -11827,8 +11827,8 @@ if (!nlppp || num1 < 0)
 
 if (!nlppp->coll_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[pncopyvars: Warning. No collected nodes.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[pncopyvars: Warning. No collected nodes.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -12018,8 +12018,8 @@ if (!escapeChar || !*escapeChar)
 
 if (!name1 || !*name1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strescape: Warning. Given no str.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strescape: Warning. Given no str.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -12225,8 +12225,8 @@ if (!escapeChar || !*escapeChar)
 
 if (!name1 || !*name1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[strunescape: Warning. Given no str.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strunescape: Warning. Given no str.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -12434,8 +12434,8 @@ CG *cg = parse->getAna()->getCG();
 // Get concept from sem.
 if (sem->getType() != RS_KBCONCEPT)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[kbdumptree: Bad semantic arg.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[kbdumptree: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;
 	return 0;
@@ -12618,8 +12618,8 @@ switch (sem->getType())
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[strisupper: Bad semantic arg.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[strisupper: Bad semantic arg.]") << std::ends;
 		errOut(&gerrStr,false);
 		str = 0;
 		}
@@ -12669,8 +12669,8 @@ switch (sem->getType())
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[strislower: Bad semantic arg.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[strislower: Bad semantic arg.]") << std::ends;
 		errOut(&gerrStr,false);
 		str = 0;
 		}
@@ -12738,8 +12738,8 @@ switch (sem->getType())
 	default:
 		{
 		delete sem;
-		_t_strstream gerrStr;
-		gerrStr << _T("[suffix: Bad semantic arg.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[suffix: Bad semantic arg.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 		break;
@@ -12771,8 +12771,8 @@ switch (sem1->getType())
 	default:
 		{
 		delete sem1;
-		_t_strstream gerrStr;
-		gerrStr << _T("[suffix: Bad semantic arg.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[suffix: Bad semantic arg.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 		break;
@@ -12810,8 +12810,8 @@ switch (sem1->getType())
 		{
 		delete sem1;
 		delete sem2;
-		_t_strstream gerrStr;
-		gerrStr << _T("[suffix: Bad semantic arg.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[suffix: Bad semantic arg.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 		break;
@@ -12828,8 +12828,8 @@ switch (sem2->getType())
 	default:
 		{
 		delete sem2;
-		_t_strstream gerrStr;
-		gerrStr << _T("[suffix: Bad semantic arg.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[suffix: Bad semantic arg.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 		break;
@@ -12961,10 +12961,10 @@ if (nlppp)
 	passnum  = (nlppp->parse_ ? nlppp->parse_->currpass_ : 0);
 	}
 
-_t_strstream gerrStr;
+std::_t_strstream gerrStr;
 gerrStr << _T("[") << passnum
 	<< _T(",") << ruleline << _T("] EXCEPTION: ")
-	<< e << ends;
+	<< e << std::ends;
 errOut(&gerrStr,false);
 #endif
 
@@ -13038,8 +13038,8 @@ switch (fsem->getType())
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[coutreset: Bad semantic type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[coutreset: Bad semantic type.]") << std::ends;
 		errOut(&gerrStr,false);
 		delete fsem;
 		return 0;
@@ -16709,7 +16709,7 @@ bool Arun::inputrangetofile(
 	Nlppp *nlppp,
 	long num1,
 	long num2,
-	_t_ostream *ostr
+	std::_t_ostream *ostr
 	)
 {
 Parse *parse = nlppp->parse_;
@@ -16742,7 +16742,7 @@ if (!text)
 _TCHAR *ptr = &(text[num1]) - 1;	// Minus 1 for convenient looping.
 for (; num1 <= num2; ++num1)
 	*ostr << *++ptr;
-*ostr << flush;
+*ostr << std::flush;
 
 return true;
 }
@@ -16758,7 +16758,7 @@ bool Arun::inputrangetofile(
 {
 if (!ostr_sem)
 	return false;
-_t_ostream *ostr = sem_to_ostream(ostr_sem);
+std::_t_ostream *ostr = sem_to_ostream(ostr_sem);
 delete ostr_sem;
 return inputrangetofile(nlppp,num1,num2,ostr);
 }
@@ -16769,7 +16769,7 @@ bool Arun::inputrangetofile(
 	Nlppp *nlppp,
 	long num1,
 	RFASem *num2_sem,
-	_t_ostream *ostr
+	std::_t_ostream *ostr
 	)
 {
 if (!num2_sem)
@@ -16788,7 +16788,7 @@ bool Arun::inputrangetofile(
 	Nlppp *nlppp,
 	RFASem *num1_sem,
 	long num2,
-	_t_ostream *ostr
+	std::_t_ostream *ostr
 	)
 {
 if (!num1_sem)
@@ -16827,7 +16827,7 @@ if (!num2_sem)
 bool ok = false;
 long num2 = num2_sem->sem_to_long(ok);
 delete num2_sem;
-_t_ostream *ostr = sem_to_ostream(ostr_sem);
+std::_t_ostream *ostr = sem_to_ostream(ostr_sem);
 delete ostr_sem;
 if (!ok)
 	return false;
@@ -16840,7 +16840,7 @@ bool Arun::inputrangetofile(
 	Nlppp *nlppp,
 	RFASem *num1_sem,
 	RFASem *num2_sem,
-	_t_ostream *ostr
+	std::_t_ostream *ostr
 	)
 {
 if (!num1_sem && !num2_sem)
@@ -16892,7 +16892,7 @@ if (!ostr_sem)
 bool ok1 = false;
 long num1 = num1_sem->sem_to_long(ok1);
 delete num1_sem;
-_t_ostream *ostr = sem_to_ostream(ostr_sem);
+std::_t_ostream *ostr = sem_to_ostream(ostr_sem);
 delete ostr_sem;
 if (!ok1)
 	return false;
@@ -16925,7 +16925,7 @@ if (num2_sem)
 	}
 
 bool ok3 = false;
-_t_ostream *ostr = 0;
+std::_t_ostream *ostr = 0;
 if (ostr_sem)
 	{
 	ostr = sem_to_ostream(ostr_sem);
@@ -17607,8 +17607,8 @@ if (!nlppp || num1 < 0)
 
 if (!nlppp->coll_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[eltnode: Warning. No collected nodes.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[eltnode: Warning. No collected nodes.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -17652,8 +17652,8 @@ delete sem;		// MEMLEAK.	// 05/15/08 AM.
 
 if (!nlppp->coll_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[eltnode: Warning. No collected nodes.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[eltnode: Warning. No collected nodes.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -17748,8 +17748,8 @@ _TCHAR *name1 = name1_sem->sem_to_str();
 delete name1_sem;
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[levenshtein: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[levenshtein: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return -1;
 	}
@@ -17769,8 +17769,8 @@ _TCHAR *name1 = name1_sem->sem_to_str();
 delete name1_sem;
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[levenshtein: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[levenshtein: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return -1;
 	}
@@ -17787,8 +17787,8 @@ long Arun::levenshtein(
 {
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[levenshtein: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[levenshtein: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return -1;
 	}
@@ -17805,8 +17805,8 @@ long Arun::levenshtein(
 {
 if (num != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[levenshtein: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[levenshtein: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return -1;
 	}
@@ -17822,8 +17822,8 @@ long Arun::levenshtein(
 {
 if (num1 != 0 || num2 != 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[levenshtein: Error. Nonstring type.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[levenshtein: Error. Nonstring type.]") << std::ends;
 	errOut(&gerrStr,false);
 	return -1;
 	}
@@ -17848,17 +17848,17 @@ if (!nlppp)
 Parse *parse = nlppp->parse_;
 if (!parse)
 	{
-	_t_strstream gerrStr;	// 06/25/09 AM.
-	gerrStr << _T("[vtcout: Error. No parse structure.]") << ends;	// 06/25/09 AM.
+	std::_t_strstream gerrStr;	// 06/25/09 AM.
+	gerrStr << _T("[vtcout: Error. No parse structure.]") << std::ends;	// 06/25/09 AM.
 	errOut(&gerrStr,false);	// 06/25/09 AM.
 	return 0;	// 06/25/09 AM.
 	}
 
-_t_ostream *x = parse->getCout();
+std::_t_ostream *x = parse->getCout();
 if (!x)
 	{
-	_t_strstream gerrStr;	// 06/25/09 AM.
-	gerrStr << _T("[vtcout: Error. No cout stream.]") << ends;	// 06/25/09 AM.
+	std::_t_strstream gerrStr;	// 06/25/09 AM.
+	gerrStr << _T("[vtcout: Error. No cout stream.]") << std::ends;	// 06/25/09 AM.
 	errOut(&gerrStr,false);	// 06/25/09 AM.
 	return 0;	// 06/25/09 AM.
 	}
