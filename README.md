@@ -121,9 +121,14 @@ mkdir build
 cd build
 ```
 
-### Build
+### Cmake
 ```
 cmake ..
+```
+
+### Build
+```
+cmake --build . --config Debug -- -m
 ```
 
 ## Windows
