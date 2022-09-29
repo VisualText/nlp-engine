@@ -43,11 +43,11 @@ const _TCHAR *STRNULL = _T("");	// PORT			// 03/08/00 AM.
 
 // 12/01/98 AM.	Trying a global output stream.
 // This way, output will be dynamically controlled.
-_t_ostream *gout = &_t_cout;			// Default is standard output.
+std::_t_ostream *gout = &std::_t_cout;			// Default is standard output.
 
 // 03/22/99 AM.	Global error stream.
 // This way, error output will be dynamically controlled.
-_t_ostream *gerr = &_t_cerr;			// Default is standard error.
+std::_t_ostream *gerr = &std::_t_cerr;			// Default is standard error.
 
 // Global debug output stream.											// 02/21/02 AM.
 //ostream *dbgout = 0;														// 08/26/02 AM.
@@ -71,9 +71,9 @@ extern char BOM_UTF8[];
 * SUBJ:	Set global output to a file.
 ********************************************/
 
-void fileOut(_TCHAR *fname, /*DU*/ _t_ofstream* &fout, _t_ostream* &sout)
+void fileOut(_TCHAR *fname, /*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout)
 {
-fout = new _t_ofstream(TCHAR2CA(fname), ios::out);
+fout = new std::_t_ofstream(TCHAR2CA(fname), std::ios::out);
 #ifdef UNICODE
 *fout << BOM_UTF8;
 #endif
@@ -83,9 +83,9 @@ gout = fout;				// Bind output to file.
 
 // VARIANT. Append eg to VisualText.log logfile.	// 05/14/13 AM.
 
-void fileApp(_TCHAR *fname, /*DU*/ _t_ofstream* &fout, _t_ostream* &sout)
+void fileApp(_TCHAR *fname, /*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout)
 {
-fout = new _t_ofstream(TCHAR2CA(fname), ios::app);
+fout = new std::_t_ofstream(TCHAR2CA(fname), std::ios::app);
 #ifdef UNICODE
 *fout << BOM_UTF8;
 #endif
@@ -95,10 +95,10 @@ gout = fout;				// Bind output to file.
 
 #ifdef _JUNKY_
 // VARIANT.	// TRYING SOMETHING HERE.	// 02/26/05 AM.
-void fileOut(_t_strstream *outStr, /*DU*/ _t_ofstream* &fout, _t_ostream* &sout)
+void fileOut(std::_t_strstream *outStr, /*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout)
 {
-//fout = new _t_ofstream(TCHAR2CA(fname), ios::out);
-//fout = new _t_ofstream(outStr->str().c_str, ios::out);
+//fout = new std::_t_ofstream(TCHAR2CA(fname), std::ios::out);
+//fout = new std::_t_ofstream(outStr->str().c_str, std::ios::out);
 sout = gout;				// Save current output stream.
 gout = fout;				// Bind output to file.
 }
@@ -110,10 +110,10 @@ gout = fout;				// Bind output to file.
 * SUBJ:	Reset global output.
 ********************************************/
 
-void resetOut(/*DU*/ _t_ofstream* &fout, _t_ostream* &sout)
+void resetOut(/*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout)
 {
 gout = sout;				// Restore current output stream.
-if (fout && fout != &_t_cout)	// 08/20/03 AM.
+if (fout && fout != &std::_t_cout)	// 08/20/03 AM.
 	delete fout;				// Done with file output stream.
 fout = 0;
 sout = 0;
@@ -126,9 +126,9 @@ sout = 0;
 * SUBJ:	Set global error output to a file.
 ********************************************/
 
-void fileErr(_TCHAR *fname, /*DU*/ _t_ofstream* &fout, _t_ostream* &sout)
+void fileErr(_TCHAR *fname, /*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout)
 {
-fout = new _t_ofstream(TCHAR2CA(fname), ios::out);
+fout = new std::_t_ofstream(TCHAR2CA(fname), std::ios::out);
 sout = gerr;				// Save current output stream.
 gerr = fout;				// Bind output to file.
 }
@@ -140,11 +140,11 @@ gerr = fout;				// Bind output to file.
 * SUBJ:	Reset global error output.
 ********************************************/
 
-void resetErr(/*DU*/ _t_ofstream* &fout, _t_ostream* &sout)
+void resetErr(/*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout)
 {
 gerr = sout;				// Restore current output stream.
 if (fout												// 06/16/02 AM.
- && fout != &_t_cerr)								// 08/20/03 AM.
+ && fout != &std::_t_cerr)								// 08/20/03 AM.
 	delete fout;			// Done with file output stream.
 fout = 0;
 sout = 0;
@@ -276,14 +276,14 @@ int webcoConfidence(long hits, long tot, double factor)
 double tmp = 0.0;
 int fin;
 
-//*fout << "hits=" << hits << " tot=" << tot << endl;
+//*fout << "hits=" << hits << " tot=" << tot << std::endl;
 tmp = (log(1.0 + factor * ((double)hits/((double)tot + 0.01))))
 //		* ((1.0 + (double)tot) / (3.0 + (double)tot))// Lower conf for small text.
 		* 100;									// Convert to percent.
 fin = (int) tmp;
 if (fin >= 100)		// Luke -- don't get cocky.
 	fin = 99;			// Besides, I don't want 3 columns.
-//*fout << "Confidence=" << fin << endl;
+//*fout << "Confidence=" << fin << std::endl;
 return fin;
 }
 
@@ -316,13 +316,13 @@ bool errOut(
 		<< passnum << _T(" ")	// Current analyzer pass.
 		<< linenum << _T(" ")		// Current line number in pat file.
 		<< Errbuf
-		<< endl;
+		<< std::endl;
 return retval;
 }
 
 // VARIANT.	For Unicode, and to remove global buffer.				// 02/25/05 AM.
 bool errOut(
-	_t_strstream *st,			// Error message to print.
+	std::_t_strstream *st,			// Error message to print.
 	bool retval,				// Value to return.
 	long passnum,
 	long linenum
@@ -332,7 +332,7 @@ bool errOut(
 		<< passnum << _T(" ")	// Current analyzer pass.
 		<< linenum << _T(" ")	// Current line number in pat file.
 		<< st->str()
-		<< endl;
+		<< std::endl;
 
 // Trying to get rid of Purify mem leak.	// 06/23/05 AM.
 // Not checked in unicode config.

@@ -1,5 +1,5 @@
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -7,7 +7,7 @@ All rights reserved.
 *
 *									UI.H
 *
-* FILE:	conch.¹/ui.h
+* FILE:	conch.ï¿½/ui.h
 * SUBJ:	Declarations for ui primitives.
 * CR:	10/15/95 AM.
 *
@@ -23,8 +23,8 @@ path_to_con(
 extern bool
 ui_read_con(
 	_TCHAR *prompt,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent,
 	CG *cg,																// 08/14/02 AM.
@@ -34,8 +34,8 @@ ui_read_con(
 extern bool
 ui_read_end(
 	_TCHAR *prompt,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent,
 	CG *cg																// 08/14/02 AM.
@@ -43,8 +43,8 @@ ui_read_end(
 extern bool
 ui_read_num(
 	_TCHAR *prompt,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent,
 	CG *cg,																// 08/14/02 AM.
@@ -54,8 +54,8 @@ ui_read_num(
 extern bool
 ui_read_pkind(
 	_TCHAR *prompt,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent,
 	CG *cg,																// 08/14/02 AM.
@@ -65,8 +65,8 @@ ui_read_pkind(
 extern bool
 ui_read_sym(
 	_TCHAR *prompt,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent,
 	CG *cg,																// 08/14/02 AM.
@@ -74,5 +74,5 @@ ui_read_sym(
 	SYM **sym
 	);
 extern bool ui_read_word(													// 05/30/02 AM.
-	_TCHAR*,_t_istream*,_t_ostream*,bool,bool,CG*,/*UP*/CON**);		// 05/30/02 AM.
+	_TCHAR*,std::_t_istream*,std::_t_ostream*,bool,bool,CG*,/*UP*/CON**);		// 05/30/02 AM.
 

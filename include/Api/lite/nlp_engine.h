@@ -50,7 +50,7 @@ class LITE_API NLP_ENGINE
 
 public:
 	NLP_ENGINE(
-        string workingFolder,
+        std::string workingFolder,
         bool silent=false
  	);
 
@@ -120,8 +120,8 @@ public:
 
     int analyze(
         _TCHAR *analyzer,
-        istringstream *iss,
-        ostringstream *oss,
+        std::istringstream *iss,
+        std::ostringstream *oss,
         bool develop=false,
         bool silent=false,
         bool compiled=false

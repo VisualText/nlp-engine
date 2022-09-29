@@ -661,12 +661,12 @@ public:
 		long ord2,
 		Tree<Pn> *collect,
 		Parse *parse,
-		_t_ostream *ostr
+		std::_t_ostream *ostr
 		);
 	static bool printr(														// 06/02/00 AM.
 		Node<Pn> *node1,
 		Node<Pn> *node2,
-		_t_ostream *ostr,
+		std::_t_ostream *ostr,
 		Nlppp *nlppp
 		);
 	static bool getr(													// 03/09/99 AM.

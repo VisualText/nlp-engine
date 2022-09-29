@@ -71,23 +71,23 @@ if (!safe_dir(infile))
 // Another way to check file existence also...
 if ((h_file = _tfindfirst(infile, &i_file)) == -1L)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Directory not found=") << infile << _T("]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Directory not found=") << infile << _T("]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
 else if (i_file.attrib & _A_SUBDIR)	// Check if a directory.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Removing from directory '") << infile << _T("']") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Removing from directory '") << infile << _T("']") << std::ends;
 	errOut(&gerrStr,false);
 
 	// Traverse the files of the directory, analyzing each.
 	_stprintf(buf, _T("%s\\*.*"), infile);
 	if ((h_file = _tfindfirst(buf, &i_tmp)) == -1L)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[No files in directory.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[No files in directory.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -95,36 +95,36 @@ else if (i_file.attrib & _A_SUBDIR)	// Check if a directory.
 		{
 		// Traverse.
 		// As usual, "." and ".." are files in every directory.
-		//*gerr << i_tmp.name << endl;					// First file.
+		//*gerr << i_tmp.name << std::endl;					// First file.
 		if (plain_file(i_tmp))
 			{
 			// Glom directory and file name.
 			_stprintf(buf, _T("%s\\%s"), infile, i_tmp.name);
-			_t_strstream gerrStr;
-			gerrStr << _T("Remove ") << buf << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("Remove ") << buf << std::ends;
 			errOut(&gerrStr,false);
 			remove_path(buf);
 			}
 		while (_tfindnext(h_file, &i_tmp) == 0)	// Rest of files.
 			{
-			//*gerr << i_tmp.name << endl;
+			//*gerr << i_tmp.name << std::endl;
 			if (plain_file(i_tmp))
 				{
 				// Glom directory and file name.
 				_stprintf(buf, _T("%s\\%s"), infile, i_tmp.name);
-				_t_strstream gerrStr;
-				gerrStr << _T("Remove ") << buf << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("Remove ") << buf << std::ends;
 				errOut(&gerrStr,false);
 				remove_path(buf);
 				}
 			}
-		//*gerr << "[Done with files in directory.]" << endl;
+		//*gerr << "[Done with files in directory.]" << std::endl;
 		}
 	}
 else
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("Removing file ") << infile << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Removing file ") << infile << std::ends;
 	errOut(&gerrStr,false);
 	remove_path(infile);
 	}
@@ -158,20 +158,20 @@ if (!safe_dir(infile))
 // Another way to check file existence also...
 if ((h_file = _tfindfirst(infile, &i_file)) == -1L)
 	{
-	//*gerr << "[File or directory not found=" << infile << "]" << endl;
+	//*gerr << "[File or directory not found=" << infile << "]" << std::endl;
 	}
 else if (i_file.attrib & _A_SUBDIR)	// Check if a directory.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Found directory=") << infile << _T("]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Found directory=") << infile << _T("]") << std::ends;
 	errOut(&gerrStr,false);
 
 	// Traverse the directories under the directory.
 	_stprintf(buf, _T("%s\\*.*"), infile);
 	if ((h_file = _tfindfirst(buf, &i_tmp)) == -1L)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[No files in directory.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[No files in directory.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -179,42 +179,42 @@ else if (i_file.attrib & _A_SUBDIR)	// Check if a directory.
 		{
 		// Traverse.
 		// As usual, "." and ".." are files in every directory.
-		//*gerr << i_tmp.name << endl;					// First file.
+		//*gerr << i_tmp.name << std::endl;					// First file.
 		if (is_dir(i_tmp))
 			{
 			// Glom directory and file name.
 			_stprintf(buf, _T("%s\\%s"), infile, i_tmp.name);
-			_t_strstream gerrStr;
-			gerrStr << _T("Removing ") << buf << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("Removing ") << buf << std::ends;
 			errOut(&gerrStr,false);
 			rm_path(buf, true);		// RECURSIVE.
 			}
 		while (_tfindnext(h_file, &i_tmp) == 0)	// Rest of files.
 			{
-			//*gerr << i_tmp.name << endl;
+			//*gerr << i_tmp.name << std::endl;
 			if (is_dir(i_tmp))
 				{
 				// Glom directory and file name.
 				_stprintf(buf, _T("%s\\%s"), infile, i_tmp.name);
-				_t_strstream gerrStr;
-				gerrStr << _T("Removing ") << buf << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("Removing ") << buf << std::ends;
 				errOut(&gerrStr,false);
 				rm_path(buf, true);	// RECURSIVE.
 				}
 			}
-		//*gerr << "[Done with directories under directory.]" << endl;
+		//*gerr << "[Done with directories under directory.]" << std::endl;
 		}
 
-	gerrStr << _T("Removing directory ") << infile << ends;
+	gerrStr << _T("Removing directory ") << infile << std::ends;
 	errOut(&gerrStr,false);
 	rm_dir(infile);
 	}
 else
 	{
-	//*gerr << "[Found single file.]" << endl;
+	//*gerr << "[Found single file.]" << std::endl;
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("Removing ") << infile << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Removing ") << infile << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -281,8 +281,8 @@ long h_file;
 // Another way to check file existence also...
 if ((h_file = _tfindfirst(name, &i_file)) == -1L)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[File or directory not found=") << name << _T("]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[File or directory not found=") << name << _T("]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -340,8 +340,8 @@ switch (*path)
 	case '>':
 	case '|':
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Unsafe filename: ") << path << _T("]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Unsafe filename: ") << path << _T("]") << std::ends;
 		return errOut(&gerrStr,false);	// Not allowing files that start this way.
 		}
 	default:
@@ -349,7 +349,7 @@ switch (*path)
 	}
 if (!strcmp_ni(path, _T("C:\\WIN"), 6)) // Don't want to go near these.
 	{
-	*gerr << _T("[Unsafe filename: ") << path << _T("]") << endl;
+	*gerr << _T("[Unsafe filename: ") << path << _T("]") << std::endl;
 	return false;
 	}
 #endif

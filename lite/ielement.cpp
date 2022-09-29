@@ -53,7 +53,7 @@ pairs_ = prs;
 attrs_ = attrs;					// 11/07/98 AM.
 line_	 = num;						// 08/08/01 AM.
 
-//*gout << "[Ielement: " << (long) this << "]" << endl;
+//*gout << "[Ielement: " << (long) this << "]" << std::endl;
 
 #ifndef STABLE_
 ++count_;
@@ -64,7 +64,7 @@ line_	 = num;						// 08/08/01 AM.
 
 Ielement::~Ielement()
 {
-//*gout << "[~Ielement: " << (long) this << "]" << endl;
+//*gout << "[~Ielement: " << (long) this << "]" << std::endl;
 
 Ielement::clear();			// 07/02/99 AM.
 
@@ -96,8 +96,8 @@ Ielement *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Ielement object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Ielement object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -112,7 +112,7 @@ return *this;
 /*******************************************/
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Ielement &element)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Ielement &element)
 {
 #ifndef UNICODE
 output << str(element.name_) << _T(" [");
@@ -130,7 +130,7 @@ output << _T("]");
 return output;
 }
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Dlist<Ielement> &list)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Dlist<Ielement> &list)
 {
 Delt<Ielement> *delt;
 Ielement *elt;
@@ -215,14 +215,14 @@ int Ielement::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Ielement::prettyCount(_t_ofstream *ofstr)
+void Ielement::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Ielement count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Ielement count=") << count_ << ends;
+		*ofstr << _T("Active Ielement count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Ielement count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }

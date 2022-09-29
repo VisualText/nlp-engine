@@ -44,7 +44,7 @@ All rights reserved.
 
 class Stab
 {
-	friend _t_ostream &operator<<(_t_ostream &, Stab &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Stab &);
 
 public:
 	Stab();								// Default constructor.
@@ -92,7 +92,7 @@ protected:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif

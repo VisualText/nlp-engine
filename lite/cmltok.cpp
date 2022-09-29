@@ -187,8 +187,8 @@ while (*fmptr_)	// While there's input buffer.
 
 	if (!ok)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[CMLTokenize: Unhandled format.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[CMLTokenize: Unhandled format.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -208,14 +208,14 @@ if (!parse)
 	return false;
 
 if (parse->Verbose())
-	*gout << _T("[CMLTokenize:]") << endl;
+	*gout << _T("[CMLTokenize:]") << std::endl;
 
 text_ = parse->text;
 
 if (!parse->text)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[CMLTokenize: Given no text.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[CMLTokenize: Given no text.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -223,8 +223,8 @@ tree_ = (Tree<Pn> *)parse->getTree();
 
 if (tree_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[CMLTokenize: Parse tree exists. Ignoring CML tokenization pass.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[CMLTokenize: Parse tree exists. Ignoring CML tokenization pass.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
@@ -277,8 +277,8 @@ parse->setTree(tree_);								// Update global data.
 
 if (!tree_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[CMLTokenize: Could not create parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[CMLTokenize: Could not create parse tree.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -287,8 +287,8 @@ root_ = tree_->getRoot();	// FETCH PARSE TREE ROOT.
 
 if (!root_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[CMLTokenize: No parse tree root.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[CMLTokenize: No parse tree root.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -333,7 +333,7 @@ if (root_)
 
 if (parse_->getEana()->getFlogfiles())
 	{
-	//*gout << "[Tokenize: Dumping parse tree.]" << endl;
+	//*gout << "[Tokenize: Dumping parse tree.]" << std::endl;
 	tree_->Traverse(root_, *gout);
 	}
 
@@ -361,18 +361,18 @@ std::_Ios_Openmode modes;
 int modes = 0;
 #endif
 
-modes |= ios::app;
+modes |= std::ios::app;
 
 _TCHAR fname[MAXSTR];
 _stprintf(fname, _T("%s%cretext.txt"), parse_->getOutdir(),DIR_CH);
-_t_ostream *ostr = new _t_ofstream(TCHAR2CA(fname), modes);
+std::_t_ostream *ostr = new std::_t_ofstream(TCHAR2CA(fname), modes);
 
 if (!ostr)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[CML Tokenizer: Couldn't create RETEXT.TXT file.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[CML Tokenizer: Couldn't create RETEXT.TXT file.]") << std::ends;
 	errOut(&gerrStr,false);
-	gerrStr << _T("[file=") << str << _T("]") << ends;
+	gerrStr << _T("[file=") << str << _T("]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;	// Let it go.
 	}
@@ -382,7 +382,7 @@ _TCHAR *ptr = text_ - 1;	// Minus 1 for convenient looping.
 _TCHAR ch;
 while ((ch = *++ptr))
 	*ostr << ch;
-*ostr << flush;
+*ostr << std::flush;
 
 // Close the file.
 delete ostr;
@@ -786,8 +786,8 @@ if (_istspace(*fmptr_))
 	if (!bad_)
 		{
 		bad_ = true;
-		_t_strstream gerrStr;
-		gerrStr << _T("[Non-ASCII chars in file.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Non-ASCII chars in file.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -974,8 +974,8 @@ if (!str_to_long(buf_,pagenum))
 // Todo: Can check that page number is one more than previous.
 if (P_ + 1 != pagenum)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[CML Tokenize: Error in CML page numbering.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[CML Tokenize: Error in CML page numbering.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -1582,8 +1582,8 @@ Sym *CMLTok::internTok(
 {
 if (empty(str) || len <= 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[internTok: Given bad string or length.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[internTok: Given bad string or length.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -1591,8 +1591,8 @@ if (empty(str) || len <= 0)
 // If token too long, truncate.	// FIX.
 if (len >= MAXSTR)					// FIX.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Intern Token: Too long -- truncating.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Intern Token: Too long -- truncating.]") << std::ends;
 	errOut(&gerrStr,false);
 	len = MAXSTR - 1;	// Recover.	// FIX.
 	}
@@ -1602,8 +1602,8 @@ Sym *sym;
 //if (!(sym = htab->hsym(str, len)))	
 if (!(sym = htab->hsym_kb(str, len,/*UP*/lcstr)))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Intern Token: Failed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Intern Token: Failed.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}

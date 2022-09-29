@@ -72,7 +72,7 @@ void sym_gen(
 	CG *cg
 	)
 {
-_t_ofstream *fp;
+std::_t_ofstream *fp;
 int ii;
 int segs_tot, seg_curr;
 long seg_size;
@@ -99,7 +99,7 @@ for (ii = 0; ii <= seg_curr; ii++)
    _stprintf(s_nam, _T("%s%s%s.cpp%s"), dir, DIR_SEP, s_tab, tail);
    //if (!file_open(s_nam, "w", &fp))
    //   return;
-	fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+	fp = new std::_t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
 
    gen_file_head(fp);
    consh_gen_includes(fp);
@@ -146,7 +146,7 @@ for (ii = seg_curr + 1; ii < segs_tot; ii++)
    _stprintf(s_nam, _T("%s%s%s.cpp"), dir, DIR_SEP, s_tab);
    //if (!file_open(s_nam, "w", &fp))
    //   return;
-	fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+	fp = new std::_t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
 
    gen_file_head(fp);
    consh_gen_includes(fp);
@@ -172,7 +172,7 @@ void sym_gen_hdr(
 	CG *cg
 	)
 {
-_t_ofstream *fp;
+std::_t_ofstream *fp;
 int ii;
 _TCHAR s_nam[PATH],	/* Name of sym table hdr file.		*/
      s_tab[16];		/* Name of sym table array.			*/
@@ -182,11 +182,11 @@ segs_tot = cg->asym_->sym_segs_tot();
 _stprintf(s_nam, _T("%s%s%s_ini.h%s"), dir, DIR_SEP, consh_SYM_BASE, tail);
 //if (!file_open(s_nam, "w", &fp))
 //   return;
-fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+fp = new std::_t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
 
 gen_file_head(fp);
 
-*fp << _T("extern bool cc_sym_ini(void*);\n") << endl;					// 08/15/02 AM.
+*fp << _T("extern bool cc_sym_ini(void*);\n") << std::endl;					// 08/15/02 AM.
 
 for (ii = 0; ii < segs_tot; ii++)
    {
@@ -214,7 +214,7 @@ void sym_gen_ini(
 	CG *cg
 	)
 {
-_t_ofstream *fp;
+std::_t_ofstream *fp;
 int ii;
 _TCHAR s_nam[PATH];	/* Name of sym table hdr file.		*/
 //char s_tab[16];		/* Name of sym table array.			*/
@@ -231,50 +231,50 @@ tsize		= cg->asym_->sym_seg_size();
 _stprintf(s_nam, _T("%s%s%s_ini.cpp"), dir, DIR_SEP, tbase);
 //if (!file_open(s_nam, "w", &fp))
 //   return;
-fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+fp = new std::_t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
 
 gen_file_head(fp);
 
 consh_gen_includes(fp);
-*fp << _T("\nbool cc_sym_ini(void *xcg)") << endl;						// 08/15/02 AM.
-*fp << _T("{") << endl;
-*fp << _T("CG *cg = (CG *) xcg;") << endl;									// 08/15/02 AM.
-*fp << _T("SYM **segs;\n") << endl;
-*fp << _T("segs = cg->asym_->sym_seg_table();") << endl;				// 08/15/02 AM.
+*fp << _T("\nbool cc_sym_ini(void *xcg)") << std::endl;						// 08/15/02 AM.
+*fp << _T("{") << std::endl;
+*fp << _T("CG *cg = (CG *) xcg;") << std::endl;									// 08/15/02 AM.
+*fp << _T("SYM **segs;\n") << std::endl;
+*fp << _T("segs = cg->asym_->sym_seg_table();") << std::endl;				// 08/15/02 AM.
 
 for (ii = 0; ii < segs_tot; ii++)
    *fp << _T("segs[") << ii << _T("] = &(")
 		 << tbase << ii << _T("[0]);")
-		 << endl;
+		 << std::endl;
 
-*fp << _T("bool ok = cg->asym_->sym_hard_ini(") << endl;				// 08/16/02 AM.
-*fp << _T("   (long) ") << tsize << _T(",\t// sym seg size") << endl;
+*fp << _T("bool ok = cg->asym_->sym_hard_ini(") << std::endl;				// 08/16/02 AM.
+*fp << _T("   (long) ") << tsize << _T(",\t// sym seg size") << std::endl;
 *fp << _T("   (long) ")
 	 << cg->asym_->sym_hash_size() << _T(",\t// sym hash size")
-	 << endl;
+	 << std::endl;
 *fp << _T("   (int) ")
 	 << cg->asym_->sym_hash_tot() << _T(",\t// sym hash tot")
-	 << endl;
+	 << std::endl;
 
 // Total hard-coded segments == total segments in sym table.	// 02/16/01 AM.
-*fp << _T("   (int) ") << segs_tot << _T(",\t// hard segs tot") << endl; // 02/16/01 AM.
+*fp << _T("   (int) ") << segs_tot << _T(",\t// hard segs tot") << std::endl; // 02/16/01 AM.
 
-*fp << _T("   (int) ") << segs_tot << _T(",\t// sym segs tot") << endl;
-*fp << _T("   (int) ") << tcurr << _T(",\t// sym seg curr") << endl;
+*fp << _T("   (int) ") << segs_tot << _T(",\t// sym segs tot") << std::endl;
+*fp << _T("   (int) ") << tcurr << _T(",\t// sym seg curr") << std::endl;
 if (toff >= 0)									/* Table not empty. */
    *fp << _T("   &(")
 		 << tbase << tcurr
 		 << _T("[") << toff << _T("])\t// sym seg p")
-		 << endl;
+		 << std::endl;
 else											/* Table empty.		*/
    *fp << _T("   &(")
 		 << tbase << tcurr
 		 << _T("[0]) - 1\t// sym seg p")
-		 << endl;
+		 << std::endl;
 
-*fp << _T("   );") << endl;
-*fp << _T("return ok;") << endl;												// 05/05/01 AM.
-*fp << _T("}") << endl;
+*fp << _T("   );") << std::endl;
+*fp << _T("return ok;") << std::endl;												// 05/05/01 AM.
+*fp << _T("}") << std::endl;
 
 //if (!file_close(s_nam, fp))
 //   return;
@@ -293,7 +293,7 @@ delete fp;
 void
 sym_gen_struct(
 	SYM *pseg,
-	_t_ofstream *fp,
+	std::_t_ofstream *fp,
 	CG *cg
 	)
 {
@@ -308,9 +308,9 @@ if (pseg->str)
       _stprintf(st_x, _T("&(%s%d[%ld])"), consh_ST_BASE, tseg, toff);
    else
       {
-      _t_cerr << _T("[sym_gen: Kb error for str=")
+      std::_t_cerr << _T("[sym_gen: Kb error for str=")
 			  << pseg->str << _T(".]")
-			  << endl;
+			  << std::endl;
       _stprintf(st_x, _T("cNULL"));
       }
 

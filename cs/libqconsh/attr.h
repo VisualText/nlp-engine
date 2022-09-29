@@ -21,7 +21,6 @@ All rights reserved.
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
-using namespace std;
 #endif
 
 // Forward reference.

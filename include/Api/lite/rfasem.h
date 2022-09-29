@@ -125,7 +125,7 @@ class Ifunc;							// 12/19/01 AM.
 
 class LITE_API RFASem : public Sem
 {
-	friend _t_ostream &operator<<(_t_ostream &, RFASem &);	// 11/09/99 AM.
+	friend std::_t_ostream &operator<<(std::_t_ostream &, RFASem &);	// 11/09/99 AM.
 
 public:
 	// If any of these become ambiguous, then add a type argument.
@@ -152,7 +152,7 @@ public:
 	RFASem(_TCHAR *, enum RFASemtype = RSNAME);	// 11/20/98 AM.
 	RFASem(long);										// 11/10/99 AM. !
 	RFASem(float);										// 08/16/01 AM.
-	RFASem(_t_ostream *);								// 12/31/99 AM.
+	RFASem(std::_t_ostream *);								// 12/31/99 AM.
 	RFASem(Ifunc*);									// 12/19/01 AM.
 
 	// NLP++ Semantics.								// 11/09/99 AM.
@@ -201,7 +201,7 @@ public:
 	_TCHAR *getNum();									// 11/21/98 AM.
 	long  getLong();									// 11/10/99 AM.
 	float getFloat();									// 08/16/01 AM.
-	_t_ostream *getOstream();							// 12/31/99 AM.
+	std::_t_ostream *getOstream();							// 12/31/99 AM.
 
 	// NLP++ Semantics.								// 11/09/99 AM.
 	Slist<Istmt> *getStmts();						// 11/11/99 AM.
@@ -249,7 +249,7 @@ public:
 	void setNum(_TCHAR *);								// 11/21/98 AM.
 	void setLong(long);								// 11/10/99 AM. !
 	void setFloat(float);							// 08/16/01 AM.
-	void setOstream(_t_ostream *);					// 12/31/99 AM.
+	void setOstream(std::_t_ostream *);					// 12/31/99 AM.
 
 	// NLP++ Semantics.								// 11/09/99 AM.
 	void setStmts(Slist<Istmt> *);				// 11/11/99 AM.
@@ -274,7 +274,7 @@ public:
 
 	bool genEval(Gen *,bool = false);									// 05/06/00 AM.
 	bool truth();																// 05/26/00 AM.
-	_t_ostream *out(_t_ostream *ostr);											// 05/26/00 AM.
+	std::_t_ostream *out(std::_t_ostream *ostr);											// 05/26/00 AM.
 
 	// Use this to fill Sem object from parse tree and rule match data.
 	virtual void Fill();
@@ -361,7 +361,7 @@ private:
 		float float_;														// 08/16/01 AM.
 
 		// 12/31/99 AM. For output operator in NLP++.
-		_t_ostream *ostr_;													// 12/31/99 AM.
+		std::_t_ostream *ostr_;													// 12/31/99 AM.
 
 		// 11/15/99 AM.
 		// For handling multiple values, eg, as stored in code variables.

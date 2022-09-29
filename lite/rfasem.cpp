@@ -69,7 +69,7 @@ RFASem::RFASem(Iaction		  *x) : Sem() {val_.action_  = x; type_ = RSACTION;}
 RFASem::RFASem(Ipre			  *x)	: Sem() {val_.pre_	  = x; type_ = RSPRE;   }
 RFASem::RFASem(long			   x)	: Sem() {val_.long_	  = x; type_ = RSLONG;	}
 RFASem::RFASem(float				x) : Sem() {val_.float_	  = x; type_ = RSFLOAT; }
-RFASem::RFASem(_t_ostream		  *x) : Sem() {val_.ostr_	  = x; type_ = RSOSTREAM;}
+RFASem::RFASem(std::_t_ostream		  *x) : Sem() {val_.ostr_	  = x; type_ = RSOSTREAM;}
 RFASem::RFASem(Ifunc			  *x) : Sem() {val_.func_	  = x; type_ = RSFUNC;}
 
 RFASem::RFASem(Dlist<Iarg>   *x,
@@ -139,8 +139,8 @@ switch (type_)
 		break;
 	case RSGLOBAL:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Pass file globals not implemented yet.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Pass file globals not implemented yet.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 		break;
@@ -274,8 +274,8 @@ switch (type_)
 	case RSNULL:
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Unknown RFA semantic type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Unknown RFA semantic type.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 		break;
@@ -332,7 +332,7 @@ return dest;
 
 /////// 11/09/99 AM.
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, RFASem &sem)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, RFASem &sem)
 {
 // Only handling expression types for now.		// 11/09/99 AM.
 #ifdef UNICODE
@@ -422,7 +422,7 @@ _TCHAR					*RFASem::getName()		{return val_.name_;   }
 _TCHAR					*RFASem::getNum()			{return val_.name_;	 }
 long					 RFASem::getLong()		{return val_.long_;	 }
 float					 RFASem::getFloat()		{return val_.float_;	 }
-_t_ostream				*RFASem::getOstream()	{return val_.ostr_;	 }
+std::_t_ostream				*RFASem::getOstream()	{return val_.ostr_;	 }
 Ifunc					*RFASem::getFunc()		{return val_.func_;	 }
 
 //////  NLP++ SEMANTICS
@@ -472,7 +472,7 @@ void RFASem::setName(_TCHAR					*x)	{val_.name_   = x; }
 void RFASem::setNum(_TCHAR					*x)	{val_.name_   = x; }
 void RFASem::setLong(long					 x)	{val_.long_	  = x; }
 void RFASem::setFloat(float				 x)	{val_.float_  = x; }
-void RFASem::setOstream(_t_ostream			*x)	{val_.ostr_	  = x; }
+void RFASem::setOstream(std::_t_ostream			*x)	{val_.ostr_	  = x; }
 
 ///////// NLP++ SEMANTICS.
 void RFASem::setStmts(Slist<Istmt> *x)	{val_.stmts_	= x;}
@@ -628,8 +628,8 @@ switch (type_)
 
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA semantic type not used in NLP++.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA semantic type not used in NLP++.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -648,8 +648,8 @@ bool RFASem::genEval(Gen *gen,
 	)
 {
 _TCHAR *indent = gen->indent_;
-//_t_ofstream *fcode = gen->fcode_;
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+//std::_t_ofstream *fcode = gen->fcode_;
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 _TCHAR buff[MAXSTR+1];
 bool ok = false;
 long num=0;																		// 03/13/02 AM.
@@ -709,7 +709,7 @@ switch (type_)
 	case RSOP:
 		//if (val_.op_)
 		//	return val_.op_->genEval(gen);
-		*fcode << _T("\n// CAN'T EVAL OP.") << endl;
+		*fcode << _T("\n// CAN'T EVAL OP.") << std::endl;
 		return false;
 		break;
 	case RSFUNC:																// 12/19/01 AM.
@@ -739,9 +739,9 @@ switch (type_)
 
 	default:
 		{
-		*fcode << endl << _T("// [RFA semantic type not used in NLP++.]") << endl;
-		_t_strstream gerrStr;
-		gerrStr << _T("[RFA semantic type not used in NLP++.]") << ends;
+		*fcode << std::endl << _T("// [RFA semantic type not used in NLP++.]") << std::endl;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA semantic type not used in NLP++.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -788,8 +788,8 @@ switch (type_)
 		return false;															// 03/22/02 AM.
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[truth: Bad runtime semantic type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[truth: Bad runtime semantic type.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	}
@@ -803,7 +803,7 @@ switch (type_)
 * NOTE:	To support compiled runtime analyzers.
 *********************************************/
 
-_t_ostream *RFASem::out(_t_ostream *ostr)
+std::_t_ostream *RFASem::out(std::_t_ostream *ostr)
 {
 switch(type_)
 	{
@@ -823,8 +823,8 @@ switch(type_)
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: out: Bad sem object type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: out: Bad sem object type.]") << std::ends;
 		errOut(&gerrStr,false);
 		return 0;
 		}
@@ -937,16 +937,16 @@ switch (type_)
 		break;
 	case RSARGS:																// 08/08/02 AM.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Error: Can't get string from multivalued var.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error: Can't get string from multivalued var.]") << std::ends;
 		errOut(&gerrStr,false);
 		return 0;
 		}
 	default:
 		break;
 	}
-_t_strstream gerrStr;
-gerrStr << _T("[Error: Bad sem type in sem_to_str]") << ends;
+std::_t_strstream gerrStr;
+gerrStr << _T("[Error: Bad sem type in sem_to_str]") << std::ends;
 errOut(&gerrStr,false);
 return 0;
 }

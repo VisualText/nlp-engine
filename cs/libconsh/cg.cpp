@@ -86,23 +86,23 @@ if (appdir && *appdir)
 	_tcscpy(appdir_, appdir);
 else
 	{
-	_t_cerr << _T("[CG: No app dir given.]") << endl;
+	std::_t_cerr << _T("[CG: No app dir given.]") << std::endl;
 	return;
 	}
 if (!appdir_ || !*appdir_)			// CONFIRM.							// 05/07/01 AM.
 	{
-	_t_cerr << _T("[CG: BAD APPDIR]") << endl;									// 05/07/01 AM.
+	std::_t_cerr << _T("[CG: BAD APPDIR]") << std::endl;									// 05/07/01 AM.
 	return;																		// 05/07/01 AM.
 	}
 
 if (!alist)																		// 08/14/02 AM.
 	{
-	_t_cerr << _T("[List manager needed for CG object.]") << endl;		// 08/14/02 AM.
+	std::_t_cerr << _T("[List manager needed for CG object.]") << std::endl;		// 08/14/02 AM.
 	return;																		// 08/14/02 AM.
 	}
 alist_ = alist;																// 08/14/02 AM.
 
-//cerr << "[CG got appdir=" << appdir_ << "]" << endl;			// 02/19/02 AM.
+//cerr << "[CG got appdir=" << appdir_ << "]" << std::endl;			// 02/19/02 AM.
 
 // DIVERT GLOBAL ERROR STREAM TO LOG FILE.							// 09/16/99 AM.
 // Commented out. // 04/04/01 AM.
@@ -123,7 +123,7 @@ if (count_ == 0)																// 08/22/02 AM.
 else																				// 08/22/02 AM.
 	{
 	*cgerr << _T("[Starting up KB number ") << (count_ + 1)			// 08/22/02 AM.
-		<< _T("]") << endl;														// 08/22/02 AM.
+		<< _T("]") << std::endl;														// 08/22/02 AM.
 	}
 
 kbm_ = 0;
@@ -167,7 +167,7 @@ _TCHAR *fname = _T("kbu");										// kbu.dll		// 01/17/06 AM.
 #ifdef EMBEDED_KB
 if (compiled)																	// 04/27/01 AM.
 	{
-	*cgerr << _T("[CG: Trying to load compiled KB.]") << endl;		// 02/19/02 AM.
+	*cgerr << _T("[CG: Trying to load compiled KB.]") << std::endl;		// 02/19/02 AM.
 	_TCHAR bin[MAXSTR];		// The real file in bin directory.		// 05/06/01 AM.
 #ifndef LINUX
 	_stprintf(bin, _T("%s%cbin%c%s.dll"),									// 05/06/01 AM.
@@ -179,7 +179,7 @@ if (compiled)																	// 04/27/01 AM.
 				appdir,DIR_CH,
 				DIR_CH,
 				fname);																// 01/21/06 AM.
-			*cgerr << _T("[Compiled kb=") << bin << _T("]") << endl;			// 02/19/02 AM.
+			*cgerr << _T("[Compiled kb=") << bin << _T("]") << std::endl;			// 02/19/02 AM.
 #endif
 
 // 02/19/19 AM.
@@ -195,28 +195,28 @@ if (compiled)																	// 04/27/01 AM.
 	// CHECK IF NEW LIB FILE EXISTS.										// 05/06/01 AM.
 	if (f_exists(buf))														// 05/06/01 AM.
 		{
-		*cgerr << _T("[Found updated KB library.]") << endl;			// 02/19/02 AM.
+		*cgerr << _T("[Found updated KB library.]") << std::endl;			// 02/19/02 AM.
 		_TCHAR cmd[MAXSTR*2];													// 05/06/01 AM.
 		// Delete the current kb.dll file, if in bin directory.	// 05/06/01 AM.
 		if (f_exists(bin))													// 05/06/01 AM.
 			{
-			*cgerr << _T("[Deleting old kb library.]") << endl;			// 02/19/02 AM.
+			*cgerr << _T("[Deleting old kb library.]") << std::endl;			// 02/19/02 AM.
 			_stprintf(cmd, _T("del /F /Q %s"), bin);							// 05/06/01 AM.
 			if (_tsystem(cmd) < 0)												// 05/06/01 AM.
 				{
 				*cgerr << _T("[Error. Can't delete kb library.]")		// 05/06/01 AM.
-						 << endl;
+						 << std::endl;
 				goto interp;	// Recover.									// 05/06/01 AM.
 				}
 			}
 
 		// Move from the project to the bin directory.				// 05/06/01 AM.
-		*cgerr << _T("[Moving new KB library into place.]") << endl;	// 02/19/02 AM.
+		*cgerr << _T("[Moving new KB library into place.]") << std::endl;	// 02/19/02 AM.
 		_stprintf(cmd, _T("move %s %s"), buf, bin);							// 05/06/01 AM.
 		if (_tsystem(cmd) < 0)													// 05/06/01 AM.
 			{
 			*cgerr << _T("[Error. Can't move kb library.]")				// 05/06/01 AM.
-					 << endl;
+					 << std::endl;
 			goto interp;		// Recover.									// 05/06/01 AM.
 			}
 		}
@@ -232,14 +232,14 @@ if (compiled)																	// 04/27/01 AM.
 		*cgerr << _T("[Error. No compiled kb for ")						// 05/06/01 AM.
 			<< fname
 			<< _T(".dll .]")
-			<< endl;
+			<< std::endl;
 		loaded = false;														// 05/06/01 AM.
 		goto interp;															// 05/06/01 AM.
 		}
 // ASSUME COMPILED KB.	// 02/19/19 AM.
 #endif
 
-	*cgerr << _T("[Loading compiled kb: ") << bin << _T("]") << endl;			// 05/06/01 AM.
+	*cgerr << _T("[Loading compiled kb: ") << bin << _T("]") << std::endl;			// 05/06/01 AM.
 #ifndef LINUX
 	hkbdll_ = load_dll(bin);												// 05/06/01 AM.
 	if (hkbdll_)
@@ -247,7 +247,7 @@ if (compiled)																	// 04/27/01 AM.
    if (true)	// 11/13/06 AM.
 #endif
 		{
-		*cgerr << _T("[Loaded compiled kb library]") << endl;			// 02/19/02 AM.
+		*cgerr << _T("[Loaded compiled kb library]") << std::endl;			// 02/19/02 AM.
 		loaded = true;
 		// NEED TO BIND VARIABLES & WHATEVER ELSE IS NEEDED TO
 		// GET THIS KB UP.
@@ -259,14 +259,14 @@ if (compiled)																	// 04/27/01 AM.
 #endif
 			{
 			loaded = false;													// 05/07/01 AM.
-			_t_cerr << _T("[Error in calling kb library.]") << endl;		// 05/07/01 AM.
-			*cgerr << _T("[Error in calling kb library.]") << endl;	// 05/07/01 AM.
+			std::_t_cerr << _T("[Error in calling kb library.]") << std::endl;		// 05/07/01 AM.
+			*cgerr << _T("[Error in calling kb library.]") << std::endl;	// 05/07/01 AM.
 			goto interp;														// 05/07/01 AM.
 			}
 		cg_CONCEPT = 1;		// BIND ROOT OF KB.						// 06/29/00 AM.
 		if (!bind_all(this))
 			{
-			*cgerr << _T("[Couldn't bind vars to compiled kb.]") << endl;
+			*cgerr << _T("[Couldn't bind vars to compiled kb.]") << std::endl;
 			loaded = false;
 #ifndef LINUX
 			unload_dll(hkbdll_);
@@ -275,8 +275,8 @@ if (compiled)																	// 04/27/01 AM.
 		}
 	else																			// 05/07/01 AM.
 		{
-		_t_cerr << _T("[Error. Failed to load KB library.]") << endl;	// 05/07/01 AM.
-		*cgerr << _T("[Error. Failed to load KB library.]") << endl;	// 02/19/02 AM.
+		std::_t_cerr << _T("[Error. Failed to load KB library.]") << std::endl;	// 05/07/01 AM.
+		*cgerr << _T("[Error. Failed to load KB library.]") << std::endl;	// 02/19/02 AM.
 		}
 interp:																			// 05/06/01 AM.
 	;		// Empty statement for the label :-)						// 05/06/01 AM.
@@ -287,10 +287,10 @@ interp:																			// 05/06/01 AM.
 // THIS IS THE HARD-WIRED INITIALIZATION OF AN EMPTY KB.
 if (!loaded)		// No kb.dll file was loaded.						// 06/29/00 AM.
 	{
-	*cgerr << _T("[Loading interpreted kb.]") << endl;					// 07/25/00 AM.
-//	cerr << "[Loading interpreted kb.]" << endl;						// 05/07/01 AM.
+	*cgerr << _T("[Loading interpreted kb.]") << std::endl;					// 07/25/00 AM.
+//	cerr << "[Loading interpreted kb.]" << std::endl;						// 05/07/01 AM.
 	if (!consh_ini(this))													// 08/15/02 AM.
-		*cgerr << _T("[ERROR INITIALIZING KB.]") << endl;				// 05/05/01 AM.
+		*cgerr << _T("[ERROR INITIALIZING KB.]") << std::endl;				// 05/05/01 AM.
 	}
 // Now the KB user must hand it a List Manager.						// 08/14/02 AM.
 //else										// FIX.	// 09/17/01 DD.	// 08/14/02 AM.
@@ -324,7 +324,7 @@ if (count_ == 1)																// 08/22/02 AM.
 //	cgresetErr(ferr_, serr_);												// 09/16/99 AM.
 	cgresetErr();																// 07/18/03 AM.
 else
-	*cgerr << _T("[Closing KB number ") << count_ << _T("]") << endl;	// 08/22/02 AM.
+	*cgerr << _T("[Closing KB number ") << count_ << _T("]") << std::endl;	// 08/22/02 AM.
 
 #ifndef LINUX
 // FREE UP COMPILED KB, IF ANY.											// 06/29/00 AM.
@@ -404,7 +404,7 @@ int CG::getCount() { return count_; }
 void CG::prettyCount()
 {
 if (count_)
-	_t_cout << _T("Active CG count=") << count_ << endl;
+	std::_t_cout << _T("Active CG count=") << count_ << std::endl;
 }
 #endif
 
@@ -425,13 +425,13 @@ if (count_)
 
 bool CG::writeKB(_TCHAR *dir)
 {
-*cgerr << _T("[In writeKB]") << endl;
+*cgerr << _T("[In writeKB]") << std::endl;
 clock_t s_time, e_time;										// 10/20/99 AM.
 s_time = clock();												// 10/20/99 AM.
 
 if (!dir || !*dir)
 	{
-	*cgerr << _T("[writeKB: Given no output directory.]") << endl;
+	*cgerr << _T("[writeKB: Given no output directory.]") << std::endl;
 	return false;
 	}
 
@@ -441,14 +441,14 @@ if (!dir || !*dir)
 CONCEPT *root;
 if (!(root = findRoot()))
 	{
-	*cgerr << _T("[writeKB: No root of concept hierarchy.]") << endl;
+	*cgerr << _T("[writeKB: No root of concept hierarchy.]") << std::endl;
 	return false;
 	}
 
 // TRAP A BAD KB WRITE!!!								// 10/20/99 AM.
 if (!findConcept(root, _T("gram")))						// 10/20/99 AM.
 	{
-	*cgerr << _T("[writeKB: No GRAM concept in hierarchy.]") << endl;
+	*cgerr << _T("[writeKB: No GRAM concept in hierarchy.]") << std::endl;
 	return false;
 	}
 
@@ -456,7 +456,7 @@ if (!findConcept(root, _T("gram")))						// 10/20/99 AM.
 _TCHAR *kbdir = _T("kb");
 _TCHAR path[MAXPATH];
 _stprintf(path, _T("%s%c%s%c%s"), getAppdir(), DIR_CH, kbdir, DIR_CH, dir);
-*cgerr << _T("[writeKB: path=") << path << _T("]") << endl;				// 02/19/02 AM.
+*cgerr << _T("[writeKB: path=") << path << _T("]") << std::endl;				// 02/19/02 AM.
 
 // If directory doesn't exist, create it.
 make_dir(path);	// 05/06/99 AM.
@@ -475,20 +475,20 @@ _stprintf(o_word, _T("%s%cword.%s"), path, DIR_CH, suff);
 _stprintf(o_phr,  _T("%s%cphr.%s"),  path, DIR_CH, suff);
 
 // Open the files for output.
-_t_ofstream f_hier(TCHAR2A(o_hier));
-_t_ofstream f_word(TCHAR2A(o_word));
-_t_ofstream f_phr(TCHAR2A(o_phr));
+std::_t_ofstream f_hier(TCHAR2A(o_hier));
+std::_t_ofstream f_word(TCHAR2A(o_word));
+std::_t_ofstream f_phr(TCHAR2A(o_phr));
 
 // May open multiples of these as needed.								// 07/01/03 AM.
 long n_attr = 1;	// Count attr#.kb files.							// 07/01/03 AM.
 long c_attr = 0;	// Count of attributes.								// 07/01/03 AM.
 _stprintf(o_attr, _T("%s%cattr%ld.%s"),path,DIR_CH,n_attr,suff);		// 07/01/03 AM.
-_t_ofstream *f_attr = new _t_ofstream(TCHAR2A(o_attr));								// 07/01/03 AM.
+std::_t_ofstream *f_attr = new std::_t_ofstream(TCHAR2A(o_attr));								// 07/01/03 AM.
 
 // KB BOOTSTRAP COMMANDS. (Axiomatics)									// 08/06/01 AM.
 // (Moved out of writeTree).												// 08/06/01 AM.
-f_hier << _T("add empty") << endl;											// 08/06/01 AM.
-f_hier << _T("add root") << endl;												// 08/06/01 AM.
+f_hier << _T("add empty") << std::endl;											// 08/06/01 AM.
+f_hier << _T("add root") << std::endl;												// 08/06/01 AM.
 
 // Traverse the concept hierarchy.  Write out the goodies.
 if (!writeTree(root, true, f_hier,f_word,f_phr, _T(""),
@@ -499,12 +499,12 @@ if (!writeTree(root, true, f_hier,f_word,f_phr, _T(""),
 	}
 
 // Terminate the command files.			// 05/02/99 AM.
-f_hier << endl << _T("quit") << endl << endl;
-f_word << endl << _T("quit") << endl << endl;
-f_phr  << endl << _T("quit") << endl << endl;
+f_hier << std::endl << _T("quit") << std::endl << std::endl;
+f_word << std::endl << _T("quit") << std::endl << std::endl;
+f_phr  << std::endl << _T("quit") << std::endl << std::endl;
 
 // Shut down the last attr kb file.										// 07/01/03 AM.
-*f_attr << endl << _T("quit") << endl << endl;							// 07/01/03 AM.
+*f_attr << std::endl << _T("quit") << std::endl << std::endl;							// 07/01/03 AM.
 delete f_attr;																	// 07/01/03 AM.
 f_attr = 0;																		// 07/01/03 AM.
 
@@ -514,7 +514,7 @@ writeKBmain(n_attr,path,suff);							// 07/01/03 AM.
 e_time = clock();												// 10/20/99 AM.
 *cgerr << _T("[WRITE KB time=")								// 10/20/99 AM.
 	  << (double) (e_time - s_time)/CLOCKS_PER_SEC	// 10/20/99 AM.
-	  << _T(" sec]") << endl;									// 10/20/99 AM.
+	  << _T(" sec]") << std::endl;									// 10/20/99 AM.
 
 return true;
 }
@@ -534,13 +534,13 @@ bool CG::writeKBmain(
 {
 _TCHAR o_main[4096];
 _stprintf(o_main, _T("%s%cmain.%s"), path, DIR_CH, suff);
-_t_ofstream f_main(TCHAR2A(o_main));
+std::_t_ofstream f_main(TCHAR2A(o_main));
 
 #ifdef LINUX
-f_main << _T("take \"kb\\\\user\\\\hier.kb\"") << endl;
-f_main << _T("bind sys") << endl;
-f_main << _T("take \"kb\\\\user\\\\word.kb\"") << endl;
-f_main << _T("take \"kb\\\\user\\\\phr.kb\"") << endl;
+f_main << _T("take \"kb\\\\user\\\\hier.kb\"") << std::endl;
+f_main << _T("bind sys") << std::endl;
+f_main << _T("take \"kb\\\\user\\\\word.kb\"") << std::endl;
+f_main << _T("take \"kb\\\\user\\\\phr.kb\"") << std::endl;
 
 long ii;
 for (ii=1; ii <= n_attr; ++ii)
@@ -548,14 +548,14 @@ for (ii=1; ii <= n_attr; ++ii)
 		<< _T("take \"kb\\\\user\\\\attr")
 		<< ii
 		<< _T(".kb\"")
-		<< endl;
-f_main << _T("quit") << endl;
+		<< std::endl;
+f_main << _T("quit") << std::endl;
 #else
 
-f_main << _T("take \"kb/user/hier.kb\"") << endl;
-f_main << _T("bind sys") << endl;
-f_main << _T("take \"kb/user/word.kb\"") << endl;
-f_main << _T("take \"kb/user/phr.kb\"") << endl;
+f_main << _T("take \"kb/user/hier.kb\"") << std::endl;
+f_main << _T("bind sys") << std::endl;
+f_main << _T("take \"kb/user/word.kb\"") << std::endl;
+f_main << _T("take \"kb/user/phr.kb\"") << std::endl;
 
 long ii;
 for (ii=1; ii <= n_attr; ++ii)
@@ -563,8 +563,8 @@ for (ii=1; ii <= n_attr; ++ii)
 		<< _T("take \"kb/user/attr")
 		<< ii
 		<< _T(".kb\"")
-		<< endl;
-f_main << _T("quit") << endl;
+		<< std::endl;
+f_main << _T("quit") << std::endl;
 #endif
 
 return true;
@@ -579,19 +579,19 @@ return true;
 
 bool CG::readKB(_TCHAR *dir)
 {
-*cgerr << _T("[readKB:]") << endl;											// 02/19/02 AM.
+*cgerr << _T("[readKB:]") << std::endl;											// 02/19/02 AM.
 clock_t s_time, e_time;										// 10/20/99 AM.
 s_time = clock();												// 10/20/99 AM.
 
 if (!dir || !*dir)
 	{
-	*cgerr << _T("[readKB: Given no input directory.]") << endl;
+	*cgerr << _T("[readKB: Given no input directory.]") << std::endl;
 	return false;
 	}
 
 if (!kbm_ || !ast_ || !aptr_ || !asym_ || !acon_)	// 07/29/03 AM.
 	{
-	*cgerr << _T("[readKB: Internal error. KB tables not initialized.]") << endl;
+	*cgerr << _T("[readKB: Internal error. KB tables not initialized.]") << std::endl;
 	return false;
 	}
 
@@ -600,7 +600,7 @@ if (!kbm_ || !ast_ || !aptr_ || !asym_ || !acon_)	// 07/29/03 AM.
 hkbdll_ = 0;
 if (hkbdll_)
 	{
-	*cgerr << _T("[Using compiled kb. readKB ignored.]") << endl;	// 06/29/00 AM.
+	*cgerr << _T("[Using compiled kb. readKB ignored.]") << std::endl;	// 06/29/00 AM.
 	return true;		// This is just info, ok.						// 06/29/00 AM.
 	}
 // ASSUME COMPILED KB.	// 02/19/19 AM.
@@ -614,7 +614,7 @@ _stprintf(path, _T("%s%c%s%c%s"), getAppdir(),DIR_CH, kbdir,DIR_CH, dir);
 *cgerr << _T("[readKB: path=")													// 02/19/02 AM.
 		 << path
 		 << _T("]")
-		 << endl;
+		 << std::endl;
 
 // Prep and open up the input file.
 // hier, word, phr, attr.
@@ -662,7 +662,7 @@ else
 e_time = clock();												// 10/20/99 AM.
 *cgerr << _T("[READ KB time=")									// 10/20/99 AM.
 	  << (double) (e_time - s_time)/CLOCKS_PER_SEC	// 10/20/99 AM.
-	  << _T(" sec]") << endl;									// 10/20/99 AM.
+	  << _T(" sec]") << std::endl;									// 10/20/99 AM.
 
 return true;
 }
@@ -777,7 +777,7 @@ bool CG::loadLib()
 #ifndef LINUX
 if (hkbdll_)
 	{
-	*cgerr << _T("[Load kb lib: Already loaded.]") << endl;
+	*cgerr << _T("[Load kb lib: Already loaded.]") << std::endl;
 	return false;
 	}
 
@@ -811,11 +811,11 @@ if (!f_exists(buf))															// 05/06/01 AM.
 	*cgerr << _T("[loadLib: Error. Can't load compiled ")			// 05/06/01 AM.
 			 << fname															// 01/21/06 AM.
 			 << _T(".dll]")													// 01/21/06 AM.
-			 << endl;
+			 << std::endl;
 	return false;																// 05/06/01 AM.
 	}
 
-*cgerr << _T("[Loading compiled kb: ") << buf << _T("]") << endl;
+*cgerr << _T("[Loading compiled kb: ") << buf << _T("]") << std::endl;
 hkbdll_ = load_dll(buf);
 #endif
 return true;
@@ -910,7 +910,7 @@ if (!(pval = kbm_->attr_find((CON *)conc, s_attr)))	// FIX.	// 08/12/99 AM.
 	return false;
 if (pval->kind != pST)
 	{
-	*cgerr << _T("[findVal: Attribute value not a string.]") << endl;
+	*cgerr << _T("[findVal: Attribute value not a string.]") << std::endl;
 	return false;
 	}
 _tcscpy(val, pval->v.vst);
@@ -935,7 +935,7 @@ switch (pval->kind)	// 12/27/06 AM.
 		val = (long) pval->v.vfloat;	// Truncate/convert.	// 12/27/06 AM.
 		break;
 	default:				// 12/27/06 AM.
-		*cgerr << _T("[findVal: Attribute value not a number.]") << endl;
+		*cgerr << _T("[findVal: Attribute value not a number.]") << std::endl;
 		return false;
 		break;
 	}
@@ -959,7 +959,7 @@ switch (pval->kind)	// 12/27/06 AM.
 		val = pval->v.vnum;	// Convert.	// 12/27/06 AM.
 		break;
 	default:				// 12/27/06 AM.
-		*cgerr << _T("[findVal: Attribute value not a float.]") << endl;
+		*cgerr << _T("[findVal: Attribute value not a float.]") << std::endl;
 		return false;
 		break;
 	}
@@ -976,7 +976,7 @@ if (!(pval = kbm_->attr_find((CON *)conc, s_attr)))
 	return false;
 if (pval->kind != pCON)
 	{
-	*cgerr << _T("[findVal: Attribute value not a concept.]") << endl;
+	*cgerr << _T("[findVal: Attribute value not a concept.]") << std::endl;
 	return false;
 	}
 val = pval->v.vcon;
@@ -993,7 +993,7 @@ if (!(pval = kbm_->attr_find((CON *)conc, s_attr)))	// FIX.	// 08/12/99 AM.
 	return 0;
 if (pval->kind != pST)
 	{
-	*cgerr << _T("[strVal: Attribute value not a string.]") << endl;
+	*cgerr << _T("[strVal: Attribute value not a string.]") << std::endl;
 	return 0;
 	}
 return pval->v.vst;
@@ -1171,19 +1171,19 @@ switch (((CON *)con)->kind)
 		break;
 	case cNO_CON:
 	default:
-		*cgerr << _T("[conceptName: Not basic or word concept.]") << endl;
+		*cgerr << _T("[conceptName: Not basic or word concept.]") << std::endl;
 		return false;
 	}
 
 if (!sym)
 	{
-	*cgerr << _T("[conceptName: Concept has no sym.]") << endl;
+	*cgerr << _T("[conceptName: Concept has no sym.]") << std::endl;
 	return false;
 	}
 tmp = sym->str;
 if (!tmp)
 	{
-	*cgerr << _T("[conceptName: Concept has no name.]") << endl;
+	*cgerr << _T("[conceptName: Concept has no name.]") << std::endl;
 	return false;
 	}
 
@@ -1604,7 +1604,7 @@ switch (ptr->kind)
 		_stprintf(buf, _T("%f"), fnum);											// 08/16/01 AM.
 		return;																	// 08/16/01 AM.
 	default:
-		*cgerr << _T("[popSval: Can't convert to string.]") << endl;
+		*cgerr << _T("[popSval: Can't convert to string.]") << std::endl;
 		return;
 	}
 }
@@ -1623,7 +1623,7 @@ vals = (VAL *) ((PTR *)vals)->next;
 
 if (ptr->kind != pST)
 	{
-	*cgerr << _T("[popVal: Attribute not a string.]") << endl;
+	*cgerr << _T("[popVal: Attribute not a string.]") << std::endl;
 	return;
 	}
 
@@ -1643,7 +1643,7 @@ vals = (VAL *) ((PTR *)vals)->next;
 
 if (ptr->kind != pNUM)
 	{
-	*cgerr << _T("[popVal: Attribute not a num.]") << endl;
+	*cgerr << _T("[popVal: Attribute not a num.]") << std::endl;
 	return;
 	}
 val = ptr->v.vnum;
@@ -1662,7 +1662,7 @@ vals = (VAL *) ((PTR *)vals)->next;
 
 if (ptr->kind != pFLOAT)
 	{
-	*cgerr << _T("[popVal: Attribute not a float.]") << endl;
+	*cgerr << _T("[popVal: Attribute not a float.]") << std::endl;
 	return;
 	}
 val = ptr->v.vfloat;
@@ -1681,7 +1681,7 @@ vals = (VAL *) ((PTR *)vals)->next;
 
 if (ptr->kind != pCON)
 	{
-	*cgerr << _T("[popVal: Attribute not a concept.]") << endl;
+	*cgerr << _T("[popVal: Attribute not a concept.]") << std::endl;
 	return;
 	}
 val = ptr->v.vcon;
@@ -2040,7 +2040,7 @@ return kbm_->dict_rm_word(str);
 // Replace attribute value with given value.
 bool CG::replaceVal(CONCEPT *con, _TCHAR *attr, _TCHAR *val)
 {
-//*cgerr << "[replaceVal: attr=" << attr << ",val=" << val << "]" << endl;
+//*cgerr << "[replaceVal: attr=" << attr << ",val=" << val << "]" << std::endl;
 rmVals(con, attr);															// 05/28/01 AM.
 dirty_ = true;																	// 05/12/00 AM.
 return addVal(con, attr, val);
@@ -2373,7 +2373,7 @@ CON *nn;
 nn = (CON *) node;
 if (!nn || nn->kind != cPROXY)
 	{
-	*cgerr << _T("[listNode: Given bad node.]") << endl;
+	*cgerr << _T("[listNode: Given bad node.]") << std::endl;
 	return 0;
 	}
 CON *tmp = NULL;
@@ -2387,7 +2387,7 @@ CONCEPT *CG::firstNode(PHRASE  *phr)
 {
 if (!phr || ((CON *)phr)->prev)
 	{
-	*cgerr << _T("[firstNode: Must be called with a phrase.]") << endl;
+	*cgerr << _T("[firstNode: Must be called with a phrase.]") << std::endl;
 	return 0;
 	}
 return (CONCEPT *) phr;
@@ -2397,7 +2397,7 @@ CONCEPT *CG::lastNode( PHRASE  *phr)
 {
 if (!phr || ((CON *)phr)->prev)
 	{
-	*cgerr << _T("[lastNode: Must be called with a phrase.]") << endl;
+	*cgerr << _T("[lastNode: Must be called with a phrase.]") << std::endl;
 	return 0;
 	}
 return (CONCEPT *) kbm_->acon_->con_nth((CON *) phr, 0);
@@ -2819,7 +2819,7 @@ bool CG::dumpTree(															// 08/06/01 AM.
 	_TCHAR *file			// Dump file (should end in .kb).
 	)
 {
-*cgerr << _T("[Starting modular kb dump.]") << endl;
+*cgerr << _T("[Starting modular kb dump.]") << std::endl;
 
 if (!root)					// Check for good concept.
 	return false;
@@ -2856,11 +2856,11 @@ _stprintf(o_attr, _T("%s%cattr.%s"), path, DIR_CH, suff);
 _stprintf(o_phr,  _T("%s%cphr.%s"),  path, DIR_CH, suff);
 
 // Open the files for output.
-_t_ofstream f_hier(TCHAR2A(o_hier));
-_t_ofstream f_word(TCHAR2A(o_word));
-_t_ofstream f_phr(TCHAR2A(o_phr));
+std::_t_ofstream f_hier(TCHAR2A(o_hier));
+std::_t_ofstream f_word(TCHAR2A(o_word));
+std::_t_ofstream f_phr(TCHAR2A(o_phr));
 
-_t_ofstream *f_attr = new _t_ofstream(TCHAR2A(o_attr));	// 07/01/03 AM.
+std::_t_ofstream *f_attr = new std::_t_ofstream(TCHAR2A(o_attr));	// 07/01/03 AM.
 
 // GET PATH TO "root" CONCEPT.
 CONCEPT *parent = Up(root);
@@ -2868,8 +2868,8 @@ _TCHAR spath[MAXPATH];
 if (!parent)			// Root of hierarchy
 	{
 	spath[0] ='\0';
-	f_hier << _T("add empty") << endl;
-	f_hier << _T("add root") << endl;
+	f_hier << _T("add empty") << std::endl;
+	f_hier << _T("add root") << std::endl;
 	}
 else
 	kbm_->acon_->con_to_path((struct con *)parent, /*UP*/ spath);
@@ -2886,34 +2886,34 @@ if (!writeTree(root, true, f_hier,f_word,f_phr, spath,
 delete f_attr;												// 08/07/03 AM.
 
 // Terminate the last command file.
-f_phr  << endl << _T("quit") << endl << endl;
+f_phr  << std::endl << _T("quit") << std::endl << std::endl;
 
 // TODO: CATENATE THE COMMAND FILES TO THE OUTPUT FILE.
 #ifndef LINUX
 // Do the catenate in C++.
 _TCHAR buf[MAXMSG];
-_t_ofstream *f_dump = new _t_ofstream(TCHAR2A(file));	// Final output file.
-_t_ifstream *f_in = new _t_ifstream(TCHAR2A(o_hier));
+std::_t_ofstream *f_dump = new std::_t_ofstream(TCHAR2A(file));	// Final output file.
+std::_t_ifstream *f_in = new std::_t_ifstream(TCHAR2A(o_hier));
 while (f_in->getline(buf, MAXMSG))		// Copy first file.
-	*f_dump << buf << endl;
+	*f_dump << buf << std::endl;
 delete f_in;
 
-*f_dump << endl;								// Separate commands.
-f_in = new _t_ifstream(TCHAR2A(o_word));
+*f_dump << std::endl;								// Separate commands.
+f_in = new std::_t_ifstream(TCHAR2A(o_word));
 while (f_in->getline(buf, MAXMSG))		// Copy first file.
-	*f_dump << buf << endl;
+	*f_dump << buf << std::endl;
 delete f_in;
 
-*f_dump << endl;								// Separate commands.
-f_in = new _t_ifstream(TCHAR2A(o_attr));
+*f_dump << std::endl;								// Separate commands.
+f_in = new std::_t_ifstream(TCHAR2A(o_attr));
 while (f_in->getline(buf, MAXMSG))		// Copy first file.
-	*f_dump << buf << endl;
+	*f_dump << buf << std::endl;
 delete f_in;
 
-*f_dump << endl;								// Separate commands.
-f_in = new _t_ifstream(TCHAR2A(o_phr));
+*f_dump << std::endl;								// Separate commands.
+f_in = new std::_t_ifstream(TCHAR2A(o_phr));
 while (f_in->getline(buf, MAXMSG))		// Copy first file.
-	*f_dump << buf << endl;
+	*f_dump << buf << std::endl;
 delete f_in;
 
 delete f_dump;
@@ -2926,7 +2926,7 @@ _stprintf(cmd, _T("%s %s %s %s %s > %s"),
 int systemRet = _tsystem(cmd);
 #endif
 
-*cgerr << _T("[Done with modular kb dump.]") << endl;
+*cgerr << _T("[Done with modular kb dump.]") << std::endl;
 return true;
 }
 
@@ -2946,11 +2946,11 @@ return true;
 bool CG::writeTree(
 	CONCEPT *root,
 	bool flag,				// true if root of subtree.
-	_t_ofstream &hier,
-	_t_ofstream &word,
-	_t_ofstream &phr,
+	std::_t_ofstream &hier,
+	std::_t_ofstream &word,
+	std::_t_ofstream &phr,
 	_TCHAR *path,				// Hierarchy path down to parent.
-	_t_ofstream *&attr,		// Current attr output stream.			// 07/01/03 AM.
+	std::_t_ofstream *&attr,		// Current attr output stream.			// 07/01/03 AM.
 	long &n_attr,			// # of attr files.						// 07/01/03 AM.
 	long &c_attr,			// # of attributes in curr file.		// 07/01/03 AM.
 	_TCHAR *o_attr,			// Buff for building attr filenames.	// 07/01/03 AM.
@@ -2965,7 +2965,7 @@ if (!root)
 _TCHAR name[MAXSTR];	// 12/17/03 AM.
 if (!conceptName(root, name))
 	{
-	*cgerr << _T("[writeTree: No concept name.]") << endl;
+	*cgerr << _T("[writeTree: No concept name.]") << std::endl;
 	return false;
 	}
 
@@ -3006,20 +3006,20 @@ switch (con->kind)
 			#endif
 
 			hier << _T("\"");
-			hier << endl;
+			hier << std::endl;
 			}
 //		else
 //			{
 			// Axiomatics.
-//			hier << "add empty" << endl;
-//			hier << "add root" << endl;
+//			hier << "add empty" << std::endl;
+//			hier << "add root" << std::endl;
 //			}
 		break;
 	case cWORD:
 		// Need to handle some chars specially.
 		{
 #ifndef UNICODE
-		word << _T("add word \"") << buf << _T("\"") << endl;
+		word << _T("add word \"") << buf << _T("\"") << std::endl;
 #else
 		char *lpstr8;
 		word << _T("add word \"");
@@ -3027,12 +3027,12 @@ switch (con->kind)
 		word << lpstr8;
 		u_delete((LPCTSTR*&)lpstr8);
 		word << _T("\"");
-		word << endl;
+		word << std::endl;
 #endif
 		}
 		break;
 	default:
-		*cgerr << _T("[writeTree: Not word or basic concept.]") << endl;
+		*cgerr << _T("[writeTree: Not word or basic concept.]") << std::endl;
 		return false;
 	}
 
@@ -3044,7 +3044,7 @@ else if (*buf && !_tcscmp(buf,_T("concept")))				// CHECK.	// 12/28/01 AM.
 	_stprintf(conpath, _T("\"%s\""), buf);
 else																				// 12/28/01 AM.
 	{
-	*cgerr << _T("[writeTree:  Bad path.]") << endl;						// 12/28/01 AM.
+	*cgerr << _T("[writeTree:  Bad path.]") << std::endl;						// 12/28/01 AM.
 	return false;																// 12/28/01 AM.
 	}
 	//strcpy(conpath, name);
@@ -3056,7 +3056,7 @@ if (!writeAttrs(con, 0, attr, conpath,
 			n_attr,c_attr,o_attr,fpath,suff))							// 07/01/03 AM.
 	{
 	*cgerr << _T("[writeTree: Couldn't write attrs for con=") << name << _T("]")
-		  << endl;
+		  << std::endl;
 	return false;
 	}
 
@@ -3064,7 +3064,7 @@ if (!writeAttrs(con, 0, attr, conpath,
 if (!writePhrase(con, hier,word,attr,phr,conpath,
 						n_attr,c_attr,o_attr,fpath,suff))				// 07/01/03 AM.
 	{
-	*cgerr << _T("[Error calling writePhrase]") << endl;
+	*cgerr << _T("[Error calling writePhrase]") << std::endl;
 	return false;
 	}
 
@@ -3072,7 +3072,7 @@ if (!writePhrase(con, hier,word,attr,phr,conpath,
 if (!writeTree(con->dn, false, hier,word,phr,conpath,
 			attr,n_attr,c_attr,o_attr,fpath,suff))						// 07/01/03 AM.
 	{
-	*cgerr << _T("[Error calling writeTree]") << endl;
+	*cgerr << _T("[Error calling writeTree]") << std::endl;
 	return false;
 	}
 
@@ -3088,7 +3088,7 @@ if (!flag && !(con->prev))
 			attr,n_attr,c_attr,o_attr,fpath,suff);						// 07/01/03 AM.
 		if (!ok)
 			{
-			*cgerr << _T("[Error in sibling call of writeTree]") << endl;
+			*cgerr << _T("[Error in sibling call of writeTree]") << std::endl;
 			return false;
 			}
 		}
@@ -3108,7 +3108,7 @@ bool CG::writeAttrs(
 	CONCEPT *conc,			// Concept (or node).
 	int pos,					// 0 for concept, positive int for each
 								// node of concept's phrase.
-	_t_ofstream *&o_attr,		// File to write attributes to.	// 07/01/03 AM.
+	std::_t_ofstream *&o_attr,		// File to write attributes to.	// 07/01/03 AM.
 	_TCHAR *conpath,			// Hierarchy path down to (node's) concept.
 	long &n_attr,			// # of attr files.						// 07/01/03 AM.
 	long &c_attr,			// # of attributes in curr file.		// 07/01/03 AM.
@@ -3121,7 +3121,7 @@ CON *con;
 
 if (!(con = (CON *) conc))
 	{
-	*cgerr << _T("[writeAttrs: Given null concept.]") << endl;
+	*cgerr << _T("[writeAttrs: Given null concept.]") << std::endl;
 	return false;
 	}
 
@@ -3239,23 +3239,23 @@ while (attrs)
          default:
 			// 04/20/99 AM.
         //fprintf(stderr, "[attrs_pret: Bad value kind=%d]\n", vals->kind);
-		  *cgerr << _T("[attrs_pret: Bad value kind=") << vals->kind << endl;
+		  *cgerr << _T("[attrs_pret: Bad value kind=") << vals->kind << std::endl;
             exit(1);
          }
 
 		// For backward compatibility, avoid ind nattr.				// 10/09/05 AM.
 		if (!val_pos)															// 10/09/05 AM.
-			*o_attr << _T("ind attr") << endl;
+			*o_attr << _T("ind attr") << std::endl;
 		else																		// 10/09/05 AM.
-			*o_attr << _T("ind nattr") << endl;							// 10/09/05 AM.
-		*o_attr << conpath << endl;
-		*o_attr << pos << endl;
-		*o_attr << s_slot << endl;
-		*o_attr << s_kind << endl;
-		*o_attr << str << endl;												// 04/29/99 AM.
+			*o_attr << _T("ind nattr") << std::endl;							// 10/09/05 AM.
+		*o_attr << conpath << std::endl;
+		*o_attr << pos << std::endl;
+		*o_attr << s_slot << std::endl;
+		*o_attr << s_kind << std::endl;
+		*o_attr << str << std::endl;												// 04/29/99 AM.
 		if (val_pos)															// 10/09/05 AM.
-			*o_attr << val_pos << endl;									// 10/09/05 AM.
-		*o_attr << _T("end ind") << endl << endl;
+			*o_attr << val_pos << std::endl;									// 10/09/05 AM.
+		*o_attr << _T("end ind") << std::endl << std::endl;
 
 		// Manage current attr kb file.									// 07/01/03 AM.
 		if (n_attr	// If zero, keep the old way.						// 07/01/03 AM.
@@ -3264,16 +3264,16 @@ while (attrs)
 			// Close up the attr file and open a new one.			// 07/01/03 AM.
 			++n_attr;	// Increment file count.						// 07/01/03 AM.
 			c_attr = 0;	// Reset count of attributes.					// 07/01/03 AM.
-			*o_attr << endl << _T("quit") << endl << endl;				// 07/01/03 AM.
+			*o_attr << std::endl << _T("quit") << std::endl << std::endl;				// 07/01/03 AM.
 			delete o_attr;	// Maxed out in the old file.				// 07/01/03 AM.
 			_stprintf(b_attr, _T("%s%cattr%ld.%s"),fpath,DIR_CH,n_attr,suff);
-			o_attr = new _t_ofstream(TCHAR2A(b_attr));								// 07/01/03 AM.
+			o_attr = new std::_t_ofstream(TCHAR2A(b_attr));								// 07/01/03 AM.
 			}
 
       vals = vals->next;
       }
    //fprintf(out, "\n");													// 04/20/99 AM.
-	*o_attr << endl;															// 04/20/99 AM.
+	*o_attr << std::endl;															// 04/20/99 AM.
    attrs = attrs->next;
    }
 
@@ -3289,10 +3289,10 @@ return true;
 
 bool CG::writePhrase(			// 04/30/99 AM.
 	CONCEPT *conc,
-	_t_ofstream &o_hier,
-	_t_ofstream &o_word,
-	_t_ofstream *&o_attr,
-	_t_ofstream &o_phr,
+	std::_t_ofstream &o_hier,
+	std::_t_ofstream &o_word,
+	std::_t_ofstream *&o_attr,
+	std::_t_ofstream &o_phr,
 	_TCHAR *path,				// Hierarchy path down to parent.
 	long &n_attr,			// # of attr files.						// 07/01/03 AM.
 	long &c_attr,			// # of attributes in curr file.		// 07/01/03 AM.
@@ -3304,7 +3304,7 @@ bool CG::writePhrase(			// 04/30/99 AM.
 CON *con;
 if (!(con = (CON *) conc))
 	{
-	*cgerr << _T("[writePhrase: no concept]") << endl;
+	*cgerr << _T("[writePhrase: no concept]") << std::endl;
 	return false;
 	}
 CON *phr;
@@ -3316,15 +3316,15 @@ CON *bas;				// Node's basic concept.
 _TCHAR buf[MAXPATH];
 
 // Traverse phrase and write it out.
-o_phr << _T("ind phrase") << endl;
-o_phr << path << endl;
+o_phr << _T("ind phrase") << std::endl;
+o_phr << path << std::endl;
 for (ptr = phr; ptr; ptr = ptr->next)
 	{
 	bas = kbm_->acon_->nc(ptr);
 	kbm_->acon_->con_to_path(bas, /*UP*/ buf);
-	o_phr << buf << endl;
+	o_phr << buf << std::endl;
 	}
-o_phr << _T("end ind") << endl << endl;
+o_phr << _T("end ind") << std::endl << std::endl;
 
 // Retraverse phrase to write out attributes.
 // (Opt: not optimal, but simple and modular.)
@@ -3336,7 +3336,7 @@ for (ptr = phr; ptr; ptr = ptr->next)
 		{
 		*cgerr << _T("[writeTree: Couldn't write attrs for con=") << path
 			  << _T(", node=") << pos
-			  << _T("]") << endl;
+			  << _T("]") << std::endl;
 		return false;
 		}
 	}
@@ -3354,20 +3354,20 @@ bool CG::readFile(
 	_TCHAR *infile
 	)
 {
-//cout << "infile=" << infile << endl;
-//ifstream fin(infile, ios::in | ios::nocreate);	// Upgrade. // 01/24/01 AM.
-_t_ifstream fin(TCHAR2A(infile), ios::in);							// Upgrade.	// 01/24/01 AM.
+//cout << "infile=" << infile << std::endl;
+//ifstream fin(infile, std::ios::in | std::ios::nocreate);	// Upgrade. // 01/24/01 AM.
+std::_t_ifstream fin(TCHAR2A(infile), std::ios::in);							// Upgrade.	// 01/24/01 AM.
 #ifdef UNICODE
 if (!u_readbom(&fin))
 	{
-	*cgerr << _T("[readFile: Unhandled Unicode format=") << infile << _T("]") << endl;
+	*cgerr << _T("[readFile: Unhandled Unicode format=") << infile << _T("]") << std::endl;
 	return false;
 	}
 #endif
 
 if (!fin)
 	{
-	*cgerr << _T("[readFile: File not found=") << infile << _T("]") << endl;
+	*cgerr << _T("[readFile: File not found=") << infile << _T("]") << std::endl;
 	return false;
 	}
 
@@ -3376,7 +3376,7 @@ if (!fin)
 //if (!cmd_top(&fin, &cout, "> ", false,true))						// 03/27/00 AM.
 if (!cmd_top(&fin, cgerr, _T("> "), false,this,true))					// 02/19/02 AM.
 	{
-	*cgerr << _T("[readFile: Error in reading file=") << infile << _T("]") << endl;
+	*cgerr << _T("[readFile: Error in reading file=") << infile << _T("]") << std::endl;
 	return false;
 	}
 return true;

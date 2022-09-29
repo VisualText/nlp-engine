@@ -55,7 +55,7 @@ All rights reserved.
 #include "vtrun.h"		// [DEGLOB]	// 10/14/20 AM.
 
 LITE_API void object_counts(
-	_t_ofstream* =0	// 07/18/03 AM.
+	std::_t_ofstream* =0	// 07/18/03 AM.
 	);
 
 // Forward references
@@ -166,21 +166,21 @@ public:
 		_TCHAR *inbuf = 0,	// IF ANALYZING A BUFFER, SUPPLY IT HERE // 02/11/00 AM.
 		long len = 0,		// LENGTH OF INPUT BUFFER					  // 02/11/00 AM.
 		bool compiled=false,	// RUN COMPILED ANALYZER				  // 07/05/00 AM.
-		_t_ostream *os = 0,	// STANDARD OUTPUT STREAM					  // 05/05/02 AM.
+		std::_t_ostream *os = 0,	// STANDARD OUTPUT STREAM					  // 05/05/02 AM.
 		_TCHAR *outbuf = 0,	// OUTPUT BUFFER TO BIND TO cbuf STREAM  // 05/07/02 AM.
 		long outlen = 0,	// MAXIMUM LENGTH OF cbuf OUTPUT BUFFER  // 05/07/02 AM.
 		_TCHAR *datum = 0   // PASS INFO TO G("$datum").             // 03/13/03 AM.
 		);
 
 	void analyze(
-		istringstream *iss,	// Input strstream.
-		ostringstream *oss,	// Output strstream.
+		std::istringstream *iss,	// Input strstream.
+		std::ostringstream *oss,	// Output strstream.
 		_TCHAR *appdir = 0,		// Directory holding analyzer.
 		bool flogfiles = false,	// Changing the meaning of this.
 		bool silent = false,	// Silent run mode.
 		_TCHAR *outdir = 0,		// Intermed files.
 		bool compiled = false,	// If running compiled analyzer.
-		_t_ostream *os = 0,		// Rebinding of output stream.				// 05/05/02 AM.
+		std::_t_ostream *os = 0,		// Rebinding of output stream.				// 05/05/02 AM.
 		_TCHAR *datum = 0		// Pass info to G("$datum").
 		);
 
@@ -216,7 +216,7 @@ public:
 		_TCHAR *outdir = 0,	// DIRECTORY FOR OUTPUT.
 		_TCHAR *inbuf = 0,	// IF ANALYZING A BUFFER, SUPPLY IT HERE
 		long len = 0,		// LENGTH OF INPUT BUFFER
-		_t_ostream *os = 0,	// STANDARD OUTPUT STREAM					  // 05/13/02 AM.
+		std::_t_ostream *os = 0,	// STANDARD OUTPUT STREAM					  // 05/13/02 AM.
 		_TCHAR *outbuf = 0,	// OUTPUT BUFFER TO BIND TO cbuf STREAM  // 05/13/02 AM.
 		long outlen = 0	// MAXIMUM LENGTH OF cbuf OUTPUT BUFFER  // 05/13/02 AM.
 		);
@@ -256,21 +256,21 @@ public:
 		_TCHAR *outdir = 0,	// DIRECTORY FOR OUTPUT.
 		_TCHAR *inbuf = 0,	// IF ANALYZING A BUFFER, SUPPLY IT HERE
 		long len = 0,		// LENGTH OF INPUT BUFFER
-		_t_ostream *os = 0,	// STANDARD OUTPUT STREAM					  // 05/13/02 AM.
-//		ostringstream * = 0,	// Output buffer stream, if any.         // 10/10/03 AM.
+		std::_t_ostream *os = 0,	// STANDARD OUTPUT STREAM					  // 05/13/02 AM.
+//		std::ostringstream * = 0,	// Output buffer stream, if any.         // 10/10/03 AM.
 	   void * = 0,       // For .NET compatibility.               // 10/10/03 AM.
 		long outlen = 0,	// MAXIMUM LENGTH OF cbuf OUTPUT BUFFER  // 05/13/02 AM.
 		_TCHAR *datum = 0   // PASS INFO TO G("$datum").             // 03/13/03 AM.
 		);
 
 	void runAnalyzer(
-		istringstream *iss,
-		ostringstream *oss,
+		std::istringstream *iss,
+		std::ostringstream *oss,
 		_TCHAR *appdir,
 		bool flogfiles,			// Changing the meaning of this.
 		bool silent = false,	// Silent run mode.
 		_TCHAR *outdir = 0,		// Interned files.
-		_t_ostream *os = 0,		// Rebinding of output stream.
+		std::_t_ostream *os = 0,		// Rebinding of output stream.
 		_TCHAR *datum = 0		// Pass info to G("$datum").
 		);
 
@@ -297,20 +297,20 @@ public:
 		_TCHAR *outdir = 0,  // DIRECTORY FOR OUTPUT.
 		_TCHAR *inbuf = 0,   // IF ANALYZING A BUFFER, SUPPLY IT HERE.// 02/06/00 AM.
 		long len = 0,        // LENGTH OF INPUT BUFFER.					  // 02/06/00 AM.
-		_t_ostream * = 0,		// Output stream, if any.                // 05/11/02 AM.
-//		ostringstream * = 0,    // Output buffer stream, if any.         // 10/10/03 AM.
+		std::_t_ostream * = 0,		// Output stream, if any.                // 05/11/02 AM.
+//		std::ostringstream * = 0,    // Output buffer stream, if any.         // 10/10/03 AM.
 	   void * = 0,          // For .NET compatibility.               // 10/10/03 AM.
 		long = 0,            // Output buffer length, if any.         // 05/11/02 AM.
 		bool retain = false  // If retaining hash,sym tables.         // 05/21/09 AM.
 		);
 
 	Parse *initAnalyze(
-		istringstream *iss,
-		ostringstream *oss,
+		std::istringstream *iss,
+		std::ostringstream *oss,
 		_TCHAR *appdir,
 		Eana *eana,
 		_TCHAR *outdir = 0,
-		_t_ostream *os = 0,	// Rebinding of output stream.
+		std::_t_ostream *os = 0,	// Rebinding of output stream.
 		bool retain = false		// If retaining hash,sym tables.
 		);
 
@@ -327,10 +327,10 @@ public:
 
 	bool load_compiled(_TCHAR *);			// 09/13/00 AM.
 
-	void fileDbg(_TCHAR *,_t_ostream*&);										// 08/26/02 AM.
-	void resetDbg(_t_ostream*&);												// 08/26/02 AM.
+	void fileDbg(_TCHAR *,std::_t_ostream*&);										// 08/26/02 AM.
+	void resetDbg(std::_t_ostream*&);												// 08/26/02 AM.
 	bool logOut(bool);														// 08/26/02 AM.
-	bool logOut(_t_strstream*,bool);                            // 02/25/05 AM.
+	bool logOut(std::_t_strstream*,bool);                            // 02/25/05 AM.
 
 	////////////////////////////
 	// STEPPING THROUGH ANALYSIS			// 05/17/99 AM.
@@ -417,7 +417,7 @@ private:
 	_TCHAR *popupdat_;	// Get popup result from GUI.					// 05/24/02 AM.
 
 	// Debugging and log output analyzer.								// 08/26/02 AM.
-	_t_ostream *dbgout_;															// 08/26/02 AM.
+	std::_t_ostream *dbgout_;															// 08/26/02 AM.
 
 	// Name for the current analyzer (may want to simply use
 	// the analyzer's folder name).  Will enable one analyzer
@@ -434,7 +434,7 @@ private:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);				// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);				// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif

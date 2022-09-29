@@ -452,8 +452,8 @@ switch (ch)
 	case '9':	return 9;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[char_to_digit: Given nondigit char.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[char_to_digit: Given nondigit char.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -1218,14 +1218,14 @@ buf = Chars::create(biglen+1);		// Extra one for termination.
 
 // Read file into buffer, converting directly.
 #ifdef LINUX
-_t_ifstream inFile(fname, ios::in);
+std::_t_ifstream inFile(fname, std::ios::in);
 #else
-_t_ifstream inFile(TCHAR2CA(fname), ios::in							// Upgrade.	// 01/24/01 AM.
-								| ios_base::binary);			// FIX.		// 02/01/01 AM.
+std::_t_ifstream inFile(TCHAR2CA(fname), std::ios::in							// Upgrade.	// 01/24/01 AM.
+								| std::ios_base::binary);			// FIX.		// 02/01/01 AM.
 #endif
 if (!inFile)
 	{
-//	*gerr << "[Could not open file '" << fname << "']." << endl;
+//	*gerr << "[Could not open file '" << fname << "']." << std::endl;
 	len = 0;
 	delete buf;
 	buf = 0;
@@ -1313,7 +1313,7 @@ len = ((unsigned long)ptr - (unsigned long)buf) / sizeof(_TCHAR);
 
 if (len > biglen)		// Sanity check.
 	{
-//	*gerr << "[Converted file is too long.]" << endl;
+//	*gerr << "[Converted file is too long.]" << std::endl;
 	len = 0;
 	delete buf;
 	buf = 0;
@@ -1359,10 +1359,10 @@ if (memcmp(bom, BOM_UTF8, 3))	// If there's no BOM header.
 
 // If there's a Unicode file in non-Unicode VisualText.	// 03/24/08 AM.
 #ifndef UNICODE
-_t_strstream gerrStr;
+std::_t_strstream gerrStr;
 gerrStr
 	<< _T("[Warning: Unicode file in non-Unicode VisualText.]")
-	<< ends;
+	<< std::ends;
 errOut(&gerrStr,false);
 return true;
 #endif
@@ -1447,7 +1447,7 @@ bool writeConvert(
 	long maxline		// default==MAXSTR.
 	)
 {
-*gerr << _T("[writeConvert: UNIMPLEMENTED.]") << endl;
+*gerr << _T("[writeConvert: UNIMPLEMENTED.]") << std::endl;
 return true;
 }
 
@@ -2131,10 +2131,10 @@ if (abs(wlen - alen) <= fudge)
 	// Found good candidate.
 	if ((usedlen + alen + 1) >= maxbuf)						// FIX.	// 05/17/02 AM.
 		{
-		_t_strstream gerrStr;		// FIX.	// 05/17/02 AM.
+		std::_t_strstream gerrStr;		// FIX.	// 05/17/02 AM.
 		gerrStr
 		 << _T("[Benign note: Spell buffer overflow.]")
-		 << ends;	// FIX.	// 05/17/02 AM.
+		 << std::ends;	// FIX.	// 05/17/02 AM.
 		errOut(&gerrStr,false);												// FIX.	// 05/17/02 AM.
 		goto done;													// FIX.	// 05/17/02 AM.
 		}
@@ -2159,10 +2159,10 @@ for (;;)
 			// Found good candidate.
 			if ((usedlen + alen + 1) >= maxbuf)
 				{
-				_t_strstream gerrStr;
+				std::_t_strstream gerrStr;
 				gerrStr
 					<< _T("[Benign note: Spell buffer overflow.]")
-					<< ends;
+					<< std::ends;
 				errOut(&gerrStr,false);
 				goto done;
 				}
@@ -2192,10 +2192,10 @@ for (;;)
 			// Found good candidate.
 			if ((usedlen + alen) >= maxbuf)
 				{
-				_t_strstream gerrStr;
+				std::_t_strstream gerrStr;
 				gerrStr
 					<< _T("[Benign note: Spell buffer overflow.]")
-					<< ends;
+					<< std::ends;
 				errOut(&gerrStr,false);
 				goto done;
 				}
@@ -2271,15 +2271,15 @@ _TCHAR *rightjustify(
 {
 if (fieldsize < 1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rightjustify: Field too small.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rightjustify: Field too small.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
 if (num < 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rightjustify: Not handling negative nums for now.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rightjustify: Not handling negative nums for now.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -2328,15 +2328,15 @@ _TCHAR *leftjustify(
 {
 if (fieldsize < 1)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[leftjustify: Field too small.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[leftjustify: Field too small.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
 if (!str || !*str)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[leftjustify: Warning: Given empty string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[leftjustify: Warning: Given empty string.]") << std::ends;
 	errOut(&gerrStr,false);
 	// Todo: Could return a buffer just padded with spaces!
 	return 0;
@@ -2458,8 +2458,8 @@ return false;
 /********************************************
 * FN:		STR_ENDS_WITH
 * CR:		11/17/00 Dd.
-* SUBJ:	Checks to see if the string ends in the substring
-* RET:	True if the string ends with substring, else false.
+* SUBJ:	Checks to see if the string std::ends in the substring
+* RET:	True if the string std::ends with substring, else false.
 * NOTE:	All strings are unsigned.
 ********************************************/
 

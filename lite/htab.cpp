@@ -69,10 +69,10 @@ clean();
 
 /*******************************************/
 
-_t_ostream &operator<<(_t_ostream &output, Htab &htab)
+std::_t_ostream &operator<<(std::_t_ostream &output, Htab &htab)
 {
 output << _T("<Hash table")
-		 << _T(">") << endl;
+		 << _T(">") << std::endl;
 return output;
 }
 
@@ -111,15 +111,15 @@ int Htab::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Htab::prettyCount(_t_ofstream *ofstr)
+void Htab::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Htab count=") << count_ << endl;
-	*gout << _T("Active Htab count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Htab count=") << count_ << ends;
+		*ofstr << _T("Active Htab count=") << count_ << std::endl;
+	*gout << _T("Active Htab count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Htab count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -140,20 +140,20 @@ if (count_)
 *
 ********************************************/
 
-long Htab::hash(register _TCHAR *str)
+long Htab::hash(_TCHAR *str)
 {
 if (empty(str))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hash: Given empty string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hash: Given empty string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;			// Reserving zero for bad strings, empty string.
 	}
 
-register _TUCHAR ch;										// FIX.	// 11/21/00 AM.
-register unsigned long val=0;									// FIX.	// 11/21/00 AM.
-register unsigned long warp=113;								// FIX.	// 11/21/00 AM.
-register unsigned long ii=1;												// 06/24/03 AM.
+_TUCHAR ch;										// FIX.	// 11/21/00 AM.
+unsigned long val=0;									// FIX.	// 11/21/00 AM.
+unsigned long warp=113;								// FIX.	// 11/21/00 AM.
+unsigned long ii=1;												// 06/24/03 AM.
 
 while ((ch = *str++) != '\0')
 	{
@@ -170,21 +170,21 @@ return val % size_;
 
 /*******************************************/
 
-long Htab::hash(register _TCHAR *str, register long len)
+long Htab::hash(_TCHAR *str, long len)
 {
 if (empty(str) || (len <= 0))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hash: Given empty string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hash: Given empty string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;			// Reserving zero for bad strings, empty string.
 	}
 
-register _TUCHAR ch;
-register unsigned long val=0;
-register unsigned long warp=113;											// 06/24/03 AM.
-register unsigned long ii=1;												// 06/24/03 AM.
-register unsigned long max=HASH_MAX;									// 06/24/03 AM.
+_TUCHAR ch;
+unsigned long val=0;
+unsigned long warp=113;											// 06/24/03 AM.
+unsigned long ii=1;												// 06/24/03 AM.
+unsigned long max=HASH_MAX;									// 06/24/03 AM.
 
 if (len < HASH_MAX)															// 06/24/03 AM.
 	max = len;
@@ -211,20 +211,20 @@ return val % size_;
 *
 ********************************************/
 
-long Htab::hashfn(register _TCHAR *str, register long hsize)
+long Htab::hashfn(_TCHAR *str, long hsize)
 {
 if (empty(str))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hash: Given empty string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hash: Given empty string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;			// Reserving zero for bad strings, empty string.
 	}
 
-register _TUCHAR ch;										// FIX.	// 06/21/02 AM.
-register unsigned long val=0;									// FIX.	// 06/21/02 AM.
-register unsigned long warp=113;								// FIX.	// 06/21/02 AM.
-register unsigned long ii=1;												// 06/24/03 AM.
+_TUCHAR ch;										// FIX.	// 06/21/02 AM.
+unsigned long val=0;									// FIX.	// 06/21/02 AM.
+unsigned long warp=113;								// FIX.	// 06/21/02 AM.
+unsigned long ii=1;												// 06/24/03 AM.
 
 while ((ch = *str++) != '\0')
 	{
@@ -267,12 +267,12 @@ return 0;
 *
 ********************************************/
 
-Selt<Sym> *Htab::hadd(register _TCHAR *str)
+Selt<Sym> *Htab::hadd(_TCHAR *str)
 {
 if (empty(str))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hadd: Given null string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hadd: Given null string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -298,12 +298,12 @@ return selt;
 
 /*******************************************/
 
-Selt<Sym> *Htab::hadd(register _TCHAR *str, register long len)
+Selt<Sym> *Htab::hadd(_TCHAR *str, long len)
 {
 if (empty(str) || (len <= 0))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hadd: Given null string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hadd: Given null string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -335,12 +335,12 @@ return selt;
 *
 ********************************************/
 
-Selt<Sym> *Htab::hfind(register _TCHAR *str)
+Selt<Sym> *Htab::hfind(_TCHAR *str)
 {
 if (empty(str))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hfind: Given null string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hfind: Given null string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -362,12 +362,12 @@ return 0;						// Not found.
 
 /*******************************************/
 
-Selt<Sym> *Htab::hfind(register _TCHAR *str, register long len)
+Selt<Sym> *Htab::hfind(_TCHAR *str, long len)
 {
 if (empty(str) || (len <= 0))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hfind: Given null string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hfind: Given null string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -399,12 +399,12 @@ return 0;						// Not found.
 *
 ********************************************/
 static _TCHAR lcbuf[MAXSTR];
-Selt<Sym> *Htab::hfind_lc(register _TCHAR *str)
+Selt<Sym> *Htab::hfind_lc(_TCHAR *str)
 {
 if (empty(str))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hfind_lc: Given null string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hfind_lc: Given null string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -426,12 +426,12 @@ return hfind(lcbuf);
 *
 ********************************************/
 
-Selt<Sym> *Htab::hpre(register _TCHAR *str, /*UP*/ Slist<Sym>* &list)
+Selt<Sym> *Htab::hpre(_TCHAR *str, /*UP*/ Slist<Sym>* &list)
 {
 if (!str)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hpre: Given null string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hpre: Given null string.]") << std::ends;
 	errOut(&gerrStr,false);
 
 	list = 0;
@@ -470,7 +470,7 @@ return 0;						// Not found in list.
 *
 ********************************************/
 
-Selt<Sym> *Htab::hget(register _TCHAR *str)
+Selt<Sym> *Htab::hget(_TCHAR *str)
 {
 // The calls check for empty string.
 Selt<Sym> *ptr;
@@ -488,7 +488,7 @@ return hadd(str);
 *
 ********************************************/
 
-_TCHAR *Htab::getStr(register _TCHAR *str)
+_TCHAR *Htab::getStr(_TCHAR *str)
 {
 // The calls check for empty string.
 Selt<Sym> *ptr;
@@ -502,7 +502,7 @@ return sym->getStr();
 
 /*******************************************/
 
-Selt<Sym> *Htab::hget(register _TCHAR *str, register long len)
+Selt<Sym> *Htab::hget(_TCHAR *str, long len)
 {
 Selt<Sym> *ptr;
 if ((ptr = hfind(str, len)))
@@ -622,12 +622,12 @@ return sym;
 *
 ********************************************/
 
-bool Htab::hdel(register _TCHAR *str)
+bool Htab::hdel(_TCHAR *str)
 {
 if (!str)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hdel: Given null string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hdel: Given null string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -660,12 +660,12 @@ return true;
 *
 ********************************************/
 
-void Htab::hinc(register _TCHAR *str)
+void Htab::hinc(_TCHAR *str)
 {
 if (!str || !*str)
 	{
-//	_t_strstream gerrStr;
-//	gerrStr << _T("[hinc: Given null string.]") << ends;
+//	std::_t_strstream gerrStr;
+//	gerrStr << _T("[hinc: Given null string.]") << std::ends;
 //	errOut(&gerrStr,false);
 	return;
 	}
@@ -690,12 +690,12 @@ sym->setUse(++use);	// Increment use count.
 *
 ********************************************/
 
-void Htab::hdec(register _TCHAR *str)
+void Htab::hdec(_TCHAR *str)
 {
 if (!str || !*str)
 	{
-//	_t_strstream gerrStr;
-//	gerrStr << _T("[hdec: Given null string.]") << ends;
+//	std::_t_strstream gerrStr;
+//	gerrStr << _T("[hdec: Given null string.]") << std::ends;
 //	errOut(&gerrStr,false);
 	return;
 	}
@@ -757,7 +757,7 @@ parr_ = 0;	// 08/20/03 AM.
 ********************************************/
 
 void Htab::pretty(
-	_t_ostream *gout	// 06/24/03 AM.
+	std::_t_ostream *gout	// 06/24/03 AM.
 	)
 {
 long ii;
@@ -765,7 +765,7 @@ Slist<Sym> *list;
 Selt<Sym> *ptr;
 Sym *sym;
 *gout << _T("Hash table:\n")
-	  << _T("-----------") << endl;
+	  << _T("-----------") << std::endl;
 for (ii = 0; ii < size_; ++ii)
 	{
 	list = &(parr_[ii]);		// 12/12/98 AM.
@@ -780,7 +780,7 @@ for (ii = 0; ii < size_; ++ii)
 		sym = ptr->getData();
 		*gout << sym->getStr() << _T(" ");
 		}
-	*gout << endl;
+	*gout << std::endl;
 	}
 }
 
@@ -805,11 +805,11 @@ table.pretty(gout);
 table.hadd(_T("goodbye"));
 table.pretty(gout);
 if (table.hfind(_T("goodbye")))
-	*gout << _T("Found goodbye") << endl;
+	*gout << _T("Found goodbye") << std::endl;
 if (table.hfind(_T("hello")))
-	*gout << _T("Found hello") << endl;
+	*gout << _T("Found hello") << std::endl;
 if (!table.hfind(_T("grunk")))
-	*gout << _T("Didn't find grunk") << endl;
+	*gout << _T("Didn't find grunk") << std::endl;
 table.hget(_T("hello"));
 table.pretty(gout);
 table.hget(_T("grunk"));
@@ -846,10 +846,10 @@ bool Htab::gen(
 	Gen *gen				// Object controlling code generation.
 	)
 {
-_t_ofstream *ehash = gen->ehash_;	// File for hash table.
-_t_ofstream *edata = gen->edata_;
+std::_t_ofstream *ehash = gen->ehash_;	// File for hash table.
+std::_t_ofstream *edata = gen->edata_;
 								// File for arrays of strings, one for each hash loc.
-_t_ofstream *ehead	= gen->ehead_;		// Header file.
+std::_t_ofstream *ehead	= gen->ehead_;		// Header file.
 
 long ii;
 Slist<Sym> *list;
@@ -885,7 +885,7 @@ for (ii = 0; ii < size_; ++ii)
 	{
 #ifdef GENPRETTY_
 	if (!(ii % hmax))
-		*ehash << endl << _T("\t");			// Line break.
+		*ehash << std::endl << _T("\t");			// Line break.
 #endif
 	list = &(parr_[ii]);
 	if (!(ptr = list->getFirst()))
@@ -910,7 +910,7 @@ for (ii = 0; ii < size_; ++ii)
 		// Pretty print the entry.
 #ifdef GENPRETTY_
 		if (!(++jj % smax))
-			*edata << endl << _T("\t");
+			*edata << std::endl << _T("\t");
 #endif
 		sym = ptr->getData();
 		// OPT: These can be condensed to one string traversal...

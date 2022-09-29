@@ -21,7 +21,6 @@ All rights reserved.
 #include <stdlib.h>
 #include <iostream>											// Upgrade	// 01/24/01 AM.
 #include <fstream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 #endif
 
 #define FNAMESIZ 256

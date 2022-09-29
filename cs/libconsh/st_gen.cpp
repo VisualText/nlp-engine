@@ -59,7 +59,7 @@ void st_gen(
 	CG *cg
 	)
 {
-_t_ofstream *fp;
+std::_t_ofstream *fp;
 int ii;
 int segs_tot, seg_curr;
 long seg_size;
@@ -89,13 +89,13 @@ for (ii = 0; ii <= seg_curr; ii++)
    _stprintf(s_nam, _T("%s%s%s.cpp%s"), dir, DIR_SEP, s_tab, tail);
    //if (!file_open(s_nam, "w", &fp))
    //   return;
-	fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+	fp = new std::_t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
    gen_file_head(fp);
 // LINUX: Need to resolve to same capitalization in file name.	// 03/23/19 AM.
 #ifdef LINUX
-	*fp << _T("#include \"stdafx.h\"") << endl;	// 03/23/19 AM.
+	*fp << _T("#include \"stdafx.h\"") << std::endl;	// 03/23/19 AM.
 #else
-	*fp << _T("#include \"StdAfx.h\"") << endl;	// 06/28/00 AM.
+	*fp << _T("#include \"StdAfx.h\"") << std::endl;	// 06/28/00 AM.
 #endif
 
    ptr = st_segs[ii];
@@ -181,7 +181,7 @@ for (ii = seg_curr + 1; ii < segs_tot; ii++)
    _stprintf(s_nam, _T("%s%s%s.cpp"), dir, DIR_SEP, s_tab);
    //if (!file_open(s_nam, "w", &fp))
    //  return;
-	fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+	fp = new std::_t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
 
    gen_file_head(fp);
    gen_array_def(_T("_TCHAR"), s_tab, siz, fp);	/* Array definition. */
@@ -206,7 +206,7 @@ void st_gen_hdr(
 	CG *cg
 	)
 {
-_t_ofstream *fp;
+std::_t_ofstream *fp;
 int ii;
 _TCHAR s_nam[PATH],	/* Name of string table hdr file.		*/
      s_tab[16];		/* Name of string table array.			*/
@@ -216,11 +216,11 @@ segs_tot = cg->ast_->st_segs_tot();
 _stprintf(s_nam, _T("%s%s%s_ini.h%s"), dir, DIR_SEP, consh_ST_BASE, tail);
 //if (!file_open(s_nam, "w", &fp))
 //   return;
-fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+fp = new std::_t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
 
 gen_file_head(fp);
 
-*fp << _T("extern bool cc_st_ini(void*);\n") << endl;					// 08/16/02 AM.
+*fp << _T("extern bool cc_st_ini(void*);\n") << std::endl;					// 08/16/02 AM.
 
 for (ii = 0; ii < segs_tot; ii++)
    {
@@ -248,7 +248,7 @@ void st_gen_ini(
 	CG *cg
 	)
 {
-_t_ofstream *fp;
+std::_t_ofstream *fp;
 int ii;
 //long off;
 _TCHAR s_nam[PATH];	/* Name of string table hdr file.		*/
@@ -266,66 +266,66 @@ tsize		= cg->ast_->st_seg_size();
 _stprintf(s_nam, _T("%s%s%s_ini.cpp%s"), dir, DIR_SEP, tbase, tail);
 //if (!file_open(s_nam, "w", &fp))
 //   return;
-fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+fp = new std::_t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
 
 gen_file_head(fp);
 
 #ifdef LINUX
-*fp << _T("#include \"stdafx.h\"") << endl;			// 06/28/00 AM.
-*fp << _T("#include <stdio.h>") << endl;
-*fp << _T("#include <stdlib.h>") << endl;	
-//*fp << "#include <fstream.h>" << endl;			// 04/23/99 AM.
-*fp << _T("#include <iostream>") << endl;	// Upgrade.	// 01/24/01 AM.
-*fp << _T("#include <fstream>") << endl;	// Upgrade.	// 01/24/01 AM.
-*fp << _T("#include \"prim\\libprim.h\"") << endl;
-*fp << _T("#include \"prim\\prim.h\"") << endl;
-//*fp << "#include \"prim\\mach.h\"" << endl;			// 04/23/99 AM.
-*fp << _T("#include \"kbm\\libkbm.h\"") << endl;
-*fp << _T("#include \"kbm\\st.h\"") << endl;
-*fp << _T("#include \"consh\\libconsh.h\"") << endl;		// 08/15/02 AM.
-*fp << _T("#include \"consh\\cg.h\"") << endl;			// 08/15/02 AM.
+*fp << _T("#include \"stdafx.h\"") << std::endl;			// 06/28/00 AM.
+*fp << _T("#include <stdio.h>") << std::endl;
+*fp << _T("#include <stdlib.h>") << std::endl;	
+//*fp << "#include <fstream.h>" << std::endl;			// 04/23/99 AM.
+*fp << _T("#include <iostream>") << std::endl;	// Upgrade.	// 01/24/01 AM.
+*fp << _T("#include <fstream>") << std::endl;	// Upgrade.	// 01/24/01 AM.
+*fp << _T("#include \"prim\\libprim.h\"") << std::endl;
+*fp << _T("#include \"prim\\prim.h\"") << std::endl;
+//*fp << "#include \"prim\\mach.h\"" << std::endl;			// 04/23/99 AM.
+*fp << _T("#include \"kbm\\libkbm.h\"") << std::endl;
+*fp << _T("#include \"kbm\\st.h\"") << std::endl;
+*fp << _T("#include \"consh\\libconsh.h\"") << std::endl;		// 08/15/02 AM.
+*fp << _T("#include \"consh\\cg.h\"") << std::endl;			// 08/15/02 AM.
 #else
-*fp << _T("#include \"StdAfx.h\"") << endl;			// 06/28/00 AM.
-*fp << _T("#include <stdio.h>") << endl;
-*fp << _T("#include <stdlib.h>") << endl;
-//*fp << "#include <fstream.h>" << endl;			// 04/23/99 AM.
-*fp << _T("#include <iostream>") << endl;	// Upgrade.	// 01/24/01 AM.
-*fp << _T("#include <fstream>") << endl;	// Upgrade.	// 01/24/01 AM.
-*fp << _T("#include \"prim/libprim.h\"") << endl;
-*fp << _T("#include \"prim/prim.h\"") << endl;
-//*fp << "#include \"prim/mach.h\"" << endl;			// 04/23/99 AM.
-*fp << _T("#include \"kbm/libkbm.h\"") << endl;
-*fp << _T("#include \"kbm/st.h\"") << endl;
-*fp << _T("#include \"consh/libconsh.h\"") << endl;		// 08/15/02 AM.
-*fp << _T("#include \"consh/cg.h\"") << endl;			// 08/15/02 AM.
+*fp << _T("#include \"StdAfx.h\"") << std::endl;			// 06/28/00 AM.
+*fp << _T("#include <stdio.h>") << std::endl;
+*fp << _T("#include <stdlib.h>") << std::endl;
+//*fp << "#include <fstream.h>" << std::endl;			// 04/23/99 AM.
+*fp << _T("#include <iostream>") << std::endl;	// Upgrade.	// 01/24/01 AM.
+*fp << _T("#include <fstream>") << std::endl;	// Upgrade.	// 01/24/01 AM.
+*fp << _T("#include \"prim/libprim.h\"") << std::endl;
+*fp << _T("#include \"prim/prim.h\"") << std::endl;
+//*fp << "#include \"prim/mach.h\"" << std::endl;			// 04/23/99 AM.
+*fp << _T("#include \"kbm/libkbm.h\"") << std::endl;
+*fp << _T("#include \"kbm/st.h\"") << std::endl;
+*fp << _T("#include \"consh/libconsh.h\"") << std::endl;		// 08/15/02 AM.
+*fp << _T("#include \"consh/cg.h\"") << std::endl;			// 08/15/02 AM.
 #endif
-*fp << _T("#include \"") << tbase << _T("_ini.h\"") << endl;
-*fp << _T("\nbool cc_st_ini(void *xcg)") << endl;		// 08/15/02 AM.
-*fp << _T("{") << endl;
-*fp << _T("_TCHAR **segs;\n") << endl;
-*fp << _T("CG *cg = (CG *) xcg;") << endl;			// 08/15/02 AM.
-*fp << _T("segs = cg->ast_->st_seg_table();") << endl;		// 08/15/02 AM.
+*fp << _T("#include \"") << tbase << _T("_ini.h\"") << std::endl;
+*fp << _T("\nbool cc_st_ini(void *xcg)") << std::endl;		// 08/15/02 AM.
+*fp << _T("{") << std::endl;
+*fp << _T("_TCHAR **segs;\n") << std::endl;
+*fp << _T("CG *cg = (CG *) xcg;") << std::endl;			// 08/15/02 AM.
+*fp << _T("segs = cg->ast_->st_seg_table();") << std::endl;		// 08/15/02 AM.
 
 for (ii = 0; ii < segs_tot; ii++)
    *fp << _T("segs[") << ii << _T("] = &(") << tbase << ii << _T("[0]);")
-		 << endl;
+		 << std::endl;
 
-*fp << _T("bool ok = cg->ast_->st_hard_ini(") << endl;					// 08/18/02 AM.
-*fp << _T("   (long) ") << tsize << _T(",\t/* st seg size */") << endl;
-*fp << _T("   (int) ") << segs_tot << _T(",\t/* st segs tot */") << endl;
-*fp << _T("   (int) ") << tcurr << _T(",\t/* st seg curr */") << endl;
+*fp << _T("bool ok = cg->ast_->st_hard_ini(") << std::endl;					// 08/18/02 AM.
+*fp << _T("   (long) ") << tsize << _T(",\t/* st seg size */") << std::endl;
+*fp << _T("   (int) ") << segs_tot << _T(",\t/* st segs tot */") << std::endl;
+*fp << _T("   (int) ") << tcurr << _T(",\t/* st seg curr */") << std::endl;
 if (toff >= 0)									/* Table not empty. */
    *fp << _T("   &(")
 		 << tbase << tcurr
-		 << _T("[") << toff << _T("])\t/* st seg p */") << endl;
+		 << _T("[") << toff << _T("])\t/* st seg p */") << std::endl;
 else											/* Table empty.		*/
    *fp << _T("   &(") << tbase << tcurr << _T("[0]) - 1\t/* st seg p */")
-		 << endl;
+		 << std::endl;
 
 
-*fp << _T("   );") << endl;
-*fp << _T("return ok;") << endl;												// 05/05/01 AM.
-*fp << _T("}") << endl;
+*fp << _T("   );") << std::endl;
+*fp << _T("return ok;") << std::endl;												// 05/05/01 AM.
+*fp << _T("}") << std::endl;
 
 //if (!file_close(s_nam, fp))
 //   return;

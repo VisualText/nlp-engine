@@ -29,8 +29,8 @@ All rights reserved.
 
 Avar::Avar()
 {
-_t_strstream gerrStr;
-gerrStr << _T("[DON'T CREATE OBJECTS OF Avar CLASS.]") << ends;
+std::_t_strstream gerrStr;
+gerrStr << _T("[DON'T CREATE OBJECTS OF Avar CLASS.]") << std::ends;
 errOut(&gerrStr,false);
 }
 

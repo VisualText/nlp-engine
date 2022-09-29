@@ -42,7 +42,7 @@ ccx_ini(void *xcg)														// 06/11/02 AM.
 CG *cg = (CG *) xcg;														// 08/15/02 AM.
 if (!ccx_st_ini(cg))
  {
- _t_cerr << _T("[cc_ini: cc_st_ini failed.]") << endl;	// 05/07/01 AM.
+ std::_t_cerr << _T("[cc_ini: cc_st_ini failed.]") << std::endl;	// 05/07/01 AM.
  return false;										// 08/15/02 AM.
  }
 if (!ccx_sym_ini(cg)) return false;										// 08/15/02 AM.

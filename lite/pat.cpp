@@ -136,8 +136,8 @@ bool Pat::Execute(Parse *parse, Seqn *seqn)
 
 if (!parse || !seqn)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Pat pass given no parser or pass information.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Pat pass given no parser or pass information.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -165,8 +165,8 @@ if (!tree
 // || !lines																	// 07/18/01 AM.
    )
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Pat pass given no parse tree data.]") << ends;	// 07/18/01 AM.
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Pat pass given no parse tree data.]") << std::ends;	// 07/18/01 AM.
 	return errOut(&gerrStr,false);
 	}
 
@@ -175,8 +175,8 @@ Node<Pn> *root;
 root = tree->pRoot;									// OPT				// 05/16/00 AM.
 if (!root)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Pat pass: Tree has no root.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Pat pass: Tree has no root.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -190,8 +190,8 @@ if (!rulelist)
 	// Check if any @RULES marker was in the file.					// 08/31/00 AM.
 	if (rulesfile && !rulesfile->getEmpty())							// 08/31/00 AM.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Pat pass given no rules.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Pat pass given no rules.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
 	return true;
@@ -202,8 +202,8 @@ Delt<Irule> *rules;
 rules = rulelist->getFirst();
 if (!rules)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Pat pass: No rules in list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Pat pass: No rules in list.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -318,7 +318,7 @@ for (dselect = selects->getFirst(); dselect; dselect = dselect->Right())
 	select = dselect->getData();
 	if (!strcmp_i(name, select->getStr()))		// Found one.
 		{
-		//*gout << "[FOUND SELECT NODE]" << endl;
+		//*gout << "[FOUND SELECT NODE]" << std::endl;
 		//flag = true;		// 10/09/99 AM.
 		//matchSelect(node, rules, parse);
 		if (!matchNodes(node->Down(),0,rules,parse,node))	// 04/27/00 AM.
@@ -387,7 +387,7 @@ for (dselect = selects->getFirst(); dselect; dselect = dselect->Right())
 	select = dselect->getData();
 	if (!strcmp_i(name, select->getStr()))		// Found one.
 		{
-		//*gout << "[FOUND SELECT NODE]" << endl;
+		//*gout << "[FOUND SELECT NODE]" << std::endl;
 		//flag = true;				// 10/09/99 AM.
 		//matchSelect(node, musts, htab, parse);
 		if (!matchNodes(node->Down(),0,musts,htab,parse,node))	// 04/27/00 AM.
@@ -534,7 +534,7 @@ while (node)					// While matching on list of nodes.
 	// For each rule in the rules list.
 	prule = rules;				// Reset the rules list. 11/1/98 AM.
 	//if (Debug())
-	//	*gout << " Matching on node:" << *node << endl;
+	//	*gout << " Matching on node:" << *node << std::endl;
 
 	// if (!matchRules(node,start,end,parse,select,				// 11/19/99 AM.
 	//					/*DU*/ prule,collect,first,last,sem, dsem))
@@ -625,7 +625,7 @@ while (node)					// While matching on list of nodes.
 	prule = resetRules(nlppp.node_, musts, htab, /*DU*/ rules);
 
 	//if (Debug())
-	//	*gout << " Matching on node:" << *node << endl;
+	//	*gout << " Matching on node:" << *node << std::endl;
 
 	// For each rule in the rules list.
 	// if (!matchRules(node,start,end,parse,select,				// 11/19/99 AM.
@@ -767,12 +767,12 @@ bool Pat::execActions(	// 11/19/99 AM.
 //sem = 0;
 
 //if (Debug())
-//	*gout << "  [Execute rule actions...]" << endl;
+//	*gout << "  [Execute rule actions...]" << std::endl;
 
 if (!nlppp->rule_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[execActions: Given no rule.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[execActions: Given no rule.]") << std::ends;
 	errOut(&gerrStr,false);
 	//delete (Tree<Pn> *) collect;	// Caller deletes.		// 11/25/98 AM.
 	return false;															// 11/10/99 AM.
@@ -807,7 +807,7 @@ for (rule = rules; rule; rule = rule->Right())
 	nlppp->rmost_ = 0;		// Reset.		// RECOPT2.	// 07/23/06 AM.
 	updateRestart(nlppp,node);	// Reset.	// RECOPT2.	// 07/24/06 AM.
 	//if (Debug())
-	//	*gout << "  Trying rule: " << *rule << endl;
+	//	*gout << "  Trying rule: " << *rule << std::endl;
 
 	// Match rule starting at current node.
 	// Remember triggering, directions, collect as you go.
@@ -822,7 +822,7 @@ for (rule = rules; rule; rule = rule->Right())
 		 && checkActions(nlppp))					// 11/19/99 AM.
 		{
 //		if (Debug())
-//			*gout << "\n  [Matched rule.]\n" << endl;
+//			*gout << "\n  [Matched rule.]\n" << std::endl;
 		rules = rule;		// UP: Return the matched rule to caller. 11/1/98 AM.
 		nlppp->node_ = node;		// RESTORE NODE.	// 11/20/99 AM.
 		return true;
@@ -869,7 +869,7 @@ for (rule = rules; rule; rule = rule->Right())
 	nlppp->rmost_ = 0;		// Reset.		// RECOPT2.	// 07/23/06 AM.
 	updateRestart(nlppp,node);	// Reset.	// RECOPT2.	// 07/24/06 AM.
 	//if (Debug())
-	//	*gout << "  Trying rule: " << *rule << endl;
+	//	*gout << "  Trying rule: " << *rule << std::endl;
 
 	// Match rule starting at current node.
 	// Remember triggering, directions, collect as you go.
@@ -887,7 +887,7 @@ for (rule = rules; rule; rule = rule->Right())
 		 && checkActions(nlppp))								// 11/19/99 AM.
 		{
 //		if (Debug())
-//			*gout << "\n  [Matched rule.]\n" << endl;
+//			*gout << "\n  [Matched rule.]\n" << std::endl;
 		rules = rule;	// UP: Return matched rule to caller.	// 11/01/98 AM.
 		nlppp->node_ = node;						// RESTORE NODE.	// 11/20/99 AM.
 		return true;
@@ -965,8 +965,8 @@ if (!nlppp->rule_ || !nlppp->node_)
 	{
 	Parse *parse = nlppp->parse_;	// 04/04/10 AM.
 	parse->line_ = nlppp->rule_->getLine();	// 04/04/10 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[matchRule: Missing rule or node.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[matchRule: Missing rule or node.]") << std::ends;
 	parse->errOut(&gerrStr,false);
 	return false;
 	}
@@ -987,8 +987,8 @@ if (!rphrase)
 	{
 	Parse *parse = nlppp->parse_;	// 04/04/10 AM.
 	parse->line_ = nlppp->rule_->getLine();	// 04/04/10 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[matchRule: Empty rule phrase.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[matchRule: Empty rule phrase.]") << std::ends;
 	parse->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1010,7 +1010,7 @@ if (!trig)
 else
 	{
 //	if (Debug())
-//		*gout << "   [Trying trigger.]" << endl;
+//		*gout << "   [Trying trigger.]" << std::endl;
 	//if (!matchTrigger(trig,start,end,rule,						// 11/19/99 AM.
 	//								/*DU*/elt,node,collect,first,last,dir))
 	if (!matchTrigger(trig,nlppp, /*DU*/ elt,dir))				// 11/19/99 AM.
@@ -1095,8 +1095,8 @@ if (!_tcscmp(ee->getName(), _T("_xSTART")))			// If it's start of phrase elt.
 		{
 		Parse *parse = nlppp->parse_;	// 04/04/10 AM.
 		parse->line_ = nlppp->rule_->getLine();	// 04/04/10 AM.
-		_t_strstream gerrStr;
-		gerrStr << _T("[Rule ending with _xSTART not allowed.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Rule ending with _xSTART not allowed.]") << std::ends;
 		parse->errOut(&gerrStr,false);
 		return false;
 		}
@@ -1121,8 +1121,8 @@ if (!nlppp->node_->Left()											// 08/10/03 AM.
 		{
 		Parse *parse = nlppp->parse_;	// 04/04/10 AM.
 		parse->line_ = nlppp->rule_->getLine();	// 04/04/10 AM.
-		_t_strstream gerrStr;			// 08/10/03 AM.
-		gerrStr << _T("[Rule ending with _xSTART not allowed.]") << ends;
+		std::_t_strstream gerrStr;			// 08/10/03 AM.
+		gerrStr << _T("[Rule ending with _xSTART not allowed.]") << std::ends;
 		parse->errOut(&gerrStr,false);													// 08/10/03 AM.
 		return false;													// 08/10/03 AM.
 		}
@@ -1164,8 +1164,8 @@ if (!(elt = trig))
 	{
 	Parse *parse = nlppp->parse_;	// 04/04/10 AM.
 	parse->line_ = nlppp->rule_->getLine();	// 04/04/10 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[matchTrigger: Given no trigger.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[matchTrigger: Given no trigger.]") << std::ends;
 	parse->errOut(&gerrStr,false);
 	return false;
 	}
@@ -1195,7 +1195,7 @@ if (wildElt(ielt))			// Trigger or first elt is a wildcard.
 // Match trigger rule elt to current node.
 //if (!Match(elt, node))
 //	{
-//	//if (Debug()) *gout << "  no match." << endl;
+//	//if (Debug()) *gout << "  no match." << std::endl;
 //	return false;
 //	}
 
@@ -1236,7 +1236,7 @@ if (!matchRealRight(ielt,
 //	nlppp->span_ += tcount;											// 02/04/05 AM.
 
 //if (Debug())
-//	*gout << "   [Literal match]" << endl;
+//	*gout << "   [Literal match]" << std::endl;
 
 // Build a collect (tracking structure) for current rule elt.
 //Node<Pn> *ncoll;	// The collect node for the trigger.	// 05/04/00 AM.
@@ -1337,8 +1337,8 @@ if (!nlppp->node_)
 			{
 			Parse *parse = nlppp->parse_;	// 04/04/10 AM.
 			parse->line_ = nlppp->rule_->getLine();	// 04/04/10 AM.
-			_t_strstream gerrStr;
-			gerrStr << _T("[_xSTART must be first rule element.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[_xSTART must be first rule element.]") << std::ends;
 			parse->errOut(&gerrStr,false);
 			return false;
 			}
@@ -1477,8 +1477,8 @@ if (!nlppp->node_)
 			{
 			Parse *parse = nlppp->parse_;	// 04/02/10 AM.
 			parse->line_ = nlppp->rule_->getLine();	// 04/02/10 AM.
-			_t_strstream gerrStr;
-			gerrStr << _T("[_xEND or _xEOF must be last rule element.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[_xEND or _xEOF must be last rule element.]") << std::ends;
 			parse->errOut(&gerrStr,false);
 			return false;			// Make sure this is last rule elt.
 			}
@@ -1798,7 +1798,7 @@ for (;;)		// Look for real match till done.
 			return false;
 
 //		if (Debug())
-//			*gout << "   [Real match]" << endl;
+//			*gout << "   [Real match]" << std::endl;
 		node = test;
 		return true;
 		}
@@ -1869,7 +1869,7 @@ for (;;)		// Look for real match till done.
 			return false;
 
 //		if (Debug())
-//			*gout << "   [Real match]" << endl;
+//			*gout << "   [Real match]" << std::endl;
 //		nlppp->maxspan_ += count;	// RECOPT1	// 04/26/06 AM.
 		node = test;
 		return true;
@@ -2175,7 +2175,7 @@ if (count <= wildmin)														// 07/31/02 AM.
 nlppp->node_ = test;															// 07/31/02 AM.
 
 //strstream gerrStr(Errbuf,MAXSTR,ios::out);
-//gerrStr << "[matchRightspecial: UNIMPLEMENTED]" << ends;
+//gerrStr << "[matchRightspecial: UNIMPLEMENTED]" << std::ends;
 //errOut(false);
 
 // COMPLETE THE WILDCARD AT END OF RULE MATCH.						// 07/31/02 AM.
@@ -2551,7 +2551,7 @@ else if (!_tcscmp(name, _T("_xCTRL")))			// Control char tok.	// 07/24/00 AM.
 else if (!_tcscmp(name, _T("_xWILD")))						// Restricted wildcard.
 	{
 //	if (Debug())
-//		*gout << "  [Restricted wildcard.]" << endl;
+//		*gout << "  [Restricted wildcard.]" << std::endl;
 	// 11/09/98 AM.
 	// Must be restricted wildcard, or we wouldn't be here.
 	// Get the match and fail lists.  Compare each.
@@ -2611,8 +2611,8 @@ else if (!_tcscmp(name, _T("_xWILD")))						// Restricted wildcard.
 	return true;	// Automatically matches this part.	// 08/16/11 AM.
 
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[modeMatch: Wildcard with no match or fail list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[modeMatch: Wildcard with no match or fail list.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -2858,8 +2858,8 @@ bool Pat::literalMatch(
 //ee = delt->getData();
 //if (Debug())			// OPT // 10/05/99 AM.
 //	{
-//	*gout << "   rule elt name=" << ename << endl;
-//	*gout << "   node name=" << nname << endl;
+//	*gout << "   rule elt name=" << ename << std::endl;
+//	*gout << "   node name=" << nname << std::endl;
 //	}
 
 // MATCH THEM!
@@ -2893,7 +2893,7 @@ Pn *pn;									// 10/05/99 AM.
 while (node)		// Look down the subtree.
 	{
 //	if (Debug())
-//		*gout << "   [IN SINGLET MATCH:]" << endl;
+//		*gout << "   [IN SINGLET MATCH:]" << std::endl;
 	pn = node->getData();										// 10/05/99 AM.
 	success = modeMatch(ielt, pn, /*UP*/ failmode);		// 10/05/99 AM.
 	if (success && !failmode)									// 03/23/99 AM.
@@ -2948,7 +2948,7 @@ bool dejunk = ielt->getDejunk();						// 09/11/11 AM.
 while (node)		// Look down the subtree.
 	{
 //	if (Debug())
-//		*gout << "   [IN SINGLET EXCEPT:]" << endl;
+//		*gout << "   [IN SINGLET EXCEPT:]" << std::endl;
 	pn = node->getData();
 	if (modeMatches(elist,					// Successful match of list.
 						 htab,								// 11/09/99 AM.
@@ -3350,10 +3350,10 @@ if (!warn_wild)		// Never issued this warning yet.
 	{
 	Parse *parse = nlppp->parse_;
 	parse->line_ = nlppp->rule_->getLine();
-	_t_strstream gerrStr;
-	gerrStr << _T("[Unimplemented: wildcard trigger, start, or end.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Unimplemented: wildcard trigger, start, or end.]") << std::ends;
 	parse->errOut(&gerrStr,false);	// 09/06/08 AM.
-//	gerrStr << _T("[Rule=") << *rule << _T("]") << ends;
+//	gerrStr << _T("[Rule=") << *rule << _T("]") << std::ends;
 //	errOut(&gerrStr,false);
 
 	warn_wild = true;
@@ -3519,7 +3519,7 @@ if (eana->getFlogfiles())													// 10/13/99 AM.
 	parse->setVerbose(true);												// 10/13/99 AM.
 	eana->setFverbose(true);												// 10/13/99 AM.
 
-	*gout << _T("\nPAT OUTPUT TREE:\n") << endl;
+	*gout << _T("\nPAT OUTPUT TREE:\n") << std::endl;
 	tree->Traverse(root, *gout);
 	Pn::TraverseSetFlags(root,false,false);	// CLEAR FLAGS.	// 05/25/01 AM.
 
@@ -3554,8 +3554,8 @@ bool Pat::Execute(
 
 if (!parse)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Pat pass given no parser or pass information.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Pat pass given no parser or pass information.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -3591,8 +3591,8 @@ if (!tree
 // || !lines																	// 07/18/01 AM.
 	)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Pat pass given no parse tree data.]") << ends;	// 07/18/01 AM.
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Pat pass given no parse tree data.]") << std::ends;	// 07/18/01 AM.
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -3602,8 +3602,8 @@ Node<Pn> *root;
 root = tree->pRoot;
 if (!root)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Pat pass: Tree has no root.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Pat pass: Tree has no root.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -3640,8 +3640,8 @@ switch (pass->seltype)			// Type of traversal.				// 06/08/00 AM.
 		break;
 	case SELECTPREMULTI:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Premulti select traversal unimplemented.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Premulti select traversal unimplemented.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -3649,8 +3649,8 @@ switch (pass->seltype)			// Type of traversal.				// 06/08/00 AM.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Bad select traversal type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Bad select traversal type.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -3692,7 +3692,7 @@ while (*pselect)
 	{
 	if (!strcmp_i(name, *pselect))		// Found one.
 		{
-		//*gout << "[FOUND SELECT NODE]" << endl;
+		//*gout << "[FOUND SELECT NODE]" << std::endl;
 //		matchNodes(node->Down(),0,rules,parse,node);
 		if (!matchNodes(node->Down(),0,parse,pass,node))
 			return false;
@@ -3801,7 +3801,7 @@ while (node)					// While matching on list of nodes.
 	// For each rule in the rules list.
 	//prule = rules;				// Reset the rules list.
 	//if (Debug())
-	//	*gout << " Matching on node:" << *node << endl;
+	//	*gout << " Matching on node:" << *node << std::endl;
 
 	// if (!matchRules(node,start,end,parse,select,
 	//					/*DU*/ prule,collect,first,last,sem, dsem))
@@ -3873,8 +3873,8 @@ while (!done)
 		if (!nlppp->first_
 			 && !nlppp->excised_)								// FIX.	// 04/28/01 AM.
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Rule match consumed no nodes.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Rule match consumed no nodes.]") << std::ends;
 			Parse *parse = nlppp->parse_;									// 12/18/03 AM.
 			// FIX.	I believe runtime doesn't use ->rule etc		// 05/17/08 AM.
 //			parse->line_ = nlppp->rule_->getLine();		// FIX.	// 05/17/08 AM.
@@ -3926,8 +3926,8 @@ bool Pat::Hexecute(
 
 if (!parse)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Pat pass given no parser or pass information.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Pat pass given no parser or pass information.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -3961,8 +3961,8 @@ if (!tree
 // || !lines
    )
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Pat pass given no parse tree data.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Pat pass given no parse tree data.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -3972,8 +3972,8 @@ Node<Pn> *root;
 root = tree->pRoot;
 if (!root)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Pat pass: Tree has no root.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Pat pass: Tree has no root.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -4009,8 +4009,8 @@ switch (pass->seltype)			// Type of traversal.
 		break;
 	case SELECTPREMULTI:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Premulti select traversal unimplemented.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Premulti select traversal unimplemented.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -4018,8 +4018,8 @@ switch (pass->seltype)			// Type of traversal.
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Bad select traversal type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Bad select traversal type.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -4063,7 +4063,7 @@ while (*pselect)
 	{
 	if (!strcmp_i(name, *pselect))		// Found one.
 		{
-		//*gout << "[FOUND SELECT NODE]" << endl;
+		//*gout << "[FOUND SELECT NODE]" << std::endl;
 //		matchNodes(node->Down(),0,must,htab,rules,parse,node);
 		if (!HmatchNodes(node->Down(),0,parse,pass,node))
 			return false;																// 11/11/02 AM.
@@ -4217,8 +4217,8 @@ while (!done)
 		if (!nlppp->first_
 			 && !nlppp->excised_)								// FIX.	// 04/28/01 AM.
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Rule match consumed no nodes.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Rule match consumed no nodes.]") << std::ends;
 			Parse *parse = nlppp->parse_;									// 12/18/03 AM.
 //			parse->line_ = nlppp->rule_->getLine();	// FIX.		// 05/17/08 AM.
 //			errOut(false);														// 12/18/03 AM.
@@ -4402,8 +4402,8 @@ if (remain < 0)
 	{
 	Parse *parse = nlppp->parse_;	// 04/04/10 AM.
 	parse->line_ = nlppp->rule_->getLine();	// 04/04/10 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: wild_backfill_left.(1)]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: wild_backfill_left.(1)]") << std::ends;
 	parse->errOut(&gerrStr,false);
 	return false;			// Should have failed to match.
 	}
@@ -4462,8 +4462,8 @@ for (; coll != bound; --coll, --elt)
 			{
 			Parse *parse = nlppp->parse_;	// 04/04/10 AM.
 			parse->line_ = nlppp->rule_->getLine();	// 04/04/10 AM.
-			_t_strstream gerrStr;
-			gerrStr << _T("[Error: wild_backfill_left]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Error: wild_backfill_left]") << std::ends;
 			parse->errOut(&gerrStr,false);
 			return false;
 			}
@@ -4475,8 +4475,8 @@ for (; coll != bound; --coll, --elt)
 			{
 			Parse *parse = nlppp->parse_;	// 04/04/10 AM.
 			parse->line_ = nlppp->rule_->getLine();	// 04/04/10 AM.
-			_t_strstream gerrStr;
-			gerrStr << _T("[Error: wild_backfill_left(3)]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Error: wild_backfill_left(3)]") << std::ends;
 			parse->errOut(&gerrStr,false);
 			}
 
@@ -4493,8 +4493,8 @@ for (; coll != bound; --coll, --elt)
 			{
 			Parse *parse = nlppp->parse_;	// 04/04/10 AM.
 			parse->line_ = nlppp->rule_->getLine();	// 04/04/10 AM.
-			_t_strstream gerrStr;
-			gerrStr << _T("[Error: wild_backfill_left]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Error: wild_backfill_left]") << std::ends;
 			parse->errOut(&gerrStr,false);
 			return false;
 			}
@@ -4556,8 +4556,8 @@ if (remain < 0)
 	{
 	Parse *parse = nlppp->parse_;	// 04/04/10 AM.
 	parse->line_ = nlppp->rule_->getLine();	// 04/04/10 AM.
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: wild_backfill_right.(1)]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: wild_backfill_right.(1)]") << std::ends;
 	parse->errOut(&gerrStr,false);
 	return false;			// Should have failed to match.
 	}
@@ -4616,8 +4616,8 @@ for (; coll != bound; ++coll, ++elt)
 			{
 			Parse *parse = nlppp->parse_;	// 04/04/10 AM.
 			parse->line_ = nlppp->rule_->getLine();	// 04/04/10 AM.
-			_t_strstream gerrStr;
-			gerrStr << _T("[Error: wild_backfill_right]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Error: wild_backfill_right]") << std::ends;
 			parse->errOut(&gerrStr,false);
 		// 05/25/00 AM.
 			return false;														// 05/25/00 AM.
@@ -4638,8 +4638,8 @@ for (; coll != bound; ++coll, ++elt)
 			{
 			Parse *parse = nlppp->parse_;	// 04/04/10 AM.
 			parse->line_ = nlppp->rule_->getLine();	// 04/04/10 AM.
-			_t_strstream gerrStr;
-			gerrStr << _T("[Error: wild_backfill_right]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Error: wild_backfill_right]") << std::ends;
 			parse->errOut(&gerrStr,false);
 			return false;
 			}

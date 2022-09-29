@@ -57,7 +57,7 @@ public:
 public:
 	static int getCount();
 	static void prettyCount(_TCHAR * = _T(""),
-						_t_ofstream* =0);			// Pretty-print the count.
+						std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif
@@ -138,23 +138,23 @@ int Selt<SELTTYPE>::getCount() { return count_; }
 #ifndef STABLE_
 template<class SELTTYPE>
 void Selt<SELTTYPE>::prettyCount(_TCHAR *str,
-	_t_ofstream *ofstr)
+	std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("Active Selt<") << str << _T("> count=")
-		  << count_ << ends;
+		  << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 
 	*gout << _T("Active Selt<") << str << _T("> count=")
-		  << count_ << endl;
+		  << count_ << std::endl;
 
 	if (ofstr)
 		*ofstr << _T("Active Selt<") << str << _T("> count=")
-		  << count_ << endl;
+		  << count_ << std::endl;
 	}
 }
 #endif

@@ -21,7 +21,6 @@ All rights reserved.
 #include <iostream>
 #include <fstream>
 #include <sstream>
-using namespace std;
 #endif
 
 #include <windows.h>
@@ -33,15 +32,14 @@ using namespace std;
 #include "u_convert.h"
 
 
-LIBPRIM_API _TCHAR getutf8(_t_istream *);
-LIBPRIM_API bool u_readbom(_t_ifstream *);
+LIBPRIM_API _TCHAR getutf8(std::_t_istream *);
+LIBPRIM_API bool u_readbom(std::_t_ifstream *);
 
 #else
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
-using namespace std;
 #ifdef LINUX
 #include <sstream>
 #else

@@ -15,7 +15,7 @@ All rights reserved.
 #include "lite/nlp_engine.h"
 #include "version.h"
 
-#define NLP_ENGINE_VERSION "1.21.4"
+#define NLP_ENGINE_VERSION "1.21.7"
 
 bool cmdReadArgs(int,_TCHAR*argv[],_TCHAR*&,_TCHAR*&,_TCHAR*&,_TCHAR*&,bool&,bool&,bool&);
 void cmdHelpargs(_TCHAR*);
@@ -94,16 +94,16 @@ silent = false;	// Produce debug files, etc. by default.		// 06/16/02 AM.
 for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 	{
 	// For each command line argument.
-	//*gout << "command arg=" << *parg << endl;
+	//*gout << "command arg=" << *parg << std::endl;
 	ptr = *parg;
 	if (strcmp_i(ptr, _T("--version")) && strcmp_i(ptr, _T("--help")))
-		_t_cout << _T("[command arg: ") << *parg << _T("]") << endl;
+		std::_t_cout << _T("[command arg: ") << *parg << _T("]") << std::endl;
 
 	if (*ptr == '-')	// DOS or UNIX style arg.
 		{
 		if (flag)
 			{
-			_t_cerr << _T("[Error in command line args for ") << *ptr << _T("]") << endl;
+			std::_t_cerr << _T("[Error in command line args for ") << *ptr << _T("]") << std::endl;
 			return false;
 			}
 		++ptr;
@@ -121,10 +121,10 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 			else if (!strcmp_i(ptr, _T("version")))
 				{
 #ifdef LINUX
-				//_t_cout << "Version " << Version() << std::endl;
-				_t_cout << _T(NLP_ENGINE_VERSION) << endl;
+				//std::_t_cout << "Version " << Version() << std::std::endl;
+				std::_t_cout << _T(NLP_ENGINE_VERSION) << std::endl;
 #else
-				_t_cout << _T(NLP_ENGINE_VERSION) << endl;
+				std::_t_cout << _T(NLP_ENGINE_VERSION) << std::endl;
 #endif
 				return false;
 				}
@@ -141,7 +141,7 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 			{
 			if (silent)
 				{
-				_t_cerr << _T("[Ignoring /dev flag.]");
+				std::_t_cerr << _T("[Ignoring /dev flag.]");
 				develop = false;
 				}
 			else
@@ -151,7 +151,7 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 			{
 			if (develop)
 				{
-				_t_cerr << _T("[Ignoring /dev flag.]");
+				std::_t_cerr << _T("[Ignoring /dev flag.]");
 				develop = false;
 				}
 			silent = true;                                        // 06/16/02 AM.
@@ -159,7 +159,7 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 		else if (!strcmp_i(ptr, _T("interp")))	// Run interpreted analyzer.
 			{
 			if (compiledck)
-				_t_cerr << _T("[Ignoring extra /compiled or /interp flag.]");
+				std::_t_cerr << _T("[Ignoring extra /compiled or /interp flag.]");
 			else
 				{
 				compiledck = true;
@@ -169,7 +169,7 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 		else if (!strcmp_i(ptr, _T("compiled")))	// Run compiled analyzer.
 			{
 			if (compiledck)
-				_t_cerr << _T("[Ignoring extra /compiled or /interp flag.]");
+				std::_t_cerr << _T("[Ignoring extra /compiled or /interp flag.]");
 			else
 				{
 				compiledck = true;
@@ -183,7 +183,7 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 			{
 			if (anapath)
 				{
-                _t_cerr << _T("[") << argv[0] << _T(": analyzer specified twice.]");
+                std::_t_cerr << _T("[") << argv[0] << _T(": analyzer specified twice.]");
 				cmdHelpargs(argv[0]);
 				return false;
 				}
@@ -194,7 +194,7 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 			{
 			if (input)
 				{
-				_t_cerr << _T("[") << argv[0] << _T(": Input file specified twice.]");
+				std::_t_cerr << _T("[") << argv[0] << _T(": Input file specified twice.]");
 				cmdHelpargs(argv[0]);
 				return false;
 				}
@@ -206,7 +206,7 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 			{
 			if (output)
 				{
-				_t_cerr << _T("[") << argv[0]
+				std::_t_cerr << _T("[") << argv[0]
 						  << _T(": Output file specified twice.]");
 				cmdHelpargs(argv[0]);
 				return false;
@@ -219,7 +219,7 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 			{
 			if (workdir)
 				{
-				_t_cerr << _T("[") << argv[0]
+				std::_t_cerr << _T("[") << argv[0]
 						  << _T(": Output file specified twice.]");
 				cmdHelpargs(argv[0]);
 				return false;
@@ -233,7 +233,7 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 		{
 			if (input && output)
 				{
-				_t_cerr << _T("[") << argv[0] << _T(": Extra arguments.]") << endl;
+				std::_t_cerr << _T("[") << argv[0] << _T(": Extra arguments.]") << std::endl;
 				cmdHelpargs(argv[0]);
 				return false;
 				}
@@ -258,19 +258,19 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 
 void cmdHelpargs(_TCHAR *name)
 {
-_t_cout << endl
-	<< _T("usage: nlp [--version] [--help]") << endl
-	<< _T("           [-INTERP][-COMPILED] INTERP is the default") << endl
-	<< _T("           [-ANA analyzer] name or path to NLP++ analyzer folder") << endl
-	<< _T("           [-IN infile] input text file path") << endl
-	<< _T("           [-OUT outdir] output directory") << endl
-	<< _T("           [-WORK workdir] working directory") << endl
-	<< _T("           [-DEV][-SILENT] -DEV generates logs, -SILENT (default) does not") << endl
-	<< _T("           [infile [outfile]] when no -IN or -OUT specified") << endl
-	<< endl
-	<< _T("Directories in the nlp.exe files:") << endl
-	<< _T("   data        nlp engine bootstrap grammar") << endl
-	<< _T("   analyzers   default location for nlp++ analyzer folders") << endl
-	<< _T("   visualtext  common files for the VisualText IDE") << endl
-	<< endl;
+std::_t_cout << std::endl
+	<< _T("usage: nlp [--version] [--help]") << std::endl
+	<< _T("           [-INTERP][-COMPILED] INTERP is the default") << std::endl
+	<< _T("           [-ANA analyzer] name or path to NLP++ analyzer folder") << std::endl
+	<< _T("           [-IN infile] input text file path") << std::endl
+	<< _T("           [-OUT outdir] output directory") << std::endl
+	<< _T("           [-WORK workdir] working directory") << std::endl
+	<< _T("           [-DEV][-SILENT] -DEV generates logs, -SILENT (default) does not") << std::endl
+	<< _T("           [infile [outfile]] when no -IN or -OUT specified") << std::endl
+	<< std::endl
+	<< _T("Directories in the nlp.exe files:") << std::endl
+	<< _T("   data        nlp engine bootstrap grammar") << std::endl
+	<< _T("   analyzers   default location for nlp++ analyzer folders") << std::endl
+	<< _T("   visualtext  common files for the VisualText IDE") << std::endl
+	<< std::endl;
 }

@@ -63,7 +63,7 @@ class Pn;			// 10/18/00 AM.
 
 class Ivar
 {
-	friend _t_ostream &operator<<(_t_ostream &, Ivar &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Ivar &);
 
 public:
 	Ivar(											// Default constructor.
@@ -96,7 +96,7 @@ public:
 	void setIndex(RFASem *);												// 10/13/00 AM.
 
 	// General.
-	void genVar(_t_ostream &ofile);
+	void genVar(std::_t_ostream &ofile);
 
 	// This one returns the value(s) of the variable.
 	bool eval(Nlppp *, /*UP*/ RFASem* &);
@@ -228,7 +228,7 @@ protected:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif

@@ -109,8 +109,8 @@ Iexpr *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Iexpr object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Iexpr object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -161,7 +161,7 @@ dest->line_		= orig->line_;
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Iexpr &expr)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Iexpr &expr)
 {
 switch (expr.type_)
 	{
@@ -229,14 +229,14 @@ int Iexpr::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Iexpr::prettyCount(_t_ofstream *ofstr)
+void Iexpr::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Iexpr count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Iexpr count=") << count_ << ends;
+		*ofstr << _T("Active Iexpr count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Iexpr count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -253,10 +253,10 @@ if (count_)
 * SUBJ:	Generate expr to a rules file.
 *********************************************/
 void Iexpr::genExpr(
-	_t_ostream &ofile
+	std::_t_ostream &ofile
 	)
 {
-ofile << this << flush;
+ofile << this << std::flush;
 }
 
 
@@ -376,7 +376,7 @@ switch (type_)
 			_stprintf(Errbuf,_T("[Bad lhs expression.]"));					// 05/18/01 AM.
 			nlppp->parse_->errOut(false); // UNFIXED 									// 05/18/01 AM.
 //			*gerr << "[Bad lhs expression: " << *lhs_					// 05/18/01 AM.
-//					<< "]" << endl;											// 05/18/01 AM.
+//					<< "]" << std::endl;											// 05/18/01 AM.
 			goto done;
 			}
 
@@ -393,7 +393,7 @@ switch (type_)
 			_stprintf(Errbuf,_T("[Bad rhs expression.]"));					// 05/18/01 AM.
 			nlppp->parse_->errOut(false); // UNFIXED 									// 05/18/01 AM.
 //			*gerr << "[Bad rhs expression: " << *rhs_					// 05/18/01 AM.
-//					<< "]" << endl;											// 05/18/01 AM.
+//					<< "]" << std::endl;											// 05/18/01 AM.
 			goto done;
 			}
 		// Allowing empty rhs in all expr types now.					// 11/22/00 AM.
@@ -408,7 +408,7 @@ switch (type_)
 				_stprintf(Errbuf,_T("[Empty rhs expression.]"));			// 05/18/01 AM.
 				nlppp->parse_->errOut(false); // UNFIXED 								// 05/18/01 AM.
 //				*gerr << "[Empty rhs expression: " << *rhs_			// 05/18/01 AM.
-//						<< "]" << endl;										// 05/18/01 AM.
+//						<< "]" << std::endl;										// 05/18/01 AM.
 				goto done;
 				}
 			}
@@ -450,7 +450,7 @@ switch (type_)
 									_T("[Binary plus: Error. Bad rhs.]"));	// 05/18/01 AM.
 							nlppp->parse_->errOut(false); // UNFIXED 					// 05/18/01 AM.
 //							*gerr << "[Binary plus: Error. Bad rhs:"	// 05/18/01 AM.
-//								<< *rhs_ << "]" << endl;					// 05/18/01 AM.
+//								<< *rhs_ << "]" << std::endl;					// 05/18/01 AM.
 							ok = false;
 							goto done;
 						}
@@ -486,7 +486,7 @@ switch (type_)
 									_T("[Binary plus: Error. Bad lhs.]"));	// 05/18/01 AM.
 							nlppp->parse_->errOut(false); // UNFIXED 					// 05/18/01 AM.
 //							*gerr << "[Binary plus: Error. Bad lhs:"	// 05/18/01 AM.
-//								<< *lhs_ << "]" << endl;					// 05/18/01 AM.
+//								<< *lhs_ << "]" << std::endl;					// 05/18/01 AM.
 							ok = false;
 							goto done;
 						}
@@ -635,7 +635,7 @@ switch (type_)
 								_stprintf(Errbuf,								// 05/18/01 AM.
 									_T("[Incompatible terms in expr.]"));	// 05/18/01 AM.
 								nlppp->parse_->errOut(false); // UNFIXED 				// 05/18/01 AM.
-//				*gerr << "[Incompatible terms in expr.]" << endl;	// 05/18/01 AM.
+//				*gerr << "[Incompatible terms in expr.]" << std::endl;	// 05/18/01 AM.
 								ok = false;										// 12/15/99 AM.
 								goto done;										// 12/15/99 AM.
 							}
@@ -697,7 +697,7 @@ switch (type_)
 							_T("[Binary plus. Error: Lhs bad type.]"));	// 05/18/01 AM.
 						nlppp->parse_->errOut(false); // UNFIXED 						// 05/18/01 AM.
 //						*gerr << "[Binary plus: Lhs bad type: "		// 05/18/01 AM.
-//								<< *lhs_ << "]" << endl;					// 05/18/01 AM.
+//								<< *lhs_ << "]" << std::endl;					// 05/18/01 AM.
 						ok = false;
 						goto done;
 					}
@@ -741,7 +741,7 @@ switch (type_)
 								_T("[Binary minus: Error. Bad rhs.]"));		// 05/18/01 AM.
 							nlppp->parse_->errOut(false); // UNFIXED 					// 05/18/01 AM.
 //							*gerr << "[Binary minus: Error. Bad rhs:"	// 05/18/01 AM.
-//								<< *rhs_ << "]" << endl;					// 05/18/01 AM.
+//								<< *rhs_ << "]" << std::endl;					// 05/18/01 AM.
 							ok = false;
 							goto done;
 						}
@@ -781,7 +781,7 @@ switch (type_)
 								_T("[Binary minus: Error. Bad lhs.]"));		// 05/18/01 AM.
 							nlppp->parse_->errOut(false); // UNFIXED 					// 05/18/01 AM.
 //							*gerr << "[Binary minus: Error. Bad lhs:"	// 11/21/00 AM.
-//								<< *lhs_ << "]" << endl;
+//								<< *lhs_ << "]" << std::endl;
 							ok = false;
 							goto done;
 						}
@@ -926,7 +926,7 @@ switch (type_)
 						_T("[Binary minus: Error. Lhs nonnumeric.]"));	// 05/18/01 AM.
 						nlppp->parse_->errOut(false); // UNFIXED 						// 05/18/01 AM.
 //						*gerr << "[Binary minus: Lhs nonnumeric: "	// 05/18/01 AM.
-//								<< *lhs_ << "]" << endl;					// 05/18/01 AM.
+//								<< *lhs_ << "]" << std::endl;					// 05/18/01 AM.
 						ok = false;
 						goto done;
 					}
@@ -952,7 +952,7 @@ switch (type_)
 								_T("[Binary times: Error. Bad rhs.]"));		// 05/18/01 AM.
 							nlppp->parse_->errOut(false); // UNFIXED 					// 05/18/01 AM.
 //							*gerr << "[Binary times: Error. Bad rhs:"	// 05/18/01 AM.
-//								<< *rhs_ << "]" << endl;					// 05/18/10 AM.
+//								<< *rhs_ << "]" << std::endl;					// 05/18/10 AM.
 							ok = false;
 							goto done;
 						}
@@ -975,7 +975,7 @@ switch (type_)
 								_T("[Binary times: Error. Bad lhs.]"));		// 05/18/01 AM.
 							nlppp->parse_->errOut(false); // UNFIXED 					// 05/18/01 AM.
 //							*gerr << "[Binary times: Error. Bad lhs:"	// 05/18/01 AM.
-//								<< *lhs_ << "]" << endl;					// 05/18/01 AM.
+//								<< *lhs_ << "]" << std::endl;					// 05/18/01 AM.
 							ok = false;
 							goto done;
 						}
@@ -1121,7 +1121,7 @@ switch (type_)
 							_T("[Binary times: Error. Lhs nonnumeric]"));	// 05/18/01 AM.
 						nlppp->parse_->errOut(false); // UNFIXED 						// 05/18/01 AM.
 //						*gerr << "[Binary times: Lhs nonnumeric: "	// 05/18/01 AM.
-//								<< *lhs_ << "]" << endl;					// 05/18/01 AM.
+//								<< *lhs_ << "]" << std::endl;					// 05/18/01 AM.
 						ok = false;
 						goto done;
 					}
@@ -1134,7 +1134,7 @@ switch (type_)
 					_stprintf(Errbuf,											// 05/18/01 AM.
 						_T("[Error. Undefined division.]"));					// 05/18/01 AM.
 					nlppp->parse_->errOut(false); // UNFIXED 							// 05/18/01 AM.
-//					*gerr << "[Undefined division.]" << endl;			// 05/18/01 AM.
+//					*gerr << "[Undefined division.]" << std::endl;			// 05/18/01 AM.
 					ok = false;
 					goto done;
 					}
@@ -1199,7 +1199,7 @@ switch (type_)
 								_T("[Binary divide: Error. Bad rhs.]"));	// 05/18/01 AM.
 							nlppp->parse_->errOut(false); // UNFIXED 					// 05/18/01 AM.
 //							*gerr << "[Binary divide: Error. Bad rhs:" // 05/18/01 AM.
-//								<< *rhs_ << "]" << endl;					// 05/18/01 AM.
+//								<< *rhs_ << "]" << std::endl;					// 05/18/01 AM.
 							ok = false;
 							goto done;
 						}
@@ -1232,7 +1232,7 @@ switch (type_)
 								_T("[Binary divid: Error. Bad lhs.]"));		// 05/18/01 AM.
 							nlppp->parse_->errOut(false); // UNFIXED 					// 05/18/01 AM.
 //							*gerr << "[Binary divide: Error. Bad lhs:" //05/18/01 AM.
-//								<< *lhs_ << "]" << endl;					// 05/18/01 AM.
+//								<< *lhs_ << "]" << std::endl;					// 05/18/01 AM.
 							ok = false;
 							goto done;
 						}
@@ -1477,7 +1477,7 @@ switch (type_)
 							_T("[Binary divide: Lhs nonnumeric.]"));		// 05/18/01 AM.
 						nlppp->parse_->errOut(false); // UNFIXED 						// 05/18/01 AM.
 //						*gerr << "[Binary divide: Lhs nonnumeric: "	// 05/18/01 AM.
-//								<< *lhs_ << "]" << endl;					// 05/18/01 AM.
+//								<< *lhs_ << "]" << std::endl;					// 05/18/01 AM.
 						ok = false;
 						goto done;
 					}
@@ -1490,7 +1490,7 @@ switch (type_)
 					_stprintf(Errbuf,											// 05/18/01 AM.
 						_T("[Error. Remainder by zero.]"));					// 05/18/01 AM.
 					nlppp->parse_->errOut(false); // UNFIXED 							// 05/18/01 AM.
-//					*gerr << "[Remainder by zero!]" << endl;			// 05/18/01 AM.
+//					*gerr << "[Remainder by zero!]" << std::endl;			// 05/18/01 AM.
 					ok = false;
 					goto done;
 					}
@@ -1502,7 +1502,7 @@ switch (type_)
 						_T("[Error. Remainder: Bad lhs.]"));					// 05/18/01 AM.
 					nlppp->parse_->errOut(false); // UNFIXED 							// 05/18/01 AM.
 //					*gerr << "[Remainder: Bad lhs: "						// 05/18/01 AM.
-//							<< *lhs_ << "]" << endl;						// 05/18/01 AM.
+//							<< *lhs_ << "]" << std::endl;						// 05/18/01 AM.
 					ok = false;
 					goto done;
 					}
@@ -1514,7 +1514,7 @@ switch (type_)
 						_T("[Error. Remainder: bad rhs.]"));					// 05/18/01 AM.
 					nlppp->parse_->errOut(false); // UNFIXED 							// 05/18/01 AM.
 //					*gerr << "[Remainder: Bad rhs: "						// 05/18/01 AM.
-//							<< *rhs_ << "]" << endl;						// 05/18/01 AM.
+//							<< *rhs_ << "]" << std::endl;						// 05/18/01 AM.
 					ok = false;
 					goto done;
 					}
@@ -1525,7 +1525,7 @@ switch (type_)
 					_stprintf(Errbuf,											// 05/18/01 AM.
 						_T("[Error. Remainder by zero.]"));					// 05/18/01 AM.
 					nlppp->parse_->errOut(false); // UNFIXED 							// 05/18/01 AM.
-//					*gerr << "[Remainder by zero!]" << endl;			// 05/18/01 AM.
+//					*gerr << "[Remainder by zero!]" << std::endl;			// 05/18/01 AM.
 					ok = false;
 					goto done;
 					}
@@ -1536,7 +1536,7 @@ switch (type_)
 					_stprintf(Errbuf,											// 05/18/01 AM.
 						_T("[Error. Remainder by zero.]"));					// 05/18/01 AM.
 					nlppp->parse_->errOut(false); // UNFIXED 							// 05/18/01 AM.
-//					*gerr << "[Remainder by zero!]" << endl;			// 05/18/01 AM.
+//					*gerr << "[Remainder by zero!]" << std::endl;			// 05/18/01 AM.
 					ok = false;
 					goto done;
 					}
@@ -1563,7 +1563,7 @@ switch (type_)
 					_stprintf(Errbuf,											// 05/18/01 AM.
 						_T("[Error. Conf: Bad lhs.]"));						// 05/18/01 AM.
 					nlppp->parse_->errOut(false); // UNFIXED 							// 05/18/01 AM.
-//			*gerr << "[conf: Bad lhs: " << *lhs_ << "]" << endl;	// 05/18/01 AM.
+//			*gerr << "[conf: Bad lhs: " << *lhs_ << "]" << std::endl;	// 05/18/01 AM.
 					ok = false;
 					goto done;
 					}
@@ -1574,7 +1574,7 @@ switch (type_)
 					_stprintf(Errbuf,											// 05/18/01 AM.
 						_T("[Error. Conf: Bad rhs.]"));						// 05/18/01 AM.
 					nlppp->parse_->errOut(false); // UNFIXED 							// 05/18/01 AM.
-//			*gerr << "[conf: Bad rhs: " << *rhs_ << "]" << endl;	// 05/18/01 AM.
+//			*gerr << "[conf: Bad rhs: " << *rhs_ << "]" << std::endl;	// 05/18/01 AM.
 					ok = false;
 					goto done;
 					}
@@ -1594,7 +1594,7 @@ switch (type_)
 						_T("[Warning: Confidence not -100 to 100.]"));	// 05/18/01 AM.
 					nlppp->parse_->errOut(false); // UNFIXED 							// 05/18/01 AM.
 //					*gerr << "[Warning: Confidence '" << num1			// 05/18/01 AM.
-//						<< "' not between -100 and 100.]" << endl;	// 05/18/01 AM.
+//						<< "' not between -100 and 100.]" << std::endl;	// 05/18/01 AM.
 					}
 				if (num2 < -100 || num2 > 100)
 					{
@@ -1604,7 +1604,7 @@ switch (type_)
 						_T("[Warning: Confidence not -100 to 100.]"));	// 05/18/01 AM.
 					nlppp->parse_->errOut(false); // UNFIXED 							// 05/18/01 AM.
 //					*gerr << "[Warning: Confidence '" << num2			// 05/18/01 AM.
-//						<< "' not between -100 and 100.]" << endl;	// 05/18/01 AM.
+//						<< "' not between -100 and 100.]" << std::endl;	// 05/18/01 AM.
 					}
 				num = confidence(num1,num2);
 				val = new RFASem(num);
@@ -1795,7 +1795,7 @@ switch (type_)
 							_T("[Binary relop: Error. Bad rhs.]"));			// 05/18/01 AM.
 						nlppp->parse_->errOut(false); // UNFIXED 						// 05/18/01 AM.
 //						*gerr << "[Binary relop: Bad rhs: "				// 05/18/01 AM.
-//								<< *rhs_ << "]" << endl;					// 05/18/01 AM.
+//								<< *rhs_ << "]" << std::endl;					// 05/18/01 AM.
 						ok = false;
 						goto done;
 					}
@@ -1905,7 +1905,7 @@ switch (type_)
 						_stprintf(Errbuf,										// 05/18/01 AM.
 							_T("[Relop: Error.]"));								// 05/18/01 AM.
 						nlppp->parse_->errOut(false); // UNFIXED 						// 05/18/01 AM.
-//						*gerr << "[Relop error.]" << endl;				// 05/18/01 AM.
+//						*gerr << "[Relop error.]" << std::endl;				// 05/18/01 AM.
 						ok = false;
 						goto done;
 					}
@@ -1957,9 +1957,9 @@ switch (type_)
 					default:
 						ruleError(line_,nlppp);								// 12/21/01 AM.
 						nlppp->parse_->line_ = line_;						// 08/24/02 AM.
-						_t_strstream gerrStr;
+						std::_t_strstream gerrStr;
 						gerrStr << _T("[Binary relop: Bad lhs: ")
-								  << *lhs_ << _T("]") << ends;
+								  << *lhs_ << _T("]") << std::ends;
 						nlppp->parse_->errOut(&gerrStr,false);
 					// 08/20/00 AM.
 						ok = false;
@@ -1987,9 +1987,9 @@ switch (type_)
 					default:
 						ruleError(line_,nlppp);								// 12/21/01 AM.
 						nlppp->parse_->line_ = line_;						// 08/24/02 AM.
-						_t_strstream gerrStr;
+						std::_t_strstream gerrStr;
 						gerrStr << _T("[Binary relop: Bad rhs: ")
-								  << *rhs_ << _T("]") << ends;
+								  << *rhs_ << _T("]") << std::ends;
 						nlppp->parse_->errOut(&gerrStr,false);
 					// 08/20/00 AM.
 						ok = false;
@@ -2140,8 +2140,8 @@ switch (type_)
 					default:
 						ruleError(line_,nlppp);								// 12/21/01 AM.
 						nlppp->parse_->line_ = line_;						// 08/24/02 AM.
-						_t_strstream gerrStr;
-						gerrStr << _T("[Relop error.]") << ends;
+						std::_t_strstream gerrStr;
+						gerrStr << _T("[Relop error.]") << std::ends;
 						nlppp->parse_->errOut(&gerrStr,false);
 
 						ok = false;
@@ -2216,9 +2216,9 @@ switch (type_)
 					default:
 						ruleError(line_,nlppp);								// 12/21/01 AM.
 						nlppp->parse_->line_ = line_;						// 08/24/02 AM.
-						_t_strstream gerrStr;
+						std::_t_strstream gerrStr;
 						gerrStr << _T("[Binary and: Bad lhs: ")
-								  << *lhs_ << _T("]") << ends;
+								  << *lhs_ << _T("]") << std::ends;
 						nlppp->parse_->errOut(&gerrStr,false);
 					// 08/20/00 AM.
 						ok = false;
@@ -2274,9 +2274,9 @@ switch (type_)
 					default:
 						ruleError(line_,nlppp);								// 12/21/01 AM.
 						nlppp->parse_->line_ = line_;						// 08/24/02 AM.
-						_t_strstream gerrStr;
+						std::_t_strstream gerrStr;
 						gerrStr << _T("[Binary and: Bad rhs: ")
-								  << *rhs_ << _T("]") << ends;
+								  << *rhs_ << _T("]") << std::ends;
 						nlppp->parse_->errOut(&gerrStr,false);
 					// 08/20/00 AM.
 						ok = false;
@@ -2354,9 +2354,9 @@ switch (type_)
 					default:
 						ruleError(line_,nlppp);								// 12/21/01 AM.
 						nlppp->parse_->line_ = line_;						// 08/24/02 AM.
-						_t_strstream gerrStr;
+						std::_t_strstream gerrStr;
 						gerrStr << _T("[Binary or: Bad lhs: ")
-								  << *lhs_ << _T("]") << ends;
+								  << *lhs_ << _T("]") << std::ends;
 						nlppp->parse_->errOut(&gerrStr,false);
 					// 08/20/00 AM.
 						ok = false;
@@ -2413,9 +2413,9 @@ switch (type_)
 					default:
 						ruleError(line_,nlppp);								// 12/21/01 AM.
 						nlppp->parse_->line_ = line_;						// 08/24/02 AM.
-						_t_strstream gerrStr;
+						std::_t_strstream gerrStr;
 						gerrStr << _T("[Binary or: Bad rhs: ")
-								  << *rhs_ << _T("]") << ends;
+								  << *rhs_ << _T("]") << std::ends;
 						nlppp->parse_->errOut(&gerrStr,false);
 					// 08/20/00 AM.
 						ok = false;
@@ -2429,14 +2429,14 @@ switch (type_)
 				break;
 			case OUTOP:		// C++ -like << output operator!			// 12/31/99 AM.
 				{
-				_t_ostream *ostr=0;												// 12/24/02 AM.
+				std::_t_ostream *ostr=0;												// 12/24/02 AM.
 
 				if (!lval)														// 11/22/00 AM.
 					{
 					ruleError(line_,nlppp);									// 12/21/01 AM.
 					nlppp->parse_->line_ = line_;							// 08/24/02 AM.
-					_t_strstream gerrStr;
-					gerrStr << _T("[Output op: Error. Empty lhs.]") << ends;
+					std::_t_strstream gerrStr;
+					gerrStr << _T("[Output op: Error. Empty lhs.]") << std::ends;
 					nlppp->parse_->errOut(&gerrStr,false);
 
 					ok = false;
@@ -2447,7 +2447,7 @@ switch (type_)
 					case RSOSTREAM:	// New type for convenience.
 						// Strung together output ops return this.
 						ostr = lval->getOstream();
-					// cout << _T("[LINUX DEBUG cbuf(): got iexpr/OUTOP/lval/ostr]") << endl;	// 09/29/19 AM.
+					// cout << _T("[LINUX DEBUG cbuf(): got iexpr/OUTOP/lval/ostr]") << std::endl;	// 09/29/19 AM.
 						break;
 					case RSVAR:
 						// If it's an ostream val, use that.
@@ -2457,8 +2457,8 @@ switch (type_)
 						ruleError(line_,nlppp);								// 12/21/01 AM.
 						nlppp->parse_->line_ = line_;						// 08/24/02 AM.
 						{
-						_t_strstream gerrStr;
-						gerrStr << _T("[unimplemented RSVAR in output op.]") << ends;
+						std::_t_strstream gerrStr;
+						gerrStr << _T("[unimplemented RSVAR in output op.]") << std::ends;
 						nlppp->parse_->errOut(&gerrStr,false);
 						}
 
@@ -2472,9 +2472,9 @@ switch (type_)
 							{
 							ruleError(line_,nlppp);							// 12/21/01 AM.
 							nlppp->parse_->line_ = line_;					// 08/24/02 AM.
-							_t_strstream gerrStr;
+							std::_t_strstream gerrStr;
 							gerrStr << _T("[Error. Can't output to empty file.]")
-									  << ends;
+									  << std::ends;
 							nlppp->parse_->errOut(&gerrStr,false);
 
 							ok = false;
@@ -2487,9 +2487,9 @@ switch (type_)
 							{
 							ruleError(line_,nlppp);							// 12/21/01 AM.
 							nlppp->parse_->line_ = line_;					// 08/24/02 AM.
-							_t_strstream gerrStr;
+							std::_t_strstream gerrStr;
 							gerrStr << _T("[Output op: Error. Couldn't make var=")
-									  << str << _T("]") << ends;
+									  << str << _T("]") << std::ends;
 							nlppp->parse_->errOut(&gerrStr,false);
 
 							ok = false;
@@ -2501,9 +2501,9 @@ switch (type_)
 						ruleError(line_,nlppp);								// 12/21/01 AM.
 						nlppp->parse_->line_ = line_;						// 08/24/02 AM.
 						{
-						_t_strstream gerrStr;
+						std::_t_strstream gerrStr;
 						gerrStr << _T("[Output operator: Local vars unimplemented.]")
-								  << ends;
+								  << std::ends;
 						nlppp->parse_->errOut(&gerrStr,false);
 						}
 						ok = false;
@@ -2512,9 +2512,9 @@ switch (type_)
 						ruleError(line_,nlppp);								// 12/21/01 AM.
 						nlppp->parse_->line_ = line_;						// 08/24/02 AM.
 						{
-						_t_strstream gerrStr;
+						std::_t_strstream gerrStr;
 						gerrStr << _T("[Output operator: Bad lhs: ")
-								  << *lhs_ << _T("]") << ends;
+								  << *lhs_ << _T("]") << std::ends;
 						nlppp->parse_->errOut(&gerrStr,false);
 						}
 					// 08/20/00 AM.
@@ -2532,8 +2532,8 @@ switch (type_)
 
 				if (!ostr)	// Empty ostr.									// 05/13/02 AM.
 					{
-					_t_strstream gerrStr;		// 05/13/02 AM.
-					gerrStr << _T("[Error: Empty output stream.]") << ends;
+					std::_t_strstream gerrStr;		// 05/13/02 AM.
+					gerrStr << _T("[Error: Empty output stream.]") << std::ends;
 					nlppp->parse_->errOut(&gerrStr,false);							// 05/13/02 AM.
 					ok = false;													// 05/13/02 AM.
 					goto done;													// 05/13/02 AM.
@@ -2551,8 +2551,8 @@ switch (type_)
 							{
 					ruleError(line_,nlppp);									// 10/27/04 AM.
 					nlppp->parse_->line_ = line_;							// 10/27/04 AM.
-					_t_strstream gerrStr;		// 10/27/04 AM.
-					gerrStr << _T("[Error: Can't output.]") << ends;
+					std::_t_strstream gerrStr;		// 10/27/04 AM.
+					gerrStr << _T("[Error: Can't output.]") << std::ends;
 					nlppp->parse_->errOut(&gerrStr,false);							// 10/27/04 AM.
 					ok = false;													// 10/27/04 AM.
 					goto done;													// 10/27/04 AM.
@@ -2567,8 +2567,8 @@ switch (type_)
 							{
 					ruleError(line_,nlppp);									// 10/27/04 AM.
 					nlppp->parse_->line_ = line_;							// 10/27/04 AM.
-					_t_strstream gerrStr;		// 10/27/04 AM.
-					gerrStr << _T("[Error: Can't output.]") << ends;
+					std::_t_strstream gerrStr;		// 10/27/04 AM.
+					gerrStr << _T("[Error: Can't output.]") << std::ends;
 					nlppp->parse_->errOut(&gerrStr,false);							// 10/27/04 AM.
 					ok = false;													// 10/27/04 AM.
 					goto done;													// 10/27/04 AM.
@@ -2590,8 +2590,8 @@ switch (type_)
 							{
 					ruleError(line_,nlppp);									// 10/27/04 AM.
 					nlppp->parse_->line_ = line_;							// 10/27/04 AM.
-					_t_strstream gerrStr;		// 10/27/04 AM.
-					gerrStr << _T("[Error: Can't output.]") << ends;
+					std::_t_strstream gerrStr;		// 10/27/04 AM.
+					gerrStr << _T("[Error: Can't output.]") << std::ends;
 					nlppp->parse_->errOut(&gerrStr,false);							// 10/27/04 AM.
 					ok = false;													// 10/27/04 AM.
 					goto done;													// 10/27/04 AM.
@@ -2601,7 +2601,7 @@ switch (type_)
 					case RSSTR:
 					case RSNAME:
 						{
-					// cout << _T("[LINUX DEBUG cbuf(): at iexpr/OUTOP/rval/RSSTR]") << endl;	// 09/29/19 AM.
+					// cout << _T("[LINUX DEBUG cbuf(): at iexpr/OUTOP/rval/RSSTR]") << std::endl;	// 09/29/19 AM.
 						// Name should become identifiers, local vars, whatever.
 						_TCHAR *str = rval->getName();						// 12/24/02 AM.
 						if (str && *str)
@@ -2620,8 +2620,8 @@ switch (type_)
 								{
 						ruleError(line_,nlppp);								// 10/27/04 AM.
 						nlppp->parse_->line_ = line_;						// 10/27/04 AM.
-						_t_strstream gerrStr;	// 10/27/04 AM.
-						gerrStr << _T("[Error: Can't output.]") << ends;
+						std::_t_strstream gerrStr;	// 10/27/04 AM.
+						gerrStr << _T("[Error: Can't output.]") << std::ends;
 						nlppp->parse_->errOut(&gerrStr,false);						// 10/27/04 AM.
 						ok = false;												// 10/27/04 AM.
 						goto done;												// 10/27/04 AM.
@@ -2636,8 +2636,8 @@ switch (type_)
 						ruleError(line_,nlppp);								// 12/21/01 AM.
 						nlppp->parse_->line_ = line_;						// 08/24/02 AM.
 						{
-						_t_strstream gerrStr;
-						gerrStr << _T("[Error: Can't print kb object.]") << ends;
+						std::_t_strstream gerrStr;
+						gerrStr << _T("[Error: Can't print kb object.]") << std::ends;
 						nlppp->parse_->errOut(&gerrStr,false);
 						}
 						ok = true;					// Tolerate.			// 10/15/00 AM.
@@ -2646,8 +2646,8 @@ switch (type_)
 						ruleError(line_,nlppp);								// 12/21/01 AM.
 						nlppp->parse_->line_ = line_;						// 08/24/02 AM.
 						{
-						_t_strstream gerrStr;
-						gerrStr << _T("[Error: Can't print node.]") << ends;
+						std::_t_strstream gerrStr;
+						gerrStr << _T("[Error: Can't print node.]") << std::ends;
 						nlppp->parse_->errOut(&gerrStr,false);
 						}
 																					// 10/30/00 AM.
@@ -2661,8 +2661,8 @@ switch (type_)
 							{
 					ruleError(line_,nlppp);									// 10/27/04 AM.
 					nlppp->parse_->line_ = line_;							// 10/27/04 AM.
-					_t_strstream gerrStr;		// 10/27/04 AM.
-					gerrStr << _T("[Error: Can't output.]") << ends;
+					std::_t_strstream gerrStr;		// 10/27/04 AM.
+					gerrStr << _T("[Error: Can't output.]") << std::ends;
 					nlppp->parse_->errOut(&gerrStr,false);							// 10/27/04 AM.
 					ok = false;													// 10/27/04 AM.
 					goto done;													// 10/27/04 AM.
@@ -2674,9 +2674,9 @@ switch (type_)
 					default:
 						ruleError(line_,nlppp);								// 12/21/01 AM.
 						nlppp->parse_->line_ = line_;						// 08/24/02 AM.
-						_t_strstream gerrStr;
+						std::_t_strstream gerrStr;
 						gerrStr << _T("[Output operator: Bad rhs: ")
-								  << *rhs_ << _T("]") << ends;
+								  << *rhs_ << _T("]") << std::ends;
 						nlppp->parse_->errOut(&gerrStr,false);
 					// 08/20/00 AM.
 						ok = true;					// Tolerate.			// 10/15/00 AM.
@@ -2687,14 +2687,14 @@ switch (type_)
 					{
 						try														// 10/27/04 AM.
 							{		
-					*ostr << flush;	// Make sure output gets there.
+					*ostr << std::flush;	// Make sure output gets there.
 							}
 						catch(...)												// 10/27/04 AM.
 							{
 					ruleError(line_,nlppp);									// 10/27/04 AM.
 					nlppp->parse_->line_ = line_;							// 10/27/04 AM.
-					_t_strstream gerrStr;		// 10/27/04 AM.
-					gerrStr << _T("[Error: Can't output.]") << ends;
+					std::_t_strstream gerrStr;		// 10/27/04 AM.
+					gerrStr << _T("[Error: Can't output.]") << std::ends;
 					nlppp->parse_->errOut(&gerrStr,false);							// 10/27/04 AM.
 					ok = false;													// 10/27/04 AM.
 					goto done;													// 10/27/04 AM.
@@ -2706,8 +2706,8 @@ switch (type_)
 			default:
 				ruleError(line_,nlppp);										// 12/21/01 AM.
 				nlppp->parse_->line_ = line_;								// 08/24/02 AM.
-				_t_strstream gerrStr;
-				gerrStr << _T("[Binary expr: bad operator.]") << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("[Binary expr: bad operator.]") << std::ends;
 				nlppp->parse_->errOut(&gerrStr,false);
 
 				ok = false;
@@ -2728,9 +2728,9 @@ switch (type_)
 			{
 			ruleError(line_,nlppp);											// 12/21/01 AM.
 			nlppp->parse_->line_ = line_;									// 08/24/02 AM.
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[Bad rhs expression: ") << *rhs_				// 08/20/00 AM.
-					  << _T("]") << ends;
+					  << _T("]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 
 			goto done;
@@ -2742,8 +2742,8 @@ switch (type_)
 			{
 			ruleError(line_,nlppp);											// 12/21/01 AM.
 			nlppp->parse_->line_ = line_;									// 08/24/02 AM.
-			_t_strstream gerrStr;
-			gerrStr << _T("[Assignment: Couldn't get variable.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Assignment: Couldn't get variable.]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 
 			ok = false;
@@ -2772,8 +2772,8 @@ switch (type_)
 				{
 				ruleError(line_,nlppp);										// 12/21/01 AM.
 				nlppp->parse_->line_ = line_;								// 08/24/02 AM.
-				_t_strstream gerrStr;
-				gerrStr << _T("[eval: No values for variable.]") << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("[eval: No values for variable.]") << std::ends;
 				nlppp->parse_->errOut(&gerrStr,false);
 
 				return false;
@@ -2804,7 +2804,7 @@ switch (type_)
 					if (sema->getType() == RSOSTREAM)					// 10/14/00 AM.
 						{
 					// Zap the ostream here. (Not the best....)		// 10/14/00 AM.
-						_t_ostream *ostr = sema->getOstream();				// 10/14/00 AM.
+						std::_t_ostream *ostr = sema->getOstream();				// 10/14/00 AM.
 						if (ostr)												// 10/14/00 AM.
 							delete ostr;										// 10/14/00 AM.
 						sema->setOstream(0);									// 10/14/00 AM.
@@ -2873,7 +2873,7 @@ switch (type_)
 				RFASem *sema = arg->getSem();								// 09/25/00 AM.
 				if (sema->getType() == RSOSTREAM)						// 09/25/00 AM.
 					{
-					_t_ostream *ostr = sema->getOstream();					// 09/25/00 AM.
+					std::_t_ostream *ostr = sema->getOstream();					// 09/25/00 AM.
 					if (ostr)													// 09/25/00 AM.
 						delete ostr;											// 09/25/00 AM.
 					sema->setOstream(0);										// 09/25/00 AM.
@@ -2887,8 +2887,8 @@ switch (type_)
 				{
 				ruleError(line_,nlppp);										// 12/21/01 AM.
 				nlppp->parse_->line_ = line_;								// 08/24/02 AM.
-				_t_strstream gerrStr;
-				gerrStr << _T("[eval(1): No values for variable.]") << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("[eval(1): No values for variable.]") << std::ends;
 				nlppp->parse_->errOut(&gerrStr,false);
 				return false;
 				}
@@ -3026,8 +3026,8 @@ switch (type_)
 					ruleError(line_,nlppp);									// 12/21/01 AM.
 					nlppp->parse_->line_ = line_;							// 08/24/02 AM.
 					{
-					_t_strstream gerrStr;
-					gerrStr << _T("[Copying array -- Error.]") << ends;
+					std::_t_strstream gerrStr;
+					gerrStr << _T("[Copying array -- Error.]") << std::ends;
 					nlppp->parse_->errOut(&gerrStr,false);
 					}
 					//rval->setArgs(0);	// So won't be deleted.		// 10/15/00 AM.
@@ -3040,9 +3040,9 @@ switch (type_)
 				default:
 					ruleError(line_,nlppp);	// Id current rule line.// 12/21/01 AM.
 					nlppp->parse_->line_ = line_;							// 08/24/02 AM.
-					_t_strstream gerrStr;
+					std::_t_strstream gerrStr;
 					gerrStr << _T("[Bad rhs type in assignment.]")		// 09/23/00 AM.
-							  << ends;
+							  << std::ends;
 					nlppp->parse_->errOut(&gerrStr,false);
 					ok = false;
 					break;
@@ -3073,9 +3073,9 @@ switch (type_)
 			{
 			ruleError(line_,nlppp);											// 12/21/01 AM.
 			nlppp->parse_->line_ = line_;									// 08/24/02 AM.
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[Empty rhs expression: ") << *rhs_			// 08/20/00 AM.
-					<< _T("]") << ends;
+					<< _T("]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 
 			goto done;
@@ -3227,9 +3227,9 @@ switch (type_)
 			{
 			ruleError(line_,nlppp);											// 12/21/01 AM.
 			nlppp->parse_->line_ = line_;									// 08/24/02 AM.
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[Empty rhs expression: ") << *rhs_			// 08/20/00 AM.
-					  << _T("]") << ends;
+					  << _T("]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 
 			goto done;
@@ -3259,8 +3259,8 @@ switch (type_)
 					{
 					ruleError(line_,nlppp);									// 12/21/01 AM.
 					nlppp->parse_->line_ = line_;							// 08/24/02 AM.
-					_t_strstream gerrStr;
-					gerrStr << _T("[Can't increment multi-valued variable.]") << ends;
+					std::_t_strstream gerrStr;
+					gerrStr << _T("[Can't increment multi-valued variable.]") << std::ends;
 					nlppp->parse_->errOut(&gerrStr,false);
 
 					ok = false;
@@ -3287,8 +3287,8 @@ switch (type_)
 					default:
 						ruleError(line_,nlppp);								// 12/21/01 AM.
 						nlppp->parse_->line_ = line_;						// 08/24/02 AM.
-						_t_strstream gerrStr;
-						gerrStr << _T("[inc: Error. Bad type.]") << ends;
+						std::_t_strstream gerrStr;
+						gerrStr << _T("[inc: Error. Bad type.]") << std::ends;
 						nlppp->parse_->errOut(&gerrStr,false);
 																					// 11/22/00 AM.
 						ok = false;
@@ -3318,8 +3318,8 @@ switch (type_)
 					{
 					ruleError(line_,nlppp);									// 12/21/01 AM.
 					nlppp->parse_->line_ = line_;							// 08/24/02 AM.
-					_t_strstream gerrStr;
-					gerrStr << _T("[Can't increment multi-valued variable.]") << ends;
+					std::_t_strstream gerrStr;
+					gerrStr << _T("[Can't increment multi-valued variable.]") << std::ends;
 					nlppp->parse_->errOut(&gerrStr,false);
 
 					ok = false;
@@ -3346,8 +3346,8 @@ switch (type_)
 					default:
 						ruleError(line_,nlppp);								// 12/21/01 AM.
 						nlppp->parse_->line_ = line_;						// 08/24/02 AM.
-						_t_strstream gerrStr;
-						gerrStr << _T("[dec: Error. Bad type.]") << ends;
+						std::_t_strstream gerrStr;
+						gerrStr << _T("[dec: Error. Bad type.]") << std::ends;
 						nlppp->parse_->errOut(&gerrStr,false);
 																					// 11/22/00 AM.
 						ok = false;
@@ -3363,8 +3363,8 @@ switch (type_)
 	default:
 		ruleError(line_,nlppp);												// 12/21/01 AM.
 		nlppp->parse_->line_ = line_;										// 08/24/02 AM.
-		_t_strstream gerrStr;
-		gerrStr << _T("[Iexpr::eval: Bad expression type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Iexpr::eval: Bad expression type.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		return false;
 	}			//////////// END OF THE BIG SWITCH.
@@ -3374,8 +3374,8 @@ done:
 		{
 		ruleError(line_,nlppp);												// 12/21/01 AM.
 		nlppp->parse_->line_ = line_;										// 08/24/02 AM.
-		_t_strstream gerrStr;
-		gerrStr << _T("[Expression evaluation error.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Expression evaluation error.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 
@@ -3533,8 +3533,8 @@ if (!semvar)
 	return false;
 if (semvar->getType() != RSVAR)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Var needed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Var needed.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -3568,8 +3568,8 @@ if (sem)																			// 10/14/00 AM.
 		default:
 			delete semval; semval = 0;					// MEM LEAK.	// 12/07/00 AM.
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[unpackVar: Error in index.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[unpackVar: Error in index.]") << std::ends;
 			errOut(&gerrStr,false);
 			}
 		// 10/1400 AM.
@@ -3581,8 +3581,8 @@ if (!var->get(nlppp, /*UP*/ pairx))
 	return false;
 if (!pairx)													// 12/03/99 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Couldn't fetch var.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Couldn't fetch var.]") << std::ends;
 	errOut(&gerrStr,false);
 
 		// 12/03/99 AM.
@@ -3603,7 +3603,7 @@ bool Iexpr::genEval(Gen *gen,
 	bool top						// If expr is at top or stmt level.	// 06/06/00 AM.
 	)
 {
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 if (top) *fcode << gen->indent_ << _T("Arun::stmt(");
 
 
@@ -3640,8 +3640,8 @@ switch (type_)		// Type of expression.
 			case OUTOP:		*fcode << _T("out");
 				break;
 			default:	
-				*fcode << _T("\nERROR();") << endl;							// 05/04/01 AM.
-				*fcode << _T("// [Iexpr: Bad operator]") << endl;		// 05/04/01 AM.
+				*fcode << _T("\nERROR();") << std::endl;							// 05/04/01 AM.
+				*fcode << _T("// [Iexpr: Bad operator]") << std::endl;		// 05/04/01 AM.
 				return false;
 			}
 		*fcode << _T("(");
@@ -3819,13 +3819,13 @@ switch (type_)		// Type of expression.
 						 << _T(")");
 				break;
 			default:
-				*fcode << _T("ERROR();") << endl;								// 05/04/01 AM.
-				*fcode << _T("// [postunaryexpr: Bad op.]") << endl;	// 05/04/01 AM.
+				*fcode << _T("ERROR();") << std::endl;								// 05/04/01 AM.
+				*fcode << _T("// [postunaryexpr: Bad op.]") << std::endl;	// 05/04/01 AM.
 				return false;
 			}
 		break;
 	default:
-		*fcode << _T("// ERROR: Bad expression type.") << endl;
+		*fcode << _T("// ERROR: Bad expression type.") << std::endl;
 		return false;
 	}
 if (top) *fcode << _T(")");			// Close out stmt().
@@ -3913,8 +3913,8 @@ if (index >= 0)	// INDEXED ARRAY VALUE.								// 10/15/00 AM.
 	}
 else if (darg->Right())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't increment multi-valued variable.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't increment multi-valued variable.]") << std::ends;
 	errOut(&gerrStr,false);
 //	delete sem;												// MEM LEAK.	// 06/13/00 AM.
 	return false;
@@ -4027,8 +4027,8 @@ if (index >= 0)	// INDEXED ARRAY VALUE.								// 07/15/03 AM.
 
 else if (darg->Right())
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't increment multi-valued variable.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't increment multi-valued variable.]") << std::ends;
 	errOut(&gerrStr,false);
 //	delete sem;												// MEM LEAK.	// 06/13/00 AM.
 	return false;
@@ -4155,9 +4155,9 @@ switch (nlppp->region_)
 	}
 //if (Linenum > line)	// At rule's line. (Not a great test.)	// 12/21/01 AM.
 
-_t_strstream gerrStr;
+std::_t_strstream gerrStr;
 gerrStr << _T("[Error executing code for current rule.]")
-		  << ends;
+		  << std::ends;
 errOut(&gerrStr,false,
 		nlppp->parse_->currpass_,											// 08/24/02 AM.
 		nlppp->ruleLine());

@@ -34,7 +34,7 @@ All rights reserved.
 template<class NODETYPE>
 Node<NODETYPE>::Node(const NODETYPE &d)
 {
-//*gerr << "[Node: " << (long) this << "]" << endl;
+//*gerr << "[Node: " << (long) this << "]" << std::endl;
 
 data = d;
 pUp = pDown = pLeft = pRight = peDown = 0;
@@ -52,7 +52,7 @@ pUp = pDown = pLeft = pRight = peDown = 0;
 template<class NODETYPE>
 Node<NODETYPE>::~Node()
 {
-//*gerr << "[Node: " << (long) this << "~]" << endl;
+//*gerr << "[Node: " << (long) this << "~]" << std::endl;
 
 #ifndef STABLE_
 --count_;
@@ -126,23 +126,23 @@ int Node<NODETYPE>::getCount() { return count_; }
 #ifndef STABLE_
 template<class NODETYPE>
 void Node<NODETYPE>::prettyCount(_TCHAR *str,
-	_t_ofstream *ofstr)
+	std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("Active Node<") << str << _T("> count=")
-		  << Node<NODETYPE>::count_ << ends;
+		  << Node<NODETYPE>::count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 
 	*gout << _T("Active Node<") << str << _T("> count=")
-		  << Node<NODETYPE>::count_ << endl;
+		  << Node<NODETYPE>::count_ << std::endl;
 
 	if (ofstr)
 		*ofstr << _T("Active Node<") << str << _T("> count=")
-		  << Node<NODETYPE>::count_ << endl;
+		  << Node<NODETYPE>::count_ << std::endl;
 	}
 }
 #endif
@@ -194,7 +194,7 @@ void Node<NODETYPE>::DeleteNodeAndData(Node<NODETYPE> *nn)
 {
 if (!nn)
 	return;
-//*gerr << "DelNode: " << (long) nn << " " << *(nn->getData()) << endl;
+//*gerr << "DelNode: " << (long) nn << " " << *(nn->getData()) << std::endl;
 delete nn;
 }
 
@@ -232,8 +232,8 @@ if (!parent || !child)
 if (parent->pDown || child->pUp)
 	{
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[linkNodes: Nodes can't be attached.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[linkNodes: Nodes can't be attached.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 

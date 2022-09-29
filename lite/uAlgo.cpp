@@ -103,7 +103,7 @@ return (Algo &) *ptr;
 bool Ualgo::Execute(Parse *parse, Seqn *seqn)
 {
 if (parse->Verbose())
-	*gout << _T("[Ualgo:]") << endl;
+	*gout << _T("[Ualgo:]") << std::endl;
 
 ////////////////////////////
 // SET UP CALL TO USER PASS.

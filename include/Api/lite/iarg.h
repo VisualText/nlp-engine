@@ -37,7 +37,7 @@ union LITE_API Iargval
 	{
 	_TCHAR *str_;
 	long num_;
-	_t_ostream *out_;		// 02/09/99 AM.
+	std::_t_ostream *out_;		// 02/09/99 AM.
 	RFASem *sem_;		// 02/16/00 AM.
 	float float_;		// 08/17/01 AM.
 	};
@@ -50,9 +50,9 @@ union LITE_API Iargval
 
 class LITE_API Iarg
 {
-	friend _t_ostream &operator<<(_t_ostream &, Iarg &);					// 11/22/98 AM.
-	friend _t_ostream &operator<<(_t_ostream &output, Delt<Iarg> &);	// 11/22/98 AM.
-	friend _t_ostream &operator<<(_t_ostream &, Dlist<Iarg> &);			// 11/22/98 AM.
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Iarg &);					// 11/22/98 AM.
+	friend std::_t_ostream &operator<<(std::_t_ostream &output, Delt<Iarg> &);	// 11/22/98 AM.
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Dlist<Iarg> &);			// 11/22/98 AM.
 public:
 	Iarg(enum Iargtype = IANULL);	// Default constructor.
 	Iarg(_TCHAR *);
@@ -60,7 +60,7 @@ public:
 	Iarg(RFASem *);															// 02/16/00 AM.
 	Iarg(RFASem *, enum Iargtype);										// 05/26/02 AM.
 	Iarg(float);																// 08/17/01 AM.
-	Iarg(_t_ostream *);															// 02/09/99 AM.
+	Iarg(std::_t_ostream *);															// 02/09/99 AM.
 	~Iarg();								// Destructor.
 
 	Iarg(Iarg &orig);					// Copy constructor.				// 07/02/99 AM.
@@ -87,7 +87,7 @@ public:
 	enum Iargtype getType();
 	_TCHAR *getStr();
 	long getNum();
-	_t_ostream *getOstream();													// 02/09/99 AM.
+	std::_t_ostream *getOstream();													// 02/09/99 AM.
 	RFASem *getSem();															// 02/16/00 AM.
 	float getFloat();															// 08/17/01 AM.
 
@@ -99,7 +99,7 @@ public:
 	void setType(enum Iargtype);
 	void setStr(_TCHAR *);
 	void setNum(long);
-	void setOstream(_t_ostream *);											// 02/09/99 AM.
+	void setOstream(std::_t_ostream *);											// 02/09/99 AM.
 	void setSem(RFASem *);													// 02/16/00 AM.
 	void setFloat(float);													// 08/17/01 AM.
 
@@ -117,12 +117,12 @@ public:
 	static void genArgs(														// 06/15/99 AM.
 		Dlist<Iarg> *args,
 		_TCHAR *sep,
-		_t_ostream &ofile,
+		std::_t_ostream &ofile,
 		bool trunc = false);													// 06/05/00 AM.
-	static void genArg(Iarg *arg, _t_ostream &ofile,					// 06/15/99 AM.
+	static void genArg(Iarg *arg, std::_t_ostream &ofile,					// 06/15/99 AM.
 								bool = false);		// CAST OFF.			// 11/06/01 AM.
 
-	static void genName(_TCHAR *name, _t_ostream &ofile);				// 07/11/99 AM.
+	static void genName(_TCHAR *name, std::_t_ostream &ofile);				// 07/11/99 AM.
 
 	static bool same(Dlist<Iarg> *list1, Dlist<Iarg> *list2);	// 06/07/99 AM.
 	static bool same(Iarg *arg1, Iarg *arg2);							// 06/07/99 AM.
@@ -136,7 +136,7 @@ private:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);		// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);		// Pretty-print the count.
 private:
 	static int count_;				// Count nodes currently allocated.
 #endif

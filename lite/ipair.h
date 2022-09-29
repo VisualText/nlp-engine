@@ -31,9 +31,9 @@ class Iarg;		// Argument class.
 
 class Ipair
 {
-	friend _t_ostream &operator<<(_t_ostream &, Ipair &);
-	friend _t_ostream &operator<<(_t_ostream &, Delt<Ipair> &);		// 11/22/98 AM.
-	friend _t_ostream &operator<<(_t_ostream &, Dlist<Ipair> &);	// 11/22/98 AM.
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Ipair &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Delt<Ipair> &);		// 11/22/98 AM.
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Dlist<Ipair> &);	// 11/22/98 AM.
 
 public:
 	Ipair(								// Default constructor.
@@ -87,7 +87,7 @@ private:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif

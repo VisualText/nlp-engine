@@ -105,7 +105,7 @@ return (Algo &) *ptr;
 bool Phash::Execute(Parse *parse, Seqn *seqn)
 {
 if (parse->Verbose())
-	*gout << _T("[Phash:]") << endl;
+	*gout << _T("[Phash:]") << std::endl;
 
 Tree<Pn> *tree = (Tree<Pn> *) parse->getTree();
 
@@ -114,8 +114,8 @@ if (!tree)
 	if (parse->getIntern())													// 05/26/01 AM.
 		{
 		parse->setIntern(false);	// Syntax error.					// 05/26/01 AM.
-		_t_strstream gerrStr;
-		gerrStr << _T("[Phash: No parse tree.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Phash: No parse tree.]") << std::ends;
 		return errOut(&gerrStr,false,parse->getInputpass(),0);
 		}
 	return false;
@@ -129,8 +129,8 @@ if (!root)
 	if (parse->getIntern())													// 05/26/01 AM.
 		{
 		parse->setIntern(false);	// Syntax error.					// 05/26/01 AM.
-		_t_strstream gerrStr;
-		gerrStr << _T("[Phash: Empty parse tree.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Phash: Empty parse tree.]") << std::ends;
 		return errOut(&gerrStr,false,parse->getInputpass(),0);
 		}
 	return false;
@@ -143,11 +143,11 @@ if (!(node = root->Down()))
 	if (parse->getIntern())													// 05/26/01 AM.
 		{
 		parse->setIntern(false);	// Syntax error.					// 05/26/01 AM.
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Phash: Rules file '")
 		  // << str(seqn->getRulesfilename())
 			  << str(parse->getInput())
-			  << _T("' not parsed.]") << ends;
+			  << _T("' not parsed.]") << std::ends;
 		errOut(&gerrStr,false,parse->getInputpass(),0);
 		}
 	return false;
@@ -158,8 +158,8 @@ if (node->Right())
 	if (parse->getIntern())													// 05/26/01 AM.
 		{
 		parse->setIntern(false);	// Syntax error.					// 05/26/01 AM.
-		_t_strstream gerrStr;
-		gerrStr << _T("[Pass file has some unhandled text.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Pass file has some unhandled text.]") << std::ends;
 		errOut(&gerrStr,false,parse->getInputpass(),0);
 		}
 	}
@@ -174,8 +174,8 @@ if (!sem)
 	if (parse->getIntern())													// 05/26/01 AM.
 		{
 		parse->setIntern(false);	// Syntax error.					// 05/26/01 AM.
-		_t_strstream gerrStr;
-		gerrStr << _T("[Phash: No semantics for parse tree.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Phash: No semantics for parse tree.]") << std::ends;
 		errOut(&gerrStr,false,parse->getInputpass(),0);
 		}
 	return false;
@@ -187,8 +187,8 @@ if (sem->getType() != RSFILE)
 	if (parse->getIntern())													// 05/26/01 AM.
 		{
 		parse->setIntern(false);	// Syntax error.					// 05/26/01 AM.
-		_t_strstream gerrStr;
-		gerrStr << _T("[Phash: Couldn't parse rules file.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Phash: Couldn't parse rules file.]") << std::ends;
 		errOut(&gerrStr,false,parse->getInputpass(),0);
 		}
 	return false;
@@ -200,8 +200,8 @@ if (!(rulesfile = sem->getRulesfile()))
 	if (parse->getIntern())													// 05/26/01 AM.
 		{
 		parse->setIntern(false);	// Syntax error.					// 05/26/01 AM.
-		_t_strstream gerrStr;
-		gerrStr << _T("[Phash: No rules found in file.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Phash: No rules found in file.]") << std::ends;
 		errOut(&gerrStr,false,parse->getInputpass(),0);
 		}
 	return false;
@@ -216,7 +216,7 @@ if (!rules)
 //	if (parse->getIntern())													// 05/26/01 AM.
 //		{
 //		strstream gerrStr(Errbuf,MAXSTR,ios::out);
-//		gerrStr << "[Warning: No rules in pass file.]" << ends;
+//		gerrStr << "[Warning: No rules in pass file.]" << std::ends;
 //		errOut(true,parse->getInputpass(),0);
 //		}
 	return true;

@@ -14,7 +14,6 @@ All rights reserved.
 #define ARUN_H_
 
 #include <iostream>
-using namespace std;
 #include <assert.h>
 #include "lite.h"
 
@@ -512,7 +511,7 @@ public:
 	static long    assign(int,_TCHAR*,int,long,Nlppp*,long);
 	static float   assign(int,_TCHAR*,int,long,Nlppp*,float);
 	static _TCHAR   *assign(int,_TCHAR*,int,long,Nlppp*,_TCHAR*);
-	static _t_ostream *assign(int,_TCHAR*,int,long,Nlppp*,_t_ostream*);	// 11/20/02 AM.
+	static std::_t_ostream *assign(int,_TCHAR*,int,long,Nlppp*,std::_t_ostream*);	// 11/20/02 AM.
 	static bool		assign(int,_TCHAR*,int,long,Nlppp*,bool);		// 12/10/02 AM.
 
 	// VARIANTS.
@@ -520,7 +519,7 @@ public:
 	static long     assign(int,_TCHAR*,int,RFASem*,Nlppp*,long);
 	static float    assign(int,_TCHAR*,int,RFASem*,Nlppp*,float);
 	static _TCHAR    *assign(int,_TCHAR*,int,RFASem*,Nlppp*,_TCHAR*);
-	static _t_ostream *assign(int,_TCHAR*,int,RFASem*,Nlppp*,_t_ostream*);//11/20/02 AM.
+	static std::_t_ostream *assign(int,_TCHAR*,int,RFASem*,Nlppp*,std::_t_ostream*);//11/20/02 AM.
 	static bool     assign(int,_TCHAR*,int,RFASem*,Nlppp*,bool);	// 12/10/02 AM.
 
 	// INDEXED ASSIGNMENT.
@@ -528,7 +527,7 @@ public:
 	static long    iassign(int,_TCHAR*,int,long,Nlppp*,long);
 	static float   iassign(int,_TCHAR*,int,long,Nlppp*,float);
 	static _TCHAR   *iassign(int,_TCHAR*,int,long,Nlppp*,_TCHAR*);
-	static _t_ostream *iassign(int,_TCHAR*,int,long,Nlppp*,_t_ostream*); // 11/20/02 AM.
+	static std::_t_ostream *iassign(int,_TCHAR*,int,long,Nlppp*,std::_t_ostream*); // 11/20/02 AM.
 	static bool    iassign(int,_TCHAR*,int,long,Nlppp*,bool);		// 12/10/02 AM.
 
 	static bool truth(long);
@@ -773,24 +772,24 @@ public:
 		);
 
 
-	static _t_ostream *out(_TCHAR*,RFASem *,Nlppp*);
-	static _t_ostream *out(_TCHAR*,_TCHAR *,Nlppp*);
-	static _t_ostream *out(_TCHAR*,long,Nlppp*);
-	static _t_ostream *out(_TCHAR*,float,Nlppp*);
-	static _t_ostream *out(_TCHAR*,bool,Nlppp*);                    // 07/11/03 AM.
-	static _t_ostream *out(RFASem*,RFASem *,Nlppp*);
-	static _t_ostream *out(RFASem*,_TCHAR *,Nlppp*);
-	static _t_ostream *out(RFASem*,long,Nlppp*);
-	static _t_ostream *out(RFASem*,float,Nlppp*);
-	static _t_ostream *out(RFASem*,bool,Nlppp*);                 // 07/11/03 AM.
-	static _t_ostream *out(_t_ostream*,RFASem *,Nlppp*);
-	static _t_ostream *out(_t_ostream*,_TCHAR *,Nlppp*);
-	static _t_ostream *out(_t_ostream*,long,Nlppp*);
-	static _t_ostream *out(_t_ostream*,float,Nlppp*);
-	static _t_ostream *out(_t_ostream*,bool,Nlppp*);                  // 07/11/03 AM.
+	static std::_t_ostream *out(_TCHAR*,RFASem *,Nlppp*);
+	static std::_t_ostream *out(_TCHAR*,_TCHAR *,Nlppp*);
+	static std::_t_ostream *out(_TCHAR*,long,Nlppp*);
+	static std::_t_ostream *out(_TCHAR*,float,Nlppp*);
+	static std::_t_ostream *out(_TCHAR*,bool,Nlppp*);                    // 07/11/03 AM.
+	static std::_t_ostream *out(RFASem*,RFASem *,Nlppp*);
+	static std::_t_ostream *out(RFASem*,_TCHAR *,Nlppp*);
+	static std::_t_ostream *out(RFASem*,long,Nlppp*);
+	static std::_t_ostream *out(RFASem*,float,Nlppp*);
+	static std::_t_ostream *out(RFASem*,bool,Nlppp*);                 // 07/11/03 AM.
+	static std::_t_ostream *out(std::_t_ostream*,RFASem *,Nlppp*);
+	static std::_t_ostream *out(std::_t_ostream*,_TCHAR *,Nlppp*);
+	static std::_t_ostream *out(std::_t_ostream*,long,Nlppp*);
+	static std::_t_ostream *out(std::_t_ostream*,float,Nlppp*);
+	static std::_t_ostream *out(std::_t_ostream*,bool,Nlppp*);                  // 07/11/03 AM.
 
 	static bool stmt(RFASem *);
-	static bool stmt(_t_ostream *);
+	static bool stmt(std::_t_ostream *);
 	static bool stmt(long);
 	static bool stmt(float);
 	static bool stmt(_TCHAR *);
@@ -1408,7 +1407,7 @@ public:
 
 
 	static bool closefile(Nlppp*,RFASem*);								// 05/21/01 AM.
-	static bool closefile(Nlppp*,_t_ostream*);							// 05/21/01 AM.
+	static bool closefile(Nlppp*,std::_t_ostream*);							// 05/21/01 AM.
 
 	static _TCHAR *strspellcandidate(Nlppp*,_TCHAR*,_TCHAR*);			// 01/09/01 AM.
 	static _TCHAR *strspellcandidate(Nlppp*,RFASem*,_TCHAR*);			// 05/07/01 AM.
@@ -1691,13 +1690,13 @@ public:
 	static bool findana(Nlppp*,RFASem*);								// 05/29/03 AM.
 	static bool findana(Nlppp*,long);                           // 07/11/03 AM.
 
-	static bool inputrangetofile(Nlppp*,long,long,_t_ostream*);		// 05/29/03 AM.
+	static bool inputrangetofile(Nlppp*,long,long,std::_t_ostream*);		// 05/29/03 AM.
 	static bool inputrangetofile(Nlppp*,long,long,RFASem*);
-	static bool inputrangetofile(Nlppp*,long,RFASem*,_t_ostream*);
+	static bool inputrangetofile(Nlppp*,long,RFASem*,std::_t_ostream*);
 	static bool inputrangetofile(Nlppp*,long,RFASem*,RFASem*);
-	static bool inputrangetofile(Nlppp*,RFASem*,long,_t_ostream*);
+	static bool inputrangetofile(Nlppp*,RFASem*,long,std::_t_ostream*);
 	static bool inputrangetofile(Nlppp*,RFASem*,long,RFASem*);
-	static bool inputrangetofile(Nlppp*,RFASem*,RFASem*,_t_ostream*);
+	static bool inputrangetofile(Nlppp*,RFASem*,RFASem*,std::_t_ostream*);
 	static bool inputrangetofile(Nlppp*,RFASem*,RFASem*,RFASem*);
 
 	static _TCHAR *resolveurl(Nlppp*,_TCHAR*,_TCHAR*);						// 05/29/03 AM.
@@ -1802,7 +1801,7 @@ public:
 
 	// Utilities.
 	static _TCHAR *sem_to_str(RFASem*);									// 04/28/01 AM.
-	static _t_ostream *sem_to_ostream(RFASem*);							// 05/04/03 AM.
+	static std::_t_ostream *sem_to_ostream(RFASem*);							// 05/04/03 AM.
 
 	static void *sort_arr_kbcon_by_attr(								// 12/10/02 AM.
 		void *args,			// Array of kbconcepts.

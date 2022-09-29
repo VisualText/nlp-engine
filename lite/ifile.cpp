@@ -149,39 +149,39 @@ if (htab_)						// 12/16/98 AM.
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Ifile &ifile)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Ifile &ifile)
 {
-output << _T("@file") << endl;
+output << _T("@file") << std::endl;
 if (ifile.codes_)							// 12/19/01 AM.
 	{
-	output << _T("@decl") << endl;
+	output << _T("@decl") << std::endl;
 	output << *(ifile.decls_);
-	output << _T("@@decl") << endl;
+	output << _T("@@decl") << std::endl;
 	}
 if (ifile.codes_)							// 12/07/98 AM.
 	{
-	output << _T("@code") << endl;
+	output << _T("@code") << std::endl;
 	output << *(ifile.codes_);
-	output << _T("@@code") << endl;
+	output << _T("@@code") << std::endl;
 	}
 if (ifile.selects_)
 	{
-	output << _T("@select") << endl;
+	output << _T("@select") << std::endl;
 	output << _T("@nodes")
-			 << *(ifile.selects_) << endl
-			 << _T("@@nodes") << endl;
-	output << _T("@@select") << endl;
+			 << *(ifile.selects_) << std::endl
+			 << _T("@@nodes") << std::endl;
+	output << _T("@@select") << std::endl;
 	}
 if (ifile.recurses_)
 	output << *(ifile.recurses_);
 if (ifile.regions_)
 	output << *(ifile.regions_);
-output << _T("@@file") << endl;
+output << _T("@@file") << std::endl;
 return output;
 }
 
 /*******************************************/
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Selt<Ifile> &selt)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Selt<Ifile> &selt)
 {
 Ifile *dat;
 dat = selt.getData();
@@ -191,17 +191,17 @@ return output;
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Slist<Ifile> &list)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Slist<Ifile> &list)
 {
 Selt<Ifile> *selt;
 Ifile *dat;
 selt = list.getFirst();
 dat   = selt->getData();
-output << *dat << endl;
+output << *dat << std::endl;
 while ((selt = selt->Right()))
 	{
 	dat = selt->getData();
-	output << *dat << endl;
+	output << *dat << std::endl;
 	}
 
 return output;
@@ -264,14 +264,14 @@ int Ifile::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Ifile::prettyCount(_t_ofstream *ofstr)
+void Ifile::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Ifile count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Ifile count=") << count_ << ends;
+		*ofstr << _T("Active Ifile count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Ifile count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -360,13 +360,13 @@ for (drule = rules->getFirst(); drule; drule = drule->Right())
 			parse))						// 04/03/03 AM.
 		{
 		// Informational output for the user.
-		*gout << _T("NOHASH rule: ") << *rule << endl;
+		*gout << _T("NOHASH rule: ") << *rule << std::endl;
 		// Couldn't hash. Add to musts_ list.
 		musts_->rpush(rule);
 		}
 	else
 		{
-		//*gerr << "Hashed rule: " << *rule << endl;
+		//*gerr << "Hashed rule: " << *rule << std::endl;
 		}
 	}
 // Shutting this down for now.  // 12/25/98 AM.
@@ -428,19 +428,19 @@ int id = gen->id_;
 // Name of the input file (a pass file).
 _TCHAR *sfile = parse->getInput();											// 05/31/00 AM.
 
-// _t_ofstream *fcode = gen->fcode_;	// 04/03/09 AM.
-_t_ofstream *fhead = gen->fhead_;
-//_t_ofstream *fdata = gen->fdata_;		// 04/04/09 AM.
+// std::_t_ofstream *fcode = gen->fcode_;	// 04/03/09 AM.
+std::_t_ofstream *fhead = gen->fhead_;
+//std::_t_ofstream *fdata = gen->fdata_;		// 04/04/09 AM.
 
 // Set up file for current pass.	// 04/03/09 AM.
 _TCHAR buff[MAXSTR];					// 04/03/09 AM.
 _stprintf(buff, _T("%s%c%s%cpass%d.cpp"),	// 04/03/09 AM.
 				parse->getAna()->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH, id);
-_t_ofstream *passc = new _t_ofstream(TCHAR2CA(buff), ios::out);
+std::_t_ofstream *passc = new std::_t_ofstream(TCHAR2CA(buff), std::ios::out);
 gen->setPassc(passc);	// 04/03/09 AM.
 
 // Todo: Replace fcode with passc in this function.	// 04/03/09 AM.
-_t_ofstream *fcode = passc;	// Just locally for current pass.	// 04/03/09 AM.
+std::_t_ofstream *fcode = passc;	// Just locally for current pass.	// 04/03/09 AM.
 
 // And would need to reference this file in the .cpp file.
 
@@ -448,31 +448,31 @@ _t_ofstream *fcode = passc;	// Just locally for current pass.	// 04/03/09 AM.
 // Used for FDATA information private to the current pass.	// 04/03/09 AM.
 _stprintf(buff, _T("%s%c%s%cpass%d.h"),	// 04/03/09 AM.
 				parse->getAna()->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH, id);
-_t_ofstream *passh = new _t_ofstream(TCHAR2CA(buff), ios::out);
+std::_t_ofstream *passh = new std::_t_ofstream(TCHAR2CA(buff), std::ios::out);
 gen->setPassh(passh);	// 04/03/09 AM.
 
 // Replace fdata with passh in this function.	// 04/04/09 AM.
-_t_ofstream *fdata = passh;							// 04/04/09 AM.
+std::_t_ofstream *fdata = passh;							// 04/04/09 AM.
 
 
 _TCHAR *algo = parse->getAlgo();											// 05/31/00 AM.
 
-*passh << _T("// Automatically generated: ") << today() << endl;	// 04/04/09 AM.
+*passh << _T("// Automatically generated: ") << today() << std::endl;	// 04/04/09 AM.
 
 
-*fcode << _T("// Automatically generated: ") << today() << endl;	// 04/03/09 AM.
+*fcode << _T("// Automatically generated: ") << today() << std::endl;	// 04/03/09 AM.
 
-*fcode << _T("#include \"analyzer.h\"") << endl;			// 04/03/09 AM.
-*fcode << _T("#include \"ehead.h\"") << endl;				// 04/03/09 AM.
-*fcode << _T("#include \"rhead.h\"") << endl;				// 04/03/09 AM.
-*fcode << _T("#include \"data.h\"") << endl;					// 04/03/09 AM.
-*fcode << _T("#include \"..\\user\\user.h\"") << endl;	// 04/03/09 AM.
-*fcode << _T("#include \"..\\user\\Ucode.h\"") << endl;	// 04/03/09 AM.
+*fcode << _T("#include \"analyzer.h\"") << std::endl;			// 04/03/09 AM.
+*fcode << _T("#include \"ehead.h\"") << std::endl;				// 04/03/09 AM.
+*fcode << _T("#include \"rhead.h\"") << std::endl;				// 04/03/09 AM.
+*fcode << _T("#include \"data.h\"") << std::endl;					// 04/03/09 AM.
+*fcode << _T("#include \"..\\user\\user.h\"") << std::endl;	// 04/03/09 AM.
+*fcode << _T("#include \"..\\user\\Ucode.h\"") << std::endl;	// 04/03/09 AM.
 
 // Point to the corresponding header file.					// 04/04/09 AM.
-*fcode << _T("#include \"pass") << id << ".h\"" << endl;	// 04/04/09 AM.
+*fcode << _T("#include \"pass") << id << ".h\"" << std::endl;	// 04/04/09 AM.
 
-*fcode << _T("// CODE GENERATION FOR PASS ") << id << _T(".") << endl << endl;
+*fcode << _T("// CODE GENERATION FOR PASS ") << id << _T(".") << std::endl << std::endl;
 
 _TCHAR codebuf[MAXSTR];
 _TCHAR rulebuf[MAXSTR];
@@ -524,7 +524,7 @@ if (selects_)
 Gen::eol(fdata);																// 04/04/03 AM.
 
 	// Declare it also.
-	//*fhead << "extern const _TCHAR *select" << id << "[];" << endl;
+	//*fhead << "extern const _TCHAR *select" << id << "[];" << std::endl;
 	}
 
 ////////////
@@ -615,9 +615,9 @@ if (!gen)
 // Name of the input file (a pass file).
 _TCHAR *sfile = parse->getInput();											// 05/31/00 AM.
 
-_t_ofstream *fcode = gen->passc_; // was fcode_						// 04/04/09 AM.
-_t_ofstream *fhead = gen->fhead_;
-_t_ofstream *fdata = gen->passc_; // was fdata_						// 04/04/09 AM.
+std::_t_ofstream *fcode = gen->passc_; // was fcode_						// 04/04/09 AM.
+std::_t_ofstream *fhead = gen->fhead_;
+std::_t_ofstream *fdata = gen->passc_; // was fdata_						// 04/04/09 AM.
 int id = gen->id_;
 _TCHAR *algo = parse->getAlgo();											// 05/31/00 AM.
 
@@ -648,8 +648,8 @@ else if (fmulti_)
 	*fdata << _T("SELECTMULTI");
 else if (fpremulti_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Unimplemented: pre multi traversal.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Unimplemented: pre multi traversal.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -758,8 +758,8 @@ if (!gen)
 // Name of the input file (a pass file).
 _TCHAR *sfile = parse->getInput();											// 05/31/00 AM.
 
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
-_t_ofstream *fhead = gen->fhead_;
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ofstream *fhead = gen->fhead_;
 int id = gen->id_;
 _TCHAR *algo = parse->getAlgo();											// 05/31/00 AM.
 
@@ -801,8 +801,8 @@ else if (fmulti_)
 	*fcode << _T("SELECTMULTI");
 else if (fpremulti_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Unimplemented: pre multi traversal.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Unimplemented: pre multi traversal.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -859,7 +859,7 @@ return true;
 #ifdef OLD_
 bool Ifile::genSelect(_TCHAR *travbuf, Gen *gen)
 {
-_t_ostream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ostream *fcode = gen->passc_;	// 04/03/09 AM.
 int id = gen->id_;
 
 Delt<Iarg> *dselect = 0;
@@ -867,18 +867,18 @@ Iarg *select;
 if (selects_)
 	dselect = selects_->getFirst();
 
-*fcode << _T("void ") << travbuf << endl;
-*fcode << _T("{") << endl;
+*fcode << _T("void ") << travbuf << std::endl;
+*fcode << _T("{") << std::endl;
 if (!dselect)			// Use root of parse tree.
 	{
-	*fcode << _T("matchNodes") << id << _T("(node->Down(),0,parse,node);") << endl;
-	*fcode << _T("}") << endl;
+	*fcode << _T("matchNodes") << id << _T("(node->Down(),0,parse,node);") << std::endl;
+	*fcode << _T("}") << std::endl;
 	return true;
 	}
 
-*fcode << _T("if (!node) return;") << endl;
-*fcode << _T("Pn *pn = node->getData();") << endl;
-*fcode << _T("_TCHAR *name = pn->getName();") << endl;
+*fcode << _T("if (!node) return;") << std::endl;
+*fcode << _T("Pn *pn = node->getData();") << std::endl;
+*fcode << _T("_TCHAR *name = pn->getName();") << std::endl;
 
 *fcode << _T("if (");
 
@@ -888,20 +888,20 @@ select = dselect->getData();
 for (dselect = dselect->Right(); dselect; dselect = dselect->Right())
 	{
 	select = dselect->getData();
-	*fcode << endl << _T("\t|| !strcmp_i(name, _T(\"") << select->getStr() << _T("\"))");
+	*fcode << std::endl << _T("\t|| !strcmp_i(name, _T(\"") << select->getStr() << _T("\"))");
 	}
 
-*fcode << _T(")") << endl;
-*fcode << _T("\tmatchNodes") << id << _T("(node->Down(),0,parse,node);") << endl;
-*fcode << _T("else if (pn->getUnsealed())") << endl;
-*fcode << _T("\ttraverseSelect") << id << _T("(parse, node->Down());") << endl;
-*fcode << _T("if (!(node->Left()))") << endl;
-*fcode << _T("\t{") << endl;
-*fcode << _T("\tfor (node = node->Right(); node; node = node->Right())") << endl;
-*fcode << _T("\t\ttraverseSelect") << id << _T("(parse,node);") << endl;
-*fcode << _T("\t}") << endl;
+*fcode << _T(")") << std::endl;
+*fcode << _T("\tmatchNodes") << id << _T("(node->Down(),0,parse,node);") << std::endl;
+*fcode << _T("else if (pn->getUnsealed())") << std::endl;
+*fcode << _T("\ttraverseSelect") << id << _T("(parse, node->Down());") << std::endl;
+*fcode << _T("if (!(node->Left()))") << std::endl;
+*fcode << _T("\t{") << std::endl;
+*fcode << _T("\tfor (node = node->Right(); node; node = node->Right())") << std::endl;
+*fcode << _T("\t\ttraverseSelect") << id << _T("(parse,node);") << std::endl;
+*fcode << _T("\t}") << std::endl;
 
-*fcode << _T("}") << endl;
+*fcode << _T("}") << std::endl;
 return true;
 }
 #endif
@@ -916,37 +916,37 @@ return true;
 #ifdef OLD_
 bool Ifile::genNodes(_TCHAR *nodesbuf, Gen *gen)
 {
-_t_ostream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ostream *fcode = gen->passc_;	// 04/03/09 AM.
 int id = gen->id_;
 
-*fcode << _T("void ") << nodesbuf << endl;
-*fcode << _T("{") << endl;
+*fcode << _T("void ") << nodesbuf << std::endl;
+*fcode << _T("{") << std::endl;
 
-*fcode << _T("if (!start || !parse) return;") << endl;
-*fcode << _T("Delt<Irule> *prule;") << endl;
-*fcode << _T("NODE *node = start;") << endl;
-*fcode << _T("Nlppp nlppp(0,new Tree<Pn>(),parse,select,0,0,node,start,end,0,0);") << endl;
+*fcode << _T("if (!start || !parse) return;") << std::endl;
+*fcode << _T("Delt<Irule> *prule;") << std::endl;
+*fcode << _T("NODE *node = start;") << std::endl;
+*fcode << _T("Nlppp nlppp(0,new Tree<Pn>(),parse,select,0,0,node,start,end,0,0);") << std::endl;
 
-*fcode << _T("while (node)") << endl;
-*fcode << _T("\t{") << endl;
+*fcode << _T("while (node)") << std::endl;
+*fcode << _T("\t{") << std::endl;
 
-*fcode << _T("\tif (!matchRules") << id << _T("(&nlppp, /*DU*/ prule))") << endl;
-*fcode << _T("\t\tnode = nlppp.node_ = nodeRight(node,end);") << endl;
-*fcode << _T("\telse") << endl;
-	*fcode << _T("\t\t{") << endl;
-	*fcode << _T("\t\tnlppp.rule_ = prule->getData();") << endl;
-	*fcode << _T("\t\texecActions(&nlppp);") << endl;	// Need runtime versions.
-	*fcode << _T("\t\tnode = nlppp.node_;") << endl;
-	*fcode << _T("\t\tstart = nlppp.start_;") << endl;
-	*fcode << _T("\t\tend = nlppp.end_;") << endl;
-	*fcode << _T("\t\tnlppp.sem_ = 0;") << endl;
-	*fcode << _T("\t\tnlppp.dsem_ = 0;") << endl;
-	*fcode << _T("\t\t}") << endl;
+*fcode << _T("\tif (!matchRules") << id << _T("(&nlppp, /*DU*/ prule))") << std::endl;
+*fcode << _T("\t\tnode = nlppp.node_ = nodeRight(node,end);") << std::endl;
+*fcode << _T("\telse") << std::endl;
+	*fcode << _T("\t\t{") << std::endl;
+	*fcode << _T("\t\tnlppp.rule_ = prule->getData();") << std::endl;
+	*fcode << _T("\t\texecActions(&nlppp);") << std::endl;	// Need runtime versions.
+	*fcode << _T("\t\tnode = nlppp.node_;") << std::endl;
+	*fcode << _T("\t\tstart = nlppp.start_;") << std::endl;
+	*fcode << _T("\t\tend = nlppp.end_;") << std::endl;
+	*fcode << _T("\t\tnlppp.sem_ = 0;") << std::endl;
+	*fcode << _T("\t\tnlppp.dsem_ = 0;") << std::endl;
+	*fcode << _T("\t\t}") << std::endl;
 
-*fcode << _T("\t}") << endl;
+*fcode << _T("\t}") << std::endl;
 
-*fcode << _T("delete (Tree<Pn> *) nlppp.collect_;") << endl;
-*fcode << _T("}") << endl << endl;
+*fcode << _T("delete (Tree<Pn> *) nlppp.collect_;") << std::endl;
+*fcode << _T("}") << std::endl << std::endl;
 return true;
 }
 #endif
@@ -962,39 +962,39 @@ return true;
 #ifdef OLD_
 bool Ifile::genRules(_TCHAR *rulesbuf, Gen *gen)
 {
-_t_ostream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ostream *fcode = gen->passc_;	// 04/03/09 AM.
 int id = gen->id_;
 
-*fcode << _T("void ") << rulesbuf << endl;
-*fcode << _T("{") << endl;
+*fcode << _T("void ") << rulesbuf << std::endl;
+*fcode << _T("{") << std::endl;
 
-*fcode << _T("NODE *node = nlppp->node_;") << endl;
+*fcode << _T("NODE *node = nlppp->node_;") << std::endl;
 
 // Need to get the total rule count for this pass.
 // (Or can use a sentinel in the default case of the rule switch).
-*fcode << _T("long ruleno=0;") << endl;
-*fcode << _T("for (;;)") << endl;
-	*fcode << _T("\t{") << endl;
-	*fcode << _T("\t++ruleno;") << endl;
-	*fcode << _T("\tnlppp->node_ = node;") << endl;
-	//*fcode << "\tnlppp->rule_ = rule->getData();" << endl;
-	*fcode << _T("\tnlppp->first_ = nlppp->last_ = 0;") << endl;
-	*fcode << _T("\tif (matchRule") << id << _T("(ruleno,bool &,nlppp)") << endl;
-		*fcode << _T("\t\t && nlppp->first_") << endl;
-		*fcode << _T("\t\t && checkActions") << id << _T("(ruleno,nlppp))") << endl;
-		*fcode << _T("\t\t{") << endl;
-		*fcode << _T("\t\tnlppp->node_ = node;") << endl;
-		*fcode << _T("\t\treturn true;") << endl;
-		*fcode << _T("\t\t}") << endl;
-	*fcode << _T("\telse") << endl;
-		*fcode << _T("\t\tmatchCleanup(nlppp->collect_);") << endl;
+*fcode << _T("long ruleno=0;") << std::endl;
+*fcode << _T("for (;;)") << std::endl;
+	*fcode << _T("\t{") << std::endl;
+	*fcode << _T("\t++ruleno;") << std::endl;
+	*fcode << _T("\tnlppp->node_ = node;") << std::endl;
+	//*fcode << "\tnlppp->rule_ = rule->getData();" << std::endl;
+	*fcode << _T("\tnlppp->first_ = nlppp->last_ = 0;") << std::endl;
+	*fcode << _T("\tif (matchRule") << id << _T("(ruleno,bool &,nlppp)") << std::endl;
+		*fcode << _T("\t\t && nlppp->first_") << std::endl;
+		*fcode << _T("\t\t && checkActions") << id << _T("(ruleno,nlppp))") << std::endl;
+		*fcode << _T("\t\t{") << std::endl;
+		*fcode << _T("\t\tnlppp->node_ = node;") << std::endl;
+		*fcode << _T("\t\treturn true;") << std::endl;
+		*fcode << _T("\t\t}") << std::endl;
+	*fcode << _T("\telse") << std::endl;
+		*fcode << _T("\t\tmatchCleanup(nlppp->collect_);") << std::endl;
 
-	*fcode << _T("\t}") << endl;
+	*fcode << _T("\t}") << std::endl;
 
 
-*fcode << _T("nlppp->node_ = node;") << endl;
-*fcode << _T("return false;") << endl;
-*fcode << _T("}") << endl << endl;
+*fcode << _T("nlppp->node_ = node;") << std::endl;
+*fcode << _T("return false;") << std::endl;
+*fcode << _T("}") << std::endl << std::endl;
 return true;
 }
 #endif

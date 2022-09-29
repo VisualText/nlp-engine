@@ -72,7 +72,7 @@ void ptr_gen(
 	CG *cg
 	)
 {
-_t_ofstream *fp;
+std::_t_ofstream *fp;
 int ii;
 int segs_tot, seg_curr;
 long seg_size;
@@ -100,7 +100,7 @@ for (ii = 0; ii <= seg_curr; ii++)
    _stprintf(s_nam, _T("%s%s%s.cpp%s"), dir, DIR_SEP, s_tab, tail);
    //if (!file_open(s_nam, "w", &fp))
    //   return;
-	fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+	fp = new std::_t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
 
    gen_file_head(fp);
    consh_gen_includes(fp);
@@ -147,7 +147,7 @@ for (ii = seg_curr + 1; ii < segs_tot; ii++)
    /* Set up file for current segment. */
    _stprintf(s_tab, _T("%s%d"), consh_PTR_BASE, ii);
    _stprintf(s_nam, _T("%s%s%s.cpp"), dir, DIR_SEP, s_tab);
-	fp = new _t_ofstream(TCHAR2A(s_nam));
+	fp = new std::_t_ofstream(TCHAR2A(s_nam));
 
    gen_file_head(fp);
    consh_gen_includes(fp);
@@ -173,7 +173,7 @@ void ptr_gen_hdr(
 	CG *cg
 	)
 {
-_t_ofstream *fp;
+std::_t_ofstream *fp;
 int ii;
 _TCHAR s_nam[PATH],	/* Name of ptr table hdr file.		*/
      s_tab[16];		/* Name of ptr table array.			*/
@@ -183,11 +183,11 @@ segs_tot = cg->aptr_->ptr_segs_tot();
 _stprintf(s_nam, _T("%s%s%s_ini.h%s"), dir, DIR_SEP, consh_PTR_BASE, tail);
 //if (!file_open(s_nam, "w", &fp))
 //   return;
-fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+fp = new std::_t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
 
 gen_file_head(fp);
 
-*fp << _T("extern bool cc_ptr_ini(void*);\n") << endl;					// 08/15/02 AM.
+*fp << _T("extern bool cc_ptr_ini(void*);\n") << std::endl;					// 08/15/02 AM.
 
 for (ii = 0; ii < segs_tot; ii++)
    {
@@ -215,7 +215,7 @@ void ptr_gen_ini(
 	CG *cg
 	)
 {
-_t_ofstream *fp;
+std::_t_ofstream *fp;
 int ii;
 _TCHAR s_nam[PATH];	/* Name of ptr table hdr file.		*/
 //char s_tab[16];		/* Name of ptr table array.			*/
@@ -232,38 +232,38 @@ tsize		= cg->aptr_->ptr_seg_size();
 _stprintf(s_nam, _T("%s%s%s_ini.cpp%s"), dir, DIR_SEP, tbase, tail);
 //if (!file_open(s_nam, "w", &fp))
 //   return;
-fp = new _t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
+fp = new std::_t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
 
 gen_file_head(fp);
 
 consh_gen_includes(fp);
-*fp << _T("\nbool cc_ptr_ini(void *xcg)") << endl;						// 08/15/02 AM.
-*fp << _T("{") << endl;
-*fp << _T("PTR **segs;\n") << endl;
-*fp << _T("CG *cg = (CG *) xcg;") << endl;									// 08/15/02 AM.
-*fp << _T("segs = cg->aptr_->ptr_seg_table();") << endl;				// 08/15/02 AM.
+*fp << _T("\nbool cc_ptr_ini(void *xcg)") << std::endl;						// 08/15/02 AM.
+*fp << _T("{") << std::endl;
+*fp << _T("PTR **segs;\n") << std::endl;
+*fp << _T("CG *cg = (CG *) xcg;") << std::endl;									// 08/15/02 AM.
+*fp << _T("segs = cg->aptr_->ptr_seg_table();") << std::endl;				// 08/15/02 AM.
 
 for (ii = 0; ii < segs_tot; ii++)
    *fp << _T("segs[") << ii << _T("] = &(")
 		 << tbase << ii << _T("[0]);")
-		 << endl;
+		 << std::endl;
 
-*fp << _T("bool ok = cg->aptr_->ptr_hard_ini(") << endl;				// 08/15/02 AM.
-*fp << _T("   (long) ") << tsize << _T(",\t/* ptr seg size */") << endl;
+*fp << _T("bool ok = cg->aptr_->ptr_hard_ini(") << std::endl;				// 08/15/02 AM.
+*fp << _T("   (long) ") << tsize << _T(",\t/* ptr seg size */") << std::endl;
 *fp << _T("   (int) ") << segs_tot << _T(",\t/* ptr segs tot */");
-*fp << _T("   (int) ") << tcurr << _T(",\t/* ptr seg curr */") << endl;
+*fp << _T("   (int) ") << tcurr << _T(",\t/* ptr seg curr */") << std::endl;
 if (toff >= 0)									/* Table not empty. */
    *fp << _T("   &(")
 		 << tbase << tcurr
 		 << _T("[") << toff << _T("])\t/* ptr seg p */")
-		 << endl;
+		 << std::endl;
 else											/* Table empty.		*/
    *fp << _T("   &(") << tbase << tcurr << _T("[0]) - 1\t/* ptr seg p */")
-		 << endl;
+		 << std::endl;
 
-*fp << _T("   );") << endl;
-*fp << _T("return ok;") << endl;												// 05/05/01 AM.
-*fp << _T("}") << endl;
+*fp << _T("   );") << std::endl;
+*fp << _T("return ok;") << std::endl;												// 05/05/01 AM.
+*fp << _T("}") << std::endl;
 
 //if (!file_close(s_nam, fp))
 //   return;
@@ -282,7 +282,7 @@ delete fp;
 void
 ptr_gen_struct(
 	PTR *pseg,
-	_t_ofstream *fp,
+	std::_t_ofstream *fp,
 	CG *cg
 	)
 {
@@ -344,7 +344,7 @@ if (pseg->kind)	/* If ptr is present. */
 
       case pNO_PTR:
       default:
-         _t_cerr << _T("[ptr_gen: Bad kind]") << endl;
+         std::_t_cerr << _T("[ptr_gen: Bad kind]") << std::endl;
          //prog_exit(1);				// 04/29/99 AM.
 			exit(1);							// 04/29/99 AM.
       }
@@ -357,7 +357,7 @@ if (pseg->kind)	/* If ptr is present. */
    
    /* Generate a ptr table struct. */
    *fp << _T("{") << kind_x << _T(",") << val_x << _T(",") << next_x << _T("}")
-		 << flush;
+		 << std::flush;
    }
 else			/* Generate empty struct. */
    {

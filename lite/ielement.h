@@ -37,8 +37,8 @@ class Iarg;
 
 class Ielement
 {
-	friend _t_ostream &operator<<(_t_ostream &, Ielement &);
-	friend _t_ostream &operator<<(_t_ostream &, Dlist<Ielement> &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Ielement &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Dlist<Ielement> &);
 
 public:
 	Ielement(									// Default constructor.
@@ -92,7 +92,7 @@ protected:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif

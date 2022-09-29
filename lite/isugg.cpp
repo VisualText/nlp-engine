@@ -78,8 +78,8 @@ Isugg *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Isugg object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Isugg object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -128,7 +128,7 @@ dest->layers_   = orig->layers_;											// 05/06/00 AM.
 
 
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Isugg &sugg)			// 11/23/98 AM.
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Isugg &sugg)			// 11/23/98 AM.
 {
 bool flag = false;		// If something prior was printed.
 
@@ -187,7 +187,7 @@ return output;
 }
 
 /*******************************************/
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Delt<Isugg> &delt)		// 11/23/98 AM.
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Delt<Isugg> &delt)		// 11/23/98 AM.
 {
 Isugg *sugg;
 sugg  = delt.getData();
@@ -197,7 +197,7 @@ return output;
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Dlist<Isugg> &list)		// 11/23/98 AM.
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Dlist<Isugg> &list)		// 11/23/98 AM.
 {
 Delt<Isugg> *delt;
 delt = list.getFirst();
@@ -259,8 +259,8 @@ sugg = this;
 // Interning attrs_ list into layers_ list.						// 05/06/00 AM.
 if (sugg->layers_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Intern: suggested elt already interned.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Intern: suggested elt already interned.]") << std::ends;
 	errOut(&gerrStr,false);
 	return;
 	}
@@ -309,9 +309,9 @@ for (dpair = list->getFirst(); dpair; dpair = dpair->Right())
 		}
 	else
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Invalid key in rule's suggested element=") << key
-				  << _T("]") << ends;
+				  << _T("]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 	}
@@ -361,7 +361,7 @@ void Isugg::fillDefaults()
 * ASS:	Not using PAIRS, but rather the internalized values in sugg.
 ********************************************/
 
-void Isugg::genSugg(Isugg *sugg, _t_ostream &ofile)
+void Isugg::genSugg(Isugg *sugg, std::_t_ostream &ofile)
 {
 if (!sugg)
 	return;
@@ -425,7 +425,7 @@ else if ((dargs = sugg->getAttrs()))	// Uninterned, for some reason.
 	}
 if (found)							// 10/11/99 AM.
 	ofile << _T("]");					// 10/11/99 AM.
-ofile << flush;					// 10/11/99 AM.
+ofile << std::flush;					// 10/11/99 AM.
 }
 
 
@@ -471,8 +471,8 @@ bool Isugg::gen(_TCHAR *asugg, Gen *gen,
 	long ruleline	// Line number of current rule.					// 08/09/02 AM.
 	)
 {
-//_t_ofstream *fdata = gen->fdata_;
-_t_ofstream *fdata = gen->passh_;	// 04/04/09 AM.
+//std::_t_ofstream *fdata = gen->fdata_;
+std::_t_ofstream *fdata = gen->passh_;	// 04/04/09 AM.
 
 _TCHAR a_attrs[MAXSTR];
 if (layers_)

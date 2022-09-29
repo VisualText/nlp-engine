@@ -79,7 +79,7 @@ long tot_hash_size =															// 02/16/01 AM.
 					(long) 250007;	// scale up.							// 06/29/03 AM.
 if (tot_hash_size < 100 || tot_hash_size > (long)10000000)		// 02/16/01 AM.
 	{
-	*cgerr << _T("[Error: Sym table size out of bounds.]") << endl;	// 02/16/01 AM.
+	*cgerr << _T("[Error: Sym table size out of bounds.]") << std::endl;	// 02/16/01 AM.
 	// Need way to flag error.												// 02/16/01 AM.
 	return false;																// 05/05/01 AM.
 	}
@@ -92,7 +92,7 @@ int tot_conf_segs = 2;		// Initial segs for conflicts.		// 02/15/01 AM.
 // If sym table larger than allowed by seg table, fail.			// 02/15/01 AM.
 if ((tot_hash_segs + tot_conf_segs) > SYM_SEGS_MAX)				// 02/15/01 AM.
 	{
-	*cgerr << _T("[Sym table too large to initialize.]") << endl;	// 02/15/01 AM.
+	*cgerr << _T("[Sym table too large to initialize.]") << std::endl;	// 02/15/01 AM.
 	// Need a way to crash and burn, or return failure.			// 02/15/01 AM.
 	return false;																// 05/05/01 AM.
 	}

@@ -79,7 +79,7 @@ bool ok = cg->acon_->con_hard_ini(										// 08/15/02 AM.
 
 #ifdef LINUX
 // Pretty-print kb concepts while debugging LINUX KB load.	// 02/21/19 AM.
-cg->acon_->con_tab_pretty(&cout);	// 02/20/19 AM.
+cg->acon_->con_tab_pretty(&std::cout);	// 02/20/19 AM.
 #endif
 
 return ok;																		// 05/05/01 AM.

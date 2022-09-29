@@ -12,8 +12,6 @@ All rights reserved.
 
 #ifndef CHECK_H_
 #define CHECK_H_
-//#include <iostream>											// Upgrade.	// 01/24/01 AM.
-//using namespace std;											// Upgrade.	// 01/24/01 AM.
 #include <assert.h>
 
 
@@ -131,7 +129,7 @@ protected:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);				// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);				// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif

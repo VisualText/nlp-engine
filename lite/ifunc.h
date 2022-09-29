@@ -32,7 +32,7 @@ class Nlppp;
 
 class Ifunc
 {
-	friend _t_ostream &operator<<(_t_ostream &, Ifunc &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Ifunc &);
 
 public:
 	Ifunc(
@@ -85,7 +85,7 @@ public:
 	static Ifunc *htLookup(_TCHAR*,void*);								// 12/21/01 AM.
 
 	// General.
-	bool gen(_t_ostream*,Gen*);
+	bool gen(std::_t_ostream*,Gen*);
 	bool eval(Delt<Iarg>*,Nlppp*,RFASem*&);							// 12/21/01 AM.
 	Dlist<Ipair> *bindParams(Delt<Iarg>*,Delt<Iarg>*,Nlppp*);	// 03/10/02 AM.
 
@@ -108,7 +108,7 @@ protected:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif

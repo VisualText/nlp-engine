@@ -50,26 +50,26 @@ HINSTANCE load_dll(_TCHAR *path)
 	//Func1 = (lpFunc1) GetProcAddress(hLibrary, "fnUsr");
 	//if (Func1 != NULL)
 	//    a = ((Func1)());
-	//else *gerr << "Error in Func1 call" << endl;
+	//else *gerr << "Error in Func1 call" << std::endl;
 
 
 		// REGISTER USER ALGORITHMS AND ACTIONS!	// 01/29/99 AM.
 		 // Func2 = (lpFunc2) GetProcAddress(hLibrary, "regUser");
        // if (Func2 != NULL)
        //     ((Func2)());
-       // else *gerr << "Error in Func2 call" << endl;
+       // else *gerr << "Error in Func2 call" << std::endl;
 
     }
-//    else *gerr << "Error in Load Library" << endl;			// 08/20/00 AM.
+//    else *gerr << "Error in Load Library" << std::endl;			// 08/20/00 AM.
 	else
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Couldn't load library:") << path << _T("]")		// 08/20/00 AM.
-					<< ends;
+					<< std::ends;
 		errOut(&gerrStr,false);
 		}
 														// 08/20/00 AM.
-    //*gerr << "a=" << a << endl;
+    //*gerr << "a=" << a << std::endl;
     //FreeLibrary(hLibrary);	 // Unload DLL from memory
 return hLibrary;
 }
@@ -91,8 +91,8 @@ if (Func3 != NULL)
    return ((Func3)(func,(DELTS*)args,auser));
 else
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("Error in call_ucodeAction") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Error in call_ucodeAction") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -113,8 +113,8 @@ if (Func4 != NULL)
    return ((Func4)(parse));
 else
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("Error in call_runAnalyzer") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Error in call_runAnalyzer") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -142,8 +142,8 @@ if (Func5 != NULL)
    return ((Func5)(parse,name));
 else
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("Error in call_ucodeAlgo") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Error in call_ucodeAlgo") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -165,9 +165,9 @@ if (Func6 != NULL)
    return ((Func6)(nlp));
 else
 	{
-	_t_strstream gerrStr;
-//	gerrStr << "Error in call_ucodeIni" << ends;
-	gerrStr << _T("[Warning: User project probably not up to date.]") << ends;
+	std::_t_strstream gerrStr;
+//	gerrStr << "Error in call_ucodeIni" << std::ends;
+	gerrStr << _T("[Warning: User project probably not up to date.]") << std::ends;
 	errOut(&gerrStr,false,0,0);
 	}
 
@@ -188,8 +188,8 @@ if (Func6 != NULL)
    return ((Func6)(nlp));
 else
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Warning: User project probably not up to date.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Warning: User project probably not up to date.]") << std::ends;
 	errOut(&gerrStr,false,0,0);
 	}
 

@@ -63,14 +63,14 @@ _TCHAR *Chars::create(long size)
 _TCHAR *tmp;
 if (!(tmp = new _TCHAR[size]))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Couldn't allocate a char array.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Couldn't allocate a char array.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
 #ifndef STABLE_
 ++count_;
-//*gerr << (long)tmp << "+" << count_ << endl;
+//*gerr << (long)tmp << "+" << count_ << std::endl;
 #endif
 return tmp;
 }
@@ -84,7 +84,7 @@ return tmp;
 
 void Chars::destroy(_TCHAR *tmp)
 {
-//*gerr << (long)tmp << "-" << count_ << endl;
+//*gerr << (long)tmp << "-" << count_ << std::endl;
 delete [] (_TCHAR *) tmp;
 #ifndef STABLE_
 --count_;
@@ -106,15 +106,15 @@ int Chars::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Chars::prettyCount(_t_ofstream *ofstr)
+void Chars::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Chars count=") << count_ << endl;
-	*gout << _T("Active Chars count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Chars count=") << count_ << ends;
+		*ofstr << _T("Active Chars count=") << count_ << std::endl;
+	*gout << _T("Active Chars count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Chars count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }

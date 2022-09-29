@@ -79,33 +79,33 @@ if (rules_)
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Iregion &iregion)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Iregion &iregion)
 {
 if (iregion.pres_)
 	{
-	output << _T("@pre") << endl;
+	output << _T("@pre") << std::endl;
 	output << *(iregion.pres_);
 	}
 if (iregion.checks_)
 	{
-	output << _T("@check") << endl;
+	output << _T("@check") << std::endl;
 	output << *(iregion.checks_);
 	}
 if (iregion.posts_)
 	{
-	output << _T("@post") << endl;
+	output << _T("@post") << std::endl;
 	output << *(iregion.posts_);
 	}
 if (iregion.rules_)
 	{
-	output << _T("@rules") << endl;
+	output << _T("@rules") << std::endl;
 	output << *(iregion.rules_);
 	}
 return output;
 }
 
 /*******************************************/
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Selt<Iregion> &selt)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Selt<Iregion> &selt)
 {
 Iregion *dat;
 dat = selt.getData();
@@ -115,7 +115,7 @@ return output;
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Slist<Iregion> &list)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Slist<Iregion> &list)
 {
 Selt<Iregion> *selt;
 Iregion *dat;
@@ -167,14 +167,14 @@ int Iregion::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Iregion::prettyCount(_t_ofstream *ofstr)
+void Iregion::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Iregion count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Iregion count=") << count_ << ends;
+		*ofstr << _T("Active Iregion count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Iregion count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }

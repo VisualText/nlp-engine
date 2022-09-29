@@ -140,14 +140,14 @@ Parse *parse = nlppp->getParse();
 Tree<Pn> *tree = (Tree<Pn> *) parse->getTree();
 if (!tree)
    {
-   _t_cout << _T("[posParse: Couldn't fetch parse tree.]") << endl;
+   std::_t_cout << _T("[posParse: Couldn't fetch parse tree.]") << std::endl;
    return false;
    }
 
 Node<Pn> *root = tree->getRoot();
 if (!root)
    {
-   _t_cout << _T("[posParse: Couldn't fetch root of parse tree.]") << endl;
+   std::_t_cout << _T("[posParse: Couldn't fetch root of parse tree.]") << std::endl;
    return false;
    }
 
@@ -169,13 +169,13 @@ _TCHAR pos[MAXSTR+1];
 tok1[0] = tok2[0] = pos[0] = '\0';	// Initialize.
 
 #ifdef LINUX
-_t_ifstream inFile(fname, ios::in | ios::nocreate);
+std::_t_ifstream inFile(fname, std::ios::in | std::ios::nocreate);
 #else
-_t_ifstream inFile(TCHAR2CA(fname), ios::in | ios_base::binary);
+std::_t_ifstream inFile(TCHAR2CA(fname), std::ios::in | std::ios_base::binary);
 #endif
 if (!inFile)
 	{
-//	*gerr << "[Could not open file '" << fname << "']." << endl;
+//	*gerr << "[Could not open file '" << fname << "']." << std::endl;
 	return false;
 	}
 
@@ -206,7 +206,7 @@ for (;;)
 			cout << " ";
 		if (*pos)
 			cout << pos;
-		cout << endl;
+		cout << std::endl;
 */
 
 		// Find token(s) in the parse tree.
@@ -334,7 +334,7 @@ if (_tcscmp(tok1,str))	// Just confirm.
 // Matched first token at this point.
 
 //	cout << "[MATCHED]";
-//	cout << "[" << tok1 << "," << pos << "]" << endl;
+//	cout << "[" << tok1 << "," << pos << "]" << std::endl;
 Node<Pn> *start = node;
 Node<Pn> *end = 0;
 if (empty(tok2))	// No 2nd token from tagger on this line.

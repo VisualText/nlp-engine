@@ -21,7 +21,7 @@ All rights reserved.
 
 class Starr
 {
-	friend _t_ostream &operator<<(_t_ostream &, const Starr &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, const Starr &);
 public:
 	Starr(int size = 1);							// Default constructor.
 	Starr(_TCHAR *);									// Convert one string to a starr.
@@ -63,7 +63,7 @@ private:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;							// Count objects currently allocated.
 #endif

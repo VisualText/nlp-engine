@@ -85,7 +85,7 @@ public:
 		Slist<SELTTYPE> *list1,
 		Slist<SELTTYPE> *list2
 		);
-	long genConflicts(_t_ostream *);											// 06/17/00 AM.
+	long genConflicts(std::_t_ostream *);											// 06/17/00 AM.
 
 private:
 	Selt<SELTTYPE> *pFirst;	// Point to first element.
@@ -95,7 +95,7 @@ private:
 public:
 	static int getCount();
 	static void prettyCount(_TCHAR * = _T(""),
-								_t_ofstream* =0);			// Pretty-print the count.
+								std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif
@@ -136,7 +136,7 @@ pFirst = pLast = selt;
 template<class SELTTYPE>
 Slist<SELTTYPE>::Slist(const Slist<SELTTYPE> &orig)	// 11/19/07 AM.
 {
-//*gerr << "[Slist copy constructor]" << endl;
+//*gerr << "[Slist copy constructor]" << std::endl;
 pFirst = pLast = 0;
 // Copy the list.
 Selt<SELTTYPE> *ptr;
@@ -160,7 +160,7 @@ while (ptr)
 template<class SELTTYPE>
 Slist<SELTTYPE>::Slist(Selt<SELTTYPE> *orig, bool dummy)	// 11/19/07 AM.
 {
-//*gerr << "[Slist copy constructor(2)]" << endl;
+//*gerr << "[Slist copy constructor(2)]" << std::endl;
 pFirst = pLast = 0;
 // Copy the list.
 Selt<SELTTYPE> *ptr;
@@ -190,8 +190,8 @@ pFirst = pLast = selt;
 if (selt->pRight)
 	{
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Slist: Given element is part of another list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Slist: Given element is part of another list.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -267,23 +267,23 @@ int Slist<SELTTYPE>::getCount() { return count_; }
 #ifndef STABLE_
 template<class SELTTYPE>
 void Slist<SELTTYPE>::prettyCount(_TCHAR *str,
-	_t_ofstream *ofstr)
+	std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("Active Slist<") << str << _T("> count=")
-		  << count_ << ends;
+		  << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 
 	*gout << _T("Active Slist<") << str << _T("> count=")
-		  << count_ << endl;
+		  << count_ << std::endl;
 
 	if (ofstr)
 		*ofstr << _T("Active Slist<") << str << _T("> count=")
-		  << count_ << endl;
+		  << count_ << std::endl;
 	}
 }
 #endif
@@ -314,8 +314,8 @@ void Slist<SELTTYPE>::push(Selt<SELTTYPE> *selt)
 #ifndef STABLE_
 if (selt->pRight)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[push: Given element is part of another list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[push: Given element is part of another list.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -363,8 +363,8 @@ void Slist<SELTTYPE>::rpush(Selt<SELTTYPE> *selt)
 if (selt->pRight)
 	{
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[rpush: Given element is part of a list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rpush: Given element is part of a list.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -534,8 +534,8 @@ void Slist<SELTTYPE>::insertLeft(
 if (!selt || !pos)
 	{
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[InsertLeft: Given NULL ptr]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[InsertLeft: Given NULL ptr]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -544,8 +544,8 @@ if (!selt || !pos)
 if (selt->pRight)
 	{
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[InsertLeft: Given elt is in another list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[InsertLeft: Given elt is in another list.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -566,8 +566,8 @@ for (tmp = pFirst; tmp && tmp->pRight != pos; tmp = tmp->pRight)
 if (!tmp)
 	{
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[InsertLeft: given position not in list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[InsertLeft: given position not in list.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -594,8 +594,8 @@ void Slist<SELTTYPE>::insertRight(
 if (!selt || !pos)
 	{
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[insertRight: Given NULL element.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[insertRight: Given NULL element.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -604,8 +604,8 @@ if (!selt || !pos)
 if (selt->pRight)
 	{
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[insertRight: Element in another list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[insertRight: Element in another list.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -639,8 +639,8 @@ void Slist<SELTTYPE>::insertRight(
 if (!pos)
 	{
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[insertRight: Given NULL element.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[insertRight: Given NULL element.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -671,8 +671,8 @@ void Slist<SELTTYPE>::Traverse(
 {
 for (; selt; selt = selt->pRight)
 // FIX FROM THE LINUX CODE.	// 03/20/19 AM.
-//	_t_cout << pn->data < _T(" ");
-	_t_cout << selt->data < _T(" "); // FIX.	// 04/26/07 AM.
+//	std::_t_cout << pn->data < _T(" ");
+	std::_t_cout << selt->data < _T(" "); // FIX.	// 04/26/07 AM.
 }
 
 
@@ -840,7 +840,7 @@ return list1;
 ********************************************/
 
 template<class SELTTYPE>
-long Slist<SELTTYPE>::genConflicts(_t_ostream *ostr)
+long Slist<SELTTYPE>::genConflicts(std::_t_ostream *ostr)
 {
 return SELTTYPE::genConflicts(this, ostr);
 }

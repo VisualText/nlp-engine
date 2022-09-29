@@ -1,5 +1,5 @@
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -7,7 +7,7 @@ All rights reserved.
 *
 *									PTR_GEN.H
 *
-* FILE:	consh.¹/ptr_gen.h
+* FILE:	consh.ï¿½/ptr_gen.h
 * SUBJ:	Declarations for ptr table code generation.
 * NOTE:	
 * CR:	10/5/95 AM.
@@ -36,7 +36,7 @@ extern void ptr_gen_ini(
 extern void
 ptr_gen_struct(
 	PTR *pseg,
-	_t_ofstream *fp,
+	std::_t_ofstream *fp,
 	CG *cg
 	);
 

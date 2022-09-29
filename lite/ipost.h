@@ -29,7 +29,7 @@ All rights reserved.
 
 class Ipost : public Iaction
 {
-	friend _t_ostream &operator<<(_t_ostream &, Dlist<Ipost> &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Dlist<Ipost> &);
 
 public:
 	Ipost(

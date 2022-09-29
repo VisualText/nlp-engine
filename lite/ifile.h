@@ -37,9 +37,9 @@ class Parse;				// 08/23/02 AM.
 
 class Ifile
 {
-	friend _t_ostream &operator<<(_t_ostream &, Ifile &);
-	friend _t_ostream &operator<<(_t_ostream &, Selt<Ifile> &);
-	friend _t_ostream &operator<<(_t_ostream &, Slist<Ifile> &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Ifile &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Selt<Ifile> &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Slist<Ifile> &);
 
 public:
 	Ifile(					// Default constructor.
@@ -136,7 +136,7 @@ protected:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif

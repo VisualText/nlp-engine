@@ -27,7 +27,7 @@ class RFASem;
 
 class Iifstmt : public Istmt
 {
-	friend _t_ostream &operator<<(_t_ostream &, Iifstmt &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Iifstmt &);
 
 public:
 	Iifstmt(											// Default constructor.
@@ -48,7 +48,7 @@ public:
 	virtual void Iifstmt::copy(const Iifstmt *orig);
 #endif
 
-	virtual void print(_t_ostream &);					// 12/27/99 AM.
+	virtual void print(std::_t_ostream &);					// 12/27/99 AM.
 
 	const Iifstmt &operator=(const Iifstmt &);	// Assignment.
 
@@ -63,7 +63,7 @@ public:
 	void setElse(RFASem *);
 
 	// General.
-	virtual void genIfstmt(_t_ostream &ofile);
+	virtual void genIfstmt(std::_t_ostream &ofile);
 	virtual bool same(Istmt *stmt1, Istmt *stmt2);
 	virtual bool eval(Nlppp *, /*UP*/ RFASem* &);
 
@@ -80,7 +80,7 @@ protected:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;					// Count objects currently allocated.
 #endif

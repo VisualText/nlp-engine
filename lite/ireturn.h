@@ -27,7 +27,7 @@ class RFASem;
 
 class Ireturn : public Istmt
 {
-	friend _t_ostream &operator<<(_t_ostream &, Ireturn &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Ireturn &);
 
 public:
 	Ireturn(											// Default constructor.
@@ -42,7 +42,7 @@ public:
 	virtual void zero();
 	virtual void copy(const Ireturn *orig);
 
-	virtual void print(_t_ostream &);
+	virtual void print(std::_t_ostream &);
 
 	const Ireturn &operator=(const Ireturn &);	// Assignment.
 
@@ -53,7 +53,7 @@ public:
 	void setExpr(RFASem *);
 
 	// General.
-	virtual void genReturnstmt(_t_ostream &ofile);
+	virtual void genReturnstmt(std::_t_ostream &ofile);
 	virtual bool same(Istmt *stmt1, Istmt *stmt2);
 	virtual bool eval(Nlppp *, /*UP*/ RFASem* &);
 
@@ -68,7 +68,7 @@ protected:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;					// Count objects currently allocated.
 #endif

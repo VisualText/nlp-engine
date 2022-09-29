@@ -6980,20 +6980,20 @@ if (!fname || !*fname)
 
 // Build up a bit-flag vector for the modes.
 #ifdef __linux__
-std::_Ios_Openmode modes = ios::in;
+std::_Ios_Openmode modes = std::ios::in;
 #else
 int modes = 0;
 #endif
 if (napp)
-	modes |= ios::app;
+	modes |= std::ios::app;
 if (nate)
-	modes |= ios::ate;
+	modes |= std::ios::ate;
 //if (nnocreate)
-//	modes |= ios::nocreate;
+//	modes |= std::ios::nocreate;
 //if (nnoreplace)
-//	modes |= ios::noreplace;
+//	modes |= std::ios::noreplace;
 if (nbinary)
-	modes |= ios::binary;
+	modes |= std::ios::binary;
 
 // Set up proper path for file.
 // Should check if it's relative or absolute.
@@ -7008,7 +7008,7 @@ else					// Absolute path.
 	parse->internStr(fname, /*UP*/ str);
 
 // Open the output file.
-_t_ostream *ostr = new _t_ofstream(TCHAR2CA(str), modes);
+std::_t_ostream *ostr = new std::_t_ofstream(TCHAR2CA(str), modes);
 parse->newostr(ostr);			// Add to list of ostrs.			// 05/23/01 AM.
 
 if (!ostr)
@@ -7063,7 +7063,7 @@ if (sem1->getType() != RSOSTREAM)
 	return parse->errOut(false); // UNFIXED
 	}
 
-_t_ostream *ostr = sem1->getOstream();
+std::_t_ostream *ostr = sem1->getOstream();
 
 if (!ostr)
 	{
@@ -8360,8 +8360,8 @@ if (nlppp->nlookahead_)											// 04/24/10 AM.
 	if (num2 >= nlppp->nlookahead_)							// 04/24/10 AM.
 		{
 		num2 = (nlppp->nlookahead_ - 1);						// 04/24/10 AM.
-		_t_strstream gerrStr;
-		gerrStr << _T("[group: Cannot group lookahead node.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[group: Cannot group lookahead node.]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		}
 	}
@@ -8973,12 +8973,12 @@ return true;
 
 
 /********************************************
-* FN:		FNSTRENDSWITH
+* FN:		FNSTRendsWITH
 * CR:		11/17/00 Dd.
 * SUBJ:		Checks to see if the string ends with the given ending.
 * RET:		True if ok, else false.
 *			UP - returns true if string has ending, else false.
-* FORMS:	strendswith(str,end_str)
+* FORMS:	strsendswith(str,end_str)
 * NOTE:
 ********************************************/
 
@@ -9008,10 +9008,10 @@ if (!name1)
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 
-long endsWith = str_ends_with(name1, ending) ? 1 : 0;
+long endswith = str_ends_with(name1, ending) ? 1 : 0;
 
 // Return as str type.
-sem = new RFASem(endsWith);
+sem = new RFASem(endswith);
 
 return true;
 }
@@ -11818,7 +11818,7 @@ if (sem1->getType() != RSOSTREAM)
 	return parse->errOut(false); // UNFIXED
 	}
 
-_t_ostream *ostr = sem1->getOstream();
+std::_t_ostream *ostr = sem1->getOstream();
 
 if (!ostr)
 	{
@@ -11848,7 +11848,7 @@ if (!text)
 _TCHAR *ptr = &(text[num1]) - 1;	// Minus 1 for convenient looping.
 for (; num1 <= num2; ++num1)
 	*ostr << *++ptr;
-*ostr << flush;
+*ostr << std::flush;
 
 return true;
 }

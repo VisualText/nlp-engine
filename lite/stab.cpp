@@ -51,12 +51,12 @@ cleanStab();
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Stab &stab)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Stab &stab)
 {
 output << _T("<String table: curr=") << stab.curr_
 		 << _T(",last=") << stab.last_
 		 << _T(",perm=") << stab.perm_
-		 << _T(">") << endl;
+		 << _T(">") << std::endl;
 return output;
 }
 
@@ -98,14 +98,14 @@ int Stab::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Stab::prettyCount(_t_ofstream *ofstr)
+void Stab::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Stab count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Stab count=") << count_ << ends;
+		*ofstr << _T("Active Stab count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Stab count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -168,9 +168,9 @@ _TCHAR *Stab::addStrNC(_TCHAR *str, long len)
 {
 if (len >= STAB_SEG_SIZE)		// Whopper string.
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Add string: String length ") << len
-		  << _T(" is too large for table.") << ends;
+		  << _T(" is too large for table.") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -205,9 +205,9 @@ _TCHAR *Stab::addStrNC(long len)
 {
 if (len >= STAB_SEG_SIZE)		// Whopper string.
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Add string: String length ") << len
-		  << _T(" is too large for table.") << ends;
+		  << _T(" is too large for table.") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -283,16 +283,16 @@ bool Stab::allocSeg()
 {
 if (curr_ != last_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[allocSeg: Called incorrectly.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[allocSeg: Called incorrectly.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
 
 if (curr_ + 1 >= STAB_SEG_MAX)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[String table is full.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[String table is full.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -302,8 +302,8 @@ _TCHAR *seg;
 seg = Chars::create(STAB_SEG_SIZE);		// 11/19/98 AM.
 if (!seg)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[String table: Can't allocate more space.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[String table: Can't allocate more space.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -373,8 +373,8 @@ else		// There is a permanent part.
 	{
 	if (perm_ >= last_)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[resetStab: Internal error.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[resetStab: Internal error.]") << std::ends;
 		errOut(&gerrStr,false);
 		return;
 		}
@@ -397,7 +397,7 @@ _TCHAR *tmp, *end;
 
 *gout << _T("String table:\n")
 	  << _T("-------------")
-	  << endl;
+	  << std::endl;
 
 // For all but the last segment.
 for (ii = 0; ii < curr_; ++ii)
@@ -410,7 +410,7 @@ for (ii = 0; ii < curr_; ++ii)
 // For the last segment.
 for (tmp = seg_[curr_]; tmp != ptr_; ++tmp)
 	*gout << pretty_char(*tmp);
-*gout << endl;
+*gout << std::endl;
 }
 
 
@@ -424,7 +424,7 @@ for (tmp = seg_[curr_]; tmp != ptr_; ++tmp)
 
 void Stab::test()
 {
-*gout << _T("[TESTING STRING TABLE:]") << endl;
+*gout << _T("[TESTING STRING TABLE:]") << std::endl;
 
 Stab table;
 

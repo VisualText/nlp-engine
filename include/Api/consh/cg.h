@@ -21,7 +21,6 @@ All rights reserved.
 #include <stdlib.h>
 #include <iostream>											// Upgrade	// 01/24/01 AM.
 #include <fstream>											// Upgrade	// 01/24/01 AM.
-using namespace std;											// Upgrade	// 01/24/01 AM.
 #endif
 
 #define FNAMESIZ 256
@@ -520,11 +519,11 @@ public:
 	bool writeTree(															// 04/28/99 AM.
 		CONCEPT *root,
 		bool flag,				// true if root of subtree.
-		_t_ofstream &hier,
-		_t_ofstream &word,
-		_t_ofstream &phr,
+		std::_t_ofstream &hier,
+		std::_t_ofstream &word,
+		std::_t_ofstream &phr,
 		_TCHAR *path,				// Hierarchy path down to parent.
-		_t_ofstream *&attr,														// 07/01/03 AM.
+		std::_t_ofstream *&attr,														// 07/01/03 AM.
 		long &n_attr,				// # of attr files.					// 07/01/03 AM.
 		long &c_attr,			// # of attributes in curr file.		// 07/01/03 AM.
 		_TCHAR *o_attr=0,														// 07/01/03 AM.
@@ -536,7 +535,7 @@ public:
 		CONCEPT *con,			// Concept to traverse.
 		int pos,					// 0 for concept, positive int for each
 									// node of concept's phrase.
-		_t_ofstream *&attr,		// File to write attributes to.		// 07/01/03 AM.
+		std::_t_ofstream *&attr,		// File to write attributes to.		// 07/01/03 AM.
 		_TCHAR *conpath,			// Hierarchy path down to parent.
 		long &n_attr,			// # of attr files.						// 07/01/03 AM.
 		long &c_attr,			// # of attributes in curr file.		// 07/01/03 AM.
@@ -546,10 +545,10 @@ public:
 		);
 	bool writePhrase(															// 04/30/99 AM.
 		CONCEPT *conc,
-		_t_ofstream &o_hier,
-		_t_ofstream &o_word,
-		_t_ofstream *&o_attr,
-		_t_ofstream &o_phr,
+		std::_t_ofstream &o_hier,
+		std::_t_ofstream &o_word,
+		std::_t_ofstream *&o_attr,
+		std::_t_ofstream &o_phr,
 		_TCHAR *path,				// Hierarchy path down to parent.
 		long &n_attr,			// # of attr files.						// 07/01/03 AM.
 		long &c_attr,			// # of attributes in curr file.		// 07/01/03 AM.
@@ -594,8 +593,8 @@ private:
 	bool dirty_;					// KB dirty flag.						// 05/12/00 AM.
 
 	// For diverting the libconsh error output.						// 09/16/99 AM.
-	_t_ostream *serr_;															// 09/16/99 AM.
-	_t_ofstream *ferr_;															// 09/16/99 AM.
+	std::_t_ostream *serr_;															// 09/16/99 AM.
+	std::_t_ofstream *ferr_;															// 09/16/99 AM.
 	_TCHAR errout_[PATHSIZ];													// 09/16/99 AM.
 
 // COMPILED KB IN LINUX.	// 02/19/19 AM.

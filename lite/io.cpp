@@ -36,21 +36,21 @@ All rights reserved.
 void copy_file(const _TCHAR *iname, const _TCHAR *oname)
 {
 
-//ifstream inFile(iname, ios::in | ios::nocreate);
-_t_ifstream inFile(CTCHAR2CA(iname), ios::in);							// Upgrade.	// 01/24/01 AM.
+//ifstream inFile(iname, std::ios::in | std::ios::nocreate);
+std::_t_ifstream inFile(CTCHAR2CA(iname), std::ios::in);							// Upgrade.	// 01/24/01 AM.
 if (!inFile)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("Could not open input file '") << iname << _T("'.") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Could not open input file '") << iname << _T("'.") << std::ends;
 	errOut(&gerrStr,false);
 	return;					// 06/15/99 AM.
 	}
 
-_t_ofstream outFile(CTCHAR2CA(oname), ios::out);
+std::_t_ofstream outFile(CTCHAR2CA(oname), std::ios::out);
 if (!outFile)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("Could not open output file '") << oname << _T("'.") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Could not open output file '") << oname << _T("'.") << std::ends;
 	errOut(&gerrStr,false);
 	return;					// 06/15/99 AM.
 	}
@@ -82,8 +82,8 @@ for (;;)																			// 12/18/01 AM.
 bool file_exists(const _TCHAR *iname)
 {
 
-//ifstream inFile(iname, ios::in | ios::nocreate);
-_t_ifstream inFile(CTCHAR2CA(iname), ios::in);
+//ifstream inFile(iname, std::ios::in | std::ios::nocreate);
+std::_t_ifstream inFile(CTCHAR2CA(iname), std::ios::in);
 return (inFile ? true : false);
 }
 
@@ -107,12 +107,12 @@ void file_to_buffer(const _TCHAR *iname, _TCHAR *buf,
 	)
 {
 
-//ifstream inFile(iname, ios::in | ios::nocreate);
-_t_ifstream inFile(CTCHAR2CA(iname), ios::in);							// Update.	// 01/24/01 AM.
+//ifstream inFile(iname, std::ios::in | std::ios::nocreate);
+std::_t_ifstream inFile(CTCHAR2CA(iname), std::ios::in);							// Update.	// 01/24/01 AM.
 if (!inFile)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("Could not open input file '") << iname << _T("'.") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Could not open input file '") << iname << _T("'.") << std::ends;
 	errOut(&gerrStr,false);
 	//exit(1);			// 06/15/99 AM.
 	return;				// 06/15/99 AM.
@@ -151,15 +151,15 @@ bool fix_file_name(
 {
 if (empty(file))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[fix_file_name: Given no file name.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[fix_file_name: Given no file name.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
 if (empty(suff))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[fix_file_name: Given no file name extension.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[fix_file_name: Given no file name extension.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -181,8 +181,8 @@ while (--ptr != file)	// Go backward now.
 		// Here's a check for some abnormal filenames, though.
 		if (ptr == file || !*++ptr)
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Bad file name='") << file << _T("'.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Bad file name='") << file << _T("'.]") << std::ends;
 			errOut(&gerrStr,false);
 			return false;
 			}
@@ -387,9 +387,9 @@ if (empty(str) || empty(buf))		// Exactly one is empty.
 	return false;
 if (start < 0 || end < 0 || end < start)
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[eq_str_range: Bad start, end=")
-		  << start << _T(",") << end << _T(".]") << ends;
+		  << start << _T(",") << end << _T(".]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -400,8 +400,8 @@ ptr = &(buf[start]);
 eptr = &(buf[end]);
 if (!*eptr)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[eq_str_range: Endpoint shouldn't be null.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[eq_str_range: Endpoint shouldn't be null.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -481,8 +481,8 @@ if (empty(str))
 if (count == 0 || count == 1)
 	{
 	// Note: count == 1 means that the terminator has filled buffer.
-	_t_strstream gerrStr;
-	gerrStr << _T("[strcat_e: String overflow.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strcat_e: String overflow.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -496,8 +496,8 @@ if (count > 0)
 		}
 	if (*(ptr-1))			// Didn't complete copying.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[strcat_e: String overflow(2).]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[strcat_e: String overflow(2).]") << std::ends;
 		errOut(&gerrStr,false);
 
 		*(ptr-1) = '\0';	// Truncate the string in buffer.
@@ -539,8 +539,8 @@ if (empty(str) || (len <= 0))
 if (count == 0 || count == 1)
 	{
 	// Note: count == 1 means that the terminator has filled buffer.
-	_t_strstream gerrStr;
-	gerrStr << _T("[strncat_e: String overflow.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[strncat_e: String overflow.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -550,8 +550,8 @@ if (count > 0)				// Tracking space left in buffer.
 	if (len >= count)
 		{
 		// Note: len >= count, because one space needed for terminator.
-		_t_strstream gerrStr;
-		gerrStr << _T("[strncat_e: String overflow(1).]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[strncat_e: String overflow(1).]") << std::ends;
 		errOut(&gerrStr,false);
 
 		// Could recover by filling buffer to the max.
@@ -589,8 +589,8 @@ _t_filebuf *directOutput(_TCHAR *fname)
 {
 if (empty(fname))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[directOutput: Given null file name.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[directOutput: Given null file name.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -741,8 +741,8 @@ if (ptr == file)			// At beginning of file string.
 // Must be at a period, not at beginning of file.
 if (*ptr != '.' || ptr == file)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[file_head: Error.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[file_head: Error.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}

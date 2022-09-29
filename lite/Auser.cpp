@@ -89,8 +89,8 @@ Auser *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Auser object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Auser object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -167,7 +167,7 @@ dest->badname_ = orig->badname_;
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Auser &auser)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Auser &auser)
 {
 output << _T("<Auser object>");
 return output;
@@ -210,7 +210,7 @@ rettype_ = RETLONG;
 retval_.long_ = x;
 }
 
-void	Auser::retOstr(_t_ostream *x)
+void	Auser::retOstr(std::_t_ostream *x)
 {
 rettype_ = RETOSTR;
 retval_.ostr_ = x;
@@ -260,15 +260,15 @@ int Auser::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Auser::prettyCount(_t_ofstream *ostr)								// 07/18/03 AM.
+void Auser::prettyCount(std::_t_ofstream *ostr)								// 07/18/03 AM.
 {
 if (count_)
 	{
 	if (ostr)																	// 07/18/03 AM.
-		*ostr << _T("Active Auser count=") << count_ << endl;			// 07/18/03 AM.
-	*gout << _T("Active Auser count=") << count_ << endl;
-	_t_strstream gerrStr;						// 02/19/02 AM.
-	gerrStr << _T("Active Auser count=") << count_ << ends;			// 02/19/02 AM.
+		*ostr << _T("Active Auser count=") << count_ << std::endl;			// 07/18/03 AM.
+	*gout << _T("Active Auser count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;						// 02/19/02 AM.
+	gerrStr << _T("Active Auser count=") << count_ << std::ends;			// 02/19/02 AM.
 	errOut(&gerrStr,false);																// 02/19/02 AM.
 	}
 }

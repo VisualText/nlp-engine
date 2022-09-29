@@ -85,7 +85,7 @@ public:
 		);
 	static bool setVal(
 		_TCHAR *name,
-		_t_ostream *ostr,
+		std::_t_ostream *ostr,
 		/*DU*/
 		Dlist<Ipair>* &dlist
 		);
@@ -104,7 +104,7 @@ public:
 	static bool setVal(Ipair*,long);										// 11/15/99 AM.
 	static bool setVal(Ipair*,float);									// 08/18/01 AM.
 	static bool setVal(Ipair*,_TCHAR*);									// 11/15/99 AM.
-	static bool setVal(Ipair*,_t_ostream*);								// 12/31/99 AM.
+	static bool setVal(Ipair*,std::_t_ostream*);								// 12/31/99 AM.
 	static bool setVal(Ipair*,RFASem*);									// 02/22/00 AM.
 	static bool setVal(Ipair*,Dlist<Iarg>*);							// 08/10/02 AM.
 
@@ -132,7 +132,7 @@ public:
 	static bool val(															// 08/06/99 AM.
 		_TCHAR *name, Dlist<Ipair> *dlist, /*DU*/ long &num);
 	static bool val(															// 08/03/99 AM.
-		_TCHAR *name, Dlist<Ipair> *dlist, /*DU*/ _t_ostream* &ostr);
+		_TCHAR *name, Dlist<Ipair> *dlist, /*DU*/ std::_t_ostream* &ostr);
 	static bool vals(															// 08/03/99 AM.
 		_TCHAR *name, Dlist<Ipair> *dlist, /*DU*/ Delt<Iarg>* &values);
 	static bool vals(															// 08/03/99 AM.
@@ -142,7 +142,7 @@ public:
 	static bool val(Ipair *, /*DU*/ _TCHAR *str);
 	static bool val(Ipair *, /*DU*/ long &num);						// 08/06/99 AM.
 	static bool val(Ipair*,/*DU*/ float&);								// 08/17/01 AM.
-	static bool val(Ipair *pair, /*DU*/ _t_ostream* &ostr);			// 02/09/99 AM.
+	static bool val(Ipair *pair, /*DU*/ std::_t_ostream* &ostr);			// 02/09/99 AM.
 
 	static bool clean_vars(Dlist<Ipair> *dlist);						// 09/26/00 AM.
 
@@ -165,9 +165,9 @@ public:
 		_TCHAR *str,			// String value to add.
 		Parse *parse
 		);
-	static bool setVal(_TCHAR *name, Parse *parse, _t_ostream *ostr);	//2/9/99AM
+	static bool setVal(_TCHAR *name, Parse *parse, std::_t_ostream *ostr);	//2/9/99AM
 	static bool val(_TCHAR *name, Parse *parse, /*DU*/ _TCHAR *str);
-	static bool val(_TCHAR *name, Parse *parse, /*DU*/ _t_ostream* &ostr); // 2/9/99AM
+	static bool val(_TCHAR *name, Parse *parse, /*DU*/ std::_t_ostream* &ostr); // 2/9/99AM
 	static bool val(_TCHAR *, Parse *, /*UP*/ long &);				// 08/31/00 AM.
 	static bool vals(_TCHAR *name, Parse *parse, /*DU*/ Delt<Iarg>* &values);
 	static bool vals(_TCHAR *name, Parse *parse, /*DU*/ Dlist<Iarg>* &list);
@@ -196,7 +196,7 @@ public:
 		Parse *parse,
 		/*UP*/
 		Ipair* &pair,				// The variable-value pair.
-		_t_ostream* &ostr,			// Var's ostream value.
+		std::_t_ostream* &ostr,			// Var's ostream value.
 		bool &exists,				// True if ostream var was already present.
 		bool &open,					// True if ostream already open.
 		bool &inuse,				// True if var in use for a non-ostream value.
@@ -207,7 +207,7 @@ public:
 	static int   compare( const void *arg1, const void *arg2 );
 	static bool dump(										// 12/13/99 AM.
 		Dlist<Ipair> *vars,
-		_t_ostream *ostr
+		std::_t_ostream *ostr
 		);
 	static bool copy_vars(Dlist<Ipair> *, Dlist<Ipair>* &);		// 05/16/01 AM.
 

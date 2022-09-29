@@ -121,8 +121,8 @@ Ivar *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Ivar object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Ivar object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -161,7 +161,7 @@ dest->index_ = orig->index_;		// Copy constructor??			// 10/13/00 AM.
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Ivar &var)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Ivar &var)
 {
 #ifndef UNICODE
 _TCHAR *nm = var.name_;													// 01/28/06 AM.
@@ -246,14 +246,14 @@ int Ivar::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Ivar::prettyCount(_t_ofstream *ofstr)
+void Ivar::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Ivar count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Ivar count=") << count_ << ends;
+		*ofstr << _T("Active Ivar count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Ivar count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -270,10 +270,10 @@ if (count_)
 * SUBJ:	Generate var to a rules file.
 *********************************************/
 void Ivar::genVar(
-	_t_ostream &ofile
+	std::_t_ostream &ofile
 	)
 {
-ofile << this << flush;
+ofile << this << std::flush;
 }
 
 
@@ -392,8 +392,8 @@ if (index_)																		// 10/13/00 AM.
 				break;
 			default:
 				{
-				_t_strstream gerrStr;
-				gerrStr << _T("[ivar::eval: Bad type in index.]") << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("[ivar::eval: Bad type in index.]") << std::ends;
 				errOut(&gerrStr,false);
 				}
 
@@ -447,8 +447,8 @@ if (vindex)
 			case RSNUM:
 				if (!str_to_long(semval->getName(), index))
 					{
-					_t_strstream gerrStr;
-					gerrStr << _T("[ivar: eval: Bad num.]") << ends;
+					std::_t_strstream gerrStr;
+					gerrStr << _T("[ivar: eval: Bad num.]") << std::ends;
 					errOut(&gerrStr,false);
 					delete semval;							// MEM LEAK.	// 10/26/00 AM.
 					return false;
@@ -456,8 +456,8 @@ if (vindex)
 				break;
 			default:
 				{
-				_t_strstream gerrStr;
-				gerrStr << _T("[ivar::eval: Bad type in index.]") << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("[ivar::eval: Bad type in index.]") << std::ends;
 				errOut(&gerrStr,false);
 				}
 
@@ -506,8 +506,8 @@ if (*vname == '$')									// 11/17/99 AM.
 	// This should really be flagged at compile time.				// 06/16/02 AM.
 	if (ref)																		// 06/16/02 AM.
 		{
-		_t_strstream gerrStr;					// 06/16/02 AM.
-		gerrStr << _T("[Error. $-variable can't take &.]") << ends;	// 06/16/02 AM.
+		std::_t_strstream gerrStr;					// 06/16/02 AM.
+		gerrStr << _T("[Error. $-variable can't take &.]") << std::ends;	// 06/16/02 AM.
 		errOut(&gerrStr,false);															// 06/16/02 AM.
 		return 0;																// 06/16/02 AM.
 		}
@@ -645,8 +645,8 @@ switch (arg->getType())
 				long num = 0;													// 08/07/02 AM.
 				if (!str_to_long(obj->getName(),num))					// 08/07/02 AM.
 					{
-					_t_strstream gerrStr;
-					gerrStr << _T("[Bad sem type in variable.]") << ends;
+					std::_t_strstream gerrStr;
+					gerrStr << _T("[Bad sem type in variable.]") << std::ends;
 					return errOut(&gerrStr,false);
 					}
 				sem = new RFASem(num);										// 08/07/02 AM.
@@ -654,23 +654,23 @@ switch (arg->getType())
 				}
 			default:
 				{
-				_t_strstream gerrStr;
-				gerrStr << _T("[Bad sem type in variable.]") << ends;
+				std::_t_strstream gerrStr;
+				gerrStr << _T("[Bad sem type in variable.]") << std::ends;
 				return errOut(&gerrStr,false);
 				}
 			}
 		return true;
 	case IAOSTREAM:
 		// Need ostream variable in output expression, at least.	// 09/23/00 AM.
-		//*gerr << "[Can't use file variable in expression.]" << endl;
+		//*gerr << "[Can't use file variable in expression.]" << std::endl;
 		//return false;														// 09/23/00 AM.
 
 		sem = new RFASem(arg->getOstream());							// 09/23/00 AM.
 		return true;															// 09/23/00 AM.
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Ivar::eval: Bad variable value type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Ivar::eval: Bad variable value type.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -703,8 +703,8 @@ sem = 0;
 
 if (vindex != FULLARRAY)													// 10/13/00 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[evalSpecial: No indexing on special vars.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[evalSpecial: No indexing on special vars.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -713,16 +713,16 @@ _TCHAR *name = 0;
 long num = 0;
 if (*vname != '$')
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[evalSpecial: Var name must start with $=") << vname << _T("]")
-			<< ends;
+			<< std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
 if (!*(name = (vname + 1)))		// Slough the dollar sign.	// 11/18/99 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[evalSpecial: $ is not a valid variable name.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[evalSpecial: $ is not a valid variable name.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -749,9 +749,9 @@ switch (vtype)
 			tmp = select->pathNth(vnum);								// 11/24/99 AM.
 			if (!tmp)														// 11/24/99 AM.
 				{
-				_t_strstream gerrStr;
+				std::_t_strstream gerrStr;
 				gerrStr << _T("[Couldn't find node X(") << vnum
-									<< _T(").]") << ends;
+									<< _T(").]") << std::ends;
 				errOut(&gerrStr,false);
 				return false;
 				}
@@ -774,7 +774,7 @@ switch (vtype)
 		//if (nstart != nend)
 		//	{
 		//	*gerr << "[Special variable " << vname
-		//			<< " covers multiple nodes.]" << endl;
+		//			<< " covers multiple nodes.]" << std::endl;
 		//	return false;	// Elt matched multiple nodes.
 		//	}
 		node = nstart;					// 11/18/99 AM.
@@ -797,7 +797,7 @@ switch (vtype)
 		//if (nstart != nend)
 		//	{
 		//	*gerr << "[Special variable " << vname
-		//			<< " covers multiple nodes.]" << endl;
+		//			<< " covers multiple nodes.]" << std::endl;
 		//	return false;	// Elt matched multiple nodes.
 		//	}
 		node = nstart;
@@ -889,30 +889,30 @@ switch (vtype)
 			return true;													// 09/12/06 AM.
 			}
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Bad special var=") << vname << _T("]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Bad special var=") << vname << _T("]") << std::ends;
 		Parse *parse = nlppp->getParse();							// 03/13/03 AM.
 		errOut(&gerrStr,false, parse->currpass_,parse->line_);			// 03/13/03 AM.
 		return false;
 		}
 	case SUGGESTEDVAR:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[evalSpecial: Suggested var can't be special.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[evalSpecial: Suggested var can't be special.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 		return false;
 	case LOCALVAR:																// 03/09/02 AM.
 		{
-		_t_strstream gerrStr;					// 03/09/02 AM.
-		gerrStr << _T("[evalSpecial: Local var can't be special.]") << ends;
+		std::_t_strstream gerrStr;					// 03/09/02 AM.
+		gerrStr << _T("[evalSpecial: Local var can't be special.]") << std::ends;
 		errOut(&gerrStr,false);															// 03/09/02 AM.
 		}
 		return false;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[evalSpecial: No variable type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[evalSpecial: No variable type.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -1015,8 +1015,8 @@ bool Ivar::nodeVarspecial(
 sem = 0;
 if (!nstart || !nend)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[nodevarspecial: No node given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[nodevarspecial: No node given.]") << std::ends;
 	errOut(&gerrStr,false);
 			// 05/17/01 AM.
 	return false;
@@ -1070,8 +1070,8 @@ if (!strcmp_i(name, _T("text")))	// $TEXT $text							// 11/10/00 AM.
 	return true;
 	}
 
-_t_strstream gerrStr;
-gerrStr << _T("[nodevar: Multi-node case not handled.]") << ends;
+std::_t_strstream gerrStr;
+gerrStr << _T("[nodevar: Multi-node case not handled.]") << std::ends;
 errOut(&gerrStr,false);
 return false;
 }
@@ -1097,8 +1097,8 @@ bool Ivar::nodeVarspecial(
 sem = 0;
 if (!node)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[nodevarspecial: No node given.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[nodevarspecial: No node given.]") << std::ends;
 	errOut(&gerrStr,false);
 			// 05/17/01 AM.
 	return false;
@@ -1215,17 +1215,17 @@ if (!strcmp_i(name, _T("end")))		// $END $end	//		// 11/18/99 AM.
 	if (vtype != NODEVAR && vtype != CONTEXTVAR
 		 && vtype != RUNNODEVAR)											// 06/06/00 AM.
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Use $end only in node,context vars.  eg, N($end,1)]")
-				  << ends;
+				  << std::ends;
 		errOut(&gerrStr,false);
 		return false;
 		}
 #endif
 	if (!node)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Couldn't find node for $end)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Couldn't find node for $end)]") << std::ends;
 		errOut(&gerrStr,false);
 
 		//return false;
@@ -1245,17 +1245,17 @@ if (!strcmp_i(name, _T("start")))		// $START $start			// 12/02/99 AM.
 	if (vtype != NODEVAR && vtype != CONTEXTVAR
 		 && vtype != RUNNODEVAR)											// 06/06/00 AM.
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Use $start only in node,context vars.  eg, N($start,1)]")
-					<< ends;
+					<< std::ends;
 		errOut(&gerrStr,false);
 		return false;
 		}
 #endif
 	if (!node)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Couldn't find node for $start)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Couldn't find node for $start)]") << std::ends;
 		errOut(&gerrStr,false);
 		//return false;
 		// Recovery. Return a "false" value.
@@ -1272,8 +1272,8 @@ if (!strcmp_i(name, _T("ostart")))		// $OSTART $ostart		// 12/02/99 AM.
 	{
 	if (!pn)							// FIX.	// 12/02/99 AM.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Couldn't find node for $ostart)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Couldn't find node for $ostart)]") << std::ends;
 		errOut(&gerrStr,false);
 		//return false;
 		// Recovery. Return a zero offset.
@@ -1290,8 +1290,8 @@ if (!strcmp_i(name, _T("oend")))		// $OEND $oend.			// 12/02/99 AM.
 	{
 	if (!pn)							// FIX.	// 12/02/99 AM.
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Couldn't find node for $oend)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Couldn't find node for $oend)]") << std::ends;
 		errOut(&gerrStr,false);
 		//return false;
 		// Recovery. Return a zero offset.
@@ -1311,17 +1311,17 @@ if (!strcmp_i(name, _T("allcaps"))			// $ALLCAPS $allcaps		// 01/10/00 AM.
 	if (vtype != NODEVAR && vtype != CONTEXTVAR
 		 && vtype != RUNNODEVAR)											// 06/06/00 AM.
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Use $allcaps only in node,context vars. eg, N($allcaps,1)]")
-					<< ends;
+					<< std::ends;
 		errOut(&gerrStr,false);
 		return false;
 		}
 #endif
 	if (!node)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Couldn't find node for $allcaps)]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Couldn't find node for $allcaps)]") << std::ends;
 		errOut(&gerrStr,false);
 
 		//return false;
@@ -1354,19 +1354,19 @@ if (!strcmp_i(name, _T("lowercase")))	// $LOWERCASE $lowercase.	// 01/11/00 AM.
 	if (vtype != NODEVAR && vtype != CONTEXTVAR
 		 && vtype != RUNNODEVAR)											// 06/06/00 AM.
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr <<
 			_T("[Use $lowercase only in node,context vars.  eg, N($lowercase,1)]")
-					<< ends;
+					<< std::ends;
 		errOut(&gerrStr,false);
 		return false;
 		}
 #endif
 	if (!node)
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Couldn't find node for $lowercase]")
-					<< ends;
+					<< std::ends;
 		errOut(&gerrStr,false);
 		//return false;
 		// Recovery. Return a "false" value.
@@ -1398,19 +1398,19 @@ if (!strcmp_i(name, _T("cap")))	// $CAP $cap.	// 01/11/00 AM.
 	if (vtype != NODEVAR && vtype != CONTEXTVAR
 		 && vtype != RUNNODEVAR)											// 06/06/00 AM.
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr <<
 			_T("[Use $cap only in node,context vars.  eg, N($cap,1)]")
-					<< ends;
+					<< std::ends;
 		errOut(&gerrStr,false);
 		return false;
 		}
 #endif
 	if (!node)
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Couldn't find node for $cap.]")
-					<< ends;
+					<< std::ends;
 		errOut(&gerrStr,false);
 		//return false;
 		// Recovery. Return a "false" value.
@@ -1444,17 +1444,17 @@ if (!strcmp_i(name, _T("mixcap")))			// $MIXCAP $mixcap		// 01/15/00 AM.
 	if (vtype != NODEVAR && vtype != CONTEXTVAR
 		 && vtype != RUNNODEVAR)											// 06/06/00 AM.
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Use $mixcap only in node,context vars.  eg, N($mixcap,1)]")
-					<< ends;
+					<< std::ends;
 		errOut(&gerrStr,false);
 		return false;
 		}
 #endif
 	if (!node)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Couldn't find node for $mixcap.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Couldn't find node for $mixcap.]") << std::ends;
 		errOut(&gerrStr,false);
 		//return false;
 		// Recovery. Return a "false" value.
@@ -1487,19 +1487,19 @@ if (!strcmp_i(name, _T("unknown"))	// $UNKNOWN $unknown.	// 01/11/00 AM.
 	if (vtype != NODEVAR && vtype != CONTEXTVAR
 		 && vtype != RUNNODEVAR)											// 06/06/00 AM.
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr <<
 			_T("[Use $unknown only in node,context vars.  eg, N($unknown,1)]")
-					<< ends;
+					<< std::ends;
 		errOut(&gerrStr,false);
 		return false;
 		}
 #endif
 	if (!node)
 		{
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Couldn't find node for $unknown.]")
-					<< ends;
+					<< std::ends;
 		errOut(&gerrStr,false);
 		//return false;
 		// Recovery. Return a "false" value.
@@ -1524,8 +1524,8 @@ if (!strcmp_i(name, _T("unknown"))	// $UNKNOWN $unknown.	// 01/11/00 AM.
 	return true;
 	}
 
-_t_strstream gerrStr;
-gerrStr << _T("[Bad special var=") << name << _T("]") << ends;
+std::_t_strstream gerrStr;
+gerrStr << _T("[Bad special var=") << name << _T("]") << std::ends;
 Parse *parse = nlppp->getParse();										// 03/13/03 AM.
 errOut(&gerrStr,false, parse->currpass_,parse->line_);						// 03/13/03 AM.
 
@@ -1606,8 +1606,8 @@ Node<Pn> *nstart, *nend;
 COLL *coll;
 if (!name || !*name)															// 04/04/02 AM.
 	{
-	_t_strstream gerrStr;						// 04/04/02 AM.
-	gerrStr << _T("[Ivar::find: Given no name.]") << ends;				// 04/04/02 AM.
+	std::_t_strstream gerrStr;						// 04/04/02 AM.
+	gerrStr << _T("[Ivar::find: Given no name.]") << std::ends;				// 04/04/02 AM.
 	errOut(&gerrStr,false);																// 04/04/02 AM.
 //	return true;	// RECOVER.												// 04/04/02 AM.
 	}
@@ -1629,9 +1629,9 @@ switch (typ)
 			tmp = select->pathNth(num);								// 11/24/99 AM.
 			if (!tmp)														// 11/24/99 AM.
 				{
-				_t_strstream gerrStr;
+				std::_t_strstream gerrStr;
 				gerrStr << _T("[Couldn't find node X(") << num
-									<< _T(").]") << ends;
+									<< _T(").]") << std::ends;
 				errOut(&gerrStr,false);
 				return false;
 				}
@@ -1662,11 +1662,11 @@ switch (typ)
 		// function.  Fetch value from there.
 #ifdef DEBUGGING_
 		{													// DEBUGGING		// 04/08/02 AM.
-		_t_strstream gerrStr;
+		std::_t_strstream gerrStr;
 		gerrStr << _T("[Ivar::find: localvar.]")  << name << _T("|");
 		if (nlppp->getLocals())
 			gerrStr << *(nlppp->getLocals());
-		gerrStr << ends;
+		gerrStr << std::ends;
 		errOut(&gerrStr,false);
 		}
 #endif
@@ -1691,8 +1691,8 @@ switch (typ)
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Ivar::find: No variable type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Ivar::find: No variable type.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -1732,8 +1732,8 @@ bool ok = makeVar(typ,name,num,nlppp, /*UP*/ pairx);
 if (ok && pairx)
 	return true;
 
-_t_strstream gerrStr;
-gerrStr << _T("[getVar: Couldn't make variable.]") << ends;
+std::_t_strstream gerrStr;
+gerrStr << _T("[getVar: Couldn't make variable.]") << std::ends;
 errOut(&gerrStr,false);
 return false;
 }
@@ -1790,9 +1790,9 @@ switch (typ)
 			tmp = select->pathNth(num);								// 11/24/99 AM.
 			if (!tmp)														// 11/24/99 AM.
 				{
-				_t_strstream gerrStr;
+				std::_t_strstream gerrStr;
 				gerrStr << _T("[Couldn't find node X(") << num
-									<< _T(").]") << ends;
+									<< _T(").]") << std::ends;
 				errOut(&gerrStr,false);
 				return false;
 				}
@@ -1842,8 +1842,8 @@ switch (typ)
 		break;
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Ivar::find: No variable type.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Ivar::find: No variable type.]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -1868,8 +1868,8 @@ bool Ivar::genEval(Gen *gen,
 	bool ref			// Flag call-by-reference.							// 06/16/02 AM.
 	)
 {
-//_t_ofstream *fcode = gen->fcode_;
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+//std::_t_ofstream *fcode = gen->fcode_;
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 // This one will have to return an RFASem, because type can only
 // be known dynamically at runtime.
 // SHOULD HANDLE THE SPECIAL VARS HERE.
@@ -1905,8 +1905,8 @@ switch (getType())
 			<< _T(",");																// 05/04/01 AM.
 		break;
 	default:
-		*fcode << _T("\nERROR();") << endl;									// 05/04/01 AM.
-		*fcode << _T("// Bad variable type.") << endl;					// 05/04/01 AM.
+		*fcode << _T("\nERROR();") << std::endl;									// 05/04/01 AM.
+		*fcode << _T("// Bad variable type.") << std::endl;					// 05/04/01 AM.
 		return false;
 	}
 

@@ -98,7 +98,7 @@ cbuftot_ = 0;				// 05/11/02 AM.
 cbufover_ = false;		// 05/11/02 AM.
 
 // Default will be standard output stream.
-cout_ = &_t_cout;				// 05/04/03 AM.
+cout_ = &std::_t_cout;				// 05/04/03 AM.
 
 #ifdef _ODBC
 henv_ = 0;					// 05/23/02 AM.
@@ -159,10 +159,10 @@ TREE *Parse::getTree() {return tree;   }
 LTREE *Parse::getLines(){return lines;  }
 Dlist<Ipair> *Parse::getVars()	{return vars_;}
 Dlist<Iarg>	 *Parse::getOstrs()	{return ostrs_;}					// 05/23/01 AM.
-_t_ostream		 *Parse::getOut()		{return out_;}
-_t_ostream		 *Parse::getCout()	{return cout_;}					// 05/04/03 AM.
-_t_ostream		 *Parse::getSout()	{return sout_;}					// 05/13/99 AM.
-_t_ofstream		 *Parse::getFout()	{return fout_;}					// 05/13/99 AM.
+std::_t_ostream		 *Parse::getOut()		{return out_;}
+std::_t_ostream		 *Parse::getCout()	{return cout_;}					// 05/04/03 AM.
+std::_t_ostream		 *Parse::getSout()	{return sout_;}					// 05/13/99 AM.
+std::_t_ofstream		 *Parse::getFout()	{return fout_;}					// 05/13/99 AM.
 #ifndef LINUX
 HINSTANCE	  Parse::getHdll()	{return hdll_;}					// 01/29/99 AM.
 #endif
@@ -178,9 +178,9 @@ long	Parse::getInputpass()	{return inputpass_;}					// 08/23/02 AM.
 Delt<Seqn> *Parse::getSeq()		{return seq_;}						// 07/24/01 AM.
 
 #ifdef LINUX
-ostringstream		*Parse::getCbuf()	{return cbuf_;}					// 05/11/02 AM. // 09/27/19 AM.
+std::ostringstream		*Parse::getCbuf()	{return cbuf_;}					// 05/11/02 AM. // 09/27/19 AM.
 #else
-_t_ostrstream		*Parse::getCbuf()	{return cbuf_;}					// 05/11/02 AM.
+std::_t_ostrstream		*Parse::getCbuf()	{return cbuf_;}					// 05/11/02 AM.
 #endif
 long	Parse::getCbufmax()			{return cbufmax_;}				// 05/11/02 AM.
 long	Parse::getCbuftot()			{return cbuftot_;}				// 05/11/02 AM.
@@ -231,10 +231,10 @@ void Parse::setLines(LTREE *x){lines  = x;}
 void Parse::setVerbose(bool x)   {verbose= x;}
 void Parse::setVars(Dlist<Ipair> *x)	{vars_ = x;}				// 12/07/98 AM.
 void Parse::setOstrs(Dlist<Iarg> *x)	{ostrs_ = x;}				// 05/23/01 AM.
-void Parse::setOut(_t_ostream			*x)	{out_	 = x;}
-void Parse::setCout(_t_ostream		*x)	{cout_ = x;}				// 05/04/03 AM.
-void Parse::setSout(_t_ostream		*x)	{sout_ = x;}				// 05/13/99 AM.
-void Parse::setFout(_t_ofstream		*x)	{fout_ = x;}				// 05/13/99 AM.
+void Parse::setOut(std::_t_ostream			*x)	{out_	 = x;}
+void Parse::setCout(std::_t_ostream		*x)	{cout_ = x;}				// 05/04/03 AM.
+void Parse::setSout(std::_t_ostream		*x)	{sout_ = x;}				// 05/13/99 AM.
+void Parse::setFout(std::_t_ofstream		*x)	{fout_ = x;}				// 05/13/99 AM.
 #ifndef LINUX
 void Parse::setHdll(HINSTANCE x)			{hdll_ = x;}				// 01/29/99 AM.
 #endif
@@ -249,9 +249,9 @@ void Parse::setRulepass(long x)		{rulepass_		=	x;}		// 02/03/05 AM.
 void Parse::setInputpass(long x)		{inputpass_	= x;}				// 08/23/02 AM.
 void Parse::setSeq(Delt<Seqn> *x)		{seq_		= x;}				// 07/24/01 AM.
 #ifdef LINUX
-void Parse::setCbuf(ostringstream* x) { cbuf_ = x; }				// 05/11/02 AM. // 09/27/19 AM.
+void Parse::setCbuf(std::ostringstream* x) { cbuf_ = x; }				// 05/11/02 AM. // 09/27/19 AM.
 #else
-void Parse::setCbuf(_t_ostrstream* x) { cbuf_ = x; }				// 05/11/02 AM.
+void Parse::setCbuf(std::_t_ostrstream* x) { cbuf_ = x; }				// 05/11/02 AM.
 #endif
 
 void Parse::setCbufmax(long x)			{cbufmax_ = x;}			// 05/11/02 AM.
@@ -294,15 +294,15 @@ int Parse::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Parse::prettyCount(_t_ofstream *ofstr)
+void Parse::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Parse count=") << count_ << endl;
-	*gout << _T("Active Parse count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Parse count=") << count_ << ends;
+		*ofstr << _T("Active Parse count=") << count_ << std::endl;
+	*gout << _T("Active Parse count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Parse count=") << count_ << std::ends;
 	::errOut(&gerrStr,false,0,0);
 	}
 }
@@ -335,16 +335,16 @@ setText(buf);
 
 if (len <= 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[File=") << input << _T(" not found.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[File=") << input << _T(" not found.]") << std::ends;
 	::errOut(&gerrStr,false,0,0);
 	return false;
 	}
 
 if (Verbose())
 	{
-	*gout << _T("Length of input file is ") << len << endl;
-	*gout << _T("\nInput text is:\n") << buf << endl;
+	*gout << _T("Length of input file is ") << len << std::endl;
+	*gout << _T("\nInput text is:\n") << buf << std::endl;
 	}
 
 return true;
@@ -371,8 +371,8 @@ long ulen;	// [UNICODE]
 
 if (!inbuf || !*inbuf)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Input buffer is empty.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Input buffer is empty.]") << std::ends;
 	::errOut(&gerrStr,false,0,0);
 	return false;
 	}
@@ -401,8 +401,8 @@ setText(buf);
 
 if (Verbose())
 	{
-	*gout << _T("Length of input buffer is ") << len << endl;
-	*gout << _T("\nInput buffer text is:\n")  << buf << endl;
+	*gout << _T("Length of input buffer is ") << len << std::endl;
+	*gout << _T("\nInput buffer text is:\n")  << buf << std::endl;
 	}
 
 return true;
@@ -425,8 +425,8 @@ s_time = clock();
 #ifndef LINUX
 if (!eana_->getFintern())													// 05/26/01 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Date: ") << today1() << _T("]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Date: ") << today1() << _T("]") << std::ends;
 	::errOut(&gerrStr,false,0,0);
 	}
 
@@ -434,8 +434,8 @@ if (!eana_->getFintern())													// 05/26/01 AM.
 #else
 if (!eana_->getFintern())													// 05/26/01 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Date: ") << today() << _T("]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Date: ") << today() << _T("]") << std::ends;
 	::errOut(&gerrStr,false,0,0);
 	}
 
@@ -452,8 +452,8 @@ Seqn *s;																			// 11/18/99 DD.
 Ana *ana = getAna();	// 05/05/09 AM.
 if (!ana)	// 05/05/09 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Error: No analyzer built.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Error: No analyzer built.]") << std::ends;
 	::errOut(&gerrStr,false,0);
 	return;	// 05/05/09 AM.
 	}
@@ -492,8 +492,8 @@ finExecute(currpass_,s_time,e_time);									// 06/13/00 AM.
 #ifdef GEODUCK_
 if (gui_.IsMessage(GUI_MESSAGE_ABORT))									// 11/10/99 DD.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Aborted by user]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Aborted by user]") << std::ends;
 	::errOut(&gerrStr,false,0);
 	}
 #endif
@@ -530,8 +530,8 @@ if (eana_->getFtimesum())									// 10/13/99 AM.
 
 	if (!len || !num)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[No text or passes.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[No text or passes.]") << std::ends;
 		::errOut(&gerrStr,false,0,0);
 		// 10/11/99 AM.
 		return;
@@ -542,54 +542,54 @@ if (eana_->getFtimesum())									// 10/13/99 AM.
 
 	if (infile)
 		{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Input file: ") << infile << _T("]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Input file: ") << infile << _T("]") << std::ends;
 	nlp_->logOut(&gerrStr,false);
 	}
 
 	else
 		infile = _T("");
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Total passes: ") << num << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Total passes: ") << num << std::ends;
 	nlp_->logOut(&gerrStr,false);
 	}
 
 	{
-	_t_strstream gerrStr;
-	gerrStr	<< _T("[Total time: ") << tot << _T(" sec]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr	<< _T("[Total time: ") << tot << _T(" sec]") << std::ends;
 	nlp_->logOut(&gerrStr,false);
 	}
 
    {
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Time per 1000 chars (") << tot << _T("/") << len << _T("): ")
-	      << tot1000 << _T(" sec]") << ends;
+	      << tot1000 << _T(" sec]") << std::ends;
 	nlp_->logOut(&gerrStr,false);
 	}
 
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Time per pass per 1000 chars: ") << pass1000 << _T("]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Time per pass per 1000 chars: ") << pass1000 << _T("]") << std::ends;
 	nlp_->logOut(&gerrStr,false);
 	}
 
 
 	// A line for putting into a timing study.	// 10/11/99 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("infile  passes tottime length tot/1000 tot/pass/1000") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("infile  passes tottime length tot/1000 tot/pass/1000") << std::ends;
 	nlp_->logOut(&gerrStr,false);
 	}
 
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << infile	<< _T("\t")
 			<< num		<< _T("\t")
 			<< tot		<< _T("\t")
 			<< len		<< _T("\t")
 			<< tot1000	<< _T("\t")
-			<< pass1000	<< ends;
+			<< pass1000	<< std::ends;
 	nlp_->logOut(&gerrStr,false);
 	}
 
@@ -612,8 +612,8 @@ bool Parse::stepExecute(
 	int num						// Current pass number.
 	)
 {
-_t_ofstream *fout;				// File pass output.						// 12/01/98 AM.
-_t_ostream *sout;					// For restoring output stream.		// 12/01/98 AM.
+std::_t_ofstream *fout;				// File pass output.						// 12/01/98 AM.
+std::_t_ostream *sout;					// For restoring output stream.		// 12/01/98 AM.
 clock_t s_time;
 _TCHAR *pretname;
 Seqn *pass = seq->getData();
@@ -636,10 +636,10 @@ else if (!strcmp_i(str(salgo),_T("folder")))							// 02/03/05 DD.
 	;																				// 02/03/05 DD.
 else if (!algo && pass->getActive())									// 01/15/99 AM.
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[Error. Analyzer pass '")
 			<< str(salgo)														// 11/12/00 AM.
-			<< _T("' is uninterned.]") << ends;
+			<< _T("' is uninterned.]") << std::ends;
 	return ::errOut(&gerrStr,false);
 	}
 
@@ -665,8 +665,8 @@ inline
 	_TCHAR *sfile,			// Name of rulesfile.
 	_TCHAR *salgo,			// Name of algorithm.
 	/*DU*/
-	_t_ofstream* &fout,		// File for outputting pass data.
-	_t_ostream* &sout,		// For restoring output stream.
+	std::_t_ofstream* &fout,		// File for outputting pass data.
+	std::_t_ostream* &sout,		// For restoring output stream.
 	clock_t &s_time,
 	_TCHAR* &pretname
 	)
@@ -743,8 +743,8 @@ sprintf_s(fname, _T("%s%c%s%s%d%s"),
  void Parse::finPass(
 	int num,							// Pass number.
 	bool flogfiles,
-	_t_ofstream *fout,
-	_t_ostream *sout,
+	std::_t_ofstream *fout,
+	std::_t_ostream *sout,
 	_TCHAR *pretname,
 	bool ftimepass,
 	clock_t &s_time)
@@ -757,13 +757,13 @@ if (ftimepass)																	// 10/13/99 AM.
 
 // DEBUGGING memleak // 06/19/05 AM.
 
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr	<< _T("[Pass ") << num
 			<< _T(" time: ")
 			<< (double)(e_time - s_time)/CLOCKS_PER_SEC
 			<< _T(" sec     ")
 			<< pretname
-			<< _T("]") << ends;
+			<< _T("]") << std::ends;
 #ifndef UNICODE
 #ifndef LINUX
 	gerrStr.freeze(false);	// 07/01/05 AM.
@@ -772,14 +772,14 @@ if (ftimepass)																	// 10/13/99 AM.
 #endif
 
 /*
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr	<< _T("[Pass ") << num;
 	gerrStr << _T(" time: ");
 	gerrStr << (double)(e_time - s_time)/CLOCKS_PER_SEC;
 	gerrStr << _T(" sec     ");
 	gerrStr << pretname;
 	gerrStr << _T("]");
-	gerrStr << ends;
+	gerrStr << std::ends;
 */
 
 //	ana->getNLP()->logOut(&gerrStr,false);
@@ -798,14 +798,14 @@ if (ftimepass)																	// 10/13/99 AM.
 
 void Parse::finalTree()
 {
-_t_ofstream *fout;				// File for outputting pass data.
-_t_ostream *sout;					// For restoring output stream.
+std::_t_ofstream *fout;				// File for outputting pass data.
+std::_t_ostream *sout;					// For restoring output stream.
 _TCHAR fname[MAXSTR*2];
 
 // G++ BUGS.	// 03/08/00 AM.
-//ostringstream *outStr = 0;													// 03/08/00 AM.
-//outStr = new ostringstream(fname, MAXSTR, ios::out);				// 03/08/00 AM.
-//*outStr << getOutdir() << "\\final.tree" << ends;					// 03/08/00 AM.
+//std::ostringstream *outStr = 0;													// 03/08/00 AM.
+//outStr = new std::ostringstream(fname, MAXSTR, std::ios::out);				// 03/08/00 AM.
+//*outStr << getOutdir() << "\\final.tree" << std::ends;					// 03/08/00 AM.
 
 #ifdef UNICODE
 wsprintf(fname, _T("%s%c%s"), getOutdir(), DIR_CH, _T("final.tree"));
@@ -819,20 +819,20 @@ sprintf_s(fname, _T("%s%c%s"), getOutdir(), DIR_CH, _T("final.tree"));
 fileOut(fname, /*DU*/ fout, sout);										// 03/08/00 AM.
 
 // TRYING SOMETHING NEW HERE... // 02/26/05 AM.
-// _t_strstream outStr;
-// outStr << getOutdir() << DIR_CH << _T("final.tree") << ends;
+// std::_t_strstream outStr;
+// outStr << getOutdir() << DIR_CH << _T("final.tree") << std::ends;
 // fileOut(&outStr, /*DU*/ fout, sout);
 
 //prettyPassnum(num, pretname);
 
-*gout << _T("\nFINAL OUTPUT TREE:\n") << endl;
+*gout << _T("\nFINAL OUTPUT TREE:\n") << std::endl;
 
 // Get the parse tree's root node.
 Tree<Pn> *tree = (Tree<Pn> *)getTree();		// 03/09/00 AM.
 if (!tree)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Pat pass: No parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Pat pass: No parse tree.]") << std::ends;
 	::errOut(&gerrStr,false,0,0);
 	resetOut(/*DU*/ fout, sout);											// 02/21/02 AM.
 	return;
@@ -842,8 +842,8 @@ Node<Pn> *root;
 root = tree->getRoot();
 if (!root)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Pat pass: Tree has no root.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Pat pass: Tree has no root.]") << std::ends;
 	::errOut(&gerrStr,false,0,0);
 	resetOut(/*DU*/ fout, sout);											// 02/21/02 AM.
 	return;
@@ -1117,7 +1117,7 @@ bool Parse::flushOut()
 {
 if (out_)
 	{
-	*out_ << endl;
+	*out_ << std::endl;
 	return true;
 	}
 return false;
@@ -1135,12 +1135,12 @@ return false;
 *			to avoid collisions. (Forget it for the moment.)
 ********************************************/
 
-Delt<Iarg> *Parse::newostr(_t_ostream *ostr)
+Delt<Iarg> *Parse::newostr(std::_t_ostream *ostr)
 {
 if (!ostrs_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[newostr: Error. Empty list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[newostr: Error. Empty list.]") << std::ends;
 	::errOut(&gerrStr,false);
 	return 0;
 	}
@@ -1159,7 +1159,7 @@ return ostrs_->getLast();
 * WARN:	Caller should zero out the ostream value.
 ********************************************/
 
-bool Parse::deleteostr(_t_ostream *ostr)
+bool Parse::deleteostr(std::_t_ostream *ostr)
 {
 if (!ostrs_)
 	return false;
@@ -1196,7 +1196,7 @@ return true;
 * NOTE:	Need a better way to find ostreams for same file.
 ********************************************/
 
-Delt<Iarg> *Parse::findostr(_t_ostream *ostr)
+Delt<Iarg> *Parse::findostr(std::_t_ostream *ostr)
 {
 if (!ostrs_)
 	return 0;
@@ -1231,7 +1231,7 @@ if (!ostrs_)
 Delt<Iarg> *delt = ostrs_->getFirst();
 Iarg *arg;
 Delt<Iarg> *dnext;
-_t_ostream *ostr;
+std::_t_ostream *ostr;
 while (delt)
 	{
 	dnext = delt->Right();	// Save the next guy.
@@ -1300,8 +1300,8 @@ bool Parse::allocDbstmt()
 if (hstmt_)
 	{
 	// Warn user to free the old one in NLP++.
-	_t_strstream gerrStr;
-	gerrStr << _T("[Warning: Need to free old db stmt with dbfreestmt.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Warning: Need to free old db stmt with dbfreestmt.]") << std::ends;
 	::errOut(&gerrStr,false,0,0);
 
 	SQLFreeHandle(SQL_HANDLE_STMT, hstmt_);
@@ -1365,7 +1365,7 @@ else
 
 // VARIANT.	For Unicode, and to remove global buffer.				// 02/25/05 AM.
 bool Parse::errOut(
-	_t_strstream *st,			// Error message to print.
+	std::_t_strstream *st,			// Error message to print.
 	bool retval,
 	bool inputerr	// E,g., if error is in file being interned.
 	)
@@ -1373,10 +1373,10 @@ bool Parse::errOut(
 if (logfile_)	// VTLOG	// 05/06/13 AM.
 	{
 	// Todo: get input file name, text near error.
-	_t_ofstream logf(TCHAR2CA(logfile_), ios::app);	// VTLOG	// 05/06/13 AM.
+	std::_t_ofstream logf(TCHAR2CA(logfile_), std::ios::app);	// VTLOG	// 05/06/13 AM.
 	logf << _T("[") << currpass_ << _T(",") << line_ << _T("] ")
-		<< st->str() << endl;	// VTLOG	// 05/06/13 AM.
-	logf << _T("  TEXT: ") << getText() << endl;	// VTLOG	// 05/06/13 AM.
+		<< st->str() << std::endl;	// VTLOG	// 05/06/13 AM.
+	logf << _T("  TEXT: ") << getText() << std::endl;	// VTLOG	// 05/06/13 AM.
 	}
 
 if (!inputerr
@@ -1397,8 +1397,8 @@ Delt<Iarg> *Parse::newblob(long siz)
 {
 if (!blobs_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[newblob: Error. Empty list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[newblob: Error. Empty list.]") << std::ends;
 	::errOut(&gerrStr,false);
 	return 0;
 	}

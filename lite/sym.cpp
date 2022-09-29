@@ -49,16 +49,16 @@ if (stab)
 	{
 	if (!(str_ = stab->addStr(str)))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Sym: Couldn't create string.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Sym: Couldn't create string.]") << std::ends;
 		errOut(&gerrStr,false);
 		return;
 		}
 	}
 else if (!empty(str))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Sym: Can't intern string without a string table.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Sym: Can't intern string without a string table.]") << std::ends;
 	errOut(&gerrStr,false);
 	return;
 	}
@@ -81,16 +81,16 @@ if (stab)
 	{
 	if (!(str_ = stab->addStr(str, len)))
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[Sym: Couldn't create string.]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Sym: Couldn't create string.]") << std::ends;
 		errOut(&gerrStr,false);
 		return;
 		}
 	}
 else if (!empty(str) || (len > 0))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Sym: Can't intern string without a string table.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Sym: Can't intern string without a string table.]") << std::ends;
 	errOut(&gerrStr,false);
 	return;
 	}
@@ -118,7 +118,7 @@ Sym::~Sym()
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Sym &sym)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Sym &sym)
 {
 #ifndef UNICODE
 output << str(sym.str_);
@@ -222,14 +222,14 @@ int Sym::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Sym::prettyCount(_t_ofstream *ofstr)
+void Sym::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Sym count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Sym count=") << count_ << ends;
+		*ofstr << _T("Active Sym count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Sym count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }

@@ -116,9 +116,9 @@ public:
 	_TCHAR *getAppdir();				// 12/03/98 AM.
 	Dlist<Ipair> *getVars();		// 12/07/98 AM.
 	Dlist<Iarg> *getOstrs();		// 05/23/01 AM.
-	_t_ostream *getOut();				// 05/13/99 AM.
-	_t_ostream *getSout();				// 05/13/99 AM.
-	_t_ofstream *getFout();				// 05/13/99 AM.
+	std::_t_ostream *getOut();				// 05/13/99 AM.
+	std::_t_ostream *getSout();				// 05/13/99 AM.
+	std::_t_ofstream *getFout();				// 05/13/99 AM.
 	bool getFbatchstart();			// 10/19/00 AM.
 #ifndef LINUX
 	HINSTANCE getHdll();				// 01/29/99 AM.
@@ -136,9 +136,9 @@ public:
 	long getLine();					// 08/24/02 AM.
 	long getInputline();				// 08/24/02 AM.
 #ifdef LINUX
-	ostringstream *getCbuf();			// 05/11/02 AM. // 09/27/19 AM.
+	std::_t_ostrstream *getCbuf();			// 05/11/02 AM. // 09/27/19 AM.
 #else
-	_t_ostrstream *getCbuf();			// 05/11/02 AM.
+	std::_t_ostrstream *getCbuf();			// 05/11/02 AM.
 #endif
 	long getCbufmax();				// 05/11/02 AM.
 	long getCbuftot();				// 05/11/02 AM.
@@ -154,7 +154,7 @@ public:
 
 	Dlist<Iarg> *getBlobs();		// 02/27/03 AM.
 	_TCHAR *getDatum();					// 03/13/03 AM.
-	_t_ostream *getCout();				// 05/04/03 AM.
+	std::_t_ostream *getCout();				// 05/04/03 AM.
 	_TCHAR *getLogfile();	// VTLOG	// 05/06/13 AM.
 
 	void setAna(Ana *);
@@ -172,9 +172,9 @@ public:
 	void setAppdir(_TCHAR *);			// 12/03/98 AM.
 	void setVars(Dlist<Ipair> *);	// 12/07/98 AM.
 	void setOstrs(Dlist<Iarg> *);	// 05/23/01 AM.
-	void setOut(_t_ostream *);			// 05/13/99 AM.
-	void setSout(_t_ostream *);		// 05/13/99 AM.
-	void setFout(_t_ofstream *);		// 05/13/99 AM.
+	void setOut(std::_t_ostream *);			// 05/13/99 AM.
+	void setSout(std::_t_ostream *);		// 05/13/99 AM.
+	void setFout(std::_t_ofstream *);		// 05/13/99 AM.
 	void setOutdir(_TCHAR *);			// 03/10/99 AM.
 	void setCollect(COLL *);		// 05/17/00 AM.
 	void setNlppp(Nlppp *);			// 05/17/00 AM.
@@ -188,11 +188,7 @@ public:
 	void setLine(long);				// 08/24/02 AM.
 	void setInputline(long);		// 08/24/02 AM.
 
-#ifdef LINUX
-	void setCbuf(ostringstream *);	// 09/27/19 AM.
-#else
-	void setCbuf(_t_ostrstream *);	// 05/11/02 AM.
-#endif
+	void setCbuf(std::_t_ostrstream *);	// 05/11/02 AM.
 	void setCbufmax(long);			// 05/11/02 AM.
 	void setCbuftot(long);			// 05/11/02 AM.
 	void setCbufover(bool);			// 05/11/02 AM.
@@ -206,7 +202,7 @@ public:
 
 	void setBlobs(Dlist<Iarg> *);	// 02/27/03 AM.
 	void setDatum(_TCHAR*);			// 03/13/03 AM.
-	void setCout(_t_ostream*);			// 05/04/03 AM.
+	void setCout(std::_t_ostream*);			// 05/04/03 AM.
 	void setLogfile(_TCHAR*);	// VTLOG	// 05/06/13 AM.
 
 	bool Verbose();
@@ -220,7 +216,7 @@ public:
 
 	void prettySeq();			// Print analyzer sequence.
 	bool errOut(bool,bool=false);											// 08/24/02 AM.
-	bool errOut(_t_strstream*,bool,bool=false);                 // 02/25/05 AM.
+	bool errOut(std::_t_strstream*,bool,bool=false);                 // 02/25/05 AM.
 
 	inline void prettyPassnum(int,  /*UP*/ _TCHAR *);
 	inline void prettyParsedone();
@@ -486,9 +482,9 @@ public:
 		);
 
 	// New handling of ostreams.											// 05/23/01 AM.
-	Delt<Iarg> *newostr(_t_ostream*);										// 05/23/01 AM.
-	bool deleteostr(_t_ostream *);											// 05/23/01 AM.
-	Delt<Iarg> *findostr(_t_ostream*);										// 05/23/01 AM.
+	Delt<Iarg> *newostr(std::_t_ostream*);										// 05/23/01 AM.
+	bool deleteostr(std::_t_ostream *);											// 05/23/01 AM.
+	Delt<Iarg> *findostr(std::_t_ostream*);										// 05/23/01 AM.
 	bool deleteostrs();														// 05/24/01 AM.
 
 	Delt<Iarg> *newblob(long);												// 02/27/03 AM.
@@ -504,8 +500,8 @@ public:
 	void finPass(														// 05/20/00 AM.
 		int num,							// Pass number.
 		bool flogfiles,
-		_t_ofstream *fout,
-		_t_ostream *sout,
+		std::_t_ofstream *fout,
+		std::_t_ostream *sout,
 		_TCHAR *pretname,
 		bool ftimepass,
 		clock_t &s_time
@@ -521,8 +517,8 @@ public:
 		_TCHAR *sfile,
 		_TCHAR *salgo,
 		/*DU*/
-		_t_ofstream* &fout,		// File for outputting pass data.
-		_t_ostream* &sout,		// For restoring output stream.
+		std::_t_ofstream* &fout,		// File for outputting pass data.
+		std::_t_ostream* &sout,		// For restoring output stream.
 		clock_t &s_time,
 		_TCHAR* &pretname
 		);
@@ -548,15 +544,11 @@ private:
 	bool		 verbose;				// If analyzer is running in verbose mode.
 
 	// Handle for the user-supplied output file.						// 01/07/99 AM.
-	_t_ostream *out_;						// REQUIRED.
+	std::_t_ostream *out_;						// REQUIRED.
 
 	// Output to a buffer.													// 05/11/02 AM.
 	// (Looks like this should be an output-buffer class.)		// 05/11/02 AM.
-#ifdef LINUX
-	ostringstream *cbuf_;		// Stream for output buffer.			// 05/11/02 AM. // 09/27/19 AM.
-#else
-	_t_ostrstream *cbuf_;		// Stream for output buffer.			// 05/11/02 AM.
-#endif
+	std::_t_ostrstream *cbuf_;		// Stream for output buffer.			// 05/11/02 AM.
 	long cbufmax_;			// Length of output buffer.				// 05/11/02 AM.
 	long cbuftot_;			// Total output length so far.			// 05/11/02 AM.
 	bool cbufover_;		// Buffer overflow.							// 05/11/02 AM.
@@ -564,11 +556,11 @@ private:
 	// Rather than rebind cout, using this as output stream locus.
 	// Calling analyzer sets this with the ostream it supplies.	// 05/04/03 AM.
 	// This is a reference.  User must manage ostream.				// 05/04/03 AM.
-	_t_ostream *cout_;															// 05/04/03 AM.
+	std::_t_ostream *cout_;															// 05/04/03 AM.
 
 	// Save rebound streams.												// 05/13/99 AM.
-	_t_ostream *sout_;															// 05/13/99 AM.
-	_t_ofstream *fout_;															// 05/13/99 AM.
+	std::_t_ostream *sout_;															// 05/13/99 AM.
+	std::_t_ofstream *fout_;															// 05/13/99 AM.
 
 #ifdef _ODBC
 	// MyODBC,MySQL connectivity.											// 05/23/02 AM.
@@ -635,7 +627,7 @@ private:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);		// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);		// Pretty-print the count.
 private:
 	static int count_;				// Count nodes currently allocated.
 #endif

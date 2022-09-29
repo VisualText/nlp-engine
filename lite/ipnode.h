@@ -46,7 +46,7 @@ class Parse;
 
 class Ipnode
 {
-	friend _t_ostream &operator<<(_t_ostream &, Ipnode &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Ipnode &);
 
 public:
 	Ipnode(											// Default constructor.
@@ -76,7 +76,7 @@ public:
 	void setNum(long);
 
 	// General.
-	void genPnode(_t_ostream &ofile);
+	void genPnode(std::_t_ostream &ofile);
 
 	bool eval(
 		Nlppp *nlppp,
@@ -99,6 +99,7 @@ public:
 
 	static bool same(Ipnode *var1, Ipnode *var2);
 	static _TCHAR Ipnodetype(enum Ipnodetype);
+
 	static enum Ipnodetype Ipnodetype(_TCHAR);
 
 
@@ -110,7 +111,7 @@ protected:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;					// Count nodes currently allocated.
 #endif

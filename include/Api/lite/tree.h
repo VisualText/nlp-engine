@@ -89,7 +89,7 @@ public:
 	Node<NODETYPE> *rpop();
 
 	void Traverse(	const Node<NODETYPE> *,
-						_t_ostream &,						// 12/01/98 AM.
+						std::_t_ostream &,						// 12/01/98 AM.
 						bool root = true,
 						int indent = 0) const;
 	void TraverseSetFiredFlag(	const Node<NODETYPE> *,				// 05/21/01 Dd.
@@ -114,7 +114,7 @@ private:
 public:
 	static int getCount();
 	static void prettyCount(_TCHAR * = _T(""),
-							_t_ofstream* =0);			// Pretty-print the count.
+							std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif

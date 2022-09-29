@@ -66,7 +66,7 @@ bool strncat_e(
 	/*DU*/ long &count
 	);
 
-_t_filebuf *directOutput(_TCHAR *fname);
+std::_t_filebuf *directOutput(_TCHAR *fname);
 
 bool file_name(															// 12/24/99 AM.
 	_TCHAR *file,				// Buffer with full file string.

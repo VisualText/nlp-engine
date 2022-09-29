@@ -94,8 +94,8 @@ Iifstmt *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Iifstmt object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Iifstmt object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -138,7 +138,7 @@ dest->else_ = orig->else_;
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Iifstmt &ifstmt)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Iifstmt &ifstmt)
 {
 output << _T("if (");
 if (ifstmt.cond_)
@@ -158,7 +158,7 @@ return output;
 }
 
 // Workaround to calling overloaded << in derived classes.	// 12/27/99 AM.
-void Iifstmt::print(_t_ostream &output)
+void Iifstmt::print(std::_t_ostream &output)
 {
 output << *this;
 }
@@ -197,14 +197,14 @@ int Iifstmt::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Iifstmt::prettyCount(_t_ofstream *ofstr)
+void Iifstmt::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Iifstmt count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Iifstmt count=") << count_ << ends;
+		*ofstr << _T("Active Iifstmt count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Iifstmt count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -221,10 +221,10 @@ if (count_)
 * SUBJ:	Generate ifstmt to a rules file.
 *********************************************/
 void Iifstmt::genIfstmt(
-	_t_ostream &ofile
+	std::_t_ostream &ofile
 	)
 {
-ofile << this << flush;
+ofile << this << std::flush;
 }
 
 
@@ -272,8 +272,8 @@ bool ifflag = true;			// True if evaluating the IF part, else ELSE.
 bool ok = cond_->eval(nlppp, /*UP*/ c_val);
 if (!ok)																			// 11/21/00 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[ifstmt: Error(1).]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[ifstmt: Error(1).]") << std::ends;
 	nlppp->getParse()->errOut(&gerrStr,false);											// 03/13/03 AM.
 							// 10/18/00 AM.
 	goto done;
@@ -296,8 +296,8 @@ if (typ == RSVAR)
 		{
 		if (!ok)
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[ifstmt: Error(2).]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[ifstmt: Error(2).]") << std::ends;
 			nlppp->getParse()->errOut(&gerrStr,false);									// 03/13/03 AM.
 			}
 					// 10/18/00 AM.
@@ -339,7 +339,7 @@ switch (typ)
 		ifflag = (c_val->getNode() ? true : false);					// 10/18/00 AM.
 		break;
 	case RSARGS:																// 12/07/00 AM.
-//		*gerr << "[ifstmt: Multiarg unhandled.]" << endl;			// 05/23/01 AM.
+//		*gerr << "[ifstmt: Multiarg unhandled.]" << std::endl;			// 05/23/01 AM.
 //		ok = false;																// 05/23/01 AM.
 //		goto done;																// 05/23/01 AM.
 		if (!(dlist = c_val->getArgs()))									// 05/23/01 AM.
@@ -352,8 +352,8 @@ switch (typ)
 		break;																	// 05/23/01 AM.
 	default:
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[ifstmt: Error(3).]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[ifstmt: Error(3).]") << std::ends;
 		nlppp->getParse()->errOut(&gerrStr,false);										// 03/13/03 AM.
 		}
 						// 10/18/00 AM.
@@ -371,8 +371,8 @@ if (ifflag)				// Evaluate the if-statements.
 		// Looks like RETURN takes care of itself here.				// 03/09/02 AM.
 		if (!ok)
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[ifstmt: Error(4).]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[ifstmt: Error(4).]") << std::ends;
 			nlppp->getParse()->errOut(&gerrStr,false);									// 03/13/03 AM.
 			}
 		// 10/18/00 AM.
@@ -387,8 +387,8 @@ else if (else_)		// Evaluate the else-statements, if any.
 	// Looks like RETURN takes care of itself here.					// 03/09/02 AM.
 	if (!ok)
 		{
-		_t_strstream gerrStr;
-		gerrStr << _T("[ifstmt: Error(5).]") << ends;
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[ifstmt: Error(5).]") << std::ends;
 		nlppp->getParse()->errOut(&gerrStr,false);										// 03/13/03 AM.
 		}
 						// 10/18/00 AM.
@@ -415,7 +415,7 @@ return ok;
 
 bool Iifstmt::genEval(Gen *gen)
 {
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 _TCHAR *indent = gen->indent_;
 
 if (!cond_)
@@ -436,7 +436,7 @@ enum RFASemtype typ = RSNULL;
 *fcode << indent << _T("if (Arun::truth(");
 if (!cond_->genEval(gen))
 	{
-	*fcode << endl << _T("// ERROR in if condition.") << endl;
+	*fcode << std::endl << _T("// ERROR in if condition.") << std::endl;
 	return false;
 	}
 *fcode << _T("))");
@@ -454,7 +454,7 @@ if (!if_ ||															// FIX.	// 04/28/01 AM.
 	 !if_->genEval(gen))
 	{
 	// Accepting this as an EMPTY if-part.					// FIX.	// 04/28/01 AM.
-//	*fcode << "// ERROR in if-part." << endl;				// FIX.	// 04/28/01 AM.
+//	*fcode << "// ERROR in if-part." << std::endl;				// FIX.	// 04/28/01 AM.
 //	gen->setIndent(indent);			// Restore.				// FIX.	// 04/28/01 AM.
 //	return false;													// FIX.	// 04/28/01 AM.
 	}
@@ -470,7 +470,7 @@ if (else_)		// Gen the else-statements, if any.
 	if (!else_->genEval(gen))
 		{
 		// Accepting this as an EMPTY else-part.			// FIX.	// 04/28/01 AM.
-//		*fcode << "// ERROR in else-part" << endl;		// FIX.	// 04/28/01 AM.
+//		*fcode << "// ERROR in else-part" << std::endl;		// FIX.	// 04/28/01 AM.
 //		gen->setIndent(indent);			// Restore.			// FIX.	// 04/28/01 AM.
 //		return false;												// FIX.	// 04/28/01 AM.
 		}

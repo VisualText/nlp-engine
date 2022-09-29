@@ -44,8 +44,8 @@ All rights reserved.
 
 Aseq::Aseq()
 {
-_t_strstream gerrStr;
-gerrStr << _T("[DON'T CREATE OBJECTS OF Aseq CLASS.]") << ends;
+std::_t_strstream gerrStr;
+gerrStr << _T("[DON'T CREATE OBJECTS OF Aseq CLASS.]") << std::ends;
 errOut(&gerrStr,false);
 }
 
@@ -103,8 +103,8 @@ LITE_API bool Aseq::makeSeq(NLP *nlp, _TCHAR *comment)
 {
 if (!nlp)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Given null NLP object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Given null NLP object.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -112,8 +112,8 @@ Ana *ana;
 ana = (Ana *) (nlp->getAna());
 if (!ana)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[NLP object has no analyzer.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[NLP object has no analyzer.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -122,10 +122,10 @@ Dlist<Seqn> *seqlist = 0;
 seqlist = ana->getSeqlist();
 if (seqlist)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Current analyzer already has a sequence.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Current analyzer already has a sequence.]") << std::ends;
 	errOut(&gerrStr,false);
-	gerrStr << _T("[Delete it first.]") << ends;
+	gerrStr << _T("[Delete it first.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -151,8 +151,8 @@ LITE_API bool Aseq::deleteSeq(NLP *nlp)
 {
 if (!nlp)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Given null NLP object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Given null NLP object.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -160,8 +160,8 @@ Ana *ana;
 ana = (Ana *) (nlp->getAna());
 if (!ana)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[NLP object has no analyzer.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[NLP object has no analyzer.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -170,8 +170,8 @@ Dlist<Seqn> *seqlist = 0;
 seqlist = ana->getSeqlist();
 if (!seqlist)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Current analyzer sequence already empty.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Current analyzer sequence already empty.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -188,8 +188,8 @@ LITE_API void *Aseq::getSeq(NLP *nlp)
 {
 if (!nlp)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Given null NLP object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Given null NLP object.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -197,8 +197,8 @@ Ana *ana;
 ana = (Ana *) (nlp->getAna());
 if (!ana)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[NLP object has no analyzer.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[NLP object has no analyzer.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -212,8 +212,8 @@ LITE_API bool Aseq::readFile(NLP *nlp)
 {
 if (!nlp)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Given null NLP object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Given null NLP object.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -221,8 +221,8 @@ Ana *ana;
 ana = (Ana *) (nlp->getAna());
 if (!ana)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[NLP object has no analyzer.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[NLP object has no analyzer.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -231,10 +231,10 @@ Dlist<Seqn> *seqlist = 0;
 seqlist = ana->getSeqlist();
 if (seqlist)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Current analyzer already has a sequence.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Current analyzer already has a sequence.]") << std::ends;
 	errOut(&gerrStr,false);
-	gerrStr << _T("[Delete it first.]") << ends;
+	gerrStr << _T("[Delete it first.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -323,8 +323,8 @@ LITE_API APASS *Aseq::insertPass(NLP *nlp, void *pass, int pos)
 Dlist<Seqn> *seqlist = 0;
 if (!(seqlist = (Dlist<Seqn> *)getSeq(nlp)))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't insert pass into null list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't insert pass into null list.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -349,8 +349,8 @@ if (!loc || !pass || !nlp)
 Dlist<Seqn> *seqlist = 0;
 if (!(seqlist = (Dlist<Seqn> *)getSeq(nlp)))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't insert pass into null list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't insert pass into null list.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -387,8 +387,8 @@ LITE_API APASS *Aseq::excisePass(NLP *nlp, int pos)
 Dlist<Seqn> *seqlist = 0;
 if (!(seqlist = (Dlist<Seqn> *)getSeq(nlp)))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't excise from empty list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't excise from empty list.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -409,8 +409,8 @@ LITE_API APASS *Aseq::excisePass(NLP *nlp, APASS *pass)
 Dlist<Seqn> *seqlist = 0;
 if (!(seqlist = (Dlist<Seqn> *)getSeq(nlp)))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't excise from empty list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't excise from empty list.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -434,8 +434,8 @@ if ((delt = (Delt<Seqn> *)Aseq::excisePass(nlp, pos)))
 	Delt<Seqn>::DeleteDeltAndData(delt);
 else
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Failed to delete pass.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Failed to delete pass.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -457,8 +457,8 @@ if (pass)
 	Delt<Seqn>::DeleteDeltAndData((Delt<Seqn> *)pass);
 else
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Failed to delete pass.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Failed to delete pass.]") << std::ends;
 	errOut(&gerrStr,false);
 	}
 
@@ -470,8 +470,8 @@ LITE_API APASS *Aseq::nthPass(NLP *nlp, int pos)
 Dlist<Seqn> *seqlist = 0;
 if (!(seqlist = (Dlist<Seqn> *)getSeq(nlp)))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[nthPass: Empty list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[nthPass: Empty list.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -485,8 +485,8 @@ LITE_API APASS *Aseq::firstPass(NLP *nlp)
 Dlist<Seqn> *seqlist = 0;
 if (!(seqlist = (Dlist<Seqn> *)getSeq(nlp)))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[firstPass: Empty list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[firstPass: Empty list.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -498,8 +498,8 @@ LITE_API APASS *Aseq::lastPass(NLP *nlp)
 Dlist<Seqn> *seqlist = 0;
 if (!(seqlist = (Dlist<Seqn> *)getSeq(nlp)))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[lastPass: Empty list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[lastPass: Empty list.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -770,9 +770,9 @@ LITE_API bool Aseq::internSeq(NLP *nlp)
 Ana *ana = (Ana *) nlp->getAna();	// Moved this up.				// 05/19/10 AM.
 
 // SETTING UP ERROR LOG FILE FOR RE-INTERNING SEQUENCE.			// 05/19/01 AM.
-_t_ostream *serr;																	// 05/19/01 AM.
-_t_ofstream *ferr;																// 05/19/01 AM.
-_t_ostream *sdbg=0;																// 02/21/02 AM.
+std::_t_ostream *serr;																	// 05/19/01 AM.
+std::_t_ofstream *ferr;																// 05/19/01 AM.
+std::_t_ostream *sdbg=0;																// 02/21/02 AM.
 _TCHAR outd[MAXSTR];															// 02/21/02 AM.
 _TCHAR errout[1024];															// 05/19/01 AM.
 _stprintf(outd,_T("%s%c%s"), ana->getAppdir(),DIR_CH,_T("logs"));			// 02/21/02 AM.
@@ -780,8 +780,8 @@ _stprintf(errout, _T("%s%cmake_ana.log"),outd,DIR_CH);					// 02/21/02 AM.
 fileErr(errout, /*DU*/ ferr, serr);										// 05/19/01 AM.
 nlp->fileDbg(outd,sdbg);													// 08/26/02 AM.
 
-_t_strstream gerrStr;							// 05/26/01 AM.
-gerrStr << _T("[Date: ") << today() << _T("]") << ends;						// 05/26/01 AM.
+std::_t_strstream gerrStr;							// 05/26/01 AM.
+gerrStr << _T("[Date: ") << today() << _T("]") << std::ends;						// 05/26/01 AM.
 errOut(&gerrStr,false,0,0);															// 05/26/01 AM.
 
 //*gerr << "Please wait...." << endl;	// Leave to the GUI.		// 05/19/01 AM.
@@ -888,8 +888,8 @@ if (!pass || !nlp)
 Dlist<Seqn> *seqlist = 0;
 if (!(seqlist = (Dlist<Seqn> *)getSeq(nlp)))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't get move pass up in sequence.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't get move pass up in sequence.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -956,8 +956,8 @@ if (!pass || !nlp)
 Dlist<Seqn> *seqlist = 0;
 if (!(seqlist = (Dlist<Seqn> *)getSeq(nlp)))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't get move pass down in sequence.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't get move pass down in sequence.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -1052,8 +1052,8 @@ if (!pass || !nlp)
 Dlist<Seqn> *seqlist = 0;
 if (!(seqlist = (Dlist<Seqn> *)getSeq(nlp)))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[No analyzer sequence.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[No analyzer sequence.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -1080,8 +1080,8 @@ if (!pass || !nlp)
 Dlist<Seqn> *seqlist = 0;
 if (!(seqlist = (Dlist<Seqn> *)getSeq(nlp)))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[No analyzer sequence.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[No analyzer sequence.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -1121,8 +1121,8 @@ if (!pass || !nlp)
 Dlist<Seqn> *seqlist = 0;
 if (!(seqlist = (Dlist<Seqn> *)getSeq(nlp)))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't get move pass up in sequence.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't get move pass up in sequence.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -1166,8 +1166,8 @@ if (!pass || !nlp)
 Dlist<Seqn> *seqlist = 0;
 if (!(seqlist = (Dlist<Seqn> *)getSeq(nlp)))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't get move pass down in sequence.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't get move pass down in sequence.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}

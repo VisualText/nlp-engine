@@ -1,5 +1,5 @@
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -7,7 +7,7 @@ All rights reserved.
 *
 *									CON_GEN.H
 *
-* FILE:	consh.¹/con_gen.h
+* FILE:	consh.ï¿½/con_gen.h
 * SUBJ:	Declarations for con table code generation.
 * NOTE:	
 * CR:	10/6/95 AM.
@@ -35,7 +35,7 @@ extern void con_gen_ini(
 extern void
 con_gen_struct(
 	CON *pseg,
-	_t_ofstream *fp,
+	std::_t_ofstream *fp,
 	CG *cg
 	);
 

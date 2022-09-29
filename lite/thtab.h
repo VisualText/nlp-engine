@@ -73,23 +73,23 @@ public:
 	void setSize(long);		// 12/12/98 AM.
 
 	// General
-	long hash(register _TCHAR *);			// Get hash location in table.
-	long hash(register _TCHAR *, register long);	// str, length.
-	static long hashfn(register _TCHAR *,register long hsize);		// 07/08/03 AM.
+	long hash(_TCHAR *);			// Get hash location in table.
+	long hash(_TCHAR *, long);	// str, length.
+	static long hashfn(_TCHAR *,long hsize);		// 07/08/03 AM.
 	long makesize(long);													// 06/16/00 AM.
 	Selt<tSym<TYPE> > *hfind(_TCHAR *);				// Find sym in table.
 	Selt<tSym<TYPE> > *hfind(_TCHAR *, long);
 	Selt<tSym<TYPE> > *hfind_lc(_TCHAR *);			// Find lowercase.
 	Selt<tSym<TYPE> > *hfind_lc(_TCHAR *, TYPE* &);	// 12/18/98 AM.
-	Selt<tSym<TYPE> > *hadd(register _TCHAR *);	// Add sym to table.
-	Selt<tSym<TYPE> > *hadd_lc(register _TCHAR *);	// Add lc sym to table.
-	Selt<tSym<TYPE> > *hadd(register _TCHAR *, register long);
+	Selt<tSym<TYPE> > *hadd(_TCHAR *);	// Add sym to table.
+	Selt<tSym<TYPE> > *hadd_lc(_TCHAR *);	// Add lc sym to table.
+	Selt<tSym<TYPE> > *hadd(_TCHAR *, long);
 	Selt<tSym<TYPE> > *hget(_TCHAR *);				// Find or add sym to table.
 	Selt<tSym<TYPE> > *hget_lc(_TCHAR *);			// Find or add lc sym.
 	tSym<TYPE>        *hsym(_TCHAR *);				// Find or add sym to table.
 	Selt<tSym<TYPE> > *hget(_TCHAR *, long);
 	tSym<TYPE>        *hsym(_TCHAR *, long);
-	Selt<tSym<TYPE> > *hpre(register _TCHAR *, /*UP*/ Slist<tSym<TYPE> >* &);
+	Selt<tSym<TYPE> > *hpre(_TCHAR *, /*UP*/ Slist<tSym<TYPE> >* &);
 												// Find sym for deleting.
 	bool hdel(_TCHAR *);						// Remove sym from table.
 	bool hdel(Selt<tSym<TYPE> > *);					// Remove sym from table.
@@ -121,7 +121,7 @@ private:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif
@@ -213,15 +213,15 @@ int tHtab<TYPE>::getCount() { return count_; }
 ********************************************/
 #ifndef STABLE_
 template<class TYPE>
-void tHtab<TYPE>::prettyCount(_t_ofstream *ofstr)
+void tHtab<TYPE>::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active tHtab count=") << count_ << endl;
-	*gout << _T("Active tHtab count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active tHtab count=") << count_ << ends;
+		*ofstr << _T("Active tHtab count=") << count_ << std::endl;
+	*gout << _T("Active tHtab count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active tHtab count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -241,19 +241,19 @@ if (count_)
 ********************************************/
 
 template<class TYPE>
-long tHtab<TYPE>::hash(register _TCHAR *str)
+long tHtab<TYPE>::hash(_TCHAR *str)
 {
 if (!str || !*str)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hash: Given empty string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hash: Given empty string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;			// Reserving zero for bad strings, empty string.
 	}
 
-register _TUCHAR ch;
-register unsigned long val;
-register unsigned long warp;
+_TUCHAR ch;
+unsigned long val;
+unsigned long warp;
 
 warp = 1;
 val = 0;
@@ -270,19 +270,19 @@ return val % size_;
 /*******************************************/
 
 template<class TYPE>
-long tHtab<TYPE>::hash(register _TCHAR *str, register long len)
+long tHtab<TYPE>::hash(_TCHAR *str, long len)
 {
 if (!str || !*str || (len <= 0))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hash: Given empty string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hash: Given empty string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;			// Reserving zero for bad strings, empty string.
 	}
 
-register _TUCHAR ch;													// 11/21/00 AM.
-register unsigned long val;												// 11/21/00 AM.
-register unsigned long warp;												// 11/21/00 AM.
+_TUCHAR ch;													// 11/21/00 AM.
+unsigned long val;												// 11/21/00 AM.
+unsigned long warp;												// 11/21/00 AM.
 
 warp = 1;
 val = 0;
@@ -306,19 +306,19 @@ return val % size_;
 ********************************************/
 
 template<class TYPE>
-long tHtab<TYPE>::hashfn(register _TCHAR *str, register long siz)
+long tHtab<TYPE>::hashfn(_TCHAR *str, long siz)
 {
 if (!str || !*str)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hashfn: Given empty string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hashfn: Given empty string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;			// Reserving zero for bad strings, empty string.
 	}
 
-register _TUCHAR ch;
-register unsigned long val;
-register unsigned long warp;
+_TUCHAR ch;
+unsigned long val;
+unsigned long warp;
 
 warp = 1;
 val = 0;
@@ -364,12 +364,12 @@ return 0;
 ********************************************/
 
 template<class TYPE>
-Selt<tSym<TYPE> > *tHtab<TYPE>::hadd(register _TCHAR *str)
+Selt<tSym<TYPE> > *tHtab<TYPE>::hadd(_TCHAR *str)
 {
 if (!str || !*str)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hadd: Given null string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hadd: Given null string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -396,12 +396,12 @@ return selt;
 /*******************************************/
 
 template<class TYPE>
-Selt<tSym<TYPE> > *tHtab<TYPE>::hadd(register _TCHAR *str, register long len)
+Selt<tSym<TYPE> > *tHtab<TYPE>::hadd(_TCHAR *str, long len)
 {
 if (!str || !*str || (len <= 0))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hadd: Given null string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hadd: Given null string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -435,12 +435,12 @@ return selt;
 ********************************************/
 
 template<class TYPE>
-Selt<tSym<TYPE> > *tHtab<TYPE>::hfind(register _TCHAR *str)
+Selt<tSym<TYPE> > *tHtab<TYPE>::hfind(_TCHAR *str)
 {
 if (!str || !*str)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hfind: Given null string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hfind: Given null string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -463,12 +463,12 @@ return 0;						// Not found.
 /*******************************************/
 
 template<class TYPE>
-Selt<tSym<TYPE> > *tHtab<TYPE>::hfind(register _TCHAR *str, register long len)
+Selt<tSym<TYPE> > *tHtab<TYPE>::hfind(_TCHAR *str, long len)
 {
 if (!str || !*str || (len <= 0))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hfind: Given null string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hfind: Given null string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -501,12 +501,12 @@ return 0;						// Not found.
 ********************************************/
 static _TCHAR lc_buf[MAXSTR];
 template<class TYPE>
-Selt<tSym<TYPE> > *tHtab<TYPE>::hfind_lc(register _TCHAR *str)
+Selt<tSym<TYPE> > *tHtab<TYPE>::hfind_lc(_TCHAR *str)
 {
 if (!str || !*str)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hfind_lc: Given null string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hfind_lc: Given null string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -528,7 +528,7 @@ return hfind(lc_buf);
 // 12/18/98 AM.
 template<class TYPE>
 Selt<tSym<TYPE> > *tHtab<TYPE>::hfind_lc(
-	register _TCHAR *str,
+	_TCHAR *str,
 	/*UP*/
 	TYPE* &dat
 	)
@@ -537,8 +537,8 @@ dat = 0;
 
 if (!str || !*str)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hfind_lc: Given null string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hfind_lc: Given null string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -559,12 +559,12 @@ return selt;
 * SUBJ:	Add lowercased string to hash table.
 ********************************************/
 template<class TYPE>
-Selt<tSym<TYPE> > *tHtab<TYPE>::hadd_lc(register _TCHAR *str)
+Selt<tSym<TYPE> > *tHtab<TYPE>::hadd_lc(_TCHAR *str)
 {
 if (!str || !*str)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hadd: Given null string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hadd: Given null string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -597,7 +597,7 @@ return selt;
 ********************************************/
 
 template<class TYPE>
-Selt<tSym<TYPE> > *tHtab<TYPE>::hget_lc(register _TCHAR *str)
+Selt<tSym<TYPE> > *tHtab<TYPE>::hget_lc(_TCHAR *str)
 {
 // Convert to lower case.
 str_to_lower(str, lc_buf);
@@ -621,12 +621,12 @@ return hadd(lc_buf);
 ********************************************/
 
 template<class TYPE>
-Selt<tSym<TYPE> > *tHtab<TYPE>::hpre(register _TCHAR *str, /*UP*/ Slist<tSym<TYPE> >* &list)
+Selt<tSym<TYPE> > *tHtab<TYPE>::hpre(_TCHAR *str, /*UP*/ Slist<tSym<TYPE> >* &list)
 {
 if (!str)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hpre: Given null string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hpre: Given null string.]") << std::ends;
 	errOut(&gerrStr,false);
 	list = 0;
 	return 0;
@@ -665,7 +665,7 @@ return 0;						// Not found in list.
 ********************************************/
 
 template<class TYPE>
-Selt<tSym<TYPE> > *tHtab<TYPE>::hget(register _TCHAR *str)
+Selt<tSym<TYPE> > *tHtab<TYPE>::hget(_TCHAR *str)
 {
 // The calls check for empty string.
 Selt<tSym<TYPE> > *ptr;
@@ -677,7 +677,7 @@ return hadd(str);
 /*******************************************/
 
 template<class TYPE>
-Selt<tSym<TYPE> > *tHtab<TYPE>::hget(register _TCHAR *str, register long len)
+Selt<tSym<TYPE> > *tHtab<TYPE>::hget(_TCHAR *str, long len)
 {
 Selt<tSym<TYPE> > *ptr;
 if ((ptr = hfind(str, len)) != NULL)
@@ -722,12 +722,12 @@ return 0;																		// 12/07/01 AM.
 ********************************************/
 
 template<class TYPE>
-bool tHtab<TYPE>::hdel(register _TCHAR *str)
+bool tHtab<TYPE>::hdel(_TCHAR *str)
 {
 if (!str)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[hdel: Given null string.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hdel: Given null string.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -799,7 +799,7 @@ Slist<tSym<TYPE> > *list;
 Selt<tSym<TYPE> > *ptr;
 tSym<TYPE>  *sym;
 *gout << _T("Hash table:\n")
-	  << _T("-----------") << endl;
+	  << _T("-----------") << std::endl;
 for (ii = 0; ii < size_; ++ii)
 	{
 	list = &(parr_[ii]);		// 12/12/98 AM.
@@ -813,7 +813,7 @@ for (ii = 0; ii < size_; ++ii)
 		sym = ptr->getData();
 		*gout << sym->getStr() << _T(" ");
 		}
-	*gout << endl;
+	*gout << std::endl;
 	}
 }
 
@@ -839,11 +839,11 @@ table.pretty();
 table.hadd(_T("goodbye"));
 table.pretty();
 if (table.hfind(_T("goodbye")))
-	*gout << _T("Found goodbye") << endl;
+	*gout << _T("Found goodbye") << std::endl;
 if (table.hfind(_T("hello")))
-	*gout << _T("Found hello") << endl;
+	*gout << _T("Found hello") << std::endl;
 if (!table.hfind(_T("grunk")))
-	*gout << _T("Didn't find grunk") << endl;
+	*gout << _T("Didn't find grunk") << std::endl;
 table.hget(_T("hello"));
 table.pretty();
 table.hget(_T("grunk"));
@@ -872,10 +872,10 @@ template<class TYPE>
 bool tHtab<TYPE>::gen(Gen *gen)
 {
 
-_t_ofstream *rhash = gen->getRhash();
-_t_ofstream *rhead = gen->getRhead();
-_t_ofstream *rchain = gen->getRchain();
-_t_ofstream *rdata = gen->getRdata();
+std::_t_ofstream *rhash = gen->getRhash();
+std::_t_ofstream *rhead = gen->getRhead();
+std::_t_ofstream *rchain = gen->getRchain();
+std::_t_ofstream *rdata = gen->getRdata();
 int id = gen->getId();
 int recid = gen->getRecid();
 
@@ -904,7 +904,7 @@ for (ii = 0; ii < size_; ++ii)
 	{
 #ifdef GENPRETTY_
 	if (!(ii % linemax))
-		*rhash << endl;
+		*rhash << std::endl;
 #endif
 	list = &(parr_[ii]);		// 12/12/98 AM.
 	if (!(ptr = list->getFirst()))
@@ -922,7 +922,7 @@ for (ii = 0; ii < size_; ++ii)
 		++jj;			// 04/04/03 AM.
 #ifdef GENPRETTY_
 		if (!(jj % linemax))	// 04/04/03 AM.
-			*rchain << endl;
+			*rchain << std::endl;
 #endif
 
 		sym = ptr->getData();

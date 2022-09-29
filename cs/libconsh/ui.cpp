@@ -92,7 +92,7 @@ ALIST* alist = cg->alist_;
 name = ALIST::list_pop_buf(&args,alist->List_buffer);
 if (!name || !*name)	// 10/31/06 AM.
    {
-   _t_cerr << _T("[path_to_con: Empty args.]") << endl;	// 10/31/06 AM.
+   std::_t_cerr << _T("[path_to_con: Empty args.]") << std::endl;	// 10/31/06 AM.
    return(false);	// 10/31/06 AM.
    }
 if (!_tcscmp(name, CON_ROOT_NAME))
@@ -102,7 +102,7 @@ else if (!_tcscmp(name, CON_EMPTY_NAME))
    /* 12/24/95 AM. Handle empty concept specially. */
    if (args)
       {
-      _t_cerr << _T("[path_to_con: Nil concept can't have child.]") << endl;
+      std::_t_cerr << _T("[path_to_con: Nil concept can't have child.]") << std::endl;
       return(false);
       }
    *upcon = cg->acon_->Con((ID) 0);
@@ -110,8 +110,8 @@ else if (!_tcscmp(name, CON_EMPTY_NAME))
    }
 else
    {
-   _t_cerr << _T("[path_to_con: Path must begin with '")
-		  << CON_ROOT_NAME << _T("'.]") << endl;
+   std::_t_cerr << _T("[path_to_con: Path must begin with '")
+		  << CON_ROOT_NAME << _T("'.]") << std::endl;
    return(false);
    }
    
@@ -142,9 +142,9 @@ if (name)
    {
    //cerr
 	*cgerr
-		<< _T("[path_to_con: Concept not found.]") << endl;	// 10/05/99 AM.
-	*cgerr << _T("[name=*") << name << _T("*]") << endl;			// 10/05/99 AM.
-	*cgerr << _T("[namech=") << (_TUCHAR) *name << _T("]") << endl;
+		<< _T("[path_to_con: Concept not found.]") << std::endl;	// 10/05/99 AM.
+	*cgerr << _T("[name=*") << name << _T("*]") << std::endl;			// 10/05/99 AM.
+	*cgerr << _T("[namech=") << (_TUCHAR) *name << _T("]") << std::endl;
 	if (ALIST::list_pop(&args))	// Still more.			// 07/08/03 AM.
 		return false;												// 07/08/03 AM.
 	// ADD THE CONCEPT!!  (eg, newstyle numeric)			// 07/08/03 AM.
@@ -171,8 +171,8 @@ return(true);
 bool
 ui_read_con(
 	_TCHAR *prompt,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent,
 	CG *cg,																// 08/14/02 AM.
@@ -185,7 +185,7 @@ LIST *args;
 bool ok;
 
 if (!silent)																	// 02/21/00 AM.
-	*out << prompt << flush;
+	*out << prompt << std::flush;
 ok  = args_read(in, out, silent,cg->alist_, buf,CMD_SIZE, &args);
 if (!ok) return(false);
 ok = path_to_con(args,cg, /*UP*/ con);
@@ -206,8 +206,8 @@ return(ok);
 bool
 ui_read_end(
 	_TCHAR *prompt,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent,
 	ALIST *alist
@@ -218,7 +218,7 @@ LIST *args;
 bool ok;
 
 if (!silent)																// 02/21/00 AM.
-	*out << prompt << flush;
+	*out << prompt << std::flush;
 ok  = args_read(in, out, silent,alist, buf,CMD_SIZE, &args);
 if (!ok) return(false);
 
@@ -243,8 +243,8 @@ return(ok);
 bool
 ui_read_num(
 	_TCHAR *prompt,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent,
 	CG *cg,
@@ -258,12 +258,12 @@ bool ok;
 ALIST *alist = cg->alist_;
 
 if (!silent)																// 02/21/00 AM.
-	*out << prompt << flush;
+	*out << prompt << std::flush;
 ok  = args_read(in, out, silent,alist, buf,CMD_SIZE, &args);
 if (!ok) return(false);
 if (!args)	// 10/31/06 AM.
    {
-   *cgerr << _T("[ui_read_num: Number not found.]") << endl;	// 10/31/06 AM.
+   *cgerr << _T("[ui_read_num: Number not found.]") << std::endl;	// 10/31/06 AM.
    return false;	// 10/31/06 AM.
    }
 if (args->next)
@@ -291,8 +291,8 @@ return(ok);
 bool
 ui_read_pkind(
 	_TCHAR *prompt,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent,
 	CG *cg,
@@ -306,7 +306,7 @@ bool ok;
 ALIST *alist = cg->alist_;
 
 if (!silent)																// 02/21/00 AM.
-	*out << prompt << endl;
+	*out << prompt << std::endl;
 ok  = args_read(in, out, silent,alist, buf,CMD_SIZE, &args);
 if (!ok) return(false);
 if (args->next)
@@ -334,8 +334,8 @@ return(ok);
 bool
 ui_read_sym(
 	_TCHAR *prompt,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent,
 	CG *cg,
@@ -350,7 +350,7 @@ ALIST *alist = cg->alist_;
 
 ok = true;
 if (!silent)																// 02/21/00 AM.
-	*out << prompt << endl;
+	*out << prompt << std::endl;
 ok  = args_read(in, out, silent,alist, buf,CMD_SIZE, &args);
 if (!ok) return(false);
 if (args->next)
@@ -381,8 +381,8 @@ return(ok);
 bool
 ui_read_word(
 	_TCHAR *prompt,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent,
 	CG *cg,
@@ -398,7 +398,7 @@ ALIST *alist = cg->alist_;
 
 ok = true;
 if (!silent)
-	*out << prompt << endl;
+	*out << prompt << std::endl;
 ok  = args_read(in, out, silent,alist, buf,CMD_SIZE, &args);
 if (!ok) return(false);
 if (args->next)

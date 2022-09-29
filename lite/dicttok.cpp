@@ -213,7 +213,7 @@ if (!parse)
 	return false;
 
 if (parse->Verbose())
-	*gout << _T("[DICTTok:]") << endl;
+	*gout << _T("[DICTTok:]") << std::endl;
 
 // Need to get the current KB.
 cg_ = parse->getAna()->getCG();
@@ -224,8 +224,8 @@ text_ = parse->text;
 
 if (!parse->text)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[DICTTok: Given no text.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[DICTTok: Given no text.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
 
@@ -233,8 +233,8 @@ tree_ = (Tree<Pn> *)parse->getTree();
 
 if (tree_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[DICTTok: Parse tree exists. Ignoring tokenization pass.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[DICTTok: Parse tree exists. Ignoring tokenization pass.]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
@@ -279,8 +279,8 @@ parse->setTree(tree_);								// Update global data.
 
 if (!tree_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[DICTTok: Could not create parse tree.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[DICTTok: Could not create parse tree.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -289,8 +289,8 @@ root_ = tree_->getRoot();	// FETCH PARSE TREE ROOT.
 
 if (!root_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[DICTTok: No parse tree root.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[DICTTok: No parse tree root.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -326,7 +326,7 @@ replaceNum(root_,_T("TOT NUMS"),totnums_);
 //if (parse_->Verbose())											// FIX	// 02/01/00 AM.
 if (parse_->getEana()->getFlogfiles())						// FIX	// 02/01/00 AM.
 	{
-	//*gout << "[Tokenize: Dumping parse tree.]" << endl;
+	//*gout << "[Tokenize: Dumping parse tree.]" << std::endl;
 	tree_->Traverse(root_, *gout);
 	}
 
@@ -449,9 +449,9 @@ node = Pn::makeTnode(start, end, ustart, uend, typ, *buf, str, sym,				// 10/09/
 // CHECK NODE OVERFLOW.														// 01/24/02 AM.
 if (!node)																		// 01/24/02 AM.
 	{
-	_t_strstream gerrStr;						// 01/24/02 AM.
+	std::_t_strstream gerrStr;						// 01/24/02 AM.
 	gerrStr << _T("[Node overflow at ") << start << _T(" chars, ")		// 01/24/02 AM.
-		<< last->getCount() << _T(" nodes.]") << ends;					// 01/24/02 AM.
+		<< last->getCount() << _T(" nodes.]") << std::ends;					// 01/24/02 AM.
 	return errOut(&gerrStr,false,0,0);												// 01/26/02 AM.
 	}
 
@@ -492,8 +492,8 @@ Sym *DICTTok::internTok(
 lcstr = 0;
 if (empty(str) || len <= 0)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[internTok: Given bad string or length.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[internTok: Given bad string or length.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}
@@ -501,8 +501,8 @@ if (empty(str) || len <= 0)
 // If token too long, truncate.	// FIX.	// 08/06/06 AM.
 if (len >= MAXSTR)					// FIX.	// 08/06/06 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Intern Token: Too long -- truncating.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Intern Token: Too long -- truncating.]") << std::ends;
 	errOut(&gerrStr,false);
 	len = MAXSTR - 1;	// Recover.	// FIX.	// 08/06/06 AM.
 	}
@@ -511,8 +511,8 @@ if (len >= MAXSTR)					// FIX.	// 08/06/06 AM.
 Sym *sym;
 if (!(sym = htab->hsym_kb(str, len,/*UP*/lcstr)))			// 01/26/99 AM.
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Intern Token: Failed.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Intern Token: Failed.]") << std::ends;
 	errOut(&gerrStr,false);
 	return 0;
 	}

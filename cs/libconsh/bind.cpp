@@ -118,27 +118,27 @@ ID con_SYS
 	, attrs_PROXY
 	, attrs_PPROXY
 	;
-_t_cerr << _T("[bind_sys: Enter.]") << endl;
+std::_t_cerr << _T("[bind_sys: Enter.]") << std::endl;
 if (!cg)
   {
-  _t_cerr << _T("[bind_sys: EMPTY cg object.]") << endl;
+  std::_t_cerr << _T("[bind_sys: EMPTY cg object.]") << std::endl;
   return(false);
   }
 if (!cg->cg_CONCEPT)
   {
-  _t_cerr << _T("[bind_sys: No cg_CONCEPT.]") << endl;
+  std::_t_cerr << _T("[bind_sys: No cg_CONCEPT.]") << std::endl;
   return(false);
   }
 
 #ifdef LINUX // Debugging kb load.
-_t_cerr << _T("[bind_sys]: Have cg_CONCEPT=") << cg->cg_CONCEPT << endl;
+std::_t_cerr << _T("[bind_sys]: Have cg_CONCEPT=") << cg->cg_CONCEPT << std::endl;
 CON *x=	cg->acon_->Con(cg->cg_CONCEPT);
-_t_cerr << _T("[bind_sys]: Conid to con to id= ") << x->id << endl;
+std::_t_cerr << _T("[bind_sys]: Conid to con to id= ") << x->id << std::endl;
 #endif
 
 // 04/30/99 AM. Removing Analyzer-specific stuff.
 bind_var(con_SYS,				cg->cg_CONCEPT,			_T("sys"));
-//_t_cerr << _T("[bind_sys]: Have con_SYS=") << con_SYS << endl;
+//std::_t_cerr << _T("[bind_sys]: Have con_SYS=") << con_SYS << std::endl;
 bind_var(sys_ATTRS,			con_SYS,				_T("attrs"));
 bind_var(sys_DICT,			con_SYS,				_T("dict"));
 bind_var(sys_NLP,				con_SYS,				_T("nlp"));
@@ -159,7 +159,7 @@ bind_var(cg->cg_PHRASE,			attrs_PPROXY,		_T("phrase"));
 //bind_var(cg_VAR,				attrs_COMMON,		"var");
 
 /* 4/30/96 AM. Must tell libraries about bound concepts. */
-//_t_cerr << _T("[bind_sys: Before kbm_vars.]") << endl;
+//std::_t_cerr << _T("[bind_sys: Before kbm_vars.]") << std::endl;
 cg->kbm_->kbm_vars(
 	cg->acon_->Con(cg->cg_CONCEPT),
 	cg->acon_->Con(cg->cg_PHRASE),		// 04/16/99 AM.
@@ -172,7 +172,7 @@ cg->kbm_->kbm_vars(
 	cg->acon_->Con(cg->nlp_WHT)
 	);
 
-//_t_cerr << _T("[bind_sys: Exit ok.]") << endl;
+//std::_t_cerr << _T("[bind_sys: Exit ok.]") << std::endl;
 return(true);
 }
 

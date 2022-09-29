@@ -57,15 +57,15 @@ public:
 	void setSize(long);		// 12/12/98 AM.
 
 	// General
-	long hash(register _TCHAR *);			// Get hash location in table.
-	long hash(register _TCHAR *, register long);	// str, length.
-	static long hashfn(register _TCHAR *,register long hsize);		// 06/15/00 AM.
+	long hash(_TCHAR *);			// Get hash location in table.
+	long hash(_TCHAR *, long);	// str, length.
+	static long hashfn(_TCHAR *,long hsize);		// 06/15/00 AM.
 	static long makesize(long len);										// 06/15/00 AM.
 	Selt<Sym> *hfind(_TCHAR *);				// Find sym in table.
 	Selt<Sym> *hfind(_TCHAR *, long);
 	Selt<Sym> *hfind_lc(_TCHAR *);			// Find lowercase.
-	Selt<Sym> *hadd(register _TCHAR *);	// Add sym to table.
-	Selt<Sym> *hadd(register _TCHAR *, register long);
+	Selt<Sym> *hadd(_TCHAR *);	// Add sym to table.
+	Selt<Sym> *hadd(_TCHAR *, long);
 	Selt<Sym> *hget(_TCHAR *);				// Find or add sym to table.
 	Sym       *hsym(_TCHAR *);				// Find or add sym to table.
 	Sym		 *hsym_kb(_TCHAR *);	// and fix up lowercase sym.	// 01/26/99 AM
@@ -73,11 +73,11 @@ public:
                      /*UP*/ _TCHAR* &lcstr);	// 08/01/11 AM.
 	Selt<Sym> *hget(_TCHAR *, long);
 	Sym       *hsym(_TCHAR *, long);
-	Selt<Sym> *hpre(register _TCHAR *, /*UP*/ Slist<Sym>* &);
+	Selt<Sym> *hpre(_TCHAR *, /*UP*/ Slist<Sym>* &);
 												// Find sym for deleting.
 	bool hdel(_TCHAR *);						// Remove sym from table.
 	bool hdel(Selt<Sym> *);					// Remove sym from table.
-	void pretty(_t_ostream*);						// Pretty-print the hash table.
+	void pretty(std::_t_ostream*);						// Pretty-print the hash table.
 	void clean();						// Wipe out the hash table.
 
 	// GARBAGE COLLECTION.	// 04/11/06 AM.
@@ -114,7 +114,7 @@ private:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif

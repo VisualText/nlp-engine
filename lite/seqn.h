@@ -40,7 +40,7 @@ class Pat;		// OPT.	// 05/16/00 AM.
 class Seqn
 {
 	friend class Pat;			// OPT												// 05/16/00 AM.
-	friend _t_ostream &operator<<(_t_ostream &, Seqn &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Seqn &);
 
 public:
 	Seqn(		// Default constructor.
@@ -97,7 +97,7 @@ public:
 		_TCHAR *date,
 		_TCHAR *modified,
 		_TCHAR *note,
-		_t_ostream &ofile
+		std::_t_ostream &ofile
 		);
 
 	// Class-wide
@@ -120,7 +120,7 @@ public:
 	static bool genRecurses(												// 11/04/99 AM.
 		Dlist<Seqn> *seqs,
 		_TCHAR *sep,
-		_t_ostream &ofile
+		std::_t_ostream &ofile
 		);
 
 	static bool gen(Dlist<Seqn> *, Gen *);								// 05/10/00 AM.
@@ -157,7 +157,7 @@ private:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif

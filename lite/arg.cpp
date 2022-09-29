@@ -45,9 +45,9 @@ All rights reserved.
 
 Arg::Arg()
 {
-*gout << _T("[DON'T CREATE OBJECTS OF Arg CLASS.]") << endl;
-_t_strstream gerrStr;							// 02/19/02 AM.
-gerrStr << _T("[DON'T CREATE OBJECTS OF Arg CLASS.]") << ends;		// 02/19/02 AM.
+*gout << _T("[DON'T CREATE OBJECTS OF Arg CLASS.]") << std::endl;
+std::_t_strstream gerrStr;							// 02/19/02 AM.
+gerrStr << _T("[DON'T CREATE OBJECTS OF Arg CLASS.]") << std::ends;		// 02/19/02 AM.
 errOut(&gerrStr,false);																	// 02/19/02 AM.
 }
 
@@ -545,10 +545,10 @@ if (!args)
 	{
 //	_stprintf(Errbuf,_T("[%s: Couldn't get argument.]"), errstr);// 05/18/01 AM.
 //	return errOut(false); // UNFIXED 									// 05/18/01 AM.
-	_t_strstream gerrStr;													// 12/26/06 AM.
+	std::_t_strstream gerrStr;													// 12/26/06 AM.
 	gerrStr << _T("[") << errstr <<										// 12/26/06 AM.
 			_T(": Couldn't get argument.]")								// 03/20/02 AM.
-			<< ends;
+			<< std::ends;
 	return parse->errOut(&gerrStr, false);								// 12/26/06 AM.
 	}
 
@@ -575,10 +575,10 @@ switch (arg->getType())
 		{
 		// TREATING THIS AS AN EMPTY VALUE, RETURNING 0.			// 03/20/02 AM.
 		num = 0;																	// 03/20/02 AM.
-		_t_strstream gerrStr;												// 12/26/06 AM.
+		std::_t_strstream gerrStr;												// 12/26/06 AM.
 		gerrStr << _T("[") << errstr <<									// 12/26/06 AM.
 			_T(": Warning: Arg is null.]")								// 03/20/02 AM.
-			<< ends;
+			<< std::ends;
 		parse->errOut(&gerrStr, false);									// 12/26/06 AM.
 		}
 	}
@@ -618,10 +618,10 @@ typ = IANULL;
 
 if (!args)
 	{
-	_t_strstream gerrStr;													// 12/26/06 AM.
+	std::_t_strstream gerrStr;													// 12/26/06 AM.
 	gerrStr << _T("[") << errstr <<										// 12/26/06 AM.
 			_T(": Couldn't get argument.]")								// 12/26/06 AM.
-			<< ends;
+			<< std::ends;
 	return parse->errOut(&gerrStr, false);								// 12/26/06 AM.
 	}
 
@@ -678,10 +678,10 @@ switch (arg->getType())
 		{
 		// TREATING THIS AS AN EMPTY VALUE, RETURNING 0.
 		num = 0;
-		_t_strstream gerrStr;												// 12/26/06 AM.
+		std::_t_strstream gerrStr;												// 12/26/06 AM.
 		gerrStr << _T("[") << errstr <<													// 12/26/06 AM.
 			_T(": Warning: Arg is null.]")							// 03/20/02 AM.
-			<< ends;
+			<< std::ends;
 		parse->errOut(&gerrStr, false);									// 12/26/06 AM.
 		}
 	}

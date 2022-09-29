@@ -59,7 +59,7 @@ class RFASem;
 
 class Iop
 {
-	friend _t_ostream &operator<<(_t_ostream &, Iop &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Iop &);
 
 public:
 	Iop(											// Default constructor.
@@ -86,7 +86,7 @@ public:
 	void setType(enum Ioptype);
 
 	// General.
-	void genOp(_t_ostream &ofile);
+	void genOp(std::_t_ostream &ofile);
 	bool eval(Nlppp *, /*UP*/ enum Ioptype &);
 	bool eval(Nlppp *, /*UP*/ RFASem* &);
 
@@ -103,7 +103,7 @@ protected:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif

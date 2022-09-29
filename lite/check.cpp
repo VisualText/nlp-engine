@@ -91,15 +91,15 @@ int Check::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Check::prettyCount(_t_ofstream *ofstr)
+void Check::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Check count=") << count_ << endl;
-	*gout << _T("Active Check count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Check count=") << count_ << ends;
+		*ofstr << _T("Active Check count=") << count_ << std::endl;
+	*gout << _T("Active Check count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Check count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -118,8 +118,8 @@ bool Pat::checkActions(		// 11/19/99 AM.
 {
 if (nlppp->sem_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Check Actions: given non null semantic object.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Check Actions: given non null semantic object.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);
 	return false;
 	}
@@ -148,11 +148,11 @@ for (dcheck = checks->getFirst(); dcheck; dcheck = dcheck->Right())
 
 	if ((rfasem = check->getSem()))											// 11/22/99 AM.
 		{
-		//*gerr << "[Check: Statements to execute.]" << endl;		// 11/22/99 AM.
+		//*gerr << "[Check: Statements to execute.]" << std::endl;		// 11/22/99 AM.
 		if (!(ok = rfasem->eval(nlppp, /*UP*/ val)))					// 11/22/99 AM.
 			{
-			_t_strstream gerrStr;
-			gerrStr << _T("[Check: Error in NLP++.]") << ends;
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Check: Error in NLP++.]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			}
 				// 11/22/99 AM.
@@ -170,9 +170,9 @@ for (dcheck = checks->getFirst(); dcheck; dcheck = dcheck->Right())
 		{
 		if (badname)															// 01/13/00 AM.
 			{
-			_t_strstream gerrStr;
+			std::_t_strstream gerrStr;
 			gerrStr << _T("[Execute check action: Unknown action=")
-							<< check->getName() << _T("].") << ends;
+							<< check->getName() << _T("].") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			}
 
@@ -208,7 +208,7 @@ bool Pat::checkAction(
 	)
 {
 //if (Debug())
-//	*gout << "  [Execute check action...]" << endl;
+//	*gout << "  [Execute check action...]" << std::endl;
 
 // Moved this stuff here.												// 01/13/00 AM.
 _TCHAR *func;

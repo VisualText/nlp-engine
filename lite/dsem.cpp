@@ -43,7 +43,7 @@ All rights reserved.
 
 Dsem::Dsem()
 {
-*gout << _T("[DON'T CREATE OBJECTS OF Dsem CLASS.]") << endl;
+*gout << _T("[DON'T CREATE OBJECTS OF Dsem CLASS.]") << std::endl;
 }
 
 /*******************************************/
@@ -100,8 +100,8 @@ dlist = pn->getDsem();
 bool ok = true;
 ok = Var::create(name, val, /*DU*/ dlist,pair);
 pn->setDsem(dlist);
-//cout << "Dsems:" << endl;
-//cout << *(pn->getDsem()) << endl;
+//cout << "Dsems:" << std::endl;
+//cout << *(pn->getDsem()) << std::endl;
 return ok;
 }
 
@@ -126,8 +126,8 @@ dlist = pn->getDsem();
 bool ok = true;
 ok = Var::createstrs(name, /*DU*/ dlist);
 pn->setDsem(dlist);
-//cout << "Dsems:" << endl;
-//cout << *(parse->getVars()) << endl;
+//cout << "Dsems:" << std::endl;
+//cout << *(parse->getVars()) << std::endl;
 return ok;
 }
 
@@ -187,7 +187,7 @@ bool Dsem::setVal(
 	_TCHAR *name,
 	Pn *pn,
 	Parse *parse,
-	_t_ostream *ostr)
+	std::_t_ostream *ostr)
 {
 if (!name || !parse)
 	return false;
@@ -251,7 +251,7 @@ return ok;
 * SUBJ:	Fetch a variable's ostream pointer value.
 ********************************************/
 
-bool Dsem::val(_TCHAR *name, Pn *pn, Parse *parse, /*DU*/ _t_ostream* &ostr)
+bool Dsem::val(_TCHAR *name, Pn *pn, Parse *parse, /*DU*/ std::_t_ostream* &ostr)
 {
 ostr = 0;
 if (!name || !parse)

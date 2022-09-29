@@ -140,9 +140,9 @@ void RUG::prettyCount()
 {
 if (count_)
 	{
-	_t_cout << _T("Active RUG count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active RUG count=") << count_ << ends;
+	std::_t_cout << _T("Active RUG count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active RUG count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -234,7 +234,7 @@ bool ok = true;	// 05/20/09 AM.
 
 if (!gram || !nlp || !appdir || !*appdir)
 	{
-	_t_cerr << _T("[rugGenerate: Empty hierarchy,analyzer, or base dir]") << endl;
+	std::_t_cerr << _T("[rugGenerate: Empty hierarchy,analyzer, or base dir]") << std::endl;
 	return false;
 	}
 
@@ -283,10 +283,10 @@ for (seq = Aseq::firstPass(nlp); seq; seq = Aseq::nextPass(seq))
 	// GRAM hierarchy.
 	passname = Aseq::getData(seq);
 	if (endStub(seq))
-		_t_cerr << _T("[Found end stub.]") << endl;		// Skip end of stub passes region.
+		std::_t_cerr << _T("[Found end stub.]") << std::endl;		// Skip end of stub passes region.
 	else if (startStub(seq))
 		{
-		_t_cerr << _T("[Found stub pass=") << passname << _T("]") << endl;
+		std::_t_cerr << _T("[Found stub pass=") << passname << _T("]") << std::endl;
 
 		// Find Gram hierarchy top-level concept that matches stub.
 		_TCHAR *stubname;
@@ -295,7 +295,7 @@ for (seq = Aseq::firstPass(nlp); seq; seq = Aseq::nextPass(seq))
 		CONCEPT *tree;
 		if ((tree = findStubconcept(stubname, gram)))
 			{
-			_t_cerr << _T("[Found stub in hierachy]") << endl;
+			std::_t_cerr << _T("[Found stub in hierachy]") << std::endl;
 
 			// Traverse subtree of concepts.  Generate a pass for each
 			// "rule" concept. RETURN LAST NEW PASS GENERATED.
@@ -361,17 +361,17 @@ for (;;)
 
 	if (startStub(seq))
 		{
-		_t_cout << _T("[Found stub pass.]") << endl;
+		std::_t_cout << _T("[Found stub pass.]") << std::endl;
 		in_stub = true;
 		}
 	else if (endStub(seq))
 		{
-		_t_cout << _T("[Found end stub pass.]") << endl;
+		std::_t_cout << _T("[Found end stub pass.]") << std::endl;
 		in_stub = false;
 		}
 	else if (in_stub)			// At a generated pass.
 		{
-		_t_cout << _T("[Removing gend pass.]") << endl;
+		std::_t_cout << _T("[Removing gend pass.]") << std::endl;
 		Aseq::excisePass(nlp_, seq);
 		Aseq::deletePass(seq);
 		}
@@ -406,7 +406,7 @@ for (;;)
 
 	if (startStub(seq) && !_tcscmp(stubname, Aseq::getData(seq)))
 		{
-		_t_cout << _T("[Found stub pass.]") << endl;
+		std::_t_cout << _T("[Found stub pass.]") << std::endl;
 		in_stub = true;
 		}
 	else if (endStub(seq))
@@ -416,7 +416,7 @@ for (;;)
 		}
 	else if (in_stub)			// At a generated pass.
 		{
-		_t_cout << _T("[Removing gend pass.]") << endl;
+		std::_t_cout << _T("[Removing gend pass.]") << std::endl;
 		Aseq::excisePass(nlp_, seq);
 		Aseq::deletePass(seq);
 		}
@@ -460,7 +460,7 @@ return false;
 /********************************************
 * FN:		ENDSTUB
 * CR:		05/31/99 AM.
-* SUBJ:	If given pass is a stub pass that ends a region of gend passes.
+* SUBJ:	If given pass is a stub pass that std::ends a region of gend passes.
 ********************************************/
 
 bool
@@ -836,14 +836,14 @@ _TCHAR conname[1024];
 _TCHAR buf[1024];
 
 cg_->conceptName(conc, conname);
-_t_cerr << _T("[genoConcept: Concept=") << conname << _T("]") << endl;
+std::_t_cerr << _T("[genoConcept: Concept=") << conname << _T("]") << std::endl;
 
 // Get concept's samples.
 if (!(samples = cg_->findPhrase(conc)))
 	{
 	zapFile(conname);								// 08/29/99 AM.
 	cg_->rmVals(conc, _T("passnum"));				// 09/24/99 AM.	// FIX	// 06/04/00 AM.
-	_t_cerr << _T("[Concept has no samples.]") << endl;
+	std::_t_cerr << _T("[Concept has no samples.]") << std::endl;
 	return true;
 	}
 
@@ -936,7 +936,7 @@ for (sample = cg_->firstNode(samples); sample; sample = mark)
 //sample = cg_->Next(sample))
 	{
 	cg_->conceptName(sample, buf);
-	_t_cerr << _T("  Sample=") << buf << endl;
+	std::_t_cerr << _T("  Sample=") << buf << std::endl;
 
 	// If sample is flagged as having an input document that has been
 	// processed, turn off the flag and continue.
@@ -959,7 +959,7 @@ for (sample = cg_->firstNode(samples); sample; sample = mark)
 
 	if (!sampleFile(sample, /*UP*/ input))	// GET INPUT FILENAME.
 		{
-		_t_cerr << _T("[Sample has no filename]") << endl;
+		std::_t_cerr << _T("[Sample has no filename]") << std::endl;
 		// Treating no document as a normal case now.
 		}
 	// See if file is empty.	// 05/21/09 AM.
@@ -978,7 +978,7 @@ for (sample = cg_->firstNode(samples); sample; sample = mark)
 			0,0,0,0,0,true);	// Retain hash,sym tables.	// 05/21/09 AM.
 		if (!parse)
 			{
-			_t_cerr << _T("[genoConcept: Couldn't initialize analyzer.]") << endl;
+			std::_t_cerr << _T("[genoConcept: Couldn't initialize analyzer.]") << std::endl;
 			Arug::rmRules(rules);
 			Arug::deleteSelects(selects);	// MEM LEAK	// 05/21/09 AM.
 			return false;
@@ -1035,7 +1035,7 @@ for (sample = cg_->firstNode(samples); sample; sample = mark)
 
 			// Set up data for current sample.
 			cg_->conceptName(samp, buf);
-			_t_cerr << _T("  Samp=") << buf << endl;
+			std::_t_cerr << _T("  Samp=") << buf << std::endl;
 
 			// Generate rule for current sample.
 			cg_->findVal(samp, _T("start"), /*UP*/ start);
@@ -1200,7 +1200,7 @@ _TCHAR *fname = cg_->strVal(sample, _T("text"));				// OPT.	// 11/12/00 AM.
 //if (!fname[0])
 if (!fname || !*fname)														// 11/12/00 AM.
 	{
-	_t_cerr << _T("[Sample has no filename]") << endl;
+	std::_t_cerr << _T("[Sample has no filename]") << std::endl;
 	// Treating no document as a normal case now.
 	return false;
 	}

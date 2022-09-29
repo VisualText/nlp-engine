@@ -253,8 +253,8 @@ void *VTRun::create_rfa(
 	)
 {
 clock_t   s_time, e_time;
-_t_ostream *sout;
-_t_ofstream *fout;
+std::_t_ostream *sout;
+std::_t_ofstream *fout;
 
 ////// DEFINE RFA.
 // Define the rules-file analyzer!
@@ -285,10 +285,10 @@ rfa->setHtab((Htab *)htab);	// Use the global hash table.		// 08/27/02 AM.
 
 e_time = clock();																// 12/28/98 AM.
 #ifdef DIAGNOSTIC_
-_t_strstream gerrStr1;
+std::_t_strstream gerrStr1;
 gerrStr1 << _T("[Build RFA time=")
 	  << (double) (e_time - s_time)/CLOCKS_PER_SEC
-	  << _T(" sec]") << ends;
+	  << _T(" sec]") << std::ends;
 errOut(&gerrStr1,false);
 #endif
 s_time = e_time;
@@ -342,8 +342,8 @@ Ana *rfb = (Ana *)NLP::make_rfb(appdir,								// 11/05/99 AM.
 // Move here.	// 08/27/12 AM.
 if (!rfb)																		// 07/06/01 AM.
 	{
-	_t_strstream gerrStr3;						// 07/06/01 AM.
-	gerrStr3 << _T("[ERROR IN ANALYZER INIT.]") << ends;				// 07/06/01 AM.
+	std::_t_strstream gerrStr3;						// 07/06/01 AM.
+	gerrStr3 << _T("[ERROR IN ANALYZER INIT.]") << std::ends;				// 07/06/01 AM.
 	errOut(&gerrStr3,false);																// 07/06/01 AM.
 	return 0;	// RECOVER	// 08/27/12 AM.
 	}
@@ -353,10 +353,10 @@ rfb->setNLP(nlp);																// 06/30/03 AM.
 e_time = clock();																// 11/05/99 AM.
 
 #ifdef DIAGNOSTIC_
-_t_strstream gerrStr2;
+std::_t_strstream gerrStr2;
 gerrStr2 << _T("[Build RFB time=")											// 11/05/99 AM.
 	  << (double) (e_time - s_time)/CLOCKS_PER_SEC
-	  << _T(" sec]") << ends;
+	  << _T(" sec]") << std::ends;
 errOut(&gerrStr2,false);
 #endif
 s_time = e_time;																// 11/05/99 AM.
@@ -396,7 +396,7 @@ if (!name || !*name)
 // Make sure name is not present.	// 09/28/20 AM.
 if (findAna(name))	// 09/28/20 AM.
 	{
-	_t_cerr << _T("[addAna: Named analyzer already present: ") << name << _T("]") << endl;
+	std::_t_cerr << _T("[addAna: Named analyzer already present: ") << name << _T("]") << std::endl;
 	return true;	// ASSUME THIS IS OK.	// 09/28/20 AM.
 	}
 ((Slist<NLP>*)anas_)->push(nlp);
@@ -520,7 +520,7 @@ CG *VTRun::makeCG(
 {
 if (!appdir || !*appdir)
    {
-   _t_cerr << _T("[makeCG: Given no kb directory.]") << endl;
+   std::_t_cerr << _T("[makeCG: Given no kb directory.]") << std::endl;
    return 0;
    }
 
@@ -532,7 +532,7 @@ CG *cg = CG::makeCG((ALIST*)alist_,appdir,compiled);	// 07/28/03 AM.
 
 if (!cg)
    {
-   _t_cerr << _T("[makeCG: Couldn't make knowledge base.]") << endl;
+   std::_t_cerr << _T("[makeCG: Couldn't make knowledge base.]") << std::endl;
    return 0;
    }
 
@@ -542,7 +542,7 @@ if (!cg->getLoaded())		// QDBM ...	// 03/04/07 AM.
 #endif
 if (!cg->readKB(_T("user")))	// 09/23/20 AM.
    {
-   _t_cerr << _T("[Couldn't read knowledge base.]") << endl;
+   std::_t_cerr << _T("[Couldn't read knowledge base.]") << std::endl;
 //   if (cg) delete cg;	// 07/18/03 AM.
 	CG::deleteCG(cg);
    return 0;
@@ -573,7 +573,7 @@ bool VTRun::deleteCG(
 {
 if (!cg)
    {
-   _t_cerr << _T("[deleteCG: Given no KB object.]") << endl;
+   std::_t_cerr << _T("[deleteCG: Given no KB object.]") << std::endl;
    return false;
    }
 
@@ -612,12 +612,12 @@ NLP *VTRun::makeNLP(
 {
 if (!appdir || !*appdir)
    {
-   _t_cerr << _T("[makeNLP: Given no analyzer directory.]") << endl;
+   std::_t_cerr << _T("[makeNLP: Given no analyzer directory.]") << std::endl;
    return 0;
    }
 if (!name || !*name)
    {
-   _t_cerr << _T("[makeNLP: Given no analyzer name.]") << endl;
+   std::_t_cerr << _T("[makeNLP: Given no analyzer name.]") << std::endl;
    return 0;
    }
 
@@ -648,7 +648,7 @@ bool VTRun::deleteNLP(
 {
 if (!nlp)
    {
-   _t_cerr << _T("[deleteNLP: Given no NLP object.]") << endl;
+   std::_t_cerr << _T("[deleteNLP: Given no NLP object.]") << std::endl;
    return false;
    }
 

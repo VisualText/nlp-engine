@@ -102,8 +102,8 @@ All rights reserved.
 
 LIBCONSH_API bool
 cmd_top(
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	_TCHAR *prompt,			/* Prompt to print, if any.	*/
 	bool i_flag,			/* If interactive session.		*/
 	CG *cg,																		// 08/15/02 AM.
@@ -122,13 +122,13 @@ for (;;)		/* Execute commands till quit or abort. */
    {
    /* Read command line arguments. */
 	if (!silent)																// 02/21/00 AM.
-		*out << prompt << flush;
+		*out << prompt << std::flush;
    ok = args_read(in,out,silent,alist,buf,CMD_SIZE,&args);		// 07/22/04 AM.
    if (!ok)
       {
       if (!args)
          {
-         *out << _T("Unexpected EOF.") << endl;
+         *out << _T("Unexpected EOF.") << std::endl;
          return(false);
          }
       *out << _T("Bad command=");
@@ -142,8 +142,8 @@ for (;;)		/* Execute commands till quit or abort. */
    //str = ALIST::list_pop_buf(&args,alist->List_buffer);		/* Get first arg. */
 //	if (str && *str)							// 10/05/99 AM.
 //		{
-//		*cgerr << prompt << flush;
-//		*cgerr << str << "\n" << flush;	// 10/05/99 AM. DEBUGGING QUANTIFY!!!
+//		*cgerr << prompt << std::flush;
+//		*cgerr << str << "\n" << std::flush;	// 10/05/99 AM. DEBUGGING QUANTIFY!!!
 //		}
 
    /* COMMANDS GO HERE */
@@ -179,7 +179,7 @@ for (;;)		/* Execute commands till quit or abort. */
        || !_tcscmp(_T("q"), str))
       {
 		if (!silent)														// 02/21/00 AM.
-			*out << _T("Quitting.") << endl;
+			*out << _T("Quitting.") << std::endl;
       alist->list_free(list, LNULL);
       break;
       }
@@ -192,7 +192,7 @@ for (;;)		/* Execute commands till quit or abort. */
    /* else empty command. */
    
    if (!ok)
-      *out << _T("[Command failed=") << str << _T(".]") << endl;			// 09/27/01 AM.
+      *out << _T("[Command failed=") << str << _T(".]") << std::endl;			// 09/27/01 AM.
    
    alist->list_free(list, LNULL);
    
@@ -215,7 +215,7 @@ return(ok);
 LIBCONSH_API bool
 cmd_help(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	_TCHAR *buf
 	)
 {
@@ -228,7 +228,7 @@ if (args)
    str = ALIST::list_pop_buf(&args,buf);		/* Get first arg. */
    if (args)
       {
-      *out << _T("Too many args in 'help' command.") << endl;
+      *out << _T("Too many args in 'help' command.") << std::endl;
       return(false);
       }
 
@@ -246,30 +246,30 @@ if (args)
    /* else empty command. */
    }
 
-*out << _T("") << endl;
-*out << _T("CMD   ARGS         DESCR") << endl;
-*out << _T("-------------------------------------------------") << endl;
-*out << _T("add   ............  Set of add commands. (type 'help add')") << endl;
-*out << _T("bind  app ........  (kb bootstrap) Bind concepts to code variables.") << endl;
-*out << _T("bind  sys ........  (kb bootstrap) Bind concepts to code variables.") << endl;
-*out << _T("con   [pp] .......  Pretty-print the concept table.") << endl;
-*out << _T("con   ID .........  Pretty-print concept with given ID number.") << endl;
-*out << _T("gen   all ........  Generate all code for Resume app.") << endl;
-*out << _T("gen   st .........  Generate code for string table.") << endl;
-*out << _T("help  ............  Print command help.") << endl;
-*out << _T("ind   ............  Higher-level add commands.") << endl;
-*out << _T("proxy ID NTH .....  Pretty-print NTH element of ID's phrase.") << endl;
-*out << _T("show  name NAME ..  Find instances of NAME in the kb.") << endl;
-*out << _T("st    add STRING    Add STRING to string table.") << endl;
-*out << _T("st    gen  .......  Generate code for string table.") << endl;
-*out << _T("st    [pp] .......  Pretty-print the string table.") << endl;
-*out << _T("sym   ............  Symbol table commands.") << endl;
-*out << _T("sym   add STRING .. Add STRING to symbol table.") << endl;
-*out << _T("sym   gen ......... Generate code for symbol table.") << endl;
-*out << _T("sym   [pp] .......  Pretty-print the symbol table.") << endl;
-*out << _T("sym   stat ........ Display statistics for symbol table.") << endl;
-*out << _T("take  DIR FILE .... Execute commands from dir:file.") << endl;
-*out << _T("quit  ............  Quit the program.") << endl;
+*out << _T("") << std::endl;
+*out << _T("CMD   ARGS         DESCR") << std::endl;
+*out << _T("-------------------------------------------------") << std::endl;
+*out << _T("add   ............  Set of add commands. (type 'help add')") << std::endl;
+*out << _T("bind  app ........  (kb bootstrap) Bind concepts to code variables.") << std::endl;
+*out << _T("bind  sys ........  (kb bootstrap) Bind concepts to code variables.") << std::endl;
+*out << _T("con   [pp] .......  Pretty-print the concept table.") << std::endl;
+*out << _T("con   ID .........  Pretty-print concept with given ID number.") << std::endl;
+*out << _T("gen   all ........  Generate all code for Resume app.") << std::endl;
+*out << _T("gen   st .........  Generate code for string table.") << std::endl;
+*out << _T("help  ............  Print command help.") << std::endl;
+*out << _T("ind   ............  Higher-level add commands.") << std::endl;
+*out << _T("proxy ID NTH .....  Pretty-print NTH element of ID's phrase.") << std::endl;
+*out << _T("show  name NAME ..  Find instances of NAME in the kb.") << std::endl;
+*out << _T("st    add STRING    Add STRING to string table.") << std::endl;
+*out << _T("st    gen  .......  Generate code for string table.") << std::endl;
+*out << _T("st    [pp] .......  Pretty-print the string table.") << std::endl;
+*out << _T("sym   ............  Symbol table commands.") << std::endl;
+*out << _T("sym   add STRING .. Add STRING to symbol table.") << std::endl;
+*out << _T("sym   gen ......... Generate code for symbol table.") << std::endl;
+*out << _T("sym   [pp] .......  Pretty-print the symbol table.") << std::endl;
+*out << _T("sym   stat ........ Display statistics for symbol table.") << std::endl;
+*out << _T("take  DIR FILE .... Execute commands from dir:file.") << std::endl;
+*out << _T("quit  ............  Quit the program.") << std::endl;
 return(ok);
 }
 
@@ -288,7 +288,7 @@ return(ok);
 LIBCONSH_API bool
 cmd_add(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
@@ -297,7 +297,7 @@ ALIST* alist = cg->alist_;
 
 if (!args)
    {
-   *out << _T("Too few args in ADD command.") << endl;
+   *out << _T("Too few args in ADD command.") << std::endl;
    return(false);
    }
 
@@ -321,7 +321,7 @@ else if (!_tcscmp(str, _T("word")))			/* Add word to kb.	*/
    return(cmd_add_word(args, out,cg));
 else
    {
-   *out << _T("Unknown command= add ") << str << _T(".") << endl;
+   *out << _T("Unknown command= add ") << str << _T(".") << std::endl;
    return(false);
    }
 }
@@ -338,7 +338,7 @@ else
 
 LIBCONSH_API bool cmd_add_attr(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
@@ -352,25 +352,25 @@ ALIST* alist = cg->alist_;
 
 if (!args)
    {
-   *out << _T("Too few args in ADD ATTR command.") << endl;
+   *out << _T("Too few args in ADD ATTR command.") << std::endl;
    return(false);
    }
 s_con = ALIST::list_pop_buf(&args,alist->List_buffer);
 if (!args)
    {
-   *out << _T("Too few args in ADD ATTR command.") << endl;
+   *out << _T("Too few args in ADD ATTR command.") << std::endl;
    return(false);
    }
 s_slot = ALIST::list_pop_buf(&args,alist->List_buffer);
 if (!args)
    {
-   *out << _T("Too few args in ADD ATTR command.") << endl;
+   *out << _T("Too few args in ADD ATTR command.") << std::endl;
    return(false);
    }
 s_val = ALIST::list_pop_buf(&args,alist->List_buffer);
 if (!args)
    {
-   *out << _T("Too few args in ADD ATTR command.") << endl;
+   *out << _T("Too few args in ADD ATTR command.") << std::endl;
    return(false);
    }
 s_kind = ALIST::list_pop_buf(&args,alist->List_buffer);
@@ -381,25 +381,25 @@ s_kind = ALIST::list_pop_buf(&args,alist->List_buffer);
 ok = s_to_l(s_con, &i_con);		/* Convert string to id. */
 if (!ok)
    {
-   *out << _T("Bad concept id=") << s_con << endl;
+   *out << _T("Bad concept id=") << s_con << std::endl;
    return(false);
    }
 ok = s_to_l(s_slot, &i_slot);	/* Convert.	*/
 if (!ok)
    {
-   *out << _T("Bad slot concept id=") << s_slot << endl;
+   *out << _T("Bad slot concept id=") << s_slot << std::endl;
    return(false);
    }
 ok = cg->aptr_->s_to_pkind(s_kind, &p_kind);
 if (!ok)
    {
-   *out << _T("Bad ptr kind=") << s_kind << endl;
+   *out << _T("Bad ptr kind=") << s_kind << std::endl;
    return(false);
    }
 ok = (cg->aptr_->s_to_pval(s_val, p_kind, &p_val) ? true : false);
 if (!ok)
    {
-   *out << _T("Bad slot value=") << s_val << endl;
+   *out << _T("Bad slot value=") << s_val << std::endl;
    return(false);
    }
 
@@ -407,13 +407,13 @@ if (!ok)
 con = cg->acon_->Con(i_con);
 if (!con)
    {
-   *out << _T("Bad concept=") << s_con << _T("]") << endl;
+   *out << _T("Bad concept=") << s_con << _T("]") << std::endl;
    return(false);
    }
 slot = cg->acon_->Con(i_slot);
 if (!slot)
    {
-   *out << _T("Bad concept=") << s_slot << _T("]") << endl;
+   *out << _T("Bad concept=") << s_slot << _T("]") << std::endl;
    return(false);
    }
 
@@ -435,7 +435,7 @@ return(true);
 LIBCONSH_API bool
 cmd_add_con(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
@@ -448,7 +448,7 @@ _TCHAR *buf = cg->alist_->List_buffer;
 
 if (!args)
    {
-   *out << _T("Too few args in ADD CON command.") << endl;
+   *out << _T("Too few args in ADD CON command.") << std::endl;
    return(false);
    }
 
@@ -456,7 +456,7 @@ name = ALIST::list_pop_buf(&args,buf);
 
 if (!args)
    {
-   *out << _T("Too few args in ADD CON command.") << endl;
+   *out << _T("Too few args in ADD CON command.") << std::endl;
    return(false);
    }
 
@@ -464,7 +464,7 @@ idstr = ALIST::list_pop_buf(&args,buf);
 
 if (args)
    {
-   *out << _T("Too many args in ADD CON command.") << endl;
+   *out << _T("Too many args in ADD CON command.") << std::endl;
    return(false);
    }
 
@@ -497,7 +497,7 @@ return(true);
 LIBCONSH_API bool
 cmd_add_empty(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
@@ -505,7 +505,7 @@ cmd_add_empty(
 
 if (args)
    {
-   *out << _T("Too many args in ADD EMPTY command.") << endl;
+   *out << _T("Too many args in ADD EMPTY command.") << std::endl;
    return(false);
    }
 
@@ -529,7 +529,7 @@ return(true);
 LIBCONSH_API bool
 cmd_add_hier(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
@@ -541,7 +541,7 @@ ALIST* alist = cg->alist_;
 
 if (!args)
    {
-   *out << _T("Too few args in ADD HIER command.") << endl;
+   *out << _T("Too few args in ADD HIER command.") << std::endl;
    return(false);
    }
 
@@ -551,14 +551,14 @@ if (_tcscmp(name, CON_ROOT_NAME))
    {
    *out << _T("add hier: Path must begin with '")
 		  << CON_ROOT_NAME << _T("'.")
-        << endl;
+        << std::endl;
    return(false);
    }
 con = cg->acon_->c_cg_CONCEPT;											// 08/22/02 AM.
 
 if (!con)
    {
-   *out << _T("add hier: Root concept absent.") << endl;
+   *out << _T("add hier: Root concept absent.") << std::endl;
    return(false);
    }
 
@@ -585,7 +585,7 @@ while ((name = ALIST::list_pop_buf(&args,alist->List_buffer)))
 if (!name)
    {
 	// Allowing this redundancy.											// 10/27/00 AM.
-   *out << _T("[add hier: Hierarchy already exists.]") << endl;
+   *out << _T("[add hier: Hierarchy already exists.]") << std::endl;
    //return(false);															// 10/27/00 AM.
 	return true;																// 10/27/00 AM.
    }
@@ -616,7 +616,7 @@ return(true);
 LIBCONSH_API bool
 cmd_add_punct(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
@@ -625,7 +625,7 @@ CON *con;
 /*** PROCESS COMMANDS ***/
 if (args)
    {
-   *out << _T("Too many args in ADD PUNCT command.") << endl;
+   *out << _T("Too many args in ADD PUNCT command.") << std::endl;
    return(false);
    }
 
@@ -633,13 +633,13 @@ if (args)
 
 if (!cg->nlp_PUNCT)
    {
-   *out << _T("Add punct: No punct hierarchy root.") << endl;
+   *out << _T("Add punct: No punct hierarchy root.") << std::endl;
    return(false);
    }
 con = cg->acon_->c_nlp_PUNCT;
 if (con->dn)
    {
-   *out << _T("Add punct: Hierarchy already present.") << endl;
+   *out << _T("Add punct: Hierarchy already present.") << std::endl;
    return(false);
    }
 
@@ -661,7 +661,7 @@ return(cg->kbm_->dict_add_punct());
 LIBCONSH_API bool
 cmd_add_root(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 
@@ -670,7 +670,7 @@ cmd_add_root(
 
 if (args)
    {
-   *out << _T("Too many args in ADD ROOT command.") << endl;
+   *out << _T("Too many args in ADD ROOT command.") << std::endl;
    return(false);
    }
 
@@ -694,7 +694,7 @@ return(true);
 LIBCONSH_API bool
 cmd_add_white(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
@@ -706,7 +706,7 @@ CON *tmp;
 /*** PROCESS COMMANDS ***/
 if (args)
    {
-   *out << _T("Too many args in ADD WHITE command.") << endl;
+   *out << _T("Too many args in ADD WHITE command.") << std::endl;
    return(false);
    }
 
@@ -714,13 +714,13 @@ if (args)
 
 if (!cg->nlp_WHT)
    {
-   *out << _T("Add white: No white hierarchy root.") << endl;
+   *out << _T("Add white: No white hierarchy root.") << std::endl;
    return(false);
    }
 tmp = cg->acon_->c_nlp_WHT;
 if (tmp->dn)
    {
-   *out << _T("Add white: Hierarchy already present.") << endl;
+   *out << _T("Add white: Hierarchy already present.") << std::endl;
    return(false);
    }
 
@@ -751,7 +751,7 @@ return(cg->kbm_->dict_add_white());
 LIBCONSH_API bool
 cmd_add_word(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
@@ -763,7 +763,7 @@ ALIST* alist = cg->alist_;
 /*** PROCESS AND CHECK COMMANDS ***/
 if (!args)
    {
-   *out << _T("Too few args in ADD WORD command.") << endl;
+   *out << _T("Too few args in ADD WORD command.") << std::endl;
    return(false);
    }
 
@@ -771,7 +771,7 @@ name = ALIST::list_pop_buf(&args,alist->List_buffer);
 
 if (args)
    {
-   *out << _T("Too many args in ADD WORD command.") << endl;
+   *out << _T("Too many args in ADD WORD command.") << std::endl;
    return(false);
    }
 
@@ -783,7 +783,7 @@ if (!name || !*name)
 // 05/02/99 AM. Allowing nonalphabetics through here.
 //if (!isalpha((unsigned char)*name))	/* Must be alphabetic. */
 //   {
-//   *out << "add word: Nonalphabetic=" << name << endl;
+//   *out << "add word: Nonalphabetic=" << name << std::endl;
 //   }
 
 /*** EXECUTE ***/
@@ -791,7 +791,7 @@ if (!name || !*name)
 
 if (cg->kbm_->dict_add_word(name))	// 04/22/03 AM.
   return true;								// 04/22/03 AM.
-*out << _T("[add word: Failed to add '") << name << _T("']") << endl;	// 04/22/03 AM.
+*out << _T("[add word: Failed to add '") << name << _T("']") << std::endl;	// 04/22/03 AM.
 return false;								// 04/22/03 AM.
 }
 
@@ -809,7 +809,7 @@ return false;								// 04/22/03 AM.
 LIBCONSH_API bool
 cmd_bind(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
@@ -818,7 +818,7 @@ ALIST* alist = cg->alist_;
 
 if (!args)
    {
-   *out << _T("Too few args in BIND command.") << endl;
+   *out << _T("Too few args in BIND command.") << std::endl;
    return(false);
    }
 
@@ -830,7 +830,7 @@ else if (!_tcscmp(str, _T("sys")))			/* Bind system concepts.		*/
    return(cmd_bind_sys(args, out,cg));
 else
    {
-   *out << _T("Unknown command= bind ") << str << _T(".") << endl;
+   *out << _T("Unknown command= bind ") << str << _T(".") << std::endl;
    return(false);
    }
 }
@@ -849,7 +849,7 @@ else
 LIBCONSH_API bool
 cmd_bind_app(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
@@ -858,7 +858,7 @@ cmd_bind_app(
 
 if (args)
    {
-   *out << _T("Too many args in BIND APP command.") << endl;
+   *out << _T("Too many args in BIND APP command.") << std::endl;
    return(false);
    }
 
@@ -879,7 +879,7 @@ return(bind_app());
 LIBCONSH_API bool
 cmd_bind_sys(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
@@ -888,20 +888,20 @@ cmd_bind_sys(
 
 if (args)
    {
-   *out << _T("Too many args in BIND SYS command.") << endl;
+   *out << _T("Too many args in BIND SYS command.") << std::endl;
    return(false);
    }
 
 if (!cg->cg_CONCEPT)
    {
-   *out << _T("Bind sys: Root concept not defined.") << endl;
+   *out << _T("Bind sys: Root concept not defined.") << std::endl;
    return(false);
    }
 
 if (cg->cg_PHRASE
     || cg->cg_ATOM)
    {
-   *out << _T("Bind sys: Some concepts defined already.") << endl;
+   *out << _T("Bind sys: Some concepts defined already.") << std::endl;
    return(false);
    }
 
@@ -921,7 +921,7 @@ return(bind_sys(cg));
 LIBCONSH_API bool
 cmd_con(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
@@ -949,7 +949,7 @@ else if (s_to_l(str, /*UP*/ &id))
    }
 else
    {
-   *out << _T("Unknown command= con ") << str << _T(".") << endl;
+   *out << _T("Unknown command= con ") << str << _T(".") << std::endl;
    return(false);
    }
 return(true);
@@ -970,7 +970,7 @@ return(true);
 LIBCONSH_API bool
 cmd_gen(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
@@ -979,13 +979,13 @@ ALIST* alist = cg->alist_;
 
 if (!args)
    {\
-   *out << _T("Too few args in \"GEN\" command.") << endl;
+   *out << _T("Too few args in \"GEN\" command.") << std::endl;
    return(false);
    }
 
 str = ALIST::list_pop_buf(&args,alist->List_buffer);
 
-*cgerr << _T("[cmd gen: Command not updated. 07/01/00 AM.]") << endl;
+*cgerr << _T("[cmd gen: Command not updated. 07/01/00 AM.]") << std::endl;
 return false;
 
 #ifdef OLD_
@@ -995,7 +995,7 @@ else if (!_tcscmp(str, _T("st")))			/* Generate code for string table.	*/
    return(cmd_st_gen(args, out));
 else
    {
-   *out << _T("Unknown command= gen ") << str << _T(".") << endl;
+   *out << _T("Unknown command= gen ") << str << _T(".") << std::endl;
    return(false);
    }
 #endif
@@ -1018,7 +1018,7 @@ LIBCONSH_API bool
 cmd_gen_all(
 	_TCHAR *dir,		// Directory to gen code to.						// 07/01/00 AM.
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
@@ -1026,53 +1026,53 @@ _TCHAR *tail;
 
 if (args)
    {
-   *out << _T("Too many args in \"gen all\" command.") << endl;
+   *out << _T("Too many args in \"gen all\" command.") << std::endl;
    return(false);
    }
 
 /* tail = ".cc"; */
 tail = _T("");			/* 10/1/95 AM */
 
-_t_cerr << _T("Generating overall code.") << endl;
+std::_t_cerr << _T("Generating overall code.") << std::endl;
 cc_gen_hdr(dir, tail);
 cc_gen_ini(dir, tail);
 
 /* Generate analyzer code first, because it modifies the kb.
    Creates trigger attributes, for example. */
-_t_cerr << _T("Generating analyzer code.") << endl;
-_t_cerr << _T("[04/23/99 AM. Turned off analyzer code gen.") << endl;
+std::_t_cerr << _T("Generating analyzer code.") << std::endl;
+std::_t_cerr << _T("[04/23/99 AM. Turned off analyzer code gen.") << std::endl;
 //ana_gen(dir, tail);
 
-_t_cerr << _T("Generating string table code.") << endl;
+std::_t_cerr << _T("Generating string table code.") << std::endl;
 st_gen(dir, tail,cg);
 st_gen_hdr(dir, tail,cg);
 st_gen_ini(dir, tail,cg);
 
-_t_cerr << _T("Generating symbol table code.") << endl;
+std::_t_cerr << _T("Generating symbol table code.") << std::endl;
 sym_gen(dir, tail,cg);
 sym_gen_hdr(dir, tail,cg);
 sym_gen_ini(dir, tail,cg);
 
-_t_cerr << _T("Generating concept table code.") << endl;
+std::_t_cerr << _T("Generating concept table code.") << std::endl;
 con_gen(dir, tail,cg);
 con_gen_hdr(dir, tail,cg);
 con_gen_ini(dir, tail,cg);
 
-_t_cerr << _T("Generating pointer table code.") << endl;
+std::_t_cerr << _T("Generating pointer table code.") << std::endl;
 ptr_gen(dir, tail,cg);
 ptr_gen_hdr(dir, tail,cg);
 ptr_gen_ini(dir, tail,cg);
 
 // NO.  Using libconsh definitions and dynamic binding.			// 06/28/00 AM.
-//cerr << "Generating defines code." << endl;
+//cerr << "Generating defines code." << std::endl;
 //var_gen(dir, tail);
 
 // GENERATE A MAKEFILE														// 07/27/01 AM.
 // Need to get file counts from above calls.							// 07/27/01 AM.
 gen_makefile(dir,cg);														// 07/27/01 AM.
 
-//cerr << "Done generating code for Resume Project." << endl;	// 06/28/00 AM.
-_t_cerr << _T("[Done generating code for knowledge base.]") << endl;	// 06/28/00 AM.
+//cerr << "Done generating code for Resume Project." << std::endl;	// 06/28/00 AM.
+std::_t_cerr << _T("[Done generating code for knowledge base.]") << std::endl;	// 06/28/00 AM.
 return(true);
 }
 
@@ -1090,8 +1090,8 @@ return(true);
 LIBCONSH_API bool
 cmd_ind(
 	LIST *args,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	bool i_flag,
 	bool silent,
 	CG *cg																		// 08/15/02 AM.
@@ -1102,7 +1102,7 @@ ALIST *alist = cg->alist_;	// List manager.							// 08/14/02 AM.
 
 if (!args)
    {
-   *out << _T("Too few args in IND command.") << endl;
+   *out << _T("Too few args in IND command.") << std::endl;
    return(false);
    }
 
@@ -1131,7 +1131,7 @@ else if (!_tcscmp(str, _T("proxy")))
 #endif
 else
    {
-   *out << _T("Unknown command= ind ") << str << _T(".") << endl;
+   *out << _T("Unknown command= ind ") << str << _T(".") << std::endl;
    return(false);
    }
 }
@@ -1149,7 +1149,7 @@ else
 LIBCONSH_API bool
 cmd_proxy(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
@@ -1163,7 +1163,7 @@ usage = _T("Usage: proxy ID NTH");
 
 if (!args)
    {
-   *out << usage << endl;
+   *out << usage << std::endl;
    return(false);
    }
 
@@ -1171,7 +1171,7 @@ s_id = ALIST::list_pop_buf(&args,alist->List_buffer);
 
 if (!args)
    {
-   *out << usage << endl;
+   *out << usage << std::endl;
    return(false);
    }
 
@@ -1179,19 +1179,19 @@ s_ord = ALIST::list_pop_buf(&args,alist->List_buffer);
 
 if (!s_to_l(s_id, /*UP*/ &id) || !s_to_l(s_ord, /*UP*/ &ord))
    {
-   *out << usage << endl;
+   *out << usage << std::endl;
    return(false);
    }
 
 if (!(con = cg->acon_->Con(id)) || !(phr = cg->acon_->con_phrase(con)))
    {
-   *out << usage << endl;
+   *out << usage << std::endl;
    return(false);
    }
 
 if (!(prox = cg->acon_->con_nth(phr, ord)))
    {
-   *out << usage << endl;
+   *out << usage << std::endl;
    return(false);
    }
 
@@ -1212,7 +1212,7 @@ return(true);
 LIBCONSH_API bool
 cmd_show(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg																		// 08/15/02 AM.
 	)
 {
@@ -1230,7 +1230,7 @@ if (!_tcscmp(str, _T("name")))				/* Show instances of name in kb.*/
    return(cmd_show_name(args, out,cg));
 else
    {
-   *out << _T("Unknown command= sym ") << str << _T(".") << endl;
+   *out << _T("Unknown command= sym ") << str << _T(".") << std::endl;
    return(false);
    }
 return(true);
@@ -1249,7 +1249,7 @@ return(true);
 LIBCONSH_API bool
 cmd_show_name(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg																		// 08/15/02 AM.
 	)
 {
@@ -1261,13 +1261,13 @@ ALIST *alist = cg->alist_;	// List manager.							// 08/14/02 AM.
 
 if (!args)
    {
-   *out << _T("Usage: show name NAME") << endl;
+   *out << _T("Usage: show name NAME") << std::endl;
    return(false);
    }
 str = ALIST::list_pop_buf(&args,alist->List_buffer);
 if (args)
    {
-   *out << _T("Too many args in \"show name\" command.") << endl;
+   *out << _T("Too many args in \"show name\" command.") << std::endl;
    return(false);
    }
 
@@ -1283,7 +1283,7 @@ for (elt = list; elt; elt = elt->next)
 			  << cg->acon_->con_kind_str(con)
 			  << _T(") ")
 			  << ACON::con_str(con)
-			  << _T(" ") << endl;
+			  << _T(" ") << std::endl;
    }
 
 /* Clean up */
@@ -1306,7 +1306,7 @@ return(true);
 LIBCONSH_API bool
 cmd_st(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
@@ -1326,7 +1326,7 @@ else if (!_tcscmp(str, _T("gen")))			/* Generate code for string table.	*/
    return(cmd_st_gen(args, out,cg));
 else
    {
-   *out << _T("Unknown command= st ") << str << _T(".") << endl;
+   *out << _T("Unknown command= st ") << str << _T(".") << std::endl;
    return(false);
    }
 return(true);
@@ -1347,7 +1347,7 @@ return(true);
 LIBCONSH_API bool
 cmd_st_add(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
@@ -1357,13 +1357,13 @@ ALIST* alist = cg->alist_;
 
 if (!args)
    {
-   *out << _T("Usage: st add \"STRING\"") << endl;
+   *out << _T("Usage: st add \"STRING\"") << std::endl;
    return(false);
    }
 str = ALIST::list_pop_buf(&args,alist->List_buffer);
 if (args)
    {
-   *out << _T("Too many args in \"st add\" command.") << endl;
+   *out << _T("Too many args in \"st add\" command.") << std::endl;
    return(false);
    }
    
@@ -1385,7 +1385,7 @@ return(cg->ast_->st_add(str, &ptr));
 LIBCONSH_API bool
 cmd_st_gen(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
@@ -1393,7 +1393,7 @@ _TCHAR *dir, *s_base, *tail;
 
 if (args)
    {
-   *out << _T("Too many args in \"st gen\" command.") << endl;
+   *out << _T("Too many args in \"st gen\" command.") << std::endl;
    return(false);
    }
 
@@ -1424,7 +1424,7 @@ return(true);
 LIBCONSH_API bool
 cmd_sym(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
@@ -1452,7 +1452,7 @@ else if (!_tcscmp(str, _T("stat")))
    return(cmd_sym_stat(args, out,cg));
 else
    {
-   *out << _T("Unknown command= sym ") << str << _T(".") << endl;
+   *out << _T("Unknown command= sym ") << str << _T(".") << std::endl;
    return(false);
    }
 return(true);
@@ -1473,7 +1473,7 @@ return(true);
 LIBCONSH_API bool
 cmd_sym_add(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
@@ -1482,13 +1482,13 @@ ALIST* alist = cg->alist_;
 
 if (!args)
    {
-   *out << _T("Usage: sym add \"STRING\"") << endl;
+   *out << _T("Usage: sym add \"STRING\"") << std::endl;
    return(false);
    }
 str = ALIST::list_pop_buf(&args,alist->List_buffer);
 if (args)
    {
-   *out << _T("Too many args in \"sym add\" command.") << endl;
+   *out << _T("Too many args in \"sym add\" command.") << std::endl;
    return(false);
    }
    
@@ -1511,19 +1511,19 @@ return(true);
 LIBCONSH_API bool
 cmd_sym_gen(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
 
 if (args)
    {
-   *out << _T("Too many args in \"st add\" command.") << endl;
+   *out << _T("Too many args in \"st add\" command.") << std::endl;
    return(false);
    }
 
 /* Generate sym table code here. */
-*out << _T("[Unimplemented]") << endl;
+*out << _T("[Unimplemented]") << std::endl;
 
 return(true);
 }
@@ -1543,14 +1543,14 @@ return(true);
 LIBCONSH_API bool
 cmd_sym_stat(
 	LIST *args,
-	_t_ostream *out,
+	std::_t_ostream *out,
 	CG *cg
 	)
 {
 
 if (args)
    {
-   *out << _T("Too many args in \"sym stat\" command.") << endl;
+   *out << _T("Too many args in \"sym stat\" command.") << std::endl;
    return(false);
    }
 
@@ -1573,8 +1573,8 @@ return(true);
 LIBCONSH_API bool
 cmd_take(
 	LIST *args,
-	_t_istream *in,
-	_t_ostream *out,
+	std::_t_istream *in,
+	std::_t_ostream *out,
 	CG *cg																		// 08/15/02 AM.
 	)
 {
@@ -1587,7 +1587,7 @@ ALIST *alist = cg->alist_;	// List Manager.							// 08/14/02 AM.
 _TCHAR *dir;
 if (!args)
    {
-   *out << _T("Too few args in TAKE command.") << endl;
+   *out << _T("Too few args in TAKE command.") << std::endl;
    return(false);
    }
 
@@ -1596,7 +1596,7 @@ dir = ALIST::list_pop_buf(&args,alist->List_buffer);
 
 if (!args)
    {
-   *out << _T("Too few args in TAKE command.") << endl;
+   *out << _T("Too few args in TAKE command.") << std::endl;
    return(false);
    }
 
@@ -1604,7 +1604,7 @@ fil = (_TCHAR*)ALIST::list_pop_buf(&args,alist->List_buffer);
 
 if (args)
    {
-   *out << _T("Too many args in TAKE command.") << endl;
+   *out << _T("Too many args in TAKE command.") << std::endl;
    return(false);
    }
 
@@ -1612,7 +1612,7 @@ if (args)
 _TCHAR buf[FNAME_SIZE+1];														// 07/01/03 AM.
 if (!resolve_file(fil,cg->getAppdir(),/*DU*/buf))					// 07/01/03 AM.
 	{
-	_t_cerr << _T("[Bad filename=") << fil << _T("]") << endl;
+	std::_t_cerr << _T("[Bad filename=") << fil << _T("]") << std::endl;
 	return false;
 	}
 
@@ -1623,23 +1623,23 @@ if (!resolve_file(fil,cg->getAppdir(),/*DU*/buf))					// 07/01/03 AM.
 
 if (!f_exists(buf))
 	{
-	_t_cerr << _T("[File=") << buf << _T(" doesn't exist.]") << endl;
+	std::_t_cerr << _T("[File=") << buf << _T(" doesn't exist.]") << std::endl;
 	return false;
 	}
 
 // G++ BUGS.																	// 03/08/00 AM.
 //fin = new ifstream(fil, ios::in | ios::nocreate);				// 04/30/99 AM.
 //ifstream fin(fil, ios::in | ios::nocreate);						// 03/08/00 AM.
-_t_ifstream fin(TCHAR2A(buf), ios::in);								// Upgrade.	// 01/24/01 AM.
+std::_t_ifstream fin(TCHAR2A(buf), std::ios::in);								// Upgrade.	// 01/24/01 AM.
 if (!fin)		// 04/30/99 AM.
 	{
-	_t_cerr << _T("[Couldn't open file ") << buf << _T("]") << endl;
+	std::_t_cerr << _T("[Couldn't open file ") << buf << _T("]") << std::endl;
 	return false;
 	}
 #ifdef UNICODE
 if (!u_readbom(&fin))
 	{
-	*cgerr << _T("[take: Unhandled Unicode format=") << buf << _T("]") << endl;
+	*cgerr << _T("[take: Unhandled Unicode format=") << buf << _T("]") << std::endl;
 	return false;
 	}
 #endif
@@ -1679,7 +1679,7 @@ int ii;	// Counter.
 
 _TCHAR s_nam[PATH];
 _stprintf(s_nam, _T("%s%skb.mak"), dir, DIR_SEP);
-_t_ofstream *fp = new _t_ofstream(TCHAR2A(s_nam));
+std::_t_ofstream *fp = new std::_t_ofstream(TCHAR2A(s_nam));
 
 *fp << _T("# VISUALTEXT Generated NMAKE File, Based on kb.dsp\n");
 *fp << _T("!IF \"$(CFG)\" == \"\" \n");
@@ -2008,7 +2008,7 @@ for (ii = 0; ii < sym_segs; ++ii)
 *fp << _T("\n");
 *fp << _T("!ENDIF \n");
 *fp << _T("\n");
-*fp << endl;
+*fp << std::endl;
 
 delete fp;
 return true;
@@ -2029,24 +2029,24 @@ _TCHAR s_nam[PATH];
 
 // RELEASE VERSION
 _stprintf(s_nam, _T("%s%skb_release.bat"), dir, DIR_SEP);
-_t_ofstream *fp = new _t_ofstream(TCHAR2A(s_nam));
+std::_t_ofstream *fp = new std::_t_ofstream(TCHAR2A(s_nam));
 
 *fp << _T("rem VISUALTEXT Generated KB batch file.\n");
-*fp << _T("pushd ") << dir << endl;
-*fp << _T("del /q kb.dep") << endl;
-*fp << _T("nmake /f kb.mak CFG=\"kb - Win32 Release\"") << endl;
-*fp << _T("popd") << endl;
+*fp << _T("pushd ") << dir << std::endl;
+*fp << _T("del /q kb.dep") << std::endl;
+*fp << _T("nmake /f kb.mak CFG=\"kb - Win32 Release\"") << std::endl;
+*fp << _T("popd") << std::endl;
 delete fp;
 
 // DEBUG VERSION
 _stprintf(s_nam, _T("%s%skb_debug.bat"), dir, DIR_SEP);
-fp = new _t_ofstream(TCHAR2A(s_nam));
+fp = new std::_t_ofstream(TCHAR2A(s_nam));
 
 *fp << _T("rem VISUALTEXT Generated KB batch file.\n");
-*fp << _T("pushd ") << dir << endl;
-*fp << _T("del /q kb.dep") << endl;
-*fp << _T("nmake /f kb.mak CFG=\"kb - Win32 Debug\"") << endl;
-*fp << _T("popd") << endl;
+*fp << _T("pushd ") << dir << std::endl;
+*fp << _T("del /q kb.dep") << std::endl;
+*fp << _T("nmake /f kb.mak CFG=\"kb - Win32 Debug\"") << std::endl;
+*fp << _T("popd") << std::endl;
 delete fp;
 
 return true;

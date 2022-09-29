@@ -101,9 +101,9 @@ void Pre::prettyCount()
 {
 if (count_)
 	{
-	*gout << _T("Active Pre count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Pre count=") << count_ << ends;
+	*gout << _T("Active Pre count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Pre count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -179,7 +179,7 @@ if (!node)	// 06/16/05 AM.
 	return false;	// 06/16/05 AM.
 
 //if (Debug())
-//	*gout << "  [Execute pre action...]" << endl;
+//	*gout << "  [Execute pre action...]" << std::endl;
 
 ////////////////////////////////////////
 // PRE ACTIONS THAT MATCH TOPLEVEL NODE.							// 06/16/05 AM.
@@ -242,8 +242,8 @@ bool Pre::userPre(_TCHAR *func, Delt<Iarg> *args, Pn *pn)
 if (userpre_)
 	return userpre_->execute(func, args, pn);	// Let pre subclass do it.
 
-_t_strstream gerrStr;
-gerrStr << _T("[Execute pre action: Unknown action=") << func << _T("].") << ends;
+std::_t_strstream gerrStr;
+gerrStr << _T("[Execute pre action: Unknown action=") << func << _T("].") << std::ends;
 errOut(&gerrStr,false);
 
 return false;
@@ -265,8 +265,8 @@ bool Pre::regPre(
 {
 if (userpre_)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[regPre: Can only register one pre action class.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[regPre: Can only register one pre action class.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -315,8 +315,8 @@ static bool warned = false;
 bool ok = true;
 if (args && !warned)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Uppercase pre action: Ignoring arguments.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Uppercase pre action: Ignoring arguments.]") << std::ends;
 	errOut(&gerrStr,false);
 	warned = true;			// Don't repeat this message.
 	}
@@ -348,8 +348,8 @@ static bool warned = false;
 bool ok = true;
 if (args && !warned)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Lowercase pre action: Ignoring arguments.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Lowercase pre action: Ignoring arguments.]") << std::ends;
 	errOut(&gerrStr,false);
 	warned = true;			// Don't repeat this message.
 	}
@@ -385,8 +385,8 @@ static bool warned = false;
 bool ok = true;
 if (args && !warned)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Cap pre action: Ignoring arguments.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Cap pre action: Ignoring arguments.]") << std::ends;
 	errOut(&gerrStr,false);
 	warned = true;			// Don't repeat this message.
 	}
@@ -399,8 +399,8 @@ _TCHAR ch;
 buf = pn->getName();
 if (!(ch = *buf))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Cap pre action: Node with no text.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Cap pre action: Node with no text.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -429,8 +429,8 @@ static bool warned = false;
 bool ok = true;
 if (args && !warned)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("['Unknown' pre action: Ignoring arguments.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("['Unknown' pre action: Ignoring arguments.]") << std::ends;
 	errOut(&gerrStr,false);
 	warned = true;			// Don't repeat this message.
 	}
@@ -493,9 +493,9 @@ if (!Arg::done(args, _T("preLength")))
 
 if (len1 < 0 || len2 < 0 || (len1 > len2))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[LENGTHR pre action: Bad range (") << len1 << _T(",") << len2
-		  << _T(")]") << ends;
+		  << _T(")]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -532,9 +532,9 @@ if (!Arg::done(args, _T("preNumrange")))
 
 if (len1 < 0 || len2 < 0 || (len1 > len2))
 	{
-	_t_strstream gerrStr;
+	std::_t_strstream gerrStr;
 	gerrStr << _T("[NUMRANGE pre action: Bad range (") << len1 << _T(",") << len2
-		  << _T(")]") << ends;
+		  << _T(")]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -544,8 +544,8 @@ _TCHAR *str;
 str = pn->getName();
 if (!str_to_long(str, /*UP*/ num))
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[NUMRANGE pre action: Bad num=") << str << _T("]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[NUMRANGE pre action: Bad num=") << str << _T("]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}

@@ -47,7 +47,7 @@ enum Iexprtype
 
 class Iexpr
 {
-	friend _t_ostream &operator<<(_t_ostream &, Iexpr &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Iexpr &);
 
 public:
 	Iexpr(											// Default constructor.
@@ -89,7 +89,7 @@ public:
 	void setLine(long);														// 05/18/01 AM.
 
 	// General.
-	void genExpr(_t_ostream &ofile);
+	void genExpr(std::_t_ostream &ofile);
 	bool eval(Nlppp *, /*UP*/ RFASem* &);
 
 	bool genEval(Gen *,bool = false);									// 05/07/00 AM.
@@ -133,7 +133,7 @@ protected:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif

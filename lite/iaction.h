@@ -42,9 +42,9 @@ class Ifunc;							// 12/26/01 AM.
 
 class Iaction
 {
-	friend _t_ostream &operator<<(_t_ostream &, Iaction &);
-	friend _t_ostream &operator<<(_t_ostream &, Delt<Iaction> &);
-	friend _t_ostream &operator<<(_t_ostream &, Dlist<Iaction> &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Iaction &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Delt<Iaction> &);
+	friend std::_t_ostream &operator<<(std::_t_ostream &, Dlist<Iaction> &);
 
 public:
 	Iaction(
@@ -104,8 +104,8 @@ public:
 		);
 
 	static void genActions(Dlist<Iaction> *actions,
-													_t_ostream &ofile);			// 06/15/99	AM.
-	static void genAction(Iaction *action, _t_ostream &ofile);		// 06/15/99 AM.
+													std::_t_ostream &ofile);			// 06/15/99	AM.
+	static void genAction(Iaction *action, std::_t_ostream &ofile);		// 06/15/99 AM.
 
 	static bool same(Dlist<Iaction> *list1,
 											Dlist<Iaction> *list2);			// 06/07/99 AM.
@@ -115,7 +115,7 @@ public:
 
 	static bool gen(Dlist<Iaction> *list, Gen *);
 
-	bool genEval(_t_ofstream *,Gen *,bool);								// 05/07/00 AM.
+	bool genEval(std::_t_ofstream *,Gen *,bool);								// 05/07/00 AM.
 
 protected:
 	_TCHAR *name_;							// The "function" or action name.
@@ -144,7 +144,7 @@ protected:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_t_ofstream* =0);			// Pretty-print the count.
+	static void prettyCount(std::_t_ofstream* =0);			// Pretty-print the count.
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif

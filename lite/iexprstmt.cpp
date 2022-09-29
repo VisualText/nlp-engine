@@ -86,8 +86,8 @@ Iexprstmt *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Iexprstmt object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Iexprstmt object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -122,7 +122,7 @@ dest->expr_ = orig->expr_;	// Assignment operator.
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Iexprstmt &exprstmt)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Iexprstmt &exprstmt)
 {
 // For more elegant output, checking on the top-level types of the
 // expr statement.														// 12/27/99 AM.
@@ -172,7 +172,7 @@ return output;
 }
 
 // Workaround to calling overloaded << in derived classes.	// 12/27/99 AM.
-void Iexprstmt::print(_t_ostream &output)
+void Iexprstmt::print(std::_t_ostream &output)
 {
 output << *this;
 }
@@ -207,14 +207,14 @@ int Iexprstmt::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Iexprstmt::prettyCount(_t_ofstream *ofstr)
+void Iexprstmt::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Iexprstmt count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Iexprstmt count=") << count_ << ends;
+		*ofstr << _T("Active Iexprstmt count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Iexprstmt count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -231,10 +231,10 @@ if (count_)
 * SUBJ:	Generate exprstmt to a rules file.
 *********************************************/
 void Iexprstmt::genExprstmt(
-	_t_ostream &ofile
+	std::_t_ostream &ofile
 	)
 {
-ofile << this << flush;
+ofile << this << std::flush;
 }
 
 
@@ -292,7 +292,7 @@ return ok;
 
 bool Iexprstmt::genEval(Gen *gen)
 {
-_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
+std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 _TCHAR *indent = gen->indent_;
 
 if (!expr_)

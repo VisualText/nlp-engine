@@ -113,8 +113,8 @@ Iaction *to;
 to = this;
 if (&fm == to)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Can't assign Iaction object to itself.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Can't assign Iaction object to itself.]") << std::ends;
 	errOut(&gerrStr,false);
 	return *this;
 	}
@@ -165,7 +165,7 @@ dest->func_ = orig->func_;										// 12/26/01 AM.
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Iaction &action)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Iaction &action)
 {
 if (action.scope_)															// 02/13/01 AM.
 	output << str(action.scope_) << _T("::");								// 02/13/01 AM.
@@ -175,14 +175,14 @@ if (action.args_)
 if (action.sem_)							// 11/13/99 AM.
 	output << *(action.sem_);			// 11/13/99 AM.
 output << _T(")");														// FIX.	// 08/20/00 AM.
-	// << endl;														// FIX.	// 08/20/00 AM.
+	// << std::endl;														// FIX.	// 08/20/00 AM.
 return output;
 }
 
 /*******************************************/
 
 /*******************************************/
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Delt<Iaction> &delt)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Delt<Iaction> &delt)
 {
 Iaction *arg;
 arg  = delt.getData();
@@ -192,14 +192,14 @@ return output;
 
 /*******************************************/
 
-_t_ostream &STDOPERATOR<<(_t_ostream &output, Dlist<Iaction> &list)
+std::_t_ostream &STDOPERATOR<<(std::_t_ostream &output, Dlist<Iaction> &list)
 {
 Delt<Iaction> *delt;
 delt = list.getFirst();
 output << *delt;
 while ((delt = delt->Right()))
 	{
-	output << endl << *delt;
+	output << std::endl << *delt;
 	}
 return output;
 }
@@ -248,14 +248,14 @@ int Iaction::getCount() { return count_; }
 * NOTE:	Class function.
 ********************************************/
 #ifndef STABLE_
-void Iaction::prettyCount(_t_ofstream *ofstr)
+void Iaction::prettyCount(std::_t_ofstream *ofstr)
 {
 if (count_)
 	{
 	if (ofstr)
-		*ofstr << _T("Active Iaction count=") << count_ << endl;
-	_t_strstream gerrStr;
-	gerrStr << _T("Active Iaction count=") << count_ << ends;
+		*ofstr << _T("Active Iaction count=") << count_ << std::endl;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("Active Iaction count=") << count_ << std::ends;
 	errOut(&gerrStr,false);
 	}
 }
@@ -367,7 +367,7 @@ return delt;
 
 void Iaction::genActions(
 	Dlist<Iaction> *actions,
-	_t_ostream &ofile
+	std::_t_ostream &ofile
 	)
 {
 if (!actions)
@@ -388,7 +388,7 @@ for (daction = daction->Right(); daction; daction = daction->Right())
 	genAction(daction->getData(), ofile);
 	}
 ofile << _T(";");														// FIX.	// 09/02/01 AM.
-ofile << endl;																	// 11/04/99 AM.
+ofile << std::endl;																	// 11/04/99 AM.
 }
 
 
@@ -399,23 +399,23 @@ ofile << endl;																	// 11/04/99 AM.
 *********************************************/
 void Iaction::genAction(
 	Iaction *action,
-	_t_ostream &ofile
+	std::_t_ostream &ofile
 	)
 {
 if (!action)
 	return;
 if (action->sem_)											// 11/13/99 AM.
 	{
-	ofile << *(action->sem_) << flush;				// 12/27/99 AM.
+	ofile << *(action->sem_) << std::flush;				// 12/27/99 AM.
 	//action->sem_->genRFASem().						// 11/13/99 AM.
 	return;													// 11/13/99 AM.
 	}
-ofile << action->getName() << _T("(") << flush;
+ofile << action->getName() << _T("(") << std::flush;
 if (action->getArgs())
 	Iarg::genArgs(action->getArgs(), _T(", "), ofile);
 //else				// Because of RFA FEATURE!		// 07/06/99 AM.
 //	ofile << "0";											// 07/06/99 AM.
-ofile << _T(")") << flush;
+ofile << _T(")") << std::flush;
 }
 
 
@@ -443,15 +443,15 @@ Delt<Iaction> *d1 = list1->getFirst();
 Delt<Iaction> *d2 = list2->getFirst();
 if (!d1 && !d2)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Iaction::same: Empty lists]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Iaction::same: Empty lists]") << std::ends;
 	errOut(&gerrStr,false);
 	return true;
 	}
 if (!d1 || !d2)
 	{
-	_t_strstream gerrStr;
-	gerrStr << _T("[Iaction::same: Empty list.]") << ends;
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Iaction::same: Empty list.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
@@ -804,7 +804,7 @@ return true;
 *			then generated code won't compile, which is fine.
 *********************************************/
 
-bool Iaction::genEval(_t_ofstream *fcode, Gen *gen,
+bool Iaction::genEval(std::_t_ofstream *fcode, Gen *gen,
 	bool top			// If action is at top, or stmt level.			// 06/06/00 AM.
 	)
 {

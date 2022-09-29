@@ -85,7 +85,7 @@ public:
 #ifndef STABLE_
 public:
 	static int getCount();
-	static void prettyCount(_TCHAR * = _T(""),_t_ofstream* =0);
+	static void prettyCount(_TCHAR * = _T(""),std::_t_ofstream* =0);
 private:
 	static int count_;						// Count nodes currently allocated.
 #endif
