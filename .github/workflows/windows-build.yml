@@ -45,11 +45,11 @@ jobs:
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./bin/Release/icudt69.dll"
+          asset_path: "./bin/Release/icudt71.dll"
           asset_name: "icudt69.dll"
 
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./bin/Release/icuuc69.dll"
+          asset_path: "./bin/Release/icuuc71.dll"
           asset_name: "icuuc69.dll"
