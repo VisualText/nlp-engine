@@ -23,6 +23,7 @@ All rights reserved.
 #include "machine-min.h"
 #include "prim/libprim.h"
 #include "prim/str.h"
+#include "prim/unicu.h"
 
 #include "qkbm/libqkbm.h"
 #include "qkbm/defs.h"
@@ -2510,11 +2511,15 @@ a2 = (XCON_S **) arg2;
 // Get node's "real" concepts.
 _TCHAR *str1 = g_cg->qkbm_->con_str(*a1);	// 03/05/07 AM.
 _TCHAR *str2 = g_cg->qkbm_->con_str(*a2);	// 03/05/07 AM.
+
+int res = unicu::strCmp(str1,str2);
+/*
 #ifndef LINUX
 int res = _tcsicmp(str1, str2);
 #else
 int res = strcasecmp(str1, str2);
 #endif
+*/
 g_cg->kbfree(str1);	// 03/05/07 AM.
 g_cg->kbfree(str2);	// 03/05/07 AM.
 return res;				// 03/05/07 AM.

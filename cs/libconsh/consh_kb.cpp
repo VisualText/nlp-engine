@@ -27,7 +27,7 @@ All rights reserved.
 #include "prim/prim.h"
 #include "prim/list_s.h"
 #include "prim/list.h"
-
+#include "prim/unicu.h"
 
 #include "kbm/libkbm.h"
 #include "kbm/sym_s.h"
@@ -581,11 +581,14 @@ a1 = (CON **) arg1;
 a2 = (CON **) arg2;
 
 // Get node's "real" concepts.
+return unicu::strCmp(ACON::con_str(*a1),ACON::con_str(*a2));
+/*
 #ifndef LINUX
 return _tcsicmp(ACON::con_str(*a1), ACON::con_str(*a2));
 #else
 return strcasecmp(ACON::con_str(*a1), ACON::con_str(*a2));	// 03/07/00 AM.
 #endif
+*/
 }
 
 

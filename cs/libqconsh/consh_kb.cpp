@@ -556,12 +556,15 @@ XCON_S **a1, **a2;
 a1 = (XCON_S **) arg1;
 a2 = (XCON_S **) arg2;
 
+return unicu::strCmp(g_cg->qkbm_->con_str(*a1),g_cg->qkbm_->con_str(*a2));
+/*
 // Get node's "real" concepts.
 #ifndef LINUX
 return _tcsicmp(g_cg->qkbm_->con_str(*a1), g_cg->qkbm_->con_str(*a2));
 #else
 return strcasecmp(g_cg->qkbm_->con_str(*a1), g_cg->qkbm_->con_str(*a2));
 #endif
+*/
 }
 
 

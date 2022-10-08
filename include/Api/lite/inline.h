@@ -19,6 +19,7 @@ All rights reserved.
 // 09/26/01 AM.
 #include <tchar.h>
 #endif
+#include "../prim/unicu.h"
 
 // A wrapper to keep things from blowing up if string is empty.
 inline const _TCHAR *str(_TCHAR *x) { return (x ? x : STRNULL); }
@@ -51,11 +52,20 @@ inline int strcmp_i(
 	const _TCHAR *str2
 	)
 {
+icu::UnicodeString ustr1 = icu::UnicodeString::fromUTF8(icu::StringPiece(str1 ));
+const UChar *strBuff1 = reinterpret_cast<const UChar *>(ustr1.getTerminatedBuffer());
+icu::UnicodeString ustr2 = icu::UnicodeString::fromUTF8(icu::StringPiece(str2));
+const UChar *strBuff2 = reinterpret_cast<const UChar *>(ustr2.getTerminatedBuffer());
+int ret = u_strcasecmp(strBuff1, strBuff2, U_COMPARE_IGNORE_CASE);
+
+return ret;
+/*
 #ifndef LINUX
 return _tcsicmp(str1,str2);
 #else
 return strcasecmp(str1,str2);
 #endif
+*/
 }
 
 

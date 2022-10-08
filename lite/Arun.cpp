@@ -13546,12 +13546,14 @@ if (!str1 || !str2)
 	return 0;
 	}
 
+int res = unicu::strCmp(str1,str2);
+/*
 #ifndef LINUX
 int res = strcmp_i(str1, str2);
 #else
 int res = strcasecmp(str1, str2);
 #endif
-
+*/
 #ifdef QDBM_
 global_cg->kbfree(str1);	// 02/12/07 AM.
 global_cg->kbfree(str2);	// 02/12/07 AM.

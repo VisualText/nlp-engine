@@ -9,6 +9,12 @@
 #include "unicode/brkiter.h"
 #include "unicode/locid.h"
 
+#ifdef LINUX
+#include <my_tchar.h>
+#else
+#include <tchar.h>
+#endif
+
 using namespace icu;
 
 namespace unicu
@@ -25,5 +31,6 @@ namespace unicu
     bool isUpper(UChar32 c);
     bool isLower(UChar32 c);
     int strLen(const UChar *str);
+    int strCmp(_TCHAR *str1, _TCHAR *str2);
 }
 

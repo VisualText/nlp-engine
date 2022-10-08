@@ -67,3 +67,11 @@ bool unicu::isLower(UChar32 c) {
 int unicu::strLen(const UChar *str) {
 	return u_strlen(str);
 }
+
+int unicu::strCmp(_TCHAR *str1, _TCHAR *str2) {
+	icu::UnicodeString ustr1 = icu::UnicodeString::fromUTF8(icu::StringPiece(str1 ));
+	const UChar *strBuff1 = reinterpret_cast<const UChar *>(ustr1.getTerminatedBuffer());
+	icu::UnicodeString ustr2 = icu::UnicodeString::fromUTF8(icu::StringPiece(str2));
+	const UChar *strBuff2 = reinterpret_cast<const UChar *>(ustr2.getTerminatedBuffer());
+	return u_strcasecmp(strBuff1, strBuff2, U_COMPARE_IGNORE_CASE);
+}
