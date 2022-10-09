@@ -26,6 +26,7 @@ All rights reserved.
 #include "prim/list.h"
 #include "prim/dir.h"				// 05/06/99 AM.
 #include "prim/dyn.h"				// 06/29/00 AM.
+#include "prim/unicu.h"
 
 #include "kbm/libkbm.h"
 #include "kbm/sym_s.h"
@@ -1342,11 +1343,14 @@ if (!ptr)
 for (; ptr; ptr = ptr->next)
 	{
 	if (ptr->kind == pST									// FIX.					// 08/07/00 AM.
+		&& unicu::strCmp(val,ptr->v.vst))
+/*
 #ifndef LINUX
 		 && !_tcsicmp(val, ptr->v.vst))
 #else
 		 && !strcasecmp(val, ptr->v.vst))
 #endif
+*/
 		return true;		// Found matching value. 
 	}
 return false;				// Did not find value.
