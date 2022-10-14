@@ -12466,6 +12466,47 @@ return kbdumptree(nlppp,sem,name);
 }
 
 
+/********************************************
+* FN:		WRITEKB
+* CR:		10/13/22 Dd.
+* SUBJ:		Write entire KB to files
+* RET:		True if ok, else false.
+* FORMS:	writekb(directory)
+********************************************/
+
+RFASem *Arun::writekb(
+	Nlppp *nlppp,
+	_TCHAR *dir
+	)
+{
+if (!dir || !*dir || !nlppp)
+	{
+	return 0;
+	}
+
+// Need to get the current KB.
+Parse *parse = nlppp->getParse();
+CG *cg = parse->getAna()->getCG();
+
+bool ok = cg->writeKB(dir);
+
+return new RFASem(ok ? (long)1 : (long)0);
+}
+
+RFASem *Arun::writekb(
+	Nlppp *nlppp,
+	RFASem *dir
+	)
+{
+if (!dir)
+	{
+	return 0;
+	}
+_TCHAR *name = dir->sem_to_str();
+return writekb(nlppp,dir);
+}
+
+
 
 /********************************************
 * FN:		FLT

@@ -1497,6 +1497,9 @@ public:
 	static RFASem *kbdumptree(Nlppp*,RFASem*,_TCHAR*);				// 08/06/01 AM.
 	static RFASem *kbdumptree(Nlppp*,RFASem*,RFASem*);				// 08/06/01 AM.
 
+	static RFASem *writekb(Nlppp*,_TCHAR*);
+	static RFASem *writekb(Nlppp*,RFASem*);
+
 	static bool strisupper(Nlppp*,_TCHAR*);								// 11/20/01 AM.
 	static bool strislower(Nlppp*,_TCHAR*);								// 11/20/01 AM.
 	static bool strisupper(Nlppp*,RFASem*);							// 11/20/01 AM.
