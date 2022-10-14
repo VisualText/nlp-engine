@@ -332,6 +332,7 @@ enum funcDef
 	//whilestmt,
 	FNwordindex,
 	FNwordpath,
+	FNWriteKB,
 	FNxaddlen,
 	FNxaddnvar,
 	FNxdump,

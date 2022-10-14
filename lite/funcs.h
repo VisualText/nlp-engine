@@ -1,4 +1,4 @@
-/*******************************************************************************
+/********************************************nlpFuncs***********************************
 Copyright (c) 2001-2010 by Text Analysis International, Inc.
 All rights reserved.
 ********************************************************************************
@@ -317,13 +317,16 @@ _T("varinlist"),
 _T("varne"),		// 07/25/06 AM.
 _T("varstrs"),
 _T("varz"),			// 07/25/06 AM.
+#ifdef WORDNET
 _T("wninit"),
 _T("wnsensestoconcept"),
 _T("wnhypnymstoconcept"),
+#endif
 //"while",
 //"whilestmt",
 _T("wordindex"),
 _T("wordpath"),
+_T("writekb"),
 _T("xaddlen"),
 _T("xaddnvar"),
 _T("xdump"),

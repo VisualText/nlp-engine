@@ -373,6 +373,8 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnInteractive(args,nlppp,/*UP*/sem);					// 05/06/02 AM.
 	case FNkbdumptree:
 		return fnKbdumptree(args,nlppp,/*UP*/sem);					// 08/06/01 AM.
+	case FNWriteKB:
+		return fnWriteKB(args,nlppp,/*UP*/sem);
 	case FNlasteltnode:
 		return fnLasteltnode(args,nlppp,/*UP*/sem);					// 11/25/00 AM.
 	case FNlastnode:
@@ -10125,6 +10127,46 @@ return true;
 
 
 /********************************************
+* FN:		FNWRITEKB
+* CR:		10/13/22 Dd.
+* SUBJ:		Write entire KB to files
+* RET:		True if ok, else false.
+* FORMS:	writekb(directory)
+********************************************/
+
+bool Fn::fnWriteKB(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+_TCHAR *dir=0;
+
+if (!Arg::str1(_T("writekb"), /*UP*/ (DELTS*&)args, dir))
+	return true;
+if (!Arg::done((DELTS*)args, _T("writekb"),parse))
+	return false;
+
+if (!dir)
+	{
+	_stprintf(Errbuf,_T("[writekb: Warning. Given no directory.]"));
+	return parse->errOut(false); // UNFIXED
+	}
+
+// Need to get the current KB.
+CG *cg = parse->getAna()->getCG();
+
+bool ok = cg->writeKB(dir);
+
+sem = new RFASem(ok ? (long)1 : (long)0);
+return true;
+}
+
+
+/********************************************
 * FN:		FNSTRISUPPER
 * CR:		11/20/01 AM.
 * SUBJ:	See if first char of string is upper case.
@@ -10136,12 +10178,11 @@ return true;
 bool Fn::fnStrisupper(
 	Delt<Iarg> *args,
 	Nlppp *nlppp,
-	/*UP*/
 	RFASem* &sem
 	)
 {
 sem = 0;
-Parse *parse = nlppp->parse_;												// 08/24/02 AM.
+Parse *parse = nlppp->parse_;
 
 _TCHAR *str1=0;
 if (!Arg::str1(_T("isupper"), (DELTS*&)args, str1))
@@ -10150,7 +10191,7 @@ if (!Arg::done((DELTS*)args, _T("isupper"),parse))
 	return false;
 
 long flag=0;
-if (str1 && *str1 && is_upper(*str1))									// 12/16/01 AM.
+if (str1 && *str1 && is_upper(*str1))
 	flag = 1;
 sem = new RFASem(flag);
 return true;
