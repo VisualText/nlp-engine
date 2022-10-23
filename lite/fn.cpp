@@ -703,6 +703,8 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnStrtoupper(args, nlppp, /*UP*/ sem);				// 05/04/00 Dd.
 	case FNstrtrim:
 		return fnStrtrim(args, nlppp, /*UP*/ sem);					// 11/09/00 Dd.
+	case FNstruniquechars:
+		return fnStruniquechars(args, nlppp, /*UP*/ sem);
 	case FNstrval:
 		return fnStrval(args, nlppp, /*UP*/ sem);						// 03/02/00 AM.
 	case FNstrwrap:
@@ -8918,6 +8920,52 @@ if (!name1 || !*name1)
 
 _TCHAR buf[100000];
 str_trim(name1, buf);
+
+_TCHAR *str;
+parse->internStr(buf, /*UP*/ str);
+
+// Return as str type.
+sem = new RFASem(str, RSSTR);
+
+return true;
+}
+
+
+/********************************************
+* FN:		FNSTRUNIQUECHARS
+* CR:		10/23/22 Dd.
+* SUBJ:		returns all the unique characters in a string
+* RET:		True if ok, else false.
+*			UP - returns the trimmed version of the string
+* FORMS:	struniquechars(str1)
+* NOTE:
+********************************************/
+
+bool Fn::fnStruniquechars(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+_TCHAR *name1=0;
+
+if (!Arg::str1(_T("struniquechars"), /*UP*/ (DELTS*&)args, name1))
+	return false;
+if (!Arg::done((DELTS*)args, _T("struniquechars"),parse))
+	return false;
+
+if (!name1 || !*name1)
+	{
+	_stprintf(Errbuf,_T("[struniquechars: Warning. Given no str.]"));
+	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
+	}
+
+_TCHAR buf[100000];
+str_unique_chars(name1, buf);
 
 _TCHAR *str;
 parse->internStr(buf, /*UP*/ str);

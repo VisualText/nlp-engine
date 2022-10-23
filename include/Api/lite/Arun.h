@@ -1312,6 +1312,10 @@ public:
 	static _TCHAR *strtrim(Nlppp*,RFASem*);								// 05/07/01 AM.
 	static _TCHAR *strtrim(Nlppp*,long);                          // 07/11/03 AM.
 	
+	static _TCHAR *struniquechars(Nlppp*,_TCHAR*);
+	static _TCHAR *struniquechars(Nlppp*,RFASem*);
+	static _TCHAR *struniquechars(Nlppp*,long);
+
 	static bool strstartswith(Nlppp*,_TCHAR*,_TCHAR*);				// 08/05/21 Dd.
 	static bool strstartswith(Nlppp*,RFASem*,_TCHAR*);				// 08/05/21 Dd.
 	static bool strstartswith(Nlppp*,_TCHAR*,RFASem*);				// 08/05/21 Dd.
