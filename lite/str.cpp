@@ -1763,18 +1763,75 @@ len = e-s;
 _tcsnccpy(buf,&(str[s]),len);
 buf[len] = '\0';
 return true;
+}
 
-/*
-if (end < start
- || start < 0
- || len >= siz )
+
+
+/********************************************
+* FN:	   STR_UNIQUE_CHARS
+* CR:	   10/23/22 Dd.
+* SUBJ: Returns the unique characters in a string.
+* RET:  True if ok, else false.
+* NOTE:
+********************************************/
+
+bool str_unique_chars(
+	_TCHAR *str,
+	/*UP*/
+	_TCHAR *buf
+	)
+{
+if (!str || !*str)
 	return false;
-if (_tcsclen(str) <= (unsigned long)end)	// .NET COMPLAINT.	// 06/11/03 AM.
-	return false;
-_tcsnccpy(buf,&(str[start]),len);
-buf[len] = '\0'; // Terminate.
+
+icu::StringPiece sp(str);
+const char *spd = sp.data();
+int32_t length = sp.length();
+int32_t unilen = u_strlen(str);
+
+UChar32 c = 1;
+int32_t s = 0;
+int32_t start = 0;
+int32_t i = 0;
+int32_t len = 0;
+int32_t strStart = 0;
+bool found = false;
+
+while (c && i<unilen) {
+	start = s;
+	U8_NEXT(spd, s, length, c);
+
+	found = false;
+	if (len) {
+		UChar32 cb = 1;
+		int32_t sb = 0;
+		icu::StringPiece spb(buf);
+		const char *spdb = spb.data();
+		int32_t lengthb = spb.length();
+		int32_t unilenb = u_strlen(buf);
+
+		for (int j=0; j<unilenb; j++) {
+			U8_NEXT(spdb, sb, lengthb, cb);
+			if (cb == c) {
+				found = true;
+				break;
+			}
+		}		
+	}
+
+	if (!found) {
+		int32_t letlen = s-start;
+
+		for (int k=0; k<letlen; k++) {
+			buf[len++] = str[strStart++];
+		}
+		buf[len] = '\0';
+	}
+	strStart = s;
+	i++;
+}
+buf[len] = '\0';
 return true;
-*/
 }
 
 

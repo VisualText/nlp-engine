@@ -301,6 +301,7 @@ enum funcDef
 	FNstrtotitle,
 	FNstrtoupper,
 	FNstrtrim,
+	FNstruniquechars,
 	FNstrval,
 	FNstrwrap,
 	FNsucceed,

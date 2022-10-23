@@ -625,6 +625,12 @@ public:
 	  /*UP*/
 	  RFASem* &sem
 	  );
+static bool fnStruniquechars(
+	  Delt<Iarg> *args,
+	  Nlppp *nlppp,
+	  /*UP*/
+	  RFASem* &sem
+	  );
   static bool fnStrchr(														// 11/18/00 AM.
 	  Delt<Iarg> *args,
 	  Nlppp *nlppp,
