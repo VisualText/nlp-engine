@@ -366,11 +366,25 @@ void Tok::nextTok(
 	if (c) {
 		if (unicu::isEmoji(c)) {
 			typ = PNEMOJI;
-			++ulen;	// [UNICODE]
+			++ulen;
+			int32_t saveEnd = end;
+			U8_NEXT(s, end, length, c);
+			if (unicu::isEmojiVariation(c) || unicu::isEmojiJoiner(c)) {
+				bool joining = false;
+				while (c && (unicu::isEmojiVariation(c) || unicu::isEmojiJoiner(c) || joining)) {
+					joining = unicu::isEmojiJoiner(c);
+					lastEnd = end;
+					U8_NEXT(s, end, length, c);
+					++ulen;
+				}
+				end -= end - lastEnd;
+			} else {
+				end = saveEnd;
+			}
 		}
 		else if (unicu::isChinese(c)) {
 			typ = PNALPHA;
-			++ulen;	// [UNICODE]
+			++ulen;
 		}
 		else if (unicu::isDigit(c)) {
 			if (getSeparateChars()) {
@@ -379,7 +393,7 @@ void Tok::nextTok(
 				while (c && unicu::isDigit(c) && !unicu::isSingle(c)) {
 					lastEnd = end;
 					U8_NEXT(s, end, length, c);
-					++ulen;	// [UNICODE]
+					++ulen;
 				}
 				end -= end - lastEnd;				
 			}
@@ -387,7 +401,7 @@ void Tok::nextTok(
 		}
 		else if (unicu::isPunct(c)) {
 			typ = PNPUNCT;
-			++ulen;	// [UNICODE]
+			++ulen;
 		}
 		else if (unicu::isAlphabetic(c)) {
 			if (getSeparateChars()) {
@@ -396,7 +410,7 @@ void Tok::nextTok(
 				while (c && unicu::isAlphabetic(c) && !unicu::isSingle(c)) {
 					lastEnd = end;
 					U8_NEXT(s, end, length, c);
-					++ulen;	// [UNICODE]
+					++ulen;
 				}
 				end -= end - lastEnd;
 			}
@@ -405,11 +419,11 @@ void Tok::nextTok(
 			if (c == '\n')
 				lineflag = true;
 			typ = PNWHITE;
-			++ulen;	// [UNICODE]
+			++ulen;
 		}
 		else {
 			typ = PNCTRL;
-			++ulen;	// [UNICODE]
+			++ulen;
 		}
 		end--;
 	}

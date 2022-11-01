@@ -28,6 +28,8 @@ namespace unicu
     bool isChinese(UChar32 c);
     bool isNepali(UChar32 c);
     bool isEmoji(UChar32 c);
+    bool isEmojiJoiner(UChar32 c);
+    bool isEmojiVariation(UChar32 c);
     bool isUpper(UChar32 c);
     bool isLower(UChar32 c);
     int strLen(const UChar *str);
