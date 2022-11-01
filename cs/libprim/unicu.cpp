@@ -52,7 +52,23 @@ bool unicu::isNepali(UChar32 c) {
 
 bool unicu::isEmoji(UChar32 c) {
 	return (
-		(0x1F600 <= c && c <= 0xE007F)
+		(0x1F004 <= c && c <= 0xE007F) ||
+		(0x2194 <= c && c <= 0x2B55)
+	);
+}
+
+bool unicu::isEmojiJoiner(UChar32 c) {
+	return (
+		0x200D == c
+	);
+}
+
+bool unicu::isEmojiVariation(UChar32 c) {
+	return (
+		(0xFE00 <= c && c <= 0xFE0F) ||		// Variation selector
+		(0x1F3FB <= c && c <= 0x1F3FF) ||	// skin tone indicator
+		0x2642 == c ||	// male
+		0x2640 == c		//female
 	);
 }
 
