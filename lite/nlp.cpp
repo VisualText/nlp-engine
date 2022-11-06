@@ -128,6 +128,7 @@ ana_  = 0;
 fbatchstart_ = false;									// 10/19/00 AM.
 finteractive_ = false;									// 05/06/02 AM.
 isLastFile_ = false;
+isFirstFile_ = false;
 #ifndef LINUX
 hdll_ = 0;													// 01/29/99 AM.
 hrundll_ = 0;												// 05/14/00 AM.
@@ -174,6 +175,7 @@ ana_  = 0;
 fbatchstart_ = false;
 finteractive_ = false;
 isLastFile_ = false;
+isFirstFile_ = false;
 #ifndef LINUX
 hdll_ = 0;
 hrundll_ = 0;
@@ -300,7 +302,8 @@ _TCHAR *NLP::getName()			{return name_;		}						// 01/06/03 AM.
 //bool	NLP::getDevelop()		{return develop_;	}						// 07/18/03 AM.
 //bool	NLP::getSilent()		{return silent_;	}						// 07/18/03 AM.
 //bool	NLP::getCompiled()	{return compiled_;}						// 07/18/03 AM.
-bool	NLP::getIsLastFile()	{return isLastFile_;}	
+bool	NLP::getIsLastFile()	{return isLastFile_;}
+bool	NLP::getIsFirstFile()	{return isFirstFile_;}
 
 /********************************************
 * FN:		Modify Functions
@@ -321,6 +324,7 @@ void	NLP::setPopupdat(_TCHAR *x)	{popupdat_ = x;}					// 05/24/02 AM.
 //void	NLP::setSilent(bool x)		{silent_   = x;}					// 07/18/03 AM.
 //void	NLP::setCompiled(bool x)	{compiled_ = x;}					// 07/18/03 AM.
 void	NLP::setIsLastFile(bool val)	{isLastFile_ = val;}
+void	NLP::setIsFirstFile(bool val)	{isFirstFile_ = val;}
 void	NLP::setName(_TCHAR *x)												// 01/06/03 AM.
 {
 if (x && *x)

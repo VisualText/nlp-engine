@@ -307,6 +307,7 @@ int NLP_ENGINE::analyze(
     _stprintf(fname, _T("%s%c%s%c%s"), analyzer, DIR_CH, _T("logs"), DIR_CH, _T("file.log"));
     std::_t_ofstream *fp = new std::_t_ofstream(TCHAR2CA(fname), std::ios::out);
     m_nlp->setIsLastFile(false);
+    m_nlp->setIsFirstFile(true);
 
     for (std::vector<std::string>::iterator it = m_files.begin() ; it != m_files.end(); ++it) {
         file = it->c_str();
@@ -362,6 +363,8 @@ int NLP_ENGINE::analyze(
             obuf,       // 05/11/02 AM.
             MAXSTR	   // 05/11/02 AM.
             );
+
+        m_nlp->setIsFirstFile(false);
     }
 
 //    NLP_ENGINE::close();  // NO.  // 09/27/20 AM.
