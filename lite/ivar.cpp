@@ -46,6 +46,7 @@ All rights reserved.
 #include "lite/parse.h"		// 03/13/03 AM.
 #include "irule.h"			// 09/12/06 AM.
 #include "ivar.h"
+#include "nlp.h"
 
 // WARN:	Ivartype and s_Vartype must be kept in sync.
 _TCHAR *s_Ivartype[] =
@@ -863,6 +864,13 @@ switch (vtype)
 			text = nlppp->getParse()->getAppdir();					// 11/09/00 AM.
 			sem = new RFASem(text, RSSTR);							// 11/09/00 AM.
 			return true;													// 11/09/00 AM.
+			}
+		if (!strcmp_i(name, _T("islastfile")))
+			{
+			NLP *nlp = nlppp->getParse()->getNLP();
+			long processingDir = nlp->getIsLastFile();
+			sem = new RFASem(processingDir);
+			return true;
 			}
 		if (!strcmp_i(name, _T("passnum")))		// $PASSNUM		// 10/11/06 AM.
 			{

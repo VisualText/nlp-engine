@@ -91,9 +91,9 @@ public:
 		bool compiled = false,  // RUN COMPILED ANALYZER (run.dll) // 07/05/00 AM.
 		_TCHAR *outdir = 0,     // DIRECTORY FOR OUTPUT.			  // 03/10/99 AM.
 //		char *datadir = 0			// VISUALTEXT DATA DIRECTORY		  // 12/08/99 AM.
-      _TCHAR *name = 0,       // UNIQUE NAME FOR ANALYZER.       // 01/06/03 AM.
-      _TCHAR *logfile = 0,      // VTLOG	// 05/06/13 AM.
-	  VTRun *vtrun = 0			// VT Runtime Environment.	// [DEGLOB]	// 10/15/20 AM.
+		_TCHAR *name = 0,       // UNIQUE NAME FOR ANALYZER.       // 01/06/03 AM.
+		_TCHAR *logfile = 0,      // VTLOG	// 05/06/13 AM.
+		VTRun *vtrun = 0			// VT Runtime Environment.	// [DEGLOB]	// 10/15/20 AM.
 		);
 	NLP(bool);                 // Dummy constructor.              // 06/30/03 AM.
 	~NLP();									// Destructor.
@@ -121,6 +121,7 @@ public:
 //	bool  getDevelop();                 // 07/18/03 AM.
 //	bool  getSilent();                  // 07/18/03 AM.
 //	bool  getCompiled();                // 07/18/03 AM.
+	bool  getIsLastFile();
 
 	// Modify
 //	void	setDatadir(char *);				// 12/08/99 AM.
@@ -331,6 +332,7 @@ public:
 	void resetDbg(std::_t_ostream*&);												// 08/26/02 AM.
 	bool logOut(bool);														// 08/26/02 AM.
 	bool logOut(std::_t_strstream*,bool);                            // 02/25/05 AM.
+	void setIsLastFile(bool val);
 
 	////////////////////////////
 	// STEPPING THROUGH ANALYSIS			// 05/17/99 AM.
@@ -407,6 +409,8 @@ private:
 	// Can help control where the output goes from NLP++, e.g.	// 05/06/02 AM.
 	// Default is FALSE.														// 05/06/02 AM.
 	bool finteractive_;														// 05/06/02 AM.
+
+	bool isLastFile_;
 
 	// Hash table for NLP++ builtin functions.						// 12/20/01 AM.
 //	void *htfunc_;																// 12/20/01 AM.
