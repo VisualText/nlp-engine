@@ -68,7 +68,7 @@ bool unicu::isEmojiVariation(UChar32 c) {
 		(0xFE00 <= c && c <= 0xFE0F) ||		// Variation selector
 		(0x1F3FB <= c && c <= 0x1F3FF) ||	// skin tone indicator
 		0x2642 == c ||	// male
-		0x2640 == c		//female
+		0x2640 == c		// female
 	);
 }
 

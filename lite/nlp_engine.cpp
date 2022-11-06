@@ -303,8 +303,19 @@ int NLP_ENGINE::analyze(
     const char *file;
     struct stat st;
 
+    _TCHAR fname[MAXSTR];
+    _stprintf(fname, _T("%s%c%s%c%s"), analyzer, DIR_CH, _T("logs"), DIR_CH, _T("file.log"));
+    std::_t_ofstream *fp = new std::_t_ofstream(TCHAR2CA(fname), std::ios::out);
+    m_nlp->setIsLastFile(false);
+
     for (std::vector<std::string>::iterator it = m_files.begin() ; it != m_files.end(); ++it) {
         file = it->c_str();
+        if (std::next(it) == m_files.end()) {
+            m_nlp->setIsLastFile(true);
+        }
+        std::string s = file;
+        std::string filepath = s.substr(s.find("input")+6,s.length()-1);
+        *fp << _T("File=") << filepath << std::endl;
 
         if (stat(file,&st) == 0)
             _stprintf(m_infile, _T("%s"),file);
