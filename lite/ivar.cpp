@@ -872,6 +872,13 @@ switch (vtype)
 			sem = new RFASem(processingDir);
 			return true;
 			}
+		if (!strcmp_i(name, _T("isfirstfile")))
+			{
+			NLP *nlp = nlppp->getParse()->getNLP();
+			long processingDir = nlp->getIsFirstFile();
+			sem = new RFASem(processingDir);
+			return true;
+			}
 		if (!strcmp_i(name, _T("passnum")))		// $PASSNUM		// 10/11/06 AM.
 			{
 			// Pass that current rule is in, if in a rule.

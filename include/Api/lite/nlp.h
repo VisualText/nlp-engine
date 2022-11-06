@@ -122,6 +122,7 @@ public:
 //	bool  getSilent();                  // 07/18/03 AM.
 //	bool  getCompiled();                // 07/18/03 AM.
 	bool  getIsLastFile();
+	bool  getIsFirstFile();
 
 	// Modify
 //	void	setDatadir(char *);				// 12/08/99 AM.
@@ -333,6 +334,7 @@ public:
 	bool logOut(bool);														// 08/26/02 AM.
 	bool logOut(std::_t_strstream*,bool);                            // 02/25/05 AM.
 	void setIsLastFile(bool val);
+	void setIsFirstFile(bool val);
 
 	////////////////////////////
 	// STEPPING THROUGH ANALYSIS			// 05/17/99 AM.
@@ -411,6 +413,7 @@ private:
 	bool finteractive_;														// 05/06/02 AM.
 
 	bool isLastFile_;
+	bool isFirstFile_;
 
 	// Hash table for NLP++ builtin functions.						// 12/20/01 AM.
 //	void *htfunc_;																// 12/20/01 AM.
