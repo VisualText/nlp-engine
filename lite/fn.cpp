@@ -5275,15 +5275,7 @@ if (!name2)																		// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 
-long result = 0;		// bool false.										// 08/17/01 AM.
-
-while (*name2) {
-	if (!_tcsncmp(name1,name2,_tcsclen(name1))) {
-		result = 1;																// 08/17/01 AM.
-		break;
-	}
-	++name2;															// OPT.	// 11/29/00 AM.
-}
+long result = unicu::contains(name1,name2,false) ? 1 : 0;
 
 sem = new RFASem(result);
 
@@ -5335,17 +5327,7 @@ if (!name2)																		// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 
-
-long result = 0;		// bool false.										// 08/17/01 AM.
-
-while (*name2) {
-	if (!strcmp_ni(name1,name2,_tcsclen(name1))) {
-		result = 1;
-		break;
-	}
-	++name2;															// OPT.	// 11/29/00 AM.
-}
-
+long result = unicu::contains(name1,name2,true) ? 1 : 0;
 sem = new RFASem(result);
 
 // Return string compare result
