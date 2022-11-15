@@ -5308,17 +5308,7 @@ bool Arun::strcontains(
 if (!name1 || !*name1 || !name2 || !*name2)
 	return false;
 
-bool result = false;
-
-while (*name2)
-	{
-	if (!_tcsncmp(name1,name2,_tcsclen(name1)))
-		{
-		result = true;
-		break;
-		}
-	++name2;															// OPT.	// 11/29/00 AM.
-	}
+bool result = unicu::contains(name1,name2,false) ? 1 : 0;;
 
 return result;
 }
@@ -5449,17 +5439,7 @@ bool Arun::strcontainsnocase(
 if (!name1 || !*name1 || !name2 || !*name2)
 	return false;
 
-bool result = false;
-
-while (*name2)
-	{
-	if (!strcmp_ni(name1,name2,_tcsclen(name1)))
-		{
-		result = true;
-		break;
-		}
-	++name2;															// OPT.	// 11/29/00 AM.
-	}
+bool result = unicu::contains(name1,name2,true) ? 1 : 0;
 
 return result;
 }

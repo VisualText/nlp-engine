@@ -91,3 +91,15 @@ int unicu::strCmp(_TCHAR *str1, _TCHAR *str2) {
 	const UChar *strBuff2 = reinterpret_cast<const UChar *>(ustr2.getTerminatedBuffer());
 	return u_strcasecmp(strBuff1, strBuff2, U_COMPARE_IGNORE_CASE);
 }
+
+bool unicu::contains(_TCHAR *str1, _TCHAR *str2, bool noCase=true) {
+	icu::UnicodeString ustr1 = icu::UnicodeString::fromUTF8(icu::StringPiece(str1 ));
+	if (noCase)
+		ustr1.toLower();
+	const UChar *strBuff1 = reinterpret_cast<const UChar *>(ustr1.getTerminatedBuffer());
+	icu::UnicodeString ustr2 = icu::UnicodeString::fromUTF8(icu::StringPiece(str2));
+	if (noCase)
+		ustr2.toLower();
+	const UChar *strBuff2 = reinterpret_cast<const UChar *>(ustr2.getTerminatedBuffer());
+	return u_strstr(strBuff2,strBuff1);
+}
