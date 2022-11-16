@@ -944,7 +944,8 @@ _stprintf(specdir, _T("%s%c%s"), appdir,DIR_CH, SPECDIRNAME);
 ana_->setSpecdir(specdir);	// Where the app definition resides	// 12/03/98 AM.
 //ana_->setDatadir(datadir_);	// Data directory.					// 12/08/99 AM.
 ana_->setCG(cg_);					// Convenience ptr to KB.			// 02/15/00 AM.
-ana_->setAppdir(appdir);													// 05/10/00 AM.
+ana_->setAppdir(appdir);
+ana_->setKBdir(appdir);
 
 /////////////////////////////////////////////////
 // GET ANALYZER DEFINITION ("Specs" or specifications)
@@ -1410,6 +1411,7 @@ parse->setFout(fout);														// 05/13/99 AM.
 parse->setSout(sout);														// 05/13/99 AM.
 parse->setAna(ana_);			// Analyzer that the parse will use.
 parse->setAppdir(appdir);	// Where the app runs from.			// 12/03/98 AM.
+parse->setKBdir(appdir);
 parse->setOutdir(outdir);	// Intermed output files.				// 03/10/99 AM.
 #ifndef LINUX
 parse->setHdll(hdll_);		// Handle to user.dll.					// 01/29/99 AM.
@@ -1555,6 +1557,7 @@ parse->setSout(sout);														// 05/13/99 AM.
 parse->setAna(ana_);			// Analyzer that the parse will use.
 parse->setAppdir(appdir);	// Where the app runs from.			// 12/03/98 AM.
 parse->setOutdir(outdir);	// Intermed output files.				// 03/10/99 AM.
+parse->setKBdir(appdir);
 #ifndef LINUX
 parse->setHdll(hdll_);		// Handle to user.dll.					// 01/29/99 AM.
 #endif
