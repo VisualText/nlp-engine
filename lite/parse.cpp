@@ -1064,6 +1064,15 @@ internStr(ptr, /*UP*/ str);	// Install in string table.
 return str;
 }
 
+_TCHAR *Parse::inputParent()
+{
+_TCHAR *ptr, *str;
+_TCHAR buf[FNAME_SIZE];
+_tcscpy(buf, input);			// Copy input filename for modifying.
+file_parent(buf, /*UP*/ ptr);
+internStr(ptr, /*UP*/ str);	// Install in string table.
+return str;
+}
 
 _TCHAR *Parse::inputHead()
 {

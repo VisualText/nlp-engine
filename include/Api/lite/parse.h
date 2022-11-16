@@ -244,6 +244,7 @@ public:
 	// Get and intern pieces of input filename.						// 12/24/99 AM.
 	_TCHAR *inputName();														// 12/24/99 AM.
 	_TCHAR *inputPath();														// 12/24/99 AM.
+	_TCHAR *inputParent();
 	_TCHAR *inputHead();														// 12/24/99 AM.
 	_TCHAR *inputTail();														// 12/24/99 AM.
 

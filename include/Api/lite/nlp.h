@@ -121,6 +121,7 @@ public:
 //	bool  getDevelop();                 // 07/18/03 AM.
 //	bool  getSilent();                  // 07/18/03 AM.
 //	bool  getCompiled();                // 07/18/03 AM.
+	bool  getIsDirRun();
 	bool  getIsLastFile();
 	bool  getIsFirstFile();
 
@@ -333,6 +334,7 @@ public:
 	void resetDbg(std::_t_ostream*&);												// 08/26/02 AM.
 	bool logOut(bool);														// 08/26/02 AM.
 	bool logOut(std::_t_strstream*,bool);                            // 02/25/05 AM.
+	void setIsDirRun(bool val);
 	void setIsLastFile(bool val);
 	void setIsFirstFile(bool val);
 
@@ -414,6 +416,7 @@ private:
 
 	bool isLastFile_;
 	bool isFirstFile_;
+	bool isDirRun_;
 
 	// Hash table for NLP++ builtin functions.						// 12/20/01 AM.
 //	void *htfunc_;																// 12/20/01 AM.

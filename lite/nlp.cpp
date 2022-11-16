@@ -127,6 +127,7 @@ stab_ = 0;
 ana_  = 0;
 fbatchstart_ = false;									// 10/19/00 AM.
 finteractive_ = false;									// 05/06/02 AM.
+isDirRun_ = false;
 isLastFile_ = false;
 isFirstFile_ = false;
 #ifndef LINUX
@@ -302,6 +303,7 @@ _TCHAR *NLP::getName()			{return name_;		}						// 01/06/03 AM.
 //bool	NLP::getDevelop()		{return develop_;	}						// 07/18/03 AM.
 //bool	NLP::getSilent()		{return silent_;	}						// 07/18/03 AM.
 //bool	NLP::getCompiled()	{return compiled_;}						// 07/18/03 AM.
+bool	NLP::getIsDirRun()	{return isDirRun_;}
 bool	NLP::getIsLastFile()	{return isLastFile_;}
 bool	NLP::getIsFirstFile()	{return isFirstFile_;}
 
@@ -323,6 +325,7 @@ void	NLP::setPopupdat(_TCHAR *x)	{popupdat_ = x;}					// 05/24/02 AM.
 //void	NLP::setDevelop(bool x)		{develop_  = x;}					// 07/18/03 AM.
 //void	NLP::setSilent(bool x)		{silent_   = x;}					// 07/18/03 AM.
 //void	NLP::setCompiled(bool x)	{compiled_ = x;}					// 07/18/03 AM.
+void	NLP::setIsDirRun(bool val)	{isDirRun_ = val;}
 void	NLP::setIsLastFile(bool val)	{isLastFile_ = val;}
 void	NLP::setIsFirstFile(bool val)	{isFirstFile_ = val;}
 void	NLP::setName(_TCHAR *x)												// 01/06/03 AM.

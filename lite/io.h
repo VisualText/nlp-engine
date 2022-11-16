@@ -78,6 +78,11 @@ bool file_path(															// 12/24/99 AM.
 	/*UP*/
 	_TCHAR* &fpath			// Pointer to the path in buffer.
 	);
+bool file_parent(
+	_TCHAR *file,				// Buffer with full file string.
+	/*UP*/
+	_TCHAR* &fpath			// Pointer to the path in buffer.
+	);
 bool file_head(															// 12/24/99 AM.
 	_TCHAR *file,				// Buffer with full file string.
 	/*UP*/
