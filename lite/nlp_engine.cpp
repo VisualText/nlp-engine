@@ -523,6 +523,7 @@ int NLP_ENGINE::readFiles(_TCHAR *path)
     struct stat s;
     if (lstat(path, &s) == 0 ) {
         if (S_ISREG(s.st_mode)) {
+            m_nlp->setIsDirRun(false);
             m_files.push_back(path);
             return 1;
         }
@@ -537,6 +538,7 @@ int NLP_ENGINE::readFiles(_TCHAR *path)
     dpdf = opendir(path);
 
     if (dpdf != NULL) {
+        m_nlp->setIsDirRun(false);
         unsigned char isFile =0x8;
         while ((epdf = readdir(dpdf))) {
             if (epdf->d_name[0] != '.' && epdf->d_type == isFile) {
@@ -544,6 +546,8 @@ int NLP_ENGINE::readFiles(_TCHAR *path)
                 m_files.push_back(fullPath);
             }
         }
+    } else {
+        return 0;
     }
     
 #else
@@ -555,6 +559,7 @@ int NLP_ENGINE::readFiles(_TCHAR *path)
     }
 
     if (ftyp & FILE_ATTRIBUTE_DIRECTORY) {
+        m_nlp->setIsDirRun(true);
         WIN32_FIND_DATA ffd;
         HANDLE hFind = INVALID_HANDLE_VALUE;
         DWORD dwError=0;
@@ -583,9 +588,13 @@ int NLP_ENGINE::readFiles(_TCHAR *path)
             }
         }
         while (FindNextFile(hFind, &ffd) != 0);
+
+        return 1;
         }
     else {
+        m_nlp->setIsDirRun(false);
         m_files.push_back(path);
+        return 1;
     }
 
 #endif

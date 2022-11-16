@@ -837,6 +837,13 @@ switch (vtype)
 			sem = new RFASem(text, RSSTR);							// 12/24/99 AM.
 			return true;													// 12/24/99 AM.
 			}
+		if (!strcmp_i(name, _T("inputparent")))	// $INPUTPARENT
+			{
+			// The path, eg, "Dev" if inputpath is "D:\apps\resume\input\Dev".
+			text = nlppp->getParse()->inputParent();
+			sem = new RFASem(text, RSSTR);
+			return true;
+			}
 		if (!strcmp_i(name, _T("inputhead")))	// $INPUTHEAD			// 12/24/99 AM.
 			{
 			// The path, eg, "dave" in "dave.txt".
@@ -864,6 +871,13 @@ switch (vtype)
 			text = nlppp->getParse()->getAppdir();					// 11/09/00 AM.
 			sem = new RFASem(text, RSSTR);							// 11/09/00 AM.
 			return true;													// 11/09/00 AM.
+			}
+		if (!strcmp_i(name, _T("isdirrun")))
+			{
+			NLP *nlp = nlppp->getParse()->getNLP();
+			long processingDir = nlp->getIsDirRun();
+			sem = new RFASem(processingDir);
+			return true;
 			}
 		if (!strcmp_i(name, _T("islastfile")))
 			{

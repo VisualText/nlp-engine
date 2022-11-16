@@ -690,6 +690,50 @@ return true;
 
 
 /********************************************
+* FN:		FILE_PARENT
+* CR:		11/16/22
+* SUBJ:	Given a file, get its parent directory name (NOT PATH)
+* RET:	Parent directory name
+* WARN:	MODIFIES GIVEN FILE NAME BUFFER.
+********************************************/
+
+bool file_parent(
+	_TCHAR *file,				// Buffer with full file string.
+	/*UP*/
+	_TCHAR* &fparent			// Pointer to the path in buffer.
+	)
+{
+	fparent = 0;
+	if (!file || !*file)
+		return false;
+
+	_TCHAR *ptr;
+
+	ptr = file;
+	while (*ptr++)
+		;					// Go to forward to end of buffer.
+	ptr--;				// Back to end of string.
+
+	// Go backward, finding backslash if any.
+	int slashCount = 0;
+	while (--ptr != file) {
+		if (*ptr == '\\') {
+			slashCount++;
+			if (slashCount == 1) {
+				*ptr = '\0';
+			}
+			if (slashCount >= 2) {
+				fparent = ++ptr;
+				return true; 
+			}
+		}
+	}
+	// Even if first char is backslash, return null path.
+	return true;
+}
+
+
+/********************************************
 * FN:		FILE_HEAD
 * CR:		12/24/99 AM.
 * SUBJ:	Given a file, get its filename head.
