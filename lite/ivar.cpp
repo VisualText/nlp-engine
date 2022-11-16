@@ -872,6 +872,13 @@ switch (vtype)
 			sem = new RFASem(text, RSSTR);							// 11/09/00 AM.
 			return true;													// 11/09/00 AM.
 			}
+		if (!strcmp_i(name, _T("kbpath")))	// $KBPATH
+			{
+			// The application base directory path.
+			text = nlppp->getParse()->getKBdir();
+			sem = new RFASem(text, RSSTR);
+			return true;
+			}
 		if (!strcmp_i(name, _T("isdirrun")))
 			{
 			NLP *nlp = nlppp->getParse()->getNLP();

@@ -114,6 +114,7 @@ public:
 	TREE *getTree();
 	LTREE *getLines();
 	_TCHAR *getAppdir();				// 12/03/98 AM.
+	_TCHAR *getKBdir();
 	Dlist<Ipair> *getVars();		// 12/07/98 AM.
 	Dlist<Iarg> *getOstrs();		// 05/23/01 AM.
 	std::_t_ostream *getOut();				// 05/13/99 AM.
@@ -170,6 +171,7 @@ public:
 	void setLines(LTREE *);
 	void setVerbose(bool);
 	void setAppdir(_TCHAR *);			// 12/03/98 AM.
+	void setKBdir(_TCHAR *);
 	void setVars(Dlist<Ipair> *);	// 12/07/98 AM.
 	void setOstrs(Dlist<Iarg> *);	// 05/23/01 AM.
 	void setOut(std::_t_ostream *);			// 05/13/99 AM.
@@ -533,6 +535,7 @@ private:
 	_TCHAR     input[FNAME_SIZE];	// The input file name.
 	_TCHAR     output[FNAME_SIZE];	// The final/main output file path.
 	_TCHAR		appdir_[FNAME_SIZE];	// Base directory for app.		// 12/03/98 AM.
+	_TCHAR		kbdir_[FNAME_SIZE];	// Base directory for app.
 	_TCHAR		outdir_[FNAME_SIZE];	// Intermediate out files.		// 03/10/99 AM.
 	_TCHAR     *text;					// The buffer for input text.
 	long		 length;					// Length of input text.

@@ -152,6 +152,7 @@ Eana *Parse::getEana()		{return eana_;	 }							// 10/13/99 AM.
 _TCHAR *Parse::getInput()    {return input;  }
 _TCHAR *Parse::getOutput()   {return output; }
 _TCHAR *Parse::getAppdir()	{return appdir_;}
+_TCHAR *Parse::getKBdir()	{return kbdir_;}
 _TCHAR *Parse::getText()     {return text;   }
 long  Parse::getLength()	{return length; }
 long Parse::getUlength()	{return ulength;}	// [UNICODE]
@@ -275,6 +276,12 @@ void Parse::setDatum(_TCHAR *x)												// 03/13/03 AM.
 datum_ = 0;
 if (x && *x)
 	internStr(x, /*DU*/ datum_);
+}
+
+void Parse::setKBdir(_TCHAR *appdir)	{
+	_TCHAR kbDir[MAXSTR];
+	_stprintf(kbDir, _T("%s%ckb%cuser%c"), appdir,DIR_CH,DIR_CH,DIR_CH);
+	_tcscpy(kbdir_, kbDir);
 }
 
 void Parse::setLogfile(_TCHAR *x)	{logfile_ = x;}	// VTLOG	// 05/06/13 AM.

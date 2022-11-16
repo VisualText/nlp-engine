@@ -179,6 +179,16 @@ else
 	appdir_[0] = '\0';
 }
 
+void Ana::setKBdir(_TCHAR *appdir)
+{
+if (appdir && *appdir) {
+	_TCHAR kbDir[MAXSTR];
+	_stprintf(kbDir, _T("%s%ckb%cuser%c"), appdir,DIR_CH,DIR_CH,DIR_CH);
+	_tcscpy(kbdir_, kbDir);
+} else
+	kbdir_[0] = '\0';
+}
+
 void Ana::setComment(_TCHAR *x)												// 01/13/99 AM.
 {
 if (x && *x)
