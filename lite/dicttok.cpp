@@ -575,7 +575,7 @@ switch (typ)
 
 		if (lcstr && *lcstr) {
 
-			con = cg_->findWordConcept(lcstr);	// dictfindword.
+			con = cg_->findDictConcept(lcstr);
 			ATTR *attrs = cg_->findAttrs(con);
 			_TCHAR buf[NAMESIZ];
 			_TCHAR bufval[NAMESIZ];

@@ -207,6 +207,8 @@ public:
 	// Find dictionary concept for given string.						// 06/29/03 AM.
 	CONCEPT *findWordConcept(_TCHAR*);								// 06/29/03 AM.
 
+	CONCEPT *findDictConcept(_TCHAR*);
+
 	// Get (find else add) dict concept for given string.			// 06/29/03 AM.
 	CONCEPT *getWordConcept(_TCHAR *str);
 
@@ -589,6 +591,7 @@ public:
 
 private:
 	_TCHAR appdir_[FNAMESIZ];		// Base directory path.
+	_TCHAR kbdir_[FNAMESIZ];		// Base directory path.
 
 	bool dirty_;					// KB dirty flag.						// 05/12/00 AM.
 

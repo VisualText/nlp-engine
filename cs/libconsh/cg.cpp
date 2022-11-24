@@ -53,6 +53,9 @@ All rights reserved.
 #include "cmd.h"
 #include "dyn.h"					// 06/29/00 AM.
 
+#include "prim/unicu.h"
+using namespace unicu;
+
 // Number of ind attr commands per file.								// 07/01/03 AM.
 // Segmenting the attr commands into multiple cmd files.			// 07/01/03 AM.
 #define ATTRS_PER_FILE 25000
@@ -83,9 +86,11 @@ dirty_ = false;																// 05/12/00 AM.
 hkbdll_ = 0;																	// 06/29/00 AM.
 #endif
 appdir_[0] = '\0';
-if (appdir && *appdir)
+kbdir_[0] = '\0';
+if (appdir && *appdir) {
 	_tcscpy(appdir_, appdir);
-else
+	_stprintf(kbdir_, _T("%s%ckb%cuser"), appdir_, DIR_CH, DIR_CH);
+} else
 	{
 	std::_t_cerr << _T("[CG: No app dir given.]") << std::endl;
 	return;
@@ -3402,6 +3407,94 @@ if (!(word = kbm_->dict_find_word(str)) )
         return 0;
 return word;
 }
+
+/********************************************
+* FN:           FINDDICTCONCEPT
+* SUBJ:	Find the concept for a word from a *.dict file
+* ARG:  User supplies the word string
+********************************************/
+
+CONCEPT *CG::findDictConcept(_TCHAR *str)
+{
+bool dirty = false;
+CONCEPT *word = kbm_->dict_get_word(str,dirty);
+
+_TCHAR allDict[FNAMESIZ];
+_stprintf(allDict, _T("%s%call.dict"), kbdir_, DIR_CH);
+
+std::_t_ifstream inFile(CTCHAR2CA(allDict), std::ios::in);
+if (!inFile) {
+	return word;
+}
+
+_TCHAR buf[MAXMSG];
+_TCHAR attr[MAXSTR];
+_TCHAR val[MAXSTR];
+bool found = false;
+
+int32_t c2 = 1;
+int32_t e2 = 0;
+icu::StringPiece strp(str);
+const char *strd = strp.data();
+int32_t length2 = strp.length();
+bool done = false;
+
+while (inFile.getline(buf, MAXMSG) && !done) {
+	icu::StringPiece sp(buf);
+	const char *line = sp.data();
+	int32_t length = sp.length();
+
+	UChar32 c = 1;
+	int32_t e = 0;
+	int32_t ulen = 0;
+	c2 = 1;
+	e2 = 0;
+	U8_NEXT(strd, e2, length2, c2);
+
+	while (c && !done) {
+		U8_NEXT(line, e, length, c);
+		if (unicu::isWhiteSpace(c)) {
+			if (c2 == 0) {
+				found = true;
+			}
+			break;
+		} else if (c > c2) {
+			done = true;
+			break;
+		}
+		else if (c != c2) {
+			break;
+		}
+		U8_NEXT(strd, e2, length2, c2);
+	}
+
+	// If found, parse the attributes and add
+	if (found) {
+		int start = e;
+		bool attrFlag = false;
+		while (c) {
+			U8_NEXT(line, e, length, c);
+			if (attrFlag && (unicu::isWhiteSpace(c) || !c)) {
+				_tcsnccpy(val, &line[start],e-start-1);
+				val[e-start-1] = '\0';
+				addSval(word,attr,val);
+				attrFlag = false;
+				start = e;
+			} else if (c == '=') {
+				_tcsnccpy(attr, &line[start],e-start-1);
+				attr[e-start-1] = '\0';
+				start = e;
+				attrFlag = true;
+			}
+		}
+
+		found = false;
+	}
+}
+
+return word;
+}
+
 
 /********************************************
 * FN:				GETWORDCONCEPT
