@@ -3408,6 +3408,17 @@ if (!(word = kbm_->dict_find_word(str)) )
 return word;
 }
 
+bool CG::openDict() {
+_TCHAR allDict[FNAMESIZ];
+_stprintf(allDict, _T("%s%call.dict"), kbdir_, DIR_CH);
+allDictStream_.open(CTCHAR2CA(allDict), std::ios::in);	
+return allDictStream_ ? true : false;
+}
+
+void CG::closeDict() {
+	allDictStream_.close();
+}
+
 /********************************************
 * FN:           FINDDICTCONCEPT
 * SUBJ:	Find the concept for a word from a *.dict file
@@ -3418,14 +3429,11 @@ CONCEPT *CG::findDictConcept(_TCHAR *str)
 {
 bool dirty = false;
 CONCEPT *word = kbm_->dict_get_word(str,dirty);
-
-_TCHAR allDict[FNAMESIZ];
-_stprintf(allDict, _T("%s%call.dict"), kbdir_, DIR_CH);
-
-std::_t_ifstream inFile(CTCHAR2CA(allDict), std::ios::in);
-if (!inFile) {
+if (!allDictStream_)
 	return word;
-}
+
+allDictStream_.clear();
+allDictStream_.seekg(0);
 
 _TCHAR buf[MAXMSG];
 _TCHAR attr[MAXSTR];
@@ -3439,7 +3447,7 @@ const char *strd = strp.data();
 int32_t length2 = strp.length();
 bool done = false;
 
-while (inFile.getline(buf, MAXMSG) && !done) {
+while (allDictStream_.getline(buf, MAXMSG) && !done) {
 	icu::StringPiece sp(buf);
 	const char *line = sp.data();
 	int32_t length = sp.length();
@@ -3472,10 +3480,24 @@ while (inFile.getline(buf, MAXMSG) && !done) {
 	if (found) {
 		int start = e;
 		bool attrFlag = false;
+		bool doubleQuote = false;
+		bool backslash = false;
+
 		while (c) {
 			U8_NEXT(line, e, length, c);
-			if (attrFlag && (unicu::isWhiteSpace(c) || !c)) {
+			if (c == '\\') {
+				backslash = true;
+			}
+			else if (!doubleQuote && attrFlag && !backslash && c == '"') {
+				doubleQuote = true;
+				start++;
+			}
+			else if (doubleQuote && !backslash && c == '"') {
+				bool nothing = true;
+			}
+			else if (attrFlag && ((!doubleQuote && unicu::isWhiteSpace(c)) || !c)) {
 				_tcsnccpy(val, &line[start],e-start-1);
+				e -= doubleQuote ? 1 : 0;
 				val[e-start-1] = '\0';
 				addSval(word,attr,val);
 				attrFlag = false;
@@ -3485,6 +3507,8 @@ while (inFile.getline(buf, MAXMSG) && !done) {
 				attr[e-start-1] = '\0';
 				start = e;
 				attrFlag = true;
+			} else if (backslash) {
+				backslash = false;
 			}
 		}
 
