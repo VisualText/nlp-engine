@@ -82,6 +82,7 @@ nlp_PUNCT =
 0;
 
 dirty_ = false;																// 05/12/00 AM.
+dictfile_ = false;
 #ifndef LINUX
 hkbdll_ = 0;																	// 06/29/00 AM.
 #endif
@@ -3411,12 +3412,14 @@ return word;
 bool CG::openDict() {
 _TCHAR allDict[FNAMESIZ];
 _stprintf(allDict, _T("%s%call.dict"), kbdir_, DIR_CH);
-allDictStream_.open(CTCHAR2CA(allDict), std::ios::in);	
-return allDictStream_ ? true : false;
+allDictStream_.open(CTCHAR2CA(allDict), std::ios::in);
+dictfile_ = allDictStream_ ? true : false;
+return dictfile_;
 }
 
 void CG::closeDict() {
 	allDictStream_.close();
+	dictfile_ = false;
 }
 
 /********************************************
@@ -3429,7 +3432,7 @@ CONCEPT *CG::findDictConcept(_TCHAR *str)
 {
 bool dirty = false;
 CONCEPT *word = kbm_->dict_get_word(str,dirty);
-if (!allDictStream_)
+if (!dictfile_)
 	return word;
 
 allDictStream_.clear();
