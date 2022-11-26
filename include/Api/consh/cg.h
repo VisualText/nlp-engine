@@ -598,6 +598,7 @@ private:
 	std::_t_ifstream allDictStream_;
 
 	bool dirty_;					// KB dirty flag.						// 05/12/00 AM.
+	bool dictfile_;
 
 	// For diverting the libconsh error output.						// 09/16/99 AM.
 	std::_t_ostream *serr_;															// 09/16/99 AM.
