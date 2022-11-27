@@ -627,47 +627,61 @@ _stprintf(path, _T("%s%c%s%c%s"), getAppdir(),DIR_CH, kbdir,DIR_CH, dir);
 // hier, word, phr, attr.
 _TCHAR infile[MAXPATH*2];
 
-_TCHAR *suff;
+_TCHAR *suff, *timeMsg;
 suff = _T("kb");		// Kb file suffix.
+timeMsg = _T("[READ KB time=");
 
-
-// Using a master take file for readin kb.			// 07/01/03 AM.
-_stprintf(infile, _T("%s%cmain.%s"),path,DIR_CH,suff);	// 07/01/03 AM.
-if (f_exists(infile))										// 07/01/03 AM.
-	{
-	if (!readFile(infile))									// 07/01/03 AM.
-		return false;											// 07/01/03 AM.
-	}
-else
-	{
-	// The old way.											// 07/01/03 AM.
-
-	// Read in the HIER.KB file.
+if (openDict()) {
 	_stprintf(infile, _T("%s%chier.%s"), path,DIR_CH, suff);
 	if (!readFile(infile))
 		return false;
 
-	// BIND SYSTEM CONCEPTS TO CODE VARIABLES.
 	bind_sys(this);
 
-	// Read in the WORD.KB file.
-	_stprintf(infile, _T("%s%cword.%s"), path, DIR_CH, suff);
-	if (!readFile(infile))
-		return false;
+	readDict();
+	closeDict();
+	timeMsg = _T("[READ all.dict time=");
 
-	// Read in the PHR.KB file.
-	_stprintf(infile, _T("%s%cphr.%s"), path, DIR_CH, suff);
-	if (!readFile(infile))
-		return false;
+} else {
 
-	// Read in the ATTR.KB file.
-	_stprintf(infile, _T("%s%cattr.%s"), path, DIR_CH, suff);
-	if (!readFile(infile))
-		return false;
+	// Using a master take file for readin kb.			// 07/01/03 AM.
+	_stprintf(infile, _T("%s%cmain.%s"),path,DIR_CH,suff);	// 07/01/03 AM.
+	if (f_exists(infile))										// 07/01/03 AM.
+		{
+		if (!readFile(infile))									// 07/01/03 AM.
+			return false;											// 07/01/03 AM.
+		}
+	else
+		{
+		// The old way.											// 07/01/03 AM.
+
+		// Read in the HIER.KB file.
+		_stprintf(infile, _T("%s%chier.%s"), path,DIR_CH, suff);
+		if (!readFile(infile))
+			return false;
+
+		// BIND SYSTEM CONCEPTS TO CODE VARIABLES.
+		bind_sys(this);
+
+		// Read in the WORD.KB file.
+		_stprintf(infile, _T("%s%cword.%s"), path, DIR_CH, suff);
+		if (!readFile(infile))
+			return false;
+
+		// Read in the PHR.KB file.
+		_stprintf(infile, _T("%s%cphr.%s"), path, DIR_CH, suff);
+		if (!readFile(infile))
+			return false;
+
+		// Read in the ATTR.KB file.
+		_stprintf(infile, _T("%s%cattr.%s"), path, DIR_CH, suff);
+		if (!readFile(infile))
+			return false;
 	}
+}
 
 e_time = clock();												// 10/20/99 AM.
-*cgerr << _T("[READ KB time=")									// 10/20/99 AM.
+*cgerr << timeMsg
 	  << (double) (e_time - s_time)/CLOCKS_PER_SEC	// 10/20/99 AM.
 	  << _T(" sec]") << std::endl;									// 10/20/99 AM.
 
@@ -3420,6 +3434,81 @@ return dictfile_;
 void CG::closeDict() {
 	allDictStream_.close();
 	dictfile_ = false;
+}
+
+bool CG::readDict() {
+
+	bool found;
+	bool dirty;
+	CONCEPT *wordCon;
+	_TCHAR buf[MAXMSG];
+	_TCHAR word[MAXSTR];
+	_TCHAR attr[MAXSTR];
+	_TCHAR val[MAXSTR];
+		
+	while (allDictStream_.getline(buf, MAXMSG)) {
+		icu::StringPiece sp(buf);
+		const char *line = sp.data();
+		int32_t length = sp.length();
+
+		UChar32 c = 1;
+		int32_t e = 0;
+		int32_t ulen = 0;
+		found = false;
+		U8_NEXT(line, e, length, c);
+
+		while (c) {
+			if (unicu::isWhiteSpace(c)) {
+				_tcsnccpy(word, &line[0],e-1);
+				word[e-1] = '\0';
+				wordCon = kbm_->dict_get_word(word,dirty);
+				found = true;
+				break;
+			}
+			U8_NEXT(line, e, length, c);
+		}
+
+		// If found, parse the attributes and add
+		if (found) {
+			int start = e;
+			bool attrFlag = false;
+			bool doubleQuote = false;
+			bool backslash = false;
+
+			while (c) {
+				U8_NEXT(line, e, length, c);
+				if (c == '\\') {
+					backslash = true;
+				}
+				else if (!doubleQuote && attrFlag && !backslash && c == '"') {
+					doubleQuote = true;
+					start++;
+				}
+				else if (doubleQuote && !backslash && c == '"') {
+					bool nothing = true;
+				}
+				else if (attrFlag && ((!doubleQuote && unicu::isWhiteSpace(c)) || !c)) {
+					_tcsnccpy(val, &line[start],e-start-1);
+					e -= doubleQuote ? 1 : 0;
+					val[e-start-1] = '\0';
+					addSval(wordCon,attr,val);
+					attrFlag = false;
+					start = e;
+				} else if (c == '=') {
+					_tcsnccpy(attr, &line[start],e-start-1);
+					attr[e-start-1] = '\0';
+					start = e;
+					attrFlag = true;
+				} else if (backslash) {
+					backslash = false;
+				}
+			}
+
+			found = false;
+		}
+	}
+
+	return true;
 }
 
 /********************************************

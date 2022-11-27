@@ -208,6 +208,8 @@ public:
 	CONCEPT *findWordConcept(_TCHAR*);								// 06/29/03 AM.
 
 	bool openDict();
+	bool readDict();
+
 	CONCEPT *findDictConcept(_TCHAR*);
 	void closeDict();
 

@@ -558,7 +558,7 @@ if (eana_->getFtimesum())									// 10/13/99 AM.
 		infile = _T("");
 	{
 	std::_t_strstream gerrStr;
-	gerrStr << _T("[Total passes: ") << num << std::ends;
+	gerrStr << _T("[Total passes: ") << num  << _T("]") << std::ends;
 	nlp_->logOut(&gerrStr,false);
 	}
 
