@@ -1,9 +1,9 @@
 name: Attach Engine File Assets
 
 on:
-  release:
-    types:
-      - created
+  push:
+    tags:
+    - '*'
 
 jobs:    
   zip-files:
