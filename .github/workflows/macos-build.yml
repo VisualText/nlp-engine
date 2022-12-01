@@ -2,9 +2,9 @@
 name: MacOS Create Released Asset
 
 on:
-  release:
-    types:
-      - created
+  push:
+    tags:
+    - '*'
       
 jobs:
   build_executable:
