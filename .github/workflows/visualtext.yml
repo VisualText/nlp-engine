@@ -1,9 +1,9 @@
 name: Attach VisualText Files Assets
 
 on:
-  release:
-    types:
-      - created
+  push:
+    tags:
+    - '*'
 
 jobs:    
   zip-files:
