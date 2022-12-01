@@ -3477,7 +3477,15 @@ bool CG::readDict() {
 
 			while (c) {
 				U8_NEXT(line, e, length, c);
-				if (c == '\\') {
+				if (!attrFlag && unicu::isWhiteSpace(c)) {
+					_tcsnccpy(word, &line[start],e-start-1);
+					word[e-start-1] = '\0';
+					wordCon = makeConcept(wordCon,word);
+					kbm_->dict_get_word(word,dirty);
+					start = e;
+					attrFlag = true;
+				}
+				else if (c == '\\') {
 					backslash = true;
 				}
 				else if (!doubleQuote && attrFlag && !backslash && c == '"') {
