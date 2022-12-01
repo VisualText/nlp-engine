@@ -1,9 +1,9 @@
 name: Linux Create Released Asset
 
 on:
-  release:
-    types:
-      - created
+  push:
+    tags:
+    - '*'
 
 jobs:
   job:
