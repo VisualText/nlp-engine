@@ -1,0 +1,52 @@
+
+name: Windows Create Released Asset
+
+on:
+  push:
+    tags:
+    - '*'
+
+jobs:
+  build_executable:
+    name: Move Assets to tag
+
+    steps:
+      - name: Move Windows Assets
+      - uses: actions/download-artifact@v3
+        with:
+          name: "nlpw.exe"
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: "icudt71.dll"
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: "icuuc71.dll"
+
+      - name: Move Linux Assets
+      - uses: actions/download-artifact@v3
+        with:
+          name: "nlpw.exe"
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: "libicutu.a"
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: "libicuuc.a"
+          
+      - name: Move MacOS Assets
+      - uses: actions/download-artifact@v3
+        with:
+          name: "nlpw.exe"
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: "ibicutum.a"
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: "libicuucm.a"
+

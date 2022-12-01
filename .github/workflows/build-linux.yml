@@ -1,13 +1,12 @@
-name: Linux Create Released Asset
+name: Test Linux
 
 on:
   push:
-    tags:
-    - '*'
-
+    branches: [master]
+      
 jobs:
   job:
-    name: Linux Create NLP-ENGINE
+    name: Linux Compile Test
     runs-on: ubuntu-latest
 
     env:
@@ -18,11 +17,11 @@ jobs:
         with:
           submodules: true
 
-      - name: Vcpkg bootstrap Shell
+      - name: Vcpkg Bootstrap Shell
         run: ./bootstrap-vcpkg.sh
         shell: bash
         working-directory: vcpkg
-        
+
       - name: Install autoconf-archive
         run: sudo apt-get install -y autoconf-archive
 
@@ -35,28 +34,28 @@ jobs:
 
       - name: Generate Solution Linux
         run: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_BUILD_TYPE=release -B build -S .
-        
-      - name: List $RUNNER_WORKSPACE before build
+
+      - name: List $RUNNER_WORKSPACE after build
         run: find $RUNNER_WORKSPACE
         shell: bash
-        
+
       - name: Cmake Build all targets Linux
         run: cmake --build build/ --target all
 
-      - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./bin/nlp.exe"
-          asset_name: "nlpl.exe"
+      - name: Test executable --version
+        run: ./bin/nlp.exe --version || true
 
-      - uses: shogo82148/actions-upload-release-asset@v1
+      - uses: actions/upload-artifact@v3
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./vcpkg_installed/x64-linux/lib/libicutu.a"
-          asset_name: "libicutu.a"
+          name: nlpl.exe
+          path: bin/nlp.exe
 
-      - uses: shogo82148/actions-upload-release-asset@v1
+      - uses: actions/upload-artifact@v3
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./vcpkg_installed/x64-linux/lib/libicuuc.a"
-          asset_name: "libicuuc.a"
+          name: ibicutu.a
+          path: vcpkg_installed/x64-linux/lib/libicutu.a
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: libicuuc.a
+          path: vcpkg_installed/x64-linux/lib/libicuuc.a

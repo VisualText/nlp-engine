@@ -2,8 +2,7 @@ name: Attach VisualText Files Assets
 
 on:
   push:
-    tags:
-    - '*'
+    branches: [master]
 
 jobs:    
   zip-files:

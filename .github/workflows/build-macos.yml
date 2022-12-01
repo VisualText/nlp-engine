@@ -3,8 +3,6 @@ name: Test MaxOS
 on:
   push:
     branches: [master]
-  pull_request:
-    types: [opened, synchronize, reopened]
   
 jobs:
   job:
@@ -46,21 +44,21 @@ jobs:
       - name: Test executable --version
         run: ./bin/nlp.exe --version || true
         
-      - name: List $RUNNER_WORKSPACE before build
+      - name: List $RUNNER_WORKSPACE after build
         run: find $RUNNER_WORKSPACE
         shell: bash
 
       - uses: actions/upload-artifact@v3
         with:
-          name: nlp.exe
-          path: bin
+          name: nlpm.exe
+          path: bin/nlp.exe
           
       - uses: actions/upload-artifact@v3
         with:
-          name: ibicutu.a
+          name: ibicutum.a
           path: vcpkg/buildtrees/icu/x64-osx-rel/lib/libicutu.a
 
       - uses: actions/upload-artifact@v3
         with:
-          name: libicuuc.a
+          name: libicuucm.a
           path: vcpkg/buildtrees/icu/x64-osx-rel/lib/libicuuc.a
