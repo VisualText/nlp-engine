@@ -4,7 +4,9 @@ name: Test Windows
 on:
   push:
     branches: [master]
-
+  pull_request:
+    types: [opened]
+ 
 jobs:
   job:
     name: Windows Compile Test

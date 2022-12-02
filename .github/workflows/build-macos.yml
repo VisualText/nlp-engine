@@ -3,6 +3,8 @@ name: Test MaxOS
 on:
   push:
     branches: [master]
+  pull_request:
+    types: [opened]
   
 jobs:
   job:

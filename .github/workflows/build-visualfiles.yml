@@ -3,7 +3,9 @@ name: Attach VisualText Files Assets
 on:
   push:
     branches: [master]
-
+  pull_request:
+    types: [opened]
+    
 jobs:    
   zip-files:
     runs-on: ubuntu-latest
