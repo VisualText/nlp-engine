@@ -19,7 +19,7 @@ jobs:
 
     - uses: shogo82148/actions-upload-release-asset@v1
       with:
-        upload_url: ${{ github.event.release.upload_url }}
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./nlpw.exe"
         asset_name: "nlpw.exe"
 
@@ -31,7 +31,7 @@ jobs:
 
     - uses: shogo82148/actions-upload-release-asset@v1
       with:
-        upload_url: ${{ github.event.release.upload_url }}
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./icudt71.dll"
         asset_name: "icudt71.dll"
 
@@ -43,7 +43,7 @@ jobs:
         
     - uses: shogo82148/actions-upload-release-asset@v1
       with:
-        upload_url: ${{ github.event.release.upload_url }}
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./libicuuc.a.dll"
         asset_name: "libicuuc.a.dll"
 
@@ -55,7 +55,7 @@ jobs:
                 
     - uses: shogo82148/actions-upload-release-asset@v1
       with:
-        upload_url: ${{ github.event.release.upload_url }}
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./nlpl.exe"
         asset_name: "nlpl.exe"
 
@@ -67,7 +67,7 @@ jobs:
                         
     - uses: shogo82148/actions-upload-release-asset@v1
       with:
-        upload_url: ${{ github.event.release.upload_url }}
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./libicutu.a"
         asset_name: "libicutu.a"
 
@@ -79,7 +79,7 @@ jobs:
                                 
     - uses: shogo82148/actions-upload-release-asset@v1
       with:
-        upload_url: ${{ github.event.release.upload_url }}
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./libicuuc.a"
         asset_name: "libicuuc.a"
         
@@ -91,7 +91,7 @@ jobs:
                                         
     - uses: shogo82148/actions-upload-release-asset@v1
       with:
-        upload_url: ${{ github.event.release.upload_url }}
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./nlpm.exe"
         asset_name: "nlpm.exe"
 
@@ -103,7 +103,7 @@ jobs:
                                                 
     - uses: shogo82148/actions-upload-release-asset@v1
       with:
-        upload_url: ${{ github.event.release.upload_url }}
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./libicutum.a"
         asset_name: "libicutum.a"
 
@@ -115,7 +115,7 @@ jobs:
                                                         
     - uses: shogo82148/actions-upload-release-asset@v1
       with:
-        upload_url: ${{ github.event.release.upload_url }}
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./libicuucm.a"
         asset_name: "libicuucm.a"
 
