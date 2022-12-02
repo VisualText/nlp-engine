@@ -7,7 +7,7 @@ on:
     types: [opened]
 
 jobs:    
-  zip-files:
+  zip_files:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,6 +16,7 @@ jobs:
         with:
           node-version: "16.x"
       - run: git submodule update --init --recursive
+
       - uses: papeloto/action-zip@v1
         with:
           files: analyzers/ data/
@@ -26,10 +27,3 @@ jobs:
         with:
           name: nlpengine
           path: ${{ github.workspace }}/nlpengine.zip
-          
-      - name: Release
-        uses: fnkr/github-action-ghr@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        env:
-          GHR_PATH: nlpengine.zip
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

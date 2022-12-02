@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Move Windows Assets
-      - uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v3
         with:
           name: "nlpw.exe"
 
@@ -25,7 +25,7 @@ jobs:
           name: "icuuc71.dll"
 
       - name: Move Linux Assets
-      - uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v3
         with:
           name: "nlpw.exe"
 
@@ -38,7 +38,7 @@ jobs:
           name: "libicuuc.a"
           
       - name: Move MacOS Assets
-      - uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v3
         with:
           name: "nlpw.exe"
 

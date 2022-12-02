@@ -7,8 +7,8 @@ on:
     types: [opened]
       
 jobs:
-  job:
-    name: uild NLP-ENGINE
+  build_engine:
+    name: Build NLP-ENGINE
     runs-on: ubuntu-latest
 
     env:
