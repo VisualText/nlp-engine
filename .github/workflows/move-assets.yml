@@ -11,42 +11,56 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Move Windows Assets
-        uses: actions/download-artifact@v3
-        with:
-          name: "nlpw.exe"
+    - name: Fetch Windows exe
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: build-windows.yml
+        name: nlpw.exe
 
-      - uses: actions/download-artifact@v3
-        with:
-          name: "icudt71.dll"
+    - name: Fetch Windows icu1
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: build-windows.yml
+        name: "icudt71.dll"
 
-      - uses: actions/download-artifact@v3
-        with:
-          name: "icuuc71.dll"
+    - name: Fetch Windows icu2
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: build-windows.yml
+        name: "icuuc71.dll"
 
-      - name: Move Linux Assets
-        uses: actions/download-artifact@v3
-        with:
-          name: "nlpw.exe"
+    - name: Fetch Linux exe
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: build-linux.yml
+        name: nlpl.exe
 
-      - uses: actions/download-artifact@v3
-        with:
-          name: "libicutu.a"
+    - name: Fetch Linux icu1
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: build-linux.yml
+        name: "libicutu.a"
 
-      - uses: actions/download-artifact@v3
-        with:
-          name: "libicuuc.a"
-          
-      - name: Move MacOS Assets
-        uses: actions/download-artifact@v3
-        with:
-          name: "nlpw.exe"
+    - name: Fetch Linux icu2
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: build-linux.yml
+        name: "libicuuc.a"
+        
+    - name: Fetch MacOS exe
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: build-macos.yml
+        name: nlpm.exe
 
-      - uses: actions/download-artifact@v3
-        with:
-          name: "ibicutum.a"
+    - name: Fetch MacOS icu1
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: build-macos.yml
+        name: "libicutum.a"
 
-      - uses: actions/download-artifact@v3
-        with:
-          name: "libicuucm.a"
-
+    - name: Fetch MacOS icu2
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: build-macos.yml
+        name: "libicuucm.a"
