@@ -2,9 +2,6 @@ name: Attach VisualText Files Assets
 
 on:
   push:
-    branches: [master]
-  pull_request:
-    types: [opened]
 
 jobs:    
   zip_files:
