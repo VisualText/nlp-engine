@@ -97,13 +97,14 @@ jobs:
     needs: create_release
     runs-on: ubuntu-latest
 
-    steps:    - name: Add nlpw.exe asset
+    steps:
+    - name: Add nlpw asset
       uses: shogo82148/actions-upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./nlpw.exe"
 
-    - name: Add nlpl.exe asset
+    - name: Add nlpl asset
       uses: shogo82148/actions-upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
