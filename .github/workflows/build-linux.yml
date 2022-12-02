@@ -8,7 +8,7 @@ on:
       
 jobs:
   job:
-    name: uild NLP-ENGINE
+    name: Build NLP-ENGINE
     runs-on: ubuntu-latest
 
     env:
