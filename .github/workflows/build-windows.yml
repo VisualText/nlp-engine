@@ -46,7 +46,7 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: nlp.exe
+          name: nlpw.exe
           path: bin/Release
 
       - uses: actions/upload-artifact@v3
