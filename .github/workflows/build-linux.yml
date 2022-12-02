@@ -1,4 +1,4 @@
-name: Test Linux
+name: Linux
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
       
 jobs:
   job:
-    name: Linux Compile Test
+    name: uild NLP-ENGINE
     runs-on: ubuntu-latest
 
     env:

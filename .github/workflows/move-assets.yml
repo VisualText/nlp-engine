@@ -1,5 +1,5 @@
 
-name: Windows Create Released Asset
+name: Move Assets to Tag
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build_executable:
-    name: Move Assets to tag
+    runs-on: ubuntu-latest
 
     steps:
       - name: Move Windows Assets
