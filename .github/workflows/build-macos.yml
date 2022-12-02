@@ -2,6 +2,9 @@ name: MaxOS
 
 on:
   push:
+    branches: [master]
+  pull_request:
+    types: [opened]
   
 jobs:
   build_engine:

@@ -1,8 +1,9 @@
 name: Attach Engine File Assets
 
 on:
-  push:
- 
+  pull_request:
+    types: [opened]
+
 jobs:    
   zip_files:
     runs-on: ubuntu-latest
