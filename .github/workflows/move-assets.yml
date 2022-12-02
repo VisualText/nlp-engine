@@ -64,3 +64,15 @@ jobs:
       with:
         workflow: build-macos.yml
         name: "libicuucm.a"
+
+    - name: Fetch Engine Files
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: build-enginefiles.yml
+        name: "nlpengine.zip"
+
+    - name: Fetch VisualText Files
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: build-visualfiles.yml
+        name: "nlpengine.zip"
