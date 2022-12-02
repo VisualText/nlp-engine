@@ -1,4 +1,4 @@
-name: Test MaxOS
+name: MaxOS
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
   
 jobs:
   job:
-    name: MacOS Compile Test
+    name: Build NLP-ENGINE
     runs-on: macOS-12
 
     env:
