@@ -18,10 +18,10 @@ jobs:
         name: nlpw.exe
 
     - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./nlpw.exe"
-          asset_name: "nlpw.exe"
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: "./nlpw.exe"
+        asset_name: "nlpw.exe"
 
     - name: Fetch Windows icu1
       uses: dawidd6/action-download-artifact@v2
@@ -30,10 +30,10 @@ jobs:
         name: "icudt71.dll"
 
     - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./icudt71.dll"
-          asset_name: "icudt71.dll"
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: "./icudt71.dll"
+        asset_name: "icudt71.dll"
 
     - name: Fetch Windows icu2
       uses: dawidd6/action-download-artifact@v2
@@ -42,10 +42,10 @@ jobs:
         name: "libicuuc.a.dll"
         
     - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./libicuuc.a.dll"
-          asset_name: "libicuuc.a.dll"
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: "./libicuuc.a.dll"
+        asset_name: "libicuuc.a.dll"
 
     - name: Fetch Linux exe
       uses: dawidd6/action-download-artifact@v2
@@ -54,10 +54,10 @@ jobs:
         name: nlpl.exe
                 
     - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./nlpl.exe"
-          asset_name: "nlpl.exe"
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: "./nlpl.exe"
+        asset_name: "nlpl.exe"
 
     - name: Fetch Linux icu1
       uses: dawidd6/action-download-artifact@v2
@@ -66,10 +66,10 @@ jobs:
         name: "libicutu.a"
                         
     - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./libicutu.a"
-          asset_name: "libicutu.a"
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: "./libicutu.a"
+        asset_name: "libicutu.a"
 
     - name: Fetch Linux icu2
       uses: dawidd6/action-download-artifact@v2
@@ -78,10 +78,10 @@ jobs:
         name: "libicuuc.a"
                                 
     - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./libicuuc.a"
-          asset_name: "libicuuc.a"
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: "./libicuuc.a"
+        asset_name: "libicuuc.a"
         
     - name: Fetch MacOS exe
       uses: dawidd6/action-download-artifact@v2
@@ -90,10 +90,10 @@ jobs:
         name: nlpm.exe
                                         
     - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./nlpm.exe"
-          asset_name: "nlpm.exe"
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: "./nlpm.exe"
+        asset_name: "nlpm.exe"
 
     - name: Fetch MacOS icu1
       uses: dawidd6/action-download-artifact@v2
@@ -102,10 +102,10 @@ jobs:
         name: "libicutum.a"
                                                 
     - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./libicutum.a"
-          asset_name: "libicutum.a"
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: "./libicutum.a"
+        asset_name: "libicutum.a"
 
     - name: Fetch MacOS icu2
       uses: dawidd6/action-download-artifact@v2
@@ -114,10 +114,10 @@ jobs:
         name: "libicuucm.a"
                                                         
     - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./libicuucm.a"
-          asset_name: "libicuucm.a"
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: "./libicuucm.a"
+        asset_name: "libicuucm.a"
 
     - name: Fetch Engine Files
       uses: dawidd6/action-download-artifact@v2
