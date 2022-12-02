@@ -51,10 +51,10 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: ibicutu.a
+          name: icudt71.dll
           path: bin/Release/icudt71.dll
 
       - uses: actions/upload-artifact@v3
         with:
-          name: libicuuc.a
+          name: icuuc71.dll
           path: bin/Release/icuuc71.dll
