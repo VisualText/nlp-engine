@@ -1,9 +1,6 @@
-
 name: Windows
 
 on:
-  push:
-    branches: [master]
   pull_request:
     types: [opened]
  
