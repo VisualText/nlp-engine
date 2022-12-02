@@ -546,6 +546,7 @@ if (!node)
 // If unique part of speech, can reduce here as desired.
 // Put attributes on.
 CONCEPT *con = 0;
+CONCEPT *conChild = 0;
 
 switch (typ)
 	{
@@ -578,6 +579,10 @@ switch (typ)
 		if (lcstr && *lcstr) {
 
 			con = cg_->findWordConcept(lcstr);
+			if (conChild = cg_->Down(con)) {
+				int stophere = 1;
+			}
+
 			ATTR *attrs = cg_->findAttrs(con);
 			_TCHAR buf[NAMESIZ];
 			_TCHAR bufval[NAMESIZ];
