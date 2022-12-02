@@ -8,7 +8,7 @@ on:
     types: [opened]
  
 jobs:
-  job:
+  build_engine:
     name: Build NLP-ENGINE
     runs-on: windows-2019
 

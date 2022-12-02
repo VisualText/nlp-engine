@@ -7,7 +7,7 @@ on:
     types: [opened]
   
 jobs:
-  job:
+  build_engine:
     name: Build NLP-ENGINE
     runs-on: macOS-12
 
