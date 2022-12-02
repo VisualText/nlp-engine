@@ -57,7 +57,7 @@ jobs:
           
       - uses: actions/upload-artifact@v3
         with:
-          name: ibicutum.a
+          name: libicutum.a
           path: vcpkg/buildtrees/icu/x64-osx-rel/lib/libicutu.a
 
       - uses: actions/upload-artifact@v3
