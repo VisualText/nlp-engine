@@ -69,13 +69,13 @@ jobs:
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: build-enginefiles.yml
-        name: "nlpengine.zip"
+        name: "nlpengine"
 
     - name: Fetch VisualText Files
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: build-visualfiles.yml
-        name: "visualtext.zip"
+        name: "visualtext"
 
     - name: Create Release
       id: create_release
@@ -146,10 +146,10 @@ jobs:
       uses: shogo82148/actions-upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./nlpengine.zip"
+        asset_path: "./nlpengine"
                 
     - name: Add visualtext.zip asset
       uses: shogo82148/actions-upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./visualtext.zip"
+        asset_path: "./visualtext"
