@@ -2,8 +2,7 @@ name: Attach Engine File Assets
 
 on:
   push:
-    tags:
-    - '*'
+    branches: [master]
 
 jobs:    
   zip-files:
