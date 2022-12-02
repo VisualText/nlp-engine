@@ -12,77 +12,84 @@ jobs:
 
     steps:
     - name: Fetch Windows exe
+      id: f1
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: build-windows.yml
         name: nlpw.exe
 
     - name: Fetch Windows icu1
+      id: f2
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: build-windows.yml
         name: "icudt71.dll"
 
     - name: Fetch Windows icu2
+      id: f3
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: build-windows.yml
         name: "icuuc71.dll"
 
     - name: Fetch Linux exe
+      id: f4
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: build-linux.yml
         name: nlpl.exe
 
     - name: Fetch Linux icu1
+      id: f5
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: build-linux.yml
         name: "libicutu.a"
 
     - name: Fetch Linux icu2
+      id: f6
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: build-linux.yml
         name: "libicuuc.a"
         
     - name: Fetch MacOS exe
+      id: f7
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: build-macos.yml
         name: nlpm.exe
 
     - name: Fetch MacOS icu1
+      id: f8
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: build-macos.yml
         name: "libicutum.a"
 
     - name: Fetch MacOS icu2
+      id: f9
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: build-macos.yml
         name: "libicuucm.a"
 
     - name: Fetch Engine Files
+      id: f10
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: build-enginefiles.yml
         name: "nlpengine"
 
     - name: Fetch VisualText Files
+      id: f11
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: build-visualfiles.yml
         name: "visualtext"
 
-  create_release:
-    needs: download_assets
-    runs-on: ubuntu-latest
-
-    steps:
     - name: Create Release
+      if: ${{ steps.f1.outcome == 'success' && steps.f2.outcome == 'success' && steps.f3.outcome == 'success' && steps.f4.outcome == 'success' && steps.f5.outcome == 'success' && steps.f6.outcome == 'success' && steps.f7.outcome == 'success' && steps.f8.outcome == 'success' && steps.f9.outcome == 'success' && steps.f10.outcome == 'success' && steps.f11.outcome == 'success' }}
       id: create_release
       uses: actions/create-release@v1.0.0
       env:
