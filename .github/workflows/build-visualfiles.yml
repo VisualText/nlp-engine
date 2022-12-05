@@ -1,9 +1,8 @@
 name: Attach VisualText Files Assets
 
 on:
-  push:
-    branches:
-      - master
+  pull_request:
+    branches: main
 
 jobs:    
   zip_files:
@@ -19,4 +18,5 @@ jobs:
           
       - uses: actions/upload-artifact@v1
         with:
+          name: visualtext.zip
           path: ${{ github.workspace }}/visualtext.zip

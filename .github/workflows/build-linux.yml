@@ -1,9 +1,8 @@
 name: Linux
 
 on:
-  push:
-    branches:
-      - master
+  pull_request:
+    branches: main
       
 jobs:
   build_engine:
@@ -46,18 +45,21 @@ jobs:
       - name: Test executable --version
         run: ./bin/nlp.exe --version || true
 
-      - name: Rename nlp.exe to nlpl.exe
-        run: mv bin/nlp.exe bin/nlpl.exe
+      - name: Copy nlp.exe to nlpl.exe
+        run: cp bin/nlp.exe bin/nlpl.exe
         shell: bash
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload nlpl.exe
+        uses: actions/upload-artifact@v3
         with:
           path: bin/nlpl.exe
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload libicutu.a
+        uses: actions/upload-artifact@v3
         with:
           path: vcpkg_installed/x64-linux/lib/libicutu.a
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload libicuuc.a
+        uses: actions/upload-artifact@v3
         with:
           path: vcpkg_installed/x64-linux/lib/libicuuc.a

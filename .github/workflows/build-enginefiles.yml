@@ -1,9 +1,8 @@
 name: Attach Engine File Assets
 
 on:
-  push:
-    branches:
-      - master
+  pull_request:
+    branches: main
 
 jobs:    
   zip_files:
@@ -24,4 +23,5 @@ jobs:
           
       - uses: actions/upload-artifact@v1
         with:
+          name: nlpengine.zip
           path: ${{ github.workspace }}/nlpengine.zip
