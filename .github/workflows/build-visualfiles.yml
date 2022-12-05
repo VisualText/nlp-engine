@@ -19,4 +19,5 @@ jobs:
           
       - uses: actions/upload-artifact@v1
         with:
+          name: visualtext.zip
           path: ${{ github.workspace }}/visualtext.zip

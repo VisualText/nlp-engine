@@ -43,17 +43,20 @@ jobs:
         shell: bash
 
       - name: Rename nlp.exe to nlpw.exe
-        run: ren bin/Release/nlp.exe bin/Release/nlpw.exe
+        run: cp bin/Release/nlp.exe bin/Release/nlpw.exe
         shell: bash
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload nlpw.exe
+        uses: actions/upload-artifact@v3
         with:
           path: bin/Release/nlpw.exe
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload icudt71.dll
+        uses: actions/upload-artifact@v3
         with:
           path: bin/Release/icudt71.dll
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload icuuc71.dll
+        uses: actions/upload-artifact@v3
         with:
           path: bin/Release/icuuc71.dll

@@ -50,19 +50,28 @@ jobs:
         shell: bash
 
       - name: Rename nlp.exe to nlpm.exe
-        run: ren bin/nlp.exe bin/nlpm.exe
+        run: mv bin/nlp.exe bin/nlpm.exe
         shell: bash
 
-      - uses: actions/upload-artifact@v3
+      - name: Rename libicutu.a to libicutum.a
+        run: cp vcpkg/buildtrees/icu/x64-osx-rel/lib/libicutu.a vcpkg/buildtrees/icu/x64-osx-rel/lib/libicutum.a
+        shell: bash
+
+      - name: Rename libicuuc.a to libicuucm.a
+        run: cp vcpkg/buildtrees/icu/x64-osx-rel/lib/libicuuc.a vcpkg/buildtrees/icu/x64-osx-rel/lib/libicuucm.a
+        shell: bash
+
+      - name: Upload nlpm.exe
+        uses: actions/upload-artifact@v3
         with:
           path: bin/nlpm.exe
           
-      - uses: actions/upload-artifact@v3
+      - name: Upload libicutu.a
+        uses: actions/upload-artifact@v3
         with:
-          name: libicutum.a
-          path: vcpkg/buildtrees/icu/x64-osx-rel/lib/libicutu.a
+          path: vcpkg/buildtrees/icu/x64-osx-rel/lib/libicutum.a
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload libicuuc.a
+        uses: actions/upload-artifact@v3
         with:
-          name: libicuucm.a
-          path: vcpkg/buildtrees/icu/x64-osx-rel/lib/libicuuc.a
+          path: vcpkg/buildtrees/icu/x64-osx-rel/lib/libicuucm.a
