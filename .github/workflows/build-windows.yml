@@ -42,7 +42,7 @@ jobs:
         shell: bash
 
       - name: Rename nlp.exe to nlpw.exe
-        run: copy bin/Release/nlp.exe bin/Release/nlpw.exe
+        run: cp bin/Release/nlp.exe bin/Release/nlpw.exe
         shell: bash
 
       - name: Upload nlpw.exe
