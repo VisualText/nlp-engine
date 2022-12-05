@@ -2,7 +2,7 @@ name: Windows
 
 on:
   pull_request:
-    branches: main
+    types: [opened, synchronize, reopened]
  
 jobs:
   build_engine:

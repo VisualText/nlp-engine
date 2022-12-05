@@ -2,7 +2,7 @@ name: Attach Engine File Assets
 
 on:
   pull_request:
-    branches: main
+    types: [opened, synchronize, reopened]
 
 jobs:    
   zip_files:
