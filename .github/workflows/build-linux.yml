@@ -46,10 +46,13 @@ jobs:
       - name: Test executable --version
         run: ./bin/nlp.exe --version || true
 
+      - name: Rename nlp.exe to nlpl.exe
+        run: mv bin/nlp.exe bin/nlpl.exe
+        shell: bash
+
       - uses: actions/upload-artifact@v3
         with:
-          name: nlpl.exe
-          path: bin/nlp.exe
+          path: bin/nlpl.exe
 
       - uses: actions/upload-artifact@v3
         with:
