@@ -52,10 +52,8 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: libicutu.a
           path: vcpkg_installed/x64-linux/lib/libicutu.a
 
       - uses: actions/upload-artifact@v3
         with:
-          name: libicuuc.a
           path: vcpkg_installed/x64-linux/lib/libicuuc.a
