@@ -3,7 +3,7 @@ name: Attach Engine File Assets
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:    
   zip_files:

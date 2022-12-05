@@ -1,8 +1,9 @@
 name: Linux
 
-push:
-  branches:
-    - main
+on:
+  push:
+    branches:
+      - master
       
 jobs:
   build_engine:

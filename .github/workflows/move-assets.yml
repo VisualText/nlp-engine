@@ -1,4 +1,4 @@
-name: Move Assets to Tag
+name: Move Assets to Release
 
 on:
   push:
