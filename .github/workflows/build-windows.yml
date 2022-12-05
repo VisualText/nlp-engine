@@ -42,10 +42,13 @@ jobs:
         run: find $RUNNER_WORKSPACE
         shell: bash
 
+      - name: Rename nlp.exe to nlpw.exe
+        run: ren bin/Release/nlp.exe bin/Release/nlpw.exe
+        shell: bash
+
       - uses: actions/upload-artifact@v3
         with:
-          name: nlpw.exe
-          path: bin/Release/nlp.exe
+          path: bin/Release/nlpw.exe
 
       - uses: actions/upload-artifact@v3
         with:

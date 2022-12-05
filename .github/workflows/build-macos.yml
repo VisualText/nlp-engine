@@ -49,10 +49,13 @@ jobs:
         run: find $RUNNER_WORKSPACE
         shell: bash
 
+      - name: Rename nlp.exe to nlpm.exe
+        run: ren bin/nlp.exe bin/nlpm.exe
+        shell: bash
+
       - uses: actions/upload-artifact@v3
         with:
-          name: nlpm.exe
-          path: bin/nlp.exe
+          path: bin/nlpm.exe
           
       - uses: actions/upload-artifact@v3
         with:
