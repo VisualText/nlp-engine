@@ -1,9 +1,8 @@
 name: MaxOS
 
 on:
-  push:
-    branches:
-      - master
+  pull_request:
+    branches: main
   
 jobs:
   build_engine:
@@ -49,15 +48,15 @@ jobs:
         run: find $RUNNER_WORKSPACE
         shell: bash
 
-      - name: Rename nlp.exe to nlpm.exe
-        run: mv bin/nlp.exe bin/nlpm.exe
+      - name: Copy nlp.exe to nlpm.exe
+        run: cp bin/nlp.exe bin/nlpm.exe
         shell: bash
 
-      - name: Rename libicutu.a to libicutum.a
+      - name: Copy libicutu.a to libicutum.a
         run: cp vcpkg/buildtrees/icu/x64-osx-rel/lib/libicutu.a vcpkg/buildtrees/icu/x64-osx-rel/lib/libicutum.a
         shell: bash
 
-      - name: Rename libicuuc.a to libicuucm.a
+      - name: Copy libicuuc.a to libicuucm.a
         run: cp vcpkg/buildtrees/icu/x64-osx-rel/lib/libicuuc.a vcpkg/buildtrees/icu/x64-osx-rel/lib/libicuucm.a
         shell: bash
 
@@ -66,12 +65,12 @@ jobs:
         with:
           path: bin/nlpm.exe
           
-      - name: Upload libicutu.a
+      - name: Upload libicutum.a
         uses: actions/upload-artifact@v3
         with:
           path: vcpkg/buildtrees/icu/x64-osx-rel/lib/libicutum.a
 
-      - name: Upload libicuuc.a
+      - name: Upload libicuucm.a
         uses: actions/upload-artifact@v3
         with:
           path: vcpkg/buildtrees/icu/x64-osx-rel/lib/libicuucm.a

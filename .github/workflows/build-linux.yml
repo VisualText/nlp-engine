@@ -1,9 +1,8 @@
 name: Linux
 
 on:
-  push:
-    branches:
-      - master
+  pull_request:
+    branches: main
       
 jobs:
   build_engine:
@@ -46,7 +45,7 @@ jobs:
       - name: Test executable --version
         run: ./bin/nlp.exe --version || true
 
-      - name: Rename nlp.exe to nlpl.exe
+      - name: Copy nlp.exe to nlpl.exe
         run: cp bin/nlp.exe bin/nlpl.exe
         shell: bash
 
