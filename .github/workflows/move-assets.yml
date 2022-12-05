@@ -68,13 +68,13 @@ jobs:
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: build-enginefiles.yml
-        name: "nlpengine"
+        name: "nlpengine.zip"
 
     - name: Fetch VisualText Files
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: build-visualfiles.yml
-        name: "visualtext"
+        name: "visualtext.zip"
 
     - name: Create Release
       id: create_release
