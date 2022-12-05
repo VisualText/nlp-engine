@@ -44,14 +44,12 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: nlpw.exe
-          path: bin/Release
+          path: bin/Release/nlp.exe
 
       - uses: actions/upload-artifact@v3
         with:
-          name: icudt71.dll
           path: bin/Release/icudt71.dll
 
       - uses: actions/upload-artifact@v3
         with:
-          name: icuuc71.dll
           path: bin/Release/icuuc71.dll
