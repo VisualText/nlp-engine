@@ -41,21 +41,24 @@ jobs:
         run: find $RUNNER_WORKSPACE
         shell: bash
 
-      - name: Rename nlp.exe to nlpw.exe
+      - name: Copy nlp.exe to nlpw.exe
         run: cp bin/Release/nlp.exe bin/Release/nlpw.exe
         shell: bash
 
       - name: Upload nlpw.exe
         uses: actions/upload-artifact@v3
         with:
+          name: nlpw.exe
           path: bin/Release/nlpw.exe
 
       - name: Upload icudt71.dll
         uses: actions/upload-artifact@v3
         with:
+          name: icudt71.dll
           path: bin/Release/icudt71.dll
 
       - name: Upload icuuc71.dll
         uses: actions/upload-artifact@v3
         with:
+          name: icuuc71.dll
           path: bin/Release/icuuc71.dll

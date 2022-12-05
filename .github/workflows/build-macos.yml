@@ -63,14 +63,17 @@ jobs:
       - name: Upload nlpm.exe
         uses: actions/upload-artifact@v3
         with:
+          name: nlpm.exe
           path: bin/nlpm.exe
           
       - name: Upload libicutum.a
         uses: actions/upload-artifact@v3
         with:
+          name: libicutum.a
           path: vcpkg/buildtrees/icu/x64-osx-rel/lib/libicutum.a
 
       - name: Upload libicuucm.a
         uses: actions/upload-artifact@v3
         with:
+          name: libicuucm.a
           path: vcpkg/buildtrees/icu/x64-osx-rel/lib/libicuucm.a
