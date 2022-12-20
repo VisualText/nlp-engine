@@ -17,7 +17,7 @@ jobs:
 
       - uses: papeloto/action-zip@v1
         with:
-          files: analyzers/ data/
+          files: data/
           recursive: false
           dest: nlpengine.zip
           
