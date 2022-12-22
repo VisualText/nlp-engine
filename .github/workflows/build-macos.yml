@@ -25,12 +25,19 @@ jobs:
       - name: Install autoconf-archive
         run: brew install autoconf-archive
 
+      - name: Install libboost-all-dev
+        run: brew install boost
+
       - name: Install Brew
         run: brew install automake
 
-      - name: Install ICU
+      - name: Install 3rd Party
         run: vcpkg install
         working-directory: vcpkg
+
+      - name: List $RUNNER_WORKSPACE before build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
 
       - name: Make build directory
         run: mkdir build
@@ -42,14 +49,14 @@ jobs:
         run: cmake --build build/ --target all
 
       - name: Test executable --version
-        run: ./bin/nlp.exe --version || true
+        run: ./bin/nlp --version || true
         
       - name: List $RUNNER_WORKSPACE after build
         run: find $RUNNER_WORKSPACE
         shell: bash
 
       - name: Copy nlp.exe to nlpm.exe
-        run: cp bin/nlp.exe bin/nlpm.exe
+        run: cp bin/nlp bin/nlpm.exe
         shell: bash
 
       - name: Copy libicutu.a to libicutum.a
@@ -65,15 +72,33 @@ jobs:
         with:
           name: nlpm.exe
           path: bin/nlpm.exe
+                              
+      - name: Copy libicutu.a to libicutum.a
+        run: cp vcpkg_installed/x64-osx/lib/libicutu.a vcpkg_installed/x64-osx/lib/libicutum.a
+        shell: bash
           
       - name: Upload libicutum.a
         uses: actions/upload-artifact@v3
         with:
           name: libicutum.a
-          path: vcpkg/buildtrees/icu/x64-osx-rel/lib/libicutum.a
+          path: vcpkg_installed/x64-osx/lib/libicutum.a
+                    
+      - name: Copy libicuuc.a to libicuucm.a
+        run: cp vcpkg_installed/x64-osx/lib/libicuuc.a vcpkg_installed/x64-osx/lib/libicuucm.a
+        shell: bash
 
       - name: Upload libicuucm.a
         uses: actions/upload-artifact@v3
         with:
           name: libicuucm.a
-          path: vcpkg/buildtrees/icu/x64-osx-rel/lib/libicuucm.a
+          path: vcpkg_installed/x64-osx/lib/libicuucm.a
+          
+      - name: Copy libboost_filesystem.a to boost_filesystemm.a
+        run: cp vcpkg_installed/x64-osx/lib/libboost_filesystem.a vcpkg_installed/x64-osx/lib/boost_filesystemm.a
+        shell: bash
+          
+      - name: Upload boost_filesystemm.a
+        uses: actions/upload-artifact@v3
+        with:
+          name: boost_filesystemm.a
+          path: vcpkg_installed/x64-osx/lib/boost_filesystemm.a

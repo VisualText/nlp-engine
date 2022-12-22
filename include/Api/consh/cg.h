@@ -23,6 +23,8 @@ All rights reserved.
 #include <fstream>											// Upgrade	// 01/24/01 AM.
 #endif
 
+#include <vector>
+
 #define FNAMESIZ 256
 #define NAMESIZ  256
 //#define PATHSIZ  512
@@ -207,11 +209,11 @@ public:
 	// Find dictionary concept for given string.						// 06/29/03 AM.
 	CONCEPT *findWordConcept(_TCHAR*);								// 06/29/03 AM.
 
-	bool openDict();
-	bool readDict();
+	bool openDict(std::vector<std::string>& files);
+	bool readDicts(std::vector<std::string> files);
+	bool readDict(std::string file);
 
 	CONCEPT *findDictConcept(_TCHAR*);
-	void closeDict();
 
 	// Get (find else add) dict concept for given string.			// 06/29/03 AM.
 	CONCEPT *getWordConcept(_TCHAR *str);
@@ -564,7 +566,7 @@ public:
 		);
 
 	// The internal function for the TAKE command or take().
-	bool readFile(_TCHAR *infile);
+	bool readFile(_TCHAR *file);
 
 	void prunePhrasesRec(CONCEPT *conc, bool root);					// 08/10/99 AM.
 

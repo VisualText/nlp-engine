@@ -3,6 +3,8 @@
     "name": "nlp-engine",
     "version": "1.21.4",
     "dependencies": [
-      "icu"
+      "icu",
+      "boost-filesystem",
+      "boost-regex"
     ]
   }

@@ -25,9 +25,16 @@ jobs:
       - name: Install autoconf-archive
         run: sudo apt-get install -y autoconf-archive
 
-      - name: Install ICU
+      - name: Install libboost-all-dev
+        run: sudo apt-get install libboost-all-dev
+
+      - name: Install 3rd Party
         run: vcpkg install
         working-directory: vcpkg
+        
+      - name: List $RUNNER_WORKSPACE before build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
 
       - name: Make build directory
         run: mkdir build
@@ -43,10 +50,10 @@ jobs:
         run: cmake --build build/ --target all
 
       - name: Test executable --version
-        run: ./bin/nlp.exe --version || true
+        run: ./bin/nlp --version || true
 
       - name: Copy nlp.exe to nlpl.exe
-        run: cp bin/nlp.exe bin/nlpl.exe
+        run: cp bin/nlp bin/nlpl.exe
         shell: bash
 
       - name: Upload nlpl.exe
@@ -66,3 +73,13 @@ jobs:
         with:
           name: libicuuc.a
           path: vcpkg_installed/x64-linux/lib/libicuuc.a
+       
+      - name: Copy to boost_filesystem.a
+        run: cp vcpkg_installed/x64-linux/lib/libboost_filesystem.a vcpkg_installed/x64-linux/lib/boost_filesystem.a
+        shell: bash
+
+      - name: Upload boost_filesystem.a
+        uses: actions/upload-artifact@v3
+        with:
+          name: boost_filesystem.a
+          path: vcpkg_installed/x64-linux/lib/boost_filesystem.a
