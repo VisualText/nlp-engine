@@ -18,23 +18,5 @@ if (NOT DEFINED CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Release")
 endif()
 
-if(WIN32)
-  add_executable(nlp ${nlp_src})
-  target_link_libraries(nlp PUBLIC prim kbm consh words lite ${${ICU_LIBRARIES}})
-  #target_link_libraries(nlp PUBLIC prim kbm consh words lite odbc)
-  #add_custom_command(TARGET nlp POST_BUILD
-  #  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE}/nlp.exe ${CMAKE_SOURCE_DIR}
-  #)
-else()
-  file(GLOB icu_dyn ${CMAKE_SOURCE_DIR}/vcpkg/packages/icu_x64-windows/bin/*.o)
-  add_executable(nlp.exe ${nlp_src})
-  target_link_libraries(nlp.exe PUBLIC prim kbm consh words lite ${VERSION} ${icu_dyn})
-  #target_link_libraries(nlp.exe PUBLIC prim kbm consh words lite odbc)
-  execute_process(COMMAND touch ${VERSION})
-  add_custom_command(TARGET nlp.exe
-    PRE_LINK COMMAND bash ${CMAKE_SOURCE_DIR}/nlp/makeversion.sh -o ${VERSION}
-  )
-  #add_custom_command(TARGET nlp.exe
-  #  POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/bin/nlp.exe ${CMAKE_SOURCE_DIR}
-  #)
-endif()
+add_executable(nlp ${nlp_src})
+target_link_libraries(nlp PUBLIC prim kbm consh words lite ${${ICU_LIBRARIES}})

@@ -21,7 +21,7 @@ jobs:
         run: bootstrap-vcpkg.bat
         working-directory: vcpkg
 
-      - name: Install ICU
+      - name: Install 3rd Party
         run: vcpkg install
         working-directory: vcpkg
 

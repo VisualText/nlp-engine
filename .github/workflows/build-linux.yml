@@ -29,7 +29,7 @@ jobs:
         run: vcpkg install
         working-directory: vcpkg
         
-      - name: List $RUNNER_WORKSPACE after build
+      - name: List $RUNNER_WORKSPACE before build
         run: find $RUNNER_WORKSPACE
         shell: bash
 
@@ -47,10 +47,10 @@ jobs:
         run: cmake --build build/ --target all
 
       - name: Test executable --version
-        run: ./bin/nlp.exe --version || true
+        run: ./bin/nlp --version || true
 
       - name: Copy nlp.exe to nlpl.exe
-        run: cp bin/nlp.exe bin/nlpl.exe
+        run: cp bin/nlp bin/nlpl.exe
         shell: bash
 
       - name: Upload nlpl.exe
