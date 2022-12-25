@@ -25,9 +25,13 @@ jobs:
       - name: Install autoconf-archive
         run: sudo apt-get install -y autoconf-archive
 
-      - name: Install ICU
+      - name: Install 3rd Party
         run: vcpkg install
         working-directory: vcpkg
+        
+      - name: List $RUNNER_WORKSPACE after build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
 
       - name: Make build directory
         run: mkdir build
