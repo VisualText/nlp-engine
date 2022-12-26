@@ -27,7 +27,13 @@ jobs:
       with:
         workflow: build-windows.yml
         name: "icuuc71.dll"
-
+        
+    - name: Fetch Windows boost_filesystem
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: build-windows.yml
+        name: "boost_filesystem.dll"
+        
     - name: Fetch Linux exe
       uses: dawidd6/action-download-artifact@v2
       with:
@@ -46,6 +52,12 @@ jobs:
         workflow: build-linux.yml
         name: "libicuuc.a"
         
+    - name: Fetch Linux boost_filesystem
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: build-linux.yml
+        name: "boost_filesystem.a"
+        
     - name: Fetch MacOS exe
       uses: dawidd6/action-download-artifact@v2
       with:
@@ -63,6 +75,12 @@ jobs:
       with:
         workflow: build-macos.yml
         name: "libicuucm.a"
+
+    - name: Fetch MacOS boost_filesystem
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: build-macos.yml
+        name: "boost_filesystemm.a"
 
     - name: Fetch Engine Files
       uses: dawidd6/action-download-artifact@v2
