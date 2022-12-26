@@ -115,7 +115,13 @@ jobs:
       uses: shogo82148/actions-upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./icuuc71.dll"
+        asset_path: "./icuuc71.dll
+                        
+    - name: Add boost_filesystem.dll asset
+      uses: shogo82148/actions-upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: "./boost_filesystem.dll"
                 
     - name: Add libicutu.a asset
       uses: shogo82148/actions-upload-release-asset@v1
@@ -128,6 +134,12 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./libicuuc.a"
+                        
+    - name: Add boost_filesystem.a asset
+      uses: shogo82148/actions-upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: "./boost_filesystem.a"
                 
     - name: Add libicutum.a asset
       uses: shogo82148/actions-upload-release-asset@v1
@@ -140,6 +152,12 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./libicuucm.a"
+                        
+    - name: Add boost_filesystemm.a asset
+      uses: shogo82148/actions-upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: "./boost_filesystemm.a"
                 
     - name: Add nlpengine.zip asset
       uses: shogo82148/actions-upload-release-asset@v1
