@@ -115,7 +115,7 @@ jobs:
       uses: shogo82148/actions-upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./icuuc71.dll
+        asset_path: "./icuuc71.dll"
                         
     - name: Add boost_filesystem.dll asset
       uses: shogo82148/actions-upload-release-asset@v1
