@@ -22,6 +22,11 @@ All rights reserved.
 #include <sys/stat.h>
 #include "lite/dir.h"
 
+#include <vector>
+
+#include "boost/filesystem.hpp"
+#include "boost/regex.hpp"
+using namespace boost::filesystem;
 
 /********************************************
 * FN:		RM_PATH
@@ -354,4 +359,25 @@ if (!strcmp_ni(path, _T("C:\\WIN"), 6)) // Don't want to go near these.
 	}
 #endif
 return true;
+}
+
+LITE_API bool
+read_files(_TCHAR *dir, _TCHAR *filter, std::vector<std::string>& files) 
+{
+    files.clear();
+
+	path p(dir);
+	directory_iterator end_itr;
+	boost::regex the_filter(filter);
+	boost::smatch what;
+
+    for (directory_iterator itr(p); itr != end_itr; ++itr)
+    {
+		std::string str = itr->path().string();
+        if (is_regular_file(itr->path()) && regex_match(str, what, the_filter)) {
+            files.push_back(str);
+        }
+	}
+
+	return files.size() > 0 ? true : false;
 }

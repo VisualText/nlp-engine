@@ -152,9 +152,7 @@ bool DICTTok::Execute(Parse *parse, Seqn *seqn)
 initTok(parse);
 
 // Ignore the pass data.
-cg_->openDict();
 Tokenize(parse);
-cg_->closeDict();
 
 return finTok();	// Final cleanups for pass.
 }

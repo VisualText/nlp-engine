@@ -52,9 +52,13 @@ All rights reserved.
 #include "io.h"
 #include "cmd.h"
 #include "dyn.h"					// 06/29/00 AM.
+#include "lite/dir.h"
 
 #include "prim/unicu.h"
 using namespace unicu;
+
+#include "boost/filesystem.hpp"
+using namespace boost::filesystem;
 
 // Number of ind attr commands per file.								// 07/01/03 AM.
 // Segmenting the attr commands into multiple cmd files.			// 07/01/03 AM.
@@ -626,20 +630,17 @@ _stprintf(path, _T("%s%c%s%c%s"), getAppdir(),DIR_CH, kbdir,DIR_CH, dir);
 // Prep and open up the input file.
 // hier, word, phr, attr.
 _TCHAR infile[MAXPATH*2];
-
 _TCHAR *suff, *timeMsg;
 suff = _T("kb");		// Kb file suffix.
 timeMsg = _T("[READ KB time=");
+std::vector<std::string> files;
 
-if (openDict()) {
+if (openDict(files)) {
 	_stprintf(infile, _T("%s%chier.%s"), path,DIR_CH, suff);
 	if (!readFile(infile))
 		return false;
-
 	bind_sys(this);
-
-	readDict();
-	closeDict();
+	readDicts(files);
 	timeMsg = _T("[READ all.dict time=");
 
 } else {
@@ -3380,7 +3381,7 @@ bool CG::readFile(
 {
 //cout << "infile=" << infile << std::endl;
 //ifstream fin(infile, std::ios::in | std::ios::nocreate);	// Upgrade. // 01/24/01 AM.
-std::_t_ifstream fin(TCHAR2A(infile), std::ios::in);							// Upgrade.	// 01/24/01 AM.
+std::_t_ifstream fin(infile, std::ios::in);							// Upgrade.	// 01/24/01 AM.
 #ifdef UNICODE
 if (!u_readbom(&fin))
 	{
@@ -3423,21 +3424,36 @@ if (!(word = kbm_->dict_find_word(str)) )
 return word;
 }
 
-bool CG::openDict() {
-_TCHAR allDict[FNAMESIZ];
-_stprintf(allDict, _T("%s%call.dict"), kbdir_, DIR_CH);
-allDictStream_.open(CTCHAR2CA(allDict), std::ios::in);
-dictfile_ = allDictStream_ ? true : false;
-return dictfile_;
-}
-
-void CG::closeDict() {
-	allDictStream_.close();
+bool CG::openDict(std::vector<std::string>& files) {
 	dictfile_ = false;
+	files.clear();
+
+	path p(kbdir_);
+	p /= _T("all.dict");
+	allDictStream_.open(p.string(), std::ios::in);
+
+	if (allDictStream_) {
+		files.push_back(p.string());
+		allDictStream_.close();
+		dictfile_ = true;
+	} else {
+		read_files(kbdir_,_T("(.*\\.dict)$"),files);
+		dictfile_ = files.size() ? true : false;
+	}
+
+	return dictfile_;
 }
 
-bool CG::readDict() {
+bool CG::readDicts(std::vector<std::string> files) {
+	std::vector<std::string>::iterator ptr;
+	if (files.size() == 0) return false;
+    for (ptr = files.begin(); ptr < files.end(); ptr++) {
+        readDict(*ptr);
+	}
+	return true;
+}
 
+bool CG::readDict(std::string file) {
 	bool found;
 	bool dirty;
 	CONCEPT *wordCon;
@@ -3445,6 +3461,8 @@ bool CG::readDict() {
 	_TCHAR word[MAXSTR];
 	_TCHAR attr[MAXSTR];
 	_TCHAR val[MAXSTR];
+
+	allDictStream_.open(file, std::ios::in);
 		
 	while (allDictStream_.getline(buf, MAXMSG)) {
 		icu::StringPiece sp(buf);
@@ -3515,6 +3533,8 @@ bool CG::readDict() {
 			found = false;
 		}
 	}
+
+	allDictStream_.close();
 
 	return true;
 }
