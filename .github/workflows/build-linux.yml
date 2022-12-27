@@ -73,13 +73,9 @@ jobs:
         with:
           name: libicuuc.a
           path: vcpkg_installed/x64-linux/lib/libicuuc.a
-       
-      - name: Copy to boost_filesystem.a
-        run: cp vcpkg_installed/x64-linux/lib/libboost_filesystem.a vcpkg_installed/x64-linux/lib/boost_filesystem.a
-        shell: bash
 
       - name: Upload boost_filesystem.a
         uses: actions/upload-artifact@v3
         with:
-          name: boost_filesystem.a
-          path: vcpkg_installed/x64-linux/lib/boost_filesystem.a
+          name: libboost_filesystem.a
+          path: vcpkg_installed/x64-linux/lib/libboost_filesystem.a
