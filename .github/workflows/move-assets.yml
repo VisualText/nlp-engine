@@ -56,7 +56,7 @@ jobs:
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: build-linux.yml
-        name: "boost_filesystem.a"
+        name: "libboost_filesystem.a"
         
     - name: Fetch MacOS exe
       uses: dawidd6/action-download-artifact@v2
@@ -80,7 +80,7 @@ jobs:
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: build-macos.yml
-        name: "boost_filesystemm.a"
+        name: "libboost_filesystemm.a"
 
     - name: Fetch Engine Files
       uses: dawidd6/action-download-artifact@v2
@@ -139,7 +139,7 @@ jobs:
       uses: shogo82148/actions-upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./boost_filesystem.dll"
+        asset_path: "./boost_filesystem-vc142-mt-x32-1_80.dll"
                 
     - name: Add libicutu.a asset
       uses: shogo82148/actions-upload-release-asset@v1
@@ -157,7 +157,7 @@ jobs:
       uses: shogo82148/actions-upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./boost_filesystem.a"
+        asset_path: "./libboost_filesystem.a"
                 
     - name: Add libicutum.a asset
       uses: shogo82148/actions-upload-release-asset@v1
@@ -175,7 +175,7 @@ jobs:
       uses: shogo82148/actions-upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./boost_filesystemm.a"
+        asset_path: "./libboost_filesystemm.a"
                 
     - name: Add nlpengine.zip asset
       uses: shogo82148/actions-upload-release-asset@v1

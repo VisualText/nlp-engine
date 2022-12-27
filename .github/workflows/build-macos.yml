@@ -59,14 +59,6 @@ jobs:
         run: cp bin/nlp bin/nlpm.exe
         shell: bash
 
-      - name: Copy libicutu.a to libicutum.a
-        run: cp vcpkg/buildtrees/icu/x64-osx-rel/lib/libicutu.a vcpkg/buildtrees/icu/x64-osx-rel/lib/libicutum.a
-        shell: bash
-
-      - name: Copy libicuuc.a to libicuucm.a
-        run: cp vcpkg/buildtrees/icu/x64-osx-rel/lib/libicuuc.a vcpkg/buildtrees/icu/x64-osx-rel/lib/libicuucm.a
-        shell: bash
-
       - name: Upload nlpm.exe
         uses: actions/upload-artifact@v3
         with:
@@ -94,11 +86,11 @@ jobs:
           path: vcpkg_installed/x64-osx/lib/libicuucm.a
           
       - name: Copy libboost_filesystem.a to boost_filesystemm.a
-        run: cp vcpkg_installed/x64-osx/lib/libboost_filesystem.a vcpkg_installed/x64-osx/lib/boost_filesystemm.a
+        run: cp vcpkg_installed/x64-osx/lib/libboost_filesystem.a vcpkg_installed/x64-osx/lib/libboost_filesystemm.a
         shell: bash
           
       - name: Upload boost_filesystemm.a
         uses: actions/upload-artifact@v3
         with:
-          name: boost_filesystemm.a
-          path: vcpkg_installed/x64-osx/lib/boost_filesystemm.a
+          name: libboost_filesystemm.a
+          path: vcpkg_installed/x64-osx/lib/libboost_filesystemm.a
