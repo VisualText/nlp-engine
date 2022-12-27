@@ -59,14 +59,6 @@ jobs:
         run: cp bin/nlp bin/nlpm.exe
         shell: bash
 
-      - name: Copy libicutu.a to libicutum.a
-        run: cp vcpkg/buildtrees/icu/x64-osx-rel/lib/libicutu.a vcpkg/buildtrees/icu/x64-osx-rel/lib/libicutum.a
-        shell: bash
-
-      - name: Copy libicuuc.a to libicuucm.a
-        run: cp vcpkg/buildtrees/icu/x64-osx-rel/lib/libicuuc.a vcpkg/buildtrees/icu/x64-osx-rel/lib/libicuucm.a
-        shell: bash
-
       - name: Upload nlpm.exe
         uses: actions/upload-artifact@v3
         with:
