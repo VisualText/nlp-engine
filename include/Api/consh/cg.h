@@ -24,6 +24,7 @@ All rights reserved.
 #endif
 
 #include <vector>
+#include <filesystem>
 
 #define FNAMESIZ 256
 #define NAMESIZ  256
@@ -209,8 +210,8 @@ public:
 	// Find dictionary concept for given string.						// 06/29/03 AM.
 	CONCEPT *findWordConcept(_TCHAR*);								// 06/29/03 AM.
 
-	bool openDict(std::vector<std::string>& files);
-	bool readDicts(std::vector<std::string> files);
+	bool openDict(std::vector<std::filesystem::path>& files);
+	bool readDicts(std::vector<std::filesystem::path> files);
 	bool readDict(std::string file);
 
 	CONCEPT *findDictConcept(_TCHAR*);

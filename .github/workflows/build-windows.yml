@@ -62,9 +62,3 @@ jobs:
         with:
           name: icuuc71.dll
           path: bin/Release/icuuc71.dll
-
-      - name: Upload boost_filesystem.dll
-        uses: actions/upload-artifact@v3
-        with:
-          name: boost_filesystem.dll
-          path: bin/Release/boost_filesystem-vc142-mt-x32-1_80.dll

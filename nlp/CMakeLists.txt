@@ -19,4 +19,4 @@ if (NOT DEFINED CMAKE_BUILD_TYPE)
 endif()
 
 add_executable(nlp ${nlp_src})
-target_link_libraries(nlp PUBLIC prim kbm consh words lite ${ICU_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(nlp PUBLIC prim kbm consh words lite ${ICU_LIBRARIES})

@@ -25,9 +25,6 @@ jobs:
       - name: Install autoconf-archive
         run: brew install autoconf-archive
 
-      - name: Install libboost-all-dev
-        run: brew install boost
-
       - name: Install Brew
         run: brew install automake
 
@@ -84,13 +81,3 @@ jobs:
         with:
           name: libicuucm.a
           path: vcpkg_installed/x64-osx/lib/libicuucm.a
-          
-      - name: Copy libboost_filesystem.a to boost_filesystemm.a
-        run: cp vcpkg_installed/x64-osx/lib/libboost_filesystem.a vcpkg_installed/x64-osx/lib/libboost_filesystemm.a
-        shell: bash
-          
-      - name: Upload boost_filesystemm.a
-        uses: actions/upload-artifact@v3
-        with:
-          name: libboost_filesystemm.a
-          path: vcpkg_installed/x64-osx/lib/libboost_filesystemm.a
