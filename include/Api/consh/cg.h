@@ -214,6 +214,13 @@ public:
 	bool readDicts(std::vector<std::filesystem::path> files);
 	bool readDict(std::string file);
 
+	bool openKBB(std::vector<std::filesystem::path>& files);
+	bool readKBBs(std::vector<std::filesystem::path> files);
+	bool readKBB(std::string file);
+	CONCEPT *addConceptByPath(const char *line, std::vector<std::pair<int,int>> conIndices);
+
+	void outputTime(_TCHAR *timeMsg, clock_t s_time);
+
 	CONCEPT *findDictConcept(_TCHAR*);
 
 	// Get (find else add) dict concept for given string.			// 06/29/03 AM.
@@ -603,7 +610,6 @@ private:
 	std::_t_ifstream allDictStream_;
 
 	bool dirty_;					// KB dirty flag.						// 05/12/00 AM.
-	bool dictfile_;
 
 	// For diverting the libconsh error output.						// 09/16/99 AM.
 	std::_t_ostream *serr_;															// 09/16/99 AM.
