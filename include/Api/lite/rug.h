@@ -45,19 +45,19 @@ public:
 	// Access
 	CONCEPT *getGram();
 	NLP *getNLP();
-	_TCHAR *getAppdir();
+	std::filesystem::path getAppdir();
 	CG *getCG();						// 05/17/99 AM.
 	_TCHAR *getOutput();				// 05/18/99 AM.
-	_TCHAR *getOutdir();				// 05/18/99 AM.
+	std::filesystem::path getOutdir();				// 05/18/99 AM.
 	Eana *getErfa();					// 10/13/99 AM.
 
 	// Modify
 	void setGram(CONCEPT *);
 	void setNLP(NLP *);
-	void setAppdir(_TCHAR *);
+	void setAppdir(std::filesystem::path);
 	void setCG(CG *);					// 05/17/99 AM.
 	void setOutput(_TCHAR *);			// 05/18/99 AM.
-	void setOutdir(_TCHAR *);			// 05/18/99 AM.
+	void setOutdir(std::filesystem::path);			// 05/18/99 AM.
 	void setErfa(Eana *);			// 10/13/99 AM.
 
 	// General.

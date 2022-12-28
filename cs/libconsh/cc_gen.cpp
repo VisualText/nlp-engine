@@ -37,17 +37,20 @@ All rights reserved.
 **************************************************/
 
 void cc_gen_hdr(
-	_TCHAR *dir,		/* Output directory for gend code.		*/
+	std::filesystem::path dir,		/* Output directory for gend code.		*/
    _TCHAR *tail		/* Tail for naming generated files.		*/
    )
 {
 std::_t_ofstream *fp;
-_TCHAR s_nam[PATH];	/* Name of file.		*/
+std::filesystem::path s_name;
+s_name = dir;
+std::stringstream ss;
+ss << consh_CC_BASE << _T("code.h") << tail;
+s_name /= ss.str();
 
-_stprintf(s_nam, _T("%s%s%s_code.h%s"), dir, DIR_SEP, consh_CC_BASE, tail);
 //if (!file_open(s_nam, "w", &fp))
 //   return;
-fp = new std::_t_ofstream(TCHAR2A(s_nam));		// 04/20/99 AM.
+fp = new std::_t_ofstream(s_name.string());		// 04/20/99 AM.
 
 gen_file_head(fp);
 *fp << _T("extern bool cc_ini(void*);") << std::endl;							// 08/16/02 AM.

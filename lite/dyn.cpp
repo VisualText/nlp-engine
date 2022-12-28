@@ -32,7 +32,7 @@ typedef void (* lpFunc2)();	// 01/29/99 AM.
 
 
 //HINSTANCE load_dll()
-HINSTANCE load_dll(_TCHAR *path)
+HINSTANCE load_dll(std::filesystem::path p)
 {
     HINSTANCE  hLibrary;
     //lpFunc1 Func1;						// 05/15/00 AM.
@@ -42,7 +42,7 @@ HINSTANCE load_dll(_TCHAR *path)
     
 	 // Load the DLL.
     //hLibrary = LoadLibrary("d:\\apps\\App\\user\\debug\\user.dll");
-    hLibrary = LoadLibrary(path);
+    hLibrary = LoadLibrary(p.string());
     
     if (hLibrary != NULL)
     {
@@ -64,7 +64,7 @@ HINSTANCE load_dll(_TCHAR *path)
 	else
 		{
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Couldn't load library:") << path << _T("]")		// 08/20/00 AM.
+		gerrStr << _T("[Couldn't load library:") << p.string() << _T("]")		// 08/20/00 AM.
 					<< std::ends;
 		errOut(&gerrStr,false);
 		}

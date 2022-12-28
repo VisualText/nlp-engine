@@ -35,7 +35,7 @@ LITE_API bool safe_dir(_TCHAR *path);
 LITE_API bool read_files(
 	_TCHAR *dir,
 	_TCHAR *filter,
-	std::vector<std::string>& files
+	std::vector<std::filesystem::path>& files
 	);
 
 #endif

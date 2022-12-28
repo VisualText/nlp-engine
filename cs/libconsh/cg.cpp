@@ -57,8 +57,7 @@ All rights reserved.
 #include "prim/unicu.h"
 using namespace unicu;
 
-#include "boost/filesystem.hpp"
-using namespace boost::filesystem;
+#include <filesystem>
 
 // Number of ind attr commands per file.								// 07/01/03 AM.
 // Segmenting the attr commands into multiple cmd files.			// 07/01/03 AM.
@@ -72,7 +71,7 @@ int CG::count_ = 0;
 ********************************************/
 
 CG::CG(
-	_TCHAR *appdir,
+	std::filesystem::path appdir,
 	bool compiled,		// TRY loading compiled kb (kb.dll).		// 04/27/01 AM.
 	ALIST *alist		// List Manager.									// 08/14/02 AM.
 	)
@@ -90,17 +89,19 @@ dictfile_ = false;
 #ifndef LINUX
 hkbdll_ = 0;																	// 06/29/00 AM.
 #endif
-appdir_[0] = '\0';
-kbdir_[0] = '\0';
-if (appdir && *appdir) {
-	_tcscpy(appdir_, appdir);
-	_stprintf(kbdir_, _T("%s%ckb%cuser"), appdir_, DIR_CH, DIR_CH);
+appdir_.clear();
+kbdir_.clear();
+if (std::filesystem::exists(appdir)) {
+	appdir_ = appdir;
+	kbdir_ = appdir;
+	kbdir_ /= _T("kb");
+	kbdir_ /= _T("user");
 } else
 	{
 	std::_t_cerr << _T("[CG: No app dir given.]") << std::endl;
 	return;
 	}
-if (!appdir_ || !*appdir_)			// CONFIRM.							// 05/07/01 AM.
+if (appdir_.empty()) // CONFIRM.							// 05/07/01 AM.
 	{
 	std::_t_cerr << _T("[CG: BAD APPDIR]") << std::endl;									// 05/07/01 AM.
 	return;																		// 05/07/01 AM.
@@ -126,10 +127,10 @@ alist_ = alist;																// 08/14/02 AM.
 // Allowing multiple KBs/instances to use the same log file.	// 08/22/02 AM.
 if (count_ == 0)																// 08/22/02 AM.
 	{
-	_stprintf(errout_, _T("%s%clogs%ccgerr.log"),
-													appdir_,DIR_CH,DIR_CH);	// 02/21/02 AM.
-//	cgfileErr(errout_, /*DU*/ ferr_, serr_);							// 09/16/99 AM.
-	cgfileErr(errout_);														// 07/18/03 AM.
+	errout_ = appdir;
+	errout_ /= _T("logs");
+	errout_ /= _T("cgerr.log");
+	cgfileErr(errout_);
 	}
 else																				// 08/22/02 AM.
 	{
@@ -358,8 +359,8 @@ if (hkbdll_)																	// 06/29/00 AM.
 ********************************************/
 
 CG *CG::makeCG(                                                // 07/28/03 AM.
-	   ALIST *alist,
-      _TCHAR *appdir,
+	    ALIST *alist,
+    	std::filesystem::path appdir,
 		bool compiled
 		)
 {
@@ -377,7 +378,7 @@ if (cg)
 * FN:		Access Functions
 ********************************************/
 
-_TCHAR	*CG::getAppdir()	{return appdir_;}
+std::filesystem::path CG::getAppdir()	{return appdir_;}
 bool	 CG::getDirty()	{return dirty_;}								// 05/12/00 AM.
 AKBM	*CG::getKBM()		{return kbm_;}									// 06/11/02 AM.
 ALIST *CG::getALIST()	{return alist_;}								// 08/14/02 AM.
@@ -389,7 +390,7 @@ HINSTANCE CG::getHkbdll()	{return hkbdll_;}
 /********************************************
 * FN:		Class-wide Functions
 ********************************************/
-void	CG::setAppdir(_TCHAR *x)	{_tcscpy(appdir_, x);	}
+void	CG::setAppdir(std::filesystem::path x)	{appdir_ = x;	}
 void	CG::setDirty(bool x)		{dirty_ = x;			}				// 05/12/00 AM.
 void	CG::setKBM(AKBM *x)		{kbm_	= x;				}				// 06/11/02 AM.
 void	CG::setALIST(ALIST *x)	{alist_ = x;			}
@@ -434,13 +435,13 @@ if (count_)
 *			hier, word, attr, phrase.
 ********************************************/
 
-bool CG::writeKB(_TCHAR *dir)
+bool CG::writeKB(std::filesystem::path dir)
 {
 *cgerr << _T("[In writeKB]") << std::endl;
 clock_t s_time, e_time;										// 10/20/99 AM.
 s_time = clock();												// 10/20/99 AM.
 
-if (!dir || !*dir)
+if (!std::filesystem::exists(dir))
 	{
 	*cgerr << _T("[writeKB: Given no output directory.]") << std::endl;
 	return false;
@@ -465,36 +466,40 @@ if (!findConcept(root, _T("gram")))						// 10/20/99 AM.
 
 // For example, path= C:\apps\Resume\kb\user.
 _TCHAR *kbdir = _T("kb");
-_TCHAR path[MAXPATH];
-_stprintf(path, _T("%s%c%s%c%s"), getAppdir(), DIR_CH, kbdir, DIR_CH, dir);
-*cgerr << _T("[writeKB: path=") << path << _T("]") << std::endl;				// 02/19/02 AM.
+std::filesystem::path p;
+p = getAppdir();
+p /= kbdir;
+p /= dir;
+*cgerr << _T("[writeKB: path=") << p.string() << _T("]") << std::endl;				// 02/19/02 AM.
 
 // If directory doesn't exist, create it.
-make_dir(path);	// 05/06/99 AM.
+std::filesystem::create_directory(p);	// 05/06/99 AM.
 
 // Prep and open up the output files.
-_TCHAR o_hier[MAXPATH*2];
-_TCHAR o_word[MAXPATH*2];
-_TCHAR o_attr[MAXPATH*2];
-_TCHAR o_phr[MAXPATH*2];
+std::filesystem::path o_attr;
 
 _TCHAR *suff;
 suff = _T("kb");		// Kb file suffix.
 
-_stprintf(o_hier, _T("%s%chier.%s"), path, DIR_CH, suff);
-_stprintf(o_word, _T("%s%cword.%s"), path, DIR_CH, suff);
-_stprintf(o_phr,  _T("%s%cphr.%s"),  path, DIR_CH, suff);
+std::filesystem::path o_hier = suffPath(p,_T("hier"),suff);
+std::filesystem::path o_word = suffPath(p,_T("word"),suff);
+std::filesystem::path o_phr = suffPath(p,_T("phr"),suff);
 
 // Open the files for output.
-std::_t_ofstream f_hier(TCHAR2A(o_hier));
-std::_t_ofstream f_word(TCHAR2A(o_word));
-std::_t_ofstream f_phr(TCHAR2A(o_phr));
+std::_t_ofstream f_hier(o_hier);
+std::_t_ofstream f_word(o_word);
+std::_t_ofstream f_phr(o_phr);
 
 // May open multiples of these as needed.								// 07/01/03 AM.
 long n_attr = 1;	// Count attr#.kb files.							// 07/01/03 AM.
 long c_attr = 0;	// Count of attributes.								// 07/01/03 AM.
-_stprintf(o_attr, _T("%s%cattr%ld.%s"),path,DIR_CH,n_attr,suff);		// 07/01/03 AM.
-std::_t_ofstream *f_attr = new std::_t_ofstream(TCHAR2A(o_attr));								// 07/01/03 AM.
+o_attr = p;
+o_attr /= _T("attr");
+std::stringstream ss;
+ss << _T("main.") << suff;
+o_main /= ss.str();
+o_attr /= std::to_string(n_attr) + suff;
+std::_t_ofstream *f_attr = new std::_t_ofstream(o_attr);								// 07/01/03 AM.
 
 // KB BOOTSTRAP COMMANDS. (Axiomatics)									// 08/06/01 AM.
 // (Moved out of writeTree).												// 08/06/01 AM.
@@ -503,7 +508,7 @@ f_hier << _T("add root") << std::endl;												// 08/06/01 AM.
 
 // Traverse the concept hierarchy.  Write out the goodies.
 if (!writeTree(root, true, f_hier,f_word,f_phr, _T(""),
-			f_attr,n_attr,c_attr,o_attr,path,suff))					// 07/01/03 AM.
+			f_attr,n_attr,c_attr,o_attr,p.string(),suff))					// 07/01/03 AM.
 	{
 	delete f_attr;																// 08/07/03 AM.
 	return false;
@@ -520,7 +525,7 @@ delete f_attr;																	// 07/01/03 AM.
 f_attr = 0;																		// 07/01/03 AM.
 
 // Write a top-level command file						// 07/01/03 AM.
-writeKBmain(n_attr,path,suff);							// 07/01/03 AM.
+writeKBmain(n_attr,p,suff);							// 07/01/03 AM.
 
 e_time = clock();												// 10/20/99 AM.
 *cgerr << _T("[WRITE KB time=")								// 10/20/99 AM.
@@ -539,13 +544,12 @@ return true;
 
 bool CG::writeKBmain(
 	long n_attr,	// Number of attr files.
-	_TCHAR *path,		// Path for files.
+	std::filesystem::path dir,		// Path for files.
 	_TCHAR *suff		// File suffix.
 	)
 {
-_TCHAR o_main[4096];
-_stprintf(o_main, _T("%s%cmain.%s"), path, DIR_CH, suff);
-std::_t_ofstream f_main(TCHAR2A(o_main));
+std::filesystem::path o_main = suffPath(dir,_T("main"),suff);
+std::_t_ofstream f_main(o_main);
 
 #ifdef LINUX
 f_main << _T("take \"kb\\\\user\\\\hier.kb\"") << std::endl;
@@ -588,13 +592,13 @@ return true;
 * CR:		05/02/99 AM.
 ********************************************/
 
-bool CG::readKB(_TCHAR *dir)
+bool CG::readKB(std::filesystem::path dir)
 {
 *cgerr << _T("[readKB:]") << std::endl;											// 02/19/02 AM.
 clock_t s_time, e_time;										// 10/20/99 AM.
 s_time = clock();												// 10/20/99 AM.
 
-if (!dir || !*dir)
+if (!std::filesystem::exists(dir))
 	{
 	*cgerr << _T("[readKB: Given no input directory.]") << std::endl;
 	return false;
@@ -619,24 +623,29 @@ if (hkbdll_)
 
 // For example, path= C:\apps\Resume\kb\user.
 _TCHAR *kbdir = _T("kb");
-_TCHAR path[MAXPATH];
-_stprintf(path, _T("%s%c%s%c%s"), getAppdir(),DIR_CH, kbdir,DIR_CH, dir);
+std::filesystem::path p;
+p = getAppdir();
+p /= kbdir;
+p /= dir;
 // 08/11/99 AM. Checking out Purify warnings.
 *cgerr << _T("[readKB: path=")													// 02/19/02 AM.
-		 << path
+		 << p.string()
 		 << _T("]")
 		 << std::endl;
 
 // Prep and open up the input file.
 // hier, word, phr, attr.
-_TCHAR infile[MAXPATH*2];
+std::filesystem::path infile;
 _TCHAR *suff, *timeMsg;
 suff = _T("kb");		// Kb file suffix.
 timeMsg = _T("[READ KB time=");
-std::vector<std::string> files;
+std::vector<std::filesystem::path> files;
 
 if (openDict(files)) {
-	_stprintf(infile, _T("%s%chier.%s"), path,DIR_CH, suff);
+	infile = p;
+	std::stringstream ss;
+	ss << _T("hier.") << suff;
+	infile /= ss.str();
 	if (!readFile(infile))
 		return false;
 	bind_sys(this);
@@ -646,8 +655,12 @@ if (openDict(files)) {
 } else {
 
 	// Using a master take file for readin kb.			// 07/01/03 AM.
-	_stprintf(infile, _T("%s%cmain.%s"),path,DIR_CH,suff);	// 07/01/03 AM.
-	if (f_exists(infile))										// 07/01/03 AM.
+	infile = p;
+	std::stringstream ss;
+	ss << _T("main.") << suff;
+	infile /= ss.str();
+
+	if (std::filesystem::exists(infile))										// 07/01/03 AM.
 		{
 		if (!readFile(infile))									// 07/01/03 AM.
 			return false;											// 07/01/03 AM.
@@ -657,7 +670,10 @@ if (openDict(files)) {
 		// The old way.											// 07/01/03 AM.
 
 		// Read in the HIER.KB file.
-		_stprintf(infile, _T("%s%chier.%s"), path,DIR_CH, suff);
+		infile = p;
+		std::stringstream ss;
+		ss << _T("hier.") << suff;
+		infile /= ss.str();
 		if (!readFile(infile))
 			return false;
 
@@ -665,17 +681,26 @@ if (openDict(files)) {
 		bind_sys(this);
 
 		// Read in the WORD.KB file.
-		_stprintf(infile, _T("%s%cword.%s"), path, DIR_CH, suff);
+		infile = p;
+		std::stringstream ss2;
+		ss2 << _T("word.") << suff;
+		infile /= ss2.str();
 		if (!readFile(infile))
 			return false;
 
 		// Read in the PHR.KB file.
-		_stprintf(infile, _T("%s%cphr.%s"), path, DIR_CH, suff);
+		infile = p;
+		std::stringstream ss3;
+		ss3 << _T("phr.") << suff;
+		infile /= ss3.str();
 		if (!readFile(infile))
 			return false;
 
 		// Read in the ATTR.KB file.
-		_stprintf(infile, _T("%s%cattr.%s"), path, DIR_CH, suff);
+		infile = p;
+		std::stringstream ss4;
+		ss4 << _T("attr.") << suff;
+		infile /= ss4.str();
 		if (!readFile(infile))
 			return false;
 	}
@@ -716,10 +741,11 @@ bool CG::genKB()
 {
 // For example, path= d:\apps\resume\kb\ .
 _TCHAR *kbdir = _T("kb");
-_TCHAR path[MAXPATH];
-_stprintf(path, _T("%s%c%s"), getAppdir(),DIR_CH, kbdir);
+std::filesystem::path p;
+p = getAppdir();
+p /= kbdir;
 
-if (!cmd_gen_all(path,0,cgerr,this))
+if (!cmd_gen_all(p,0,cgerr,this))
 	return false;
 // Move generated code to cg folder.
 // Optionally compile here.
@@ -744,19 +770,25 @@ bool CG::compileKB(bool releaseflag)
 _TCHAR cmd[MAXSTR];
 cmd[0] = '\0';
 #ifndef LINUX
-if (releaseflag)
-	_stprintf(cmd,
+
+std::filesystem::path p;
+p = getAppdir();
+p /= _T("kb");
+
+if (releaseflag) {
+	p /= _T("kb_release.bat");
+	_tcscpy(cmd,p.string().c_str());
 // Generating and using makefile.										// 07/28/01 AM.
 //		"msdev %s%ckb%ckb.dsp /MAKE \"kb - Win32 Release\" /REBUILD",
 //		getAppdir(), DIR_CH,DIR_CH);
-		_T("%s%ckb%ckb_release.bat"), getAppdir(), DIR_CH, DIR_CH);
-else
-	_stprintf(cmd,
+} else {
+	p /= _T("ckb_debug.bat");
+	_tcscpy(cmd,p.string().c_str());
 // Generating and using makefile.										// 07/28/01 AM.
 //		"msdev %s%ckb%ckb.dsp /MAKE \"kb - Win32 Debug\" /REBUILD",
 //		"NMAKE /f \"%s%ckb%ckb.mak\" CFG=\"kb - Win32 Debug\" > c:\\xxx.txt",
 //		getAppdir(), DIR_CH,DIR_CH);
-		_T("%s%ckb%ckb_debug.bat"), getAppdir(), DIR_CH, DIR_CH);
+}
 if (_tsystem(cmd) < 0)															// 04/27/01 AM.
 	return false;																// 04/27/01 AM.
 #endif
@@ -822,13 +854,14 @@ _TCHAR *fname = _T("kbu");										// kbu.dll		// 01/17/06 AM.
 
 #endif
 
-_TCHAR buf[MAXSTR];
-_stprintf(buf, _T("%s%ckb%c%s.dll"),										// 04/27/01 AM.
-			getAppdir(),
-			DIR_CH,DIR_CH,
-			fname);																		// 01/21/06 AM.
+std::filesystem::path buf;
+buf = getAppdir();
+buf /= _T("kb");
+std::stringstream ss;
+ss << fname << _T(".dll");
+buf /= ss.str();																	// 01/21/06 AM.
 
-if (!f_exists(buf))															// 05/06/01 AM.
+if (!std::filesystem::exists(buf))															// 05/06/01 AM.
 	{
 	*cgerr << _T("[loadLib: Error. Can't load compiled ")			// 05/06/01 AM.
 			 << fname															// 01/21/06 AM.
@@ -2860,32 +2893,29 @@ if (!goodKbfile(file))	// Check for good kb filename.
 _TCHAR *dir = _T("tmp");
 
 // For example, path= C:\apps\Resume\tmp.
-_TCHAR path[MAXPATH];
-_stprintf(path, _T("%s%c%s"), getAppdir(), DIR_CH, dir);
+std::filesystem::path p;
+p = getAppdir();
+p /= dir;
 
 // If tmp directory absent, create it.
-make_dir(path);
+std::filesystem::create_directory(p);
 
 // Prep and open up the output files.
-_TCHAR o_hier[MAXPATH*2];
-_TCHAR o_word[MAXPATH*2];
-_TCHAR o_attr[MAXPATH*2];
-_TCHAR o_phr[MAXPATH*2];
 
 _TCHAR *suff;
 suff = _T("kb");		// Kb file suffix.
 
-_stprintf(o_hier, _T("%s%chier.%s"), path, DIR_CH, suff);
-_stprintf(o_word, _T("%s%cword.%s"), path, DIR_CH, suff);
-_stprintf(o_attr, _T("%s%cattr.%s"), path, DIR_CH, suff);
-_stprintf(o_phr,  _T("%s%cphr.%s"),  path, DIR_CH, suff);
+std::filesystem::path o_hier = suffPath(p,_T("hier"),suff);
+std::filesystem::path o_word = suffPath(p,_T("word"),suff);
+std::filesystem::path o_attr = suffPath(p,_T("attr"),suff);
+std::filesystem::path o_phr = suffPath(p,_T("phr"),suff);
 
 // Open the files for output.
-std::_t_ofstream f_hier(TCHAR2A(o_hier));
-std::_t_ofstream f_word(TCHAR2A(o_word));
-std::_t_ofstream f_phr(TCHAR2A(o_phr));
+std::_t_ofstream f_hier(o_hier);
+std::_t_ofstream f_word(o_word);
+std::_t_ofstream f_phr(o_phr);
 
-std::_t_ofstream *f_attr = new std::_t_ofstream(TCHAR2A(o_attr));	// 07/01/03 AM.
+std::_t_ofstream *f_attr = new std::_t_ofstream(o_attr);	// 07/01/03 AM.
 
 // GET PATH TO "root" CONCEPT.
 CONCEPT *parent = Up(root);
@@ -2902,8 +2932,10 @@ else
 // Traverse the subtree.  Write out the goodies.
 long n_attr=0;												// 07/01/03 AM.
 long c_attr=0;												// 07/01/03 AM.
+std::filesystem::path p;
+p = _T("");
 if (!writeTree(root, true, f_hier,f_word,f_phr, spath,
-			f_attr,n_attr,c_attr,0,0))					// 07/01/03 AM.
+			f_attr,n_attr,c_attr,p,0))					// 07/01/03 AM.
 	{
 	delete f_attr;											// 08/07/03 AM.
 	return false;
@@ -2978,8 +3010,8 @@ bool CG::writeTree(
 	std::_t_ofstream *&attr,		// Current attr output stream.			// 07/01/03 AM.
 	long &n_attr,			// # of attr files.						// 07/01/03 AM.
 	long &c_attr,			// # of attributes in curr file.		// 07/01/03 AM.
-	_TCHAR *o_attr,			// Buff for building attr filenames.	// 07/01/03 AM.
-	_TCHAR *fpath,			// Path for attr file.						// 07/01/03 AM.
+	std::filesystem:: path o_attr,			// Buff for building attr filenames.	// 07/01/03 AM.
+	std::filesystem:: path fpath,			// Path for attr file.						// 07/01/03 AM.
 	_TCHAR *suff				// Filename suffix.							// 07/01/03 AM.
 	)
 {
@@ -3376,12 +3408,12 @@ return true;
 ********************************************/
 
 bool CG::readFile(
-	_TCHAR *infile
+	std::filesystem::path infile
 	)
 {
 //cout << "infile=" << infile << std::endl;
 //ifstream fin(infile, std::ios::in | std::ios::nocreate);	// Upgrade. // 01/24/01 AM.
-std::_t_ifstream fin(infile, std::ios::in);							// Upgrade.	// 01/24/01 AM.
+std::_t_ifstream fin(infile.string(), std::ios::in);							// Upgrade.	// 01/24/01 AM.
 #ifdef UNICODE
 if (!u_readbom(&fin))
 	{
@@ -3424,16 +3456,16 @@ if (!(word = kbm_->dict_find_word(str)) )
 return word;
 }
 
-bool CG::openDict(std::vector<std::string>& files) {
+bool CG::openDict(std::vector<std::filesystem::path>& files) {
 	dictfile_ = false;
 	files.clear();
 
-	path p(kbdir_);
+	std::filesystem::path p(kbdir_);
 	p /= _T("all.dict");
 	allDictStream_.open(p.string(), std::ios::in);
 
 	if (allDictStream_) {
-		files.push_back(p.string());
+		files.push_back(p);
 		allDictStream_.close();
 		dictfile_ = true;
 	} else {
@@ -3444,11 +3476,11 @@ bool CG::openDict(std::vector<std::string>& files) {
 	return dictfile_;
 }
 
-bool CG::readDicts(std::vector<std::string> files) {
-	std::vector<std::string>::iterator ptr;
+bool CG::readDicts(std::vector<std::filesystem::path> files) {
+	std::vector<std::filesystem::path>::iterator ptr;
 	if (files.size() == 0) return false;
     for (ptr = files.begin(); ptr < files.end(); ptr++) {
-        readDict(*ptr);
+        readDict(ptr->string());
 	}
 	return true;
 }
@@ -3711,6 +3743,14 @@ CONCEPT *CG::dictNext(CONCEPT *con)
 if (!con)
 	return 0;
 return (CONCEPT *) kbm_->dict_next((CON*)con);
+}
+
+std::filesystem::path CG::suffPath(std::filesystem::path p, _TCHAR *filename, _TCHAR *suff) {
+	std::filesystem::path suffPath = p;
+	std::stringstream ss;
+	ss << filename << _T(".") << suff;
+	suffPath /= ss.str();
+	return suffPath;
 }
 
 /**********************     END OF FILE         ***************************/

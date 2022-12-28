@@ -170,14 +170,14 @@ public:
 	void setTree(TREE *);
 	void setLines(LTREE *);
 	void setVerbose(bool);
-	void setAppdir(_TCHAR *);			// 12/03/98 AM.
-	void setKBdir(_TCHAR *);
+	void setAppdir(std::filesystem::path);			// 12/03/98 AM.
+	void setKBdir(std::filesystem::path);
 	void setVars(Dlist<Ipair> *);	// 12/07/98 AM.
 	void setOstrs(Dlist<Iarg> *);	// 05/23/01 AM.
 	void setOut(std::_t_ostream *);			// 05/13/99 AM.
 	void setSout(std::_t_ostream *);		// 05/13/99 AM.
 	void setFout(std::_t_ofstream *);		// 05/13/99 AM.
-	void setOutdir(_TCHAR *);			// 03/10/99 AM.
+	void setOutdir(std::filesystem::path);			// 03/10/99 AM.
 	void setCollect(COLL *);		// 05/17/00 AM.
 	void setNlppp(Nlppp *);			// 05/17/00 AM.
 	void setAlgo(_TCHAR *);			// 05/31/00 AM.

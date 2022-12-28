@@ -77,13 +77,13 @@ typedef void PHRASE;					// A concept's phrase of nodes.
 extern const _TCHAR *STRNULL;									// PORT.	// 03/08/00 AM.
 
 extern std::_t_ostream *gout;
-void fileOut(_TCHAR *fname, /*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout);
-void fileApp(_TCHAR *fname, /*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout); // 05/14/13 AM.
+void fileOut(std::filesystem::path fname, /*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout);
+void fileApp(std::filesystem::path fname, /*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout); // 05/14/13 AM.
 //void fileOut(std::_t_strstream*, /*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout);
 void resetOut(/*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout);
 
 extern std::_t_ostream *gerr;														// 03/22/99 AM.
-void fileErr(_TCHAR *fname, /*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout);
+void fileErr(std::filesystem::path fname, /*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout);
 void resetErr(/*DU*/ std::_t_ofstream* &fout, std::_t_ostream* &sout);
 
 // A global verbose, debug, timing, stream.							// 02/21/02 AM.

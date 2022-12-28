@@ -39,6 +39,8 @@
 #include "lite/rug.h"   // RULE GENERATION API.
 #include "lite/Aseq.h"
 
+#include <filesystem>
+
 /********************************************
 * CLASS:  NLP ENGINE
 * CR:	  09/14/20 Dd.
@@ -61,18 +63,18 @@ public:
     _TCHAR *m_output;
     _TCHAR *m_sequence;
 
-    _TCHAR m_workingFolder[MAXPATH];
-    _TCHAR m_anadir[MAXPATH*2];
-    _TCHAR m_ananame[MAXPATH];
-    _TCHAR m_rfbdir[MAXPATH*2];
-    _TCHAR m_logfile[MAXPATH];	
-    _TCHAR m_specdir[MAXPATH*3];
-    _TCHAR m_infile[MAXPATH*3];
-    _TCHAR m_outdir[MAXPATH*3];
-    _TCHAR m_outfile[MAXPATH*3];
-    _TCHAR m_seqfile[MAXPATH*4];
+    std::filesystem::path m_workingFolder;
+    std::filesystem::path m_anadir;
+    std::string m_ananame;
+    std::filesystem::path  m_rfbdir;
+    std::filesystem::path  m_logfile;	
+    std::filesystem::path  m_specdir;
+    std::filesystem::path  m_infile;
+    std::filesystem::path  m_outdir;
+    std::filesystem::path  m_outfile;
+    std::filesystem::path  m_seqfile;
 
-    std::vector<std::string> m_files;
+    std::vector<std::filesystem::path> m_files;
 
     VTRun *m_vtrun;
     NLP *m_nlp;
@@ -131,6 +133,5 @@ public:
     int close(_TCHAR *analyzer);
 
 private:
-    int createDir(_TCHAR *dirPath);
     int readFiles(_TCHAR *directoryPath);
 };

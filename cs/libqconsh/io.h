@@ -32,4 +32,3 @@ rule_pret(
 	_t_ostream *out		// 04/20/99 AM.
 	);
 
-bool f_exists(_TCHAR *fil);

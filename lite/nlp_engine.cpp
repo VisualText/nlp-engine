@@ -12,6 +12,8 @@ MIT License
 
 #include "nlp_engine.h"
 
+#include <filesystem>
+
 #ifdef LINUX
 #include <unistd.h>
 #include <dirent.h>
@@ -44,19 +46,19 @@ NLP_ENGINE::NLP_ENGINE(
 {
     NLP_ENGINE::zeroInit();    // [DEGLOB]	// 10/15/20 AM.
 
-    static _TCHAR logfile[MAXSTR];
-    static _TCHAR rfbdir[MAXSTR];
+    std::filesystem::path logfile;
+    std::filesystem::path rfbdir;
     if (!workingFolder.empty()) {
-        _stprintf(m_workingFolder,_T("%s"),workingFolder.c_str());
-        _stprintf(logfile,"%s%s%s",workingFolder.c_str(),DIR_STR,_T("vtrun_logfile.out"));
-        _stprintf(rfbdir,"%s%sdata%srfb%sspec",workingFolder.c_str(),DIR_STR,DIR_STR,DIR_STR);
-    } else {
-        _stprintf(logfile,"%s",_T("vtrun_logfile.out"));
-        _stprintf(rfbdir,"data/rfb/spec");
+        m_workingFolder = workingFolder;
+        logfile = workingFolder;
+        rfbdir = workingFolder;
     }
-    std::_t_cout << _T("[logfile: ") << logfile << _T("]") << std::endl;
- 
-    std::_t_cout << _T("[rfbdir: ") << rfbdir << _T("]") << std::endl;
+    logfile /= _T("vtrun_logfile.out");
+    rfbdir /= _T("data");
+    rfbdir /= _T("rfb");
+    rfbdir /= _T("spec");
+    std::_t_cout << _T("[logfile: ") << logfile.string() << _T("]") << std::endl;
+    std::_t_cout << _T("[rfbdir: ") << rfbdir.string() << _T("]") << std::endl;
  
 // if (!VTRun_Ptr)  // [DEGLOB]	// 10/15/20 AM.
     {
@@ -80,16 +82,16 @@ void NLP_ENGINE::zeroInit()
     m_output = 0;
     m_sequence = 0;
 
-    m_workingFolder[0] = '\0';
-    m_anadir[0] = '\0';
+    m_workingFolder.clear();
+    m_anadir.clear();
     m_ananame[0] = '\0';
-    m_rfbdir[0] = '\0';
-    m_logfile[0] = '\0';	
-    m_specdir[0] = '\0';
-    m_infile[0] = '\0';
-    m_outdir[0] = '\0';
-    m_outfile[0] = '\0';
-    m_seqfile[0] = '\0';
+    m_rfbdir.clear();
+    m_logfile.clear();	
+    m_specdir.clear();
+    m_infile.clear();
+    m_outdir.clear();
+    m_outfile.clear();;
+    m_seqfile.clear();
 
     m_vtrun = 0;
     m_nlp = 0;
@@ -109,15 +111,15 @@ void NLP_ENGINE::zeroAna()
     m_output = 0;
     m_sequence = 0;
 
-    m_anadir[0] = '\0';
+    m_anadir.clear();
     m_ananame[0] = '\0';
-    m_rfbdir[0] = '\0';
-    m_logfile[0] = '\0';	
-    m_specdir[0] = '\0';
-    m_infile[0] = '\0';
-    m_outdir[0] = '\0';
-    m_outfile[0] = '\0';
-    m_seqfile[0] = '\0';
+    m_rfbdir.clear();
+    m_logfile.clear();	
+    m_specdir.clear();
+    m_infile.clear();
+    m_outdir.clear();
+    m_outfile.clear();
+    m_seqfile.clear();
 
  //   m_vtrun = 0;
     m_nlp = 0;
@@ -146,56 +148,56 @@ int NLP_ENGINE::init(
     m_compiled = compiled;
 
     struct stat st;
-    char str[MAXPATH] = _T("");
-    _stprintf(m_anadir,_T("%s"),analyzer);
+    m_anadir = analyzer;
 
-    if (m_workingFolder[0] != '\0') {
-        strcpy(str,m_analyzer);
-        if (stat(str,&st) != 0) {
-            _stprintf(m_anadir, _T("%s%sanalyzers%s%s"),m_workingFolder,DIR_STR,DIR_STR,m_analyzer);
-            _stprintf(m_ananame, _T("%s"),m_analyzer);          
+    if (!m_workingFolder.empty()) {
+        if (!std::filesystem::exists(m_analyzer)) {
+            m_anadir = m_workingFolder;
+            m_anadir /= _T("analyzers");
+            m_anadir /= m_analyzer;
+            m_ananame = m_analyzer;          
         }
     }
     
-    strcpy(str,m_anadir);
-    if (stat(m_anadir,&st) != 0) {
-        std::_t_cerr << _T("[analyzer directory not found: ") << m_anadir << _T("]") << std::endl;
+    if (!std::filesystem::exists(m_anadir)) {
+        std::_t_cerr << _T("[analyzer directory not found: ") << m_anadir.string() << _T("]") << std::endl;
         return 0;
     }
     
-    if (m_ananame[0] == '\0') {
-        _TCHAR *ana = _tcsrchr(m_anadir,DIR_CH);
-        ++ana;
-        _stprintf(m_ananame,_T("%s"),ana);           
+    if (m_ananame.empty()) {
+        m_ananame = m_anadir.filename().string();         
     }
 
-	std::_t_cout << _T("[analyzer directory: ") << m_anadir << _T("]") << std::endl;
-    std::_t_cout << _T("[analyzer name: ") << m_ananame << _T("]") << std::endl; 
+	std::_t_cout << _T("[analyzer directory: ") << m_anadir.string() << _T("]") << std::endl;
+    std::_t_cout << _T("[analyzer name: ") << m_ananame << _T("]") << std::endl;
 
-    _stprintf(m_rfbdir, _T("%s%cdata%crfb%cspec"),m_workingFolder,DIR_CH,DIR_CH,DIR_CH);
-    std::_t_cout << _T("[rfb file: ") << m_rfbdir << _T("]") << std::endl;
+    m_rfbdir = m_workingFolder;
+    m_rfbdir /= _T("data");
+    m_rfbdir /= _T("rfb");
+    m_rfbdir /= _T("spec");
 
-#ifdef LINUX
-    _TCHAR *tmp = _T("./tmp");
-#else
-    _TCHAR* tmp = _T(".\\tmp");
-#endif
-    _stprintf(m_logfile, _T("%s%cvisualtext.log"),tmp,DIR_CH);
+    std::_t_cout << _T("[rfb file: ") << m_rfbdir.string() << _T("]") << std::endl;
+
+    m_logfile = _T("tmp");
+    m_logfile /= _T("visualtext.log");
     if (!silent) {
-        NLP_ENGINE::createDir(tmp);
+        std::filesystem::create_directory(_T("tmp"));
         std::_t_cout << _T("[log file: ") << m_logfile << _T("]") << std::endl;
     }
 
-    _stprintf(m_specdir, _T("%s%sspec"), m_anadir, DIR_STR);
-    std::_t_cout << _T("[spec directory: ") << m_specdir << _T("]") << std::endl;
+    m_specdir = m_anadir;
+    m_specdir /= _T("spec");
+    std::_t_cout << _T("[spec directory: ") << m_specdir.string() << _T("]") << std::endl;
 
-    _stprintf(m_seqfile, _T("%s%sanalyzer.seq"),m_specdir,DIR_STR);
-    std::_t_cout << _T("[spec file: ") << m_seqfile << _T("]") << std::endl;
+    m_seqfile = m_anadir;
+    m_seqfile /= _T("spec");
+    std::_t_cout << _T("[spec file: ") << m_seqfile.string() << _T("]") << std::endl;
  
-    _stprintf(m_outdir, _T("%s%s%s"), m_anadir,DIR_STR,_T("output"));
+    m_outdir = m_anadir;
+    m_outdir /= _T("output");
     if (!silent) {
-        NLP_ENGINE::createDir(m_outdir);
-        std::_t_cout << _T("[output directory: ") << m_outdir << _T("]") << std::endl;
+        std::filesystem::create_directory(m_outdir);
+        std::_t_cout << _T("[output directory: ") << m_outdir.string() << _T("]") << std::endl;
     }
 
     /////////////////////////////////////////////////
@@ -213,7 +215,6 @@ int NLP_ENGINE::init(
         // return 1;    // If reloading same analyzer, done init....
         m_cg = m_nlp->getCG();
 
- 
         //    std::_t_cout << _T("Analyzer not found: ") << analyzer << std::endl;
         }
     else
@@ -300,17 +301,18 @@ int NLP_ENGINE::analyze(
     NLP_ENGINE::init(analyzer,develop,silent,compiled);
 
     readFiles(infile);
-    const char *file;
+    std::string file;
     struct stat st;
 
-    _TCHAR fname[MAXSTR];
-    _stprintf(fname, _T("%s%c%s%c%s"), analyzer, DIR_CH, _T("logs"), DIR_CH, _T("file.log"));
-    std::_t_ofstream *fp = new std::_t_ofstream(TCHAR2CA(fname), std::ios::out);
+    std::filesystem::path fname(analyzer);
+    fname /= _T("logs");
+    fname /= _T("file.log");
+    std::_t_ofstream *fp = new std::_t_ofstream(fname.string(), std::ios::out);
     m_nlp->setIsLastFile(false);
     m_nlp->setIsFirstFile(true);
 
-    for (std::vector<std::string>::iterator it = m_files.begin() ; it != m_files.end(); ++it) {
-        file = it->c_str();
+    for (std::vector<std::filesystem::path>::iterator it = m_files.begin() ; it != m_files.end(); ++it) {
+        file = it->string();
         if (std::next(it) == m_files.end()) {
             m_nlp->setIsLastFile(true);
         }
@@ -318,28 +320,30 @@ int NLP_ENGINE::analyze(
         std::string filepath = s.substr(s.find("input")+6,s.length()-1);
         *fp << _T("File=") << filepath << std::endl;
 
-        if (stat(file,&st) == 0)
-            _stprintf(m_infile, _T("%s"),file);
-        else
-            _stprintf(m_infile, _T("%s%sinput%s%s"),m_anadir,DIR_STR,DIR_STR,file);
-        std::_t_cout << _T("[infile path: ") << m_infile << _T("]") << std::endl;
+        if (std::filesystem::exists(file))
+            m_infile = file;
+        else {
+            m_infile = m_anadir;
+            m_infile /= _T("input");
+            m_infile = file;
+        }
+        std::_t_cout << _T("[infile path: ") << m_infile.string() << _T("]") << std::endl;
 
-        _stprintf(m_outfile, _T("%s%soutfile.txt"),m_anadir,DIR_STR);
-        std::_t_cout << _T("[outfile path: ") << m_outfile << _T("]") << std::endl;
+        m_outfile = m_anadir;
+        m_outfile /= _T("outfile.txt");
+        std::_t_cout << _T("[outfile path: ") << m_outfile.string() << _T("]") << std::endl;
 
         bool create = true;
-        if (outdir) {
-            stat(outdir, &st);
-            if ((st.st_mode & S_IFREG) == S_IFDIR) {
-                _stprintf(m_outdir, _T("%s"), outdir);
-                create = false;
-            }
+        m_outdir = outdir;
+        if (std::filesystem::is_directory(m_outdir)) {
+            m_outdir = outdir;
+            create = false;
         }
         if (!silent && create) {
-            _stprintf(m_outdir, _T("%s_log"),file);
-            NLP_ENGINE::createDir(m_outdir);
+            m_outdir = file;
+            std::filesystem::create_directory(m_outdir);
         }
-        std::_t_cout << _T("[outdir path: ") << m_outdir << _T("]") << std::endl;
+        std::_t_cout << _T("[outdir path: ") << m_outdir.string() << _T("]") << std::endl;
 
         // Analyzer can output to a stream.
         _TCHAR ofstr[MAXSTR];
@@ -394,8 +398,8 @@ int NLP_ENGINE::analyze(
     #endif
     std::_t_ofstream os(TCHAR2CA(ofstr), std::ios::out);
     
-    std::_t_cout << _T("[infile path: ") << m_infile << _T("]") << std::endl;
-    std::_t_cout << _T("[outfile path: ") << m_outfile << _T("]") << std::endl;
+    std::_t_cout << _T("[infile path: ") << m_infile.string() << _T("]") << std::endl;
+    std::_t_cout << _T("[outfile path: ") << m_outfile.string() << _T("]") << std::endl;
 
 //std::_t_cout << _T("BEFORE ANALYSIS: ") << std::endl; // 09/27/20 AM.
 //object_counts();    // TESTING analysis cleanup.    // 09/27/20 AM.
@@ -501,103 +505,17 @@ int NLP_ENGINE::close(_TCHAR *analyzer)
     return 0;
 }
 
-int NLP_ENGINE::createDir(_TCHAR *dirPath) {
-    struct stat st;
-    if (stat(dirPath,&st) != 0) {
-#ifdef LINUX
-	    mkdir(dirPath, 0755);
-#else
-	    CreateDirectory(dirPath,NULL);
-#endif
-	    std::_t_cout << _T("[Creating output directory: ") << dirPath << _T("]") << std::endl;
-	}
-    return 0;
-}
-
-int NLP_ENGINE::readFiles(_TCHAR *path) 
+int NLP_ENGINE::readFiles(_TCHAR *dir) 
 {
     m_files.clear();
 
-#ifdef LINUX
-
-    struct stat s;
-    if (lstat(path, &s) == 0 ) {
-        if (S_ISREG(s.st_mode)) {
-            m_nlp->setIsDirRun(false);
-            m_files.push_back(path);
-            return 1;
-        }
-    } else {
-        return 0;
-    }
-
-    DIR *dpdf;
-    struct dirent *epdf;
-    _TCHAR fullPath[MAXPATH*3];
-
-    dpdf = opendir(path);
-
-    if (dpdf != NULL) {
+    if (std::filesystem::is_directory(dir)) {
         m_nlp->setIsDirRun(false);
-        unsigned char isFile =0x8;
-        while ((epdf = readdir(dpdf))) {
-            if (epdf->d_name[0] != '.' && epdf->d_type == isFile) {
-                _stprintf(fullPath, _T("%s%s%s"),path,DIR_STR,epdf->d_name);
-                m_files.push_back(fullPath);
-            }
-        }
-    } else {
-        return 0;
-    }
-    
-#else
-
-    DWORD ftyp = GetFileAttributesA(path);
-    if (ftyp == INVALID_FILE_ATTRIBUTES && GetLastError() == ERROR_FILE_NOT_FOUND)
-    {
-        return 0;
-    }
-
-    if (ftyp & FILE_ATTRIBUTE_DIRECTORY) {
-        m_nlp->setIsDirRun(true);
-        WIN32_FIND_DATA ffd;
-        HANDLE hFind = INVALID_HANDLE_VALUE;
-        DWORD dwError=0;
-
-        // Find the first file in the directory.
-
-        _TCHAR fullPath[MAXPATH*3];
-        _stprintf(fullPath, _T("%s%s%s"),path,DIR_STR,_T("*"));
-        hFind = FindFirstFile(fullPath, &ffd);
-
-        if (INVALID_HANDLE_VALUE == hFind) 
-        {
-            return 0;
-        }
-
-        do
-        {
-            if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-            {
-                continue;
-            }
-            else if (ffd.cFileName[0] != '.')
-            {
-                _stprintf(fullPath, _T("%s%s%s"),path,DIR_STR,ffd.cFileName);
-                m_files.push_back(fullPath);
-            }
-        }
-        while (FindNextFile(hFind, &ffd) != 0);
-
+        m_files.push_back(dir);
         return 1;
-        }
-    else {
+    } else {
         m_nlp->setIsDirRun(false);
-        m_files.push_back(path);
+        read_files(dir,_T("*"),m_files);
         return 1;
     }
-
-#endif
-
-    return 0;
 }

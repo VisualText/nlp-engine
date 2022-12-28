@@ -772,11 +772,13 @@ Ana *ana = (Ana *) nlp->getAna();	// Moved this up.				// 05/19/10 AM.
 // SETTING UP ERROR LOG FILE FOR RE-INTERNING SEQUENCE.			// 05/19/01 AM.
 std::_t_ostream *serr;																	// 05/19/01 AM.
 std::_t_ofstream *ferr;																// 05/19/01 AM.
-std::_t_ostream *sdbg=0;																// 02/21/02 AM.
-_TCHAR outd[MAXSTR];															// 02/21/02 AM.
-_TCHAR errout[1024];															// 05/19/01 AM.
-_stprintf(outd,_T("%s%c%s"), ana->getAppdir(),DIR_CH,_T("logs"));			// 02/21/02 AM.
-_stprintf(errout, _T("%s%cmake_ana.log"),outd,DIR_CH);					// 02/21/02 AM.
+std::_t_ostream *sdbg=0;																// 02/21/02 AM.														// 02/21/02 AM.
+std::filesystem::path outd;
+outd = ana->getAppdir();
+outd /= _T("logs");
+std::filesystem::path errout;
+errout = outd;
+errout /= _T("make_ana.log");					// 02/21/02 AM.
 fileErr(errout, /*DU*/ ferr, serr);										// 05/19/01 AM.
 nlp->fileDbg(outd,sdbg);													// 08/26/02 AM.
 

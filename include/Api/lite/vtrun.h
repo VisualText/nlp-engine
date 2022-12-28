@@ -45,8 +45,8 @@ class LITE_API VTRun
 	friend class Nlp;	// 09/21/20 AM.
 public:
    VTRun(                   // Default constructor.
-      _TCHAR *logfile = 0,    // Log file for verbose output.
-      _TCHAR *rfbspecdir = 0,
+      std::filesystem::path logfile,    // Log file for verbose output.
+      std::filesystem::path rfbspecdir,
       bool silent = true
 		);
    ~VTRun();                // Destructor. 
@@ -61,8 +61,8 @@ public:
 
 	// API: Create runtime environmnet.	// 07/19/03 AM.
 	static VTRun *makeVTRun(	// 07/19/03 AM.
-      _TCHAR *logfile = 0,    // Log file for verbose output.
-      _TCHAR *rfbspecdir = 0,
+      std::filesystem::path logfile,    // Log file for verbose output.
+      std::filesystem::path rfbspecdir,
       bool silent = true
 		);
 
@@ -84,7 +84,7 @@ public:
 
 	// API: Create and load a knowledge base.
 	CG *makeCG(         // 07/18/03 AM.
-		_TCHAR *appdir,    // Folder housing the kb folder.
+		std::filesystem::path appdir,    // Folder housing the kb folder.
 		bool compiled,   // If loading the compiled kb.
 		NLP *nlp         // Associated analyzer, if any.
 		);
@@ -96,7 +96,7 @@ public:
 	// API: Create an analyzer INSTANCE.
 	// (Defaults as in NLP object creation.)
 	NLP *makeNLP(        // 07/18/03 AM.
-		_TCHAR *appdir,     // Analyzer app directory.
+		std::filesystem::path appdir,     // Analyzer app directory.
 		_TCHAR *name,       // Unique name for analyzer.
 		bool develop=false,
 		bool silent=false,

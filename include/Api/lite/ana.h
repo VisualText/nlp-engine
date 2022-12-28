@@ -21,6 +21,7 @@ All rights reserved.
 //#include "lite/dlist.h"
 //#include "seqn.h"
 //#include "Eana.h"				// 10/13/99 AM.
+#include <filesystem>
 
 #define DEFAULT_SEQFILE _T("analyzer.seq")									// 11/04/99 AM.
 #define DEFAULT_RUNDIR _T("run")												// 05/10/00 AM.
@@ -48,15 +49,15 @@ public:
 	~Ana();
 	Dlist<Seqn>	*getSeqlist();
 	Delt<Seqn>	*getSeq();		// Get the list of sequence elts.
-	_TCHAR			*getSeqfile();
-	_TCHAR			*getSeqbuf();
+	std::filesystem::path getSeqfile();
+	std::filesystem::path getSeqbuf();
 	long			 getSeqbuflen();
 	Htab			*getHtab();
 	bool			 Verbose();
-	_TCHAR			*getSpecdir();												// 12/03/98 AM.
-	_TCHAR			*getComment();												// 01/13/99 AM.
-	_TCHAR			*getDatadir();												// 12/08/99 AM.
-	_TCHAR			*getAppdir();												// 05/10/00 AM.
+	std::filesystem::path getSpecdir();												// 12/03/98 AM.
+	_TCHAR *getComment();												// 01/13/99 AM.
+	std::filesystem::path getDatadir();												// 12/08/99 AM.
+	std::filesystem::path getAppdir();												// 05/10/00 AM.
 	CG				*getCG();													// 02/15/00 AM.
 	Gen			*getGen();													// 05/10/00 AM.
 	long			 getNpasses();												// 06/13/00 AM.
@@ -70,11 +71,11 @@ public:
 	void setSeqbuflen(long);
 	void setHtab(Htab *);
 	void setVerbose(bool);
-	void setSpecdir(_TCHAR *);												// 12/03/98 AM.
+	void setSpecdir(std::filesystem::path);												// 12/03/98 AM.
 	void setComment(_TCHAR *);												// 01/13/99 AM.
-	void setDatadir(_TCHAR *);												// 12/08/99 AM.
-	void setAppdir(_TCHAR *);													// 05/10/00 AM.
-	void setKBdir(_TCHAR *);
+	void setDatadir(std::filesystem::path);												// 12/08/99 AM.
+	void setAppdir(std::filesystem::path);													// 05/10/00 AM.
+	void setKBdir(std::filesystem::path);
 	void setCG(CG *);															// 02/15/00 AM.
 	void setGen(Gen *);														// 05/10/00 AM.
 	void setNpasses(long);													// 06/13/00 AM.
@@ -120,12 +121,12 @@ private:
 	long seqbuflen_;				// Length of sequence file.
 	bool verbose_;					// If ana operations running verbose.
 	Htab *htab_;					// Hashed symbol table.				// 11/19/98 AM.
-	_TCHAR specdir_[FNAME_SIZE];	// Definition directory.			// 12/03/98 AM.
-	_TCHAR seqfile_[FNAME_SIZE]; // Sequence file name.				// 01/20/99 AM.
+	std::filesystem::path specdir_;	// Definition directory.			// 12/03/98 AM.
+	std::filesystem::path seqfile_; // Sequence file name.				// 01/20/99 AM.
 	_TCHAR comment_[MAXSTR];		// Header comment for seq file.	// 01/13/99 AM.
-	_TCHAR datadir_[FNAME_SIZE];	// Data directory.					// 12/08/99 AM.
-	_TCHAR appdir_[FNAME_SIZE];	// Top-level directory for ana.	// 05/10/00 AM.
-	_TCHAR kbdir_[FNAME_SIZE];
+	std::filesystem::path datadir_;	// Data directory.					// 12/08/99 AM.
+	std::filesystem::path appdir_;	// Top-level directory for ana.	// 05/10/00 AM.
+	std::filesystem::path kbdir_;
 	Gen *gen_;						// For code gen and compilation.	// 05/10/00 AM.
 	CG *cg_;							// Pointer to KB.						// 02/15/00 AM.
 	long npasses_;					// Number of passes in analyzer.	// 06/13/00 AM.

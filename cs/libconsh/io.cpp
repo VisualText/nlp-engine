@@ -214,23 +214,3 @@ phr = con_phrase(atom);
 phrase_pret(phr, out,cg);
 }
 #endif
-
-
-/**************************************************
-*						F_EXISTS
-* FUN:	f_exists
-* SUBJ:	Yet another file-exists function.
-* CR:		05/02/99 AM.  (Moved from cmd.cpp)
-*
-**************************************************/
-
-bool
-f_exists(_TCHAR *fil)
-{
-//ifstream x(fil, std::ios::in | std::ios::nocreate);
-std::_t_ifstream x(TCHAR2A(fil), std::ios::in);									// Upgrade.	// 01/24/01 AM.
-if (x)
-	return true;
-else
-	return false;
-}

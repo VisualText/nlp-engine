@@ -31,5 +31,3 @@ rule_pret(
 	//FILE *out			// 04/20/99 AM.
 	std::_t_ostream *out		// 04/20/99 AM.
 	);
-
-bool f_exists(_TCHAR *fil);

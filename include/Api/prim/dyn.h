@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright © 2000-2009 by Text Analysis International, Inc.
+Copyright ï¿½ 2000-2009 by Text Analysis International, Inc.
 All rights reserved.
 ********************************************************************************
 *
@@ -14,8 +14,10 @@ All rights reserved.
 #ifndef DYN_H_
 #define DYN_H_
 
+#include <filesystem>
+
 #ifndef LINUX
-LIBPRIM_API HINSTANCE load_dll(_TCHAR *path);
+LIBPRIM_API HINSTANCE load_dll(std::filesystem::path p);
 
 LIBPRIM_API void unload_dll(HINSTANCE hLibrary);
 #endif

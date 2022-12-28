@@ -25,14 +25,14 @@ modified without written permission from Text Analysis International, Inc.
 extern const _TCHAR *strNULL;
 
 extern _t_ostream *cgout;
-void cgfileOut(_TCHAR *fname, /*DU*/ _t_ofstream* &fout, _t_ostream* &sout);
+void cgfileOut(std::filesystem::path fname, /*DU*/ _t_ofstream* &fout, _t_ostream* &sout);
 void cgresetOut(/*DU*/ _t_ofstream* &fout, _t_ostream* &sout);
 
 //extern ostream *cgerr;
 //void cgfileErr(char *fname, /*DU*/ ofstream* &fout, ostream* &sout);
 //void cgresetErr(/*DU*/ ofstream* &fout, ostream* &sout);
 extern _t_ofstream *cgerr;	// 07/18/03 AM.
-void cgfileErr(_TCHAR *fname);	// 07/18/03 AM.
+void cgfileErr(std::filesystem::path fname);	// 07/18/03 AM.
 void cgresetErr();	// 07/18/03 AM.
 
 #endif

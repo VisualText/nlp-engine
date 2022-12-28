@@ -83,7 +83,7 @@ public:
 #endif
 
 	// Modify
-	void setAppdir(_TCHAR *);
+	void setAppdir(std::filesystem::path);
 	void setDirty(bool);														// 05/12/00 AM.
 	void setLoaded(bool);                                       // 03/04/07 AM.
 	void setKBM(AQKBM*);														// 06/11/02 AM.
@@ -113,11 +113,11 @@ public:
 
 	// Read the latest (user-modified) kb from files.
 	// If dir is present, kb is read from $appdir/kb/dir.
-	bool readKB(_TCHAR *dir)	// _T("user")	// 09/23/20 AM.
+	bool readKB(std::filesystem::path dir)	// _T("user")	// 09/23/20 AM.
 
 	// Save latest KB (from memory to files).
 	// If dir is present, kb is written to $appdir/kb/dir.
-	bool writeKB(_TCHAR *dir);	// _T("user")	// FIX.	09/23/20 AM.
+	bool writeKB(std::filesystem::path dir);	// _T("user")	// FIX.	09/23/20 AM.
 
 	// Modular dump of a kb subtree.										// 08/06/01 AM.
 	bool dumpTree(CONCEPT*, _TCHAR*);										// 08/06/01 AM.
@@ -210,6 +210,7 @@ public:
 
 	// Get next alphabetic dict concept.  For traversal.			// 03/21/03 AM.
 	CONCEPT *dictNext(CONCEPT *dictcon);								// 03/21/03 AM.
+	std::filesystem::path suffPath(std::filesystem::path p, _TCHAR *filename, _TCHAR *suff);
 
 	// Find hierarchy concept.  Given a name, look through the given subtree
 	// for it.  Also look through node names.  If a node, return its owning
@@ -519,11 +520,11 @@ public:
 		_t_ofstream *&attr,														// 07/01/03 AM.
 		long &n_attr,				// # of attr files.					// 07/01/03 AM.
 		long &c_attr,			// # of attributes in curr file.		// 07/01/03 AM.
-		_TCHAR *o_attr=0,														// 07/01/03 AM.
-		_TCHAR *fpath=0,															// 07/01/03 AM.
+		std::filesystem::path o_attr = _T(""),														// 07/01/03 AM.
+		std::filesystem::path fpath = _T(""),															// 07/01/03 AM.
 		_TCHAR *suff=0															// 07/01/03 AM.
 		);
-	bool writeKBmain(long,_TCHAR*,_TCHAR*);									// 07/01/03 AM.
+	bool writeKBmain(long,std::filesystem::path,_TCHAR*);									// 07/01/03 AM.
 	bool writeAttrs(															// 04/29/99 AM.
 		XCON_S *con,			// Concept to traverse.             // 03/08/07 AM.
 		int pos,					// 0 for concept, positive int for each

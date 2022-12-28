@@ -19,6 +19,7 @@ All rights reserved.
 #include <iostream>	// 09/27/19 AM.
 #include <strstream>	// 09/27/19 AM.
 #include <time.h>
+#include <filesystem>
 #include "machine.h"				// 03/08/00 AM.
 #include "u_out.h"		// 01/19/06 AM.
 #include "prim/libprim.h"	// 09/15/08 AM.
@@ -870,11 +871,11 @@ return (void *)rfb;
 ********************************************/
 
 bool NLP::make_analyzer(
-	_TCHAR *sequence,
-	_TCHAR *appdir,
+	std::filesystem::path sequence,
+	std::filesystem::path appdir,
 	bool develop,																// 12/25/98 AM.
 	bool silent,			// Silent run mode.							// 06/16/02 AM.
-	_TCHAR *outdir,			// Intermed files.							// 03/10/99 AM.
+	std::filesystem::path outdir,			// Intermed files.							// 03/10/99 AM.
 	bool compile,			// Compile while loading.					// 05/10/00 AM.
 	bool compiled,			// If running compiled analyzer.			// 07/03/00 AM.
 	bool fromkb				// Get sequence from kb.					// 11/11/00 AM.
@@ -888,7 +889,7 @@ bool ok;
 
 s_time = clock();																// 12/28/98 AM.
 
-if (!appdir || !*appdir)													// 03/10/99 AM.
+if (appdir.empty())													// 03/10/99 AM.
 	{
 	std::_t_strstream gerrStr;
 	gerrStr << _T("[make_analyzer: Given no appdir.]") << std::ends;
@@ -896,30 +897,31 @@ if (!appdir || !*appdir)													// 03/10/99 AM.
 	return false;																// 06/15/99 AM.
 	}
 
-_TCHAR tmp[MAXSTR];
-if (!outdir)																	// 03/10/99 AM.
+if (outdir.empty())																	// 03/10/99 AM.
 	{
-	_stprintf(tmp, _T("%s%coutput"), appdir, DIR_CH);
-	outdir = tmp;
+	outdir = appdir;
+	outdir /= _T("output");
 	}
 
-if (!dir_exists(outdir))
-	make_dir(outdir);
+if (!std::filesystem::is_directory(outdir))
+	std::filesystem::create_directory(outdir);
 
 std::_t_ostream *serr=0;					// 03/22/99 AM.						// 06/16/02 AM.
 std::_t_ofstream *ferr=0;					// 03/22/99 AM.						// 06/16/02 AM.
 std::_t_ostream *sdbg=0;																// 02/21/02 AM.
-_TCHAR outd[MAXSTR];															// 02/21/02 AM.
-_stprintf(outd,_T("%s%c%s"), appdir,DIR_CH,_T("logs"));						// 02/21/02 AM.
-_TCHAR errout[MAXSTR];															// 03/22/99 AM.
+
+std::filesystem::path outd;
+outd = appdir;
+outd /= _T("logs");
+
+std::filesystem::path errout;															// 03/22/99 AM.
 //if (!silent)																	// 06/16/02 AM.
 	{
-	_stprintf(errout, _T("%s%c%s%cmake_ana.log"),							// 05/19/01 AM.
-			appdir,DIR_CH, _T("logs"),DIR_CH);								// 05/19/01 AM.
-	//sprintf_s(errout, "%s%cmake_ana.log", outdir,					// 05/19/01 AM.
-	//				DIR_CH);														// 05/19/01 AM.
-	fileErr(errout, /*DU*/ ferr, serr);
-	fileDbg(outd,sdbg);														// 02/21/02 AM.
+	errout = appdir;
+	errout /= _T("logs");
+	errout /= _T("make_ana.log");														// 05/19/01 AM.
+	fileErr(errout.string(), /*DU*/ ferr, serr);
+	fileDbg(outd.string(),sdbg);														// 02/21/02 AM.
 	}
 
 std::_t_strstream gerrStr;														// 02/25/05 AM.
@@ -938,8 +940,9 @@ ana_->setSeqfile(sequence);	// Analyzer sequence file = analyzer specification.
 ana_->setHtab((Htab *)vtrun_->htab_);	// 06/25/03 AM.	// [DEGLOB]	// 10/15/20 AM.
 
 // 12/03/98 AM. Using the appdir for finding the analyzer specification also.
-_TCHAR specdir[MAXSTR];
-_stprintf(specdir, _T("%s%c%s"), appdir,DIR_CH, SPECDIRNAME);
+std::filesystem::path specdir;
+specdir = appdir;
+specdir /= SPECDIRNAME;
 
 ana_->setSpecdir(specdir);	// Where the app definition resides	// 12/03/98 AM.
 //ana_->setDatadir(datadir_);	// Data directory.					// 12/08/99 AM.
@@ -1204,14 +1207,14 @@ return true;																	// 06/15/99 AM.
 ********************************************/
 
 bool NLP::load_compiled(
-	_TCHAR *appdir
+	std::filesystem::path appdir
 	)
 {
 #ifdef RUNEMBED_
 return true;
 #endif
 
-_TCHAR buf[MAXSTR];
+std::filesystem::path buf;
 
 // LOAD COMPILED RUNTIME VERSION OF ANALYZER.						// 05/14/00 AM.
 #ifndef LINUX
@@ -1235,6 +1238,9 @@ _TCHAR *fname = _T("run");								// run.dll		// 01/23/06 AM.
 #endif
 
 #endif
+
+buf = appdir;
+
 
 _stprintf(buf, _T("%s%cbin%c%s.dll"),									// 01/23/06 AM.
 						appdir,DIR_CH,DIR_CH,fname);						// 01/23/06 AM.
@@ -1731,17 +1737,17 @@ return true;
 ********************************************/
 
 void NLP::analyze(
-	_TCHAR *input,
-	_TCHAR *output,
-	_TCHAR *appdir,
+	std::filesystem::path input,
+	std::filesystem::path output,
+	std::filesystem::path appdir,
 	bool flogfiles,	// Changing the meaning of this.				// 10/13/99 AM.
 	bool silent,		// Silent run mode.								// 06/16/02 AM.
-	_TCHAR *outdir,		// Intermed files.								// 03/10/99 AM.
-	_TCHAR *inbuf,		// If != 0, analyzing BUFFER					// 02/11/00 AM.
+	std::filesystem::path outdir,		// Intermed files.								// 03/10/99 AM.
+	std::filesystem::path inbuf,		// If != 0, analyzing BUFFER					// 02/11/00 AM.
 	long len,			// If != 0, then buffer length				// 02/11/00 AM.
 	bool compiled,		// If running compiled analyzer.				// 07/05/00 AM.
 	std::_t_ostream *os,		// Rebinding of output stream.				// 05/05/02 AM.
-	_TCHAR *outbuf,		// Output buffer, if outlen > 0.				// 05/07/02 AM.
+	_std::filesystem::path outbuf,		// Output buffer, if outlen > 0.				// 05/07/02 AM.
 	long outlen,			// Output buffer max length.				// 05/07/02 AM.
 	_TCHAR *datum			// Pass info to G("$datum").					// 03/13/03 AM.
 	)
@@ -2549,7 +2555,7 @@ return true;
 *			08/26/02 AM. Moved here.  Part of removing globals.
 ********************************************/
 
-void NLP::fileDbg(_TCHAR *dirname, std::_t_ostream* &sdbg)
+void NLP::fileDbg(std::filesystem::path dirname, std::_t_ostream* &sdbg)
 {
 sdbg = dbgout_;			// Save the current debug stream.
 

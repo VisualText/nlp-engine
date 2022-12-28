@@ -511,13 +511,15 @@ return true;
 
 bool CG::writeKBmain(
 	long n_attr,	// Number of attr files.
-	_TCHAR *path,		// Path for files.
+	std::filesystem::path dir,		// Path for files.
 	_TCHAR *suff		// File suffix.
 	)
 {
-_TCHAR o_main[FNAMESIZ];
-_stprintf(o_main, _T("%s%cmain.%s"), path, DIR_CH, suff);
-_t_ofstream f_main(TCHAR2A(o_main));
+std::filesystem::path o_main;
+o_main = dir;
+o_main /= _T("main.") + suff;
+o_main /= suf;
+_t_ofstream f_main(o_main);
 
 f_main << _T("take \"kb/user/hier.kb\"") << endl;
 f_main << _T("bind sys") << endl;
@@ -542,13 +544,13 @@ return true;
 * CR:		05/02/99 AM.
 ********************************************/
 
-bool CG::readKB(_TCHAR *dir)
+bool CG::readKB(std::filesystem::path dir)
 {
 *cgerr << _T("[readKB:]") << endl;											// 02/19/02 AM.
 clock_t s_time, e_time;										// 10/20/99 AM.
 s_time = clock();												// 10/20/99 AM.
 
-if (!dir || !*dir)
+if (!std::filesystem::exists(dir))
 	{
 	*cgerr << _T("[readKB: Given no input directory.]") << endl;
 	return false;
@@ -660,10 +662,11 @@ bool CG::genKB()
 {
 // For example, path= d:\apps\resume\kb\ .
 _TCHAR *kbdir = _T("kb");
-_TCHAR path[FNAMESIZ];
-_stprintf(path, _T("%s%c%s"), getAppdir(),DIR_CH, kbdir);
+std::filesystem::path p;
+p = getAppdir();
+p /= kbdir;
 
-if (!cmd_gen_all(path,0,cgerr,this))
+if (!cmd_gen_all(p,0,cgerr,this))
 	return false;
 // Move generated code to cg folder.
 // Optionally compile here.
@@ -3547,6 +3550,10 @@ CON_ID nxt_id = nxt->id;
 kbfree(nxt);
 kbfree(cc);
 return (CONCEPT *) nxt_id;
+}
+
+std::filesystem::path CG::suffPath() {
+	
 }
 
 /**********************     END OF FILE         ***************************/

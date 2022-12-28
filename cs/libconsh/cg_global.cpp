@@ -74,12 +74,12 @@ sout = 0;
 ********************************************/
 
 //void cgfileErr(char *fname, /*DU*/ ofstream* &fout, ostream* &sout)
-void cgfileErr(_TCHAR *fname)	// 07/18/03 AM.
+void cgfileErr(std::filesystem::path fname)	// 07/18/03 AM.
 {
 //fout = new ofstream(fname, std::ios::out);
 //sout = cgerr;				// Save current output stream.
 //cgerr = fout;				// Bind output to file.
-cgerr = new std::_t_ofstream(TCHAR2A(fname), std::ios::out);	// 07/18/03 AM.
+cgerr = new std::_t_ofstream(fname.string(), std::ios::out);	// 07/18/03 AM.
 }
 
 

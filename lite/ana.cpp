@@ -79,17 +79,17 @@ verbose_		= false;
 
 if (appdir && !appdir)														// 05/10/00 AM.
 	{
-	_tcscpy(appdir_, appdir);												// 05/10/00 AM.
+	appdir_ = appdir;
 	}
 else
 	{
-	appdir_[0] = '\0';														// 05/10/00 AM.
+	appdir_.clear();														// 05/10/00 AM.
 	}
 
-specdir_[0] = '\0';															// 12/03/98 AM.
-comment_[0] = '\0';															// 01/13/99 AM.
-seqfile_[0] = '\0';															// 01/20/99 AM.
-datadir_[0] = '\0';															// 12/08/99 AM.
+specdir_.clear();															// 12/03/98 AM.
+comment_[0] = '\0';														// 01/13/99 AM.
+seqfile_.clear();															// 01/20/99 AM.
+datadir_.clear();															// 12/08/99 AM.
 cg_ = 0;																			// 02/15/00 AM.
 gen_ = 0;																		// 05/10/00 AM.
 npasses_ = 0;																	// 06/13/00 AM.
@@ -130,15 +130,15 @@ if (htfunc_)																	// 12/20/01 AM.
 ********************************************/
 
 Dlist<Seqn> *Ana::getSeqlist()		{ return seqlist_; }
-_TCHAR		  *Ana::getSeqfile()		{ return seqfile_; }
-_TCHAR		  *Ana::getSeqbuf()		{ return seqbuf_;  }
+std::filesystem::path Ana::getSeqfile()		{ return seqfile_; }
+std::filesystem::path Ana::getSeqbuf()		{ return seqbuf_;  }
 long			Ana::getSeqbuflen()	{ return seqbuflen_; }
 Htab		  *Ana::getHtab()			{ return htab_;	}
 bool			Ana::Verbose()			{ return verbose_; }
-_TCHAR		  *Ana::getSpecdir()		{return specdir_;}
-_TCHAR		  *Ana::getComment()		{return comment_;}				// 01/13/99 AM.
-_TCHAR		  *Ana::getDatadir()		{return datadir_;}				// 12/08/99 AM.
-_TCHAR		  *Ana::getAppdir()		{return appdir_;}					// 05/10/00 AM.
+std::filesystem::path Ana::getSpecdir()		{return specdir_;}
+_TCHAR *Ana::getComment()		{return comment_;}				// 01/13/99 AM.
+std::filesystem::path Ana::getDatadir()		{return datadir_;}				// 12/08/99 AM.
+std::filesystem::path Ana::getAppdir()		{return appdir_;}					// 05/10/00 AM.
 CG			  *Ana::getCG()			{return cg_;}						// 02/15/00 AM.
 Gen		  *Ana::getGen()			{return gen_;}						// 05/10/00 AM.
 long			Ana::getNpasses()		{return npasses_;}				// 06/13/00 AM.
@@ -163,7 +163,7 @@ void Ana::setSeqbuf(_TCHAR *x)			{ seqbuf_		= x;}
 void Ana::setSeqbuflen(long x)		{ seqbuflen_	= x;}
 void Ana::setHtab(Htab *x)				{ htab_			= x;}
 void Ana::setVerbose(bool x)			{ verbose_		= x;}
-void Ana::setSpecdir(_TCHAR *x)			{_tcscpy(specdir_, x);}		// 12/03/98 AM.
+void Ana::setSpecdir(std::filesystem::path x) {specdir_		= x;}		// 12/03/98 AM.
 void Ana::setCG(CG *x)					{cg_				= x;}			// 02/15/00 AM.
 void Ana::setGen(Gen *x)				{gen_				= x;}			// 05/10/00 AM.
 void Ana::setNpasses(long x)			{npasses_		= x;}			// 06/13/00 AM.
@@ -171,22 +171,22 @@ void Ana::setDirty(bool x)				{dirty_			= x;}			// 12/20/01 AM.
 void Ana::setHtfunc(void *x)			{htfunc_			= x;}			// 12/20/01 AM.
 void Ana::setNLP(NLP *x)				{nlp_				= x;}			// 12/21/01 AM.
 
-void Ana::setAppdir(_TCHAR *x)												// 05/10/00 AM.
+void Ana::setAppdir(std::filesystem::path x)												// 05/10/00 AM.
 {
-if (x && *x)
-	_tcscpy(appdir_, x);
+if (x && std::filesystem::exists(x))
+	appdir_ = x;
 else
-	appdir_[0] = '\0';
+	appdir_.clear();
 }
 
-void Ana::setKBdir(_TCHAR *appdir)
+void Ana::setKBdir(std::filesystem::path appdir)
 {
-if (appdir && *appdir) {
-	_TCHAR kbDir[MAXSTR];
-	_stprintf(kbDir, _T("%s%ckb%cuser%c"), appdir,DIR_CH,DIR_CH,DIR_CH);
-	_tcscpy(kbdir_, kbDir);
+if (appdir) {
+	kbdir_ = appdir;
+	kbdir_ /= _T("kb");
+	kbdir_ /= _T("user");
 } else
-	kbdir_[0] = '\0';
+	kbdir_.clear();
 }
 
 void Ana::setComment(_TCHAR *x)												// 01/13/99 AM.
@@ -197,19 +197,19 @@ else
 	comment_[0] = '\0';														// 05/10/00 AM.
 }
 
-void Ana::setSeqfile(_TCHAR *x)
+void Ana::setSeqfile(std::filesystem::path x)
 {
-if (x && *x)
-	_tcscpy(seqfile_, x);
+if (x && std::filesystem::exists(x))
+	seqfile_ = x;
 else
-	seqfile_[0] = '\0';														// 05/10/00 AM.
+	seqfile_.clear();														// 05/10/00 AM.
 }
-void Ana::setDatadir(_TCHAR *x)
+void Ana::setDatadir(std::filesystem::path *x)
 {
-if (x && *x)
-	_tcscpy(datadir_, x);
+if (x && std::filesystem::exists(x))
+	datadir_ = x;
 else
-	datadir_[0] = '\0';														// 05/10/00 AM.
+	datadir_.clear();													// 05/10/00 AM.
 }
 
 

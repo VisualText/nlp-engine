@@ -24,7 +24,7 @@ class NLP;			// 01/23/02 AM.
 
 //extern void load_dll();
 #ifndef LINUX
-HINSTANCE load_dll(_TCHAR *path);
+HINSTANCE load_dll(std::filesystem::path p);
 
 bool call_ucodeAction(
 	HINSTANCE hLibrary,

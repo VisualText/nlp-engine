@@ -24,6 +24,7 @@ All rights reserved.
 #endif
 
 #include <vector>
+#include <filesystem>
 
 #define FNAMESIZ 256
 #define NAMESIZ  256
@@ -80,14 +81,14 @@ class LIBCONSH_API CG
 
 public:
 	CG(										// Default constructor.
-		_TCHAR *appdir = 0,
+		std::filesystem::path appdir = _T(""),
 		bool compiled = false,			// Load compiled (kb.dll).	// 04/27/01 AM.
 		ALIST *alist = 0			// List Manager (not optional).	// 08/14/02 AM.
 		);
 	~CG();									// Destructor.
 
 	// Access
-	_TCHAR *getAppdir();
+	std::filesystem::path getAppdir();
 	bool  getDirty();															// 05/12/00 AM.
 	AKBM  *getKBM();															// 06/11/02 AM.
 	ALIST *getALIST();														// 08/14/02 AM.
@@ -97,7 +98,7 @@ public:
 //#endif
 
 	// Modify
-	void setAppdir(_TCHAR *);
+	void setAppdir(std::filesystem::path);
 	void setDirty(bool);														// 05/12/00 AM.
 	void setKBM(AKBM*);														// 06/11/02 AM.
 	void setALIST(ALIST*);													// 08/14/02 AM.
@@ -108,8 +109,8 @@ public:
 
 	// General.
    static CG *makeCG(                                          // 07/28/03 AM.
-	   ALIST *alist,
-      _TCHAR *appdir=0,
+	    ALIST *alist,
+        std::filesystem::path appdir = _T(""),
 		bool compiled = false
 		);
    static void deleteCG(CG*);                                  // 07/28/03 AM.
@@ -124,12 +125,12 @@ public:
 
 	// Read the latest (user-modified) kb from files.
 	// If dir is present, kb is read from $appdir/kb/dir.
-	bool readKB(_TCHAR *dir);	// _T("user")	// 09/23/20 AM.
+	bool readKB(std::filesystem::path dir);	// _T("user")	// 09/23/20 AM.
 
 	// Save latest KB (from memory to files).
 	// If dir is present, kb is written to $appdir/kb/dir.
 //	bool writeKB(_TCHAR *dir = _T("user"));
-	bool writeKB(_TCHAR *dir);	// _T("user")	// 09/23/20 AM.
+	bool writeKB(std::filesystem::path dir);	// _T("user")	// 09/23/20 AM.
 
 	// Modular dump of a kb subtree.										// 08/06/01 AM.
 	bool dumpTree(CONCEPT*, _TCHAR*);										// 08/06/01 AM.
@@ -209,8 +210,8 @@ public:
 	// Find dictionary concept for given string.						// 06/29/03 AM.
 	CONCEPT *findWordConcept(_TCHAR*);								// 06/29/03 AM.
 
-	bool openDict(std::vector<std::string>& files);
-	bool readDicts(std::vector<std::string> files);
+	bool openDict(std::vector<std::filesystem::path>& files);
+	bool readDicts(std::vector<std::filesystem::path> files);
 	bool readDict(std::string file);
 
 	CONCEPT *findDictConcept(_TCHAR*);
@@ -226,6 +227,7 @@ public:
 
 	// Get next alphabetic dict concept.  For traversal.			// 03/21/03 AM.
 	CONCEPT *dictNext(CONCEPT *dictcon);								// 03/21/03 AM.
+	std::filesystem::path suffPath(std::filesystem::path p, _TCHAR *filename, _TCHAR *suff);
 
 	// Find hierarchy concept.  Given a name, look through the given subtree
 	// for it.  Also look through node names.  If a node, return its owning
@@ -534,11 +536,11 @@ public:
 		std::_t_ofstream *&attr,														// 07/01/03 AM.
 		long &n_attr,				// # of attr files.					// 07/01/03 AM.
 		long &c_attr,			// # of attributes in curr file.		// 07/01/03 AM.
-		_TCHAR *o_attr=0,														// 07/01/03 AM.
-		_TCHAR *fpath=0,															// 07/01/03 AM.
+		std::filesystem:: path o_attr = _T(""),														// 07/01/03 AM.
+		std::filesystem:: path fpath = _T(""),															// 07/01/03 AM.
 		_TCHAR *suff=0															// 07/01/03 AM.
 		);
-	bool writeKBmain(long,_TCHAR*,_TCHAR*);									// 07/01/03 AM.
+	bool writeKBmain(long,std::filesystem::path,_TCHAR*);									// 07/01/03 AM.
 	bool writeAttrs(															// 04/29/99 AM.
 		CONCEPT *con,			// Concept to traverse.
 		int pos,					// 0 for concept, positive int for each
@@ -566,7 +568,7 @@ public:
 		);
 
 	// The internal function for the TAKE command or take().
-	bool readFile(_TCHAR *file);
+	bool readFile(std::filesystem::path file);
 
 	void prunePhrasesRec(CONCEPT *conc, bool root);					// 08/10/99 AM.
 
@@ -596,8 +598,8 @@ public:
 	ID nlp_WHT;																	// 08/22/02 AM.
 
 private:
-	_TCHAR appdir_[FNAMESIZ];		// Base directory path.
-	_TCHAR kbdir_[FNAMESIZ];
+	std::filesystem::path appdir_;		// Base directory path.
+	std::filesystem::path kbdir_;
 
 	std::_t_ifstream allDictStream_;
 
@@ -607,7 +609,7 @@ private:
 	// For diverting the libconsh error output.						// 09/16/99 AM.
 	std::_t_ostream *serr_;															// 09/16/99 AM.
 	std::_t_ofstream *ferr_;															// 09/16/99 AM.
-	_TCHAR errout_[PATHSIZ];													// 09/16/99 AM.
+	std::filesystem::path errout_;													// 09/16/99 AM.
 
 // COMPILED KB IN LINUX.	// 02/19/19 AM.
 //#ifndef LINUX

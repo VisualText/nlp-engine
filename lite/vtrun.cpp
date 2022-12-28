@@ -63,6 +63,7 @@ All rights reserved.
 #endif
 
 #include "lite/vtrun.h"
+#include <filesystem>
 
 // Keep track of the first instance of this class.
 //VTRun *VTRun_Ptr = 0;	// [DEGLOB]	// 10/15/20 AM.
@@ -603,7 +604,7 @@ return true;			// 07/28/03 AM.
 ********************************************/
 
 NLP *VTRun::makeNLP(
-	_TCHAR *appdir,	// Directory housing kb folder.
+	std::filesystem::path appdir,	// Directory housing kb folder.
 	_TCHAR *name,
 	bool develop,
 	bool silent,
@@ -664,8 +665,8 @@ return true;
 ********************************************/
 
 VTRun *VTRun::makeVTRun(
-	_TCHAR *logfile,
-	_TCHAR *rfbspecdir,
+	std::filesystem::path logfile,
+	std::filesystem::path rfbspecdir,
 	bool silent
 	)
 {

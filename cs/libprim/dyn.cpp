@@ -20,19 +20,19 @@ typedef void (* lpFunc2)();
 
 #ifndef LINUX
 
-LIBPRIM_API HINSTANCE load_dll(_TCHAR *path)
+LIBPRIM_API HINSTANCE load_dll(std::filesystem::path p)
 {
     HINSTANCE  hLibrary;
 
         int a = 0;
-    hLibrary = LoadLibrary(path);
+    hLibrary = LoadLibrary(p.string().c_str());
     
     if (hLibrary != NULL)
     {
     }
 //    else cerr << "Error in Load Library" << std::endl;				// 08/20/00 AM.
 	else
-		std::_t_cerr << _T("[Couldn't load library: ") << path					// 08/20/00 AM.
+		std::_t_cerr << _T("[Couldn't load library: ") << p.string()					// 08/20/00 AM.
 			  << std::endl;
 return hLibrary;
 }

@@ -44,6 +44,7 @@ All rights reserved.
 #include <iostream>
 #include <strstream>
 #include <sstream>
+#include <filesystem>
 
 #ifndef NLP_H_
 #define NLP_H_
@@ -148,11 +149,11 @@ public:
 
 	// CREATE AND LOAD A TEXT ANALYZER.
 	bool make_analyzer(
-		_TCHAR *sequence,			// NAME OF ANA SEQUENCE FILE.
-		_TCHAR *appdir,				// ANALYZER APPLICATION TOP DIR.
+		std::filesystem::path sequence,			// NAME OF ANA SEQUENCE FILE.
+		std::filesystem::path appdir,				// ANALYZER APPLICATION TOP DIR.
 		bool develop,				// INTERMEDIATE FILES.				  // 12/25/98 AM.
 		bool silent = false,    // LOGGING/DEBUG OUTPUT.           // 06/16/02 AM.
-		_TCHAR *outdir = 0,			// DIRECTORY FOR OUTPUT.			  // 03/10/99 AM.
+		std::filesystem::path outdir = _T(""),			// DIRECTORY FOR OUTPUT.			  // 03/10/99 AM.
 		bool compile = false,		// COMPILE WHILE LOADING.       // 07/15/02 AM.
 		bool compiled = false,	// RUN COMPILED ANALYZER (run.dll) // 07/05/00 AM.
 		bool fromkb = false		// GET ANALYZER SEQUENCE FROM KB.  // 11/11/00 AM.
@@ -160,17 +161,17 @@ public:
 
 	// RUN ANALYZER ON A SINGLE TEXT OR BUFFER.
 	void analyze(
-		_TCHAR *input,		// INPUT FILE PATH.
-		_TCHAR *output,		// OUTPUT FILE PATH.
-		_TCHAR *appdir,		// ANALYZER APPLICATION TOP DIR.
+		std::filesystem::path input,		// INPUT FILE PATH.
+		std::filesystem::path output,		// OUTPUT FILE PATH.
+		std::filesystem::path appdir,		// ANALYZER APPLICATION TOP DIR.
 		bool flogfiles,	// OUTPUT INTERMEDIATE LOGS				  // 10/13/99 AM.
 		bool silent = false, // LOGGING/DEBUG OUTPUT.              // 06/16/02 AM.
-		_TCHAR *outdir = 0,	// DIRECTORY FOR OUTPUT.					  // 03/10/99 AM.
-		_TCHAR *inbuf = 0,	// IF ANALYZING A BUFFER, SUPPLY IT HERE // 02/11/00 AM.
+		std::filesystem::path outdir = _T(""),	// DIRECTORY FOR OUTPUT.					  // 03/10/99 AM.
+		std::filesystem::path inbuf = _T(""),	// IF ANALYZING A BUFFER, SUPPLY IT HERE // 02/11/00 AM.
 		long len = 0,		// LENGTH OF INPUT BUFFER					  // 02/11/00 AM.
 		bool compiled=false,	// RUN COMPILED ANALYZER				  // 07/05/00 AM.
-		std::_t_ostream *os = 0,	// STANDARD OUTPUT STREAM					  // 05/05/02 AM.
-		_TCHAR *outbuf = 0,	// OUTPUT BUFFER TO BIND TO cbuf STREAM  // 05/07/02 AM.
+		std::_t_ostream *os = 0,	// 0STANDARD OUTPUT STREAM					  // 05/05/02 AM.
+		std::filesystem::path outbuf = _T(""),	// OUTPUT BUFFER TO BIND TO cbuf STREAM  // 05/07/02 AM.
 		long outlen = 0,	// MAXIMUM LENGTH OF cbuf OUTPUT BUFFER  // 05/07/02 AM.
 		_TCHAR *datum = 0   // PASS INFO TO G("$datum").             // 03/13/03 AM.
 		);
@@ -330,7 +331,7 @@ public:
 
 	bool load_compiled(_TCHAR *);			// 09/13/00 AM.
 
-	void fileDbg(_TCHAR *,std::_t_ostream*&);										// 08/26/02 AM.
+	void fileDbg(std::filesystem::path dirname,std::_t_ostream*&);										// 08/26/02 AM.
 	void resetDbg(std::_t_ostream*&);												// 08/26/02 AM.
 	bool logOut(bool);														// 08/26/02 AM.
 	bool logOut(std::_t_strstream*,bool);                            // 02/25/05 AM.

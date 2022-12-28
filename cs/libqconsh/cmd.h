@@ -101,7 +101,7 @@ cmd_gen(
 	);
 extern LIBQCONSH_API bool
 cmd_gen_all(
-	_TCHAR *dir,		// Dir to gen code to.								// 07/01/00 AM.
+	std::filesystem::path dir,		// Dir to gen code to.								// 07/01/00 AM.
 	LIST *args,
 	_t_ostream *out,
 	CG *cg
