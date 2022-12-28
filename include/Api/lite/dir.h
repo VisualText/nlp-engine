@@ -14,6 +14,8 @@ All rights reserved.
 #define DIR_H_
 
 #include <vector>
+#include <filesystem>
+#include <regex>
 
 LITE_API bool plain_file(struct _tfinddata_t &fileinfo);
 LITE_API bool     is_dir(struct _tfinddata_t &fileinfo);
@@ -35,7 +37,7 @@ LITE_API bool safe_dir(_TCHAR *path);
 LITE_API bool read_files(
 	_TCHAR *dir,
 	_TCHAR *filter,
-	std::vector<std::string>& files
+	std::vector<std::filesystem::path>& files
 	);
 
 #endif

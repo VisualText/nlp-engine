@@ -12,6 +12,8 @@ MIT License
 
 #include "nlp_engine.h"
 
+#include <filesystem>
+
 #ifdef LINUX
 #include <unistd.h>
 #include <dirent.h>
@@ -287,7 +289,6 @@ int NLP_ENGINE::init(
 
     return 0;
 }
- 
 int NLP_ENGINE::analyze(
     _TCHAR *analyzer,
     _TCHAR *infile,
@@ -300,17 +301,18 @@ int NLP_ENGINE::analyze(
     NLP_ENGINE::init(analyzer,develop,silent,compiled);
 
     readFiles(infile);
-    const char *file;
+    std::string file;
     struct stat st;
 
-    _TCHAR fname[MAXSTR];
-    _stprintf(fname, _T("%s%c%s%c%s"), analyzer, DIR_CH, _T("logs"), DIR_CH, _T("file.log"));
-    std::_t_ofstream *fp = new std::_t_ofstream(TCHAR2CA(fname), std::ios::out);
+    std::filesystem::path fname(analyzer);
+    fname /= _T("logs");
+    fname /= _T("file.log");
+    std::_t_ofstream *fp = new std::_t_ofstream(fname.string(), std::ios::out);
     m_nlp->setIsLastFile(false);
     m_nlp->setIsFirstFile(true);
 
-    for (std::vector<std::string>::iterator it = m_files.begin() ; it != m_files.end(); ++it) {
-        file = it->c_str();
+    for (std::vector<std::filesystem::path>::iterator it = m_files.begin() ; it != m_files.end(); ++it) {
+        file = it->string();
         if (std::next(it) == m_files.end()) {
             m_nlp->setIsLastFile(true);
         }
@@ -318,10 +320,10 @@ int NLP_ENGINE::analyze(
         std::string filepath = s.substr(s.find("input")+6,s.length()-1);
         *fp << _T("File=") << filepath << std::endl;
 
-        if (stat(file,&st) == 0)
-            _stprintf(m_infile, _T("%s"),file);
+        if (std::filesystem::exists(file))
+            _stprintf(m_infile, _T("%s"),file.c_str());
         else
-            _stprintf(m_infile, _T("%s%sinput%s%s"),m_anadir,DIR_STR,DIR_STR,file);
+            _stprintf(m_infile, _T("%s%sinput%s%s"),m_anadir,DIR_STR,DIR_STR,file.c_str());
         std::_t_cout << _T("[infile path: ") << m_infile << _T("]") << std::endl;
 
         _stprintf(m_outfile, _T("%s%soutfile.txt"),m_anadir,DIR_STR);
@@ -336,7 +338,7 @@ int NLP_ENGINE::analyze(
             }
         }
         if (!silent && create) {
-            _stprintf(m_outdir, _T("%s_log"),file);
+            _stprintf(m_outdir, _T("%s_log"),file.c_str());
             NLP_ENGINE::createDir(m_outdir);
         }
         std::_t_cout << _T("[outdir path: ") << m_outdir << _T("]") << std::endl;
@@ -514,90 +516,17 @@ int NLP_ENGINE::createDir(_TCHAR *dirPath) {
     return 0;
 }
 
-int NLP_ENGINE::readFiles(_TCHAR *path) 
+int NLP_ENGINE::readFiles(_TCHAR *dir) 
 {
     m_files.clear();
 
-#ifdef LINUX
-
-    struct stat s;
-    if (lstat(path, &s) == 0 ) {
-        if (S_ISREG(s.st_mode)) {
-            m_nlp->setIsDirRun(false);
-            m_files.push_back(path);
-            return 1;
-        }
-    } else {
-        return 0;
-    }
-
-    DIR *dpdf;
-    struct dirent *epdf;
-    _TCHAR fullPath[MAXPATH*3];
-
-    dpdf = opendir(path);
-
-    if (dpdf != NULL) {
+    if (std::filesystem::is_directory(dir)) {
         m_nlp->setIsDirRun(false);
-        unsigned char isFile =0x8;
-        while ((epdf = readdir(dpdf))) {
-            if (epdf->d_name[0] != '.' && epdf->d_type == isFile) {
-                _stprintf(fullPath, _T("%s%s%s"),path,DIR_STR,epdf->d_name);
-                m_files.push_back(fullPath);
-            }
-        }
-    } else {
-        return 0;
-    }
-    
-#else
-
-    DWORD ftyp = GetFileAttributesA(path);
-    if (ftyp == INVALID_FILE_ATTRIBUTES && GetLastError() == ERROR_FILE_NOT_FOUND)
-    {
-        return 0;
-    }
-
-    if (ftyp & FILE_ATTRIBUTE_DIRECTORY) {
-        m_nlp->setIsDirRun(true);
-        WIN32_FIND_DATA ffd;
-        HANDLE hFind = INVALID_HANDLE_VALUE;
-        DWORD dwError=0;
-
-        // Find the first file in the directory.
-
-        _TCHAR fullPath[MAXPATH*3];
-        _stprintf(fullPath, _T("%s%s%s"),path,DIR_STR,_T("*"));
-        hFind = FindFirstFile(fullPath, &ffd);
-
-        if (INVALID_HANDLE_VALUE == hFind) 
-        {
-            return 0;
-        }
-
-        do
-        {
-            if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-            {
-                continue;
-            }
-            else if (ffd.cFileName[0] != '.')
-            {
-                _stprintf(fullPath, _T("%s%s%s"),path,DIR_STR,ffd.cFileName);
-                m_files.push_back(fullPath);
-            }
-        }
-        while (FindNextFile(hFind, &ffd) != 0);
-
+        read_files(dir,_T(""),m_files);
         return 1;
-        }
-    else {
+    } else {
         m_nlp->setIsDirRun(false);
-        m_files.push_back(path);
+        m_files.push_back(dir);
         return 1;
     }
-
-#endif
-
-    return 0;
 }

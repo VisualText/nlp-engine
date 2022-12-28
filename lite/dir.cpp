@@ -24,10 +24,6 @@ All rights reserved.
 
 #include <vector>
 
-#include "boost/filesystem.hpp"
-#include "boost/regex.hpp"
-using namespace boost::filesystem;
-
 /********************************************
 * FN:		RM_PATH
 * CR:		03/11/99 AM.
@@ -362,20 +358,14 @@ return true;
 }
 
 LITE_API bool
-read_files(_TCHAR *dir, _TCHAR *filter, std::vector<std::string>& files) 
+read_files(_TCHAR *dir, _TCHAR *filter, std::vector<std::filesystem::path>& files) 
 {
     files.clear();
+	const std::regex filt{filter};
 
-	path p(dir);
-	directory_iterator end_itr;
-	boost::regex the_filter(filter);
-	boost::smatch what;
-
-    for (directory_iterator itr(p); itr != end_itr; ++itr)
-    {
-		std::string str = itr->path().string();
-        if (is_regular_file(itr->path()) && regex_match(str, what, the_filter)) {
-            files.push_back(str);
+	for (const auto & entry : std::filesystem::directory_iterator(dir)) {
+        if (std::filesystem::is_regular_file(entry.path()) && std::regex_match(entry.path().string(),filt)) {
+            files.push_back(entry.path());
         }
 	}
 

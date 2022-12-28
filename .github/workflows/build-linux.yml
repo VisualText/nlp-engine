@@ -25,9 +25,6 @@ jobs:
       - name: Install autoconf-archive
         run: sudo apt-get install -y autoconf-archive
 
-      - name: Install libboost-all-dev
-        run: sudo apt-get install libboost-all-dev
-
       - name: Install 3rd Party
         run: vcpkg install
         working-directory: vcpkg
@@ -73,9 +70,3 @@ jobs:
         with:
           name: libicuuc.a
           path: vcpkg_installed/x64-linux/lib/libicuuc.a
-
-      - name: Upload boost_filesystem.a
-        uses: actions/upload-artifact@v3
-        with:
-          name: libboost_filesystem.a
-          path: vcpkg_installed/x64-linux/lib/libboost_filesystem.a

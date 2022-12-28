@@ -7,7 +7,6 @@ enable_testing()
 
 find_package(ICU REQUIRED COMPONENTS uc i18n io)
 set(CMAKE_GENERATOR_PLATFORM Win32 HINT)
-find_package(Boost REQUIRED COMPONENTS system filesystem regex)
 
 if(MSVC)
     add_compile_options(/w44005 /w44244 /w44311 /w44211 /w44302 /w44267 /w44312 /w45033 /w44624 /w44996 /w44273)
@@ -38,7 +37,6 @@ include_directories(include)
 include_directories(include/Api)
 include_directories(include/Api/lite)
 include_directories(${ICU_INCLUDE_DIR})
-include_directories(${Boost_INCLUDE_DIR})
 
 add_subdirectory(cs)
 add_subdirectory(src)

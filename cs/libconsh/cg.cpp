@@ -57,9 +57,6 @@ All rights reserved.
 #include "prim/unicu.h"
 using namespace unicu;
 
-#include "boost/filesystem.hpp"
-using namespace boost::filesystem;
-
 // Number of ind attr commands per file.								// 07/01/03 AM.
 // Segmenting the attr commands into multiple cmd files.			// 07/01/03 AM.
 #define ATTRS_PER_FILE 25000
@@ -633,7 +630,7 @@ _TCHAR infile[MAXPATH*2];
 _TCHAR *suff, *timeMsg;
 suff = _T("kb");		// Kb file suffix.
 timeMsg = _T("[READ KB time=");
-std::vector<std::string> files;
+std::vector<std::filesystem::path> files;
 
 if (openDict(files)) {
 	_stprintf(infile, _T("%s%chier.%s"), path,DIR_CH, suff);
@@ -3424,16 +3421,16 @@ if (!(word = kbm_->dict_find_word(str)) )
 return word;
 }
 
-bool CG::openDict(std::vector<std::string>& files) {
+bool CG::openDict(std::vector<std::filesystem::path>& files) {
 	dictfile_ = false;
 	files.clear();
 
-	path p(kbdir_);
+	std::filesystem::path p(kbdir_);
 	p /= _T("all.dict");
 	allDictStream_.open(p.string(), std::ios::in);
 
 	if (allDictStream_) {
-		files.push_back(p.string());
+		files.push_back(p);
 		allDictStream_.close();
 		dictfile_ = true;
 	} else {
@@ -3444,11 +3441,11 @@ bool CG::openDict(std::vector<std::string>& files) {
 	return dictfile_;
 }
 
-bool CG::readDicts(std::vector<std::string> files) {
-	std::vector<std::string>::iterator ptr;
+bool CG::readDicts(std::vector<std::filesystem::path> files) {
+	std::vector<std::filesystem::path>::iterator ptr;
 	if (files.size() == 0) return false;
     for (ptr = files.begin(); ptr < files.end(); ptr++) {
-        readDict(*ptr);
+        readDict(ptr->string());
 	}
 	return true;
 }

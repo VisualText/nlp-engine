@@ -28,12 +28,6 @@ jobs:
         workflow: build-windows.yml
         name: "icuuc71.dll"
         
-    - name: Fetch Windows boost_filesystem
-      uses: dawidd6/action-download-artifact@v2
-      with:
-        workflow: build-windows.yml
-        name: "boost_filesystem.dll"
-        
     - name: Fetch Linux exe
       uses: dawidd6/action-download-artifact@v2
       with:
@@ -52,12 +46,6 @@ jobs:
         workflow: build-linux.yml
         name: "libicuuc.a"
         
-    - name: Fetch Linux boost_filesystem
-      uses: dawidd6/action-download-artifact@v2
-      with:
-        workflow: build-linux.yml
-        name: "libboost_filesystem.a"
-        
     - name: Fetch MacOS exe
       uses: dawidd6/action-download-artifact@v2
       with:
@@ -75,12 +63,6 @@ jobs:
       with:
         workflow: build-macos.yml
         name: "libicuucm.a"
-
-    - name: Fetch MacOS boost_filesystem
-      uses: dawidd6/action-download-artifact@v2
-      with:
-        workflow: build-macos.yml
-        name: "libboost_filesystemm.a"
 
     - name: Fetch Engine Files
       uses: dawidd6/action-download-artifact@v2
@@ -134,12 +116,6 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./icuuc71.dll"
-                        
-    - name: Add boost_filesystem.dll asset
-      uses: shogo82148/actions-upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./boost_filesystem-vc142-mt-x32-1_80.dll"
                 
     - name: Add libicutu.a asset
       uses: shogo82148/actions-upload-release-asset@v1
@@ -152,12 +128,6 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./libicuuc.a"
-                        
-    - name: Add boost_filesystem.a asset
-      uses: shogo82148/actions-upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./libboost_filesystem.a"
                 
     - name: Add libicutum.a asset
       uses: shogo82148/actions-upload-release-asset@v1
@@ -170,12 +140,6 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./libicuucm.a"
-                        
-    - name: Add boost_filesystemm.a asset
-      uses: shogo82148/actions-upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./libboost_filesystemm.a"
                 
     - name: Add nlpengine.zip asset
       uses: shogo82148/actions-upload-release-asset@v1

@@ -72,7 +72,7 @@ public:
     _TCHAR m_outfile[MAXPATH*3];
     _TCHAR m_seqfile[MAXPATH*4];
 
-    std::vector<std::string> m_files;
+    std::vector<std::filesystem::path> m_files;
 
     VTRun *m_vtrun;
     NLP *m_nlp;

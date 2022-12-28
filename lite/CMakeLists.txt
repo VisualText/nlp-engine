@@ -14,5 +14,4 @@ target_link_libraries(lite PUBLIC
   kbm
   consh
   words
-  ${ICU_LIBRARIES}
-  ${Boost_LIBRARIES})
+  ${ICU_LIBRARIES})
