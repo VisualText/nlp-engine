@@ -83,7 +83,6 @@ nlp_PUNCT =
 0;
 
 dirty_ = false;																// 05/12/00 AM.
-dictfile_ = false;
 #ifndef LINUX
 hkbdll_ = 0;																	// 06/29/00 AM.
 #endif
@@ -588,7 +587,7 @@ return true;
 bool CG::readKB(_TCHAR *dir)
 {
 *cgerr << _T("[readKB:]") << std::endl;											// 02/19/02 AM.
-clock_t s_time, e_time;										// 10/20/99 AM.
+clock_t s_time;										// 10/20/99 AM.
 s_time = clock();												// 10/20/99 AM.
 
 if (!dir || !*dir)
@@ -627,20 +626,37 @@ _stprintf(path, _T("%s%c%s%c%s"), getAppdir(),DIR_CH, kbdir,DIR_CH, dir);
 // Prep and open up the input file.
 // hier, word, phr, attr.
 _TCHAR infile[MAXPATH*2];
-_TCHAR *suff, *timeMsg;
+_TCHAR *suff;
 suff = _T("kb");		// Kb file suffix.
-timeMsg = _T("[READ KB time=");
 std::vector<std::filesystem::path> files;
+bool kbLoaded = false;
+bool bound = false;
 
 if (openDict(files)) {
 	_stprintf(infile, _T("%s%chier.%s"), path,DIR_CH, suff);
 	if (!readFile(infile))
 		return false;
+	con_add_root(this);
 	bind_sys(this);
+	bound = true;
 	readDicts(files);
-	timeMsg = _T("[READ all.dict time=");
+	outputTime(_T("[READ dict files time="),s_time);
+	s_time = clock();
+	kbLoaded = true;
+}
 
-} else {
+if (openKBB(files)) {
+	if (!bound) {
+		bind_sys(this);
+		con_add_root(this);
+	}
+	readKBBs(files);
+	outputTime(_T("[READ kbb files time="),s_time);
+	s_time = clock();
+	kbLoaded = true;
+}
+
+if (!kbLoaded) {
 
 	// Using a master take file for readin kb.			// 07/01/03 AM.
 	_stprintf(infile, _T("%s%cmain.%s"),path,DIR_CH,suff);	// 07/01/03 AM.
@@ -675,15 +691,19 @@ if (openDict(files)) {
 		_stprintf(infile, _T("%s%cattr.%s"), path, DIR_CH, suff);
 		if (!readFile(infile))
 			return false;
+			
+		outputTime(_T("Original KB files"),s_time);
 	}
 }
 
-e_time = clock();												// 10/20/99 AM.
-*cgerr << timeMsg
-	  << (double) (e_time - s_time)/CLOCKS_PER_SEC	// 10/20/99 AM.
-	  << _T(" sec]") << std::endl;									// 10/20/99 AM.
-
 return true;
+}
+
+void CG::outputTime(_TCHAR *timeMsg, clock_t s_time) {
+clock_t e_time = clock();
+*cgerr << timeMsg << _T(" ")
+	  << (double) (e_time - s_time)/CLOCKS_PER_SEC
+	  << _T(" sec]") << std::endl;
 }
 
 /********************************************
@@ -3422,7 +3442,7 @@ return word;
 }
 
 bool CG::openDict(std::vector<std::filesystem::path>& files) {
-	dictfile_ = false;
+	bool found = false;
 	files.clear();
 
 	std::filesystem::path p(kbdir_);
@@ -3432,13 +3452,13 @@ bool CG::openDict(std::vector<std::filesystem::path>& files) {
 	if (allDictStream_) {
 		files.push_back(p);
 		allDictStream_.close();
-		dictfile_ = true;
+		found = true;
 	} else {
 		read_files(kbdir_,_T("(.*\\.dict)$"),files);
-		dictfile_ = files.size() ? true : false;
+		found = files.size() ? true : false;
 	}
 
-	return dictfile_;
+	return found;
 }
 
 bool CG::readDicts(std::vector<std::filesystem::path> files) {
@@ -3536,6 +3556,187 @@ bool CG::readDict(std::string file) {
 	return true;
 }
 
+bool CG::openKBB(std::vector<std::filesystem::path>& files) {
+	bool found = false;
+	files.clear();
+
+	std::filesystem::path p(kbdir_);
+	p /= _T("all.kbb");
+	allDictStream_.open(p.string(), std::ios::in);
+
+	if (allDictStream_) {
+		files.push_back(p);
+		allDictStream_.close();
+		found = true;
+	} else {
+		read_files(kbdir_,_T("(.*\\.kbb)$"),files);
+		found = files.size() ? true : false;
+	}
+
+	return found;
+}
+
+bool CG::readKBBs(std::vector<std::filesystem::path> files) {
+	std::vector<std::filesystem::path>::iterator ptr;
+	if (files.size() == 0) return false;
+    for (ptr = files.begin(); ptr < files.end(); ptr++) {
+        readKBB(ptr->string());
+	}
+	return true;
+}
+
+bool CG::readKBB(std::string file) {
+	bool found;
+	CONCEPT *con, *parent;
+	std::vector<CONCEPT *> cons;
+	std::vector<std::pair<int,int>> conIndices;
+	_TCHAR buf[MAXMSG];
+	_TCHAR word[MAXSTR];
+	_TCHAR attr[MAXSTR];
+	_TCHAR val[MAXSTR];
+	_TCHAR conName[MAXSTR];
+
+	std::ifstream streamer;
+	streamer.open(file, std::ios::in);
+	int32_t indent = 0;
+	int32_t lastIndent = 0;
+	int32_t index = 0;
+	bool starting = true;
+	bool attrFlag = false;
+	bool openSquare = false;
+	bool openDouble = false;
+	bool collectingConcept = false;
+		
+	while (streamer.getline(buf, MAXMSG)) {
+		icu::StringPiece sp(buf);
+		const char *line = sp.data();
+		int32_t length = sp.length();
+		if (!length)
+			continue;
+
+		UChar32 c = 1;
+		int32_t end = 0;
+		int32_t start = 0;
+		int32_t ulen = 0;
+		found = false;
+		U8_NEXT(line, end, length, c);
+		lastIndent = index;
+		indent = 0;
+		index = 0;
+		attrFlag = false;
+		openSquare = false;
+		openDouble = false;
+		collectingConcept = false;
+
+		// Get indent
+		while (c) {
+			if (unicu::isWhiteSpace(c)) {
+				indent++;
+				U8_NEXT(line, end, length, c);
+			} else {
+				break;
+			}
+		}
+		index = indent/2;
+		start = indent;
+		if (indent == 0) {
+			cons.clear();
+			lastIndent = 0;
+		}
+
+		bool conceptDone = false;
+
+		// Get the rest
+		while (c) {
+			if (conceptDone && unicu::isWhiteSpace(c)) {
+				int doNothing = 1;
+				start = end;
+			}
+			else if (conceptDone && c == '[') {
+				openSquare = true;
+				start = end;
+				attrFlag = true;			
+			}
+			else if (conceptDone && openSquare && collectingConcept && c == ']') {
+				CONCEPT *c = addConceptByPath(line,conIndices);
+				addVal(con,attr,c);
+				start = end;
+				openDouble = false;
+				collectingConcept = false;
+				attrFlag = false;
+				conIndices.clear();		
+			}
+			else if (conceptDone && openSquare && openDouble && c == '"') {
+				_tcsnccpy(val, &line[start],end-start-1);
+				val[end-start-1] = '\0';	
+				conIndices.push_back(std::make_pair(start,end-1));
+				start = end;
+				// Add to concept path
+				openDouble = false;
+			}
+			else if (conceptDone && openSquare && c == '"') {
+				openDouble = true;
+				collectingConcept = true;
+				start = end;
+				attrFlag = true;			
+			}
+			else if (openSquare && (c == ',' || c == ']')) {
+				if (c == ',')
+					int stophere = 1;
+				_tcsnccpy(val, &line[start],end-start-1);
+				val[end-start-1] = '\0';
+				start = end;
+				conceptPath(con,conName,MAXSTR);
+				addSval(con,attr,val);
+				if (c == ']') {
+					openSquare = false;
+					attrFlag = false;
+				}				
+			}
+			else if (conceptDone && c == '=') {
+				_tcsnccpy(attr, &line[start],end-start-1);
+				attr[end-start-1] = '\0';
+				start = end;
+				attrFlag = true;			
+			}
+			else if (!conceptDone && (c == ':' || end == length)) {
+				_tcsnccpy(word, &line[start],end-start);
+				int adjust = c == ':' ? 1 : 0;
+				word[end-start-adjust] = '\0';
+				if (index == 0)
+					parent = findRoot();
+				else
+					parent = cons[index-1];
+				con = makeConcept(parent,word);
+				// Backup if indent less than last
+				for (int j=lastIndent; j && j>=index; j--)
+					cons.pop_back();
+				cons.push_back(con);
+				conceptDone = true;
+				start = end;
+			}
+			U8_NEXT(line, end, length, c);
+		}
+	}
+
+	allDictStream_.close();
+
+	return true;
+}
+
+CONCEPT *CG::addConceptByPath(const char *line, std::vector<std::pair<int,int>> conIndices) {
+	CONCEPT *con = findRoot();
+	int i = 0;
+	_TCHAR word[MAXMSG];
+    for (auto indice: conIndices) {
+		_tcsnccpy(word, &line[indice.first],indice.second);
+		word[indice.second-indice.first] = '\0';
+		if (i++)
+			con = makeConcept(con,word);
+    }
+	return con;
+}
+
 /********************************************
 * FN:           FINDDICTCONCEPT
 * SUBJ:	Find the concept for a word from a *.dict file
@@ -3546,8 +3747,6 @@ CONCEPT *CG::findDictConcept(_TCHAR *str)
 {
 bool dirty = false;
 CONCEPT *word = kbm_->dict_get_word(str,dirty);
-if (!dictfile_)
-	return word;
 
 allDictStream_.clear();
 allDictStream_.seekg(0);
