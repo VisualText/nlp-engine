@@ -3490,7 +3490,17 @@ bool CG::readDict(std::string file) {
 		int32_t e = 0;
 		int32_t ulen = 0;
 		found = false;
+
 		U8_NEXT(line, e, length, c);
+
+		// Skip white space (SHOULD NOT BE THERE)
+		while (unicu::isWhiteSpace(c)) {
+			U8_NEXT(line, e, length, c);
+		}
+
+		// If comment, skip line
+		if (c == '#')
+			continue;
 
 		while (c) {
 			if (unicu::isWhiteSpace(c)) {
@@ -3620,23 +3630,28 @@ bool CG::readKBB(std::string file) {
 		int32_t ulen = 0;
 		found = false;
 		U8_NEXT(line, end, length, c);
-		lastIndent = index;
-		indent = 0;
-		index = 0;
-		attrFlag = false;
-		openSquare = false;
-		openDouble = false;
-		collectingConcept = false;
 
 		// Get indent
+		int spaces = 0;
 		while (c) {
 			if (unicu::isWhiteSpace(c)) {
-				indent++;
+				spaces++;
 				U8_NEXT(line, end, length, c);
 			} else {
 				break;
 			}
 		}
+		if (c == '#')
+			continue;
+					
+		lastIndent = index;
+		indent = spaces;
+
+		attrFlag = false;
+		openSquare = false;
+		openDouble = false;
+		collectingConcept = false;
+
 		index = indent/2;
 		start = indent;
 		if (indent == 0) {
@@ -3648,7 +3663,10 @@ bool CG::readKBB(std::string file) {
 
 		// Get the rest
 		while (c) {
-			if (conceptDone && unicu::isWhiteSpace(c)) {
+			if (c == '#') {
+				break;
+			}
+			else if (conceptDone && unicu::isWhiteSpace(c)) {
 				int doNothing = 1;
 				start = end;
 			}
@@ -3699,7 +3717,7 @@ bool CG::readKBB(std::string file) {
 				start = end;
 				attrFlag = true;			
 			}
-			else if (!conceptDone && (c == ':' || end == length)) {
+			else if (!conceptDone && (c == ':' || unicu::isWhiteSpace(c) || end == length)) {
 				_tcsnccpy(word, &line[start],end-start);
 				int adjust = c == ':' ? 1 : 0;
 				word[end-start-adjust] = '\0';
