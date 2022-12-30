@@ -297,7 +297,6 @@ void Parse::setAnasdir(_TCHAR *appdir)	{
 	p = appdir;
 	std::string anas = p.parent_path().string();
 	_tcscpy(anasdir_, anas.c_str());
-	int i = 0;
 }
 
 void Parse::setLogfile(_TCHAR *x)	{logfile_ = x;}	// VTLOG	// 05/06/13 AM.
