@@ -872,6 +872,13 @@ switch (vtype)
 			sem = new RFASem(text, RSSTR);							// 11/09/00 AM.
 			return true;													// 11/09/00 AM.
 			}
+		if (!strcmp_i(name, _T("anaspath")))	// $ANALYZERS				// 11/09/00 AM.
+			{
+			// The application base directory path.
+			text = nlppp->getParse()->getAnasdir();					// 11/09/00 AM.
+			sem = new RFASem(text, RSSTR);							// 11/09/00 AM.
+			return true;													// 11/09/00 AM.
+			}
 		if (!strcmp_i(name, _T("kbpath")))	// $KBPATH
 			{
 			// The application base directory path.

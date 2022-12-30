@@ -74,7 +74,6 @@ public:
 	void setComment(_TCHAR *);												// 01/13/99 AM.
 	void setDatadir(_TCHAR *);												// 12/08/99 AM.
 	void setAppdir(_TCHAR *);													// 05/10/00 AM.
-	void setKBdir(_TCHAR *);
 	void setCG(CG *);															// 02/15/00 AM.
 	void setGen(Gen *);														// 05/10/00 AM.
 	void setNpasses(long);													// 06/13/00 AM.
@@ -125,7 +124,7 @@ private:
 	_TCHAR comment_[MAXSTR];		// Header comment for seq file.	// 01/13/99 AM.
 	_TCHAR datadir_[FNAME_SIZE];	// Data directory.					// 12/08/99 AM.
 	_TCHAR appdir_[FNAME_SIZE];	// Top-level directory for ana.	// 05/10/00 AM.
-	_TCHAR kbdir_[FNAME_SIZE];
+	_TCHAR anasdir_[FNAME_SIZE];
 	Gen *gen_;						// For code gen and compilation.	// 05/10/00 AM.
 	CG *cg_;							// Pointer to KB.						// 02/15/00 AM.
 	long npasses_;					// Number of passes in analyzer.	// 06/13/00 AM.

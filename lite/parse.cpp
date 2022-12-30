@@ -51,6 +51,8 @@ All rights reserved.
 #include "var.h"											// 09/26/00 AM.
 #include "lite/nlppp.h"										// 05/17/00 AM.
 
+#include <filesystem>
+
 int Parse::count_ = 0;
 
 // Keep cout safe, in case it is rebound.
@@ -65,7 +67,12 @@ int Parse::count_ = 0;
 Parse::Parse()
 {
 text = 0;
-input[0] = output[0] = appdir_[0] = outdir_[0] = '\0';
+input[0] =  '\0';
+output[0] =  '\0';
+appdir_[0] =  '\0';
+anasdir_[0] = '\0';
+kbdir_[0] =  '\0';
+outdir_[0] = '\0';
 tree = 0;
 lines = 0;
 ana = 0;
@@ -152,6 +159,7 @@ Eana *Parse::getEana()		{return eana_;	 }							// 10/13/99 AM.
 _TCHAR *Parse::getInput()    {return input;  }
 _TCHAR *Parse::getOutput()   {return output; }
 _TCHAR *Parse::getAppdir()	{return appdir_;}
+_TCHAR *Parse::getAnasdir()	{return anasdir_;}
 _TCHAR *Parse::getKBdir()	{return kbdir_;}
 _TCHAR *Parse::getText()     {return text;   }
 long  Parse::getLength()	{return length; }
@@ -282,6 +290,14 @@ void Parse::setKBdir(_TCHAR *appdir)	{
 	_TCHAR kbDir[MAXSTR];
 	_stprintf(kbDir, _T("%s%ckb%cuser%c"), appdir,DIR_CH,DIR_CH,DIR_CH);
 	_tcscpy(kbdir_, kbDir);
+}
+
+void Parse::setAnasdir(_TCHAR *appdir)	{
+	std::filesystem::path p;
+	p = appdir;
+	std::string anas = p.parent_path().string();
+	_tcscpy(anasdir_, anas.c_str());
+	int i = 0;
 }
 
 void Parse::setLogfile(_TCHAR *x)	{logfile_ = x;}	// VTLOG	// 05/06/13 AM.
