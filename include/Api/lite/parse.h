@@ -114,6 +114,7 @@ public:
 	TREE *getTree();
 	LTREE *getLines();
 	_TCHAR *getAppdir();				// 12/03/98 AM.
+	_TCHAR *getAnasdir();
 	_TCHAR *getKBdir();
 	Dlist<Ipair> *getVars();		// 12/07/98 AM.
 	Dlist<Iarg> *getOstrs();		// 05/23/01 AM.
@@ -171,6 +172,7 @@ public:
 	void setLines(LTREE *);
 	void setVerbose(bool);
 	void setAppdir(_TCHAR *);			// 12/03/98 AM.
+	void setAnasdir(_TCHAR *);
 	void setKBdir(_TCHAR *);
 	void setVars(Dlist<Ipair> *);	// 12/07/98 AM.
 	void setOstrs(Dlist<Iarg> *);	// 05/23/01 AM.
@@ -546,6 +548,7 @@ private:
 	Dlist<Iarg> *ostrs_;				// Global list for ostreams.	// 05/23/01 AM.
 
 	bool		 verbose;				// If analyzer is running in verbose mode.
+	_TCHAR		anasdir_[FNAME_SIZE];
 
 	// Handle for the user-supplied output file.						// 01/07/99 AM.
 	std::_t_ostream *out_;						// REQUIRED.
