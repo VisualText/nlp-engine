@@ -3473,6 +3473,7 @@ bool CG::readDicts(std::vector<std::filesystem::path> files) {
 bool CG::readDict(std::string file) {
 	bool dirty;
 	bool hasAttrs;
+	bool isPhrase;
 	CONCEPT *wordCon, *parentCon, *topCon;
 	_TCHAR buf[MAXMSG];
 	_TCHAR word[MAXSTR];
@@ -3508,6 +3509,7 @@ bool CG::readDict(std::string file) {
 		UChar32 cLast = c;
 		int32_t eLast = e;
 		hasAttrs = false;
+		isPhrase = false;
 		parentCon = NULL;
 		topCon = NULL;
 		wordCount = 0;
@@ -3522,9 +3524,10 @@ bool CG::readDict(std::string file) {
 				word[e-start-1] = '\0';
 				wordCount++;
 				wordCon = kbm_->dict_get_word(word,dirty);
-				if (parentCon)
+				if (parentCon) {
 					parentCon = makeConcept(parentCon,word);
-				else {
+					isPhrase = true;
+				} else {
 					topCon = wordCon;
 					parentCon = wordCon;
 				}
@@ -3583,7 +3586,7 @@ bool CG::readDict(std::string file) {
 			}
 		}
 
-		if (parentCon && !suggestedAttr) {
+		if (isPhrase && !suggestedAttr) {
 			addSval(parentCon,_T("suggested"),_T("phrase"));
 		}
 	}
