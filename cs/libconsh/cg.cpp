@@ -3562,16 +3562,14 @@ bool CG::readDict(std::string file) {
 					doubleQuote = true;
 					start++;
 				}
-				else if (doubleQuote && !backslash && c == '"') {
-					bool nothing = true;
-				}
-				else if (attrFlag && ((!doubleQuote && unicu::isWhiteSpace(c)) || !c)) {
+				else if (attrFlag && ((doubleQuote && c == '"') || (!doubleQuote && unicu::isWhiteSpace(c)) || !c)) {
 					_tcsnccpy(val, &line[start],e-start-1);
-					e -= doubleQuote ? 1 : 0;
 					val[e-start-1] = '\0';
 					addSval(parentCon,attr,val);
 					attrFlag = false;
-					start = e;
+					start = doubleQuote ? e + 1 : e;
+					doubleQuote = false;
+					
 				} else if (c == '=') {
 					_tcsnccpy(attr, &line[start],e-start-1);
 					attr[e-start-1] = '\0';
