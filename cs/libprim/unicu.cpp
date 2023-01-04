@@ -92,7 +92,7 @@ int unicu::strCmp(_TCHAR *str1, _TCHAR *str2) {
 	return u_strcasecmp(strBuff1, strBuff2, U_COMPARE_IGNORE_CASE);
 }
 
-bool unicu::contains(_TCHAR *str1, _TCHAR *str2, bool noCase=true) {
+UChar *unicu::contains(_TCHAR *str1, _TCHAR *str2, bool noCase=true) {
 	icu::UnicodeString ustr1 = icu::UnicodeString::fromUTF8(icu::StringPiece(str1 ));
 	if (noCase)
 		ustr1.toLower();

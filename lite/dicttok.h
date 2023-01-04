@@ -83,12 +83,21 @@ public:
 		/*UP*/ _TCHAR* &lcstr
 		);
 
-	inline bool handleTok(
+	inline Node<Pn> * handleTok(
 		Node<Pn> *node,
 		Node<Pn> *last,
 		enum Pntype typ,
 		_TCHAR *str,
-		_TCHAR *lcstr
+		_TCHAR *lcstr,
+		Htab *htab
+		);
+
+	inline bool findAttrs(
+		Node<Pn> *node,
+		CONCEPT *con,
+		_TCHAR *str,
+		_TCHAR *lcstr,
+		bool isSuggested
 		);
 
 	///////////////////////////////////////

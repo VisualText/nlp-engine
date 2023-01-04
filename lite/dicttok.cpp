@@ -40,6 +40,16 @@ All rights reserved.
 #include "nlp.h"				// 06/25/03 AM.
 #include "ivar.h"
 
+#include "pn.h"
+#include "prim/libprim.h"
+#include "kbm/libkbm.h"
+#include "kbm/sym_s.h"
+#include "kbm/sym.h"
+#include "kbm/con_s.h"
+#include "kbm/con_.h"
+#include "kbm/ptr_s.h"
+#include "kbm/ptr.h"
+
 #ifdef UNICODE
 #include "utypes.h"	// 03/03/05 AM.
 #include "uchar.h"
@@ -382,7 +392,7 @@ last = Pn::makeTnode(start, end, ustart, uend, typ, *buf, str, sym,				// 10/09/
 							line);												// 05/17/01 AM.
 
 // Lookup, add attrs, reduce, attach to tree.	// 07/31/11 AM
-handleTok(last,0,typ,str,lcstr);	// 07/31/11 AM.
+handleTok(last,0,typ,str,lcstr,htab);	// 07/31/11 AM.
 //tree->firstNode(*last);	// Attach first node to tree.
 
 	}	// END else (not zapwhite or not whitespace)
@@ -456,7 +466,7 @@ if (!node)																		// 01/24/02 AM.
 	}
 
 // Lookup, add attrs, reduce, attach to tree.	// 07/31/11 AM
-handleTok(node,last,typ,str,lcstr);	// 07/31/11 AM.
+node = handleTok(node,last,typ,str,lcstr,htab);
 
 last = node;		// node is last node of list now.
 
@@ -528,16 +538,17 @@ return sym;								// 11/19/98 AM.
 * NOTE:	Looking up alphabetics in KB DICTIONARY.
 ********************************************/
 
-bool DICTTok::handleTok(
+Node<Pn> * DICTTok::handleTok(
 	Node<Pn> *node,
 	Node<Pn> *last,
 	enum Pntype typ,
 	_TCHAR *str,
-	_TCHAR *lcstr	// Lowercase str
+	_TCHAR *lcstr,	// Lowercase str
+	Htab *htab
 	)
 {
 if (!node)
-	return false;
+	return 0;
 
 // If ctrl, get code onto node.
 // If alphabetic, lookup in dictionary.
@@ -545,6 +556,8 @@ if (!node)
 // Put attributes on.
 CONCEPT *con = 0;
 CONCEPT *conChild = 0;
+bool hasPhrase = false;
+_TCHAR *suggested = 0;
 
 switch (typ)
 	{
@@ -575,76 +588,82 @@ switch (typ)
 		lines_ = tabs_ = 0;
 
 		if (lcstr && *lcstr) {
-
 			con = cg_->findWordConcept(lcstr);
 			if (conChild = cg_->Down(con)) {
-				int stophere = 1;
-			}
-
-			ATTR *attrs = cg_->findAttrs(con);
-			_TCHAR buf[NAMESIZ];
-			_TCHAR bufval[NAMESIZ];
-
-			while (attrs) {
-				cg_->attrName(attrs, buf, NAMESIZ);
-				if (!_tcscmp(_T("pos"),buf)) {
-					VAL *vals = cg_->findVals(con, _T("pos"));
-					_TCHAR *val;
-					int pos_num = 0;	// Count parts of speech.
-					while (vals) {
-						val = popsval(vals);
-						// Some kb editing.
-						if (!_tcscmp(_T("adjective"),val))
-							val = _T("adj");
-						else if (!_tcscmp(_T("adverb"),val))
-							val = _T("adv");
-						else if (!_tcscmp(_T("pronoun"),val))
-							val = _T("pro");
-						else if (!_tcscmp(_T("conjunction"),val))
-							val = _T("conj");
-						// TODO: Look for COLON as first char, copy attr and VALUE.
-						replaceNum(node,val,1);
-						++pos_num;
-						vals = cg_->nextVal(vals);
-					}
-					if (pos_num) replaceNum(node,_T("pos num"),pos_num);
-				}
-
-				if (!_tcscmp(str,lcstr)) {
-					replaceNum(node,_T("lower"),1);	// LOWERCASE.
-					++totlowers_;
-				}
-				else {
-					++totcaps_;
-					replaceNum(node,_T("cap"),1);
-					// CHECK UPPERCASE HERE.
-					_TCHAR ucstr[MAXSTR];
-					str_to_upper(str, ucstr);
-					if (!_tcscmp(str,ucstr)) {
-						++totuppers_;
-						replaceNum(node,_T("upper"),1);
-					}
-				}
-				
-				VAL *vals = cg_->findVals(con, buf);
-				_TCHAR *strattr, *strval;
-				parse_->internStr(buf, strattr);
-				if (vals && _tcscmp(_T("pos"),strattr)) {
-					if (cg_->isValStr(vals)) {
-						cg_->popSval(vals,bufval);
-						parse_->internStr(bufval, strval);
-						replaceStr(node,strattr,strval);
-					} else if (cg_->isValNum(vals)) {
-						long num = 0L;
-						cg_->popVal(vals,num);
-						replaceNum(node,strattr,num);	
-					} else
-						cg_->nextVal(vals);
-				}
-				cg_->popAttr(attrs);
+				int dontProbablyNeed = 1;
 			}
 			
-//		  _TCHAR *val = KB::strVal(con,attr,cg_,htab_);
+			hasPhrase = findAttrs(node, con, str, lcstr, false);
+			
+//		   _TCHAR *val = KB::strVal(con,attr,cg_,htab_);
+
+			if (hasPhrase) {
+				PTR *phrases = (PTR *)cg_->findVals(con, _T("phrase"));
+				CONCEPT *valCon = NULL;
+				while (phrases) {
+					if (phrases->kind == pCON) {
+						valCon = phrases->v.vcon;
+						VAL *vals = cg_->findVals(valCon, _T("suggested"));
+						_TCHAR suggName[1024];
+						if (vals) {
+							suggested = popsval(vals);
+							sprintf(suggName,_T("_%s"),suggested);
+						}
+						if (cg_->Down(valCon)) {
+							continue;
+						} else {
+							// Work up the concept hier and match node names
+							CONCEPT *up = cg_->Up(valCon);
+							Node<Pn> *parentN = last;
+							bool matchedPhrase = true;
+							_TCHAR conName[MAXSTR];
+
+							while (up) {
+								cg_->conceptName(up, conName);
+								Pn *parentPN = &(((Node<Pn> *)parentN)->data);
+								_TCHAR *pnName = parentPN->getName();
+								if (!_tcsicmp(pnName, " ")) {
+									parentN = parentN->pLeft;
+								}
+								else if (_tcsicmp(conName, pnName)) {
+									matchedPhrase = false;
+									break;
+								} else if (cg_->findVals(up, _T("top"))) {
+									break;
+								} else {
+									up = cg_->Up(up);
+									parentN = parentN->pLeft;
+								}
+							}
+
+							if (matchedPhrase) {
+								Pn *pn = node->getData();
+								Pn *ppn = parentN->getData();
+								long start = ppn->getStart();
+								long end = pn->getEnd();
+								long ustart = ppn->getUstart();
+								long uend = pn->getUend();
+								long line = pn->getLine();
+								Sym *sym = internTok(suggName, end-start+2, htab, lcstr);
+								str = sym->getStr();
+								Node<Pn>* suggestedN = Pn::makeTnode(start, end, ustart, uend, PNNODE, suggName, str, sym, line);
+								if (parentN->Left()) {
+									suggestedN->setLeft(parentN->Left());
+									parentN->Left()->setRight(suggestedN);
+									parentN->setLeft(0);
+								} else {
+									tree_->insertDown(*suggestedN,*root_);
+								}
+								tree_->insertDown(*parentN,*suggestedN);
+								last->setRight(node);
+								findAttrs(suggestedN, valCon, str, lcstr, true);
+								return suggestedN;
+							}
+						}
+					}
+					phrases = phrases->next;
+				}
+			}
 		}
 		break;
 	case PNNUM:	// Placed here for easy reference.
@@ -672,7 +691,86 @@ if (last)
 	tree_->insertRight(*node,*last);
 else if (root_)	// Sanity check.
 	tree_->insertDown(*node,*root_);
-return true;
+return node;
+}
+
+
+inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, _TCHAR *lcstr, bool isSuggested) {
+	_TCHAR attrName[NAMESIZ];
+	_TCHAR bufval[NAMESIZ];
+
+	ATTR *attrs = cg_->findAttrs(con);
+	bool hasPhrase = false;
+
+	while (attrs) {
+		cg_->attrName(attrs, attrName, NAMESIZ);
+		
+		if (!_tcscmp(_T("phrase"),attrName)) {
+			hasPhrase = true;
+
+		} else if (!_tcscmp(_T("pos"),attrName)) {
+			VAL *vals = cg_->findVals(con, _T("pos"));
+			_TCHAR *val;
+			int pos_num = 0;	// Count parts of speech.
+			while (vals) {
+				val = popsval(vals);
+				// Some kb editing.
+				if (!_tcscmp(_T("adjective"),val))
+					val = _T("adj");
+				else if (!_tcscmp(_T("adverb"),val))
+					val = _T("adv");
+				else if (!_tcscmp(_T("pronoun"),val))
+					val = _T("pro");
+				else if (!_tcscmp(_T("conjunction"),val))
+					val = _T("conj");
+				// TODO: Look for COLON as first char, copy attr and VALUE.
+				replaceNum(node,val,1);
+				++pos_num;
+				vals = cg_->nextVal(vals);
+			}
+			if (pos_num) replaceNum(node,_T("pos num"),pos_num);
+
+		} else if (isSuggested && !_tcscmp(_T("suggested"),attrName)) {
+			cg_->popAttr(attrs);
+			continue;
+		}
+
+		if (!isSuggested) {
+			if (!_tcscmp(str,lcstr)) {
+				replaceNum(node,_T("lower"),1);	// LOWERCASE.
+				++totlowers_;
+			}
+			else {
+				++totcaps_;
+				replaceNum(node,_T("cap"),1);
+				// CHECK UPPERCASE HERE.
+				_TCHAR ucstr[MAXSTR];
+				str_to_upper(str, ucstr);
+				if (!_tcscmp(str,ucstr)) {
+					++totuppers_;
+					replaceNum(node,_T("upper"),1);
+				}
+			}			
+		}
+
+		VAL *vals = cg_->findVals(con, attrName);
+		_TCHAR *strattr, *strval;
+		parse_->internStr(attrName, strattr);
+		if (vals && _tcscmp(_T("pos"),strattr)) {
+			if (cg_->isValStr(vals)) {
+				cg_->popSval(vals,bufval);
+				parse_->internStr(bufval, strval);
+				replaceStr(node,strattr,strval);
+			} else if (cg_->isValNum(vals)) {
+				long num = 0L;
+				cg_->popVal(vals,num);
+				replaceNum(node,strattr,num);	
+			} else
+				cg_->nextVal(vals);
+		}
+		cg_->popAttr(attrs);
+	}
+	return hasPhrase;
 }
 
 
