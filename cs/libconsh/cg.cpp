@@ -3471,9 +3471,9 @@ bool CG::readDicts(std::vector<std::filesystem::path> files) {
 }
 
 bool CG::readDict(std::string file) {
-	bool found;
 	bool dirty;
-	CONCEPT *wordCon;
+	bool hasAttrs;
+	CONCEPT *wordCon, *parentCon, *topCon;
 	_TCHAR buf[MAXMSG];
 	_TCHAR word[MAXSTR];
 	_TCHAR attr[MAXSTR];
@@ -3489,48 +3489,70 @@ bool CG::readDict(std::string file) {
 		UChar32 c = 1;
 		int32_t e = 0;
 		int32_t ulen = 0;
-		found = false;
+		int start = e;
+		int wordCount = 0;
+		bool suggestedAttr = false;
 
 		U8_NEXT(line, e, length, c);
 
 		// Skip white space (SHOULD NOT BE THERE)
 		while (unicu::isWhiteSpace(c)) {
 			U8_NEXT(line, e, length, c);
+			start = e;
 		}
 
 		// If comment, skip line
 		if (c == '#')
 			continue;
 
+		UChar32 cLast = c;
+		int32_t eLast = e;
+		hasAttrs = false;
+		parentCon = NULL;
+		topCon = NULL;
+		wordCount = 0;
+
+		// Find word or word phrase
 		while (c) {
-			if (unicu::isWhiteSpace(c)) {
-				_tcsnccpy(word, &line[0],e-1);
-				word[e-1] = '\0';
-				wordCon = kbm_->dict_get_word(word,dirty);
-				found = true;
+			if (c == '=') { 
+				hasAttrs = true;
 				break;
+			} else if (unicu::isWhiteSpace(c)) {
+				_tcsnccpy(word, &line[start],e-start-1);
+				word[e-start-1] = '\0';
+				wordCount++;
+				wordCon = kbm_->dict_get_word(word,dirty);
+				if (parentCon)
+					parentCon = makeConcept(parentCon,word);
+				else {
+					topCon = wordCon;
+					parentCon = wordCon;
+				}
+				start = e;
+				cLast = c;
+				eLast = e;
 			}
 			U8_NEXT(line, e, length, c);
 		}
 
+		if (parentCon && wordCount > 1) {
+			addVal(wordCon,_T("phrase"),parentCon);
+			addVal(topCon,_T("top"),1L);
+		}
+
+		c = cLast;
+		e = eLast;
+
 		// If found, parse the attributes and add
-		if (found) {
-			int start = e;
+		if (hasAttrs) {
+			start = e;
 			bool attrFlag = false;
 			bool doubleQuote = false;
 			bool backslash = false;
 
 			while (c) {
 				U8_NEXT(line, e, length, c);
-				if (!attrFlag && unicu::isWhiteSpace(c)) {
-					_tcsnccpy(word, &line[start],e-start-1);
-					word[e-start-1] = '\0';
-					wordCon = makeConcept(wordCon,word);
-					kbm_->dict_get_word(word,dirty);
-					start = e;
-					attrFlag = true;
-				}
-				else if (c == '\\') {
+				if (c == '\\') {
 					backslash = true;
 				}
 				else if (!doubleQuote && attrFlag && !backslash && c == '"') {
@@ -3544,20 +3566,25 @@ bool CG::readDict(std::string file) {
 					_tcsnccpy(val, &line[start],e-start-1);
 					e -= doubleQuote ? 1 : 0;
 					val[e-start-1] = '\0';
-					addSval(wordCon,attr,val);
+					addSval(parentCon,attr,val);
 					attrFlag = false;
 					start = e;
 				} else if (c == '=') {
 					_tcsnccpy(attr, &line[start],e-start-1);
 					attr[e-start-1] = '\0';
+					if (!_tcsicmp(attr, _T("suggested"))) {
+						suggestedAttr = true;
+					}
 					start = e;
 					attrFlag = true;
 				} else if (backslash) {
 					backslash = false;
 				}
 			}
+		}
 
-			found = false;
+		if (parentCon && !suggestedAttr) {
+			addSval(parentCon,_T("suggested"),_T("phrase"));
 		}
 	}
 

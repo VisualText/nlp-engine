@@ -34,6 +34,6 @@ namespace unicu
     bool isLower(UChar32 c);
     int strLen(const UChar *str);
     int strCmp(_TCHAR *str1, _TCHAR *str2);
-    bool contains(_TCHAR *str1, _TCHAR *str2, bool noCase);
+    UChar *contains(_TCHAR *str1, _TCHAR *str2, bool noCase);
 }
 
