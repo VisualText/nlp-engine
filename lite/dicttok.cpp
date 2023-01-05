@@ -733,6 +733,22 @@ inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, _TCHAR
 	ATTR *attrs = cg_->findAttrs(con);
 	bool reduceIt = false;
 
+	if (!_tcscmp(str,lcstr)) {
+		replaceNum(node,_T("lower"),1);	// LOWERCASE.
+		++totlowers_;
+	}
+	else {
+		++totcaps_;
+		replaceNum(node,_T("cap"),1);
+		// CHECK UPPERCASE HERE.
+		_TCHAR ucstr[MAXSTR];
+		str_to_upper(str, ucstr);
+		if (!_tcscmp(str,ucstr)) {
+			++totuppers_;
+			replaceNum(node,_T("upper"),1);
+		}
+	}	
+
 	while (attrs) {
 		cg_->attrName(attrs, attrName, NAMESIZ);
 		
@@ -762,24 +778,6 @@ inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, _TCHAR
 			if (pos_num) replaceNum(node,_T("pos num"),pos_num);
 		}
 
-		if (!isSuggested) {
-			if (!_tcscmp(str,lcstr)) {
-				replaceNum(node,_T("lower"),1);	// LOWERCASE.
-				++totlowers_;
-			}
-			else {
-				++totcaps_;
-				replaceNum(node,_T("cap"),1);
-				// CHECK UPPERCASE HERE.
-				_TCHAR ucstr[MAXSTR];
-				str_to_upper(str, ucstr);
-				if (!_tcscmp(str,ucstr)) {
-					++totuppers_;
-					replaceNum(node,_T("upper"),1);
-				}
-			}			
-		}
-
 		VAL *vals = cg_->findVals(con, attrName);
 		_TCHAR *strattr, *strval;
 		parse_->internStr(attrName, strattr);
@@ -801,7 +799,6 @@ inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, _TCHAR
 	}
 	return reduceIt;
 }
-
 
 
 /********************************************
