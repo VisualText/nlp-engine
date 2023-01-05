@@ -600,7 +600,7 @@ switch (typ)
 
 				// Single word to be reduced
 				if (!phrases) {
-					VAL *vals = cg_->findVals(con, _T("suggested"));
+					VAL *vals = cg_->findVals(con, _T("s"));
 					_TCHAR suggName[MAXSTR];
 					if (vals) {
 						suggested = popsval(vals);
@@ -630,7 +630,7 @@ switch (typ)
 				while (phrases) {
 					if (phrases->kind == pCON) {
 						valCon = phrases->v.vcon;
-						VAL *vals = cg_->findVals(valCon, _T("suggested"));
+						VAL *vals = cg_->findVals(valCon, _T("s"));
 						_TCHAR suggName[MAXSTR];
 						if (vals) {
 							suggested = popsval(vals);
@@ -736,7 +736,7 @@ inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, _TCHAR
 	while (attrs) {
 		cg_->attrName(attrs, attrName, NAMESIZ);
 		
-		if (!_tcscmp(_T("phrase"),attrName) || !_tcscmp(_T("suggested"),attrName)) {
+		if (!_tcscmp(_T("phrase"),attrName) || !_tcscmp(_T("s"),attrName)) {
 			reduceIt = true;
 
 		} else if (!_tcscmp(_T("pos"),attrName)) {
@@ -784,7 +784,7 @@ inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, _TCHAR
 		_TCHAR *strattr, *strval;
 		parse_->internStr(attrName, strattr);
 
-		if (_tcscmp(_T("pos"),strattr) && _tcscmp(_T("suggested"),strattr)) {
+		if (_tcscmp(_T("pos"),strattr) && _tcscmp(_T("s"),strattr)) {
 			// This needs to loop if there is more than one value for the same attribute
 			if (cg_->isValStr(vals)) {
 				cg_->popSval(vals,bufval);

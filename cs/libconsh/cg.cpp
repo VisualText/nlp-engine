@@ -3573,7 +3573,7 @@ bool CG::readDict(std::string file) {
 				} else if (c == '=') {
 					_tcsnccpy(attr, &line[start],e-start-1);
 					attr[e-start-1] = '\0';
-					if (!_tcsicmp(attr, _T("suggested"))) {
+					if (!_tcsicmp(attr, _T("s"))) {
 						suggestedAttr = true;
 					}
 					start = e;
@@ -3585,7 +3585,7 @@ bool CG::readDict(std::string file) {
 		}
 
 		if (isPhrase && !suggestedAttr) {
-			addSval(parentCon,_T("suggested"),_T("phrase"));
+			addSval(parentCon,_T("s"),_T("phrase"));
 		}
 	}
 
