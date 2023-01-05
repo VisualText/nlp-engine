@@ -392,7 +392,7 @@ last = Pn::makeTnode(start, end, ustart, uend, typ, *buf, str, sym,				// 10/09/
 							line);												// 05/17/01 AM.
 
 // Lookup, add attrs, reduce, attach to tree.	// 07/31/11 AM
-handleTok(last,0,typ,str,lcstr,htab);	// 07/31/11 AM.
+last = handleTok(last,0,typ,str,lcstr,htab);	// 07/31/11 AM.
 //tree->firstNode(*last);	// Attach first node to tree.
 
 	}	// END else (not zapwhite or not whitespace)
@@ -449,26 +449,24 @@ if (zapwhite_ && typ == PNWHITE)	// 08/16/11 AM.
 	}
 else
 	{
-sym = internTok(*buf, end-start+1, htab,/*UP*/lcstr);
-str = sym->getStr();
-Node<Pn> *node;
-//node = Pn::makeNode(start, end, typ, *buf, str, sym);			// 10/09/99 AM.
-node = Pn::makeTnode(start, end, ustart, uend, typ, *buf, str, sym,				// 10/09/99 AM.
-							line);												// 05/17/01 AM.
+	sym = internTok(*buf, end-start+1, htab,/*UP*/lcstr);
+	str = sym->getStr();
+	Node<Pn> *node;
+	//node = Pn::makeNode(start, end, typ, *buf, str, sym);			// 10/09/99 AM.
+	node = Pn::makeTnode(start, end, ustart, uend, typ, *buf, str, sym,				// 10/09/99 AM.
+								line);												// 05/17/01 AM.
 
-// CHECK NODE OVERFLOW.														// 01/24/02 AM.
-if (!node)																		// 01/24/02 AM.
-	{
-	std::_t_strstream gerrStr;						// 01/24/02 AM.
-	gerrStr << _T("[Node overflow at ") << start << _T(" chars, ")		// 01/24/02 AM.
-		<< last->getCount() << _T(" nodes.]") << std::ends;					// 01/24/02 AM.
-	return errOut(&gerrStr,false,0,0);												// 01/26/02 AM.
-	}
+	// CHECK NODE OVERFLOW.														// 01/24/02 AM.
+	if (!node)																		// 01/24/02 AM.
+		{
+		std::_t_strstream gerrStr;						// 01/24/02 AM.
+		gerrStr << _T("[Node overflow at ") << start << _T(" chars, ")		// 01/24/02 AM.
+			<< last->getCount() << _T(" nodes.]") << std::ends;					// 01/24/02 AM.
+		return errOut(&gerrStr,false,0,0);												// 01/26/02 AM.
+		}
 
-// Lookup, add attrs, reduce, attach to tree.	// 07/31/11 AM
-node = handleTok(node,last,typ,str,lcstr,htab);
-
-last = node;		// node is last node of list now.
+	// Lookup, add attrs, reduce, attach to tree.	// 07/31/11 AM
+	last = handleTok(node,last,typ,str,lcstr,htab);
 
 	}	// END else (not zapwhite or not whitespace)
 
@@ -556,7 +554,7 @@ if (!node)
 // Put attributes on.
 CONCEPT *con = 0;
 CONCEPT *conChild = 0;
-bool hasPhrase = false;
+bool reduceIt = false;
 _TCHAR *suggested = 0;
 
 switch (typ)
@@ -593,18 +591,47 @@ switch (typ)
 				int dontProbablyNeed = 1;
 			}
 			
-			hasPhrase = findAttrs(node, con, str, lcstr, false);
+			reduceIt = findAttrs(node, con, str, lcstr, false);
 			
 //		   _TCHAR *val = KB::strVal(con,attr,cg_,htab_);
 
-			if (hasPhrase) {
+			if (reduceIt) {
 				PTR *phrases = (PTR *)cg_->findVals(con, _T("phrase"));
+
+				// Single word to be reduced
+				if (!phrases) {
+					VAL *vals = cg_->findVals(con, _T("suggested"));
+					_TCHAR suggName[MAXSTR];
+					if (vals) {
+						suggested = popsval(vals);
+						sprintf(suggName,_T("_%s"),suggested);
+					}
+
+					Pn *pn = node->getData();
+					long start = pn->getStart();
+					long end = pn->getEnd();
+					long ustart = pn->getUstart();
+					long uend = pn->getUend();
+					long line = pn->getLine();
+					Sym *sym = internTok(suggName, end-start+3, htab, lcstr);
+					str = sym->getStr();
+					Node<Pn>* suggestedN = Pn::makeTnode(start, end, ustart, uend, PNNODE, suggName, str, sym, line);
+					findAttrs(suggestedN, con, str, lcstr, true);
+					if (last)
+						tree_->insertRight(*suggestedN,*last);
+					else if (root_)
+						tree_->insertDown(*suggestedN,*root_);
+					tree_->insertDown(*node,*suggestedN);
+					return suggestedN;
+				}
+
+				// More than one word to be reduced
 				CONCEPT *valCon = NULL;
 				while (phrases) {
 					if (phrases->kind == pCON) {
 						valCon = phrases->v.vcon;
 						VAL *vals = cg_->findVals(valCon, _T("suggested"));
-						_TCHAR suggName[1024];
+						_TCHAR suggName[MAXSTR];
 						if (vals) {
 							suggested = popsval(vals);
 							sprintf(suggName,_T("_%s"),suggested);
@@ -644,7 +671,7 @@ switch (typ)
 								long ustart = ppn->getUstart();
 								long uend = pn->getUend();
 								long line = pn->getLine();
-								Sym *sym = internTok(suggName, end-start+2, htab, lcstr);
+								Sym *sym = internTok(suggName, end-start+3, htab, lcstr);
 								str = sym->getStr();
 								Node<Pn>* suggestedN = Pn::makeTnode(start, end, ustart, uend, PNNODE, suggName, str, sym, line);
 								if (parentN->Left()) {
@@ -655,6 +682,10 @@ switch (typ)
 									tree_->insertDown(*suggestedN,*root_);
 								}
 								tree_->insertDown(*parentN,*suggestedN);
+								if (last)
+									tree_->insertRight(*suggestedN,*last);
+								else if (root_)
+									tree_->insertDown(*suggestedN,*root_);
 								last->setRight(node);
 								findAttrs(suggestedN, valCon, str, lcstr, true);
 								return suggestedN;
@@ -700,13 +731,13 @@ inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, _TCHAR
 	_TCHAR bufval[NAMESIZ];
 
 	ATTR *attrs = cg_->findAttrs(con);
-	bool hasPhrase = false;
+	bool reduceIt = false;
 
 	while (attrs) {
 		cg_->attrName(attrs, attrName, NAMESIZ);
 		
-		if (!_tcscmp(_T("phrase"),attrName)) {
-			hasPhrase = true;
+		if (!_tcscmp(_T("phrase"),attrName) || !_tcscmp(_T("suggested"),attrName)) {
+			reduceIt = true;
 
 		} else if (!_tcscmp(_T("pos"),attrName)) {
 			VAL *vals = cg_->findVals(con, _T("pos"));
@@ -729,10 +760,6 @@ inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, _TCHAR
 				vals = cg_->nextVal(vals);
 			}
 			if (pos_num) replaceNum(node,_T("pos num"),pos_num);
-
-		} else if (isSuggested && !_tcscmp(_T("suggested"),attrName)) {
-			cg_->popAttr(attrs);
-			continue;
 		}
 
 		if (!isSuggested) {
@@ -756,7 +783,9 @@ inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, _TCHAR
 		VAL *vals = cg_->findVals(con, attrName);
 		_TCHAR *strattr, *strval;
 		parse_->internStr(attrName, strattr);
-		if (vals && _tcscmp(_T("pos"),strattr)) {
+
+		if (_tcscmp(_T("pos"),strattr) && _tcscmp(_T("suggested"),strattr)) {
+			// This needs to loop if there is more than one value for the same attribute
 			if (cg_->isValStr(vals)) {
 				cg_->popSval(vals,bufval);
 				parse_->internStr(bufval, strval);
@@ -770,7 +799,7 @@ inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, _TCHAR
 		}
 		cg_->popAttr(attrs);
 	}
-	return hasPhrase;
+	return reduceIt;
 }
 
 
