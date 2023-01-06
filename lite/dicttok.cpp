@@ -613,7 +613,7 @@ switch (typ)
 					long ustart = pn->getUstart();
 					long uend = pn->getUend();
 					long line = pn->getLine();
-					Sym *sym = internTok(suggName, end-start+3, htab, lcstr);
+					Sym *sym = internTok(suggName, sizeof(suggName), htab, lcstr);
 					str = sym->getStr();
 					Node<Pn>* suggestedN = Pn::makeTnode(start, end, ustart, uend, PNNODE, suggName, str, sym, line);
 					findAttrs(suggestedN, con, str, lcstr, true);
@@ -671,7 +671,7 @@ switch (typ)
 								long ustart = ppn->getUstart();
 								long uend = pn->getUend();
 								long line = pn->getLine();
-								Sym *sym = internTok(suggName, end-start+3, htab, lcstr);
+								Sym *sym = internTok(suggName, sizeof(suggName), htab, lcstr);
 								str = sym->getStr();
 								Node<Pn>* suggestedN = Pn::makeTnode(start, end, ustart, uend, PNNODE, suggName, str, sym, line);
 								if (parentN->Left()) {
