@@ -605,6 +605,8 @@ switch (typ)
 					if (vals) {
 						suggested = popsval(vals);
 						sprintf(suggName,_T("_%s"),suggested);
+					} else {
+						return NULL;
 					}
 
 					Pn *pn = node->getData();
@@ -622,6 +624,9 @@ switch (typ)
 					else if (root_)
 						tree_->insertDown(*suggestedN,*root_);
 					tree_->insertDown(*node,*suggestedN);
+					sym = internTok(pn->getText(), sizeof(pn->getText()), htab, lcstr);
+					str = sym->getStr();
+					suggestedN->getData()->setText(str);
 					return suggestedN;
 				}
 
@@ -644,11 +649,13 @@ switch (typ)
 							Node<Pn> *parentN = last;
 							bool matchedPhrase = true;
 							_TCHAR conName[MAXSTR];
+							std::string text = str;
 
 							while (up) {
 								cg_->conceptName(up, conName);
 								Pn *parentPN = &(((Node<Pn> *)parentN)->data);
 								_TCHAR *pnName = parentPN->getName();
+								text = pnName + text;
 								if (!_tcsicmp(pnName, " ")) {
 									parentN = parentN->pLeft;
 								}
@@ -687,6 +694,14 @@ switch (typ)
 								else if (root_)
 									tree_->insertDown(*suggestedN,*root_);
 								last->setRight(node);
+
+								// Set text to be the entire text of the phrase
+								_TCHAR txt[MAXPATH];
+								sprintf(txt,_T("%s"),text.c_str());
+								sym = internTok(txt, sizeof(txt), htab, lcstr);
+								str = sym->getStr();
+								suggestedN->getData()->setText(str);
+
 								findAttrs(suggestedN, valCon, str, lcstr, true);
 								return suggestedN;
 							}
