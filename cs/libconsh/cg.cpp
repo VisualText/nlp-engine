@@ -3745,9 +3745,10 @@ bool CG::readKBB(std::string file) {
 				start = end;
 				attrFlag = true;			
 			}
-			else if (!conceptDone && (c == ':' || unicu::isWhiteSpace(c) || end == length)) {
+			else if (!conceptDone && (c == ':' || unicu::isWhiteSpace(c) || end == length || (openDouble && c == '"'))) {
 				_tcsnccpy(word, &line[start],end-start);
-				int adjust = c == ':' ? 1 : 0;
+				int adjust = (c == ':' || c == '"') ? 1 : 0;
+				openDouble = false;
 				word[end-start-adjust] = '\0';
 				if (index == 0)
 					parent = findRoot();
@@ -3760,6 +3761,10 @@ bool CG::readKBB(std::string file) {
 				cons.push_back(con);
 				conceptDone = true;
 				start = end;
+			}
+			else if (!conceptDone && c == '"') {
+				openDouble = true;
+				start = end;		
 			}
 			U8_NEXT(line, end, length, c);
 		}
