@@ -364,8 +364,9 @@ read_files(_TCHAR *dir, _TCHAR *filter, std::vector<std::filesystem::path>& file
 	const std::regex filt{filter};
 
 	for (const auto & entry : std::filesystem::directory_iterator(dir)) {
-        if (std::filesystem::is_regular_file(entry.path()) && std::regex_match(entry.path().string(),filt)) {
-            files.push_back(entry.path());
+        if (std::filesystem::is_regular_file(entry.path())) {
+			if (!filter[0] || std::regex_match(entry.path().string(),filt))
+            	files.push_back(entry.path());
         }
 	}
 
