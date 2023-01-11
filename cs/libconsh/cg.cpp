@@ -647,6 +647,9 @@ if (openDict(files)) {
 
 if (openKBB(files)) {
 	if (!bound) {
+		_stprintf(infile, _T("%s%chier.%s"), path,DIR_CH, suff);
+		if (!readFile(infile))
+			return false;
 		bind_sys(this);
 		con_add_root(this);
 	}
@@ -3632,7 +3635,6 @@ bool CG::readKBB(std::string file) {
 	_TCHAR word[MAXSTR];
 	_TCHAR attr[MAXSTR];
 	_TCHAR val[MAXSTR];
-	_TCHAR conName[MAXSTR];
 
 	std::ifstream streamer;
 	streamer.open(file, std::ios::in);
@@ -3694,7 +3696,7 @@ bool CG::readKBB(std::string file) {
 			if (c == '#') {
 				break;
 			}
-			else if (conceptDone && unicu::isWhiteSpace(c)) {
+			else if (conceptDone && !openDouble && unicu::isWhiteSpace(c)) {
 				int doNothing = 1;
 				start = end;
 			}
@@ -3708,9 +3710,17 @@ bool CG::readKBB(std::string file) {
 				addVal(con,attr,c);
 				start = end;
 				openDouble = false;
+				openSquare = false;
 				collectingConcept = false;
 				attrFlag = false;
 				conIndices.clear();		
+			}
+			else if (conceptDone && attrFlag && !openDouble && c == '"') {
+				openDouble = true;
+				start = end;
+			}
+			else if (conceptDone && !attrFlag && c == ':') {
+				start = end;
 			}
 			else if (conceptDone && openSquare && openDouble && c == '"') {
 				_tcsnccpy(val, &line[start],end-start-1);
@@ -3726,18 +3736,18 @@ bool CG::readKBB(std::string file) {
 				start = end;
 				attrFlag = true;			
 			}
-			else if (openSquare && (c == ',' || c == ']')) {
+			else if (conceptDone && ((openSquare && (c == ',' || c == ']')) || (openDouble && c == '"'))) {
 				if (c == ',')
 					int stophere = 1;
 				_tcsnccpy(val, &line[start],end-start-1);
 				val[end-start-1] = '\0';
 				start = end;
-				conceptPath(con,conName,MAXSTR);
 				addSval(con,attr,val);
 				if (c == ']') {
 					openSquare = false;
 					attrFlag = false;
-				}				
+				}
+				openDouble = false;			
 			}
 			else if (conceptDone && c == '=') {
 				_tcsnccpy(attr, &line[start],end-start-1);
@@ -3745,7 +3755,7 @@ bool CG::readKBB(std::string file) {
 				start = end;
 				attrFlag = true;			
 			}
-			else if (!conceptDone && (c == ':' || unicu::isWhiteSpace(c) || end == length || (openDouble && c == '"'))) {
+			else if (!conceptDone && (c == ':' || unicu::isWhiteSpace(c) || end == length || (openDouble && !attrFlag && c == '"'))) {
 				_tcsnccpy(word, &line[start],end-start);
 				int adjust = (c == ':' || c == '"') ? 1 : 0;
 				openDouble = false;
