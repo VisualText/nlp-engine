@@ -3700,7 +3700,7 @@ bool CG::readKBB(std::string file) {
 				int doNothing = 1;
 				start = end;
 			}
-			else if (conceptDone && c == '[') {
+			else if (conceptDone && !openDouble && c == '[') {
 				openSquare = true;
 				start = end;
 				attrFlag = true;			
@@ -3736,7 +3736,7 @@ bool CG::readKBB(std::string file) {
 				start = end;
 				attrFlag = true;			
 			}
-			else if (conceptDone && ((openSquare && (c == ',' || c == ']')) || (openDouble && c == '"'))) {
+			else if (conceptDone && ((openSquare && !openDouble && (c == ',' || c == ']')) || (openDouble && c == '"'))) {
 				if (c == ',')
 					int stophere = 1;
 				_tcsnccpy(val, &line[start],end-start-1);
