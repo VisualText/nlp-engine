@@ -51,14 +51,14 @@ jobs:
           name: nlpw.exe
           path: bin/Release/nlpw.exe
 
-      - name: Upload icudt71.dll
+      - name: Upload icudt72.dll
         uses: actions/upload-artifact@v3
         with:
-          name: icudt71.dll
-          path: bin/Release/icudt71.dll
+          name: icudt72.dll
+          path: bin/Release/icudt72.dll
 
-      - name: Upload icuuc71.dll
+      - name: Upload icuuc72.dll
         uses: actions/upload-artifact@v3
         with:
-          name: icuuc71.dll
-          path: bin/Release/icuuc71.dll
+          name: icuuc72.dll
+          path: bin/Release/icuuc72.dll
