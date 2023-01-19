@@ -587,13 +587,7 @@ switch (typ)
 
 		if (lcstr && *lcstr) {
 			con = cg_->findWordConcept(lcstr);
-			if (conChild = cg_->Down(con)) {
-				int dontProbablyNeed = 1;
-			}
-			
 			reduceIt = findAttrs(node, con, str, lcstr, false);
-			
-//		   _TCHAR *val = KB::strVal(con,attr,cg_,htab_);
 
 			if (reduceIt) {
 				PTR *phrases = (PTR *)cg_->findVals(con, _T("phrase"));
@@ -624,9 +618,7 @@ switch (typ)
 					else if (root_)
 						tree_->insertDown(*suggestedN,*root_);
 					tree_->insertDown(*node,*suggestedN);
-					sym = internTok(pn->getText(), sizeof(pn->getText()), htab, lcstr);
-					str = sym->getStr();
-					suggestedN->getData()->setText(str);
+					suggestedN->getData()->setText(pn->getText());
 					return suggestedN;
 				}
 
