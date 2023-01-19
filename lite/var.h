@@ -210,6 +210,7 @@ public:
 		std::_t_ostream *ostr
 		);
 	static bool copy_vars(Dlist<Ipair> *, Dlist<Ipair>* &);		// 05/16/01 AM.
+	static bool copy_vars(Dlist<Ipair> *, RFASem *sem1, CG *cg);
 
 protected:
 };
