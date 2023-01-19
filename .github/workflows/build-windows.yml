@@ -37,7 +37,7 @@ jobs:
       - name: Test executable --version
         run: ./bin/Release/nlp.exe --version || true
         
-      - name: List $RUNNER_WORKSPACE after build
+      - name: List workspace after build
         run: find $RUNNER_WORKSPACE
         shell: bash
 
