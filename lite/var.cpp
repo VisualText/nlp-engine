@@ -39,6 +39,7 @@ All rights reserved.
 #include "rfasem.h"															// 09/26/00 AM.
 
 #include "var.h"
+#include "kbm/con_s.h"
 
 extern char BOM_UTF8[];
 
@@ -2525,6 +2526,95 @@ for (dpair = fmlist->getFirst(); dpair; dpair = dpair->Right())
 		return false;
 		}
 	}
+return true;
+}
+
+
+/********************************************
+* FN:		COPY_VARS
+* CR:		01/19/23  Dd.
+* SUBJ:	Copy vars and values from one list to a concept.
+* NOTE:	Supports "copying up semantics".
+*			CREATES destination list if empty.
+*			If destination has redundant var name, aborts the copy.
+*			(for now).
+********************************************/
+
+bool Var::copy_vars(
+	Dlist<Ipair> *fmlist,
+	/*DU*/
+	RFASem *sem1,
+	CG *cg
+	)
+{
+if (!fmlist)
+	return true;
+Delt<Ipair> *dpair = fmlist->getFirst();
+if (!dpair)								// Empty list.
+	return true;
+
+// if (!con)
+// 	tolist = new Dlist<Ipair>();	// Create empty list.
+
+Ipair *fmpair;
+_TCHAR *name;
+Dlist<Iarg> *vals = 0;
+Delt<Iarg> *val = 0;
+Iarg *arg = 0;
+RFASem *s;
+RFASemtype semType;
+CONCEPT *conc1 = sem1->getKBconcept();
+CON *c1 = (CON *)conc1;
+
+// For each var in list, copy it to the concept.
+for (dpair = fmlist->getFirst(); dpair; dpair = dpair->Right())
+	{
+	fmpair = dpair->getData();
+	name = fmpair->getKey();
+	vals = fmpair->getVals();
+	val = vals->getFirst();
+
+	arg = val->getData();
+	enum Iargtype argType = arg->getType();
+	if (argType == IASEM)
+		{
+		s = arg->getSem();
+		semType = s->getType();
+
+		if (semType == RS_KBCONCEPT) {
+			CONCEPT *con = s->getKBconcept();
+			CON *c = (CON *)con;
+			cg->addVal(conc1,name,con);
+			}
+		else if (semType == RS_KBVAL) {
+			int what = 1;
+			}
+		else
+			{
+			int there = 1;
+			}	
+		} 
+	else if (argType == IANUM)
+		{
+		long num = arg->getNum();
+		cg->addVal(conc1,name,num);
+		}
+	else if (argType == IASTR)
+		{
+		_TCHAR *str = arg->getStr();
+		cg->addSval(conc1,name,str);
+		}
+	else if (argType == IAFLOAT)
+		{
+		float num = arg->getFloat();
+		cg->addVal(conc1,name,num);
+		}
+	else
+		{
+		int where = 1;
+		}
+}
+
 return true;
 }
 

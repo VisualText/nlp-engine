@@ -9404,6 +9404,8 @@ if (str1)
 	}
 
 Node<Pn> *node = 0;
+RFASemtype semType = RSNULL;
+
 if (!sem1)		// If it's numeric arg.
 	{
 	// Get node from numth rule element.
@@ -9421,7 +9423,8 @@ if (!sem1)		// If it's numeric arg.
 else
 	{
 	// Get node from sem.
-	if (sem1->getType() != RSNODE)
+	semType = sem1->getType();
+	if (semType != RSNODE && semType != RS_KBCONCEPT)
 		{
 		_stprintf(Errbuf,_T("[pncopyvars: Bad semantic arg.]"));
 		return parse->errOut(false); // UNFIXED 												// 05/18/01 AM.
@@ -9444,24 +9447,32 @@ Pn *pn2 = 0;																	// 11/13/01 AM.
 Dlist<Ipair> *tolist = 0;													// 11/13/01 AM.
 if (sem2)																		// 11/13/01 AM.
 	{
-	if (sem2->getType() != RSNODE)										// 11/13/01 AM.
-		{
-		_stprintf(Errbuf,_T("[pncopyvars: Bad semantic arg(2).]"));		// 11/13/01 AM.
-		parse->errOut(false); // UNFIXED 															// 11/13/01 AM.
-		return true;															// 11/13/01 AM.
+		if (sem2->getType() == RS_KBCONCEPT) {
+			CG *cg = parse->getAna()->getCG();
+			Var::copy_vars(fmlist,sem2,cg);
+			return true;
 		}
-	node2 = sem2->getNode();												// 11/13/01 AM.
-	pn2 = node2->getData();													// 11/13/01 AM.
-   tolist = pn2->getDsem();												// 11/13/01 AM.
-	Var::copy_vars(fmlist,tolist);										// 11/13/01 AM.
-	pn2->setDsem(tolist);			// Restore to destination.		// 11/13/01 AM.
+		else {
+			if (sem2->getType() != RSNODE)										// 11/13/01 AM.
+				{
+				_stprintf(Errbuf,_T("[pncopyvars: Bad semantic arg(2).]"));		// 11/13/01 AM.
+				parse->errOut(false); // UNFIXED 															// 11/13/01 AM.
+				return true;															// 11/13/01 AM.
+				}
+			node2 = sem2->getNode();												// 11/13/01 AM.
+			pn2 = node2->getData();													// 11/13/01 AM.
+			tolist = pn2->getDsem();												// 11/13/01 AM.
+			Var::copy_vars(fmlist,tolist);										// 11/13/01 AM.
+			pn2->setDsem(tolist);			// Restore to destination.		// 11/13/01 AM.
+		}
 	}
 else										// The old way (to sugg).		// 11/13/01 AM.
 	{
 	tolist = nlppp->getDsem();		// From suggested elt.			// 11/13/01 AM.
 	//Dlist<Ipair> *tolist = nlppp->getDsem();						// 11/13/01 AM.
-	Var::copy_vars(fmlist,tolist);
 
+	Var::copy_vars(fmlist,tolist);
+		
 	// Restore var list in parser state.
 	nlppp->setDsem(tolist);
 	}
@@ -9558,6 +9569,7 @@ switch (typ) // 12/15/14 AM.
 			{
 			// RSARGS
 			// Need to COPY the sem object here.
+			RFASemtype t = semval->getType();
 			if (semval->getType() == RSARGS)							// FIX.	// 08/07/03 AM.
 				{
 				// NEED TO COPY ARGS LIST.								// FIX.	// 08/07/03 AM.
