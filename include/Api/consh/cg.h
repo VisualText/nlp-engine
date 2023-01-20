@@ -165,6 +165,8 @@ public:
 	// Fetch the list of attributes for the concept.
 	ATTR *findAttrs(CONCEPT *con);
 
+	int attrValType(CONCEPT *con, _TCHAR *attr);
+
 	// Fetch attribute name into given buffer.						// 07/05/99 AM.
 	bool attrName(ATTR *attr, _TCHAR *buf, int bufsiz = NAMESIZ);
 

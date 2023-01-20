@@ -927,6 +927,32 @@ _tcscpy(buf, name);
 return true;
 }
 
+int CG::attrValType(CONCEPT *con, _TCHAR *attr) {
+int type = 0;
+PTR *pval;
+if (!(pval = kbm_->attr_find((CON *)con, attr)))
+	return false;
+switch (pval->kind)
+	{
+	case pST:
+		type = 0;
+		break;
+	case pNUM:
+		type = 1;
+		break;
+	case pCON:
+		type = 1;
+		break;
+	case pFLOAT:
+		type = 3;
+		break;
+	default:
+		break;
+	}
+
+return type;
+}
+
 // Fetch attribute values.				// 07/05/99 AM.
 VAL *CG::attrVals(ATTR *attr)
 {
