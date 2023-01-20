@@ -941,7 +941,7 @@ switch (pval->kind)
 		type = 1;
 		break;
 	case pCON:
-		type = 1;
+		type = 2;
 		break;
 	case pFLOAT:
 		type = 3;
