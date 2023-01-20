@@ -341,6 +341,8 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnGetconcept(args, nlppp, /*UP*/ sem);				// 03/03/00 AM.
 	case FNgetconval:
 		return fnGetconval(args, nlppp, /*UP*/ sem);					// 08/12/00 AM.
+	case FNgetfltval:
+		return fnGetfltval(args, nlppp, /*UP*/ sem);
 	case FNgetnumval:
 		return fnGetnumval(args, nlppp, /*UP*/ sem);					// 03/02/00 AM.
 	case FNgetpopupdata:
@@ -2829,6 +2831,66 @@ if (!val)
 CG *cg = parse->getAna()->getCG();
 
 long num;
+cg->popVal(val, /*UP*/ num);
+
+// Return appropriate value.
+sem = new RFASem(num);
+
+return true;
+}
+
+
+/********************************************
+* FN:		FNGETFLTVAL
+* CR:		03/02/00 AM.
+* SUBJ:	Fetch numeric value.
+* RET:	True if ok, else false.
+*			UP num - Long obtained from value.
+* FORM:	getfltval(val)
+* NOTE:	Not doing "pop" functions because NLP++ has no call-by-reference.
+*			Not equivalent to popVal.
+********************************************/
+
+bool Fn::fnGetfltval(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem		// Function return value.
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+RFASem *val_sem = 0;
+
+if (!Arg::sem1(_T("getfltval"),nlppp,(DELTS*&)args, val_sem))
+	return false;
+if (!Arg::done((DELTS*)args, _T("getfltval"),parse))
+	return false;
+
+if (!val_sem)																	// 10/30/00 AM.
+	{
+	_stprintf(Errbuf,_T("[getfltval: Warning. Given no val.]"));		// 10/30/00 AM.
+	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
+	}
+
+if (val_sem->getType() != RS_KBVAL)
+	{
+	_stprintf(Errbuf,_T("[getfltval: Bad semantic arg.]"));
+	return parse->errOut(false); // UNFIXED 													// 05/18/01 AM.
+	}
+VAL *val = val_sem->getKBval();
+if (!val)
+	{
+	// Todo: Do I need to build an empty semantic object?
+	sem = new RFASem((_TCHAR *)0, RSLONG);
+	return true;
+	}
+
+// Need to get the current KB.
+CG *cg = parse->getAna()->getCG();
+
+float num;
 cg->popVal(val, /*UP*/ num);
 
 // Return appropriate value.
