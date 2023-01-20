@@ -37,6 +37,7 @@ All rights reserved.
 
 #include "htab.h"					// 02/12/07 AM.
 #include "kb.h"					// 02/12/07 AM.
+#include "kbm/ptr_s.h"
 
 #include "prim/libprim.h"	// 09/15/08 AM.
 #ifndef DWORD	// 09/16/20 AM.
@@ -447,6 +448,61 @@ parse->internStr(buf, /*UP*/ str);
 delete sem;													// MEM LEAK.	// 06/27/00 AM.
 return str;
 }
+
+
+
+/********************************************
+* FN:		ATTRTYPE
+* CR:		01/20/23  Dd.
+* SUBJ:	Get attribute's type
+* RET:	0 = string, 1 = int, 2 = concept, 3 = float
+* FORMS:	attrname(attr)
+* NOTE:	Not totally analogous to cg.cpp function.
+********************************************/
+
+int Arun::attrtype(
+	Nlppp *nlppp,
+	RFASem *sem,			// Concept.
+	_TCHAR *name			// Attribute name.
+	)
+{
+if (!sem || !name || !*name || !nlppp)
+	{
+	if (sem)
+		delete sem;
+	return 0;
+	}
+
+if (sem->getType() != RS_KBCONCEPT)
+	{
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[fltval: Bad semantic arg.]") << std::ends;
+	errOut(&gerrStr,false);
+	delete sem;
+	return 0;
+	}
+CONCEPT *conc1 = sem->getKBconcept();
+
+// Need to get the current KB.
+CG *cg = nlppp->getParse()->getAna()->getCG();
+
+// Get concept from sem.
+if (sem->getType() != RS_KBATTR)
+	{
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[attrname: Bad semantic arg.]") << std::ends;
+	errOut(&gerrStr,false);
+	delete sem;												// MEM LEAK.	// 06/27/00 AM.
+	return 0;
+	}
+ATTR *attr = sem->getKBattr();
+
+int type = cg->attrValType(conc1,name);
+
+delete sem;
+return type;
+}
+
 
 
 /********************************************

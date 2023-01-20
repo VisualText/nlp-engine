@@ -108,6 +108,12 @@ public:
 		/*UP*/
 		RFASem* &sem
 		);
+	static bool fnAttrtype(												// 03/02/00 AM.
+		Delt<Iarg> *args,
+		Nlppp *nlppp,
+		/*UP*/
+		RFASem* &sem
+		);
 	static bool fnFindvals(												// 03/02/00 AM.
 		Delt<Iarg> *args,
 		Nlppp *nlppp,

@@ -38,6 +38,7 @@ enum funcDef
 	FNattrexists,
 	FNattrname,
 	FNattrvals,
+	FNattrtype,
 	FNattrwithval,
 	FNbatchstart,
 	FNcap,

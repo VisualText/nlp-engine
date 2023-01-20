@@ -224,6 +224,8 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnAttrexists(args, nlppp, /*UP*/ sem);				// 03/02/00 AM.
 	case FNattrname:
 		return fnAttrname(args, nlppp, /*UP*/ sem);					// 02/23/00 AM.
+	case FNattrtype:
+		return fnAttrtype(args, nlppp, /*UP*/ sem);
 	case FNattrvals:
 		return fnAttrvals(args, nlppp, /*UP*/ sem);					// 03/02/00 AM.
 	case FNattrwithval:
@@ -1255,6 +1257,61 @@ VAL *vals = cg->attrVals(attr1);
 
 // Return as val type.
 sem = new RFASem(vals, RS_KBVAL);
+return true;
+}
+
+
+/********************************************
+* FN:		FNATTRTYPE
+* CR:		03/02/00 AM.
+* SUBJ:	Get attribute's values.
+* RET:	True if ok, else false.
+*			UP - values of attribute
+* FORMS:	attrvals(attr)
+********************************************/
+
+bool Fn::fnAttrtype(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem		// Function return value.
+	)
+{
+sem = 0;
+
+RFASem *con_sem = 0;
+_TCHAR *attr_str=0;
+Parse *parse = nlppp->parse_;										// 08/24/02 AM.
+
+if (!Arg::sem1(_T("attrtype"),nlppp,(DELTS*&)args,con_sem))
+	return false;
+if (!Arg::str1(_T("attrtype"), (DELTS*&)args, attr_str))
+	return false;
+if (!Arg::done((DELTS*)args, _T("attrtype"),parse))
+	return false;
+
+if (!con_sem)																	// 10/30/00 AM.
+	{
+	_stprintf(Errbuf,_T("[attrtype: Warning. Given no concept.]"));	// 05/18/01 AM.
+	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
+	}
+if (!attr_str)																	// 10/30/00 AM.
+	{
+	_stprintf(Errbuf,_T("[attrtype: Warning. Given no attr name.]"));	// 05/18/01 AM.
+	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
+	}
+
+if (con_sem->getType() != RS_KBCONCEPT)
+	{
+	_stprintf(Errbuf,_T("[findvals: Bad semantic arg.]"));				// 05/18/01 AM.
+	return parse->errOut(false); // UNFIXED 													// 05/18/01 AM.
+	}
+
+CG *cg = parse->getAna()->getCG();
+CONCEPT *conc1 = con_sem->getKBconcept();
+long type = cg->attrValType(conc1, attr_str);
+
+sem = new RFASem(type);
 return true;
 }
 

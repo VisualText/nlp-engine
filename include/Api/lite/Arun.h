@@ -841,7 +841,7 @@ public:
 	static RFASem *findattrs(Nlppp*,RFASem*);
 
 	static _TCHAR *attrname(Nlppp*,RFASem*);
-
+	static int attrtype(Nlppp*,RFASem*,_TCHAR*);
 	static RFASem *attrvals(Nlppp*,RFASem*);
 
 	static RFASem *findvals(Nlppp*,RFASem*,_TCHAR*);
