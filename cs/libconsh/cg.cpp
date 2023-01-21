@@ -3731,15 +3731,41 @@ bool CG::readKBB(std::string file) {
 				start = end;
 				attrFlag = true;			
 			}
-			else if (conceptDone && openSquare && collectingConcept && c == ']') {
-				CONCEPT *c = addConceptByPath(line,conIndices);
-				addVal(con,attr,c);
+			else if (conceptDone && openSquare && collectingConcept && (c == ']' || c ==',')) {
+				CONCEPT *conPath = addConceptByPath(line,conIndices);
+				addVal(con,attr,conPath);
 				start = end;
-				openDouble = false;
-				openSquare = false;
-				collectingConcept = false;
-				attrFlag = false;
+				if (c != ',') {
+					openDouble = false;
+					openSquare = false;
+					collectingConcept = false;
+					attrFlag = false;
+				}
 				conIndices.clear();		
+			}
+			else if (conceptDone && openSquare && openDouble && c == '"') {
+				_tcsnccpy(val, &line[start],end-start-1);
+				val[end-start-1] = '\0';
+				if (!_tcscmp(val, _T("concept")) || collectingConcept) {
+					collectingConcept = true;
+					conIndices.push_back(std::make_pair(start,end-1));
+				} else {
+					start = end;
+					addSval(con,attr,val);
+				}
+				start = end;
+				// Add to concept path
+				openDouble = false;
+			}
+			else if (conceptDone && openSquare && c == '"') {
+				openDouble = true;
+				start = end;
+				attrFlag = true;			
+			}
+			// If attribute starts with a double quote
+			else if (conceptDone && !attrFlag && !openDouble && c == '"') {
+				openDouble = true;
+				start = end;
 			}
 			else if (conceptDone && attrFlag && !openDouble && c == '"') {
 				openDouble = true;
@@ -3748,40 +3774,35 @@ bool CG::readKBB(std::string file) {
 			else if (conceptDone && !attrFlag && c == ':') {
 				start = end;
 			}
-			else if (conceptDone && openSquare && openDouble && c == '"') {
-				_tcsnccpy(val, &line[start],end-start-1);
-				val[end-start-1] = '\0';	
-				conIndices.push_back(std::make_pair(start,end-1));
-				start = end;
-				// Add to concept path
-				openDouble = false;
-			}
-			else if (conceptDone && openSquare && c == '"') {
-				openDouble = true;
-				collectingConcept = true;
-				start = end;
-				attrFlag = true;			
-			}
 			else if (conceptDone && attrFlag &&
 						((openSquare && !openDouble && (c == ',' || c == ']')) ||
 						 (!openSquare && !openDouble && c == ',') ||
 						 (openDouble && c == '"') ||
 						  end == length)) {
-				if (end == length && c != ']')
-					end++;
-				_tcsnccpy(val, &line[start],end-start-1);
-				val[end-start-1] = '\0';
-				start = end;
+				_tcsnccpy(val, &line[start],end-start);
+				int adjust = length && c != ']' && c != '"' && c != ',' ? 0 : 1;
+				val[end-start-adjust] = '\0';
 				addSval(con,attr,val);
-				if (c == ']') {
+				start = end;
+				if (end >= length) {
+					conceptDone = false;
+					attrFlag = false;
 					openSquare = false;
+				}
+				else if (c == ']') {
+					openSquare = false;
+					attrFlag = false;
+				// Comma separating attributes
+				} else if (c == ',' && attrFlag && !openDouble && !openSquare) {
 					attrFlag = false;
 				}
 				openDouble = false;			
 			}
 			else if (conceptDone && c == '=') {
 				_tcsnccpy(attr, &line[start],end-start-1);
-				attr[end-start-1] = '\0';
+				int adjust = openDouble ? 2 : 1;  // This is in case the attribute was double quoted
+				attr[end-start-adjust] = '\0';
+				openDouble = false;
 				start = end;
 				attrFlag = true;			
 			}
