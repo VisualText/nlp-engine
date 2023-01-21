@@ -258,6 +258,12 @@ public:
 		/*UP*/
 		RFASem* &sem
 		);
+	static bool fnGetfltval(
+		Delt<Iarg> *args,
+		Nlppp *nlppp,
+		/*UP*/
+		RFASem* &sem
+		);
 	static bool fnGetnumval(											// 03/02/00 AM.
 		Delt<Iarg> *args,
 		Nlppp *nlppp,

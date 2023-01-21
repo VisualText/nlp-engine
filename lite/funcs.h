@@ -89,6 +89,7 @@ _T("fprintvar"),
 _T("gdump"),
 _T("getconcept"),
 _T("getconval"),
+_T("getfltval"),
 _T("getnumval"),
 _T("getpopupdata"),	// 05/25/02 AM.
 _T("getstrval"),

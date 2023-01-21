@@ -95,6 +95,7 @@ enum funcDef
 	FNgdump,
 	FNgetconcept,
 	FNgetconval,
+	FNgetfltval,
 	FNgetnumval,
 	FNgetpopupdata,	// 05/25/02 AM.
 	FNgetstrval,

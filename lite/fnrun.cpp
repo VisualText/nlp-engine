@@ -2235,6 +2235,56 @@ return num;
 
 
 /********************************************
+* FN:		GETFLTVAL
+* CR:		01/20/23
+* SUBJ:	Fetch numeric value.
+* RET:	True if ok, else false.
+*			UP num - Long obtained from value.
+* FORM:	getfltval(val)
+* NOTE:	Not doing "pop" functions because NLP++ has no call-by-reference.
+*			Not equivalent to popVal.
+********************************************/
+
+long Arun::getfltval(
+	Nlppp *nlppp,
+	RFASem *val_sem
+	)
+{
+if (!val_sem || !nlppp)
+	{
+	if (val_sem)
+		delete val_sem;									// MEM LEAK.	// 06/27/00 AM.
+	return 0;
+	}
+
+if (val_sem->getType() != RS_KBVAL)
+	{
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[getfltval: Bad semantic arg.]") << std::ends;
+	errOut(&gerrStr,false);
+	delete val_sem;										// MEM LEAK.	// 06/27/00 AM.
+	return 0;
+	}
+VAL *val = val_sem->getKBval();
+if (!val)
+	{
+	delete val_sem;										// MEM LEAK.	// 06/27/00 AM.
+	return 0;
+	}
+
+// Need to get the current KB.
+Parse *parse = nlppp->getParse();
+CG *cg = parse->getAna()->getCG();
+
+float num;
+cg->popVal(val, /*UP*/ num);
+
+delete val_sem;											// MEM LEAK.	// 06/27/00 AM.
+return num;
+}
+
+
+/********************************************
 * FN:		GETCONVAL
 * CR:		08/12/00 AM.
 * SUBJ:	Fetch concept value.

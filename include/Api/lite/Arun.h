@@ -918,6 +918,7 @@ public:
 	static _TCHAR *getstrval(Nlppp*,RFASem*);
 
 	static long getnumval(Nlppp*,RFASem*);
+	static long getfltval(Nlppp*,RFASem*);
 
 	static RFASem *getconval(Nlppp*,RFASem*);							// 08/12/00 AM.
 
