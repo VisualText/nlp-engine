@@ -521,7 +521,7 @@ int NLP_ENGINE::readFiles(_TCHAR *dir)
     m_files.clear();
 
     if (std::filesystem::is_directory(dir)) {
-        m_nlp->setIsDirRun(false);
+        m_nlp->setIsDirRun(true);
         read_files(dir,_T(""),m_files);
         return 1;
     } else {
