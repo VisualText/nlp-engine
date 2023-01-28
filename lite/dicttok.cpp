@@ -609,7 +609,7 @@ switch (typ)
 					long ustart = pn->getUstart();
 					long uend = pn->getUend();
 					long line = pn->getLine();
-					Sym *sym = internTok(suggName, sizeof(suggName), htab, lcstr);
+					Sym *sym = internTok(suggName, _tcslen(suggName), htab, lcstr);
 					str = sym->getStr();
 					Node<Pn>* suggestedN = Pn::makeTnode(start, end, ustart, uend, PNNODE, suggName, str, sym, line);
 					findAttrs(suggestedN, con, str, lcstr, true);
@@ -670,7 +670,7 @@ switch (typ)
 								long ustart = ppn->getUstart();
 								long uend = pn->getUend();
 								long line = pn->getLine();
-								Sym *sym = internTok(suggName, sizeof(suggName), htab, lcstr);
+								Sym *sym = internTok(suggName, _tcslen(suggName), htab, lcstr);
 								str = sym->getStr();
 								Node<Pn>* suggestedN = Pn::makeTnode(start, end, ustart, uend, PNNODE, suggName, str, sym, line);
 								if (parentN->Left()) {
@@ -690,7 +690,7 @@ switch (typ)
 								// Set text to be the entire text of the phrase
 								_TCHAR txt[MAXPATH];
 								sprintf(txt,_T("%s"),text.c_str());
-								sym = internTok(txt, sizeof(txt), htab, lcstr);
+								sym = internTok(txt, _tcslen(txt), htab, lcstr);
 								str = sym->getStr();
 								suggestedN->getData()->setText(str);
 
