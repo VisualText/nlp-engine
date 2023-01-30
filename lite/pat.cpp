@@ -2511,9 +2511,9 @@ if (*name != '_'										// 10/12/99 AM.
 	}
 
 if (!_tcscmp(name, _T("_xALPHA")))	// Alpha token.
-//	return ((pn->getType() == PNALPHA) ? true : false);			// 07/20/04 AM.
+	return ((pn->getType() == PNALPHA) ? true : false);			// 07/20/04 AM.
 	// To handle retokenized alphabetics.								// 07/20/04 AM.
-	return alphabetic(*pn->getName());									// 07/20/04 AM.
+	// return alphabetic(*pn->getName());									// 07/20/04 AM.
 else if (!_tcscmp(name, _T("_xNUM")))						// Numeric token.
 	return ((pn->getType() == PNNUM) ? true : false);
 else if (!_tcscmp(name, _T("_xWHITE")))						// White token.
@@ -2532,8 +2532,8 @@ else if (!_tcscmp(name, _T("_xEMOJI")))
 else if (!_tcscmp(name, _T("_xANY")))	// Match any node.	// 12/08/98 AM.
 	return true;	// Always matches.
 else if (!_tcscmp(name, _T("_xCAP")))		// Match capitalized word. // 01/20/99 AM.
-//	return ((pn->getType() == PNALPHA)									// 07/20/04 AM.
-	return (alphabetic(*pn->getName())									// 07/20/04 AM.
+	return ((pn->getType() == PNALPHA)									// 07/20/04 AM.
+	// return (alphabetic(*pn->getName())									// 07/20/04 AM.
 				&& is_upper((_TUCHAR)*(pn->getName())) );		// 12/16/01 AM.
 else if (!_tcscmp(name, _T("_xCAPLET")))	// Match cap letter.	// 07/10/09 AM.
 	{
@@ -2643,8 +2643,8 @@ if (!nname || !ename)
 	return false;
 
 if (!_tcscmp(ename, _T("_xALPHA")))	// Alpha token.
-//	return (ntype == PNALPHA) ? true : false;							// 07/20/04 AM.
-	return (alphabetic(*nname));											// 07/20/04 AM.
+	return (ntype == PNALPHA) ? true : false;							// 07/20/04 AM.
+	// return (alphabetic(*nname));											// 07/20/04 AM.
 else if (!_tcscmp(ename, _T("_xNUM")))	// Numeric token.
 	return (ntype == PNNUM) ? true : false;
 else if (!_tcscmp(ename, _T("_xWHITE")))	// White token.
@@ -2663,8 +2663,8 @@ else if (!_tcscmp(ename, _T("_xEMOJI")))
 else if (!_tcscmp(ename, _T("_xANY")))				// 12/08/98 AM.
 	return true;					// User is being silly, but do it anyway.
 else if (!_tcscmp(ename, _T("_xCAP")))	// Match capitalized word. // 01/20/99 AM.
-//	return ((ntype == PNALPHA)												// 07/20/04 AM.
-	return (alphabetic(*nname)												// 07/20/04 AM.
+	return ((ntype == PNALPHA)												// 07/20/04 AM.
+	// return (alphabetic(*nname)												// 07/20/04 AM.
 			  && is_upper((_TUCHAR)*nname) );					// 12/16/10 AM.
 else if (!_tcscmp(ename, _T("_xCAPLET")))	// Match cap letter.	// 07/10/09 AM.
 	return (*nname && !(*(nname+1)) && isupper((_TUCHAR)*nname)	// 07/10/09 AM.

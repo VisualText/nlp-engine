@@ -3801,8 +3801,8 @@ return node ? true : false;
 bool Arun::micro_alpha(NODE *node, const ELT *elt, Nlppp *nlppp)
 {
 Pn *pn = &(((Node<Pn> *)node)->data);
-//return ((pn->getType() == PNALPHA) ? true : false);	// 07/20/04 AM.
-return (alphabetic(*pn->getName()) ? true : false);	// 07/20/04 AM.
+return ((pn->getType() == PNALPHA) ? true : false);	// 07/20/04 AM.
+// return (alphabetic(*pn->getName()) ? true : false);	// 07/20/04 AM.
 }
 
 
