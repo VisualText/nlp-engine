@@ -950,6 +950,7 @@ static bool fnStruniquechars(
 	static bool fnStrunescape(Delt<Iarg>*,Nlppp*,RFASem*&);			// 07/24/01 DD.
 	static bool fnKbdumptree(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/06/01 AM.
 	static bool fnWriteKB(Delt<Iarg>*,Nlppp*,RFASem*&);
+	static bool fnStriscaps(Delt<Iarg>*,Nlppp*,RFASem*&);
 	static bool fnStrisupper(Delt<Iarg>*,Nlppp*,RFASem*&);			// 11/20/01 AM.
 	static bool fnStrislower(Delt<Iarg>*,Nlppp*,RFASem*&);			// 11/20/01 AM.
 	static bool fnSuffix(Delt<Iarg>*,Nlppp*,RFASem*&);				// 11/21/01 AM.
