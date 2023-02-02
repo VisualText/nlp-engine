@@ -286,6 +286,7 @@ enum funcDef
 	FNstrunescape,
 	FNstrgreaterthan,
 	FNstrisalpha,
+	FNstriscaps,
 	FNstrisdigit,
 	FNstrislower,
 	FNstrisupper,

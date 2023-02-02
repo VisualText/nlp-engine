@@ -675,6 +675,8 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnStrgreaterthan(args, nlppp, /*UP*/ sem);			// 04/25/00 Dd.
 	case FNstrisalpha:
 		return fnStrisalpha(args, nlppp, /*UP*/ sem);				// 05/05/00 Dd.
+	case FNstriscaps:
+		return fnStriscaps(args, nlppp, /*UP*/ sem);
 	case FNstrisdigit:
 		return fnStrisdigit(args, nlppp, /*UP*/ sem);				// 05/05/00 Dd.
 	case FNstrislower:
@@ -10328,6 +10330,44 @@ return true;
 
 
 /********************************************
+* FN:		FNSTRISCAPS
+* CR:		02/02/23  Dd.
+* SUBJ:	See if all characters are uppercase.
+* RET:	True if ok, else false.
+*			UP bool - 1 if all caps, else 0.
+* FORM:	striscaps(str)
+********************************************/
+
+bool Fn::fnStriscaps(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+_TCHAR *str1=0;
+if (!Arg::str1(_T("iscaps"), (DELTS*&)args, str1))
+	return false;
+if (!Arg::done((DELTS*)args, _T("iscaps"),parse))
+	return false;
+
+long isCaps = 0;
+if (str1 && *str1) {
+	icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str1));
+	const UChar *strBuf = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
+	if (unicu::isCaps(strBuf))
+		isCaps = 1;
+}
+
+sem = new RFASem(isCaps);
+return true;
+}
+
+
+
+/********************************************
 * FN:		FNSTRISUPPER
 * CR:		11/20/01 AM.
 * SUBJ:	See if first char of string is upper case.
@@ -10351,10 +10391,19 @@ if (!Arg::str1(_T("isupper"), (DELTS*&)args, str1))
 if (!Arg::done((DELTS*)args, _T("isupper"),parse))
 	return false;
 
-long flag=0;
-if (str1 && *str1 && is_upper(*str1))
-	flag = 1;
-sem = new RFASem(flag);
+long isUpper=0;
+if (str1 && *str1) {
+	icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str1));
+	const UChar *strBuf = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
+	UChar32 c = 1;
+	int32_t e = 0;
+	int32_t length = unicu::strLen(strBuf);
+	U8_NEXT(strBuf, e, length, c);
+	if (unicu::isUpper(c))
+		isUpper = 1;
+}
+
+sem = new RFASem(isUpper);
 return true;
 }
 
@@ -10385,11 +10434,18 @@ if (!Arg::str1(_T("islower"), (DELTS*&)args, str1))
 if (!Arg::done((DELTS*)args, _T("islower"),parse))
 	return false;
 
-long flag=0;
-if (str1 && *str1
-	 && is_lower(*str1))														// 12/16/01 AM.
-	flag = 1;
-sem = new RFASem(flag);
+long isLower=0;
+if (str1 && *str1) {
+	icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str1));
+	const UChar *strBuf = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
+	UChar32 c = 1;
+	int32_t e = 0;
+	int32_t length = unicu::strLen(strBuf);
+	U8_NEXT(strBuf, e, length, c);
+	if (unicu::isLower(c))
+		isLower = 1;
+}
+sem = new RFASem(isLower);
 return true;
 }
 

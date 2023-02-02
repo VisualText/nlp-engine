@@ -72,6 +72,27 @@ bool unicu::isEmojiVariation(UChar32 c) {
 	);
 }
 
+bool unicu::isCaps(const UChar *str) {
+	UChar32 c = 1;
+	int32_t e = 0;
+	int32_t length = unicu::strLen(str);
+	U8_NEXT(str, e, length, c);
+	bool foundLower = false;
+
+	// Skip white space (SHOULD NOT BE THERE)
+	while (e <= length) {
+		if (unicu::isLower(c)) {
+			foundLower = true;
+			break;
+		}
+		U8_NEXT(str, e, length, c);
+	}
+	if (!foundLower) {
+		int stophere = 1;
+	}
+	return !foundLower ? true : false;
+}
+
 bool unicu::isUpper(UChar32 c) {
 	return u_isupper(c);
 }
