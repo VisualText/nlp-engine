@@ -114,6 +114,7 @@ _LIT <- _xWILD [s one match=(
 
 
 _LIT [base] <- _xALPHA @@
+_LIT [base] <- _xEMOJI @@
 _LIT [base] <- _xCTRL @@    # 10/14/13 AM.
 
 # ADDING FLOAT TO GRAMMAR.  # 08/19/01 AM.
