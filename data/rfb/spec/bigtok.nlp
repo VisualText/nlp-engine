@@ -96,7 +96,7 @@ _soRULES [base layer=(_startMark)] <- \@ RULES [t] @@
 	rfanonlit(2)
 	single()
 @RULES
-_NONLIT [base] <- \_ _xALPHA @@
+_NONLIT [base] <- \_ _xWILD [s one match=(_xALPHA _xEMOJI)] @@
 
 @RULES
 _ARROW [base] <- \< \- @@
