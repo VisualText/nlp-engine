@@ -2253,6 +2253,79 @@ return false;
 
 
 /********************************************
+* FN:		NODEVARGT
+* CR:		02/03/23
+* SUBJ:	True if named node variable great than a number value.
+* RET:	True if greater than.
+*********************************************/
+
+bool Ivar::nodeVarGT(
+	Pn *pn,
+	_TCHAR *name,			// Name of var.
+	long nval
+	)
+{
+if (!pn)
+	return false;
+
+Dlist<Ipair> *dlist = pn->getDsem();
+if (!dlist)
+	return false;
+
+Ipair *pairx = 0;
+Var::find(name,dlist,/*UP*/pairx);
+if (!pairx)
+	return false;		// No pair.
+
+Dlist<Iarg> *vals = pairx->getVals();
+if (!vals)
+	{
+	return false;		// Pair with no values list.
+	}
+Delt<Iarg> *darg = vals->getFirst();
+if (!darg)
+	{
+	return false;		// Empty values list.
+	}
+
+// If more than one value, then it's an array.
+if (darg->Right())
+	return false;	// (Fail even if first value of array is same.)
+
+// One value.  See if it matches.
+Iarg *iarg = darg->getData();
+RFASem *sem;	// FIX. // 07/12/11 AM.
+bool ok = false;	// FIX.	// 07/12/11 AM.
+long aval = 0;	// FIX.	// 07/12/11 AM.
+switch (iarg->getType())
+	{
+	case IANUM:
+		return iarg->getNum() > nval;
+		break;
+	case IASEM:
+		sem = iarg->getSem();	// FIX.	// 07/12/11 AM.
+		switch (sem->getType())	// FIX.	// 07/12/11 AM.
+			{
+			case RSLONG:	// FIX.	// 07/12/11 AM.
+				aval = sem->sem_to_long(ok); //FIX // 07/12/11 AM.
+				return aval > nval;	// FIX.	// 07/12/11 AM.
+				break;
+			default: break;
+			}
+		break;
+	case IASTR:
+	case IAFLOAT:
+	case IAREF:
+	default:
+		return false;
+		break;
+	}
+
+return false;
+}
+
+
+/********************************************
 * FN:		NODEREPLACEVAL
 * CR:		06/26/01 AM.
 * SUBJ:	Replace node variable value.

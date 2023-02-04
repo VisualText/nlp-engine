@@ -94,6 +94,10 @@ public:
 		Delt<Iarg> *args,
 		Pn *pn
 		);
+	static bool preVargt(   // 06/16/05 AM.
+		Delt<Iarg> *args,
+		Pn *pn
+		);
 	static bool preVarne(   // 06/16/05 AM.
 		Delt<Iarg> *args,
 		Pn *pn

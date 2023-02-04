@@ -315,6 +315,7 @@ _T("urlbase"),		// 03/16/03 AM.
 _T("urltofile"),	// 02/11/03 AM.
 _T("var"),			// 06/14/05 AM.
 _T("vareq"),		// 07/25/06 AM.
+_T("vargt"),
 _T("varfn"),
 _T("varfnarray"),
 _T("varinlist"),
