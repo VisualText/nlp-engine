@@ -645,6 +645,10 @@ switch (typ)
 
 							while (up) {
 								cg_->conceptName(up, conName);
+								if (!parentN) {
+									matchedPhrase = false;
+									break;
+								}
 								Pn *parentPN = &(((Node<Pn> *)parentN)->data);
 								_TCHAR *pnName = parentPN->getName();
 								text = pnName + text;

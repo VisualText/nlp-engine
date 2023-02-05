@@ -1864,6 +1864,17 @@ return false;
 
 }
 
+// Add num value at end of attribute's values IF UNIQUE.
+bool CG::addValUnique(CONCEPT *conc, _TCHAR *attr, long val)
+{
+dirty_ = true;
+if (!kbm_->attr_has_n_val((CON *) conc, attr, val)) {
+	if (kbm_->attr_add_by_name((CON *) conc, attr, val))
+		return true;
+}
+return false;
+}
+
 // Add float value at end of attribute's values.
 bool CG::addVal(CONCEPT *conc, _TCHAR *attr, float val)				// 06/11/03 AM.
 {
@@ -3569,7 +3580,7 @@ bool CG::readDict(std::string file) {
 
 		if (parentCon && wordCount > 1) {
 			addVal(wordCon,_T("phrase"),parentCon);
-			addVal(topCon,_T("top"),1L);
+			addValUnique(topCon,_T("top"),1L);
 		}
 
 		c = cLast;

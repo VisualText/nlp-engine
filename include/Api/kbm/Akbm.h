@@ -108,6 +108,7 @@ public:
 	PTR *attr_add_by_name(CON*,_TCHAR*,float);				// 08/16/01 AM.
 	PTR *attr_add_by_name(CON*,_TCHAR*,CON*);					// 08/11/00 AM.
 	bool attr_rm_by_name(CON*, _TCHAR*);
+	bool attr_has_n_val(CON*,_TCHAR*,long);
 	bool
 	attr_rm(							// 07/12/99 AM.
 		CON *con,
