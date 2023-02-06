@@ -143,6 +143,36 @@ pval->kind = pNUM;
 return ptr;
 }
 
+bool AKBM::attr_has_n_val(
+   CON *con,
+   _TCHAR *name,
+   long val)
+{
+if (!con || !name || !*name)
+	return PNULL;
+
+PTR *p_slot;
+PTR *ptr;
+
+if (!(ptr = attr_get_h(con, name)))
+	return PNULL;
+
+// Get slot.
+p_slot = ptr->v.vptr;
+
+// Search if value already exists
+
+PTR *vals;
+vals = p_slot;
+while (vals) {
+	if (vals->kind == pNUM && vals->v.vnum == val)
+		return true;
+   vals = vals->next;
+}
+
+return false;
+}
+
 /**************************************************
 *						ATTR_ADD_BY_NAME
 * FUN:	attr_add_by_name

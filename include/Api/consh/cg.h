@@ -323,6 +323,7 @@ public:
 
 	// Add num value at end of attribute's values.
 	bool addVal(CONCEPT *con, _TCHAR *attr, long val);
+	bool addValUnique(CONCEPT *con, _TCHAR *attr, long val);
 	bool addVal(CONCEPT *con, _TCHAR *attr, float val);				// 03/19/03 AM.
 
 	// Add CONCEPT values at end of attr's values.					// 08/11/00 AM.
