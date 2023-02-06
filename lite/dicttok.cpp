@@ -207,7 +207,203 @@ while (*buf)
 		return false;															// 01/26/02 AM.
 	}
 
+// Match dict file
+ApplyDictFiles();
+
 return true;																	// 01/26/02 AM.
+}
+
+bool DICTTok::ApplyDictFiles() {
+	Node<Pn> *root = tree_->getRoot();
+	Node<Pn> *node = root->pDown;
+	Node<Pn> *last = NULL;
+	Node<Pn> *curr = NULL;
+	CONCEPT *con = NULL;
+	_TCHAR *suggested, *str, *lcstr;
+	bool reduceIt = false;
+
+	while (node) {
+		lcstr = node->data.getName();
+		con = cg_->findWordConcept(lcstr);
+		reduceIt = findAttrs(node, con, lcstr, lcstr, false);
+
+		if (reduceIt) {
+			PTR *phrases = (PTR *)cg_->findVals(con, _T("phrase"));
+
+			// Single word to be reduced
+			if (!phrases) {
+				VAL *vals = cg_->findVals(con, _T("s"));
+				_TCHAR suggName[MAXSTR];
+				if (vals) {
+					suggested = popsval(vals);
+					sprintf(suggName,_T("_%s"),suggested);
+				} else {
+					return NULL;
+				}
+
+				Pn *pn = node->getData();
+				long start = pn->getStart();
+				long end = pn->getEnd();
+				long ustart = pn->getUstart();
+				long uend = pn->getUend();
+				long line = pn->getLine();
+				Sym *sym = internTok(suggName, _tcslen(suggName), htab_, lcstr);
+				str = sym->getStr();
+				Node<Pn>* suggestedN = Pn::makeTnode(start, end, ustart, uend, PNNODE, suggName, str, sym, line);
+				findAttrs(suggestedN, con, str, lcstr, true);
+				if (last)
+					tree_->insertRight(*suggestedN,*last);
+				else if (root_)
+					tree_->insertDown(*suggestedN,*root_);
+				tree_->insertDown(*node,*suggestedN);
+				suggestedN->getData()->setText(pn->getText());
+				return suggestedN;
+			}
+
+			// More than one word to be reduced
+			CONCEPT *valCon = NULL;
+			bool checkForward = false;
+			Node<Pn> *parentN = node;
+			std::string sp = " ";
+
+			while (phrases && parentN) {
+				if (phrases->kind == pCON) {
+					valCon = phrases->v.vcon;
+					CON *c = (CON *)valCon;
+					VAL *vals = cg_->findVals(valCon, _T("s"));
+					_TCHAR suggName[MAXSTR];
+					if (vals) {
+						suggested = popsval(vals);
+						sprintf(suggName,_T("_%s"),suggested);
+					}
+					if (cg_->Down(valCon) && !checkForward) {
+						checkForward = true;
+						Node<Pn> *downMatch = MatchForward(valCon,parentN);
+						if (downMatch) {
+							curr = node;
+							node = downMatch;
+						}
+						continue;
+					} else {
+						// Work up the concept hier and match node names
+						CONCEPT *up = cg_->Up(valCon);
+						bool matchedPhrase = true;
+						_TCHAR conName[MAXSTR];
+						std::string text = lcstr;
+						parentN = parentN->pLeft;
+
+						while (up) {
+							cg_->conceptName(up, conName);
+							if (!parentN) {
+								matchedPhrase = false;
+								break;
+							}
+							Pn *parentPN = &(parentN->data);
+							_TCHAR *pnName = parentPN->getName();
+							text = pnName + sp + text;
+							if (parentPN->getType() == PNWHITE) {
+								parentN = parentN->pLeft;
+							}
+							else if (_tcsicmp(conName, pnName)) {
+								matchedPhrase = false;
+								break;
+							} else if (cg_->findVals(up, _T("top"))) {
+								break;
+							} else {
+								up = cg_->Up(up);
+								parentN = parentN->pLeft;
+							}
+						}
+
+						if (checkForward && !matchedPhrase) {
+							if (curr)
+								node = curr;
+							checkForward = false;
+						}
+
+						if (matchedPhrase) {
+							Pn *pn = node->getData();
+							Pn *ppn = parentN->getData();
+							long start = ppn->getStart();
+							long end = pn->getEnd();
+							long ustart = ppn->getUstart();
+							long uend = pn->getUend();
+							long line = pn->getLine();
+							Sym *sym = internTok(suggName, _tcslen(suggName), htab_, lcstr);
+							str = sym->getStr();
+							Node<Pn>* suggestedN = Pn::makeTnode(start, end, ustart, uend, PNNODE, suggName, str, sym, line);
+							last = parentN->Left();
+							if (last) {
+								suggestedN->setLeft(last);
+								last->setRight(suggestedN);
+							} else {
+								tree_->insertDown(*suggestedN,*root_);
+							}
+							suggestedN->setRight(node->pRight);
+							if (node->pRight)
+								node->pRight->setLeft(suggestedN);
+							suggestedN->setDown(parentN);
+							parentN->setUp(suggestedN);
+							parentN->setLeft(0);
+							node->setRight(0);
+
+							// Set text to be the entire text of the phrase
+							_TCHAR txt[MAXPATH];
+							sprintf(txt,_T("%s"),text.c_str());
+							sym = internTok(txt, _tcslen(txt), htab_, lcstr);
+							str = sym->getStr();
+							suggestedN->getData()->setText(str);
+
+							findAttrs(suggestedN, valCon, str, lcstr, true);
+							node = suggestedN;
+							break;
+						}
+					}
+				}
+				checkForward = false;
+				parentN = node;
+				phrases = phrases->next;
+			}
+		}
+		last = node;
+		if (node)
+			node = node->pRight;
+	}
+
+	return true;
+}
+
+
+Node<Pn>* DICTTok::MatchForward(CONCEPT *con, Node<Pn>*parentN) {
+	_TCHAR conName[MAXSTR];
+	parentN = parentN->pRight;
+	CONCEPT *next = cg_->Down(con);
+	CON *c = (CON *)next;
+
+	while (next && parentN) {
+		cg_->conceptName(next, conName);
+		if (!parentN) {
+			break;
+		}
+		Pn *parentPN = &(parentN->data);
+		_TCHAR *pnName = parentPN->getName();
+		// text = pnName + sp + text;
+		if (parentPN->getType() == PNWHITE) {
+			parentN = parentN->pLeft;
+		}
+		else if (_tcsicmp(conName, pnName)) {
+			next = cg_->Next(next);
+		} else if (!cg_->Down(next)) {
+			return parentN;
+		} else {
+			Node<Pn> *match = MatchForward(next,parentN->pRight);
+			if (match)
+				return match;
+			next = cg_->Next(next);
+			parentN = parentN->pRight;
+		}
+	}
+	return NULL;
 }
 
 
@@ -588,124 +784,6 @@ switch (typ)
 		if (lcstr && *lcstr) {
 			con = cg_->findWordConcept(lcstr);
 			reduceIt = findAttrs(node, con, str, lcstr, false);
-
-			if (reduceIt) {
-				PTR *phrases = (PTR *)cg_->findVals(con, _T("phrase"));
-
-				// Single word to be reduced
-				if (!phrases) {
-					VAL *vals = cg_->findVals(con, _T("s"));
-					_TCHAR suggName[MAXSTR];
-					if (vals) {
-						suggested = popsval(vals);
-						sprintf(suggName,_T("_%s"),suggested);
-					} else {
-						return NULL;
-					}
-
-					Pn *pn = node->getData();
-					long start = pn->getStart();
-					long end = pn->getEnd();
-					long ustart = pn->getUstart();
-					long uend = pn->getUend();
-					long line = pn->getLine();
-					Sym *sym = internTok(suggName, _tcslen(suggName), htab, lcstr);
-					str = sym->getStr();
-					Node<Pn>* suggestedN = Pn::makeTnode(start, end, ustart, uend, PNNODE, suggName, str, sym, line);
-					findAttrs(suggestedN, con, str, lcstr, true);
-					if (last)
-						tree_->insertRight(*suggestedN,*last);
-					else if (root_)
-						tree_->insertDown(*suggestedN,*root_);
-					tree_->insertDown(*node,*suggestedN);
-					suggestedN->getData()->setText(pn->getText());
-					return suggestedN;
-				}
-
-				// More than one word to be reduced
-				CONCEPT *valCon = NULL;
-				while (phrases) {
-					if (phrases->kind == pCON) {
-						valCon = phrases->v.vcon;
-						VAL *vals = cg_->findVals(valCon, _T("s"));
-						_TCHAR suggName[MAXSTR];
-						if (vals) {
-							suggested = popsval(vals);
-							sprintf(suggName,_T("_%s"),suggested);
-						}
-						if (cg_->Down(valCon)) {
-							continue;
-						} else {
-							// Work up the concept hier and match node names
-							CONCEPT *up = cg_->Up(valCon);
-							Node<Pn> *parentN = last;
-							bool matchedPhrase = true;
-							_TCHAR conName[MAXSTR];
-							std::string text = str;
-
-							while (up) {
-								cg_->conceptName(up, conName);
-								if (!parentN) {
-									matchedPhrase = false;
-									break;
-								}
-								Pn *parentPN = &(((Node<Pn> *)parentN)->data);
-								_TCHAR *pnName = parentPN->getName();
-								text = pnName + text;
-								if (!_tcsicmp(pnName, " ")) {
-									parentN = parentN->pLeft;
-								}
-								else if (_tcsicmp(conName, pnName)) {
-									matchedPhrase = false;
-									break;
-								} else if (cg_->findVals(up, _T("top"))) {
-									break;
-								} else {
-									up = cg_->Up(up);
-									parentN = parentN->pLeft;
-								}
-							}
-
-							if (matchedPhrase) {
-								Pn *pn = node->getData();
-								Pn *ppn = parentN->getData();
-								long start = ppn->getStart();
-								long end = pn->getEnd();
-								long ustart = ppn->getUstart();
-								long uend = pn->getUend();
-								long line = pn->getLine();
-								Sym *sym = internTok(suggName, _tcslen(suggName), htab, lcstr);
-								str = sym->getStr();
-								Node<Pn>* suggestedN = Pn::makeTnode(start, end, ustart, uend, PNNODE, suggName, str, sym, line);
-								if (parentN->Left()) {
-									suggestedN->setLeft(parentN->Left());
-									parentN->Left()->setRight(suggestedN);
-									parentN->setLeft(0);
-								} else {
-									tree_->insertDown(*suggestedN,*root_);
-								}
-								tree_->insertDown(*parentN,*suggestedN);
-								if (last)
-									tree_->insertRight(*suggestedN,*last);
-								else if (root_)
-									tree_->insertDown(*suggestedN,*root_);
-								last->setRight(node);
-
-								// Set text to be the entire text of the phrase
-								_TCHAR txt[MAXPATH];
-								sprintf(txt,_T("%s"),text.c_str());
-								sym = internTok(txt, _tcslen(txt), htab, lcstr);
-								str = sym->getStr();
-								suggestedN->getData()->setText(str);
-
-								findAttrs(suggestedN, valCon, str, lcstr, true);
-								return suggestedN;
-							}
-						}
-					}
-					phrases = phrases->next;
-				}
-			}
 		}
 		break;
 	case PNNUM:	// Placed here for easy reference.

@@ -50,6 +50,8 @@ public:
 	virtual void setup(_TCHAR *s_data);					// 12/04/98 AM.
 	bool Execute(Parse *, Seqn *);	// Perform the tokenization.
 	bool Tokenize(Parse *);	// Perform the tokenization.
+	bool ApplyDictFiles();
+	Node<Pn>* MatchForward(CONCEPT *con, Node<Pn>*parentN);
 	void FirstToken(Tree<Pn> *tree, Htab *htab, _TCHAR* *buf, const char* s, int32_t length,
 										int32_t &start, int32_t &ustart, Node<Pn>* &last,
 										long &line	// Line number.		// 05/17/01 AM.

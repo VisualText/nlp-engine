@@ -1928,6 +1928,7 @@ return (CONCEPT *) word;
 // Find or make concept under given parent.
 CONCEPT *CG::getConcept(CONCEPT *parent, _TCHAR *name)
 {
+CON *c = (CON *)parent;
 CONCEPT *con = (CONCEPT *) kbm_->acon_->con_get_child((CON *) parent, name);
 if (con)																// FIX.	// 08/07/00 AM.
 	return con;														// FIX.	// 08/07/00 AM.
@@ -3565,7 +3566,7 @@ bool CG::readDict(std::string file) {
 				wordCount++;
 				wordCon = kbm_->dict_get_word(word,dirty);
 				if (parentCon) {
-					parentCon = makeConcept(parentCon,word);
+					parentCon = getConcept(parentCon,word);
 					isPhrase = true;
 				} else {
 					topCon = wordCon;
