@@ -319,6 +319,7 @@ _T("vargt"),
 _T("varfn"),
 _T("varfnarray"),
 _T("varinlist"),
+_T("varlt"),
 _T("varne"),		// 07/25/06 AM.
 _T("varstrs"),
 _T("varz"),			// 07/25/06 AM.
