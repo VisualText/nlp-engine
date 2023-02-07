@@ -6049,7 +6049,9 @@ else {
 }
 */
 
-len = u_strlen(name1);	// [UNICODE]
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(name1));
+const UChar *strBuf = ustr.getTerminatedBuffer();
+len = unicu::strLen(strBuf);
 
 sem = new RFASem(len);
 
