@@ -3565,7 +3565,7 @@ bool CG::readDict(std::string file) {
 				wordCount++;
 				wordCon = kbm_->dict_get_word(word,dirty);
 				if (parentCon) {
-					parentCon = makeConcept(parentCon,word);
+					parentCon = getConcept(parentCon,word);
 					isPhrase = true;
 				} else {
 					topCon = wordCon;
