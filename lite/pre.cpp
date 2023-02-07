@@ -467,7 +467,11 @@ if (!Arg::num1(_T("preLength"), (DELTS*&)args, len))
 if (!Arg::done(args, _T("preLength")))
 	return false;
 
-return ((unsigned int) len == _tcsclen(pn->getName()));
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(pn->getName()));
+const UChar *strBuf = ustr.getTerminatedBuffer();
+long uniLen = unicu::strLen(strBuf);
+
+return ((unsigned int) len == uniLen);
 }
 
 
@@ -502,7 +506,10 @@ if (len1 < 0 || len2 < 0 || (len1 > len2))
 	return false;
 	}
 
-len = _tcsclen(pn->getName());
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(pn->getName()));
+const UChar *strBuf = ustr.getTerminatedBuffer();
+len = unicu::strLen(strBuf);
+
 if ((len >= len1) && (len <= len2))
 	return true;
 return false;
