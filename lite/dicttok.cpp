@@ -221,9 +221,10 @@ bool DICTTok::ApplyDictFiles() {
 	CONCEPT *con = NULL;
 	_TCHAR *suggested, *str, *lcstr;
 	bool reduceIt = false;
+	_TCHAR buf[PATHSIZ];
 
 	while (node) {
-		lcstr = node->data.getName();
+		lcstr = str_to_lower(node->data.getName(),buf);
 		con = cg_->findWordConcept(lcstr);
 		reduceIt = findAttrs(node, con, lcstr, lcstr, false);
 
@@ -256,9 +257,16 @@ bool DICTTok::ApplyDictFiles() {
 					tree_->insertRight(*suggestedN,*last);
 				else if (root_)
 					tree_->insertDown(*suggestedN,*root_);
-				tree_->insertDown(*node,*suggestedN);
+				suggestedN->setRight(node->pRight);
+				if (node->pRight)
+					node->pRight->setLeft(suggestedN);
+				suggestedN->setDown(node);
+				node->setUp(suggestedN);
+				node->setLeft(0);
+				node->setRight(0);
+
 				suggestedN->getData()->setText(pn->getText());
-				return suggestedN;
+				node = suggestedN;
 			}
 
 			// More than one word to be reduced
