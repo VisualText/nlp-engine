@@ -2259,10 +2259,11 @@ return false;
 * RET:	True if greater than.
 *********************************************/
 
-bool Ivar::nodeVarGT(
+bool Ivar::nodeVarGTLT(
 	Pn *pn,
 	_TCHAR *name,			// Name of var.
-	long nval
+	long nval,
+	bool lessThan
 	)
 {
 if (!pn)
@@ -2300,7 +2301,7 @@ long aval = 0;	// FIX.	// 07/12/11 AM.
 switch (iarg->getType())
 	{
 	case IANUM:
-		return iarg->getNum() > nval;
+		return lessThan? iarg->getNum() < nval : iarg->getNum() > nval;
 		break;
 	case IASEM:
 		sem = iarg->getSem();	// FIX.	// 07/12/11 AM.
@@ -2308,7 +2309,7 @@ switch (iarg->getType())
 			{
 			case RSLONG:	// FIX.	// 07/12/11 AM.
 				aval = sem->sem_to_long(ok); //FIX // 07/12/11 AM.
-				return aval > nval;	// FIX.	// 07/12/11 AM.
+				return lessThan ? aval < nval : aval > nval;	// FIX.	// 07/12/11 AM.
 				break;
 			default: break;
 			}

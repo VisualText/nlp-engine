@@ -193,6 +193,8 @@ if (!strcmp_i(func, _T("vareq")))
 	return Pre::preVareq(args, pn);					// 06/16/05 AM.
 if (!strcmp_i(func, _T("vargt")))
 	return Pre::preVargt(args, pn);
+if (!strcmp_i(func, _T("varlt")))
+	return Pre::preVarlt(args, pn);
 if (!strcmp_i(func, _T("varne")))
 	return Pre::preVarne(args, pn);					// 06/16/05 AM.
 if (!strcmp_i(func, _T("regexp")))
@@ -690,8 +692,39 @@ if (!Arg::done(args, _T("preVargt")))
 if (sval && *sval)
   return false;
 else
-  return Ivar::nodeVarGT(pn,str,nval);
+  return Ivar::nodeVarGTLT(pn,str,nval,false);
 }
+
+
+/********************************************
+* FN:		PREVARGT
+* CR:		02/07/23 Dd.
+* SUBJ:	Check if node's var less than a number.
+* RET:	True if pre succeeded.
+********************************************/
+
+bool Pre::preVarlt(
+	Delt<Iarg> *args,			// Action's arguments.
+	Pn *pn						// Node to match.
+	)
+{
+_TCHAR *str;
+_TCHAR *sval;
+long nval;
+
+if (!Arg::str1(_T("preVarlt"), (DELTS*&)args, str))
+	return false;
+if (!Arg::str_or_num1(_T("preVarlt"), (DELTS*&)args, sval,nval))
+	return false;
+if (!Arg::done(args, _T("preVarlt")))
+	return false;
+
+if (sval && *sval)
+  return false;
+else
+  return Ivar::nodeVarGTLT(pn,str,nval,true);
+}
+
 
 
 
