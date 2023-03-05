@@ -2298,6 +2298,7 @@ Iarg *iarg = darg->getData();
 RFASem *sem;	// FIX. // 07/12/11 AM.
 bool ok = false;	// FIX.	// 07/12/11 AM.
 long aval = 0;	// FIX.	// 07/12/11 AM.
+
 switch (iarg->getType())
 	{
 	case IANUM:
@@ -2315,6 +2316,14 @@ switch (iarg->getType())
 			}
 		break;
 	case IASTR:
+	    try {
+            aval = std::stol(iarg->getStr());
+        }
+        catch (const std::invalid_argument) {
+			return false;
+		}
+		return lessThan? aval < nval : aval > nval;
+		break;
 	case IAFLOAT:
 	case IAREF:
 	default:
