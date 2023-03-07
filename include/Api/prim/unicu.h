@@ -30,11 +30,14 @@ namespace unicu
     bool isEmoji(UChar32 c);
     bool isEmojiJoiner(UChar32 c);
     bool isEmojiVariation(UChar32 c);
-    bool isCaps(const UChar *str);
     bool isUpper(UChar32 c);
     bool isLower(UChar32 c);
     int strLen(const UChar *str);
     int strCmp(_TCHAR *str1, _TCHAR *str2);
     UChar *contains(_TCHAR *str1, _TCHAR *str2, bool noCase);
+    bool isCaps(const UChar *str);
+    bool isNumeric(_TCHAR *str);
+    bool strToLong(_TCHAR *str, long &num);
+    int charToDigit(UChar ch);
 }
 

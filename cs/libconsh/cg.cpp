@@ -3592,6 +3592,7 @@ bool CG::readDict(std::string file) {
 			bool attrFlag = false;
 			bool doubleQuote = false;
 			bool backslash = false;
+			bool isNumeric = false;
 
 			while (c) {
 				U8_NEXT(line, e, length, c);
@@ -3605,7 +3606,12 @@ bool CG::readDict(std::string file) {
 				else if (attrFlag && ((doubleQuote && c == '"') || (!doubleQuote && unicu::isWhiteSpace(c)) || !c)) {
 					_tcsnccpy(val, &line[start],e-start-1);
 					val[e-start-1] = '\0';
-					addSval(parentCon,attr,val);
+					if (unicu::isNumeric(val)) {
+						long vnum = 0;
+						unicu::strToLong(val,vnum);
+						addVal(parentCon,attr,vnum);
+					} else
+						addSval(parentCon,attr,val);
 					attrFlag = false;
 					start = doubleQuote ? e + 1 : e;
 					doubleQuote = false;
