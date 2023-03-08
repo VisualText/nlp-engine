@@ -72,27 +72,6 @@ bool unicu::isEmojiVariation(UChar32 c) {
 	);
 }
 
-bool unicu::isCaps(const UChar *str) {
-	UChar32 c = 1;
-	int32_t e = 0;
-	int32_t length = unicu::strLen(str);
-	U8_NEXT(str, e, length, c);
-	bool foundLower = false;
-
-	// Skip white space (SHOULD NOT BE THERE)
-	while (e <= length) {
-		if (unicu::isLower(c)) {
-			foundLower = true;
-			break;
-		}
-		U8_NEXT(str, e, length, c);
-	}
-	if (!foundLower) {
-		int stophere = 1;
-	}
-	return !foundLower ? true : false;
-}
-
 bool unicu::isUpper(UChar32 c) {
 	return u_isupper(c);
 }
@@ -106,7 +85,7 @@ int unicu::strLen(const UChar *str) {
 }
 
 int unicu::strCmp(_TCHAR *str1, _TCHAR *str2) {
-	icu::UnicodeString ustr1 = icu::UnicodeString::fromUTF8(icu::StringPiece(str1 ));
+	icu::UnicodeString ustr1 = icu::UnicodeString::fromUTF8(icu::StringPiece(str1));
 	const UChar *strBuff1 = reinterpret_cast<const UChar *>(ustr1.getTerminatedBuffer());
 	icu::UnicodeString ustr2 = icu::UnicodeString::fromUTF8(icu::StringPiece(str2));
 	const UChar *strBuff2 = reinterpret_cast<const UChar *>(ustr2.getTerminatedBuffer());
@@ -123,4 +102,82 @@ UChar *unicu::contains(_TCHAR *str1, _TCHAR *str2, bool noCase=true) {
 		ustr2.toLower();
 	const UChar *strBuff2 = reinterpret_cast<const UChar *>(ustr2.getTerminatedBuffer());
 	return u_strstr(strBuff2,strBuff1);
+}
+
+bool unicu::isCaps(const UChar *str) {
+	UChar32 c = 1;
+	int32_t e = 0;
+	int32_t length = unicu::strLen(str);
+	U8_NEXT(str, e, length, c);
+	bool foundLower = false;
+
+	// Skip white space (SHOULD NOT BE THERE)
+	while (e <= length) {
+		if (unicu::isLower(c)) {
+			foundLower = true;
+			break;
+		}
+		U8_NEXT(str, e, length, c);
+	}
+	return !foundLower ? true : false;
+}
+
+bool unicu::isNumeric(_TCHAR *str) {
+	icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
+	const UChar *strBuff = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
+	UChar32 c = 1;
+	int32_t e = 0;
+	int32_t length = unicu::strLen(strBuff);
+	U8_NEXT(str, e, length, c);
+	bool isNumeric = true;
+
+	// Skip white space (SHOULD NOT BE THERE)
+	while (e <= length) {
+		if (!unicu::isDigit(c)) {
+			isNumeric = false;
+			break;
+		}
+		U8_NEXT(str, e, length, c);
+	}
+	return isNumeric;
+}
+
+int unicu::charToDigit(UChar ch)
+{
+	switch (ch)
+		{
+		case '0':	return 0;
+		case '1':	return 1;
+		case '2':	return 2;
+		case '3':	return 3;
+		case '4':	return 4;
+		case '5':	return 5;
+		case '6':	return 6;
+		case '7':	return 7;
+		case '8':	return 8;
+		case '9':	return 9;
+		default:
+			return 0;
+		}
+}
+
+bool unicu::strToLong(_TCHAR *str, long &num)
+{
+	if (str[0] == '\0')
+		return false;
+
+	icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
+	const UChar *strBuf = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
+	icu::UCharCharacterIterator iter(strBuf, unicu::strLen(strBuf));
+	num = 0;
+	UChar c = iter.first();
+	do {
+		if (!unicu::isDigit(c))
+			return false;
+		num = 10 * num + unicu::charToDigit(c);
+		c = iter.next();
+
+	} while (c != icu::CharacterIterator::DONE); 
+
+	return true;
 }
