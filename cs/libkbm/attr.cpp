@@ -118,7 +118,7 @@ return ptr;
 PTR *AKBM::attr_add_by_name(
    CON *con,
    _TCHAR *name,
-   long val)			// LONG value.
+   long long val)			// LONG value.
 {
 if (!con || !name || !*name)
 	return PNULL;
@@ -146,7 +146,7 @@ return ptr;
 bool AKBM::attr_has_n_val(
    CON *con,
    _TCHAR *name,
-   long val)
+   long long val)
 {
 if (!con || !name || !*name)
 	return PNULL;
@@ -1058,7 +1058,7 @@ while (attrs)
          case pCON:		str = ACON::con_str(vals->v.vcon);			break;
          case pSYM:		str = vals->v.vsym->str;				break;
          case pST:		str = vals->v.vst;						break;
-         case pNUM:		_stprintf(str, _T("%ld"), vals->v.vnum);	break;
+         case pNUM:		_stprintf(str, _T("%llu"), vals->v.vnum);	break;
          case pFLOAT:	_stprintf(str, _T("%f"), vals->v.vfloat);	break;//08/16/01 AM
          case pCHAR:		_stprintf(str, _T("%c"), vals->v.vchar);	break;
          case pPTR:
@@ -1396,7 +1396,7 @@ return true;
 bool AKBM::attr_rm_val_by_name(
    CON *con,
    _TCHAR *attr_s,
-	long val
+	long long val
    )
 {
 if (!con || !attr_s || !*attr_s

@@ -1,5 +1,5 @@
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/ 
@@ -14,7 +14,7 @@ All rights reserved.
 *******************************************************************************/
 #ifdef OLD_020815_
 LIBKBM_API PTR *attr_add_by_name(CON*,_TCHAR*,_TCHAR*);				// 05/03/99 AM.
-LIBKBM_API PTR *attr_add_by_name(CON*,_TCHAR*,long);					// 05/03/99 AM.
+LIBKBM_API PTR *attr_add_by_name(CON*,_TCHAR*,long long);					// 05/03/99 AM.
 LIBKBM_API PTR *attr_add_by_name(CON*,_TCHAR*,float);				// 08/16/01 AM.
 LIBKBM_API PTR *attr_add_by_name(CON*,_TCHAR*,CON*);					// 08/11/00 AM.
 LIBKBM_API bool attr_rm_by_name(CON*, _TCHAR*);

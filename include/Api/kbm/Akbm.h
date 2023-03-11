@@ -104,11 +104,11 @@ public:
 	bool attr_rename(PTR*,_TCHAR*);
 	bool attrs_rm(CON*,/*UP*/bool&);
 	PTR *attr_add_by_name(CON*,_TCHAR*,_TCHAR*);				// 05/03/99 AM.
-	PTR *attr_add_by_name(CON*,_TCHAR*,long);					// 05/03/99 AM.
+	PTR *attr_add_by_name(CON*,_TCHAR*,long long);					// 05/03/99 AM.
 	PTR *attr_add_by_name(CON*,_TCHAR*,float);				// 08/16/01 AM.
 	PTR *attr_add_by_name(CON*,_TCHAR*,CON*);					// 08/11/00 AM.
 	bool attr_rm_by_name(CON*, _TCHAR*);
-	bool attr_has_n_val(CON*,_TCHAR*,long);
+	bool attr_has_n_val(CON*,_TCHAR*,long long);
 	bool
 	attr_rm(							// 07/12/99 AM.
 		CON *con,
@@ -222,7 +222,7 @@ public:
 	attr_rm_val_by_name(															// 05/19/00 AM.
 		CON *con,
 		_TCHAR *attr_s,
-		long val
+		long long val
 		);
 	bool
 	attr_rm_val_by_name(															// 06/11/03 AM.

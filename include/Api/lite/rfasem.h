@@ -150,7 +150,7 @@ public:
 	RFASem(Iaction *);					// 11/23/98 AM.
 	RFASem(Ipre *);						// 11/29/98 AM.
 	RFASem(_TCHAR *, enum RFASemtype = RSNAME);	// 11/20/98 AM.
-	RFASem(long);										// 11/10/99 AM. !
+	RFASem(long long);										// 11/10/99 AM. !
 	RFASem(float);										// 08/16/01 AM.
 	RFASem(std::_t_ostream *);								// 12/31/99 AM.
 	RFASem(Ifunc*);									// 12/19/01 AM.
@@ -199,7 +199,7 @@ public:
 	Ipre *getPre();									// 11/29/98 AM.
 	_TCHAR *getName();
 	_TCHAR *getNum();									// 11/21/98 AM.
-	long  getLong();									// 11/10/99 AM.
+	long long getLong();									// 11/10/99 AM.
 	float getFloat();									// 08/16/01 AM.
 	std::_t_ostream *getOstream();							// 12/31/99 AM.
 
@@ -247,7 +247,7 @@ public:
 	void setPre(Ipre *);								// 11/29/98 AM.
 	void setName(_TCHAR *);
 	void setNum(_TCHAR *);								// 11/21/98 AM.
-	void setLong(long);								// 11/10/99 AM. !
+	void setLong(long long);								// 11/10/99 AM. !
 	void setFloat(float);							// 08/16/01 AM.
 	void setOstream(std::_t_ostream *);					// 12/31/99 AM.
 
@@ -281,12 +281,12 @@ public:
 	static bool same(RFASem *sem1, RFASem *sem2);	// 11/09/99 AM.
 
 	// Conversions!															// 04/28/01 AM.
-	long sem_to_long(bool &);												// 04/28/01 AM.
+	long long sem_to_long(bool &);												// 04/28/01 AM.
 	float sem_to_float(bool&);												// 08/18/01 AM.
 	Node<Pn> *sem_to_node();												// 04/28/01 AM.
 	_TCHAR *sem_to_str();														// 04/28/01 AM.
 
-	long sem_set_long(long,bool&);						            // 07/05/06 AM.
+	long long sem_set_long(long long,bool&);						            // 07/05/06 AM.
 
 protected:					// Accessible by derived classes.
 
@@ -355,7 +355,7 @@ private:
 		// 11/10/99 AM. (one year later!)
 		// Want a way to store numbers as numbers!
 		// Naming this way to ease into this....
-		long long_;															// 11/10/99 AM.
+		long long long_;															// 11/10/99 AM.
 
 		// FLOAT DATA TYPE.												// 08/16/01 AM.
 		float float_;														// 08/16/01 AM.

@@ -412,7 +412,7 @@ for (node = start; node != end; node = node->Right())
 			//sprintf_s(buf, "%d", len);
 			//parse->internStr(buf, ptr);
 			//parg = new Iarg(ptr);
-			parg = new Iarg(len);									// 06/04/00 AM.
+			parg = new Iarg((long long)len);									// 06/04/00 AM.
 			pargs = new Dlist<Iarg>();
 			pargs->rpush(parg);
 
@@ -499,7 +499,7 @@ _TCHAR *tmp;
 PHRASE *samples;		// Phrase of samples under concept.
 CONCEPT *sample;
 _TCHAR buf[1024];
-long s_start, s_end;
+long long s_start, s_end;
 //char text[1024];
 _TCHAR *text;																		// 11/12/00 AM.
 
@@ -533,7 +533,6 @@ for (label = labels; label; label = cg->Next(label))
 		gerrStr << _T("  Sample=") << buf << std::ends;
 		::errOut(&gerrStr,false);
 		}
-
 
 		cg->findVal(sample, _T("start"), /*UP*/ s_start);
 		cg->findVal(sample, _T("end"), /*UP*/ s_end);
@@ -668,7 +667,7 @@ if (first != last)
 //	sprintf_s(buf, "%d", first);
 //	parse->internStr(buf, /*DU*/ str);
 //	arg = new Iarg(str);
-	arg = new Iarg((long)first);											// 08/17/01 AM.
+	arg = new Iarg((long long)first);											// 08/17/01 AM.
 	args = new Dlist<Iarg>();
 	args->rpush(arg);
 	//delete arg;				// 07/02/99 AM.
@@ -676,7 +675,7 @@ if (first != last)
 //	sprintf_s(buf, "%d", last);
 //	parse->internStr(buf, /*DU*/ str);
 //	arg = new Iarg(str);
-	arg = new Iarg((long)last);											// 08/17/01 AM.
+	arg = new Iarg((long long)last);											// 08/17/01 AM.
 	args->rpush(arg);
 	//delete arg;				// 07/02/99 AM.
 

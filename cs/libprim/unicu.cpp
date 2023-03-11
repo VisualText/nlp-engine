@@ -161,7 +161,7 @@ int unicu::charToDigit(UChar ch)
 		}
 }
 
-bool unicu::strToLong(_TCHAR *str, long &num)
+bool unicu::strToLong(_TCHAR *str, long long &num)
 {
 	if (str[0] == '\0')
 		return false;

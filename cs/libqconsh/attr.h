@@ -55,7 +55,7 @@ public:
 	bool attr_rename(PTR_ID,_TCHAR*);
 	PTR_ID attr_add_by_name(CON_ID ,_TCHAR*,_TCHAR*);
 	PTR_ID attr_add_by_name_s(CON_ID,_TCHAR*,STR_ID);	// 02/16/07 AM.
-	PTR_ID attr_add_by_name(CON_ID ,_TCHAR*,long);
+	PTR_ID attr_add_by_name(CON_ID ,_TCHAR*,long long);
 	PTR_ID attr_add_by_name(CON_ID ,_TCHAR*,float);
 	PTR_ID attr_add_by_name(CON_ID ,_TCHAR*,CON_ID );
 	PTR_ID attr_add_by_name(XCON_S*,_TCHAR*,CON_ID);	// 02/16/07 AM.
@@ -80,7 +80,7 @@ public:
 	attr_add_n(
 		XCON_S *con,
 		XCON_S *slot_con,
-		long num
+		long long num
 		);
 	XPTR_S *
 	attr_add_c(
@@ -105,7 +105,7 @@ public:
 	attr_get(XCON_S *con, _TCHAR *s_slot, /*UP*/ PTR_ID &val_pid);
 	CON_ID
 	attr_get_c(XCON_S *con, XCON_S *slot);
-	long
+	long long
 	attr_get_n(XCON_S *con, XCON_S *slot);
 	bool
 	attr_get_ns(XCON_S *con, XCON_S *slot, int len, /*UP*/ long *arr);
@@ -146,7 +146,7 @@ public:
 	attr_rm_val_by_name(
 		CON_ID con,
 		_TCHAR *attr_s,
-		long val
+		long long val
 		);
 	bool
 	attr_rm_val_by_name(

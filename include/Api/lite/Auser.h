@@ -141,7 +141,7 @@ protected:
 		NODE *node_;
 
 		_TCHAR *str_;
-		long long_;
+		long long long_;
 		std::_t_ostream *ostr_;
 		bool bool_;
 		} retval_;

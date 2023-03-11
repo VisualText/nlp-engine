@@ -235,7 +235,7 @@ bool Ireturn::eval(Nlppp *nlppp, /*UP*/ RFASem* &val)
 val = 0;
 if (!expr_)
 	{
-	val = new RFASem((long)0);	// Return null value.
+	val = new RFASem(0LL);	// Return null value.
 	return true;
 	}
 

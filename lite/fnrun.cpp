@@ -98,12 +98,12 @@ LIBPRIM_API DWORD run_silent(_TCHAR* strCMD);	// 09/15/08 AM.
 * NOTE:	VARIANT. Compiled runtime.
 *********************************************/
 
-long Arun::factorial(
+long long Arun::factorial(
 	Nlppp *nlppp,
-	long num1
+	long long num1
 	)
 {
-long fact = -1;
+long long fact = -1;
 
 if (num1 < 0)
 	{
@@ -131,7 +131,7 @@ else
 return fact;
 }
 
-long Arun::factorial(
+long long Arun::factorial(
 	Nlppp *nlppp,
 	RFASem *num1_sem
 	)
@@ -139,7 +139,7 @@ long Arun::factorial(
 if (!num1_sem)
 	return 0;														// FIX.	// 08/11/02 AM.
 bool ok = false;
-long num1 = num1_sem->sem_to_long(ok);
+long long num1 = num1_sem->sem_to_long(ok);
 delete num1_sem;
 if (!ok)
 	return 0;														// FIX.	// 08/11/02 AM.
@@ -217,7 +217,7 @@ return new RFASem(child, RS_KBCONCEPT, cg);
 RFASem *Arun::findconcept(
 	Nlppp *nlppp,
 	RFASem *sem,
-	long num
+	long long num
 	)
 {
 if (num <= 0 || !sem || !nlppp)
@@ -621,7 +621,7 @@ return findvals(nlppp,sem,name);
 * NOTE:	KB assumed to have been read in.
 ********************************************/
 
-long Arun::numval(
+long long Arun::numval(
 	Nlppp *nlppp,
 	RFASem *sem,		// Concept.
 	_TCHAR *name			// Attribute name.
@@ -659,7 +659,7 @@ CONCEPT *conc1 = sem->getKBconcept();
 // Need to get the current KB.
 CG *cg = nlppp->getParse()->getAna()->getCG();
 
-long val = -1;
+long long val = -1;
 if (!cg->findVal(conc1, name, /*UP*/ val))
 	{
 	delete sem;												// MEM LEAK.	// 06/27/00 AM.
@@ -671,7 +671,7 @@ return val;
 }
 
 // VARIANT.
-long Arun::numval(															// 05/05/01 AM.
+long long Arun::numval(															// 05/05/01 AM.
 	Nlppp *nlppp,
 	RFASem *sem,
 	RFASem *name_sem
@@ -2195,7 +2195,7 @@ return str;
 *			Not equivalent to popVal.
 ********************************************/
 
-long Arun::getnumval(
+long long Arun::getnumval(
 	Nlppp *nlppp,
 	RFASem *val_sem
 	)
@@ -2226,7 +2226,7 @@ if (!val)
 Parse *parse = nlppp->getParse();
 CG *cg = parse->getAna()->getCG();
 
-long num;
+long long num;
 cg->popVal(val, /*UP*/ num);
 
 delete val_sem;											// MEM LEAK.	// 06/27/00 AM.
@@ -2245,7 +2245,7 @@ return num;
 *			Not equivalent to popVal.
 ********************************************/
 
-long Arun::getfltval(
+long long Arun::getfltval(
 	Nlppp *nlppp,
 	RFASem *val_sem
 	)
@@ -2350,7 +2350,7 @@ RFASem *Arun::makeconcept(
 	Nlppp *nlppp,
 	RFASem *con_sem,
 	_TCHAR *name_str,
-	long pos_num	/*OPTIONAL*/
+	int pos_num	/*OPTIONAL*/
 	)
 {
 if (!con_sem || !name_str || !*name_str || pos_num < 0  || !nlppp)
@@ -2385,7 +2385,7 @@ RFASem *Arun::makeconcept(
 	Nlppp *nlppp,
 	RFASem *con_sem,
 	RFASem *name_sem,
-	long pos_num	/*OPTIONAL*/
+	int pos_num	/*OPTIONAL*/
 	)
 {
 if (!name_sem)
@@ -2603,7 +2603,7 @@ bool Arun::addsval(
 	Nlppp *nlppp,
 	RFASem *con_sem,
 	_TCHAR *attr_str,
-	long num
+	long long num
 	)
 {
 if (!con_sem || !attr_str || !*attr_str || !nlppp)
@@ -2640,7 +2640,7 @@ bool Arun::addsval(
 	Nlppp *nlppp,
 	RFASem *con_sem,
 	RFASem *attr_sem,
-	long num
+	long long num
 	)
 {
 if (!attr_sem)
@@ -2847,7 +2847,7 @@ bool Arun::addnumval(
 	Nlppp *nlppp,
 	RFASem *con_sem,
 	_TCHAR *attr_str,
-	long num
+	long long num
 	)
 {
 if (!con_sem || !attr_str || !*attr_str || !nlppp)
@@ -2884,7 +2884,7 @@ bool Arun::addnumval(
 	Nlppp *nlppp,
 	RFASem *con_sem,
 	RFASem *attr_sem,
-	long num
+	long long num
 	)
 {
 if (!attr_sem)
@@ -3205,7 +3205,7 @@ return cg->rmConcept(conc1, name1);
 bool Arun::rmchild(
 	Nlppp *nlppp,
 	RFASem *sem1,
-	long num1
+	int num1
 	)
 {
 if (!sem1 || num1 <= 0 || !nlppp)
@@ -3706,7 +3706,7 @@ bool Arun::replaceval(
 	Nlppp *nlppp,
 	RFASem *con_sem,
 	_TCHAR *attr_str,
-	long num
+	long long num
 	)
 {
 if (!con_sem || !attr_str || !*attr_str || !nlppp)
@@ -3800,7 +3800,7 @@ CONCEPT *conc1 = con_sem->getKBconcept();
 CG *cg = nlppp->getParse()->getAna()->getCG();
 
 _TCHAR *str;
-long num;
+long long num;
 float fnum;																		// 08/16/01 AM.
 CONCEPT *val_conc;
 Node<Pn> *val_node;															// 10/30/00 AM.
@@ -3857,7 +3857,7 @@ bool Arun::replaceval(
 	Nlppp *nlppp,
 	RFASem *con_sem,
 	RFASem *attr_sem,
-	long num
+	long long num
 	)
 {
 if (!attr_sem)
@@ -3950,7 +3950,7 @@ return renameconcept(nlppp,con_sem,str);
 bool Arun::renamechild(
 	Nlppp *nlppp,
 	RFASem *con_sem,
-	long num,
+	long long num,
 	_TCHAR *str
 	)
 {
@@ -4008,7 +4008,7 @@ return renamechild(nlppp,con_sem,num,str);
 bool Arun::renamechild(
 	Nlppp *nlppp,
 	RFASem *con_sem,
-	long num,
+	long long num,
 	RFASem *str_sem
 	)
 {
@@ -7684,7 +7684,7 @@ _TCHAR *Arun::str(
 _TCHAR *st = 0;
 if (!sem)
 	{
-	// For consistency, treat this as a (long)0.	// FIX.	// 05/17/08 AM.
+	// For consistency, treat this as a 0LL.	// FIX.	// 05/17/08 AM.
 	Parse *parse = nlppp->getParse();				// FIX.	// 05/17/08 AM.
 	parse->internStr(_T("0"), /*UP*/ st);			// FIX.	// 05/17/08 AM.
 	return st;
@@ -7722,14 +7722,14 @@ return str;
 
 _TCHAR *Arun::str(
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 _TCHAR *st=0;
 
 // Convert num, then intern string.
 _TCHAR buf[MAXSTR+1];
-_stprintf(buf, _T("%ld"), num);
+_stprintf(buf, _T("%llu"), num);
 Parse *parse = nlppp->getParse();
 parse->internStr(buf, /*UP*/ st);
 return st;
@@ -7760,12 +7760,12 @@ return st;
 *			num(num);		# no-op.
 ********************************************/
 
-long Arun::num(
+long long Arun::num(
 	Nlppp *nlppp,
 	RFASem *sem
 	)
 {
-long nm = 0;
+long long nm = 0;
 if (!sem)
 	return nm;
 
@@ -7791,9 +7791,9 @@ delete sem;
 return nm;
 }
 
-long Arun::num(
+long long Arun::num(
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return num;
@@ -7802,21 +7802,21 @@ return num;
 // Trying to get compiled/interpreted behavior the same.	// 08/10/08 AM.
 // Also, this will eliminate a float -> long conversion error in C++ compile
 // of the RUN.DLL project.	// 08/10/08 AM.
-long Arun::num(
+long long Arun::num(
 	Nlppp *nlppp,
 	float num
 	)
 {
-long x = (long) num;
+long long x = (long long) num;
 return x;
 }
 
-long Arun::num(
+long long Arun::num(
 	Nlppp *nlppp,
 	_TCHAR *str
 	)
 {
-long num = 0;
+long long num = 0;
 
 if (str && *str)			// String variant.
 	str_to_long(str, /*UP*/ num);
@@ -7906,16 +7906,16 @@ long Arun::arraylength(
 	_TCHAR *str
 	)
 {
-return 1;
+return 1L;
 }
 
 // VARIANT.
 long Arun::arraylength(
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
-return 1;
+return 1L;
 }
 
 // VARIANT
@@ -7925,7 +7925,7 @@ long Arun::arraylength(
 	)
 {
 if (!sem1)
-	return 1;
+	return 1L;
 
 switch (sem1->getType())
 	{
@@ -7940,7 +7940,7 @@ switch (sem1->getType())
 		break;
 	}
 delete sem1;												// MEM LEAK.	// 08/07/02 AM.
-return 1;
+return 1L;
 }
 
 
@@ -11369,7 +11369,7 @@ long num = 0;
 _TCHAR *st = 0;
 if (!sem)
 //	return 0;																	// 11/19/02 AM.
-	return rightjustifynum(nlppp,(long)0,fieldsize);				// 11/19/02 AM.
+	return rightjustifynum(nlppp,0L,fieldsize);				// 11/19/02 AM.
 
 switch (sem->getType())
 	{
@@ -11899,7 +11899,7 @@ bool Arun::pncopyvars(
 	Nlppp *nlppp
 	)
 {
-return pncopyvars(nlppp,(long)0);
+return pncopyvars(nlppp,0L);
 }
 
 // VARIANT.
@@ -12531,7 +12531,7 @@ CONCEPT *conc = sem->getKBconcept();
 bool ok = cg->dumpTree(conc, name);
 
 delete sem;
-return new RFASem(ok ? (long)1 : (long)0);
+return new RFASem(ok ? 1LL : 0LL);
 }
 
 RFASem *Arun::kbdumptree(
@@ -12576,7 +12576,7 @@ CG *cg = parse->getAna()->getCG();
 
 bool ok = cg->writeKB(dir);
 
-return new RFASem(ok ? (long)1 : (long)0);
+return new RFASem(ok ? 1LL : 0LL);
 }
 
 RFASem *Arun::writekb(
@@ -12606,7 +12606,7 @@ return writekb(nlppp,dir);
 
 float Arun::flt(
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return (float)num;
@@ -12695,7 +12695,7 @@ return sem;
 }
 
 RFASem *Arun::sem(
-	long num
+	long long num
 	)
 {
 return new RFASem(num);
@@ -13021,7 +13021,7 @@ RFASem *Arun::ret(
 	Nlppp *nlppp,
 	void *loc,	// List of L() local vars from calling frame.
 	void *locstrs,
-	long num
+	long long num
 	)
 {
 if (nlppp->locals_)
@@ -14218,7 +14218,7 @@ bool Arun::pnmakevar(
 	Nlppp *nlppp,
 	NODE *nd,
 	_TCHAR *name1,
-	long numval
+	long long numval
 	)
 {
 if (!nd || !name1 || !*name1)
@@ -14332,7 +14332,7 @@ bool Arun::pnmakevar(
 	Nlppp *nlppp,
 	RFASem *nodesem,
 	_TCHAR *name1,
-	long numval
+	long long numval
 	)
 {
 if (!nodesem)
@@ -14384,7 +14384,7 @@ bool Arun::pnmakevar(
 	Nlppp *nlppp,
 	NODE *nd,
 	RFASem *namesem,
-	long numval
+	long long numval
 	)
 {
 if (!namesem)
@@ -14448,7 +14448,7 @@ bool Arun::pnmakevar(
 	Nlppp *nlppp,
 	RFASem *nodesem,
 	RFASem *namesem,
-	long numval
+	long long numval
 	)
 {
 if (!namesem && !nodesem)
@@ -14545,7 +14545,7 @@ if (strval && *strval)										// FIX.	// 07/06/06 AM.
 	Ivar::nodeReplaceval(pn, name2, x);
 	}
 else																// FIX.	// 07/06/06 AM.
-	Ivar::nodeReplaceval(pn,name2,(long)0);			// FIX.	// 07/06/06 AM.
+	Ivar::nodeReplaceval(pn,name2,0LL);			// FIX.	// 07/06/06 AM.
 
 return true;
 }
@@ -14556,7 +14556,7 @@ bool Arun::pnreplaceval(
 	Nlppp *nlppp,
 	NODE *nd,
 	_TCHAR *name1,
-	long numval
+	long long numval
 	)
 {
 if (!nd || !name1 || !*name1)
@@ -14658,7 +14658,7 @@ else if (sem1)													// FIX.	// 11/14/02 AM.
 	delete sem1;															// 01/09/07 AM.
 	}
 else																// FIX.	// 07/06/06 AM.
-	Ivar::nodeReplaceval(pn,name2,(long)0);			// FIX.	// 07/06/06 AM.
+	Ivar::nodeReplaceval(pn,name2,0LL);			// FIX.	// 07/06/06 AM.
 
 return true;
 }
@@ -14685,7 +14685,7 @@ bool Arun::pnreplaceval(
 	Nlppp *nlppp,
 	RFASem *nodesem,
 	_TCHAR *name1,
-	long numval
+	long long numval
 	)
 {
 if (!nodesem)
@@ -14753,7 +14753,7 @@ bool Arun::pnreplaceval(
 	Nlppp *nlppp,
 	NODE *nd,
 	RFASem *namesem,
-	long numval
+	long long numval
 	)
 {
 if (!namesem)
@@ -14833,7 +14833,7 @@ bool Arun::pnreplaceval(
 	Nlppp *nlppp,
 	RFASem *nodesem,
 	RFASem *namesem,
-	long numval
+	long long numval
 	)
 {
 if (!namesem && !nodesem)
@@ -14958,7 +14958,7 @@ if (strval && *strval)										// FIX.	// 07/06/06 AM.
 	Ivar::nodePushval(pn, name2, x,false,true); // 12/14/14 AM.
 	}
 else																// FIX.	// 07/06/06 AM.
-	Ivar::nodeReplaceval(pn,name2,(long)0,false,true);			// FIX.	// 07/06/06 AM.
+	Ivar::nodeReplaceval(pn,name2,0LL,false,true);			// FIX.	// 07/06/06 AM.
 
 return true;
 }
@@ -14969,7 +14969,7 @@ bool Arun::pnpushval(
 	Nlppp *nlppp,
 	NODE *nd,
 	_TCHAR *name1,
-	long numval
+	long long numval
 	)
 {
 if (!nd || !name1 || !*name1)
@@ -15058,7 +15058,7 @@ Pn *pn = node->getData();
 
 if (!sem1) // 12/14/14 AM.
 	{
-	Ivar::nodeReplaceval(pn,name2,(long)0,false,true);			// FIX.	// 07/06/06 AM.
+	Ivar::nodeReplaceval(pn,name2,0LL,false,true);			// FIX.	// 07/06/06 AM.
 	return true; // 12/14/14 AM.
 	}
 
@@ -15089,7 +15089,7 @@ switch (sem1->getType()) // 12/14/14 AM.
 		break;
 	case RSLONG: // 12/14/14 AM.
 		{
-		long numval = sem1->getLong(); // 12/14/14 AM.
+		long long numval = sem1->getLong(); // 12/14/14 AM.
 		Ivar::nodeReplaceval(pn, name2, numval,false,true); // 12/14/14 AM.
 		}
 		break;
@@ -15101,7 +15101,7 @@ switch (sem1->getType()) // 12/14/14 AM.
 		}
 		break;
 	default:
-		Ivar::nodeReplaceval(pn,name2,(long)0,false,true);			// FIX.	// 07/06/06 AM.
+		Ivar::nodeReplaceval(pn,name2,0LL,false,true);			// FIX.	// 07/06/06 AM.
 		break;
 	}
 
@@ -15132,7 +15132,7 @@ bool Arun::pnpushval(
 	Nlppp *nlppp,
 	RFASem *nodesem,
 	_TCHAR *name1,
-	long numval
+	long long numval
 	)
 {
 if (!nodesem)
@@ -15199,7 +15199,7 @@ bool Arun::pnpushval(
 	Nlppp *nlppp,
 	NODE *nd,
 	RFASem *namesem,
-	long numval
+	long long numval
 	)
 {
 if (!namesem)
@@ -15279,7 +15279,7 @@ bool Arun::pnpushval(
 	Nlppp *nlppp,
 	RFASem *nodesem,
 	RFASem *namesem,
-	long numval
+	long long numval
 	)
 {
 if (!namesem && !nodesem)
@@ -15404,7 +15404,7 @@ if (strval && *strval)										// FIX.	// 07/06/06 AM.
 	Ivar::nodePushval(pn, name2, x,false,false); // 12/14/14 AM.
 	}
 else																// FIX.	// 07/06/06 AM.
-	Ivar::nodeReplaceval(pn,name2,(long)0,false,false);			// FIX.	// 07/06/06 AM.
+	Ivar::nodeReplaceval(pn,name2,0LL,false,false);			// FIX.	// 07/06/06 AM.
 
 return true;
 }
@@ -15415,7 +15415,7 @@ bool Arun::pnrpushval(
 	Nlppp *nlppp,
 	NODE *nd,
 	_TCHAR *name1,
-	long numval
+	long long numval
 	)
 {
 if (!nd || !name1 || !*name1)
@@ -15504,7 +15504,7 @@ Pn *pn = node->getData();
 
 if (!sem1) // 12/14/14 AM.
 	{
-	Ivar::nodeReplaceval(pn,name2,(long)0,false,false);			// FIX.	// 07/06/06 AM.
+	Ivar::nodeReplaceval(pn,name2,0LL,false,false);			// FIX.	// 07/06/06 AM.
 	return true; // 12/14/14 AM.
 	}
 
@@ -15535,7 +15535,7 @@ switch (sem1->getType()) // 12/14/14 AM.
 		break;
 	case RSLONG: // 12/14/14 AM.
 		{
-		long numval = sem1->getLong(); // 12/14/14 AM.
+		long long numval = sem1->getLong(); // 12/14/14 AM.
 		Ivar::nodeReplaceval(pn, name2, numval,false,false); // 12/14/14 AM.
 		}
 		break;
@@ -15547,7 +15547,7 @@ switch (sem1->getType()) // 12/14/14 AM.
 		}
 		break;
 	default:
-		Ivar::nodeReplaceval(pn,name2,(long)0,false,false);			// FIX.	// 07/06/06 AM.
+		Ivar::nodeReplaceval(pn,name2,0LL,false,false);			// FIX.	// 07/06/06 AM.
 		break;
 	}
 
@@ -15578,7 +15578,7 @@ bool Arun::pnrpushval(
 	Nlppp *nlppp,
 	RFASem *nodesem,
 	_TCHAR *name1,
-	long numval
+	long long numval
 	)
 {
 if (!nodesem)
@@ -15645,7 +15645,7 @@ bool Arun::pnrpushval(
 	Nlppp *nlppp,
 	NODE *nd,
 	RFASem *namesem,
-	long numval
+	long long numval
 	)
 {
 if (!namesem)
@@ -15725,7 +15725,7 @@ bool Arun::pnrpushval(
 	Nlppp *nlppp,
 	RFASem *nodesem,
 	RFASem *namesem,
-	long numval
+	long long numval
 	)
 {
 if (!namesem && !nodesem)
@@ -16391,7 +16391,7 @@ return stem(nlppp,word);
 
 _TCHAR *Arun::stem(	// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return 0;
@@ -16650,7 +16650,7 @@ return xstr;
 
 _TCHAR *Arun::xmlstr(	// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return 0;
@@ -16695,7 +16695,7 @@ return xstr;
 
 _TCHAR *Arun::sqlstr(	// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return 0;
@@ -16815,7 +16815,7 @@ return findana(nlppp,appname);
 
 bool Arun::findana(	// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return false;
@@ -17221,7 +17221,7 @@ return mkdir(nlppp,str);
 
 bool Arun::mkdir(	// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return false;
@@ -17628,7 +17628,7 @@ if (num1 <= 0)
 	return 0;
 
 if (num1 == 1)	// Trivial case.
-	return new RFASem((long)0);
+	return new RFASem(0LL);
 
 // Create buf of length n-1.
 long *buf = new long[num1];
@@ -17668,7 +17668,7 @@ Iarg *arg = 0;
 
 for (ii = 0; ii < num1; ++ii)
 	{
-	arg = new Iarg(buf[ii]);
+	arg = new Iarg((long long)buf[ii]);
 	list->rpush(arg);
 	}
 
@@ -18222,7 +18222,7 @@ return urlbase(nlppp,str1);
 
 _TCHAR *Arun::urlbase(
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return 0;

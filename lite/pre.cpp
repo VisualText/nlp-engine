@@ -462,7 +462,7 @@ bool Pre::preLength(
 	Pn *pn						// Node to match.
 	)
 {
-long len = 0;
+long long len = 0;
 
 if (!Arg::num1(_T("preLength"), (DELTS*&)args, len))
 	return false;
@@ -489,8 +489,8 @@ bool Pre::preLengthr(
 	Pn *pn						// Node to match.
 	)
 {
-long len1 = 0, len2=0;
-long len = 0;
+long long len1 = 0, len2=0;
+long long len = 0;
 
 if (!Arg::num1(_T("preLength"), (DELTS*&)args, len1))
 	return false;
@@ -532,7 +532,7 @@ bool Pre::preNumrange(
 	Pn *pn						// Node to match.
 	)
 {
-long len1 = 0, len2=0;
+long long len1 = 0, len2=0;
 
 if (!Arg::num1(_T("preNumrange"), (DELTS*&)args, len1))
 	return false;
@@ -550,7 +550,7 @@ if (len1 < 0 || len2 < 0 || (len1 > len2))
 	return false;
 	}
 
-long num = 0;
+long long num = 0;
 _TCHAR *str;
 str = pn->getName();
 if (!str_to_long(str, /*UP*/ num))
@@ -649,7 +649,7 @@ bool Pre::preVareq(
 {
 _TCHAR *str;
 _TCHAR *sval;
-long nval;
+long long nval;
 
 if (!Arg::str1(_T("preVareq"), (DELTS*&)args, str))
 	return false;
@@ -680,7 +680,7 @@ bool Pre::preVargt(
 {
 _TCHAR *str;
 _TCHAR *sval;
-long nval;
+long long nval;
 
 if (!Arg::str1(_T("preVargt"), (DELTS*&)args, str))
 	return false;
@@ -710,7 +710,7 @@ bool Pre::preVarlt(
 {
 _TCHAR *str;
 _TCHAR *sval;
-long nval;
+long long nval;
 
 if (!Arg::str1(_T("preVarlt"), (DELTS*&)args, str))
 	return false;
@@ -742,7 +742,7 @@ bool Pre::preVarne(
 {
 _TCHAR *str;
 _TCHAR *sval;
-long nval;
+long long nval;
 
 if (!Arg::str1(_T("preVareq"), (DELTS*&)args, str))
 	return false;

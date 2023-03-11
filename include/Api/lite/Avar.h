@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright © 1998-2009 by Text Analysis International, Inc.
+Copyright ï¿½ 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 ********************************************************************************
 *
@@ -39,8 +39,8 @@ public:
 	// Class-wide
 	LITE_API static void *getVars(void *hparse);
 	LITE_API static void *getVar(_TCHAR *name, void *hvars);
-	LITE_API static bool getLong(void *hvar, /*DU*/ long &val);
-	LITE_API static bool getLong(_TCHAR *name, void *hvars, /*DU*/ long &val);
+	LITE_API static bool getLong(void *hvar, /*DU*/ long long &val);
+	LITE_API static bool getLong(_TCHAR *name, void *hvars, /*DU*/ long long &val);
 
 	LITE_API static void *getFirst(void *hvars);
 	LITE_API static void *getNext(void *pvar);

@@ -112,7 +112,7 @@ public:
 	inline bool replaceNum(
 		Node<Pn> *node,
 		_TCHAR *name,	// variable name.
-		long val
+		long long val
 		);
 	inline bool replaceStr(	// 08/30/08 AM.
 		Node<Pn> *node,

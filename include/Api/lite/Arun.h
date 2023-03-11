@@ -78,7 +78,7 @@ typedef struct s_elist
 	{
 	const _TCHAR **reg;		// The regular list of strings.			// 06/15/00 AM.
 	const _TCHAR ***htab;	// The hash table of strings.				// 06/15/00 AM.
-	long hsize;		// Size of the hash table.							// 06/15/00 AM.
+	long long hsize;		// Size of the hash table.							// 06/15/00 AM.
 	const int *spec;		// The array of special tokens.			// 06/15/00 AM.
 	} ELIST;
 
@@ -86,7 +86,7 @@ typedef struct s_elist
 typedef struct s_rhash														// 06/16/00 AM.
 	{
 	_TCHAR *name;
-	long length;			// Length of rule array.					// 06/19/00 AM.
+	long long length;			// Length of rule array.					// 06/19/00 AM.
 	const int *rules;
 	} RHASH;																		// 06/16/00 AM.
 
@@ -143,7 +143,7 @@ typedef struct s_sugg														// 05/19/00 AM.
 	bool base;
 	bool unsealed;
 	int passnum;	// PASS NUMBER OF CURRENT RULE.					// 08/09/02 AM.
-	long ruleline;	// LINE NUMBER OF CURRENT RULE.					// 08/09/02 AM.
+	long long ruleline;	// LINE NUMBER OF CURRENT RULE.					// 08/09/02 AM.
 	} SUGG;																		// 05/19/00 AM.
 
 typedef bool (*MICROFN)(NODE *,const ELT *,Nlppp *);				// 05/25/00 AM.
@@ -159,7 +159,7 @@ typedef struct s_pass														// 06/20/00 AM.
 	_TCHAR *sfile;							// Pass file name.
 	const RHASH *must;					// Must-try rule data.
 	const RHASH **htab;					// Rule hash table.
-	long hsize;								// Rule hash table length.
+	long long hsize;								// Rule hash table length.
 	} PASS;
 
 // Exception numbers for NLP++ code.	// 09/15/08 AM.
@@ -470,13 +470,13 @@ public:
 	static bool unknown(Nlppp *);											// 06/02/00 AM.
 	static bool length(Nlppp *, int);									// 05/24/00 AM.
 	static bool lengthr(Nlppp *,long,long);							// 06/02/00 AM.
-	static bool numrange(Nlppp *,long,long);							// 06/02/00 AM.
+	static bool numrange(Nlppp *,long long,long long);							// 06/02/00 AM.
 	static bool var(Nlppp*,_TCHAR*);                            // 10/01/05 AM.
 	static bool varz(Nlppp*,_TCHAR*);                           // 10/01/05 AM.
 	static bool vareq(Nlppp*,_TCHAR*,_TCHAR*);                  // 10/01/05 AM.
-	static bool vareq(Nlppp*,_TCHAR*,long);                     // 10/01/05 AM.
+	static bool vareq(Nlppp*,_TCHAR*,long long);                     // 10/01/05 AM.
 	static bool varne(Nlppp*,_TCHAR*,_TCHAR*);                  // 10/01/05 AM.
-	static bool varne(Nlppp*,_TCHAR*,long);                     // 10/01/05 AM.
+	static bool varne(Nlppp*,_TCHAR*,long long);                     // 10/01/05 AM.
 
 	static bool var(Nlppp*,RFASem*);                            // 10/04/05 AM.
 	static bool varz(Nlppp*,RFASem*);                           // 10/04/05 AM.
@@ -508,7 +508,7 @@ public:
 	static RFASem *s(Nlppp *);												// 04/28/01 AM.
 
 	static RFASem *assign(int,_TCHAR*,int,long,Nlppp*,RFASem*);
-	static long    assign(int,_TCHAR*,int,long,Nlppp*,long);
+	static long long    assign(int,_TCHAR*,int,long,Nlppp*,long long);
 	static float   assign(int,_TCHAR*,int,long,Nlppp*,float);
 	static _TCHAR   *assign(int,_TCHAR*,int,long,Nlppp*,_TCHAR*);
 	static std::_t_ostream *assign(int,_TCHAR*,int,long,Nlppp*,std::_t_ostream*);	// 11/20/02 AM.
@@ -516,7 +516,7 @@ public:
 
 	// VARIANTS.
 	static RFASem  *assign(int,_TCHAR*,int,RFASem*,Nlppp*,RFASem*);
-	static long     assign(int,_TCHAR*,int,RFASem*,Nlppp*,long);
+	static long long     assign(int,_TCHAR*,int,RFASem*,Nlppp*,long long);
 	static float    assign(int,_TCHAR*,int,RFASem*,Nlppp*,float);
 	static _TCHAR    *assign(int,_TCHAR*,int,RFASem*,Nlppp*,_TCHAR*);
 	static std::_t_ostream *assign(int,_TCHAR*,int,RFASem*,Nlppp*,std::_t_ostream*);//11/20/02 AM.
@@ -524,67 +524,67 @@ public:
 
 	// INDEXED ASSIGNMENT.
 	static RFASem *iassign(int,_TCHAR*,int,long,Nlppp*,RFASem*);
-	static long    iassign(int,_TCHAR*,int,long,Nlppp*,long);
+	static long long    iassign(int,_TCHAR*,int,long,Nlppp*,long long);
 	static float   iassign(int,_TCHAR*,int,long,Nlppp*,float);
 	static _TCHAR   *iassign(int,_TCHAR*,int,long,Nlppp*,_TCHAR*);
 	static std::_t_ostream *iassign(int,_TCHAR*,int,long,Nlppp*,std::_t_ostream*); // 11/20/02 AM.
 	static bool    iassign(int,_TCHAR*,int,long,Nlppp*,bool);		// 12/10/02 AM.
 
-	static bool truth(long);
+	static bool truth(long long);
 	static bool truth(float);
 	static bool truth(_TCHAR *);
 	static bool truth(RFASem *);
 	static bool truth(bool);												// 09/03/01 AM.
 
-	static RFASem *plus(RFASem *, long,Nlppp *);
+	static RFASem *plus(RFASem *, long long,Nlppp *);
 	static float plus(RFASem*,float,Nlppp*);							// 08/17/01 AM.
 	static _TCHAR *plus(RFASem *, _TCHAR *,Nlppp *);
 	static RFASem *plus(RFASem *, RFASem *,Nlppp *);  // ambig: numeric or str.
 	static _TCHAR *plus(_TCHAR *, _TCHAR *,Nlppp *);
-	static _TCHAR *plus(_TCHAR*,long,Nlppp*);                       // 07/11/03 AM.
-	static _TCHAR *plus(long,_TCHAR*,Nlppp*);                       // 07/11/03 AM.
+	static _TCHAR *plus(_TCHAR*,long long,Nlppp*);                       // 07/11/03 AM.
+	static _TCHAR *plus(long long,_TCHAR*,Nlppp*);                       // 07/11/03 AM.
 	static _TCHAR *plus(_TCHAR *, RFASem *,Nlppp *);
-	static long plus(long,long,Nlppp *);
-	static RFASem *plus(long,RFASem *,Nlppp *);
+	static long long plus(long long,long long,Nlppp *);
+	static RFASem *plus(long long,RFASem *,Nlppp *);
 	static float plus(float,RFASem *,Nlppp *);						// 08/17/01 AM.
-	static float plus(float,long,Nlppp *);								// 08/17/01 AM.
-	static float plus(long,float,Nlppp *);								// 08/17/01 AM.
+	static float plus(float,long long,Nlppp *);								// 08/17/01 AM.
+	static float plus(long long,float,Nlppp *);								// 08/17/01 AM.
 	static float plus(float,float,Nlppp *);							// 08/17/01 AM.
 
-	static RFASem *minus(RFASem *, long);
+	static RFASem *minus(RFASem *, long long);
 	static float minus(RFASem*,float);									// 08/17/01 AM.
 	static RFASem *minus(RFASem *, RFASem *);							// 08/17/01 AM.
-	static long minus(long, long);
-	static RFASem *minus(long, RFASem *);
+	static long long minus(long long, long long);
+	static RFASem *minus(long long, RFASem *);
 	static float minus(float,RFASem*);									// 08/17/01 AM.
-	static float minus(float,long);
-	static float minus(long,float);
+	static float minus(float,long long);
+	static float minus(long long,float);
 	static float minus(float,float);
 
-	static RFASem *times(RFASem *, long);
+	static RFASem *times(RFASem *, long long);
 	static float times(RFASem*,float);
 	static RFASem *times(RFASem *, RFASem *);
-	static long times(long, long);
-	static RFASem *times(long, RFASem *);
+	static long long times(long long, long long);
+	static RFASem *times(long long, RFASem *);
 	static float times(float,RFASem*);
-	static float times(long,float);
-	static float times(float,long);
+	static float times(long long,float);
+	static float times(float,long long);
 	static float times(float,float);
 
-	static RFASem *divide(RFASem *, long);
+	static RFASem *divide(RFASem *, long long);
 	static float divide(RFASem*,float);
 	static RFASem *divide(RFASem *, RFASem *);
-	static long divide(long, long);
-	static RFASem *divide(long, RFASem *);
+	static long long divide(long long, long long);
+	static RFASem *divide(long long, RFASem *);
 	static float divide(float,RFASem*);
-	static float divide(float,long);
-	static float divide(long,float);
+	static float divide(float,long long);
+	static float divide(long long,float);
 	static float divide(float,float);
 
-	static long rem(RFASem *, long);
-	static long rem(RFASem *, RFASem *);
-	static long rem(long, long);
-	static long rem(long, RFASem *);
+	static long long rem(RFASem *, long long);
+	static long long rem(RFASem *, RFASem *);
+	static long long rem(long long, long long);
+	static long long rem(long long, RFASem *);
 	
 	static long conf(RFASem *, long);
 	static long conf(RFASem *, RFASem *);
@@ -592,125 +592,125 @@ public:
 	static long conf(long, RFASem *);
 
 	// Note: Should really return bool type....not in NLP++ yet.
-	static long eq(RFASem*,long);
+	static long eq(RFASem*,long long);
 	static long eq(RFASem*,float);
 	static long eq(RFASem *, RFASem *);
 	static long eq(RFASem *, _TCHAR *);
-	static long eq(long, long);
-	static long eq(long,RFASem*);
+	static long eq(long long, long long);
+	static long eq(long long,RFASem*);
 	static long eq(float,RFASem*);
 	static long eq(_TCHAR *, _TCHAR *);
 	static long eq(_TCHAR *, RFASem *);
-	static long eq(long,float);
-	static long eq(float,long);
+	static long eq(long long,float);
+	static long eq(float,long long);
 	static long eq(float,float);
-	static long eq(_TCHAR*,long);                  // 07/11/03 AM.
-	static long eq(long,_TCHAR*);                  // 07/11/03 AM.
+	static long eq(_TCHAR*,long long);                  // 07/11/03 AM.
+	static long eq(long long,_TCHAR*);                  // 07/11/03 AM.
 
 
-	static long ne(RFASem*,long);
+	static long ne(RFASem*,long long);
 	static long ne(RFASem*,float);
 	static long ne(RFASem *, RFASem *);
-	static long ne(long, long);
-	static long ne(long, RFASem *);
+	static long ne(long long, long long);
+	static long ne(long long, RFASem *);
 	static long ne(float,RFASem*);
 	static bool ne(_TCHAR *, _TCHAR *);
 	static bool ne(_TCHAR *, RFASem *);
 	static bool ne(RFASem *, _TCHAR *);
-	static long ne(float,long);
-	static long ne(long,float);
+	static long ne(float,long long);
+	static long ne(long long,float);
 	static long ne(float,float);
-	static long ne(_TCHAR*,long);                  // 07/11/03 AM.
-	static long ne(long,_TCHAR*);                  // 07/11/03 AM.
+	static long ne(_TCHAR*,long long);                  // 07/11/03 AM.
+	static long ne(long long,_TCHAR*);                  // 07/11/03 AM.
 
-	static long gt(RFASem *, long);
+	static long gt(RFASem *, long long);
 	static long gt(RFASem *, float);
 	static long gt(RFASem *, RFASem *);
-	static long gt(long, long);
-	static long gt(long, RFASem *);
+	static long gt(long long, long long);
+	static long gt(long long, RFASem *);
 	static long gt(float, RFASem*);
-	static long gt(float,long);
-	static long gt(long,float);
+	static long gt(float,long long);
+	static long gt(long long,float);
 	static long gt(float,float);
 
-	static long lt(RFASem *, long);
+	static long lt(RFASem *, long long);
 	static long lt(RFASem*,float);
 	static long lt(RFASem *, RFASem *);
-	static long lt(long, long);
-	static long lt(long, RFASem *);
+	static long lt(long long, long long);
+	static long lt(long long, RFASem *);
 	static long lt(float,RFASem*);
-	static long lt(float,long);
-	static long lt(long,float);
+	static long lt(float,long long);
+	static long lt(long long,float);
 	static long lt(float,float);
 
-	static long ge(RFASem *, long);
+	static long ge(RFASem *, long long);
 	static long ge(RFASem*,float);
 	static long ge(RFASem *, RFASem *);
-	static long ge(long, long);
-	static long ge(long, RFASem *);
+	static long ge(long long, long long);
+	static long ge(long long, RFASem *);
 	static long ge(float,RFASem*);
-	static long ge(float,long);
-	static long ge(long,float);
+	static long ge(float,long long);
+	static long ge(long long,float);
 	static long ge(float,float);
 
-	static long le(RFASem *, long);
+	static long le(RFASem *, long long);
 	static long le(RFASem*,float);
 	static long le(RFASem *, RFASem *);
-	static long le(long, long);
-	static long le(long, RFASem *);
+	static long le(long long, long long);
+	static long le(long long, RFASem *);
 	static long le(float,RFASem*);
-   static long le(float,long);
-	static long le(long,float);
+    static long le(float,long long);
+	static long le(long long,float);
 	static long le(float,float);
 
-	static long vtand(RFASem *, long);
+	static long vtand(RFASem *, long long);
 	static long vtand(RFASem*,float);
 	static long vtand(RFASem *, RFASem *);
 	static long vtand(RFASem *, _TCHAR *);									// 06/11/00 AM.
 	static bool vtand(RFASem*,bool);										// 09/03/01 AM.
-	static long vtand(long, long);
-	static long vtand(long, RFASem *);
-	static long vtand(long, _TCHAR *);										// 06/11/00 AM.
-	static long vtand(long,float);
-	static bool vtand(long,bool);											// 09/03/01 AM.
+	static long vtand(long long, long long);
+	static long vtand(long long, RFASem *);
+	static long vtand(long long, _TCHAR *);										// 06/11/00 AM.
+	static long vtand(long long,float);
+	static bool vtand(long long,bool);											// 09/03/01 AM.
 	static long vtand(float,RFASem*);
 	static long vtand(float,_TCHAR*);
-	static long vtand(float,long);
+	static long vtand(float,long long);
 	static long vtand(float,float);
 	static bool vtand(float,bool);											// 09/03/01 AM.
 	static long vtand(_TCHAR *, RFASem *);									// 06/11/00 AM.
-	static long vtand(_TCHAR *, long);										// 06/11/00 AM.
+	static long vtand(_TCHAR *, long long);										// 06/11/00 AM.
 	static long vtand(_TCHAR*,float);
 	static long vtand(_TCHAR *, _TCHAR *);										// 06/11/00 AM.
-	static bool vtand(_TCHAR*,bool);											// 09/03/01 AM.
+	static bool vtand(_TCHAR*,bool);											// 09/03/01 AM.min(
 	static bool vtand(bool,RFASem*);										// 09/03/01 AM.
-	static bool vtand(bool,long);											// 09/03/01 AM.
+	static bool vtand(bool,long long);											// 09/03/01 AM.
 	static bool vtand(bool,float);											// 09/03/01 AM.
 	static bool vtand(bool,_TCHAR*);											// 09/03/01 AM.
 	static bool vtand(bool,bool);											// 09/03/01 AM.
 
-	static long vtor(RFASem *, long);
+	static long vtor(RFASem *, long long);
 	static long vtor(RFASem *, float);
 	static long vtor(RFASem *, RFASem *);
 	static long vtor(RFASem *, _TCHAR *);									// 06/11/00 AM.
 	static bool vtor(RFASem*,bool);											// 09/03/01 AM.
-	static long vtor(long, long);
-	static long vtor(long,float);
-	static long vtor(long, RFASem *);
-	static long vtor(long, _TCHAR *);											// 06/11/00 AM.
-	static bool vtor(long,bool);												// 09/03/01 AM.
-	static long vtor(float,long);
+	static long vtor(long long, long long);
+	static long vtor(long long,float);
+	static long vtor(long long, RFASem *);
+	static long vtor(long long, _TCHAR *);											// 06/11/00 AM.
+	static bool vtor(long long,bool);												// 09/03/01 AM.
+	static long vtor(float,long long);
 	static long vtor(float,float);
 	static long vtor(float, RFASem *);
 	static long vtor(float, _TCHAR*);
 	static bool vtor(float,bool);											// 09/03/01 AM.
 	static long vtor(_TCHAR*, RFASem *);										// 06/11/00 AM.
-	static long vtor(_TCHAR*, long);											// 06/11/00 AM.
+	static long vtor(_TCHAR*, long long);											// 06/11/00 AM.
 	static long vtor(_TCHAR*,float);
 	static long vtor(_TCHAR*, _TCHAR *);										// 06/11/00 AM.
 	static bool vtor(_TCHAR*,bool);											// 09/03/01 AM.
 	static bool vtor(bool,RFASem*);											// 09/03/01 AM.
-	static bool vtor(bool,long);												// 09/03/01 AM.
+	static bool vtor(bool,long long);												// 09/03/01 AM.
 	static bool vtor(bool,float);											// 09/03/01 AM.
 	static bool vtor(bool,_TCHAR*);											// 09/03/01 AM.
 	static bool vtor(bool,bool);												// 09/03/01 AM.
@@ -718,43 +718,43 @@ public:
    static RFASem *vtcout(Nlppp*);                                 // 05/06/09 AM.
 
 	// Unary ops.
-	static long inc(RFASem *,Nlppp *);
-	static long inc(															// 06/02/00 AM.
+	static long long inc(RFASem *,Nlppp *);
+	static long long inc(															// 06/02/00 AM.
 		int typ,
 		_TCHAR *varname,
 		int nelt,
 		long index,																// 10/13/00 AM.
 		Nlppp *nlppp
 		);
-	static long inc(int,_TCHAR*,int,RFASem*,Nlppp*);              // 07/15/03 AM.
+	static long long inc(int,_TCHAR*,int,RFASem*,Nlppp*);              // 07/15/03 AM.
 
-	static long dec(RFASem *,Nlppp *);
-	static long dec(															// 06/02/00 AM.
+	static long long dec(RFASem *,Nlppp *);
+	static long long dec(															// 06/02/00 AM.
 		int typ,
 		_TCHAR *varname,
 		int nelt,
 		long index,																// 10/13/00 AM.
 		Nlppp *nlppp
 		);
-	static long dec(int,_TCHAR*,int,RFASem*,Nlppp*);              // 07/15/03 AM.
+	static long long dec(int,_TCHAR*,int,RFASem*,Nlppp*);              // 07/15/03 AM.
 
-	static long vtnot(long);
+	static long vtnot(long long);
 	static long vtnot(float);
 	static long vtnot(RFASem *);
 	static long vtnot(_TCHAR *);
 	static bool vtnot(bool);													// 09/03/01 AM.
 
-	static long plus(long,Nlppp *);
+	static long long plus(long long,Nlppp *);
 	static float plus(float,Nlppp *);
 	static RFASem *plus(RFASem *,Nlppp *);
 
-	static long minus(long);
+	static long long minus(long long);
 	static float minus(float);
 	static RFASem *minus(RFASem *);
 
 	// Postunary.
-	static long postinc(RFASem *,Nlppp *);
-	static long postinc(														// 06/02/00 AM.
+	static long long postinc(RFASem *,Nlppp *);
+	static long long postinc(														// 06/02/00 AM.
 		int typ,
 		_TCHAR *varname,
 		int nelt,
@@ -762,8 +762,8 @@ public:
 		Nlppp *nlppp
 		);
 
-	static long postdec(RFASem *,Nlppp *);
-	static long postdec(														// 06/02/00 AM.
+	static long long postdec(RFASem *,Nlppp *);
+	static long long postdec(														// 06/02/00 AM.
 		int typ,
 		_TCHAR *varname,
 		int nelt,
@@ -774,23 +774,23 @@ public:
 
 	static std::_t_ostream *out(_TCHAR*,RFASem *,Nlppp*);
 	static std::_t_ostream *out(_TCHAR*,_TCHAR *,Nlppp*);
-	static std::_t_ostream *out(_TCHAR*,long,Nlppp*);
+	static std::_t_ostream *out(_TCHAR*,long long,Nlppp*);
 	static std::_t_ostream *out(_TCHAR*,float,Nlppp*);
 	static std::_t_ostream *out(_TCHAR*,bool,Nlppp*);                    // 07/11/03 AM.
 	static std::_t_ostream *out(RFASem*,RFASem *,Nlppp*);
 	static std::_t_ostream *out(RFASem*,_TCHAR *,Nlppp*);
-	static std::_t_ostream *out(RFASem*,long,Nlppp*);
+	static std::_t_ostream *out(RFASem*,long long,Nlppp*);
 	static std::_t_ostream *out(RFASem*,float,Nlppp*);
 	static std::_t_ostream *out(RFASem*,bool,Nlppp*);                 // 07/11/03 AM.
 	static std::_t_ostream *out(std::_t_ostream*,RFASem *,Nlppp*);
 	static std::_t_ostream *out(std::_t_ostream*,_TCHAR *,Nlppp*);
-	static std::_t_ostream *out(std::_t_ostream*,long,Nlppp*);
+	static std::_t_ostream *out(std::_t_ostream*,long long,Nlppp*);
 	static std::_t_ostream *out(std::_t_ostream*,float,Nlppp*);
 	static std::_t_ostream *out(std::_t_ostream*,bool,Nlppp*);                  // 07/11/03 AM.
 
 	static bool stmt(RFASem *);
 	static bool stmt(std::_t_ostream *);
-	static bool stmt(long);
+	static bool stmt(long long);
 	static bool stmt(float);
 	static bool stmt(_TCHAR *);
 	static bool stmt(bool);													// 09/03/01 AM.
@@ -827,11 +827,11 @@ public:
 
 
 	// FN.CPP FUNCTIONS
-	static long factorial(Nlppp*,long);
-	static long factorial(Nlppp*,RFASem*);								// 05/06/01 AM.
+	static long long factorial(Nlppp*,long long);
+	static long long factorial(Nlppp*,RFASem*);								// 05/06/01 AM.
 	static RFASem *findroot(Nlppp*);
 	static RFASem *findconcept(Nlppp*,RFASem*,_TCHAR*);
-	static RFASem *findconcept(Nlppp*,RFASem*,long);
+	static RFASem *findconcept(Nlppp*,RFASem*,long long);
 												// FIX.	Lowercased the C	// 06/24/00 AM.
 	static RFASem *findconcept(Nlppp*,RFASem*,RFASem*);			// 05/06/01 AM.
 
@@ -847,8 +847,8 @@ public:
 	static RFASem *findvals(Nlppp*,RFASem*,_TCHAR*);
 	static RFASem *findvals(Nlppp*,RFASem*,RFASem*);				// 05/06/01 AM.
 
-	static long numval(Nlppp*,RFASem*,_TCHAR*);
-	static long numval(Nlppp*,RFASem*,RFASem*);						// 05/05/01 AM.
+	static long long numval(Nlppp*,RFASem*,_TCHAR*);
+	static long long numval(Nlppp*,RFASem*,RFASem*);						// 05/05/01 AM.
 
 	static float fltval(Nlppp*,RFASem*,_TCHAR*);						// 12/27/06 AM.
 	static float fltval(Nlppp*,RFASem*,RFASem*);						// 12/27/06 AM.
@@ -917,13 +917,13 @@ public:
 
 	static _TCHAR *getstrval(Nlppp*,RFASem*);
 
-	static long getnumval(Nlppp*,RFASem*);
-	static long getfltval(Nlppp*,RFASem*);
+	static long long getnumval(Nlppp*,RFASem*);
+	static long long getfltval(Nlppp*,RFASem*);
 
 	static RFASem *getconval(Nlppp*,RFASem*);							// 08/12/00 AM.
 
-	static RFASem *makeconcept(Nlppp*,RFASem*,_TCHAR*,long=0);
-	static RFASem *makeconcept(Nlppp*,RFASem*,RFASem*,long=0);	// 05/06/01 AM.
+	static RFASem *makeconcept(Nlppp*,RFASem*,_TCHAR*,int=0);
+	static RFASem *makeconcept(Nlppp*,RFASem*,RFASem*,int=0);	// 05/06/01 AM.
 	static RFASem *makeconcept(Nlppp*,RFASem*,_TCHAR*,RFASem*);	// 05/06/01 AM.
 	static RFASem *makeconcept(Nlppp*,RFASem*,RFASem*,RFASem*);	// 05/06/01 AM.
 
@@ -932,15 +932,15 @@ public:
 		Nlppp *nlppp,
 		RFASem *con_sem,
 		RFASem *child_sem,
-		long pos_num=0
+		long long pos_num=0
 		);
 #endif
 
 	static RFASem *addattr(Nlppp*,RFASem*,_TCHAR*);
 	static RFASem *addattr(Nlppp*,RFASem*,RFASem*);					// 05/06/01 AM.
 
-	static bool addsval(Nlppp*,RFASem*,_TCHAR*,long);
-	static bool addsval(Nlppp*,RFASem*,RFASem*,long);				// 05/06/01 AM.
+	static bool addsval(Nlppp*,RFASem*,_TCHAR*,long long);
+	static bool addsval(Nlppp*,RFASem*,RFASem*,long long);				// 05/06/01 AM.
 	static bool addsval(Nlppp*,RFASem*,_TCHAR*,RFASem*);				// 05/06/01 AM.
 	static bool addsval(Nlppp*,RFASem*,RFASem*,RFASem*);			// 05/06/01 AM.
 
@@ -949,8 +949,8 @@ public:
 	static bool addstrval(Nlppp*,RFASem*,RFASem*,_TCHAR*);			// 05/06/01 AM.
 	static bool addstrval(Nlppp*,RFASem*,RFASem*,RFASem*);		// 05/06/01 AM.
 
-	static bool addnumval(Nlppp*,RFASem*,_TCHAR*,long);
-	static bool addnumval(Nlppp*,RFASem*,RFASem*,long);			// 05/06/01 AM.
+	static bool addnumval(Nlppp*,RFASem*,_TCHAR*,long long);
+	static bool addnumval(Nlppp*,RFASem*,RFASem*,long long);			// 05/06/01 AM.
 	static bool addnumval(Nlppp*,RFASem*,_TCHAR*,RFASem*);			// 05/06/01 AM.
 	static bool addnumval(Nlppp*,RFASem*,RFASem*,RFASem*);		// 05/06/01 AM.
 
@@ -963,7 +963,7 @@ public:
 	static bool rmconcept(Nlppp*,RFASem*);
 
 	static bool rmchild(Nlppp*,RFASem*,_TCHAR*);
-	static bool rmchild(Nlppp*,RFASem*,long);
+	static bool rmchild(Nlppp*,RFASem*,int);
 	static bool rmchild(Nlppp*,RFASem*,RFASem*);	// Ambiguous.	// 05/06/01 AM.
 
 	static bool rmvals(Nlppp*,RFASem*,_TCHAR*);
@@ -984,17 +984,17 @@ public:
 	static bool prunephrases(Nlppp*,RFASem*);
 
 	static bool replaceval(Nlppp*,RFASem*,_TCHAR*,_TCHAR*);
-	static bool replaceval(Nlppp*,RFASem*,_TCHAR*,long);
+	static bool replaceval(Nlppp*,RFASem*,_TCHAR*,long long);
 	static bool replaceval(Nlppp*,RFASem*,_TCHAR*,RFASem*);			// 06/27/00 AM.
-	static bool replaceval(Nlppp*,RFASem*,RFASem*,long);			// 05/05 01 AM.
+	static bool replaceval(Nlppp*,RFASem*,RFASem*,long long);			// 05/05 01 AM.
 	static bool replaceval(Nlppp*,RFASem*,RFASem*,RFASem*);		// 05/05/01 AM.
 
 	static bool renameconcept(Nlppp*,RFASem*,_TCHAR*);
 	static bool renameconcept(Nlppp*,RFASem*,RFASem*);				// 05/06/01 AM.
 
-	static bool renamechild(Nlppp*,RFASem*,long,_TCHAR*);
+	static bool renamechild(Nlppp*,RFASem*,long long,_TCHAR*);
 	static bool renamechild(Nlppp*,RFASem*,RFASem*,_TCHAR*);		// 05/06/01 AM.
-	static bool renamechild(Nlppp*,RFASem*,long,RFASem*);			// 05/06/01 AM.
+	static bool renamechild(Nlppp*,RFASem*,long long,RFASem*);			// 05/06/01 AM.
 	static bool renamechild(Nlppp*,RFASem*,RFASem*,RFASem*);		// 05/06/01 AM.
 
 	static bool renameattr(Nlppp*,RFASem*,_TCHAR*,_TCHAR*);
@@ -1185,8 +1185,8 @@ public:
 
 //////////////
 
-	static bool xrename(Nlppp*,_TCHAR*,long=0);
-	static bool xrename(Nlppp*,RFASem*,long=0);						// 05/07/01 AM.
+	static bool xrename(Nlppp*,_TCHAR*, long=0);
+	static bool xrename(Nlppp*,RFASem*, long=0);						// 05/07/01 AM.
 	static bool xrename(Nlppp*,_TCHAR*,RFASem*);						// 05/07/01 AM.
 	static bool xrename(Nlppp*,RFASem*,RFASem*);						// 05/07/01 AM.
 
@@ -1220,21 +1220,21 @@ public:
 
 	static _TCHAR *str(Nlppp*,RFASem*);							// 08/01/00 AM.
 	static _TCHAR *str(Nlppp*,_TCHAR*);								// 07/31/00 AM.
-	static _TCHAR *str(Nlppp*,long);								// 07/31/00 AM.
+	static _TCHAR *str(Nlppp*,long long);								// 07/31/00 AM.
 	static _TCHAR *str(Nlppp*,float);								// 08/16/01 AM.
 
-	static long num(Nlppp*,RFASem*);								// 08/01/00 AM.
-	static long num(Nlppp*,_TCHAR*);								// 07/31/00 AM.
-	static long num(Nlppp*,long);									// 07/31/00 AM.
-	static long num(Nlppp*,float);								// 08/10/08 AM.
+	static long long num(Nlppp*,RFASem*);								// 08/01/00 AM.
+	static long long num(Nlppp*,_TCHAR*);								// 07/31/00 AM.
+	static long long num(Nlppp*,long long);									// 07/31/00 AM.
+	static long long num(Nlppp*,float);								// 08/10/08 AM.
 
-	static float flt(Nlppp*,long);										// 08/23/01 AM.
+	static float flt(Nlppp*,long long);										// 08/23/01 AM.
 	static float flt(Nlppp*,float);										// 08/23/01 AM.
 	static float flt(Nlppp*,_TCHAR*);										// 08/23/01 AM.
 	static float flt(Nlppp*,RFASem*);									// 08/23/01 AM.
 
 	// Wrap a sem object around a data type.							// 03/07/02 AM.
-	static RFASem *sem(long);												// 03/07/02 AM.
+	static RFASem *sem(long long);												// 03/07/02 AM.
 	static RFASem *sem(float);												// 03/07/02 AM.
 	static RFASem *sem(_TCHAR*);												// 03/07/02 AM.
 	static RFASem *sem(RFASem*);	// Noop.								// 03/07/02 AM.
@@ -1242,9 +1242,9 @@ public:
 	static _TCHAR *strtotitle(Nlppp*,_TCHAR*);								// 08/22/00 AM.
 	static _TCHAR *strtotitle(Nlppp*,RFASem*);							// 08/22/00 AM.
 
-	static long arraylength(Nlppp*,_TCHAR*);								// 01/04/01 AM.
-	static long arraylength(Nlppp*,long);								// 01/04/01 AM.
-	static long arraylength(Nlppp*,RFASem*);							// 01/04/01 AM.
+	static long  arraylength(Nlppp*,_TCHAR*);								// 01/04/01 AM.
+	static long  arraylength(Nlppp*,long long);								// 01/04/01 AM.
+	static long  arraylength(Nlppp*,RFASem*);							// 01/04/01 AM.
 
 	static RFASem *lasteltnode(Nlppp*,long);							// 01/04/01 AM.
 	static RFASem *lasteltnode(Nlppp*,RFASem*);						// 01/04/01 AM.
@@ -1419,7 +1419,7 @@ public:
 	static _TCHAR *strspellcandidate(Nlppp*,_TCHAR*,RFASem*);			// 05/07/01 AM.
 	static _TCHAR *strspellcandidate(Nlppp*,RFASem*,RFASem*);		// 05/07/01 AM.
 
-   // strspellcompare: Return long NOT int, conform w Arun fns. // 08/09/11 AM.
+   // strspellcompare: Return long long NOT int, conform w Arun fns. // 08/09/11 AM.
 	static long strspellcompare(Nlppp*,_TCHAR*,_TCHAR*);         // 01/09/01 AM.
 	static long strspellcompare(Nlppp*,RFASem*,_TCHAR*);         // 05/07/01 AM.
 	static long strspellcompare(Nlppp*,_TCHAR*,RFASem*);         // 05/07/01 AM.
@@ -1531,7 +1531,7 @@ public:
 
 	static void *fnstart(Nlppp*,void*&,void*&);	// 03/11/02 AM. // 01/08/07 AM.
 
-	static RFASem *ret(Nlppp*,void*,void*,long);						// 03/11/02 AM.
+	static RFASem *ret(Nlppp*,void*,void*,long long);						// 03/11/02 AM.
 	static RFASem *ret(Nlppp*,void*,void*,float);					// 03/11/02 AM.
 	static RFASem *ret(Nlppp*,void*,void*,_TCHAR*);					// 03/11/02 AM.
 	static RFASem *ret(Nlppp*,void*,void*,RFASem*);					// 03/11/02 AM.
@@ -1547,66 +1547,66 @@ public:
 	static RFASem *pnvarnames(Nlppp*,RFASem*);						// 05/13/02 AM.
 
 	static bool pnmakevar(Nlppp*,NODE*,_TCHAR*,_TCHAR*);				// 07/03/02 AM.
-	static bool pnmakevar(Nlppp*,NODE*,_TCHAR*,long);					// 07/03/02 AM.
+	static bool pnmakevar(Nlppp*,NODE*,_TCHAR*,long long);					// 07/03/02 AM.
 	static bool pnmakevar(Nlppp*,NODE*,_TCHAR*,RFASem*);				// 07/03/02 AM.
 	static bool pnmakevar(Nlppp*,RFASem*,_TCHAR*,_TCHAR*);				// 07/03/02 AM.
-	static bool pnmakevar(Nlppp*,RFASem*,_TCHAR*,long);				// 07/03/02 AM.
+	static bool pnmakevar(Nlppp*,RFASem*,_TCHAR*,long long);				// 07/03/02 AM.
 	static bool pnmakevar(Nlppp*,RFASem*,_TCHAR*,RFASem*);			// 07/03/02 AM.
 	static bool pnmakevar(Nlppp*,NODE*,RFASem*,_TCHAR*);				// 07/03/02 AM.
-	static bool pnmakevar(Nlppp*,NODE*,RFASem*,long);				// 07/03/02 AM.
+	static bool pnmakevar(Nlppp*,NODE*,RFASem*,long long);				// 07/03/02 AM.
 	static bool pnmakevar(Nlppp*,NODE*,RFASem*,RFASem*);			// 07/03/02 AM.
 	static bool pnmakevar(Nlppp*,RFASem*,RFASem*,_TCHAR*);			// 07/03/02 AM.
-	static bool pnmakevar(Nlppp*,RFASem*,RFASem*,long);			// 07/03/02 AM.
+	static bool pnmakevar(Nlppp*,RFASem*,RFASem*,long long);			// 07/03/02 AM.
 	static bool pnmakevar(Nlppp*,RFASem*,RFASem*,RFASem*);		// 07/03/02 AM.
 
 	static bool pnreplaceval(Nlppp*,NODE*,_TCHAR*,_TCHAR*);			// 07/03/02 AM.
-	static bool pnreplaceval(Nlppp*,NODE*,_TCHAR*,long);				// 07/03/02 AM.
+	static bool pnreplaceval(Nlppp*,NODE*,_TCHAR*,long long);				// 07/03/02 AM.
 	static bool pnreplaceval(Nlppp*,NODE*,_TCHAR*,float);          // 12/15/14 AM.
 	static bool pnreplaceval(Nlppp*,NODE*,_TCHAR*,RFASem*);			// 07/03/02 AM.
 	static bool pnreplaceval(Nlppp*,RFASem*,_TCHAR*,_TCHAR*);			// 07/03/02 AM.
-	static bool pnreplaceval(Nlppp*,RFASem*,_TCHAR*,long);			// 07/03/02 AM.
+	static bool pnreplaceval(Nlppp*,RFASem*,_TCHAR*,long long);			// 07/03/02 AM.
 	static bool pnreplaceval(Nlppp*,RFASem*,_TCHAR*,float);        // 12/15/14 AM.
 	static bool pnreplaceval(Nlppp*,RFASem*,_TCHAR*,RFASem*);		// 07/03/02 AM.
 	static bool pnreplaceval(Nlppp*,NODE*,RFASem*,_TCHAR*);			// 07/03/02 AM.
-	static bool pnreplaceval(Nlppp*,NODE*,RFASem*,long);			// 07/03/02 AM.
+	static bool pnreplaceval(Nlppp*,NODE*,RFASem*,long long);			// 07/03/02 AM.
 	static bool pnreplaceval(Nlppp*,NODE*,RFASem*,float);       // 12/15/14 AM.
 	static bool pnreplaceval(Nlppp*,NODE*,RFASem*,RFASem*);		// 07/03/02 AM.
 	static bool pnreplaceval(Nlppp*,RFASem*,RFASem*,_TCHAR*);		// 07/03/02 AM.
-	static bool pnreplaceval(Nlppp*,RFASem*,RFASem*,long);		// 07/03/02 AM.
+	static bool pnreplaceval(Nlppp*,RFASem*,RFASem*,long long);		// 07/03/02 AM.
 	static bool pnreplaceval(Nlppp*,RFASem*,RFASem*,float);     // 12/15/14 AM.
 	static bool pnreplaceval(Nlppp*,RFASem*,RFASem*,RFASem*);	// 07/03/02 AM.
 
 	static bool pnpushval(Nlppp*,NODE*,_TCHAR*,_TCHAR*);   // 12/12/14 AM.
-	static bool pnpushval(Nlppp*,NODE*,_TCHAR*,long);      // 12/12/14 AM.
+	static bool pnpushval(Nlppp*,NODE*,_TCHAR*,long long);      // 12/12/14 AM.
 	static bool pnpushval(Nlppp*,NODE*,_TCHAR*,float);      // 12/12/14 AM.
 	static bool pnpushval(Nlppp*,NODE*,_TCHAR*,RFASem*);   // 12/12/14 AM.
 	static bool pnpushval(Nlppp*,RFASem*,_TCHAR*,_TCHAR*); // 12/12/14 AM.
-	static bool pnpushval(Nlppp*,RFASem*,_TCHAR*,long);    // 12/12/14 AM.
+	static bool pnpushval(Nlppp*,RFASem*,_TCHAR*,long long);    // 12/12/14 AM.
 	static bool pnpushval(Nlppp*,RFASem*,_TCHAR*,float);    // 12/12/14 AM.
 	static bool pnpushval(Nlppp*,RFASem*,_TCHAR*,RFASem*); // 12/12/14 AM.
 	static bool pnpushval(Nlppp*,NODE*,RFASem*,_TCHAR*);   // 12/12/14 AM.
-	static bool pnpushval(Nlppp*,NODE*,RFASem*,long);      // 12/12/14 AM.
+	static bool pnpushval(Nlppp*,NODE*,RFASem*,long long);      // 12/12/14 AM.
 	static bool pnpushval(Nlppp*,NODE*,RFASem*,float);      // 12/12/14 AM.
 	static bool pnpushval(Nlppp*,NODE*,RFASem*,RFASem*);   // 12/12/14 AM.
 	static bool pnpushval(Nlppp*,RFASem*,RFASem*,_TCHAR*); // 12/12/14 AM.
-	static bool pnpushval(Nlppp*,RFASem*,RFASem*,long);    // 12/12/14 AM.
+	static bool pnpushval(Nlppp*,RFASem*,RFASem*,long long);    // 12/12/14 AM.
 	static bool pnpushval(Nlppp*,RFASem*,RFASem*,float);    // 12/12/14 AM.
 	static bool pnpushval(Nlppp*,RFASem*,RFASem*,RFASem*); // 12/12/14 AM.
 
 	static bool pnrpushval(Nlppp*,NODE*,_TCHAR*,_TCHAR*);   // 12/12/14 AM.
-	static bool pnrpushval(Nlppp*,NODE*,_TCHAR*,long);      // 12/12/14 AM.
+	static bool pnrpushval(Nlppp*,NODE*,_TCHAR*,long long);      // 12/12/14 AM.
 	static bool pnrpushval(Nlppp*,NODE*,_TCHAR*,float);      // 12/12/14 AM.
 	static bool pnrpushval(Nlppp*,NODE*,_TCHAR*,RFASem*);   // 12/12/14 AM.
 	static bool pnrpushval(Nlppp*,RFASem*,_TCHAR*,_TCHAR*); // 12/12/14 AM.
-	static bool pnrpushval(Nlppp*,RFASem*,_TCHAR*,long);    // 12/12/14 AM.
+	static bool pnrpushval(Nlppp*,RFASem*,_TCHAR*,long long);    // 12/12/14 AM.
 	static bool pnrpushval(Nlppp*,RFASem*,_TCHAR*,float);    // 12/12/14 AM.
 	static bool pnrpushval(Nlppp*,RFASem*,_TCHAR*,RFASem*); // 12/12/14 AM.
 	static bool pnrpushval(Nlppp*,NODE*,RFASem*,_TCHAR*);   // 12/12/14 AM.
-	static bool pnrpushval(Nlppp*,NODE*,RFASem*,long);      // 12/12/14 AM.
+	static bool pnrpushval(Nlppp*,NODE*,RFASem*,long long);      // 12/12/14 AM.
 	static bool pnrpushval(Nlppp*,NODE*,RFASem*,float);      // 12/12/14 AM.
 	static bool pnrpushval(Nlppp*,NODE*,RFASem*,RFASem*);   // 12/12/14 AM.
 	static bool pnrpushval(Nlppp*,RFASem*,RFASem*,_TCHAR*); // 12/12/14 AM.
-	static bool pnrpushval(Nlppp*,RFASem*,RFASem*,long);    // 12/12/14 AM.
+	static bool pnrpushval(Nlppp*,RFASem*,RFASem*,long long);    // 12/12/14 AM.
 	static bool pnrpushval(Nlppp*,RFASem*,RFASem*,float);    // 12/12/14 AM.
 	static bool pnrpushval(Nlppp*,RFASem*,RFASem*,RFASem*); // 12/12/14 AM.
 
@@ -1668,7 +1668,7 @@ public:
 
 	static _TCHAR *stem(Nlppp*,_TCHAR*);										// 08/04/02 AM.
 	static _TCHAR *stem(Nlppp*,RFASem*);									// 08/04/02 AM.
-	static _TCHAR *stem(Nlppp*,long);                             // 07/11/03 AM.
+	static _TCHAR *stem(Nlppp*,long long);                             // 07/11/03 AM.
 
 	// Note: not all variants implemented...							// 12/14/02 AM.
 	// ... because an upgrade to eliminate variants is planned.	// 12/14/02 AM.
@@ -1685,18 +1685,18 @@ public:
 
 	static _TCHAR *xmlstr(Nlppp*,_TCHAR*);									// 07/22/03 AM.
 	static _TCHAR *xmlstr(Nlppp*,RFASem*);								// 07/22/03 AM.
-	static _TCHAR *xmlstr(Nlppp*,long);                           // 07/22/03 AM.
+	static _TCHAR *xmlstr(Nlppp*,long long);                           // 07/22/03 AM.
 
 	static _TCHAR *sqlstr(Nlppp*,_TCHAR*);									// 05/10/03 AM.
 	static _TCHAR *sqlstr(Nlppp*,RFASem*);								// 05/10/03 AM.
-	static _TCHAR *sqlstr(Nlppp*,long);                           // 07/11/03 AM.
+	static _TCHAR *sqlstr(Nlppp*,long long);                           // 07/11/03 AM.
 
 	static RFASem *dictfirst(Nlppp*);									// 05/29/03 AM.
 	static RFASem *dictnext(Nlppp*,RFASem*);							// 05/29/03 AM.
 
 	static bool findana(Nlppp*,_TCHAR*);									// 05/29/03 AM.
 	static bool findana(Nlppp*,RFASem*);								// 05/29/03 AM.
-	static bool findana(Nlppp*,long);                           // 07/11/03 AM.
+	static bool findana(Nlppp*,long long);                           // 07/11/03 AM.
 
 	static bool inputrangetofile(Nlppp*,long,long,std::_t_ostream*);		// 05/29/03 AM.
 	static bool inputrangetofile(Nlppp*,long,long,RFASem*);
@@ -1719,7 +1719,7 @@ public:
 
 	static bool mkdir(Nlppp*,_TCHAR*);										// 06/11/03 AM.
 	static bool mkdir(Nlppp*,RFASem*);									// 06/11/03 AM.
-	static bool mkdir(Nlppp*,long);                             // 07/11/03 AM.
+	static bool mkdir(Nlppp*,long long);                             // 07/11/03 AM.
 
 	static RFASem *split(Nlppp*,_TCHAR*,_TCHAR*);                   // 08/14/03 AM.
 	static RFASem *split(Nlppp*,_TCHAR*,RFASem*);                 // 08/14/03 AM.
@@ -1764,7 +1764,7 @@ public:
 
 	static _TCHAR *urlbase(Nlppp*,_TCHAR*);   // 05/20/14 AM.
 	static _TCHAR *urlbase(Nlppp*,RFASem*);   // 05/20/14 AM.
-	static _TCHAR *urlbase(Nlppp*,long);      // 05/20/14 AM.
+	static _TCHAR *urlbase(Nlppp*,long long);      // 05/20/14 AM.
 
 	////
 	static bool DICTphraselookup(Nlppp*,NODE*,_TCHAR*,_TCHAR*,_TCHAR*,long);      // 12/16/14 AM.

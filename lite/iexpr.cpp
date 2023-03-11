@@ -417,7 +417,7 @@ switch (type_)
 			{
 			case PLUSOP:
 				if (!lval && !rval)											// 11/21/00 AM.
-					val = new RFASem((long)0);								// 11/21/00 AM.
+					val = new RFASem(0LL);								// 11/21/00 AM.
 				else if (!lval)												// 11/21/00 AM.
 					{
 					switch (rval->getType())								// 11/21/00 AM.
@@ -433,7 +433,7 @@ switch (type_)
 							break;
 						case RSNUM:	// Bastard str-num.					// 03/12/02 AM.
 							{
-							long num=0;											// 12/24/02 AM.
+							long long num=0;											// 12/24/02 AM.
 							if (!str_to_long(rval->getName(),num))		// 03/12/02 AM.
 								{
 								ok = false;										// 03/12/02 AM.
@@ -470,7 +470,7 @@ switch (type_)
 							break;
 						case RSNUM:	// Bastard str-num.					// 03/12/02 AM.
 							{
-							long num=0;											// 12/24/02 AM.
+							long long num=0;											// 12/24/02 AM.
 							if (!str_to_long(rval->getName(),num))		// 03/12/02 AM.
 								{
 								ok = false;										// 03/12/02 AM.
@@ -500,7 +500,7 @@ switch (type_)
 							case RSLONG:
 								{
 								// Two numbers.
-								long num=0;										// 12/24/02 AM.
+								long long num=0;										// 12/24/02 AM.
 								num = lval->getLong() + rval->getLong();
 								val = new RFASem(num);
 								}
@@ -515,7 +515,7 @@ switch (type_)
 								break;
 							case RSNUM:	// Bastard str-num.				// 03/12/02 AM.
 								{
-								long num=0;										// 12/24/02 AM.
+								long long num=0;										// 12/24/02 AM.
 								if (!str_to_long(rval->getName(),num))	// 03/12/02 AM.
 									{
 									ok = false;									// 03/12/02 AM.
@@ -588,7 +588,7 @@ switch (type_)
 									_stprintf(Errbuf,							// 10/09/03 AM.
 										_T("[Adding zeroed strings.]"));		// 10/09/03 AM.
 									nlppp->parse_->errOut(false); // UNFIXED 			// 10/09/03 AM.
-									val = new RFASem((long)0);				// 10/09/03 AM.
+									val = new RFASem(0LL);				// 10/09/03 AM.
 									ok = true;
 									goto done;
 									}
@@ -642,7 +642,7 @@ switch (type_)
 						break;
 					case RSNUM:													// 03/12/02 AM.
 						{
-						long num1=0;											// 12/24/02 AM.
+						long long num1=0;											// 12/24/02 AM.
 
 						if (!str_to_long(lval->getName(),num1))		// 03/12/02 AM.
 							{
@@ -654,7 +654,7 @@ switch (type_)
 							case RSLONG:										// 03/12/02 AM.
 								{
 								// Two numbers.								// 03/12/02 AM.
-								long num=0;										// 12/24/02 AM.
+								long long num=0;										// 12/24/02 AM.
 								num = num1 + rval->getLong();				// 03 12/02 AM.
 								val = new RFASem(num);						// 03/12/02 AM.
 								}
@@ -669,7 +669,7 @@ switch (type_)
 								break;
 							case RSNUM:	// Bastard str-num.				// 03 12/02 AM.
 								{
-								long num=0;										// 12/24/02 AM.
+								long long num=0;										// 12/24/02 AM.
 								if (!str_to_long(rval->getName(),num))	// 03/12/02 AM.
 									{
 									ok = false;									// 03/12/02 AM.
@@ -704,14 +704,14 @@ switch (type_)
 				break;
 			case MINUSOP:
 				if (!lval && !rval)											// 11/21/00 AM.
-					val = new RFASem((long)0);								// 11/21/00 AM.
+					val = new RFASem(0LL);								// 11/21/00 AM.
 				else if (!lval)												// 11/21/00 AM.
 					{
 					switch (rval->getType())								// 11/21/00 AM.
 						{
 						case RSLONG:											// 11/21/00 AM.
 							{
-							long num=0;											// 12/24/02 AM.
+							long long num=0;											// 12/24/02 AM.
 							num = - (rval->getLong());						// 11/21/00 AM.
 							val = new RFASem(num);							// 11/21/00 AM.
 							}
@@ -725,7 +725,7 @@ switch (type_)
 							break;
 						case RSNUM:												// 03/12/02 AM.
 							{
-							long num=0;											// 12/24/02 AM.
+							long long num=0;											// 12/24/02 AM.
 							if (!str_to_long(rval->getName(),num))		// 03/12/02 AM.
 								{
 								ok = false;										// 03/12/02 AM.
@@ -752,7 +752,7 @@ switch (type_)
 						{
 						case RSLONG:											// 11/21/00 AM.
 							{
-							long num=0;											// 12/24/02 AM.
+							long long num=0;											// 12/24/02 AM.
 							num = lval->getLong();							// 11/21/00 AM.
 							val = new RFASem(num);							// 11/21/00 AM.
 							}
@@ -765,7 +765,7 @@ switch (type_)
 							break;
 						case RSNUM:												// 03/12/02 AM.
 							{
-							long num=0;											// 12/24/02 AM.
+							long long num=0;											// 12/24/02 AM.
 							if (!str_to_long(lval->getName(),num))		// 03/12/02 AM.
 								{
 								ok = false;										// 03/12/02 AM.
@@ -795,7 +795,7 @@ switch (type_)
 							case RSLONG:
 								{
 								// Two numbers.
-								long num=0;										// 12/24/02 AM.
+								long long num=0;										// 12/24/02 AM.
 								num = lval->getLong() - rval->getLong();
 								val = new RFASem(num);
 								}
@@ -809,7 +809,7 @@ switch (type_)
 								break;
 							case RSNUM:											// 03/12/02 AM.
 								{
-								long num=0;										// 12/24/02 AM.
+								long long num=0;										// 12/24/02 AM.
 								if (!str_to_long(rval->getName(),num))	// 03/12/02 AM.
 									{
 									ok = false;									// 03/12/02 AM.
@@ -849,7 +849,7 @@ switch (type_)
 								break;
 							case RSNUM:											// 03/12/02 AM.
 								{
-								long num=0;										// 12/24/02 AM.
+								long long num=0;										// 12/24/02 AM.
 								if (!str_to_long(rval->getName(),num))	// 03/12/02 AM.
 									{
 									ok = false;									// 03/12/02 AM.
@@ -872,7 +872,7 @@ switch (type_)
 						break;
 					case RSNUM:													// 03/12/02 AM.
 						{
-						long num1=0;											// 12/24/02 AM.
+						long long num1=0;											// 12/24/02 AM.
 
 						if (!str_to_long(lval->getName(),num1))		// 03/12/02 AM.
 							{
@@ -884,7 +884,7 @@ switch (type_)
 							case RSLONG:										// 03/12/02 AM.
 								{
 								// Two numbers.								// 03/12/02 AM.
-								long num=0;										// 12/24/02 AM.
+								long long num=0;										// 12/24/02 AM.
 								num = num1 - rval->getLong();				// 03/12/02 AM.
 								val = new RFASem(num);						// 03/12/02 AM.
 								}
@@ -898,7 +898,7 @@ switch (type_)
 								break;
 							case RSNUM:											// 03/12/02 AM.
 								{
-								long num=0;										// 12/24/02 AM.
+								long long num=0;										// 12/24/02 AM.
 								if (!str_to_long(rval->getName(),num))	// 03/12/02 AM.
 									{
 									ok = false;									// 03/12/02 AM.
@@ -933,14 +933,14 @@ switch (type_)
 				break;
 			case TIMESOP:
 				if (!lval && !rval)											// 11/21/00 AM.
-					val = new RFASem((long)0);								// 11/21/00 AM.
+					val = new RFASem(0LL);								// 11/21/00 AM.
 				else if (!lval)												// 11/21/00 AM.
 					{
 					switch (rval->getType())								// 11/21/00 AM.
 						{
 						case RSLONG:											// 11/21/00 AM.
 						case RSNUM:							// PREEMPTIVE.	// 03/12/02 AM.
-							val = new RFASem((long)0);						// 11/21/00 AM.
+							val = new RFASem(0LL);						// 11/21/00 AM.
 							break;
 						case RSFLOAT:											// 08/19/01 AM.
 							val = new RFASem((float)0.0);					// 08/19/01 AM.
@@ -963,7 +963,7 @@ switch (type_)
 						{
 						case RSLONG:											// 11/21/00 AM.
 						case RSNUM:												// 03/12/02 AM.
-							val = new RFASem((long)0);						// 11/21/00 AM.
+							val = new RFASem(0LL);						// 11/21/00 AM.
 							break;
 						case RSFLOAT:											// 08/19/01 AM.
 							val = new RFASem((float)0.0);					// 08/19/01 AM.
@@ -989,7 +989,7 @@ switch (type_)
 							case RSLONG:
 								{
 								// Two numbers.
-								long num=0;										// 12/24/02 AM.
+								long long num=0;										// 12/24/02 AM.
 								num = lval->getLong() * rval->getLong();
 								val = new RFASem(num);
 								}
@@ -1003,7 +1003,7 @@ switch (type_)
 								break;
 							case RSNUM:	// Bastard str-num.				// 03/12/02 AM.
 								{
-								long num=0;										// 12/24/02 AM.
+								long long num=0;										// 12/24/02 AM.
 								if (!str_to_long(rval->getName(),num))	// 03/12/02 AM.
 									{
 									ok = false;									// 03/12/02 AM.
@@ -1044,7 +1044,7 @@ switch (type_)
 								break;
 							case RSNUM:	// Bastard str-num.				// 03/12/02 AM.
 								{
-								long num=0;										// 12/24/02 AM.
+								long long num=0;										// 12/24/02 AM.
 								if (!str_to_long(lval->getName(),num))	// 03/12/02 AM.
 									{
 									ok = false;									// 03/12/02 AM.
@@ -1067,7 +1067,7 @@ switch (type_)
 						break;
 					case RSNUM:													// 03/12/02 AM.
 						{
-						long num1=0;											// 12/24/02 AM.
+						long long num1=0;											// 12/24/02 AM.
 
 						if (!str_to_long(lval->getName(),num1))		// 03/12/02 AM.
 							{
@@ -1079,7 +1079,7 @@ switch (type_)
 							case RSLONG:										// 03/12/02 AM.
 								{
 								// Two numbers.								// 03/12/02 AM.
-								long num=0;										// 12/24/02 AM.
+								long long num=0;										// 12/24/02 AM.
 								num = num1 * rval->getLong();				// 03/12/02 AM.
 								val = new RFASem(num);						// 03/12/02 AM.
 								}
@@ -1093,7 +1093,7 @@ switch (type_)
 								break;
 							case RSNUM:	// Bastard str-num.				// 03/12/02 AM.
 								{
-								long num=0;										// 12/24/02 AM.
+								long long num=0;										// 12/24/02 AM.
 								if (!str_to_long(rval->getName(),num))	// 03/12/02 AM.
 									{
 									ok = false;									// 03/12/02 AM.
@@ -1144,7 +1144,7 @@ switch (type_)
 						{
 						case RSLONG:											// 11/21/00 AM.
 							{
-							long num=0;											// 12/24/02 AM.
+							long long num=0;											// 12/24/02 AM.
 							if (!(num = rval->getLong()))					// 11/21/00 AM.
 								{
 								ruleError(line_,nlppp);						// 12/21/01 AM.
@@ -1155,7 +1155,7 @@ switch (type_)
 								ok = false;
 								goto done;
 								}
-							val = new RFASem((long)0);						// 11/21/00 AM.
+							val = new RFASem(0LL);						// 11/21/00 AM.
 							}
 							break;
 						case RSFLOAT:											// 08/20/01 AM.
@@ -1173,7 +1173,7 @@ switch (type_)
 							break;
 						case RSNUM:												// 03/12/02 AM.
 							{
-							long num=0;											// 12/24/02 AM.
+							long long num=0;											// 12/24/02 AM.
 							if (!str_to_long(rval->getName(),num))		// 03/12/02 AM.
 								{
 								ok = false;										// 03/12/02 AM.
@@ -1189,7 +1189,7 @@ switch (type_)
 								ok = false;										// 03/12/02 AM.
 								goto done;										// 03/12/02 AM.
 								}
-							val = new RFASem((long)0);						// 03/12/02 AM.
+							val = new RFASem(0LL);						// 03/12/02 AM.
 							}
 							break;
 						default:
@@ -1246,8 +1246,8 @@ switch (type_)
 							case RSLONG:
 								{
 								// Two numbers.
-								long num=0;										// 12/24/02 AM.
-								long num2=0;									// 12/24/02 AM.
+								long long num=0;										// 12/24/02 AM.
+								long long num2=0;									// 12/24/02 AM.
 								if (!(num2 = rval->getLong()))			// 12/16/99 AM.
 									{
 									ruleError(line_,nlppp);					// 12/21/01 AM.
@@ -1283,8 +1283,8 @@ switch (type_)
 								break;
 							case RSNUM:											// 03/12/02 AM.
 								{
-								long num=0;										// 12/24/02 AM.
-								long num2=0;									// 12/24/02 AM.
+								long long num=0;										// 12/24/02 AM.
+								long long num2=0;									// 12/24/02 AM.
 								if (!str_to_long(rval->getName(),num2))// 03/12/02 AM.
 									{
 									ok = false;									// 03/12/02 AM.
@@ -1320,7 +1320,7 @@ switch (type_)
 							case RSLONG:										// 08/20/01 AM.
 								{
 								// Two numbers.
-								long num2=0;									// 12/24/02 AM.
+								long long num2=0;									// 12/24/02 AM.
 								if (!(num2 = rval->getLong()))			// 08/20/01 AM.
 									{
 									ruleError(line_,nlppp);					// 12/21/01 AM.
@@ -1355,7 +1355,7 @@ switch (type_)
 								break;
 							case RSNUM:											// 03/12/02 AM.
 								{
-								long num2=0;									// 12/24/02 AM.
+								long long num2=0;									// 12/24/02 AM.
 								if (!str_to_long(rval->getName(),num2))// 03/12/02 AM.
 									{
 									ok = false;									// 03/12/02 AM.
@@ -1388,7 +1388,7 @@ switch (type_)
 						break;
 					case RSNUM:													// 03/12/02 AM.
 						{
-						long num1=0;											// 12/24/02 AM.
+						long long num1=0;											// 12/24/02 AM.
 
 						if (!str_to_long(lval->getName(),num1))		// 03/12/02 AM.
 							{
@@ -1400,8 +1400,8 @@ switch (type_)
 							case RSLONG:										// 03/12/02 AM.
 								{
 								// Two numbers.
-								long num=0;										// 12/24/02 AM.
-								long num2=0;									// 12/24/02 AM.
+								long long num=0;										// 12/24/02 AM.
+								long long num2=0;									// 12/24/02 AM.
 
 								if (!(num2 = rval->getLong()))			// 03/12/02 AM.
 									{
@@ -1437,8 +1437,8 @@ switch (type_)
 								break;
 							case RSNUM:											// 03/12/02 AM.
 								{
-								long num=0;										// 12/24/02 AM.
-								long num2=0;									// 12/24/02 AM.
+								long long num=0;										// 12/24/02 AM.
+								long long num2=0;									// 12/24/02 AM.
 
 								if (!str_to_long(rval->getName(),num2))// 03/12/02 AM.
 									{
@@ -1542,18 +1542,18 @@ switch (type_)
 					}
 
 				if (!lval)
-					val = new RFASem((long)0);
+					val = new RFASem(0LL);
 				else		// Both values present.							// 11/21/00 AM.
 					val = new RFASem(lval->getLong() % rval->getLong());
 				break;
 			case CONFOP:						// %% operator				// 12/17/99 AM.
 				{
-				long num=0;														// 12/24/02 AM.
-				long num1=0;													// 12/24/02 AM.
-				long num2=0;													// 12/24/02 AM.
+				long long num=0;														// 12/24/02 AM.
+				long long num1=0;													// 12/24/02 AM.
+				long long num2=0;													// 12/24/02 AM.
 				if (!lval && !rval)											// 11/21/00 AM.
 					{
-					val = new RFASem((long)0);
+					val = new RFASem(0LL);
 					goto done;
 					}
 				if (lval && lval->getType() != RSLONG)
@@ -1613,11 +1613,11 @@ switch (type_)
 			case EQOP:
 			case NEOP:
 				{
-				long num=0;														// 12/24/02 AM.
+				long long num=0;														// 12/24/02 AM.
 				float ffnum1=0.0;												// 12/24/02 AM.
 				float ffnum2=0.0;												// 12/24/02 AM.
-				long num1=0;													// 12/24/02 AM.
-				long num2=0;													// 12/24/02 AM.
+				long long num1=0;													// 12/24/02 AM.
+				long long num2=0;													// 12/24/02 AM.
 				bool fflt1 = false, fflt2 = false;						// 12/24/02 AM.
 				_TCHAR *str1=0;													// 12/24/02 AM.
 				_TCHAR *str2=0;													// 12/24/02 AM.
@@ -1633,10 +1633,10 @@ switch (type_)
 					switch (op_->getType())									// 11/22/00 AM.
 						{
 						case EQOP:
-							val = new RFASem((long)1);
+							val = new RFASem(1LL);
 							goto done;
 						case NEOP:
-							val = new RFASem((long)0);
+							val = new RFASem(0LL);
 							goto done;
 						}
 					}
@@ -1917,11 +1917,11 @@ switch (type_)
 			case GEOP:
 			case LEOP:
 				{
-				long num=0;														// 12/24/02 AM.
+				long long num=0;														// 12/24/02 AM.
 				float ffnum1=0.0;												// 12/24/02 AM.
 				float ffnum2=0.0;												// 12/24/02 AM.
-				long num1=0;													// 12/24/02 AM.
-				long num2=0;													// 12/24/02 AM.
+				long long num1=0;													// 12/24/02 AM.
+				long long num2=0;													// 12/24/02 AM.
 				bool fflt1 = false, fflt2 = false;						// 12/24/02 AM.
 				_TCHAR *str1=0;													// 12/24/02 AM.
 				_TCHAR *str2=0;													// 12/24/02 AM.
@@ -1932,7 +1932,7 @@ switch (type_)
 
 				if (!lval && !rval)											// 11/22/00 AM.
 					{
-					val = new RFASem((long)0);
+					val = new RFASem(0LL);
 					goto done;
 					}
 				if (lval)														// 11/22/00 AM.
@@ -2152,9 +2152,9 @@ switch (type_)
 				break;
 			case ANDOP:
 				{
-				long num=0;														// 12/24/02 AM.
-				long num1=0;													// 12/24/02 AM.
-				long num2=0;													// 12/24/02 AM.
+				long long num=0;														// 12/24/02 AM.
+				long long num1=0;													// 12/24/02 AM.
+				long long num2=0;													// 12/24/02 AM.
 
 				// Now handled by eval_lhs_only							// 12/24/02 AM.
 				if (
@@ -2163,7 +2163,7 @@ switch (type_)
 #endif
 					!rval)														// 11/22/00 AM.
 					{
-					val = new RFASem((long)0);
+					val = new RFASem(0LL);
 					goto done;
 					}
 #ifdef OLD_
@@ -2285,14 +2285,14 @@ switch (type_)
 				// Two numbers.
 //				num = (num1 && num2);
 //				val = new RFASem(num);
-				val = new RFASem(num2 ? (long)1 : (long)0);			// 12/24/02 AM.
+				val = new RFASem(num2 ? 1LL : 0LL);			// 12/24/02 AM.
 				}
 				break;
 			case OROP:
 				{
-				long num=0;														// 12/24/02 AM.
-				long num1=0;													// 12/24/02 AM.
-				long num2=0;													// 12/24/02 AM.
+				long long num=0;														// 12/24/02 AM.
+				long long num1=0;													// 12/24/02 AM.
+				long long num2=0;													// 12/24/02 AM.
 
 				if (
 #ifdef OLD_
@@ -2300,7 +2300,7 @@ switch (type_)
 #endif
 					!rval)														// 11/22/00 AM.
 					{
-					val = new RFASem((long)0);
+					val = new RFASem(0LL);
 					goto done;
 					}
 #ifdef OLD_
@@ -2424,7 +2424,7 @@ switch (type_)
 				// Two numbers.
 //				num = (num1 || num2);
 //				val = new RFASem(num);
-				val = new RFASem(num2 ? (long)1 : (long)0);			// 12/24/02 AM.
+				val = new RFASem(num2 ? 1LL : 0LL);			// 12/24/02 AM.
 				}
 				break;
 			case OUTOP:		// C++ -like << output operator!			// 12/31/99 AM.
@@ -2576,7 +2576,7 @@ switch (type_)
 						break;
 					case RSNUM:
 						{
-						long num2=0;											// 12/24/02 AM.
+						long long num2=0;											// 12/24/02 AM.
 						if (!str_to_long(rval->getNum(), num2))
 							{
 							ok = false;
@@ -2780,7 +2780,7 @@ switch (type_)
 				}
 			if (!darg)															// 10/14/00 AM.
 				{
-				arg = new Iarg((long)0);									// 10/14/00 AM.
+				arg = new Iarg(0LL);									// 10/14/00 AM.
 				vals->rpush(arg);												// 10/14/00 AM.
 				darg = vals->getFirst();									// 10/14/00 AM.
 				}
@@ -2831,7 +2831,7 @@ switch (type_)
 				// assign to that position down below.
 				for (; ii <= index; ++ii)									// 10/14/00 AM.
 					{
-					arg = new Iarg((long)0);								// 10/14/00 AM.
+					arg = new Iarg(0LL);								// 10/14/00 AM.
 					vals->rpush(arg);											// 10/14/00 AM.
 					}
 				darg = vals->getLast();										// 10/14/00 AM.
@@ -2892,7 +2892,7 @@ switch (type_)
 				nlppp->parse_->errOut(&gerrStr,false);
 				return false;
 				}
-			arg = new Iarg((long)0);										// 10/14/00 AM.
+			arg = new Iarg(0LL);										// 10/14/00 AM.
 			vals->rpush(arg);													// 10/14/00 AM.
 			darg = vals->getFirst();										// 10/14/00 AM.
 			}
@@ -2964,7 +2964,7 @@ switch (type_)
 				case RSNUM:	// Bastard num (was converted to str).	// 10/14/00 AM.
 					{
 					// Convert to num and assign.
-					long num=0;													// 12/24/02 AM.
+					long long num=0;													// 12/24/02 AM.
 					arg->setType(IANUM);										// 10/14/00 AM.
 					if (!str_to_long(rval->getName(), num))			// 10/14/00 AM.
 						{
@@ -3083,16 +3083,16 @@ switch (type_)
 		else if (!rval)														// 08/21/00 AM.
 			{
 			if (op_->getType() == NOTOP)					// BUG FIX.	// 11/10/01 AM.
-				val = new RFASem((long)1);					// BUG FIX.	// 11/10/01 AM.
+				val = new RFASem(1LL);					// BUG FIX.	// 11/10/01 AM.
 			else													// BUG FIX.	// 11/10/01 AM.
-				val = new RFASem((long) 0);								// 08/21/00 AM.
+				val = new RFASem(0LL);								// 08/21/00 AM.
 			goto done;															// 08/21/00 AM.
 			}
 		switch (op_->getType())
 			{
 			case INCOP:
 				{
-				long num=0;														// 12/24/02 AM.
+				long long num=0;														// 12/24/02 AM.
 				if (!inc_interp(rhs_, nlppp, /*UP*/ num))				// 06/13/00 AM.
 					{
 					ok = false;
@@ -3103,7 +3103,7 @@ switch (type_)
 				}
 			case DECOP:
 				{
-				long num=0;														// 12/24/02 AM.
+				long long num=0;														// 12/24/02 AM.
 				// Return decremented num.  Create variable with init
 				// value zero, if not found.								// 06/01/00 AM.
 				if (!dec_interp(rhs_, nlppp, /*UP*/ num))				// 06/13/00 AM.
@@ -3116,7 +3116,7 @@ switch (type_)
 				}
 			case NOTOP:
 				{
-				long num=0;														// 12/24/02 AM.
+				long long num=0;														// 12/24/02 AM.
 				// Get rhs value.
 				// Attempt to do a "not".
 				// Return the not.
@@ -3183,7 +3183,7 @@ switch (type_)
 				return ok;
 			case MINUSOP:
 				{
-				long num=0;														// 12/24/02 AM.
+				long long num=0;														// 12/24/02 AM.
 				// Get rhs value.
 				// Attempt to negate.
 				// Return the negation.
@@ -3238,7 +3238,7 @@ switch (type_)
 			{
 			case INCOP:
 				{
-				long num=0;														// 12/24/02 AM.
+				long long num=0;														// 12/24/02 AM.
 				// Rhs must be a variable.
 				// Get the variable and its value.
 				if (!unpackVar(rhs_, nlppp, /*UP*/ var, pair, vals,index))
@@ -3251,8 +3251,8 @@ switch (type_)
 				if (!vals || !(darg = vals->getFirst()))
 					{
 					// Variable has no value.  Set to 1 and done.
-					val = new RFASem((long)0);		// RETURN UNINCREMENTED VALUE.
-					Var::setVal(pair, (long)1);			// Install 1 in variable.
+					val = new RFASem(0LL);		// RETURN UNINCREMENTED VALUE.
+					Var::setVal(pair, 1LL);			// Install 1 in variable.
 					goto done;
 					}
 				if (darg->Right())
@@ -3299,7 +3299,7 @@ switch (type_)
 				}
 			case DECOP:
 				{
-				long num=0;														// 12/24/02 AM.
+				long long num=0;														// 12/24/02 AM.
 				// Rhs must be a variable.
 				// Get the variable and its value.
 				if (!unpackVar(rhs_, nlppp, /*UP*/ var, pair, vals,index))
@@ -3310,8 +3310,8 @@ switch (type_)
 				if (!vals || !(darg = vals->getFirst()))
 					{
 					// Variable has no value.  Set to -1 and done.
-					val = new RFASem((long)0);		// RETURN UNDECREMENTED VALUE.
-					Var::setVal(pair, (long)-1);			// Install -1 in variable.
+					val = new RFASem(0LL);		// RETURN UNDECREMENTED VALUE.
+					Var::setVal(pair, -1LL);			// Install -1 in variable.
 					goto done;
 					}
 				if (darg->Right())
@@ -3412,7 +3412,7 @@ switch (op_->getType())
 	case ANDOP:
 		if (!lval)
 			{
-			val = new RFASem((long) 0);
+			val = new RFASem(0LL);
 			return true;
 			}
 		break;
@@ -3437,7 +3437,7 @@ switch (lval->getType())
 		break;
 	case RSNUM:
 		{
-		long num1=0;
+		long long num1=0;
 		if (!str_to_long(lval->getNum(), num1))
 			{
 			ok = false;
@@ -3488,14 +3488,14 @@ switch (op_->getType())
 			return false;
 		else
 			{
-			val = new RFASem((long) 0);
+			val = new RFASem(0LL);
 			return true;
 			}
 		}
 	case OROP:
 		if (nonzero)
 			{
-			val = new RFASem((long) 1);
+			val = new RFASem(1LL);
 			return true;
 			}
 		else
@@ -3843,7 +3843,7 @@ return true;
 *			If var doesn't exist, make it with init value zero.
 *********************************************/
 
-bool Iexpr::inc(RFASem *sem, Nlppp *nlppp, /*UP*/ long &num)
+bool Iexpr::inc(RFASem *sem, Nlppp *nlppp, /*UP*/ long long &num)
 {
 bool ok = inc_interp(sem,nlppp,/*UP*/ num);
 delete sem;
@@ -3862,7 +3862,7 @@ return ok;
 *			Interpreted version doesn't free given SEM. Compiled does.
 *********************************************/
 
-inline bool Iexpr::inc_interp(RFASem *sem, Nlppp *nlppp, /*UP*/ long &num)
+inline bool Iexpr::inc_interp(RFASem *sem, Nlppp *nlppp, /*UP*/ long long &num)
 {
 num = -1;
 // Sem must be a variable.
@@ -3886,7 +3886,7 @@ if (!darg && index <= 0)										// FIX.	// 07/15/03 AM.
 	{
 	// Variable has no value.  Set to 1 and done.
 	num = 1;
-	Var::setVal(pair, (long)1);	// Install 1 in variable.
+	Var::setVal(pair, 1LL);	// Install 1 in variable.
 //	delete sem;												// MEM LEAK.	// 06/13/00 AM.
 	return true;
 	}
@@ -3905,7 +3905,7 @@ if (index >= 0)	// INDEXED ARRAY VALUE.								// 10/15/00 AM.
 		// assign to that position down below.
 		for (; ii <= index; ++ii)											// 10/15/00 AM.
 			{
-			arg = new Iarg((long)0);										// 10/15/00 AM.
+			arg = new Iarg(0LL);										// 10/15/00 AM.
 			vals->rpush(arg);													// 10/15/00 AM.
 			}
 		darg = vals->getLast();												// 10/15/00 AM.
@@ -3959,7 +3959,7 @@ return true;
 *			If var doesn't exist, make it with init value zero.
 *********************************************/
 
-bool Iexpr::dec(RFASem *sem, Nlppp *nlppp, /*UP*/ long &num)
+bool Iexpr::dec(RFASem *sem, Nlppp *nlppp, /*UP*/ long long &num)
 {
 bool ok = dec_interp(sem,nlppp,/*UP*/num);
 delete sem;
@@ -3977,7 +3977,7 @@ return ok;
 *			Interpreted version doesn't free given SEM. Compiled does.
 *********************************************/
 
-inline bool Iexpr::dec_interp(RFASem *sem, Nlppp *nlppp, /*UP*/ long &num)
+inline bool Iexpr::dec_interp(RFASem *sem, Nlppp *nlppp, /*UP*/ long long &num)
 {
 num = -1;
 Ivar *var;
@@ -3993,13 +3993,13 @@ if (!unpackVar(sem, nlppp, /*UP*/ var, pair, vals,index))
 Delt<Iarg> *darg=0;															// 07/15/03 AM.
 Iarg *arg;
 if (vals)																		// 07/15/03 AM.
-	darg = vals->getFirst();												// 07/15/03 AM.
+	darg = vals->getFirst();												// 07/15/03 AM.1LL
 
 if (!darg && index <= 0)										// FIX.	// 07/15/03 AM.
 	{
 	// Variable has no value.  Set to -1 and done.
 	num = -1;
-	Var::setVal(pair, (long)-1);	// Install -1 in variable.
+	Var::setVal(pair, -1LL);	// Install -1 in variable.
 //	delete sem;												// MEM LEAK.	// 06/13/00 AM.
 	return true;
 	}
@@ -4018,7 +4018,7 @@ if (index >= 0)	// INDEXED ARRAY VALUE.								// 07/15/03 AM.
 		// assign to that position down below.
 		for (; ii <= index; ++ii)											// 07/15/03 AM.
 			{
-			arg = new Iarg((long)0);										// 07/15/03 AM.
+			arg = new Iarg(0LL);										// 07/15/03 AM.
 			vals->rpush(arg);													// 07/15/03 AM.
 			}
 		darg = vals->getLast();												// 07/15/03 AM.
@@ -4068,7 +4068,7 @@ return true;
 * NOTE:	Supporting compiled runtime also.
 *********************************************/
 
-bool Iexpr::vtnot(RFASem *sem, Nlppp *nlppp, /*UP*/ long &num)
+bool Iexpr::vtnot(RFASem *sem, Nlppp *nlppp, /*UP*/ long long &num)
 {
 num = 1;
 _TCHAR *str;
@@ -4181,7 +4181,7 @@ Iarg *arg = NULL;
 Delt<Iarg> *darg=vals->getFirst();
 if (!darg)
 	{
-	arg = new Iarg((long)0);
+	arg = new Iarg(0LL);
 	vals->rpush(arg);
 	darg = vals->getFirst();
 	}
@@ -4214,7 +4214,7 @@ else	// Indexed value doesn't exist.
 	// assign to that position down below.
 	for (; ii <= index; ++ii)
 		{
-		arg = new Iarg((long)0);
+		arg = new Iarg(0LL);
 		vals->rpush(arg);
 		}
 	darg = vals->getLast();

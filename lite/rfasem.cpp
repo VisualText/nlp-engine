@@ -67,7 +67,7 @@ RFASem::RFASem(Iarg			  *x) : Sem() {val_.arg_	  = x; type_ = RSARG;   }
 RFASem::RFASem(Ipair			  *x) : Sem() {val_.pair_	  = x; type_ = RSPAIR;  }
 RFASem::RFASem(Iaction		  *x) : Sem() {val_.action_  = x; type_ = RSACTION;}
 RFASem::RFASem(Ipre			  *x)	: Sem() {val_.pre_	  = x; type_ = RSPRE;   }
-RFASem::RFASem(long			   x)	: Sem() {val_.long_	  = x; type_ = RSLONG;	}
+RFASem::RFASem(long long			   x)	: Sem() {val_.long_	  = x; type_ = RSLONG;	}
 RFASem::RFASem(float				x) : Sem() {val_.float_	  = x; type_ = RSFLOAT; }
 RFASem::RFASem(std::_t_ostream		  *x) : Sem() {val_.ostr_	  = x; type_ = RSOSTREAM;}
 RFASem::RFASem(Ifunc			  *x) : Sem() {val_.func_	  = x; type_ = RSFUNC;}
@@ -364,7 +364,7 @@ switch (sem.type_)
 #endif
 		break;
 	case RSLONG:	 output													// 11/10/99 AM.
-									<< _T("((long)")								// 09/09/01 AM.
+									<< _T("((long long)")								// 09/09/01 AM.
 									<<  (sem.val_.long_)
 									<< _T(")")										// 09/09/01 AM.
 									;		break;
@@ -420,7 +420,7 @@ Iaction				*RFASem::getAction()		{return val_.action_; }
 Ipre					*RFASem::getPre()			{return val_.pre_;	 }
 _TCHAR					*RFASem::getName()		{return val_.name_;   }
 _TCHAR					*RFASem::getNum()			{return val_.name_;	 }
-long					 RFASem::getLong()		{return val_.long_;	 }
+long long					 RFASem::getLong()		{return val_.long_;	 }
 float					 RFASem::getFloat()		{return val_.float_;	 }
 std::_t_ostream				*RFASem::getOstream()	{return val_.ostr_;	 }
 Ifunc					*RFASem::getFunc()		{return val_.func_;	 }
@@ -470,7 +470,7 @@ void RFASem::setAction(Iaction			*x)	{val_.action_ = x; }
 void RFASem::setPre(Ipre					*x)	{val_.pre_	  = x; }
 void RFASem::setName(_TCHAR					*x)	{val_.name_   = x; }
 void RFASem::setNum(_TCHAR					*x)	{val_.name_   = x; }
-void RFASem::setLong(long					 x)	{val_.long_	  = x; }
+void RFASem::setLong(long long					 x)	{val_.long_	  = x; }
 void RFASem::setFloat(float				 x)	{val_.float_  = x; }
 void RFASem::setOstream(std::_t_ostream			*x)	{val_.ostr_	  = x; }
 
@@ -652,7 +652,7 @@ _TCHAR *indent = gen->indent_;
 std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 _TCHAR buff[MAXSTR+1];
 bool ok = false;
-long num=0;																		// 03/13/02 AM.
+long long num=0;																		// 03/13/02 AM.
 switch (type_)
 	{
 	case RSNAME:
@@ -665,13 +665,13 @@ switch (type_)
 		// Problem if generating these as strings.					// 03/13/02 AM.
 		if (!str_to_long(val_.name_,num))								// 03/13/02 AM.
 			return false;														// 03/13/02 AM.
-		*fcode << _T("(long)") << num;											// 03/13/02 AM.
+		*fcode << _T("(long long)") << num;											// 03/13/02 AM.
 		return true;															// 03/13/02 AM.
 	case RSLONG:
 		if (!val_.long_)				// If ZERO.							// 06/05/00 AM.
-			*fcode << _T("(long)0");		// Make unambiguous.				// 06/05/00 AM.
+			*fcode << _T("(long long)0");		// Make unambiguous.				// 06/05/00 AM.
 		else
-			*fcode << _T("(long)")		// Make unambiguous.				// 09/03/01 AM.
+			*fcode << _T("(long long)")		// Make unambiguous.				// 09/03/01 AM.
 					 << val_.long_;
 		return true;
 	case RSFLOAT:																// 08/16/01 AM.
@@ -835,12 +835,12 @@ return ostr;
 /********************************************
 * FN:		SEM_SET_LONG
 * CR:		07/05/06 AM.
-* SUBJ:	Loosely set a sem with long value.
+* SUBJ:	Loosely set a sem with long long value.
 * NOTE:	Convenience function.
 * ASS:	Assume if name type, will take numeric string value.
 *********************************************/
 
-long RFASem::sem_set_long(long num, bool &ok)
+long long RFASem::sem_set_long(long long num, bool &ok)
 {
 ok = true;
 switch (type_)
@@ -865,14 +865,14 @@ return num;
 /********************************************
 * FN:		SEM_TO_LONG
 * CR:		04/28/01 AM.
-* SUBJ:	Loosely convert a sem to long.
+* SUBJ:	Loosely convert a sem to long long.
 * NOTE:	Convenience function.
 *********************************************/
 
-long RFASem::sem_to_long(bool &ok)
+long long RFASem::sem_to_long(bool &ok)
 {
 ok = true;
-long num = 0;
+long long num = 0;
 switch (type_)
 	{
 	case RSLONG:
@@ -890,7 +890,6 @@ switch (type_)
 	}
 return num;
 }
-
 
 
 /********************************************
@@ -963,7 +962,7 @@ return 0;
 float RFASem::sem_to_float(bool &ok)
 {
 ok = true;
-long num = 0;
+long long num = 0;
 float fnum=0.0;
 switch (type_)
 	{

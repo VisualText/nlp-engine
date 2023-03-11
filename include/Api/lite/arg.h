@@ -62,18 +62,18 @@ public:
 		NODE* &end
 		);
 
-	static bool num1(_TCHAR*,/*DU*/DELTS*&,long&,bool=false);// 05/26/02 AM.
+	static bool num1(_TCHAR*,/*DU*/DELTS*&,long long&,bool=false);// 05/26/02 AM.
    static bool float1(_TCHAR*,/*DU*/DELTS*&,float&,bool=false);// 04/29/04 AM.
 	static bool str1(_TCHAR*,/*DU*/DELTS*&,_TCHAR*&);				// 05/26/02 AM.
 	static bool sem1(_TCHAR*,Nlppp*,/*DU*/DELTS*&,RFASem*&,	// 05/26/02 AM.
 																bool=false);	// 05/04/03 AM.
 	static bool ref1(_TCHAR*,/*DU*/DELTS*&,RFASem*&);			// 05/26/02 AM.
 	static bool str_or_num1(
-							_TCHAR*,/*DU*/DELTS*&,_TCHAR*&,long&);	// 05/26/02 AM.
+							_TCHAR*,/*DU*/DELTS*&,_TCHAR*&,long long&);	// 05/26/02 AM.
 	static bool any1(
-				_TCHAR*,Parse*,/*DU*/DELTS*&,_TCHAR*&,long&,float&,RFASem*&);	// 05/26/02 AM.
+				_TCHAR*,Parse*,/*DU*/DELTS*&,_TCHAR*&,long long&,float&,RFASem*&);	// 05/26/02 AM.
 	static bool any1(_TCHAR*,Parse*, /*DU*/ DELTS*&,enum Iargtype &,// 05/29/02 AM.
-		_TCHAR*&,long&,float&,RFASem*&);									// 05/29/02 AM.
+		_TCHAR*&,long long&,float&,RFASem*&);									// 05/29/02 AM.
 	static bool arg1(_TCHAR*,/*DU*/DELTS*&,Iarg*&);				// 05/26/02 AM.
 
 protected:

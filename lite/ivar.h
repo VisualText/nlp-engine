@@ -204,17 +204,17 @@ public:
     static bool nodeVarhasval(Pn*,_TCHAR*);                        // 06/14/05 AM.
     static bool nodeVarNZ(Pn*,_TCHAR*);                            // 06/16/05 AM.
     static bool nodeVarEQ(Pn*,_TCHAR*,_TCHAR*);                    // 06/16/05 AM.
-    static bool nodeVarEQ(Pn*,_TCHAR*,long);                       // 06/16/05 AM.
-    static bool nodeVarGTLT(Pn*,_TCHAR*,long,bool=false);
+    static bool nodeVarEQ(Pn*,_TCHAR*,long long);                       // 06/16/05 AM.
+    static bool nodeVarGTLT(Pn*,_TCHAR*,long long,bool=false);
 	static bool nodeReplaceval(Pn*,_TCHAR*,RFASem*,bool=true,bool=false);					// 06/26/01 AM.
 	static bool nodeReplaceval(Pn*,_TCHAR*,Dlist<Iarg>*);			// 11/14/02 AM.
 	static bool nodeReplaceval(Pn*,_TCHAR*,_TCHAR*,bool=true,bool=false);						// 06/26/01 AM.
-	static bool nodeReplaceval(Pn*,_TCHAR*,long,bool=true,bool=false);						// 06/26/01 AM.
+	static bool nodeReplaceval(Pn*,_TCHAR*,long long,bool=true,bool=false);						// 06/26/01 AM.
 	static bool nodeReplaceval(Pn*,_TCHAR*,float,bool=true,bool=false); // 12/15/14 AM.
 
 	static bool nodePushval(Pn*,_TCHAR*,_TCHAR*,bool=false,bool=false); // [OPT] // 12/14/14 AM.
 	static bool nodePushval(Pn*,_TCHAR*,RFASem*,bool=false,bool=false); // [OPT] // 12/15/14 AM.
-	static bool nodePushval(Pn*,_TCHAR*,long,bool=false,bool=false);    // [OPT] // 12/15/14 AM.
+	static bool nodePushval(Pn*,_TCHAR*,long long,bool=false,bool=false);    // [OPT] // 12/15/14 AM.
 	static bool nodePushval(Pn*,_TCHAR*,float,bool=false,bool=false);   // [OPT] // 12/15/14 AM.
 
 	static Dlist<Iarg> *nodeVarnames(Pn*);								// 05/13/02 AM.

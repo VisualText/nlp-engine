@@ -874,7 +874,7 @@ if (hdll && call_ucodeAction(hdll, func,args,&glob_Auser))
 			sem = new RFASem(glob_Auser.retval_.ostr_);
 			break;
 		case RETBOOL:
-			sem = new RFASem(glob_Auser.retval_.bool_ ? (long)1 : (long)0);
+			sem = new RFASem(glob_Auser.retval_.bool_ ? 1LL : 0LL);
 			break;
 		case RETNULL:
 		default:
@@ -904,8 +904,8 @@ bool Fn::fnFactorial(
 	RFASem* &sem		// Function return value.
 	)
 {
-long num1;
-long fact = -1;
+long long num1;
+long long fact = -1;
 sem = 0;
 
 if (!Arg::num1(_T("factorial"),/*DU*/ (DELTS*&)args, num1, false))
@@ -995,7 +995,7 @@ Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 
 RFASem *sem1;
 _TCHAR *name1=0;
-long num1= -1;
+long long num1= -1;
 
 if (!Arg::sem1(_T("findconcept"),nlppp,(DELTS*&)args,sem1))
 	return false;
@@ -1313,7 +1313,7 @@ if (con_sem->getType() != RS_KBCONCEPT)
 
 CG *cg = parse->getAna()->getCG();
 CONCEPT *conc1 = con_sem->getKBconcept();
-long type = cg->attrValType(conc1, attr_str);
+long long type = cg->attrValType(conc1, attr_str);
 
 sem = new RFASem(type);
 return true;
@@ -1436,7 +1436,7 @@ CG *cg = parse->getAna()->getCG();
 float fval = 0.0;			// 12/26/06 AM.
 if (!cg->findVal(conc1, attr_str, /*UP*/ fval))			// FIX.	// 08/21/00 AM.
 	fval = 0;															// FIX.	// 08/21/00 AM.
-long val = (long) fval;													// CONVERT.	// 12/27/06 AM.
+long long val = (long long) fval;													// CONVERT.	// 12/27/06 AM.
 if (abs(fval - val) > 0.00001)	// tolerance,delta					// 12/27/06 AM.
 	{
 	_stprintf(Errbuf,_T("[numval: Truncating float (use fltval).]"));		// 12/27/06 AM.
@@ -2161,7 +2161,7 @@ else																				// 10/30/00 AM.
 
 bool found = cg->attrExists(hier1, attr_str, val_str);
 //	return false;			// 04/25/00 AM. Rogue return caught by Dave.
-long val;
+long long val;
 if (found)
 	val = 1;
 else
@@ -2234,7 +2234,7 @@ CONCEPT *conc1 = conc_sem->getKBconcept();
 CG *cg = parse->getAna()->getCG();
 
 bool found = cg->attrWithval(conc1, attr_str, val_str);
-long val;
+long long val;
 if (found)
 	val = 1;
 else
@@ -2832,7 +2832,7 @@ if (!val)
 // Need to get the current KB.
 CG *cg = parse->getAna()->getCG();
 
-long num;
+long long num;
 cg->popVal(val, /*UP*/ num);
 
 // Return appropriate value.
@@ -2986,7 +2986,7 @@ Parse *parse = nlppp->parse_;
 
 RFASem *con_sem = 0;		// Parent concept.
 _TCHAR *name_str=0;			// New concept's name.
-long pos_num = 0;			// Optional position.
+long long pos_num = 0;			// Optional position.
 
 if (!Arg::sem1(_T("makeconcept"),nlppp,(DELTS*&)args,con_sem))
 	return false;
@@ -3018,8 +3018,9 @@ CONCEPT *conc1 = con_sem->getKBconcept();
 
 // Need to get the current KB.
 CG *cg = parse->getAna()->getCG();
+int posn = (int) pos_num;
 
-CONCEPT *conc = cg->makeConcept(conc1, name_str, pos_num);
+CONCEPT *conc = cg->makeConcept(conc1, name_str, posn);
 
 // Return as str type.
 if (conc)															// FIX.	// 11/15/00 AM.
@@ -3054,7 +3055,7 @@ Parse *parse = nlppp->parse_;
 
 RFASem *con_sem = 0;		// Parent concept.
 RFASem *child_sem = 0;	// Concept to add.
-long pos_num = 0;			// Optional position.
+long long pos_num = 0;			// Optional position.
 
 if (!Arg::sem1(_T("addconcept"),nlppp,(DELTS*&)args,con_sem))
 	return false;
@@ -3192,7 +3193,7 @@ Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 
 RFASem *con_sem = 0;
 _TCHAR *attr_str=0;
-long num=0;
+long long num=0;
 
 if (!Arg::sem1(_T("addsval"),nlppp,(DELTS*&)args,con_sem))
 	return false;
@@ -3325,7 +3326,7 @@ Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 
 RFASem *con_sem = 0;
 _TCHAR *attr_str=0;
-long num=0;
+long long num=0;
 
 if (!Arg::sem1(_T("addnumval"),nlppp,(DELTS*&)args,con_sem))
 	return false;
@@ -3545,7 +3546,7 @@ CONCEPT *conc1 = con_sem->getKBconcept();
 CG *cg = parse->getAna()->getCG();
 
 bool flag = cg->rmConcept(conc1);
-long ok = (flag ? 1 : 0);										// FIX.	// 02/06/01 AM.
+long long ok = (flag ? 1 : 0);										// FIX.	// 02/06/01 AM.
 sem = new RFASem(ok);											// FIX.	// 02/06/01 AM.
 return true;
 }
@@ -3574,7 +3575,7 @@ Parse *parse = nlppp->parse_;
 
 RFASem *sem1;
 _TCHAR *name1=0;
-long num1= -1;
+long long num1= -1;
 
 if (!Arg::sem1(_T("rmchild"),nlppp,(DELTS*&)args,sem1))
 	return false;
@@ -3601,7 +3602,7 @@ if (sem1->getType() != RS_KBCONCEPT)
 CONCEPT *conc1 = sem1->getKBconcept();
 CONCEPT *child = 0;
 
-long ok;																			// 02/06/01 AM.
+long long ok;																			// 02/06/01 AM.
 bool flag;																		// 02/06/01 AM.
 if (name1 && *name1)		// 2nd arg was name.
 	{
@@ -3670,7 +3671,7 @@ if (sem1->getType() != RS_KBCONCEPT)
 CONCEPT *conc1 = sem1->getKBconcept();
 
 bool ok = cg->rmVals(conc1, name1);										// 05/25/01 AM.
-long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
+long long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
 sem = new RFASem(num);			// Return 1/0 for boolean.			// 05/25/01 AM.
 return true;																	// 05/25/01 AM.
 }
@@ -3735,7 +3736,7 @@ if (sem2->getType() != RS_KBVAL)
 VAL *val = sem2->getKBval();
 
 bool ok = cg->rmVal(attr, val);											// 05/25/01 AM.
-long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
+long long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
 sem = new RFASem(num);			// Return 1/0 for boolean.			// 05/25/01 AM.
 return true;																	// 05/25/01 AM.
 }
@@ -3793,7 +3794,7 @@ if (sem1->getType() != RS_KBCONCEPT)
 CONCEPT *conc1 = sem1->getKBconcept();
 
 bool ok = cg->rmAttr(conc1, name1);										// 05/25/01 AM.
-long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
+long long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
 sem = new RFASem(num);			// Return 1/0 for boolean.			// 05/25/01 AM.
 return true;																	// 05/25/01 AM.
 }
@@ -3858,7 +3859,7 @@ if (sem1->getType() != RS_KBCONCEPT)
 CONCEPT *conc = sem1->getKBconcept();
 
 bool ok = cg->rmAttrval(conc, attr_s, val_s);						// 05/25/01 AM.
-long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
+long long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
 sem = new RFASem(num);			// Return 1/0 for boolean.			// 05/25/01 AM.
 return true;																	// 05/25/01 AM.
 }
@@ -3953,7 +3954,7 @@ CONCEPT *conc1 = con_sem->getKBconcept();
 CG *cg = parse->getAna()->getCG();
 
 bool ok = cg->prunePhrases(conc1);										// 05/29/01 AM.
-sem = new RFASem( ok ? (long)1 : (long)0);							// 05/29/01 AM.
+sem = new RFASem( ok ? 1LL : 0LL);							// 05/29/01 AM.
 
 return true;
 }
@@ -3995,7 +3996,7 @@ if (!name1)																		// 10/30/00 AM.
 CG *cg = parse->getAna()->getCG();
 
 bool ok = cg->rmWord(name1);
-long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 02/03/01 AM.
+long long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 02/03/01 AM.
 sem = new RFASem(num);														// 02/03/01 AM.
 return true;
 }
@@ -4026,7 +4027,7 @@ Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 RFASem *con_sem = 0;
 _TCHAR *attr_str=0;
 _TCHAR *str=0;
-long num= -1;
+long long num= -1;
 RFASem *val_sem = 0;															// 08/12/00 AM.
 float flt = 0;	// 12/26/06 AM.
 enum Iargtype typ;	// 12/26/06 AM.
@@ -4086,7 +4087,7 @@ else						// Val is a sem.									// 08/12/00 AM.
 	ok = cg->replaceVal(conc1, attr_str, val_conc);					// 05/25/01 AM.
 	}
 
-long numb = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
+long long numb = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
 sem = new RFASem(numb);			// Return 1/0 for boolean.			// 05/25/01 AM.
 return true;																	// 05/25/01 AM.
 }
@@ -4142,7 +4143,7 @@ CONCEPT *conc1 = con_sem->getKBconcept();
 CG *cg = nlppp->parse_->getAna()->getCG();
 
 bool ok = cg->renameConcept(conc1, str);								// 05/25/01 AM.
-long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
+long long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
 sem = new RFASem(num);			// Return 1/0 for boolean.			// 05/25/01 AM.
 return true;																	// 05/25/01 AM.
 }
@@ -4168,7 +4169,7 @@ sem = 0;
 Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 
 RFASem *con_sem = 0;
-long num = -1;
+long long num = -1;
 _TCHAR *str=0;
 
 if (!Arg::sem1(_T("renamechild"),nlppp,(DELTS*&)args,con_sem))
@@ -4202,7 +4203,7 @@ CONCEPT *conc1 = con_sem->getKBconcept();
 CG *cg = nlppp->parse_->getAna()->getCG();
 
 bool ok = cg->renameConcept(conc1, num, str);						// 05/25/01 AM.
-long numb = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
+long long numb = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
 sem = new RFASem(numb);			// Return 1/0 for boolean.			// 05/25/01 AM.
 return true;																	// 05/25/01 AM.
 }
@@ -4267,7 +4268,7 @@ CONCEPT *conc1 = con_sem->getKBconcept();
 CG *cg = nlppp->parse_->getAna()->getCG();
 
 bool ok = cg->renameAttr(conc1, attr_str, str);						// 05/25/01 AM.
-long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
+long long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
 sem = new RFASem(num);			// Return 1/0 for boolean.			// 05/25/01 AM.
 return true;																	// 05/25/01 AM.
 }
@@ -4471,7 +4472,7 @@ if (sem1->getType() != RS_KBCONCEPT)
 CONCEPT *conc1 = sem1->getKBconcept();
 
 bool ok = cg->sortPhrase(conc1);											// 05/25/01 AM.
-long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
+long long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
 sem = new RFASem(num);			// Return 1/0 for boolean.			// 05/25/01 AM.
 return true;																	// 05/25/01 AM.
 }
@@ -4521,7 +4522,7 @@ if (sem1->getType() != RS_KBCONCEPT)
 CONCEPT *conc1 = sem1->getKBconcept();
 
 bool ok = cg->sortChilds(conc1);
-long num = (ok ? 1 : 0);		// "Convert" to boolnum.
+long long num = (ok ? 1 : 0);		// "Convert" to boolnum.
 sem = new RFASem(num);			// Return 1/0 for boolean.
 return true;
 }
@@ -4570,7 +4571,7 @@ if (sem1->getType() != RS_KBCONCEPT)
 CONCEPT *conc1 = sem1->getKBconcept();
 
 bool ok = cg->sortHier(conc1);
-long num = (ok ? 1 : 0);		// "Convert" to boolnum.
+long long num = (ok ? 1 : 0);		// "Convert" to boolnum.
 sem = new RFASem(num);			// Return 1/0 for boolean.
 return true;
 }
@@ -4619,7 +4620,7 @@ if (sem1->getType() != RS_KBCONCEPT)
 	}
 CONCEPT *conc1 = sem1->getKBconcept();
 
-long len = cg->phraseLength(conc1);
+long long len = cg->phraseLength(conc1);
 
 sem = new RFASem(len);
 return true;
@@ -4750,7 +4751,7 @@ Parse *parse = nlppp->parse_;
 
 RFASem *sem1;
 _TCHAR *name1=0;
-long num1= -1;
+long long num1= -1;
 
 if (!Arg::sem1(_T("findnode"),nlppp,(DELTS*&)args,sem1))
 	return false;
@@ -5020,7 +5021,7 @@ Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 
 RFASem *con_sem = 0;
 _TCHAR *str=0;
-long num = -1;
+long long num = -1;
 float flt = -1.0;																// 11/27/02 AM.
 enum Iargtype typ = IANULL;												// 11/27/02 AM.
 RFASem *sem1 = 0;																// 11/27/02 AM.
@@ -5094,7 +5095,7 @@ Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 
 RFASem *phr_sem = 0;
 _TCHAR *str=0;
-long num= -1;
+long long num= -1;
 
 if (!Arg::sem1(_T("addnode"),nlppp,(DELTS*&)args, phr_sem))
 	return false;
@@ -5180,7 +5181,7 @@ if (sem1->getType() != RS_KBCONCEPT)
 CONCEPT *node = sem1->getKBconcept();
 
 bool ok = cg->rmNode(node);												// 05/25/01 AM.
-long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
+long long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
 sem = new RFASem(num);			// Return 1/0 for boolean.			// 05/25/01 AM.
 return true;																	// 05/25/01 AM.
 }
@@ -5230,7 +5231,7 @@ if (sem1->getType() != RS_KBPHRASE)
 PHRASE *phr = sem1->getKBphrase();
 
 bool ok = cg->rmPhrase(phr);												// 05/25/01 AM.
-long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
+long long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
 sem = new RFASem(num);			// Return 1/0 for boolean.			// 05/25/01 AM.
 return true;																	// 05/25/01 AM.
 }
@@ -5279,7 +5280,7 @@ if (sem1->getType() != RS_KBCONCEPT)
 CONCEPT *conc = sem1->getKBconcept();
 
 bool ok = cg->rmCphrase(conc);											// 05/25/01 AM.
-long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
+long long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
 sem = new RFASem(num);			// Return 1/0 for boolean.			// 05/25/01 AM.
 return true;																	// 05/25/01 AM.
 }
@@ -5307,7 +5308,7 @@ Parse *parse = nlppp->parse_;
 
 RFASem *sem1;
 _TCHAR *name1=0;
-long num1= -1;
+long long num1= -1;
 _TCHAR *rename=0;
 
 if (!Arg::sem1(_T("renamenode"),nlppp,(DELTS*&)args,sem1))
@@ -5347,7 +5348,7 @@ if (name1 && *name1)		// 2nd arg was name.
 else							// 2nd arg was num.
 	ok = cg->renameNode(phr1, num1, rename);							// 05/25/01 AM.
 
-long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
+long long num = (ok ? 1 : 0);		// "Convert" to boolnum.			// 05/25/01 AM.
 sem = new RFASem(num);			// Return 1/0 for boolean.			// 05/25/01 AM.
 return true;																	// 05/25/01 AM.
 }
@@ -5386,17 +5387,17 @@ if (!Arg::done((DELTS*)args, _T("strcontains"),parse))
 if (!name1)																		// 10/30/00 AM.
 	{
 	_stprintf(Errbuf,_T("[strcontains: Warning. Given no str1.]"));	// 05/18/01 AM.
-	sem = new RFASem((long)0);												// 10/30/00 AM.
+	sem = new RFASem(0LL);												// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 if (!name2)																		// 10/30/00 AM.
 	{
 	_stprintf(Errbuf,_T("[strcontains: Warning. Given no str2.]"));	// 05/18/01 AM.
-	sem = new RFASem((long)0);												// 10/30/00 AM.
+	sem = new RFASem(0LL);												// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 
-long result = unicu::contains(name1,name2,false) ? 1 : 0;
+long long result = unicu::contains(name1,name2,false) ? 1 : 0;
 
 sem = new RFASem(result);
 
@@ -5438,17 +5439,17 @@ if (!Arg::done((DELTS*)args, _T("strcontainsnocase"),parse))
 if (!name1)																		// 10/30/00 AM.
 	{
 	_stprintf(Errbuf,_T("[strcontainsnocase: Warning. Given no str1.]"));// 05/18/01 AM.
-	sem = new RFASem((long)0);												// 10/30/00 AM.
+	sem = new RFASem(0LL);												// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 if (!name2)																		// 10/30/00 AM.
 	{
 	_stprintf(Errbuf,_T("[strcontainsnocase: Warning. Given no str2.]"));// 05/18/01 AM.
-	sem = new RFASem((long)0);												// 10/30/00 AM.
+	sem = new RFASem(0LL);												// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 
-long result = unicu::contains(name1,name2,true) ? 1 : 0;
+long long result = unicu::contains(name1,name2,true) ? 1 : 0;
 sem = new RFASem(result);
 
 // Return string compare result
@@ -5490,18 +5491,18 @@ if (!Arg::done((DELTS*)args, _T("strequal"),parse))
 if (!name1)																		// 10/30/00 AM.
 	{
 	_stprintf(Errbuf,_T("[strequal: Warning. Given no str1.]"));		// 05/18/01 AM.
-	sem = new RFASem((long)0);												// 10/30/00 AM.
+	sem = new RFASem(0LL);												// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 if (!name2)																		// 10/30/00 AM.
 	{
 	_stprintf(Errbuf,_T("[strequal: Warning. Given no str2.]"));		// 05/18/01 AM.
-	sem = new RFASem((long)0);												// 10/30/00 AM.
+	sem = new RFASem(0LL);												// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 #endif
 
-long result;																	// 07/11/03 AM.
+long long result;																	// 07/11/03 AM.
 if (empty(name1) && empty(name2))										// 07/11/03 AM.
 	result = 1;																	// 07/11/03 AM.
 else if (empty(name1) || empty(name2))									// 07/11/03 AM.
@@ -5550,18 +5551,18 @@ if (!Arg::done((DELTS*)args, _T("strnotequal"),parse))
 if (!name1)																		// 10/30/00 AM.
 	{
 	_stprintf(Errbuf,_T("[strnotequal: Warning. Given no str1.]"));	// 05/18/01 AM.
-	sem = new RFASem((long)0);												// 10/30/00 AM.
+	sem = new RFASem(0LL);												// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 if (!name2)																		// 10/30/00 AM.
 	{
 	_stprintf(Errbuf,_T("[strnotequal: Warning. Given no str2.]"));	// 05/18/01 AM.
-	sem = new RFASem((long)0);												// 10/30/00 AM.
+	sem = new RFASem(0LL);												// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 #endif
 
-long result;																	// 07/11/03 AM.
+long long result;																	// 07/11/03 AM.
 if (empty(name1) && empty(name2))										// 07/11/03 AM.
 	result = 0;																	// 07/11/03 AM.
 else if (empty(name1) || empty(name2))									// 07/11/03 AM.
@@ -5610,18 +5611,18 @@ if (!Arg::done((DELTS*)args, _T("strequalnocase"),parse))
 if (!name1)																		// 10/30/00 AM.
 	{
 	_stprintf(Errbuf,_T("[strequalnocase: Warning. Given no str1.]"));// 05/18/01 AM.
-	sem = new RFASem((long)0);												// 10/30/00 AM.
+	sem = new RFASem(0LL);												// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 if (!name2)																		// 10/30/00 AM.
 	{
 	_stprintf(Errbuf,_T("[strequalnocase: Warning. Given no str2.]"));// 05/18/01 AM.
-	sem = new RFASem((long)0);												// 10/30/00 AM.
+	sem = new RFASem(0LL);												// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 #endif
 
-long result;																	// 07/11/03 AM.
+long long result;																	// 07/11/03 AM.
 if (empty(name1) && empty(name2))										// 07/11/03 AM.
 	result = 1;																	// 07/11/03 AM.
 else if (empty(name1) || empty(name2))									// 07/11/03 AM.
@@ -5670,18 +5671,18 @@ if (!Arg::done((DELTS*)args, _T("strnotequalnocase"),parse))
 if (!name1)																		// 10/30/00 AM.
 	{
 	_stprintf(Errbuf,_T("[strnotequalnocase: Warning. Given no str1.]"));// 05/18/01 AM.
-	sem = new RFASem((long)0);												// 10/30/00 AM.
+	sem = new RFASem(0LL);												// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 if (!name2)																		// 10/30/00 AM.
 	{
 	_stprintf(Errbuf,_T("[strnotequalnocase: Warning. Given no str2.]"));// 05/18/01 AM.
-	sem = new RFASem((long)0);												// 10/30/00 AM.
+	sem = new RFASem(0LL);												// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 #endif
 
-long result;																	// 07/11/03 AM.
+long long result;																	// 07/11/03 AM.
 if (empty(name1) && empty(name2))										// 07/11/03 AM.
 	result = 0;																	// 07/11/03 AM.
 else if (empty(name1) || empty(name2))									// 07/11/03 AM.
@@ -5730,18 +5731,18 @@ if (!Arg::done((DELTS*)args, _T("strgreaterthan"),parse))
 if (!name1)																		// 10/30/00 AM.
 	{
 	_stprintf(Errbuf,_T("[strgreaterthan: Warning. Given no str1.]"));// 05/18/01 AM.
-	sem = new RFASem((long)0);												// 10/30/00 AM.
+	sem = new RFASem(0LL);												// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 if (!name2)																		// 10/30/00 AM.
 	{
 	_stprintf(Errbuf,_T("[strgreaterthan: Warning. Given no str2.]"));// 05/18/01 AM.
-	sem = new RFASem((long)0);												// 10/30/00 AM.
+	sem = new RFASem(0LL);												// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 #endif
 
-long result;																	// 07/11/03 AM.
+long long result;																	// 07/11/03 AM.
 if (empty(name1) && empty(name2))										// 07/11/03 AM.
 	result = 0;																	// 07/11/03 AM.
 else if (empty(name1))														// 07/11/03 AM.
@@ -5793,18 +5794,18 @@ if (!Arg::done((DELTS*)args, _T("strlessthan"),parse))
 if (!name1)																		// 10/30/00 AM.
 	{
 	_stprintf(Errbuf,_T("[strlessthan: Warning. Given no str1.]"));	// 05/18/01 AM.
-	sem = new RFASem((long)0);												// 10/30/00 AM.
+	sem = new RFASem(0LL);												// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 if (!name2)																		// 10/30/00 AM.
 	{
 	_stprintf(Errbuf,_T("[strlessthan: Warning. Given no str2.]"));	// 05/18/01 AM.
-	sem = new RFASem((long)0);												// 10/30/00 AM.
+	sem = new RFASem(0LL);												// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 #endif
 
-long result;																	// 07/11/03 AM.
+long long result;																	// 07/11/03 AM.
 if (empty(name1) && empty(name2))										// 07/11/03 AM.
 	result = 0;																	// 07/11/03 AM.
 else if (empty(name1))														// 07/11/03 AM.
@@ -6028,7 +6029,7 @@ bool Fn::fnStrlength(
 	)
 {
 sem = 0;
-long len = -1;
+long long len = -1;
 Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 
 _TCHAR *name1=0;
@@ -6080,8 +6081,8 @@ sem = 0;
 Parse *parse = nlppp->parse_;
 
 _TCHAR *str1=0;
-long start = -1;
-long end = -1;
+long long start = -1;
+long long end = -1;
 
 if (!Arg::str1(_T("strpiece"), /*UP*/ (DELTS*&)args, str1))
 	return false;
@@ -6155,7 +6156,7 @@ sem = 0;
 Parse *parse = nlppp->parse_;
 
 _TCHAR *name1=0;
-long charnum = -1;
+long long charnum = -1;
 
 if (!Arg::str1(_T("strchar"), /*UP*/ (DELTS*&)args, name1))
 	return false;
@@ -6207,7 +6208,7 @@ sem = 0;
 Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 
 _TCHAR *str1=0;
-long isDigit = 1;
+long long isDigit = 1;
 
 if (!Arg::str1(_T("strisdigit"), /*UP*/ (DELTS*&)args, str1))
 	{
@@ -6261,7 +6262,7 @@ sem = 0;
 Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 
 _TCHAR *str1=0;
-long isAlpha = 1;
+long long isAlpha = 1;
 
 if (!Arg::str1(_T("strisalpha"), /*UP*/ (DELTS*&)args, str1))
 	return false;
@@ -6387,7 +6388,7 @@ if (ch_str[1])
 	return parse->errOut(true); // UNFIXED
 	}
 
-long count = 0;
+long long count = 0;
 for (; *name1; ++name1)
 	if (*name1 == *ch_str)
 		++count;
@@ -6489,7 +6490,7 @@ if (!name1)																		// 10/30/00 AM.
 // Need to get the current KB.
 CG *cg = parse->getAna()->getCG();
 
-sem = new RFASem(cg->readFile(name1) ? (long)1 : (long)0);		// 08/07/01 AM.
+sem = new RFASem(cg->readFile(name1) ? 1LL : 0LL);		// 08/07/01 AM.
 return true;																	// 08/07/01 AM.
 }
 
@@ -6638,7 +6639,7 @@ sem = 0;
 Parse *parse = nlppp->parse_;
 
 _TCHAR *str=0;
-long num = -1;
+long long num = -1;
 float flt = -1.0;																// 05/29/02 AM.
 enum Iargtype typ = IANULL;												// 05/29/02 AM.
 RFASem *sem1 = 0;																// 05/29/02 AM.
@@ -6657,7 +6658,7 @@ switch (typ)																	// 05/29/02 AM.
 		{
 		// Convert num, then intern string.
 		_TCHAR buf[MAXSTR+1];
-		_stprintf(buf, _T("%ld"), num);
+		_stprintf(buf, _T("%llu"), num);
 		parse->internStr(buf, /*UP*/ str);
 		}
 		break;
@@ -6699,7 +6700,7 @@ bool Fn::fnNum(
 {
 sem = 0;
 _TCHAR *str=0;
-long num = -1;
+long long num = -1;
 float flt = -1.0;																// 05/29/02 AM.
 enum Iargtype typ = IANULL;												// 05/29/02 AM.
 RFASem *sem1 = 0;																// 05/29/02 AM.
@@ -6756,7 +6757,7 @@ bool Fn::fnFlt(
 {
 sem = 0;
 _TCHAR *str=0;
-long num = 0;
+long long num = 0;
 float fnum = 0.0;
 Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 
@@ -6865,7 +6866,7 @@ sem = 0;
 Parse *parse = nlppp->parse_;
 
 _TCHAR *name1=0;
-long wrapSize=0;
+long long wrapSize=0;
 
 if (!Arg::str1(_T("strwrap"), /*UP*/ (DELTS*&)args, name1))
 	return false;
@@ -7302,7 +7303,7 @@ _TCHAR *lcstr2 = Chars::create(_tcsclen(str2) + 1);						// 09/28/00 AM.
 str_to_lower(str1, lcstr1);												// 09/28/00 AM.
 str_to_lower(str2, lcstr2);												// 09/28/00 AM.
 
-long weight = str_spell_compare(lcstr1, lcstr2);					// 08/17/01 AM.
+long long weight = str_spell_compare(lcstr1, lcstr2);					// 08/17/01 AM.
 
 Chars::destroy(lcstr1);														// 09/28/00 AM.
 Chars::destroy(lcstr2);														// 09/28/00 AM.
@@ -7390,17 +7391,17 @@ if (!str || !*str)
 	return true;
 
 // Convert to lowercase.													// 09/28/00 AM.
-long len = _tcsclen(str);														// 10/16/00 AM.
+long long len = _tcsclen(str);														// 10/16/00 AM.
 if (len > MAXWORDLENGTH)										// FIX	// 11/13/01 AM.
 	{
-	sem = new RFASem((long)0);									// FIX	// 11/13/01 AM.
+	sem = new RFASem(0LL);									// FIX	// 11/13/01 AM.
 	return true;													// FIX	// 11/13/01 AM.
 	}
 _TCHAR *lcstr = Chars::create(len + 1);									// 09/28/00 AM.
 str_to_lower(str, lcstr);													// 09/28/00 AM.
 
 long pos;
-long ans;																		// 08/17/01 AM.
+long long ans;																		// 08/17/01 AM.
 if (binary_spell(lcstr, word_arrays[len],word_lengths[len], /*UP*/pos))
 	ans = 1;
 else
@@ -7447,7 +7448,7 @@ bool cap = (is_upper((_TUCHAR)*str) ? true : false);		// 12/16/01 AM.
 // Forget about mix cap!
 
 // Convert to lowercase.													// 09/28/00 AM.
-long len = _tcsclen(str);														// 10/16/00 AM.
+long long len = _tcsclen(str);														// 10/16/00 AM.
 if (len > MAXWORDLENGTH)				// Forget it		// FIX	// 11/13/01 AM.
 	return true;													// FIX	// 11/13/01 AM.
 
@@ -7526,7 +7527,7 @@ bool Fn::fnLj(
 {
 sem = 0;
 _TCHAR *sptr;
-long fieldsize = -1;
+long long fieldsize = -1;
 Parse *parse = nlppp->parse_;
 
 if (!Arg::str1(_T("LJ"), /*UP*/ (DELTS*&)args, sptr))
@@ -7572,8 +7573,8 @@ bool Fn::fnRightjustifynum(
 	)
 {
 sem = 0;
-long num = -1;
-long fieldsize = -1;
+long long num = -1;
+long long fieldsize = -1;
 Parse *parse = nlppp->parse_;
 
 if (!Arg::num1(_T("rightjustifynum"), /*UP*/ (DELTS*&)args, num))
@@ -7613,8 +7614,8 @@ bool Fn::fnPercentstr(
 	)
 {
 sem = 0;
-long numerator = -1;
-long denominator = -1;
+long long numerator = -1;
+long long denominator = -1;
 int fieldsize = 3;
 int pct=0;
 Parse *parse = nlppp->parse_;
@@ -7672,10 +7673,10 @@ bool Fn::fnHitconf(
 sem = 0;
 Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 
-long hits = -1;
-long tot = -1;
-long factor = -1;
-long pct=0;																		// 08/17/01 AM.
+long long hits = -1;
+long long tot = -1;
+long long factor = -1;
+long long pct=0;																		// 08/17/01 AM.
 
 if (!Arg::num1(_T("hitconf"), /*UP*/ (DELTS*&)args, hits))
 	return false;
@@ -7718,7 +7719,7 @@ sem = 0;
 Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 
 RFASem *sem1;
-long num1=0;
+long long num1=0;
 float fnum=0; // unused. // 12/15/14 AM.
 _TCHAR *str1=0;
 _TCHAR *name1=0;
@@ -7731,7 +7732,7 @@ if (!Arg::done((DELTS*)args, _T("arraylength"),parse))
 long len = 1;
 if (!sem1)																		// 10/23/00 AM.
 	{
-	sem = new RFASem(len);
+	sem = new RFASem((long long)len);
 	return true;
 	}
 switch (sem1->getType())
@@ -7743,7 +7744,7 @@ switch (sem1->getType())
 	default:
 		break;
 	}
-sem = new RFASem(len);
+sem = new RFASem((long long)len);
 return true;
 }
 
@@ -8329,7 +8330,7 @@ sem = 0;
 Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 
 _TCHAR *name1=0;
-long num1=0;
+long long num1=0;
 
 if (!Arg::str1(_T("varinlist"), /*UP*/ (DELTS*&)args, name1))
 	return false;
@@ -8398,7 +8399,7 @@ sem = 0;
 Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 
 
-long num1=0,num2=0;
+long long num1=0,num2=0;
 _TCHAR *tname;	// 07/24/07 AM.
 _TCHAR *name1=0;
 
@@ -8557,7 +8558,7 @@ bool Fn::fnSplice(
 sem = 0;
 Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 
-long num1=0,num2=0;
+long long num1=0,num2=0;
 
 if (!Arg::num1(_T("splice"), (DELTS*&)args, num1))
 	return false;
@@ -8631,7 +8632,7 @@ Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 if (!Arg::done((DELTS*)args, _T("batchstart"),parse))
 	return false;
 bool batchstart = parse->getFbatchstart();
-long flag;																		// 08/17/01 AM.
+long long flag;																		// 08/17/01 AM.
 if (batchstart)
 	flag = 1;
 else
@@ -9118,7 +9119,7 @@ if (!name1)
 	return parse->errOut(true);
 	}
 
-long endsWith = str_starts_with(name1, ending) ? 1 : 0;
+long long endsWith = str_starts_with(name1, ending) ? 1 : 0;
 
 // Return as str type.
 sem = new RFASem(endsWith);
@@ -9163,7 +9164,7 @@ if (!name1)
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 
-long endswith = str_ends_with(name1, ending) ? 1 : 0;
+long long endswith = str_ends_with(name1, ending) ? 1 : 0;
 
 // Return as str type.
 sem = new RFASem(endswith);
@@ -9318,7 +9319,7 @@ bool Fn::fnLasteltnode(
 sem = 0;
 Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 
-long num1=0;
+long long num1=0;
 
 if (!Arg::num1(_T("lasteltnode"), (DELTS*&)args, num1))
 	return false;
@@ -9507,7 +9508,7 @@ Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 
 RFASem *sem1 = 0;
 _TCHAR *str1=0;
-long num= 0;			// Default is 0th or last elt's node.
+long long num= 0;			// Default is 0th or last elt's node.
 float fnum=0; // unused // 12/15/14 AM.
 
 RFASem *sem2 = 0;																// 11/13/01 AM.
@@ -9628,7 +9629,7 @@ RFASem *sem1;
 _TCHAR *name1=0;
 _TCHAR *tname=0;	// 07/24/07 AM.
 RFASem *semval;
-long numval=0;
+long long numval=0;
 float fnum=0; // 12/15/14 AM.
 _TCHAR *strval=0;
 
@@ -9727,13 +9728,13 @@ switch (typ) // 12/15/14 AM.
 		return true;
 		break;
 	default:
-		Ivar::nodeReplaceval(pn,name1,(long)0);         // 12/15/14 AM.
+		Ivar::nodeReplaceval(pn,name1,0LL);         // 12/15/14 AM.
 		return false;	// Unhandled type.
 		break;
 	}
 
 // Fell through. Recover from empty case. // 12/15/14 AM.
-Ivar::nodeReplaceval(pn,name1,(long)0);         // 12/15/14 AM.
+Ivar::nodeReplaceval(pn,name1,0LL);         // 12/15/14 AM.
 return false; // 12/15/14 AM.
 }
 
@@ -9761,7 +9762,7 @@ enum Iargtype typ;	// 12/15/14 AM.
 RFASem *sem1;
 _TCHAR *name1=0;
 RFASem *semval;
-long numval=0;
+long long numval=0;
 float fnum=0; // 12/15/14 AM.
 _TCHAR *strval=0;
 
@@ -9886,7 +9887,7 @@ enum Iargtype typ;	// 12/15/14 AM.
 RFASem *sem1;
 _TCHAR *name1=0;
 RFASem *semval;
-long numval=0;
+long long numval=0;
 float fnum=0; // 12/15/14 AM.
 _TCHAR *strval=0;
 
@@ -10019,7 +10020,7 @@ enum Iargtype typ;	// 12/15/14 AM.
 RFASem *sem1;
 _TCHAR *name1=0;
 RFASem *semval;
-long numval=0;
+long long numval=0;
 float fnum=0;	// 12/15/14 AM.
 _TCHAR *strval=0;
 
@@ -10286,7 +10287,7 @@ CONCEPT *conc1 = sem1->getKBconcept();
 
 bool ok = cg->dumpTree(conc1, name1);
 
-sem = new RFASem(ok ? (long)1 : (long)0);
+sem = new RFASem(ok ? 1LL : 0LL);
 return true;
 }
 
@@ -10326,7 +10327,7 @@ CG *cg = parse->getAna()->getCG();
 
 bool ok = cg->writeKB(dir);
 
-sem = new RFASem(ok ? (long)1 : (long)0);
+sem = new RFASem(ok ? 1LL : 0LL);
 return true;
 }
 
@@ -10355,7 +10356,7 @@ if (!Arg::str1(_T("iscaps"), (DELTS*&)args, str1))
 if (!Arg::done((DELTS*)args, _T("iscaps"),parse))
 	return false;
 
-long isCaps = 0;
+long long isCaps = 0;
 if (str1 && *str1) {
 	icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str1));
 	const UChar *strBuf = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
@@ -10393,7 +10394,7 @@ if (!Arg::str1(_T("isupper"), (DELTS*&)args, str1))
 if (!Arg::done((DELTS*)args, _T("isupper"),parse))
 	return false;
 
-long isUpper=0;
+long long isUpper=0;
 if (str1 && *str1) {
 	icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str1));
 	const UChar *strBuf = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
@@ -10436,7 +10437,7 @@ if (!Arg::str1(_T("islower"), (DELTS*&)args, str1))
 if (!Arg::done((DELTS*)args, _T("islower"),parse))
 	return false;
 
-long isLower=0;
+long long isLower=0;
 if (str1 && *str1) {
 	icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str1));
 	const UChar *strBuf = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
@@ -10490,7 +10491,7 @@ if (!name1 || !*name1 || !suffix || !*suffix)
 	}
 
 bool flag = strsuffix(name1,suffix);
-long retval = (flag ? true : false);
+long long retval = (flag ? true : false);
 
 sem = new RFASem(retval);
 
@@ -10549,11 +10550,11 @@ ok = true;	// 09/28/08 AM.
 if (!ok)
 	{
 	_stprintf(Errbuf,_T("[mkdir: Warning. Couldn't create directory=%s.]"),str);
-	sem = new RFASem((long)0);	// 04/12/03 AM.
+	sem = new RFASem(0LL);	// 04/12/03 AM.
 	return parse->errOut(true); // UNFIXED
 	}
 
-sem = new RFASem((long)1);	// 04/12/03 AM.
+sem = new RFASem(1LL);	// 04/12/03 AM.
 return true;
 }
 
@@ -10716,7 +10717,7 @@ Parse *parse = nlppp->parse_;
 if (!Arg::done((DELTS*)args, _T("interactive"),parse))
 	return false;
 bool interactive = parse->getAna()->getNLP()->getFinteractive();
-long flag;
+long long flag;
 if (interactive)
 	flag = 1;
 else
@@ -10840,7 +10841,7 @@ if ((!password || !*password) && passwordnum)
 	}
 
 if (Arun::dbopen(nlppp,dbname,usrname,password))				// 06/15/02 AM.
-	sem = new RFASem((long)1);
+	sem = new RFASem(1LL);
 return true;
 }
 
@@ -10874,7 +10875,7 @@ if (!Arg::done((DELTS*)args, _T("dbclose"),parse))
 
 parse->dbclose();
 
-sem = new RFASem((long)1);
+sem = new RFASem(1LL);
 return true;
 }
 
@@ -10908,7 +10909,7 @@ if (!Arg::done((DELTS*)args, _T("dbexec"),parse))
 	return true;
 
 if (Arun::dbexec(nlppp,stmt))
-	sem = new RFASem((long)1);
+	sem = new RFASem(1LL);
 return true;
 }
 
@@ -10947,7 +10948,7 @@ if (!Arg::done((DELTS*)args, _T("dballoctstmt"),parse))
 if (!parse->allocDbstmt())
 	return true;
 
-sem = new RFASem((long)1);
+sem = new RFASem(1LL);
 return true;
 }
 
@@ -10996,7 +10997,7 @@ if (!hstmt)
 // Execute the statement.
 SQLExecDirect (hstmt, statement, SQL_NTS);
 
-sem = new RFASem((long)1);
+sem = new RFASem(1LL);
 return true;
 }
 
@@ -11029,7 +11030,7 @@ if (!Arg::done((DELTS*)args, _T("dbfreestmt"),parse))
 	return true;
 
 if (Arun::dbfreestmt(nlppp))
-	sem = new RFASem((long)1);
+	sem = new RFASem(1LL);
 return true;
 }
 
@@ -11062,7 +11063,7 @@ if (!Arg::done((DELTS*)args, _T("dbfetch"),parse))
 	return true;
 
 if (Arun::dbfetch(nlppp))
-	sem = new RFASem((long)1);
+	sem = new RFASem(1LL);
 return true;
 }
 
@@ -11099,7 +11100,7 @@ if (!Arg::done((DELTS*)args, _T("exittopopup"),parse))
 	return true;
 
 if (Arun::exittopopup(nlppp,msg_str,typ_str))
-	sem = new RFASem((long)1);
+	sem = new RFASem(1LL);
 return true;
 }
 
@@ -11179,9 +11180,9 @@ if (!Arg::done((DELTS*)args, _T("dbbindcol"),parse))
 bool success = Arun::dbbindcol_int(nlppp,column_num,typ,bsiz,var,flagv);
 
 if (success)
-	sem = new RFASem((long)1);
+	sem = new RFASem(1LL);
 else
-	sem = new RFASem((long)0);
+	sem = new RFASem(0LL);
 return true;
 }
 
@@ -11597,7 +11598,7 @@ CG *cg = nlppp->parse_->getAna()->getCG();
 
 RFASem *array_sem=0;
 _TCHAR *attr=0;
-long numeric=0, descending=0;
+long long numeric=0, descending=0;
 
 if (!Arg::sem1(_T("sortconsbyattr"),nlppp,(DELTS*&)args, array_sem))
 	return false;
@@ -11675,7 +11676,7 @@ bool Fn::fnInputrange(
 sem = 0;
 Parse *parse = nlppp->parse_;
 
-long start=0,end=0;
+long long start=0,end=0;
 
 if (!Arg::num1(_T("inputrange"), (DELTS*&)args, start))
 	return false;
@@ -11740,7 +11741,7 @@ if (!Arg::done((DELTS*)args, _T("findana"),parse))
 
 //	NLP *nlp1 = VTRun_Ptr->findAna(appname);	// [DEGLOB]	// 10/15/20 AM.
 NLP *nlp1 = vtrun->findAna(appname);			// [DEGLOB]	// 10/15/20 AM.
-long retval = (nlp1 ? 1 : 0);
+long long retval = (nlp1 ? 1 : 0);
 
 sem = new RFASem(retval);
 return true;
@@ -11848,7 +11849,7 @@ if (!Arg::done((DELTS*)args, _T("urlbase"),parse))
 
 if (!url_s || !*url_s)
 	{
-	sem = new RFASem((long)0);
+	sem = new RFASem(0LL);
 	return true;
 	}
 
@@ -11857,7 +11858,7 @@ _TCHAR *str = Chars::create(_tcsclen(url_s) + 1);
 if (!url_base(url_s, /*UP*/ str))
 	{
 	Chars::destroy(str);
-	sem = new RFASem((long)0);
+	sem = new RFASem(0LL);
 	return true;
 	}
 
@@ -12059,7 +12060,7 @@ sem = 0;
 Parse *parse = nlppp->parse_;
 
 RFASem *sem1 = 0;
-long num1=0,num2=0;
+long long num1=0,num2=0;
 
 if (!Arg::num1(_T("inputrangetofile"), (DELTS*&)args, num1))
 	return false;
@@ -12296,7 +12297,7 @@ return parse->errOut(true);
 LexTagger::postagger(nlppp);
 #endif
 
-sem = new RFASem((long)1);
+sem = new RFASem(1LL);
 return true;
 }
 
@@ -12323,7 +12324,7 @@ Parse *parse = nlppp->parse_;
 
 // If ok, update nlppp->nlookahead_, else leave it alone.	// 09/06/08 AM.
 
-long num1=0;
+long long num1=0;
 
 if (!Arg::num1(_T("setlookahead"), (DELTS*&)args, num1))
 	return false;
@@ -12428,7 +12429,7 @@ bool Fn::fnPermuten(
 {
 sem = 0;
 Parse *parse = nlppp->parse_;
-long num1 = 0;
+long long num1 = 0;
 
 if (!Arg::num1(_T("permuten"), (DELTS*&)args, num1))
 	return false;
@@ -12788,7 +12789,7 @@ bool Fn::fnEltnode(
 sem = 0;
 Parse *parse = nlppp->parse_;
 
-long num1=0;
+long long num1=0;
 
 if (!Arg::num1(_T("eltnode"), (DELTS*&)args, num1))
 	return false;
@@ -12877,7 +12878,7 @@ if (!str1 || !*str1 || !str2 || !*str2)
 
 int dist = levenshtein_int(str1,str2);
 
-sem = new RFASem((long)dist);
+sem = new RFASem((long long)dist);
 
 return true;
 }
@@ -12904,7 +12905,7 @@ Parse *parse = nlppp->parse_;
 
 _TCHAR *name_str=0;
 RFASem *pos_sem;
-long after_num=0;
+long long after_num=0;
 
 if (!Arg::str1(_T("pninsert"), /*UP*/ (DELTS*&)args, name_str))
 	return false;
@@ -13042,7 +13043,7 @@ Parse *parse = nlppp->parse_;
 _TCHAR *name_str=0;
 RFASem *pn_sem;
 RFASem *pos_sem;
-long after_num=0;
+long long after_num=0;
 
 if (!Arg::sem1(_T("pnmove"),nlppp,(DELTS*&)args,pn_sem))
 	return false;
@@ -13250,7 +13251,7 @@ RFASem *pn_sem;
 _TCHAR *key_str=0;
 _TCHAR *match_str=0;
 _TCHAR *list_str=0;
-long punct_num=0;
+long long punct_num=0;
 
 if (!Arg::sem1(_T("DICTphraselookup"),nlppp,(DELTS*&)args,pn_sem))
 	return false;

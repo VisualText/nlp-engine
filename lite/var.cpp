@@ -284,7 +284,7 @@ return ok;
 * SUBJ:	Fetch a variable's num value.
 ********************************************/
 
-bool Var::val(_TCHAR *name, Parse *parse, /*DU*/ long &num)
+bool Var::val(_TCHAR *name, Parse *parse, /*DU*/ long long &num)
 {
 num = 0;
 if (!name || !parse)
@@ -541,7 +541,7 @@ if (!pairx)			// Var doesn't exist yet.
 	// *gerr << "[Var::inc: Variable=" << name << " not found.]" << std::endl;
 	// If var not found, create it.  If no list, create it.		// 08/31/00 AM.
 	Iarg *val;																	// 08/31/00 AM.
-	val = new Iarg((long) 1);		// Start with +1.					// 08/31/00 AM.
+	val = new Iarg(1LL);		// Start with +1.					// 08/31/00 AM.
 	Var::create(name, val, /*DU*/ dlist,pairx);						// 08/31/00 AM.
 	delete val;																	// 08/31/00 AM.
 	return true;																// 08/31/00 AM.
@@ -560,7 +560,7 @@ assert(arg);
 
 
 // Convert to number as needed.								// 11/03/99 AM.
-long num;
+long long num;
 switch (arg->getType())											// 11/03/99 AM.
 	{
 	case IASTR:
@@ -612,7 +612,7 @@ return true;
 
 bool Var::addNum(
 	_TCHAR *name,		// Variable name.
-	long numb,		// Number to add to its value.
+	long long numb,		// Number to add to its value.
 	Parse *parse,
 	/*DU*/
 	Dlist<Ipair>* &dlist		// May be empty going down.
@@ -656,7 +656,7 @@ assert(arg);
 //num = arg->getNum();
 
 // Convert to number as needed.								// 11/03/99 AM.
-long num;
+long long num;
 switch (arg->getType())											// 11/03/99 AM.
 	{
 	case IASTR:
@@ -846,7 +846,7 @@ return true;
 
 bool Var::setVal(
 	Ipair *pairx,
-	long num
+	long long num
 	)
 {
 if (!pairx)
@@ -993,7 +993,7 @@ args = pairx->getVals();
 if (sem)	// HACK TO STOP CRASH.	// 09/30/19 AM.
 	arg = new Iarg(sem);		// Build an arg for the given sem.
 else
-	arg = new Iarg((long)0);	// HACK TO STOP CRASH.	// 09/30/19 AM.
+	arg = new Iarg(0LL);	// HACK TO STOP CRASH.	// 09/30/19 AM.
 
 if (!args)
 	{
@@ -1249,7 +1249,7 @@ return true;
 
 bool Var::setVal(
 	_TCHAR *name,
-	long numval,
+	long long numval,
 	bool bRM,	// If rm existing values	// 12/12/14 AM.
 	bool bPUSH,	// If pushing value front	// 12/12/14 AM.
 	/*DU*/
@@ -1501,7 +1501,7 @@ switch (sem->getType()) // 12/14/14 AM.
 		break;
 	case RSLONG: // 12/14/14 AM.
 		{
-		long numval = sem->getLong(); // 12/14/14 AM.
+		long long numval = sem->getLong(); // 12/14/14 AM.
 		arg = new Iarg(numval);
 		}
 		break;
@@ -1537,7 +1537,7 @@ return true;
 
 bool Var::pushVal(
 	_TCHAR *name,
-	long numval,
+	long long numval,
 	bool bRM,	// If rm existing values (unused)
 	bool bPUSH,	// If pushing value front
 	/*DU*/
@@ -1722,7 +1722,7 @@ return Var::val(pairx, /*DU*/ buf);
 * SUBJ:	Fetch a variable's numeric value.
 ********************************************/
 
-bool Var::val(_TCHAR *name, Dlist<Ipair> *dlist, /*DU*/ long &num)
+bool Var::val(_TCHAR *name, Dlist<Ipair> *dlist, /*DU*/ long long &num)
 {
 num = 0;
 if (!name || !dlist)
@@ -1776,7 +1776,7 @@ assert(arg);
 
 
 // Convert to string as needed.											// 11/03/99 AM.
-long num;
+long long num;
 switch (arg->getType())														// 11/03/99 AM.
 	{
 	case IASTR:
@@ -1786,7 +1786,7 @@ switch (arg->getType())														// 11/03/99 AM.
 		num = arg->getNum();													// 11/03/99 AM.
 		// Convert to string.
 		// _stprintf(buf, _T("%d"), num);	// 11/03/99 AM.
-		_stprintf(buf, _T("%ld"), num);	// 11/03/99 AM.	// 09/26/19 AM.
+		_stprintf(buf, _T("%llu"), num);	// 11/03/99 AM.	// 09/26/19 AM.
 		break;
 	case IAFLOAT:																// 08/17/01 AM.
 		_stprintf(buf, _T("%f"), arg->getFloat());							// 08/17/01 AM.
@@ -1809,7 +1809,7 @@ return true;
 * TODO:	Could convert string-valued attributes with all digits also.
 ********************************************/
 
-bool Var::val(Ipair *pairx, /*DU*/ long &num)
+bool Var::val(Ipair *pairx, /*DU*/ long long &num)
 {
 num = 0;
 
@@ -2596,7 +2596,7 @@ for (dpair = fmlist->getFirst(); dpair; dpair = dpair->Right())
 		} 
 	else if (argType == IANUM)
 		{
-		long num = arg->getNum();
+		long long num = arg->getNum();
 		cg->addVal(conc1,name,num);
 		}
 	else if (argType == IASTR)

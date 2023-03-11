@@ -397,7 +397,7 @@ bool Check::checkNlt(
 {
 Node<Pn> *nstart, *nend, *coll;
 _TCHAR *var = 0;
-long num = 0;
+long long num = 0;
 
 if (!Arg::elt1(nlppp->collect_, _T("checkNlt"),/*DU*/ ((DELTS*&)args), (NODE*&)coll, (NODE*&)nstart, (NODE*&)nend))
 	return false;
@@ -421,7 +421,7 @@ Pn *pnsel;
 pnsel = nstart->getData();
 dlist = pnsel->getDsem();
 
-long vnum = 0;
+long long vnum = 0;
 Var::val(var, dlist, /*DU*/ vnum);
 
 // Compare variable's value to given value.
@@ -446,7 +446,7 @@ bool Check::checkNgt(
 {
 Node<Pn> *nstart, *nend, *coll;
 _TCHAR *var = 0;
-long num = 0;
+long long num = 0;
 
 if (!Arg::elt1(nlppp->collect_, _T("checkNgt"),/*DU*/ ((DELTS*&)args), (NODE*&)coll, (NODE*&)nstart, (NODE*&)nend))
 	return false;
@@ -470,7 +470,7 @@ Pn *pnsel;
 pnsel = nstart->getData();
 dlist = pnsel->getDsem();
 
-long vnum = 0;
+long long vnum = 0;
 Var::val(var, dlist, /*DU*/ vnum);
 
 // Compare variable's value to given value.
@@ -495,7 +495,7 @@ bool Check::checkNeq(
 {
 Node<Pn> *nstart, *nend, *coll;
 _TCHAR *var = 0;
-long num = 0;
+long long num = 0;
 
 if (!Arg::elt1(nlppp->collect_, _T("checkNeq"),/*DU*/ ((DELTS*&)args), (NODE*&)coll, (NODE*&)nstart, (NODE*&)nend))
 	return false;
@@ -519,7 +519,7 @@ Pn *pnsel;
 pnsel = nstart->getData();
 dlist = pnsel->getDsem();
 
-long vnum = 0;
+long long vnum = 0;
 Var::val(var, dlist, /*DU*/ vnum);
 
 // Compare variable's value to given value.
@@ -544,7 +544,7 @@ bool Check::checkNne(
 {
 Node<Pn> *nstart, *nend, *coll;
 _TCHAR *var = 0;
-long num = 0;
+long long num = 0;
 
 if (!Arg::elt1(nlppp->collect_, _T("checkNne"),/*DU*/ ((DELTS*&)args), (NODE*&)coll, (NODE*&)nstart, (NODE*&)nend))
 	return false;
@@ -568,7 +568,7 @@ Pn *pnsel;
 pnsel = nstart->getData();
 dlist = pnsel->getDsem();
 
-long vnum = 0;
+long long vnum = 0;
 Var::val(var, dlist, /*DU*/ vnum);
 
 // Compare variable's value to given value.
@@ -593,7 +593,7 @@ bool Check::checkNge(
 {
 Node<Pn> *nstart, *nend, *coll;
 _TCHAR *var = 0;
-long num = 0;
+long long num = 0;
 
 if (!Arg::elt1(nlppp->collect_, _T("checkNge"),/*DU*/ ((DELTS*&)args), (NODE*&)coll, (NODE*&)nstart, (NODE*&)nend))
 	return false;
@@ -617,7 +617,7 @@ Pn *pnsel;
 pnsel = nstart->getData();
 dlist = pnsel->getDsem();
 
-long vnum = 0;
+long long vnum = 0;
 Var::val(var, dlist, /*DU*/ vnum);
 
 // Compare variable's value to given value.
@@ -642,7 +642,7 @@ bool Check::checkNle(
 {
 Node<Pn> *nstart, *nend, *coll;
 _TCHAR *var = 0;
-long num = 0;
+long long num = 0;
 
 if (!Arg::elt1(nlppp->collect_, _T("checkNle"),/*DU*/ ((DELTS*&)args), (NODE*&)coll, (NODE*&)nstart, (NODE*&)nend))
 	return false;
@@ -666,7 +666,7 @@ Pn *pnsel;
 pnsel = nstart->getData();
 dlist = pnsel->getDsem();
 
-long vnum = 0;
+long long vnum = 0;
 Var::val(var, dlist, /*DU*/ vnum);
 
 // Compare variable's value to given value.
@@ -691,7 +691,7 @@ bool Check::checkXlt(
 	)
 {
 _TCHAR *var = 0;
-long num = 0;
+long long num = 0;
 
 if (!Arg::str1(_T("checkXlt"), /*DU*/ ((DELTS*&)args), var))
 	return false;
@@ -709,7 +709,7 @@ Pn *pnsel;
 pnsel = nlppp->select_->getData();
 dlist = pnsel->getDsem();
 
-long vnum = 0;
+long long vnum = 0;
 Var::val(var, dlist, /*DU*/ vnum);
 
 // Compare variable's value to given value.
@@ -733,7 +733,7 @@ bool Check::checkXgt(
 	)
 {
 _TCHAR *var = 0;
-long num = 0;
+long long num = 0;
 
 if (!Arg::str1(_T("checkXgt"), /*DU*/ ((DELTS*&)args), var))
 	return false;
@@ -751,7 +751,7 @@ Pn *pnsel;
 pnsel = nlppp->select_->getData();
 dlist = pnsel->getDsem();
 
-long vnum = 0;
+long long vnum = 0;
 Var::val(var, dlist, /*DU*/ vnum);
 
 // Compare variable's value to given value.
@@ -775,7 +775,7 @@ bool Check::checkXeq(
 	)
 {
 _TCHAR *var = 0;
-long num = 0;
+long long num = 0;
 
 if (!Arg::str1(_T("checkXeq"), /*DU*/ ((DELTS*&)args), var))
 	return false;
@@ -793,7 +793,7 @@ Pn *pnsel;
 pnsel = nlppp->select_->getData();
 dlist = pnsel->getDsem();
 
-long vnum = 0;
+long long vnum = 0;
 Var::val(var, dlist, /*DU*/ vnum);
 
 // Compare variable's value to given value.
@@ -817,7 +817,7 @@ bool Check::checkXne(
 	)
 {
 _TCHAR *var = 0;
-long num = 0;
+long long num = 0;
 
 if (!Arg::str1(_T("checkXne"), /*DU*/ ((DELTS*&)args), var))
 	return false;
@@ -835,7 +835,7 @@ Pn *pnsel;
 pnsel = nlppp->select_->getData();
 dlist = pnsel->getDsem();
 
-long vnum = 0;
+long long vnum = 0;
 Var::val(var, dlist, /*DU*/ vnum);
 
 // Compare variable's value to given value.
@@ -859,7 +859,7 @@ bool Check::checkXge(
 	)
 {
 _TCHAR *var = 0;
-long num = 0;
+long long num = 0;
 
 if (!Arg::str1(_T("checkXge"), /*DU*/ ((DELTS*&)args), var))
 	return false;
@@ -877,7 +877,7 @@ Pn *pnsel;
 pnsel = nlppp->select_->getData();
 dlist = pnsel->getDsem();
 
-long vnum = 0;
+long long vnum = 0;
 Var::val(var, dlist, /*DU*/ vnum);
 
 // Compare variable's value to given value.
@@ -901,7 +901,7 @@ bool Check::checkXle(
 	)
 {
 _TCHAR *var = 0;
-long num = 0;
+long long num = 0;
 
 if (!Arg::str1(_T("checkXle"), /*DU*/ ((DELTS*&)args), var))
 	return false;
@@ -919,7 +919,7 @@ Pn *pnsel;
 pnsel = nlppp->select_->getData();
 dlist = pnsel->getDsem();
 
-long vnum = 0;
+long long vnum = 0;
 Var::val(var, dlist, /*DU*/ vnum);
 
 // Compare variable's value to given value.
@@ -943,7 +943,7 @@ bool Check::checkGlt(
 	)
 {
 _TCHAR *var = 0;
-long num = 0;
+long long num = 0;
 
 if (!Arg::str1(_T("checkGlt"), /*DU*/ ((DELTS*&)args), var))
 	return false;
@@ -956,7 +956,7 @@ if (!Arg::done(((DELTS*)args), _T("checkGlt"),nlppp->parse_))
 
 if (!nlppp->select_)
 	return false;
-long vnum = 0;
+long long vnum = 0;
 Var::val(var, nlppp->parse_->getVars(), /*DU*/ vnum);
 
 // Compare variable's value to given value.
@@ -980,7 +980,7 @@ bool Check::checkGgt(
 	)
 {
 _TCHAR *var = 0;
-long num = 0;
+long long num = 0;
 
 if (!Arg::str1(_T("checkGgt"), /*DU*/ ((DELTS*&)args), var))
 	return false;
@@ -994,7 +994,7 @@ if (!Arg::done(((DELTS*)args), _T("checkGgt"),nlppp->parse_))
 if (!nlppp->select_)
 	return false;
 
-long vnum = 0;
+long long vnum = 0;
 Var::val(var, nlppp->parse_->getVars(), /*DU*/ vnum);
 
 // Compare variable's value to given value.
@@ -1018,7 +1018,7 @@ bool Check::checkGeq(
 	)
 {
 _TCHAR *var = 0;
-long num = 0;
+long long num = 0;
 
 if (!Arg::str1(_T("checkGeq"), /*DU*/ ((DELTS*&)args), var))
 	return false;
@@ -1032,7 +1032,7 @@ if (!Arg::done(((DELTS*)args), _T("checkGeq"),nlppp->parse_))
 if (!nlppp->select_)
 	return false;
 
-long vnum = 0;
+long long vnum = 0;
 Var::val(var, nlppp->parse_->getVars(), /*DU*/ vnum);
 
 // Compare variable's value to given value.
@@ -1056,7 +1056,7 @@ bool Check::checkGne(
 	)
 {
 _TCHAR *var = 0;
-long num = 0;
+long long num = 0;
 
 if (!Arg::str1(_T("checkGne"), /*DU*/ ((DELTS*&)args), var))
 	return false;
@@ -1070,7 +1070,7 @@ if (!Arg::done(((DELTS*)args), _T("checkGne"),nlppp->parse_))
 if (!nlppp->select_)
 	return false;
 
-long vnum = 0;
+long long vnum = 0;
 Var::val(var, nlppp->parse_->getVars(), /*DU*/ vnum);
 
 // Compare variable's value to given value.
@@ -1094,7 +1094,7 @@ bool Check::checkGge(
 	)
 {
 _TCHAR *var = 0;
-long num = 0;
+long long num = 0;
 
 if (!Arg::str1(_T("checkGge"), /*DU*/ ((DELTS*&)args), var))
 	return false;
@@ -1108,7 +1108,7 @@ if (!Arg::done(((DELTS*)args), _T("checkGge"),nlppp->parse_))
 if (!nlppp->select_)
 	return false;
 
-long vnum = 0;
+long long vnum = 0;
 Var::val(var, nlppp->parse_->getVars(), /*DU*/ vnum);
 
 // Compare variable's value to given value.
@@ -1132,7 +1132,7 @@ bool Check::checkGle(
 	)
 {
 _TCHAR *var = 0;
-long num = 0;
+long long num = 0;
 
 if (!Arg::str1(_T("checkGle"), /*DU*/ ((DELTS*&)args), var))
 	return false;
@@ -1146,7 +1146,7 @@ if (!Arg::done(((DELTS*)args), _T("checkGle"),nlppp->parse_))
 if (!nlppp->select_)
 	return false;
 
-long vnum = 0;
+long long vnum = 0;
 Var::val(var, nlppp->parse_->getVars(), /*DU*/ vnum);
 
 // Compare variable's value to given value.
@@ -1187,7 +1187,7 @@ bool Check::checkTrue(RFASem *val)
 if (!val)
 	return false;
 _TCHAR *str;
-long num;
+long long num;
 switch (val->getType())
 	{
 	case RSLONG:	return val->getLong() ? true : false;
