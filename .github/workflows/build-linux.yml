@@ -13,7 +13,7 @@ jobs:
       VCPKG_DEFAULT_TRIPLET: x64-linux
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
 
@@ -38,10 +38,6 @@ jobs:
 
       - name: Generate Solution Linux
         run: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_BUILD_TYPE=release -B build -S .
-
-      - name: List $RUNNER_WORKSPACE after build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
 
       - name: Cmake Build all targets Linux
         run: cmake --build build/ --target all
@@ -70,3 +66,26 @@ jobs:
         with:
           name: libicuuc.a
           path: vcpkg_installed/x64-linux/lib/libicuuc.a
+
+      - name: Checkout Analyzers repo
+        uses: actions/checkout@v3
+        with:
+          repository: VisualText/analyzers
+          submodules: recursive
+          path: analyzers
+
+      - name: List runner workspace
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+
+      - name: Run English Parser
+        run: ./bin/nlp -ANA ./analyzers/parse-en-us -WORK ./ ./analyzers/parse-en-us/input/doj.txt -DEV || true
+
+      - name: Full English Test
+        uses: LouisBrunner/diff-action@v0.2.0
+        with:
+          old: .github/workflows/tests/parse-en-us/final.tree
+          new: ./analyzers/parse-en-us/input/doj.txt_log/final.tree
+          mode: addition
+          tolerance: same
+          output: parse-en-us-diff-lin.txt
