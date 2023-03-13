@@ -1409,7 +1409,7 @@ if ((args = args->Right()))												// 12/14/99 AM.
 	}
 
 
-long num1, num2;
+long long num1, num2;
 switch (arg1->getType())
 	{
 	case IANUM:
@@ -3759,7 +3759,7 @@ bool Pat::postAddstrs(
 	)
 {
 _TCHAR *var = 0;						// Name of variable.
-long ord = 0;						// Rule element.
+long long ord = 0;						// Rule element.
 
 static bool bpostAddstrs = false;
 if (!bpostAddstrs)															// 01/04/02 AM.
@@ -3836,7 +3836,7 @@ bool Pat::postXaddlen(
 	)
 {
 _TCHAR *var = 0;						// Name of variable.
-long ord = 0;						// Rule element.
+long long ord = 0;						// Rule element.
 
 if (!Arg::str1(_T("postXaddlen"), (DELTS*&)args, var))
 	return false;
@@ -3952,7 +3952,7 @@ bool Pat::postXaddNvar(
 	Nlppp *nlppp				// 11/19/99 AM.
 	)
 {
-long ord = 0;						// Rule element.
+long long ord = 0;						// Rule element.
 _TCHAR *nvar = 0;					// Node var.
 _TCHAR *xvar = 0;					// Context node var.
 
@@ -3996,7 +3996,7 @@ Pn *npn;
 npn = nstart->getData();
 ndlist = npn->getDsem();
 
-long nval = 0;
+long long nval = 0;
 Var::val(nvar, ndlist, /*DU*/ nval);
 
 // Add node's var to the variable.
@@ -4023,7 +4023,7 @@ bool Pat::postXrename(
 	Nlppp *nlppp
 	)
 {
-long ord = 0;						// Context node ordinal.
+long long ord = 0;						// Context node ordinal.
 _TCHAR *name = 0;					// New name for context node.
 _TCHAR *xvar = 0;					// Context node var.
 
@@ -4157,7 +4157,7 @@ xdlist = xpn->getDsem();	// Context node's variable list.
 
 
 // Get xvar2 variable and value.
-long num = 0;
+long long num = 0;
 Var::val(xvar2, xdlist, /*DU*/ num);
 if (num)					// Value exists and is nonzero.
 	return true;		// Action succeeds anyway.
@@ -4236,7 +4236,7 @@ bool Pat::postNinc(
 	Nlppp *nlppp				// 11/19/99 AM.
 	)
 {
-long ord = 0;						// Rule element.
+long long ord = 0;						// Rule element.
 _TCHAR *nvar = 0;					// Node var.
 
 if (!Arg::num1(_T("postNinc"), (DELTS*&)args, ord))
@@ -4320,8 +4320,8 @@ bool Pat::postPrintr(
 	Nlppp *nlppp				// 11/19/99 AM.
 	)
 {
-long ord1 = 0;						// 1st rule element.
-long ord2 = 0;						// Last rule element.
+long long ord1 = 0;						// 1st rule element.
+long long ord2 = 0;						// Last rule element.
 
 if (!Arg::num1(_T("postPrintr"), (DELTS*&)args, ord1))
 	return false;
@@ -4399,8 +4399,8 @@ bool Pat::postPrrange(
 	)
 {
 _TCHAR *fname = 0;					// The filename (== variable name!)
-long ord1 = 0;						// 1st rule element.
-long ord2 = 0;						// Last rule element.
+long long ord1 = 0;						// 1st rule element.
+long long ord2 = 0;						// Last rule element.
 
 if (!Arg::str1(_T("postPrrange"), (DELTS*&)args, fname))
 	return false;
@@ -4443,7 +4443,7 @@ bool Pat::postPrchild(
 	)
 {
 _TCHAR *fname = 0;					// The filename (== variable name!)
-long ord = 0;						// 1st rule element.
+long long ord = 0;						// 1st rule element.
 _TCHAR *name;							// Named subnode to look for.
 
 if (!Arg::str1(_T("postPrchild"), (DELTS*&)args, fname))
@@ -4538,7 +4538,7 @@ bool Pat::postPrtree(
 	)
 {
 _TCHAR *fname = 0;					// The filename (== variable name!)
-long ord = 0;						// 1st rule element.
+long long ord = 0;						// 1st rule element.
 _TCHAR *name;							// Named subnode to look for.
 
 if (!Arg::str1(_T("postPrtree"), (DELTS*&)args, fname))
@@ -4626,7 +4626,7 @@ bool Pat::postPrxtree(
 {
 _TCHAR *fname = 0;					// The filename (== variable name!)
 _TCHAR *prestr = 0;					// Literal to print before node str.
-long ord = 0;						// 1st rule element.
+long long ord = 0;						// 1st rule element.
 _TCHAR *name = 0;					// Named subnode to look for.
 _TCHAR *poststr = 0;				// Literal to print after node str.
 
@@ -4723,7 +4723,7 @@ bool Pat::postFprintnvar(
 {
 _TCHAR *fname = 0;					// The filename
 _TCHAR *name;							// Variable name.
-long ord = 0;						// 1st rule element.
+long long ord = 0;						// 1st rule element.
 
 if (!Arg::str1(_T("postFprintnvar"), (DELTS*&)args, fname))
 	return false;
@@ -4827,7 +4827,7 @@ bool Pat::postFprintxvar(
 {
 _TCHAR *fname = 0;					// The filename
 _TCHAR *name;							// Variable name.
-long ord = 0;						// 1st rule element.
+long long ord = 0;						// 1st rule element.
 
 if (!Arg::str1(_T("postFprintxvar"), (DELTS*&)args, fname))
 	return false;
@@ -5024,7 +5024,7 @@ bool Pat::postNdump(
 	)
 {
 _TCHAR *fname = 0;					// The filename
-long ord = 0;						// 1st rule element.
+long long ord = 0;						// 1st rule element.
 
 if (!Arg::str1(_T("Ndump"), (DELTS*&)args, fname))
 	return false;
@@ -5108,7 +5108,7 @@ bool Pat::postXdump(
 	)
 {
 _TCHAR *fname = 0;					// The filename
-long ord = 0;						// 1st rule element.
+long long ord = 0;						// 1st rule element.
 
 if (!Arg::str1(_T("Xdump"), (DELTS*&)args, fname))
 	return false;
@@ -5423,8 +5423,8 @@ bool Pat::postPranchor(
 	)
 {
 _TCHAR *fname = 0;					// The filename (== variable name!)
-long ord1 = 0;						// 1st rule element.
-long ord2 = 0;						// Last rule element.
+long long ord1 = 0;						// 1st rule element.
+long long ord2 = 0;						// Last rule element.
 
 if (!Arg::str1(_T("postPranchor"), (DELTS*&)args, fname))
 	return false;
@@ -6575,7 +6575,7 @@ Tree<Pn> *tree = (Tree<Pn> *)nlppp->parse_->getTree();
 Node<Pn> *first=0, *last=0;
 
 // Traverse collect one element at a time.
-long ord = 0;
+long long ord = 0;
 Node<Pn> *sub1=0, *sub2=0;
 Node<Pn> *child1, *child2;	// First and last child for current element.
 for (; coll; coll = coll->Right())

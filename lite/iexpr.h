@@ -109,11 +109,11 @@ public:
 		Dlist<Iarg>* &vals,
 		long &index																// 10/14/00 AM.
 		);
-	static bool inc(RFASem *, Nlppp *, /*UP*/ long&);				// 06/01/00 AM.
-	static bool dec(RFASem *, Nlppp *, /*UP*/ long&);				// 06/01/00 AM.
-	static bool vtnot(RFASem *, Nlppp *, /*UP*/ long&);				// 06/01/00 AM.
-	static inline bool inc_interp(RFASem*,Nlppp*,/*UP*/long&);	// 06/13/00 AM.
-	static inline bool dec_interp(RFASem*,Nlppp*,/*UP*/long&);	// 06/13/00 AM.
+	static bool inc(RFASem *, Nlppp *, /*UP*/ long long&);				// 06/01/00 AM.
+	static bool dec(RFASem *, Nlppp *, /*UP*/ long long&);				// 06/01/00 AM.
+	static bool vtnot(RFASem *, Nlppp *, /*UP*/ long long&);				// 06/01/00 AM.
+	static inline bool inc_interp(RFASem*,Nlppp*,/*UP*/long long&);	// 06/13/00 AM.
+	static inline bool dec_interp(RFASem*,Nlppp*,/*UP*/long long&);	// 06/13/00 AM.
 	inline bool eval_lhs_only(RFASem*,/*UP*/RFASem*&,bool&);
 																					// 12/24/02 AM.
 

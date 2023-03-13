@@ -521,7 +521,7 @@ Parse *parse = nlppp->parse_;												// 08/24/02 AM.
 if (!name_ || !*name_)
 	{
 	// BUILD A DEFAULT VALUE.
-	sem = new RFASem((long) 0);
+	sem = new RFASem(0LL);
 	return false;
 	}
 
@@ -553,7 +553,7 @@ Iarg *iarg;
 RFASem *semarg;
 RFASem *val;
 _TCHAR *str;
-long num;
+long long num;
 float fnum;																		// 08/17/01 AM.
 //Iarg *newarg;
 if (iargs)
@@ -571,7 +571,7 @@ if (iargs)
 			nlppp->parse_->line_ = line_;									// 08/24/02 AM.
 			_stprintf(Errbuf, _T("[Fncall error: Bad arg expression.]"));// 05/18/01 AM.
 			parse->errOut(false); // UNFIXED 														// 05/18/01 AM.
-			sem = new RFASem((long) 0);
+			sem = new RFASem(0LL);
 			this->setArgs(origargs_);				// Restore args.	// 03/13/02 AM.
 			Iarg::delete_top(iargs);				// Zap.				// 02/18/00 AM.
 			return false;
@@ -644,7 +644,7 @@ if (iargs)
 				_stprintf(Errbuf,												// 05/18/01 AM.
 								_T("[Fncall error: Bad arg expr type.]"));	// 05/18/01 AM.
 				parse->errOut(false); // UNFIXED 													// 05/18/01 AM.
-				sem = new RFASem((long) 0);
+				sem = new RFASem(0LL);
 				this->setArgs(origargs_);			// Restore args.	// 03/13/02 AM.
 				Iarg::delete_top(iargs);			// Zap.				// 02/18/00 AM.
 				return false;
@@ -660,7 +660,7 @@ if (iargs)
 			_stprintf(Errbuf,													// 05/26/02 AM.
 				_T("[Error: Call by reference needs var.]"));				// 05/26/02 AM.
 			parse->errOut(false); // UNFIXED 														// 05/26/02 AM.
-			sem = new RFASem((long) 0);									// 05/26/02 AM.
+			sem = new RFASem(0LL);									// 05/26/02 AM.
 			this->setArgs(origargs_);										// 05/26/02 AM.
 			Iarg::delete_top(iargs);										// 05/26/02 AM.
 			return false;														// 05/26/02 AM.
@@ -680,7 +680,7 @@ if (iargs)
 /////////////////////////////
 
 bool badname = false;
-long ret = 1;		// Return value for check actions.
+long long ret = 1;		// Return value for check actions.
 
 // ACTIONS DEPENDENT ON THE CODE REGION.
 switch (nlppp->getRegion())
@@ -705,7 +705,7 @@ switch (nlppp->getRegion())
 		_stprintf(Errbuf,														// 05/18/01 AM.
 			_T("[Fncall: Error. Executing in bad region of code.]"));	// 05/18/01 AM.
 		parse->errOut(false); // UNFIXED 															// 05/18/01 AM.
-		sem = new RFASem((long) 0);
+		sem = new RFASem(0LL);
 		if (iargs)
 			{
 			this->setArgs(origargs_);				// Restore args.	// 03/13/02 AM.
@@ -727,7 +727,7 @@ if (ok)
 	}
 else if (!badname)	// Known action with bad result
 	{
-	sem = new RFASem((long) 0);
+	sem = new RFASem(0LL);
 	if (iargs)
 		{
 		this->setArgs(origargs_);					// Restore args.	// 03/13/02 AM.
@@ -778,7 +778,7 @@ if (!ok)
 		}
 	}
 // Action/function executed ok.  Return true.
-sem = new RFASem((long) 1);
+sem = new RFASem(1LL);
 return true;
 }
 
@@ -980,7 +980,7 @@ if (darg)
 
 // Traverse the args, generating code for them.
 _TCHAR buf[MAXSTR+1];
-long num = 0;																	// 05/04/01 AM.
+long long num = 0;																	// 05/04/01 AM.
 for (; darg; darg = darg->Right())
 	{
 	if (userdef)	// Wrap args of user-defined NLP++ fn.			// 03/11/02 AM.

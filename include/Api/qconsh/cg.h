@@ -165,7 +165,7 @@ public:
 	// Fetch the first value of given attribute of a concept.
 	// Treat as appropriate type if possible.
 	bool findVal(CONCEPT *con, _TCHAR *attr, /*UP*/ _TCHAR *valbuf);
-	bool findVal(CONCEPT *con, _TCHAR *attr, /*UP*/ long &val);
+	bool findVal(CONCEPT *con, _TCHAR *attr, /*UP*/ long long &val);
 	bool findVal(CONCEPT *con, _TCHAR *attr, /*UP*/ float &val);	// 08/16/01 AM.
 	bool findVal(CONCEPT *con,_TCHAR *attr,/*UP*/CONCEPT *&val);	// 08/12/00 AM.
 	bool findVal_db(CONCEPT *con,_TCHAR *attr, /*UP*/ _TCHAR *&val);	// 02/14/07 AM.
@@ -266,7 +266,7 @@ public:
 
 	// Pop the next value from a list of attribute values.
 	void popVal(VAL *&vals, /*UP*/ _TCHAR *val);
-	void popVal(VAL *&vals, /*UP*/ long &val);
+	void popVal(VAL *&vals, /*UP*/ long long &val);
 	void popVal(VAL *&vals, /*UP*/ float &val);						// 08/16/01 AM.
 	void popVal(VAL *&vals, /*UP*/ CONCEPT *&val);					// 08/12/00 AM.
 
@@ -291,14 +291,14 @@ public:
 
 	// Add value as a string type.										// 07/09/99 AM.
 	bool addSval(CONCEPT *con, _TCHAR *attr, _TCHAR *buf);	// supplied buffer.
-	bool addSval(CONCEPT *con, _TCHAR *attr, long val);
+	bool addSval(CONCEPT *con, _TCHAR *attr, long long val);
 
 	// Add string value at end of attribute's values.
 	bool addVal_id(CONCEPT *con, _TCHAR *atrr, STR_ID val);	// 02/14/07 AM.
 	bool addVal(CONCEPT *con, _TCHAR *attr, _TCHAR *val);
 
 	// Add num value at end of attribute's values.
-	bool addVal(CONCEPT *con, _TCHAR *attr, long val);
+	bool addVal(CONCEPT *con, _TCHAR *attr, long long val);
 	bool addVal(CONCEPT *con, _TCHAR *attr, float val);				// 03/19/03 AM.
 
 	// Add CONCEPT values at end of attr's values.					// 08/11/00 AM.
@@ -356,7 +356,7 @@ public:
 
 	// Delete named value from attribute.								// 05/17/00 AM.
 	bool rmAttrval(CONCEPT *con, _TCHAR *attr_s, _TCHAR *val_s);		// 05/17/00 AM.
-	bool rmAttrval(CONCEPT *con, _TCHAR *attr_s, long val);			// 05/19/00 AM.
+	bool rmAttrval(CONCEPT *con, _TCHAR *attr_s, long long val);			// 05/19/00 AM.
 	bool rmAttrval(CONCEPT *con, _TCHAR *attr_s, float val);		// 03/19/03 AM.
 	bool rmAttrval(CONCEPT *con, _TCHAR *attr_s, CONCEPT *val);		// 06/03/02 Dd.
 
@@ -383,14 +383,14 @@ public:
 	// Replace attribute value with given value.
 	// Note: not comparing types.
 	bool replaceVal(CONCEPT *con, _TCHAR *attr, _TCHAR *val);
-	bool replaceVal(CONCEPT *con, _TCHAR *attr, long val);
+	bool replaceVal(CONCEPT *con, _TCHAR *attr, long long val);
 	bool replaceVal(CONCEPT *con, _TCHAR *attr, float val);			// 03/19/03 AM.
 	bool replaceVal(CONCEPT *con, _TCHAR *attr, CONCEPT *val);		// 08/12/00 AM.
 	bool replaceVal_id(CONCEPT *con, _TCHAR *attr, STR_ID sid);		// 02/14/07 AM.
 
 	// Replace in multi-valued attrs.									// 05/19/00 AM.
 	bool CG::replaceVal(CONCEPT *con, _TCHAR *attr, _TCHAR *oldval, _TCHAR *newval);
-	bool CG::replaceVal(CONCEPT *con, _TCHAR *attr, long oldval, long newval);
+	bool CG::replaceVal(CONCEPT *con, _TCHAR *attr, long long oldval, long long newval);
 	bool CG::replaceVal(CONCEPT*, _TCHAR*attr, float oldval, float newval);
 																					// 03/19/03 AM.
 	bool CG::replaceVal(CONCEPT *con, _TCHAR *attr, CONCEPT *oldval, CONCEPT *newval);

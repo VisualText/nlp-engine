@@ -520,7 +520,7 @@ if (*vname == '$')									// 11/17/99 AM.
 if (ref)																			// 06/16/02 AM.
 	{
 	// Going backwards a bit here.										// 06/16/02 AM.
-	RFASem *semindex = new RFASem(vindex);								// 06/16/02 AM.
+	RFASem *semindex = new RFASem((long long)vindex);								// 06/16/02 AM.
 	Ivar *ivar = new Ivar(vtype,vname,vnum,semindex);				// 06/16/02 AM.
 	sem = new RFASem(ivar);													// 06/16/02 AM.
 	return true;																// 06/16/02 AM.
@@ -531,7 +531,7 @@ findVar(vtype,vname,vnum,nlppp, /*UP*/ pairx);						// 05/25/00 AM.
 if (!pairx)
 	{
 	// BUILD A DEFAULT VALUE.												// 11/15/99 AM.
-	sem = new RFASem((long) 0);											// 11/15/99 AM.
+	sem = new RFASem(0LL);											// 11/15/99 AM.
 	return true;
 	}
 
@@ -539,14 +539,14 @@ Dlist<Iarg> *vals = pairx->getVals();
 if (!vals)
 	{
 	// BUILD A DEFAULT VALUE.									// FIX!	// 01/02/00 AM.
-	sem = new RFASem((long) 0);								// FIX!	// 01/02/00 AM.
+	sem = new RFASem(0LL);								// FIX!	// 01/02/00 AM.
 	return true;		// Pair with no values list.
 	}
 Delt<Iarg> *darg = vals->getFirst();
 if (!darg)
 	{
 	// BUILD A DEFAULT VALUE.									// FIX!	// 01/02/00 AM.
-	sem = new RFASem((long) 0);								// FIX!	// 01/02/00 AM.
+	sem = new RFASem(0LL);								// FIX!	// 01/02/00 AM.
 	return true;		// Empty values list.
 	}
 
@@ -556,7 +556,7 @@ if (vindex >= 0)		// Index into variable's values (ARRAY!)	// 10/13/00 AM.
 		darg = darg->Right();												// 10/13/00 AM.
 	if (!darg)																	// 10/13/00 AM.
 		{
-		sem = new RFASem((long) 0);										// 10/13/00 AM.
+		sem = new RFASem(0LL);										// 10/13/00 AM.
 		return true;															// 10/13/00 AM.
 		}
 	return varVal(darg->getData(), sem);
@@ -643,7 +643,7 @@ switch (arg->getType())
 				break;
 			case RSNUM:															// 08/07/02 AM.
 				{
-				long num = 0;													// 08/07/02 AM.
+				long long num = 0;													// 08/07/02 AM.
 				if (!str_to_long(obj->getName(),num))					// 08/07/02 AM.
 					{
 					std::_t_strstream gerrStr;
@@ -767,7 +767,7 @@ switch (vtype)
 			 || !nstart || !nend)
 			{
 			// ASSUME IT'S AN OPTIONAL NODE.								// 01/05/00 AM.
-			sem = new RFASem((long)0);						// FIX		// 01/05/00 AM.
+			sem = new RFASem(0LL);						// FIX		// 01/05/00 AM.
 			return true;										// FIX		// 01/05/00 AM.
 			// return false;													// 01/05/00 AM.
 			}
@@ -791,7 +791,7 @@ switch (vtype)
 		if (!nstart || !nend)
 			{
 			// ASSUME IT'S AN OPTIONAL NODE.
-			sem = new RFASem((long)0);
+			sem = new RFASem(0LL);
 			return true;
 			}
 		// 06/05/00 AM.	ALLOWING MULTI-NODE MATCHES.				// 06/05/00 AM.
@@ -812,7 +812,7 @@ switch (vtype)
 			if (str && *str)													// 03/13/03 AM.
 				sem = new RFASem(str, RSSTR);								// 03/13/03 AM.
 			else																	// 03/13/03 AM.
-				sem = new RFASem((long)0);									// 03/13/03 AM.
+				sem = new RFASem(0LL);									// 03/13/03 AM.
 			return true;														// 03/13/03 AM.
 			}
 
@@ -890,21 +890,21 @@ switch (vtype)
 			{
 			NLP *nlp = nlppp->getParse()->getNLP();
 			long processingDir = nlp->getIsDirRun();
-			sem = new RFASem(processingDir);
+			sem = new RFASem((long long)processingDir);
 			return true;
 			}
 		if (!strcmp_i(name, _T("islastfile")))
 			{
 			NLP *nlp = nlppp->getParse()->getNLP();
 			long processingDir = nlp->getIsLastFile();
-			sem = new RFASem(processingDir);
+			sem = new RFASem((long long)processingDir);
 			return true;
 			}
 		if (!strcmp_i(name, _T("isfirstfile")))
 			{
 			NLP *nlp = nlppp->getParse()->getNLP();
 			long processingDir = nlp->getIsFirstFile();
-			sem = new RFASem(processingDir);
+			sem = new RFASem((long long)processingDir);
 			return true;
 			}
 		if (!strcmp_i(name, _T("passnum")))		// $PASSNUM		// 10/11/06 AM.
@@ -916,7 +916,7 @@ switch (vtype)
 			long xx = parse->getRulepass();							// 09/12/06 AM.
 			if (!xx)															// 10/11/06 AM.
 				xx = parse->getCurrpass();								// 10/11/06 AM.
-			sem = new RFASem(xx);										// 09/12/06 AM.
+			sem = new RFASem((long long)xx);										// 09/12/06 AM.
 			return true;													// 09/12/06 AM.
 			}
 		if (!strcmp_i(name, _T("rulenum")))		// $RULENUM		// 09/12/06 AM.
@@ -928,7 +928,7 @@ switch (vtype)
 				xx = rule->getNum();										// 09/12/06 AM.
 			// else return zero.						// FIX.			// 10/10/06 AM.
 
-			sem = new RFASem(xx);										// 09/12/06 AM.
+			sem = new RFASem((long long)xx);										// 09/12/06 AM.
 			return true;													// 09/12/06 AM.
 			}
 		{
@@ -1003,7 +1003,7 @@ Var::find(name,dlist,/*UP*/pairx);
 if (!pairx)
 	{
 	// BUILD A DEFAULT VALUE.												// 11/21/00 AM.
-	//sem = new RFASem((long) 0);											// 11/15/99 AM.
+	//sem = new RFASem(0LL);											// 11/15/99 AM.
 	return true;
 	}
 
@@ -1011,14 +1011,14 @@ Dlist<Iarg> *vals = pairx->getVals();
 if (!vals)
 	{
 	// BUILD A DEFAULT VALUE.												// 11/21/00 AM.
-	//sem = new RFASem((long) 0);								// FIX!	// 01/02/00 AM.
+	//sem = new RFASem(0LL);								// FIX!	// 01/02/00 AM.
 	return true;		// Pair with no values list.
 	}
 Delt<Iarg> *darg = vals->getFirst();
 if (!darg)
 	{
 	// BUILD A DEFAULT VALUE.												// 11/21/00 AM.
-	//sem = new RFASem((long) 0);								// FIX!	// 01/02/00 AM.
+	//sem = new RFASem(0LL);								// FIX!	// 01/02/00 AM.
 	return true;		// Empty values list.
 	}
 
@@ -1080,7 +1080,7 @@ if (!strcmp_i(name, _T("length")))	//	$LENGTH $length.	// Get node text length.
 		}
 	else
 		len = pn->End - pn->Start + 1;									// 06/04/00 AM.
-	sem = new RFASem(len);													// 06/04/00 AM.
+	sem = new RFASem((long long)len);													// 06/04/00 AM.
 	return true;
 	}
 if (!strcmp_i(name, _T("text")))	// $TEXT $text							// 11/10/00 AM.
@@ -1101,7 +1101,7 @@ if (!strcmp_i(name, _T("text")))	// $TEXT $text							// 11/10/00 AM.
 	text = make_str(pn->getText(), len);					// FIX.	// 11/20/00 AM.
 	if (!text)																
 		{
-		sem = new RFASem((long)0);					// "NULL"			
+		sem = new RFASem(0LL);					// "NULL"			
 		return true;
 		}
 	buf = Chars::create(len+1);							
@@ -1161,7 +1161,7 @@ if (!strcmp_i(name, _T("text")))	//	$TEXT $text.	// Get node text.
 	text = pn->pnStr(len);			// Create buffer for node's text.
 	if (!text)																	// 07/24/00 AM.
 		{
-		sem = new RFASem((long)0);					// "NULL"			// 07/24/00 AM.
+		sem = new RFASem(0LL);					// "NULL"			// 07/24/00 AM.
 		return true;
 		}
 	buf = Chars::create(len+1);								// FIX	// 07/24/00 AM.
@@ -1177,7 +1177,7 @@ if (!strcmp_i(name, _T("length")))	//	$LENGTH $length.	// Get node text length.
 	{
 	long len;
 	len = pn->End - pn->Start + 1;										// 06/04/00 AM.
-	sem = new RFASem(len);													// 06/04/00 AM.
+	sem = new RFASem((long long)len);													// 06/04/00 AM.
 	return true;
 	}
 
@@ -1185,7 +1185,7 @@ if (!strcmp_i(name, _T("exists")))	//	$EXISTS $exists.	// TRUE if node exists.
 	{
 	// We got here, so there's a node.  Only meaningful for rule elements,
 	// but will return true for X("$exists") also.
-	sem = new RFASem ((long) 1);
+	sem = new RFASem (1LL);
 	return true;
 	}
 
@@ -1273,11 +1273,11 @@ if (!strcmp_i(name, _T("end")))		// $END $end	//		// 11/18/99 AM.
 
 		//return false;
 		// Recovery. Return a "false" value.
-		sem = new RFASem((long)0);
+		sem = new RFASem(0LL);
 		return true;
 		}
 	num = (node->Right() ? 0 : 1);	// True if end, false if not.
-	sem = new RFASem(num);
+	sem = new RFASem((long long)num);
 	return true;
 	}
 
@@ -1302,11 +1302,11 @@ if (!strcmp_i(name, _T("start")))		// $START $start			// 12/02/99 AM.
 		errOut(&gerrStr,false);
 		//return false;
 		// Recovery. Return a "false" value.
-		sem = new RFASem((long)0);
+		sem = new RFASem(0LL);
 		return true;
 		}
 	num = (node->Left() ? 0 : 1);	// True if start, false if not.
-	sem = new RFASem(num);
+	sem = new RFASem((long long)num);
 	return true;
 	}
 
@@ -1320,11 +1320,11 @@ if (!strcmp_i(name, _T("ostart")))		// $OSTART $ostart		// 12/02/99 AM.
 		errOut(&gerrStr,false);
 		//return false;
 		// Recovery. Return a zero offset.
-		sem = new RFASem((long)0);
+		sem = new RFASem(0LL);
 		return true;
 		}
 	num = pn->getStart();
-	sem = new RFASem(num);
+	sem = new RFASem((long long)num);
 	return true;
 	}
 
@@ -1338,11 +1338,11 @@ if (!strcmp_i(name, _T("oend")))		// $OEND $oend.			// 12/02/99 AM.
 		errOut(&gerrStr,false);
 		//return false;
 		// Recovery. Return a zero offset.
-		sem = new RFASem((long)0);
+		sem = new RFASem(0LL);
 		return true;
 		}
 	num = pn->getEnd();
-	sem = new RFASem(num);
+	sem = new RFASem((long long)num);
 	return true;
 	}
 
@@ -1369,7 +1369,7 @@ if (!strcmp_i(name, _T("allcaps"))			// $ALLCAPS $allcaps		// 01/10/00 AM.
 
 		//return false;
 		// Recovery. Return a "false" value.
-		sem = new RFASem((long)0);
+		sem = new RFASem(0LL);
 		return true;
 		}
 	// GET THE LEAF NODE.
@@ -1386,7 +1386,7 @@ if (!strcmp_i(name, _T("allcaps"))			// $ALLCAPS $allcaps		// 01/10/00 AM.
 	ok = all_uppercase(buf);
 	Chars::destroy(buf);			// Free up buffer.
 	num = (ok ? 1 : 0);
-	sem = new RFASem(num);
+	sem = new RFASem((long long)num);
 	return true;
 	}
 
@@ -1413,7 +1413,7 @@ if (!strcmp_i(name, _T("lowercase")))	// $LOWERCASE $lowercase.	// 01/11/00 AM.
 		errOut(&gerrStr,false);
 		//return false;
 		// Recovery. Return a "false" value.
-		sem = new RFASem((long)0);
+		sem = new RFASem(0LL);
 		return true;
 		}
 	// GET THE LEAF NODE.
@@ -1430,7 +1430,7 @@ if (!strcmp_i(name, _T("lowercase")))	// $LOWERCASE $lowercase.	// 01/11/00 AM.
 	ok = all_lowercase(buf);
 	Chars::destroy(buf);			// Free up buffer.
 	num = (ok ? 1 : 0);
-	sem = new RFASem(num);
+	sem = new RFASem((long long)num);
 	return true;
 	}
 
@@ -1457,7 +1457,7 @@ if (!strcmp_i(name, _T("cap")))	// $CAP $cap.	// 01/11/00 AM.
 		errOut(&gerrStr,false);
 		//return false;
 		// Recovery. Return a "false" value.
-		sem = new RFASem((long)0);
+		sem = new RFASem(0LL);
 		return true;
 		}
 	// GET THE LEAF NODE.
@@ -1476,7 +1476,7 @@ if (!strcmp_i(name, _T("cap")))	// $CAP $cap.	// 01/11/00 AM.
 		num = 1;
 	else
 		num = 0;
-	sem = new RFASem(num);
+	sem = new RFASem((long long)num);
 	return true;
 	}
 
@@ -1501,7 +1501,7 @@ if (!strcmp_i(name, _T("mixcap")))			// $MIXCAP $mixcap		// 01/15/00 AM.
 		errOut(&gerrStr,false);
 		//return false;
 		// Recovery. Return a "false" value.
-		sem = new RFASem((long)0);
+		sem = new RFASem(0LL);
 		return true;
 		}
 	// GET THE LEAF NODE.
@@ -1518,7 +1518,7 @@ if (!strcmp_i(name, _T("mixcap")))			// $MIXCAP $mixcap		// 01/15/00 AM.
 	ok = mixcap(buf);
 	Chars::destroy(buf);			// Free up buffer.
 	num = (ok ? 1 : 0);
-	sem = new RFASem(num);
+	sem = new RFASem((long long)num);
 	return true;
 	}
 
@@ -1546,7 +1546,7 @@ if (!strcmp_i(name, _T("unknown"))	// $UNKNOWN $unknown.	// 01/11/00 AM.
 		errOut(&gerrStr,false);
 		//return false;
 		// Recovery. Return a "false" value.
-		sem = new RFASem((long)0);
+		sem = new RFASem(0LL);
 		return true;
 		}
 	// GET THE LEAF NODE.
@@ -1563,7 +1563,7 @@ if (!strcmp_i(name, _T("unknown"))	// $UNKNOWN $unknown.	// 01/11/00 AM.
 		num = 1;
 	else
 		num = 0;
-	sem = new RFASem(num);
+	sem = new RFASem((long long)num);
 	return true;
 	}
 
@@ -1917,12 +1917,12 @@ std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 // be known dynamically at runtime.
 // SHOULD HANDLE THE SPECIAL VARS HERE.
 _TCHAR *name = getName();
-long num = getNum();
+long long num = getNum();
 _TCHAR s_num[64];																// 05/04/01 AM.
 if (num)																			// 05/04/01 AM.
-	_stprintf(s_num, _T("%ld"), num);											// 05/04/01 AM.
+	_stprintf(s_num, _T("%llu"), num);											// 05/04/01 AM.
 else																				// 05/04/01 AM.
-	_stprintf(s_num, _T("(long)0"));												// 05/04/01 AM.
+	_stprintf(s_num, _T("0LL"));												// 05/04/01 AM.
 *fcode << _T("Arun::");
 switch (getType())
 	{
@@ -2185,7 +2185,7 @@ return false;
 bool Ivar::nodeVarEQ(
 	Pn *pn,
 	_TCHAR *name,			// Name of var.
-	long nval
+	long long nval
 	)
 {
 if (!pn)
@@ -2223,7 +2223,7 @@ if (darg->Right())
 Iarg *iarg = darg->getData();
 RFASem *sem;	// FIX. // 07/12/11 AM.
 bool ok = false;	// FIX.	// 07/12/11 AM.
-long aval = 0;	// FIX.	// 07/12/11 AM.
+long long aval = 0;	// FIX.	// 07/12/11 AM.
 switch (iarg->getType())
 	{
 	case IANUM:
@@ -2262,7 +2262,7 @@ return false;
 bool Ivar::nodeVarGTLT(
 	Pn *pn,
 	_TCHAR *name,			// Name of var.
-	long nval,
+	long long nval,
 	bool lessThan
 	)
 {
@@ -2297,7 +2297,7 @@ if (darg->Right())
 Iarg *iarg = darg->getData();
 RFASem *sem;	// FIX. // 07/12/11 AM.
 bool ok = false;	// FIX.	// 07/12/11 AM.
-long aval = 0;	// FIX.	// 07/12/11 AM.
+long long aval = 0;	// FIX.	// 07/12/11 AM.
 
 switch (iarg->getType())
 	{
@@ -2316,12 +2316,7 @@ switch (iarg->getType())
 			}
 		break;
 	case IASTR:
-	    try {
-            aval = std::stol(iarg->getStr());
-        }
-        catch (const std::invalid_argument) {
-			return false;
-		}
+		aval = std::stoll(iarg->getStr());
 		return lessThan? aval < nval : aval > nval;
 		break;
 	case IAFLOAT:
@@ -2432,7 +2427,7 @@ return true;
 bool Ivar::nodeReplaceval(
 	Pn *pn,
 	_TCHAR *name,			// Name of var.
-	long numval,		// Value to replace.
+	long long numval,		// Value to replace.
 	bool bRM,	// If rm existing values	// 12/12/14 AM.
 	bool bPUSH	// If pushing value front	// 12/12/14 AM.
 	)
@@ -2552,7 +2547,7 @@ return true;
 bool Ivar::nodePushval(
 	Pn *pn,
 	_TCHAR *name,			// Name of var.
-	long numval,		// Value to replace.
+	long long numval,		// Value to replace.
 	bool bRM,	// If rm existing values
 	bool bPUSH	// If pushing value front
 	)

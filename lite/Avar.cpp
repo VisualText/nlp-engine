@@ -142,7 +142,7 @@ return var->getKey();
 * SUBJ:	Get a long value for a variable.
 ********************************************/
 
-LITE_API bool Avar::getLong(void *hvar, /*DU*/ long &val)
+LITE_API bool Avar::getLong(void *hvar, /*DU*/ long long &val)
 {
 // val = -1;
 
@@ -172,7 +172,7 @@ return Var::val((Ipair *) hvar,/*DU*/ val);		// 11/03/99 AM.
 * SUBJ:	Get a long value for a variable.
 ********************************************/
 
-LITE_API bool Avar::getLong(_TCHAR *name, void *hvars, /*DU*/ long &val)
+LITE_API bool Avar::getLong(_TCHAR *name, void *hvars, /*DU*/ long long &val)
 {
 val = -1;
 

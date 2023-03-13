@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright © 1998-2009 by Text Analysis International, Inc.
+Copyright ï¿½ 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
 ********************************************************************************
 *
@@ -60,7 +60,7 @@ typedef union pval
    struct ptr *vptr;	// kind = pPTR
    struct sym *vsym;	// kind = pSYM
    _TCHAR *vst;			// kind = pST	/* String in string table.	*/
-   long vnum;			// kind = pNUM
+   long long vnum;			// kind = pNUM
    _TCHAR vchar;			// kind = pCHAR
 	float vfloat;		// kind = pFLOAT									// 08/16/01 AM.
    ID vid;				// kind = pID

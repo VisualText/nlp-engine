@@ -1921,7 +1921,7 @@ dirty_ = true;
 return cgattr_->attr_rm_val_by_name((CON_ID)con, attr_s, val_s);
 }
 
-bool CG::rmAttrval(CONCEPT *con, _TCHAR *attr_s, long val)			// 05/19/00 AM.
+bool CG::rmAttrval(CONCEPT *con, _TCHAR *attr_s, long long val)			// 05/19/00 AM.
 {
 dirty_ = true;
 return cgattr_->attr_rm_val_by_name((CON_ID)con, attr_s, val);
@@ -2085,7 +2085,7 @@ return addVal(con, attr, newval);
 }
 
 // Multi-valued attr replacement.
-bool CG::replaceVal(CONCEPT *con, _TCHAR *attr, long oldval, long newval)
+bool CG::replaceVal(CONCEPT *con, _TCHAR *attr, long long oldval, long long newval)
 {
 if (!rmAttrval(con, attr, oldval))
 	return false;

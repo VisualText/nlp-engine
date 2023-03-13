@@ -896,7 +896,7 @@ inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, _TCHAR
 				parse_->internStr(bufval, strval);
 				replaceStr(node,strattr,strval);
 			} else if (cg_->isValNum(vals)) {
-				long num = 0L;
+				long long num = 0L;
 				cg_->popVal(vals,num);
 				replaceNum(node,strattr,num);	
 			} else
@@ -919,7 +919,7 @@ inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, _TCHAR
 inline bool DICTTok::replaceNum(
 	Node<Pn> *node,
 	_TCHAR *name,	// variable name.
-	long val
+	long long val
 	)
 {
 if (!node)

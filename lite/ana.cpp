@@ -1210,7 +1210,7 @@ bool first = true;		// First pass still pending.
 npasses_ = 0;				// COUNTING PASSES.
 Delt<Seqn> *delt;
 Seqn *seqn;
-long num;
+long long num;
 
 for (; con; con = cg_->Next(con))	// While traversing passes.
 	{

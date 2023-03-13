@@ -37,7 +37,7 @@ namespace unicu
     UChar *contains(_TCHAR *str1, _TCHAR *str2, bool noCase);
     bool isCaps(const UChar *str);
     bool isNumeric(_TCHAR *str);
-    bool strToLong(_TCHAR *str, long &num);
+    bool strToLong(_TCHAR *str, long long &num);
     int charToDigit(UChar ch);
 }
 

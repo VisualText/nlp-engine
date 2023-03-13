@@ -1528,7 +1528,7 @@ return true;
 inline bool CMLTok::replaceNum(
 	Node<Pn> *node,
 	_TCHAR *name,	// variable name.
-	long val
+	long long val
 	)
 {
 if (!node)

@@ -870,7 +870,7 @@ if (justDirty)										// 08/25/99 AM.
 							true);			// An active pass.
 		seq = rugpass;						// Move forward one pass.
 		Aseq::setPassnum(seq, pnum);										// 09/24/99 AM.
-		cg_->replaceVal(conc, _T("passnum"),(long)pnum);					// 03/19/03 AM.
+		cg_->replaceVal(conc, _T("passnum"),(long long)pnum);					// 03/19/03 AM.
 		// Intern this pass and rules file.								// 09/01/99 AM.
 		return nlp_->internPass(seq, erfa_);							// 05/26/01 AM.
 		}
@@ -897,7 +897,7 @@ else if (skipLocks)								// 08/25/99 AM.
 							true);			// An active pass.
 		seq = rugpass;						// Move forward one pass.
 		Aseq::setPassnum(seq, pnum);										// 09/24/99 AM.
-		cg_->replaceVal(conc, _T("passnum"),(long)pnum);					// 03/19/03 AM.
+		cg_->replaceVal(conc, _T("passnum"),(long long)pnum);					// 03/19/03 AM.
 		// Intern this pass and rules file.								// 09/01/99 AM.
 		return nlp_->internPass(seq, erfa_);							// 05/26/01 AM.
 		}
@@ -920,7 +920,7 @@ ASELECTS *selects;					// List of context node names. @NODES.
 selects = Arug::makeSelects();	// Make empty list of selects.
 
 CONCEPT *mark = 0;				// Mark next sample with different doc.
-long val = 0;						// Samples with doc flagged as redundant.
+long long val = 0;						// Samples with doc flagged as redundant.
 
 // Closed-set attribute from up the Gram hierarchy.
 //bool closed = false;				// 08/09/99 AM.
@@ -988,7 +988,7 @@ for (sample = cg_->firstNode(samples); sample; sample = mark)
 		nlp_->partExecute(parse, Aseq::firstPass(nlp_), seq, /*DU*/ num);
 		}
 
-	long start, end;
+	long long start, end;
 
 	/////////////////////////
 	// Handle current sample.
@@ -1119,7 +1119,7 @@ Arug::genRulesfile(rugpass, buff);
 seq = rugpass;			// Return the new pass as current stopping
 							// point in analyzer.
 Aseq::setPassnum(seq, pnum);				// 09/24/99 AM.
-cg_->replaceVal(conc, _T("passnum"),(long)pnum);	// 03/19/03 AM.
+cg_->replaceVal(conc, _T("passnum"),(long long)pnum);	// 03/19/03 AM.
 
 return true;
 }

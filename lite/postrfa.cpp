@@ -175,7 +175,7 @@ if ((args = args->Right()))
 	return false;
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -283,7 +283,7 @@ if ((args = args->Right()))
 	return false;
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -346,7 +346,7 @@ name = pn->getName();		// Should be token node's name.
 
 RFASem *rfasem;
 // Converting to numeric.						// 11/15/99 AM.
-//long num;											// 11/15/99 AM.
+//long long num;											// 11/15/99 AM.
 //if (!str_to_long(name, /*UP*/ num))			// 11/15/99 AM.
 //	{
 //	*gout << "[Couldn't convert to num=" << name << "]" << std::endl;
@@ -412,7 +412,7 @@ if ((args = args->Right()))
 	return false;
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())
 	{
 	case IANUM:
@@ -430,7 +430,7 @@ switch (arg1->getType())
 		return false;
 	}
 
-long num2;
+long long num2;
 switch (arg2->getType())
 	{
 	case IANUM:
@@ -557,7 +557,7 @@ if ((args = args->Right()))
 	return false;
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -683,7 +683,7 @@ if ((args = args->Right()))
 	return false;
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -898,7 +898,7 @@ if (args->Right())
 	return false;
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -1064,7 +1064,7 @@ if (args->Right())
 	return false;
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -1323,7 +1323,7 @@ if ((args = args->Right()))
 	return false;
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -1513,7 +1513,7 @@ if (semlist && !(iargs = semlist->getArgs()))
 	return false;
 
 // 11/29/98 AM. If the prepair is present, get start and end.
-long start, end;
+long long start, end;
 if (prepair)
 	{
 	Delt<Iarg> *ptr;
@@ -1611,7 +1611,7 @@ if (args->Right())
 	return false;
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -1756,7 +1756,7 @@ if (args->Right())
 	return false;
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -1776,7 +1776,7 @@ switch (arg1->getType())				// 11/15/99 AM.
 
 		return false;
 	}
-long num2;
+long long num2;
 switch (arg2->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -1918,7 +1918,7 @@ if ((args = args->Right()))
 	return false;
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -2268,7 +2268,7 @@ if (args->Right())
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -2288,7 +2288,7 @@ switch (arg1->getType())				// 11/15/99 AM.
 
 		return false;
 	}
-long num2;
+long long num2;
 switch (arg2->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -2446,7 +2446,7 @@ if ((args = args->Right()))
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
 	}
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -2565,7 +2565,7 @@ if ((args = args->Right()))
 	return false;
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -2714,7 +2714,7 @@ if ((args = args->Right()))
 	return false;
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -2856,7 +2856,7 @@ if (args->Right())
 	return false;
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -2876,7 +2876,7 @@ switch (arg1->getType())				// 11/15/99 AM.
 
 		return false;
 	}
-long num2;
+long long num2;
 switch (arg2->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -3070,7 +3070,7 @@ if ((args = args->Right()))
 	return false;
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -3548,7 +3548,7 @@ if (!(args = args->Right()))			// 03/25/99 AM.
 Iarg *arg2;
 arg2 = args->getData();
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -4285,7 +4285,7 @@ ifile = new Ifile(decls, code, sels, recs, regions,				// 12/19/01 AM.
 //delete X;									// Keep for consistency.
 
 // Register if rulefile is legitimately empty of rules.			// 08/31/00 AM.
-long num =0;																	// 08/31/00 AM.
+long long num =0;																	// 08/31/00 AM.
 Var::val(_T("RFA rulemark"), nlppp->getParse(), num);					// 08/31/00 AM.
 ifile->setEmpty(num ? false : true);									// 08/31/00 AM.
 
@@ -4995,7 +4995,7 @@ Pn *pnret = nret->getData();												// 03/12/02 AM.
 
 if (!nexpr)	// No expression to evaluate.
 	{
-	RFASem *semexpr = new RFASem((long)0);	// Value for expr of return stmt.
+	RFASem *semexpr = new RFASem(0LL);	// Value for expr of return stmt.
 	Ireturn *returnstmt = new Ireturn(semexpr,
 												 pnret->getLine());			// 03/12/02 AM.
 	RFASem *rfasem = new RFASem(returnstmt);
@@ -5078,7 +5078,7 @@ RFASem *semlhs = 0, *semop = 0, *semrhs = 0;
 Iop *iop = 0;				// Operator semantic object.
 enum Iexprtype typ = BINARYEXPR;
 _TCHAR *str, *name, *tstr;
-long num;
+long long num;
 if (!(semlhs = (RFASem *) pnlhs->getSem()))
 	{
 	// If it's an atomic thing like a number or string, build a sem for it.
@@ -5328,7 +5328,7 @@ Pn *pnrhs = nrhs->getData();
 RFASem *semop = 0, *semrhs = 0;
 Iop *iop = 0;				// Operator semantic object.
 _TCHAR *str, *name, *tstr;
-long num;
+long long num;
 
 if (!(semop = (RFASem *) pnop->getSem()))
 	{
@@ -5676,7 +5676,7 @@ if (semlist)
 // Get the variable name and the position number (if any) from args.
 Iarg *namearg = 0;
 Iarg *numarg = 0;
-long num = 0;		// Important init.	// FIX.		// 11/24/99 AM.
+long long num = 0;		// Important init.	// FIX.		// 11/24/99 AM.
 Delt<Iarg> *darg;
 if (!(darg = iargs->getFirst()))
 	{
@@ -5875,7 +5875,7 @@ if ((args = args->Right()))
 	return errOut(&gerrStr,false);
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -6002,7 +6002,7 @@ if (args->Right())
 		  << _T(" action: More than two args given.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -6022,7 +6022,7 @@ switch (arg1->getType())				// 11/15/99 AM.
 		return errOut(&gerrStr,false);
 		}
 	}
-long num2;
+long long num2;
 if (arg2)
 	{
 	switch (arg2->getType())				// 11/15/99 AM.
@@ -6146,7 +6146,7 @@ if (args->Right())
 		  << _T(" action: More than three args given.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -6166,7 +6166,7 @@ switch (arg1->getType())				// 11/15/99 AM.
 		return errOut(&gerrStr,false);
 		}
 	}
-long num2;
+long long num2;
 switch (arg2->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -6287,7 +6287,7 @@ if (args->Right())
 	return nlppp->parse_->errOut(&gerrStr,false,true);	// 09/21/13 AM.
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -6308,7 +6308,7 @@ switch (arg1->getType())				// 11/15/99 AM.
 	return nlppp->parse_->errOut(&gerrStr,false,true);	// 09/21/13 AM.
 		}
 	}
-long num2;
+long long num2;
 switch (arg2->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -6476,7 +6476,7 @@ if (args->Right())
 	return errOut(&gerrStr,false);
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -6496,7 +6496,7 @@ switch (arg1->getType())				// 11/15/99 AM.
 		return errOut(&gerrStr,false);
 		}
 	}
-long num2;
+long long num2;
 switch (arg2->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -6516,7 +6516,7 @@ switch (arg2->getType())				// 11/15/99 AM.
 		return errOut(&gerrStr,false);
 		}
 	}
-long num3;
+long long num3;
 switch (arg3->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -6666,7 +6666,7 @@ if (args->Right())
 	return errOut(&gerrStr,false);
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -6686,7 +6686,7 @@ switch (arg1->getType())				// 11/15/99 AM.
 		return errOut(&gerrStr,false);
 		}
 	}
-long num2;
+long long num2;
 switch (arg2->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -6706,7 +6706,7 @@ switch (arg2->getType())				// 11/15/99 AM.
 		return errOut(&gerrStr,false);
 		}
 	}
-long num3;
+long long num3;
 switch (arg3->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -6726,7 +6726,7 @@ switch (arg3->getType())				// 11/15/99 AM.
 		return errOut(&gerrStr,false);
 		}
 	}
-long num4;
+long long num4;
 switch (arg4->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -6746,7 +6746,7 @@ switch (arg4->getType())				// 11/15/99 AM.
 		return errOut(&gerrStr,false);
 		}
 	}
-long num5;
+long long num5;
 switch (arg5->getType())
 	{
 	case IANUM:
@@ -6893,7 +6893,7 @@ if (args->Right())
 	return errOut(&gerrStr,false);
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -6913,7 +6913,7 @@ switch (arg1->getType())				// 11/15/99 AM.
 		return errOut(&gerrStr,false);
 		}
 	}
-long num2;
+long long num2;
 switch (arg2->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -6933,7 +6933,7 @@ switch (arg2->getType())				// 11/15/99 AM.
 		return errOut(&gerrStr,false);
 		}
 	}
-long num3;
+long long num3;
 switch (arg3->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -6953,7 +6953,7 @@ switch (arg3->getType())				// 11/15/99 AM.
 		return errOut(&gerrStr,false);
 		}
 	}
-long num4;
+long long num4;
 switch (arg4->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -7101,7 +7101,7 @@ if (args->Right())
 	return errOut(&gerrStr,false);
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())				// 11/15/99 AM.
 	{
 	case IANUM:								// 11/15/99 AM.
@@ -7165,7 +7165,7 @@ if (!(semname = (RFASem *) nname->getData()->getSem()))
 Iarg *iarg;				// Sem to build.  Treat all types as string.
 _TCHAR *name;
 _TCHAR *str;																		// 12/18/99 AM.
-long num;																		// 12/18/99 AM.
+long long num;																		// 12/18/99 AM.
 switch (semname->getType())												// 11/15/99 AM.
 	{
 	case RSLONG:								// 11/15/99 AM. Pure numeric.
@@ -7474,7 +7474,7 @@ Dlist<Iarg> *iargs = action->getArgs();
 
 // If it's a simple type, get rid of the semantic wrapper.
 _TCHAR *str;
-long num;
+long long num;
 float fnum;																		// 08/19/01 AM.
 Iarg *iarg = 0;
 switch (semexpr->getType())
@@ -7832,7 +7832,7 @@ if (args->Right())
 	return errOut(&gerrStr,false);
 	}
 
-long num1;
+long long num1;
 switch (arg1->getType())
 	{
 	case IANUM:
@@ -7852,7 +7852,7 @@ switch (arg1->getType())
 		}
 	}
 
-long num2;
+long long num2;
 switch (arg2->getType())
 	{
 	case IANUM:
@@ -7928,7 +7928,7 @@ if (nindex)																		// 10/20/00 AM.
 
 	// If index is string type try to convert to long.				// 09/09/01 AM.
 	// This way things like assign compile right.					// 09/09/01 AM.
-	long numb = 0;																// 09/09/01 AM.
+	long long numb = 0;																// 09/09/01 AM.
 	switch (semindex->getType())											// 09/09/01 AM.
 		{
 		case RSSTR:																// 09/09/01 AM.
@@ -7945,7 +7945,7 @@ if (nindex)																		// 10/20/00 AM.
 		}
 	}
 else																				// 10/20/00 AM.
-	semindex = new RFASem((long) MULTIARRAY);							// 10/20/00 AM.
+	semindex = new RFASem((long long) MULTIARRAY);							// 10/20/00 AM.
 
 // Unpack and check on the function and args.
 Iaction *action = semfn->getAction();
@@ -8066,7 +8066,7 @@ Iaction *action = semfn->getAction();
 
 // Get start and end range.
 Dlist<Iarg> *iargs = 0;
-long start, end;
+long long start, end;
 Delt<Iarg> *ptr;
 ptr = prepair->getFirst();
 // Unpack the start and end args.

@@ -524,15 +524,26 @@ do {
 	c = iter.next();
 
 } while (c != icu::CharacterIterator::DONE); 
-/*
+return true;
+}
 
-while (*str)
-	{
-	if (!_istdigit((_TUCHAR)*str))
+bool str_to_long(_TCHAR *str, long long &num)
+{
+if (empty(str))
+	return false;
+
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
+const UChar *strBuf = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
+icu::UCharCharacterIterator iter(strBuf, unicu::strLen(strBuf));
+num = 0;
+UChar c = iter.first();
+do {
+	if (!unicu::isDigit(c))
 		return false;
-	um = 10 * num + char_to_digit(*str++);n
-	}
-*/
+	num = 10 * num + char_to_digit(c);
+	c = iter.next();
+
+} while (c != icu::CharacterIterator::DONE); 
 return true;
 }
 

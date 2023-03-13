@@ -329,12 +329,12 @@ if (pseg->kind)	/* If ptr is present. */
       case pNUM:
          _tcscpy(kind_x, _T("pNUM"));
          /* FOR NOW, NEG means no number. */
-         _stprintf(val_x, _T("(CON *)%ld"), pseg->v.vnum);
+         _stprintf(val_x, _T("(CON *)%llu"), pseg->v.vnum);
          break;
 		case pFLOAT:															// 08/16/01 AM.
 			_tcscpy(kind_x, _T("pFLOAT"));										// 08/16/01 AM.
 			// Workaround: Pretend float is a LONG!					// 08/16/01 AM.
-			_stprintf(val_x, _T("(CON *)%ld"), pseg->v.vnum);				// 08/16/01 AM.
+			_stprintf(val_x, _T("(CON *)%llu"), pseg->v.vnum);				// 08/16/01 AM.
 			//sprintf(val_x, "(CON *)%f", pseg->v.vfloat);			// 08/16/01 AM.
 			break;																// 08/16/01 AM.
       case pCHAR:
