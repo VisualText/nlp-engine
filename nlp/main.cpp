@@ -15,7 +15,7 @@ All rights reserved.
 #include "lite/nlp_engine.h"
 #include "version.h"
 
-#define NLP_ENGINE_VERSION "2.7.0"
+#define NLP_ENGINE_VERSION "2.7.1"
 
 bool cmdReadArgs(int,_TCHAR*argv[],_TCHAR*&,_TCHAR*&,_TCHAR*&,_TCHAR*&,bool&,bool&,bool&);
 void cmdHelpargs(_TCHAR*);
@@ -98,6 +98,11 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 	ptr = *parg;
 	if (strcmp_i(ptr, _T("--version")) && strcmp_i(ptr, _T("--help")))
 		std::_t_cout << _T("[command arg: ") << *parg << _T("]") << std::endl;
+
+	if (ptr[0] == '"' && ptr[strlen(ptr) - 1] == '"') {
+        ptr = &ptr[1];
+        ptr[strlen(ptr) - 1] = '\0';
+    }
 
 	if (*ptr == '-')	// DOS or UNIX style arg.
 		{
