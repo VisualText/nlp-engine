@@ -683,6 +683,8 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnStrislower(args,nlppp, /*UP*/ sem);					// 11/20/01 AM.
 	case FNstrisupper:
 		return fnStrisupper(args,nlppp, /*UP*/ sem);					// 11/20/01 AM.
+	case FNstrhaspunct:
+		return fnStrhaspunct(args,nlppp, /*UP*/ sem);					// 11/20/01 AM.
 	case FNstrlength:
 		return fnStrlength(args, nlppp, /*UP*/ sem);					// 05/05/00 Dd.
 	case FNstrlessthan:
@@ -6226,14 +6228,22 @@ if (!str1)																		// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 
-for (_TCHAR *c = str1; *c; ++c)
-	{
-	if (!_istdigit((_TUCHAR)*c))
-		{
+icu::StringPiece sp(str1);
+const char *spd = sp.data();
+int32_t length = sp.length();
+
+UChar32 c = 1;
+int32_t s = 0;
+int i = 0;
+
+while (c && i<length) {
+	U8_NEXT(spd, s, length, c);
+	if (!unicu::isDigit(c)) {
 		isDigit = 0;
 		break;
-		}
 	}
+	i++;
+}
 
 sem = new RFASem(isDigit);
 
@@ -6275,16 +6285,86 @@ if (!str1)																		// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 
-for (_TCHAR *c = str1; *c; ++c)
-	{
-	if (!alphabetic(*c))
-		{
+icu::StringPiece sp(str1);
+const char *spd = sp.data();
+int32_t length = sp.length();
+
+UChar32 c = 1;
+int32_t s = 0;
+int i = 0;
+
+while (c && i<length) {
+	U8_NEXT(spd, s, length, c);
+	if (!unicu::isAlphabetic(c)) {
 		isAlpha = 0;
 		break;
-		}
 	}
+	i++;
+}
 
 sem = new RFASem(isAlpha);
+
+return true;
+}
+
+
+/********************************************
+* FN:	   FNSTRHASPUNCT
+* CR:	   04/01/23 Dd.
+* SUBJ: Checks to see if the entire string is punctuation
+* RET:  True if ok, else false.
+*	 UP - returns 1 if all punctuation, 0 if not
+* FORMS:	strhaspunct(str1)
+* NOTE:
+********************************************/
+
+bool Fn::fnStrhaspunct(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;												// 08/24/02 AM.
+
+_TCHAR *str1=0;
+long long hasPunct = 0;
+
+if (!Arg::str1(_T("fnStrhaspunct"), /*UP*/ (DELTS*&)args, str1))
+	{
+	// RECOVER.						// 06/26/06 AM.
+	//return false;				// 06/26/06 AM.
+	str1 = 0;						// 06/26/06 AM.
+	hasPunct = 0;					// 06/26/06 AM.
+	}
+if (!Arg::done((DELTS*)args, _T("fnStrhaspunct"),parse))
+	return false;
+
+if (!str1)																		// 10/30/00 AM.
+	{
+	_stprintf(Errbuf,_T("[fnStrhaspunct: Warning. Given no str.]"));		// 05/18/01 AM.
+	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
+	}
+
+icu::StringPiece sp(str1);
+const char *spd = sp.data();
+int32_t length = sp.length();
+
+UChar32 c = 1;
+int32_t s = 0;
+int i = 0;
+
+while (c && i<length) {
+	U8_NEXT(spd, s, length, c);
+	if (unicu::isPunct(c)) {
+		hasPunct = 1;
+		break;
+	}
+	i++;
+}
+
+sem = new RFASem(hasPunct);
 
 return true;
 }

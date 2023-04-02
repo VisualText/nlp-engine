@@ -290,6 +290,7 @@ enum funcDef
 	FNstrisdigit,
 	FNstrislower,
 	FNstrisupper,
+	FNstrhaspunct,
 	FNstrlength,
 	FNstrlessthan,
 	FNstrnotequal,

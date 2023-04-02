@@ -625,6 +625,12 @@ public:
 	  /*UP*/
 	  RFASem* &sem
 	  );
+	static bool fnStrhaspunct(
+	  Delt<Iarg> *args,
+	  Nlppp *nlppp,
+	  /*UP*/
+	  RFASem* &sem
+	  );
   static bool fnStrclean(													// 11/09/00 Dd.
 	  Delt<Iarg> *args,
 	  Nlppp *nlppp,
