@@ -1179,6 +1179,9 @@ public:
 	static bool strisalpha(Nlppp*,RFASem*);							// 05/07/01 AM.
 	static bool strisalpha(Nlppp*,long);                        // 07/11/03 AM.
 
+	static bool strhaspunct(Nlppp*,_TCHAR*);
+	static bool strhaspunct(Nlppp*,RFASem*);
+	static bool strhaspunct(Nlppp*,long);
 
 	static bool take(Nlppp*,_TCHAR*);
 	static bool take(Nlppp*,RFASem*);									// 05/07/01 AM.

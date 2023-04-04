@@ -7463,11 +7463,22 @@ bool Arun::strisdigit(
 if (!str1 || !*str1)
 	return false;
 
-for (_TCHAR *c = str1; *c; ++c)
-	{
-	if (!_istdigit((_TUCHAR)*c))
+icu::StringPiece sp(str1);
+const char *spd = sp.data();
+int32_t length = sp.length();
+
+UChar32 c = 1;
+int32_t s = 0;
+int i = 0;
+
+while (c && i<length) {
+	U8_NEXT(spd, s, length, c);
+	if (!unicu::isDigit(c)) {
 		return false;
 	}
+	i++;
+}
+
 return true;
 }
 
@@ -7512,11 +7523,22 @@ bool Arun::strisalpha(
 if (!str1 || !*str1)
 	return false;
 
-for (_TCHAR *c = str1; *c; ++c)
-	{
-	if (!alphabetic(*c))
+icu::StringPiece sp(str1);
+const char *spd = sp.data();
+int32_t length = sp.length();
+
+UChar32 c = 1;
+int32_t s = 0;
+int i = 0;
+
+while (c && i<length) {
+	U8_NEXT(spd, s, length, c);
+	if (!unicu::isAlphabetic(c)) {
 		return false;
 	}
+	i++;
+}
+
 return true;
 }
 
@@ -7535,6 +7557,66 @@ return strisalpha(nlppp,str);
 
 
 bool Arun::strisalpha(	// 07/11/03 AM.
+	Nlppp *nlppp,
+	long num
+	)
+{
+return false;
+}
+
+
+/********************************************
+* FN:	   STRHASPUNCT
+* CR:	   04/02/23 Dd.
+* SUBJ: Checks to see if the string contains a punctuation
+* RET:  True if ok, else false.
+*	 UP - returns 1 for true, 0 for false
+* FORMS:	strhaspunct(str1)
+* NOTE:
+********************************************/
+
+bool Arun::strhaspunct(
+	Nlppp *nlppp,
+	_TCHAR *str1
+	)
+{
+if (!str1 || !*str1)
+	return false;
+
+icu::StringPiece sp(str1);
+const char *spd = sp.data();
+int32_t length = sp.length();
+
+UChar32 c = 1;
+int32_t s = 0;
+int i = 0;
+
+while (c && i<length) {
+	U8_NEXT(spd, s, length, c);
+	if (unicu::isPunct(c)) {
+		return true;
+	}
+	i++;
+}
+
+return false;
+}
+
+
+bool Arun::strhaspunct(
+	Nlppp *nlppp,
+	RFASem *str_sem
+	)
+{
+if (!str_sem)
+	return false;
+_TCHAR *str = str_sem->sem_to_str();
+delete str_sem;
+return strhaspunct(nlppp,str);
+}
+
+
+bool Arun::strhaspunct(	// 07/11/03 AM.
 	Nlppp *nlppp,
 	long num
 	)
