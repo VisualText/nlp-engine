@@ -310,6 +310,7 @@ int NLP_ENGINE::analyze(
     std::_t_ofstream *fp = new std::_t_ofstream(fname.string(), std::ios::out);
     m_nlp->setIsLastFile(false);
     m_nlp->setIsFirstFile(true);
+    m_nlp->setFinteractive(true);
 
     for (std::vector<std::filesystem::path>::iterator it = m_files.begin() ; it != m_files.end(); ++it) {
         file = it->string();
