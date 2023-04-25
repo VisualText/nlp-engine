@@ -230,7 +230,7 @@ bool DICTTok::ApplyDictFiles() {
 
 		int length = 0;
 		CONCEPT *end = NULL;
-		Node<Pn> *endNode = MatchLongest(con,node,&end,length);
+		Node<Pn> *endNode = MatchLongest(con,node,&end,length,0);
 		if (endNode && end) {
 			CON *e = (CON *)end;
 			con = end;
@@ -299,8 +299,7 @@ bool DICTTok::ApplyDictFiles() {
 	return true;
 }
 
-
-Node<Pn>* DICTTok::MatchLongest(CONCEPT *con, Node<Pn> *parentN, CONCEPT **end, int &length) {
+Node<Pn>* DICTTok::MatchLongest(CONCEPT *con, Node<Pn> *parentN, CONCEPT **end, int &length, int level) {
 	_TCHAR conName[MAXSTR];
 	CONCEPT *next = con;
 	CON *c = (CON *)next;
@@ -327,14 +326,14 @@ Node<Pn>* DICTTok::MatchLongest(CONCEPT *con, Node<Pn> *parentN, CONCEPT **end, 
 				Node<Pn>*p = parentN->pRight;
 				CONCEPT *e = NULL;
 				int l = len;
-				Node<Pn> *match = MatchLongest(cn,p,&e,l);
+				Node<Pn> *match = MatchLongest(cn,p,&e,l,level+1);
 				if (match && l > len) {
 					*end = e;
 					length = l;
 					pn = match;
 				}
-			}
-			parentN = parentN->pRight;
+			} else if (level == 0)
+				return pn;
 		}
 		next = cg_->Next(next);
 	}
