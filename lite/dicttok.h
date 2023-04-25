@@ -51,7 +51,7 @@ public:
 	bool Execute(Parse *, Seqn *);	// Perform the tokenization.
 	bool Tokenize(Parse *);	// Perform the tokenization.
 	bool ApplyDictFiles();
-	Node<Pn>* MatchLongest(CONCEPT *con, Node<Pn> *parentN, CONCEPT **end, int &length);
+	Node<Pn>* MatchLongest(CONCEPT *con, Node<Pn> *parentN, CONCEPT **end, int &length, int level);
 	void FirstToken(Tree<Pn> *tree, Htab *htab, _TCHAR* *buf, const char* s, int32_t length,
 										int32_t &start, int32_t &ustart, Node<Pn>* &last,
 										long &line	// Line number.		// 05/17/01 AM.
