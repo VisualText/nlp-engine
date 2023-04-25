@@ -80,6 +80,46 @@ bool unicu::isLower(UChar32 c) {
 	return u_islower(c);
 }
 
+bool unicu::isStrAlphabetic(_TCHAR *str) {
+	UChar32 c = 1;
+	int32_t e = 0;
+	icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
+	const UChar *strBuff = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
+	int32_t length = unicu::strLen(strBuff);
+	U8_NEXT(str, e, length, c);
+	bool nonAlpha = false;
+
+	// Skip white space (SHOULD NOT BE THERE)
+	while (e <= length) {
+		if (!unicu::isAlphabetic(c)) {
+			nonAlpha = true;
+			break;
+		}
+		U8_NEXT(str, e, length, c);
+	}
+	return nonAlpha ? false : true;
+}
+
+bool unicu::isStrLower(_TCHAR *str) {
+	UChar32 c = 1;
+	int32_t e = 0;
+	icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
+	const UChar *strBuff = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
+	int32_t length = unicu::strLen(strBuff);
+	U8_NEXT(str, e, length, c);
+	bool nonLower = false;
+
+	// Skip white space (SHOULD NOT BE THERE)
+	while (e <= length) {
+		if (!unicu::isLower(c)) {
+			nonLower = true;
+			break;
+		}
+		U8_NEXT(str, e, length, c);
+	}
+	return nonLower ? false : true;
+}
+
 int unicu::strLen(const UChar *str) {
 	return u_strlen(str);
 }
@@ -119,7 +159,7 @@ bool unicu::isCaps(const UChar *str) {
 		}
 		U8_NEXT(str, e, length, c);
 	}
-	return !foundLower ? true : false;
+	return foundLower ? false : true;
 }
 
 bool unicu::isNumeric(_TCHAR *str) {

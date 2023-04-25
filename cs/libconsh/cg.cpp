@@ -3514,7 +3514,7 @@ bool CG::readDict(std::string file) {
 	bool dirty;
 	bool hasAttrs;
 	bool isPhrase;
-	CONCEPT *wordCon, *parentCon, *topCon;
+	CONCEPT *wordCon, *parentCon;
 	_TCHAR buf[MAXMSG];
 	_TCHAR word[MAXSTR];
 	_TCHAR attr[MAXSTR];
@@ -3551,7 +3551,6 @@ bool CG::readDict(std::string file) {
 		hasAttrs = false;
 		isPhrase = false;
 		parentCon = NULL;
-		topCon = NULL;
 		wordCount = 0;
 
 		// Find word or word phrase
@@ -3568,7 +3567,6 @@ bool CG::readDict(std::string file) {
 					parentCon = getConcept(parentCon,word);
 					isPhrase = true;
 				} else {
-					topCon = wordCon;
 					parentCon = wordCon;
 				}
 				start = e;
@@ -3577,12 +3575,7 @@ bool CG::readDict(std::string file) {
 			}
 			U8_NEXT(line, e, length, c);
 		}
-
-		if (parentCon && wordCount > 1) {
-			addVal(wordCon,_T("phrase"),parentCon);
-			addValUnique(topCon,_T("top"),1L);
-		}
-
+		
 		c = cLast;
 		e = eLast;
 

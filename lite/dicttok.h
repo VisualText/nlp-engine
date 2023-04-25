@@ -51,7 +51,7 @@ public:
 	bool Execute(Parse *, Seqn *);	// Perform the tokenization.
 	bool Tokenize(Parse *);	// Perform the tokenization.
 	bool ApplyDictFiles();
-	Node<Pn>* MatchForward(CONCEPT *con, Node<Pn>*parentN);
+	Node<Pn>* MatchLongest(CONCEPT *con, Node<Pn> *parentN, CONCEPT **end, int &length);
 	void FirstToken(Tree<Pn> *tree, Htab *htab, _TCHAR* *buf, const char* s, int32_t length,
 										int32_t &start, int32_t &ustart, Node<Pn>* &last,
 										long &line	// Line number.		// 05/17/01 AM.
@@ -98,7 +98,6 @@ public:
 		Node<Pn> *node,
 		CONCEPT *con,
 		_TCHAR *str,
-		_TCHAR *lcstr,
 		bool isSuggested
 		);
 
@@ -126,6 +125,7 @@ public:
 private:
 	//Parse *parse;			// The analyze instance that we're tokenizing for.
 	bool bad_;					// If unknown char seen.	// 01/15/99 AM.
+	CONCEPT *funk;
 
 	// The new stuff...
 	
