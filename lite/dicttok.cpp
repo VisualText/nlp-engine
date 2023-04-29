@@ -527,8 +527,10 @@ last = handleTok(last,0,typ,str,lcstr,htab);	// 07/31/11 AM.
 
 	}	// END else (not zapwhite or not whitespace)
 
-if (lineflag)		// First token was a newline!						// 05/17/01 AM.
-	++line;																		// 05/17/01 AM.
+if (lineflag) {		// First token was a newline!						// 05/17/01 AM.
+	++line;																// 05/17/01 AM.
+	lines_++;
+}
 
 /* UP */
 start = ++end;	// Continue tokenizing from next char.
@@ -600,8 +602,10 @@ else
 
 	}	// END else (not zapwhite or not whitespace)
 
-if (lineflag)																	// 05/17/01 AM.
+if (lineflag) {																	// 05/17/01 AM.
 	++line;																		// 05/17/01 AM.
+	lines_++;
+}
 
 /* UP */
 start = ++end;	// Continue tokenizing from next char.
