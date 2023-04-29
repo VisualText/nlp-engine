@@ -334,8 +334,8 @@ Node<Pn>* DICTTok::MatchLongest(CONCEPT *con, Node<Pn> *parentN, CONCEPT **end, 
 				}
 			} else if (level == 0)
 				return pn;
+			next = cg_->Next(next);
 		}
-		next = cg_->Next(next);
 	}
 	return pn;
 }
