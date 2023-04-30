@@ -316,24 +316,26 @@ Node<Pn>* DICTTok::MatchLongest(CONCEPT *con, Node<Pn> *parentN, CONCEPT **end, 
 		if (parentPN->getType() == PNWHITE) {
 			parentN = parentN->pRight;
 		}
-		else if (!_tcsicmp(conName, pnName)) {
-			*end = next;
-			length = len;
-			pn = parentN;
+		else {
+			if (!_tcsicmp(conName, pnName)) {
+				*end = next;
+				length = len;
+				pn = parentN;
 
-			if (cg_->Down(con)) {
-				CONCEPT *cn = cg_->Down(con);
-				Node<Pn>*p = parentN->pRight;
-				CONCEPT *e = NULL;
-				int l = len;
-				Node<Pn> *match = MatchLongest(cn,p,&e,l,level+1);
-				if (match && l > len) {
-					*end = e;
-					length = l;
-					pn = match;
-				}
-			} else if (level == 0)
-				return pn;
+				if (cg_->Down(con)) {
+					CONCEPT *cn = cg_->Down(con);
+					Node<Pn>*p = parentN->pRight;
+					CONCEPT *e = NULL;
+					int l = len;
+					Node<Pn> *match = MatchLongest(cn,p,&e,l,level+1);
+					if (match && l > len) {
+						*end = e;
+						length = l;
+						pn = match;
+					}
+				} else if (level == 0)
+					return pn;
+			}
 			next = cg_->Next(next);
 		}
 	}
