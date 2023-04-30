@@ -39,6 +39,7 @@ All rights reserved.
 #include "Eana.h"				// 02/26/01 AM.
 #include "nlp.h"				// 06/25/03 AM.
 #include "ivar.h"
+#include "ipair.h"
 
 #include "pn.h"
 #include "prim/libprim.h"
@@ -222,9 +223,11 @@ bool DICTTok::ApplyDictFiles() {
 	_TCHAR *suggested, *str, *lcstr;
 	bool reduceIt = false;
 	_TCHAR buf[PATHSIZ];
+	_TCHAR *name;
 
 	while (node) {
-		lcstr = str_to_lower(node->data.getName(),buf);
+		name = node->data.getName();
+		lcstr = str_to_lower(name,buf);
 		con = cg_->findWordConcept(lcstr);
 		CON *c = (CON *)con;
 
@@ -263,7 +266,7 @@ bool DICTTok::ApplyDictFiles() {
 				Node<Pn>* suggestedN = Pn::makeTnode(start, end, ustart, uend, PNNODE, suggName, str, sym, line);
 
 				// Rewire the tree branches
-				Node<Pn>* lefty  = node->Left();
+				Node<Pn>* lefty = node->Left();
 				if (lefty) {
 					suggestedN->setLeft(lefty);
 					lefty->setRight(suggestedN);
@@ -279,6 +282,9 @@ bool DICTTok::ApplyDictFiles() {
 				node->setLeft(0);
 				endNode->setRight(0);
 
+				// Transfer NL and NOSP to the parent if there are there
+				copyAttrsToSuggested(pn, suggestedN, endNode);
+
 				// Set text to be the entire text of the phrase
 				_TCHAR txt[MAXPATH];
 				sprintf(txt,_T("%s"),text.c_str());
@@ -286,7 +292,7 @@ bool DICTTok::ApplyDictFiles() {
 				str = sym->getStr();
 				suggestedN->getData()->setText(str);
 
-				findAttrs(suggestedN, con, str, true);
+				findAttrs(suggestedN, con, name, true);
 				node = suggestedN;	
 			}
 		}
@@ -340,6 +346,35 @@ Node<Pn>* DICTTok::MatchLongest(CONCEPT *con, Node<Pn> *parentN, CONCEPT **end, 
 		}
 	}
 	return pn;
+}
+
+bool DICTTok::copyAttrsToSuggested(Pn *pn, Node<Pn> *suggestedPn, Node<Pn> *endNode) {
+	Dlist<Ipair> *dsem_ = pn->getDsem();
+	bool found = false;
+	if (dsem_) {
+		Delt<Ipair> *delt;
+		Ipair *sempair;
+		_TCHAR *key;
+		Delt<Iarg> *darg;
+		Dlist<Iarg> *vls;
+		Iarg *arg;
+
+		for (delt = dsem_->getFirst(); delt; delt = delt->Right()) {
+			sempair = delt->getData();
+			key = sempair->getKey();
+			vls = sempair->getVals();
+			for (darg = vls->getFirst(); darg; darg = darg->Right()) { 
+				arg = darg->getData();
+				if (arg->getType() == IANUM) {
+					if (!_tcsicmp(key, _T("nl")) || !_tcsicmp(key, _T("sp")) || !_tcsicmp(key, _T("nosp")) || !_tcsicmp(key, _T("tabs"))) {
+						replaceNum(suggestedPn,key,arg->getNum());
+						found = true;
+					}
+				}
+			}
+		}	
+	}
+	return found;
 }
 
 
@@ -495,14 +530,14 @@ void DICTTok::FirstToken(
 {
 int32_t end;
 enum Pntype typ;
-bool lineflag = false;														// 05/17/01 AM.
+enum TokWhite white;
 
 ustart = 0;	// [UNICODE]
 int32_t uend = 0;	// [UNICODE]
 int32_t ulen = 0;	// [UNICODE]
 
 // Get first token information.
-token_->nextTok(s, start, end, ulen, length, typ, lineflag);
+token_->nextTok(s, start, end, ulen, length, typ, white);
 int len = end-start+1;
 uend = ustart + ulen - 1;	// [UNICODE]
 
@@ -518,20 +553,23 @@ if (zapwhite_ && typ == PNWHITE)	// 08/16/11 AM.
 	}
 else
 	{
-sym = internTok(*buf, end-start+1, htab,/*UP*/lcstr);
-str = sym->getStr();
-last = Pn::makeTnode(start, end, ustart, uend, typ, *buf, str, sym,				// 10/09/99 AM.
-							line);												// 05/17/01 AM.
+	sym = internTok(*buf, end-start+1, htab,/*UP*/lcstr);
+	str = sym->getStr();
+	last = Pn::makeTnode(start, end, ustart, uend, typ, *buf, str, sym,				// 10/09/99 AM.
+								line);												// 05/17/01 AM.
 
-// Lookup, add attrs, reduce, attach to tree.	// 07/31/11 AM
-last = handleTok(last,0,typ,str,lcstr,htab);	// 07/31/11 AM.
-//tree->firstNode(*last);	// Attach first node to tree.
+	// Lookup, add attrs, reduce, attach to tree.	// 07/31/11 AM
+	last = handleTok(last,0,typ,str,lcstr,htab);	// 07/31/11 AM.
+	//tree->firstNode(*last);	// Attach first node to tree.
 
 	}	// END else (not zapwhite or not whitespace)
 
-if (lineflag) {		// First token was a newline!						// 05/17/01 AM.
+if (white == TKNL) {		// First token was a newline!						// 05/17/01 AM.
 	++line;																// 05/17/01 AM.
 	lines_++;
+}
+else if (white == TKTAB) {
+	tabs_++;
 }
 
 /* UP */
@@ -565,9 +603,9 @@ enum Pntype typ;
 
 
 // Get next token information.
-bool lineflag = false;														// 05/17/01 AM.
+enum TokWhite white;
 int32_t ulen = 0;	// [UNICODE]
-token_->nextTok(s, start, end, ulen, length, typ, lineflag);
+token_->nextTok(s, start, end, ulen, length, typ, white);
 int32_t len = end-start+1;													// 05/17/01 AM.
 int32_t uend = ustart + ulen - 1;	// [UNICODE]
 
@@ -604,9 +642,12 @@ else
 
 	}	// END else (not zapwhite or not whitespace)
 
-if (lineflag) {																	// 05/17/01 AM.
+if (white == TKNL) {																	// 05/17/01 AM.
 	++line;																		// 05/17/01 AM.
 	lines_++;
+}
+else if (white == TKTAB) {
+	tabs_++;
 }
 
 /* UP */
@@ -700,27 +741,12 @@ switch (typ)
 		// Put this as a variable on the node!
 		int ansi = (unsigned char) *str;
 		replaceNum(node,_T("CTRL"),ansi);
-		if (!prevwh_)
-			replaceNum(node,_T("NOSP"),1);
-		if (lines_)
-			replaceNum(node,_T("NL"),lines_);
-		if (tabs_)
-			replaceNum(node,_T("TABS"),tabs_);
-		prevwh_ = false;
-		lines_ = tabs_ = 0;
+		makeTextAttrs(node,last);
 		}
 		break;
 	case PNALPHA:
 	case PNEMOJI:
-		if (!prevwh_)
-			replaceNum(node,_T("NOSP"),1);
-		if (lines_)
-			replaceNum(node,_T("NL"),lines_);
-		if (tabs_)
-			replaceNum(node,_T("TABS"),tabs_);
-		prevwh_ = false;
-		lines_ = tabs_ = 0;
-
+		makeTextAttrs(node,last);
 		if (lcstr && *lcstr) {
 			con = cg_->findWordConcept(lcstr);
 			reduceIt = findAttrs(node, con, str, false);
@@ -730,14 +756,7 @@ switch (typ)
 		++totnums_;
 		// Fall through to PNPUNCT for now.
 	case PNPUNCT:
-		if (!prevwh_)
-			replaceNum(node,_T("NOSP"),1);
-		if (lines_)
-			replaceNum(node,_T("NL"),lines_);
-		if (tabs_)
-			replaceNum(node,_T("TABS"),tabs_);
-		prevwh_ = false;
-		lines_ = tabs_ = 0;
+		makeTextAttrs(node,last);
 		break;
 	case PNWHITE:
 		prevwh_ = true;
@@ -754,6 +773,19 @@ else if (root_)	// Sanity check.
 return node;
 }
 
+void DICTTok::makeTextAttrs(Node<Pn> *node, Node<Pn> *last) {
+	if (prevwh_)
+		replaceNum(node,_T("SP"),1);
+	else
+		replaceNum(node,_T("NOSP"),1);
+	if (lines_)
+		replaceNum(node,_T("NL"),lines_);
+	if (tabs_)
+		replaceNum(node,_T("TABS"),tabs_);
+	prevwh_ = false;
+	lines_ = tabs_ = 0;
+}
+
 
 inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, bool isSuggested) {
 	_TCHAR attrName[NAMESIZ];
@@ -761,22 +793,53 @@ inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, bool i
 
 	ATTR *attrs = cg_->findAttrs(con);
 	bool reduceIt = false;
+	bool lower = false;
+	bool cap = false;
+	bool upper = false;
 
-	if (unicu::isStrAlphabetic(str) && unicu::isStrLower(str)) {
-		replaceNum(node,_T("lower"),1);	// LOWERCASE.
-		++totlowers_;
-	}
-	else {
-		++totcaps_;
-		replaceNum(node,_T("cap"),1);
-		// CHECK UPPERCASE HERE.
-		_TCHAR ucstr[MAXSTR];
-		str_to_upper(str, ucstr);
-		if (!_tcscmp(str,ucstr)) {
-			++totuppers_;
-			replaceNum(node,_T("upper"),1);
+	// Check for upper and lower in single node and suggested node
+	if (isSuggested) {
+		Node<Pn> *pn = node->Down();
+		lower = true;
+		upper = true;
+		cap = true;
+		while (pn && (lower || cap || upper)) {
+			Pn *p = pn->getData();
+			_TCHAR *name = p->getName();
+			bool l = false;
+			bool c = false;
+			bool u = false;
+			if (checkCase(name,pn,l,c,u)) {
+				if (l == false)
+					lower = false;
+				if (c == false)
+					cap = false;
+				if (u == false)
+					upper = false;				
+			}
+			pn = pn->Right();
 		}
-	}	
+	} else {
+		checkCase(str,node,lower,cap,upper);
+	}
+
+	// Mark accordingly
+	if (lower || upper || cap) {
+		if (lower) {
+			replaceNum(node,_T("lower"),1);
+			++totlowers_;
+		}
+		else {
+			++totcaps_;
+			replaceNum(node,_T("cap"),1);
+			if (upper) {
+				++totuppers_;
+				replaceNum(node,_T("upper"),1);
+			}
+		}		
+	}
+
+	_TCHAR *val;
 
 	while (attrs) {
 		cg_->attrName(attrs, attrName, NAMESIZ);
@@ -786,7 +849,7 @@ inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, bool i
 
 		} else if (!_tcscmp(_T("pos"),attrName)) {
 			VAL *vals = cg_->findVals(con, _T("pos"));
-			_TCHAR *val;
+
 			int pos_num = 0;	// Count parts of speech.
 			while (vals) {
 				val = popsval(vals);
@@ -804,7 +867,8 @@ inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, bool i
 				++pos_num;
 				vals = cg_->nextVal(vals);
 			}
-			if (pos_num) replaceNum(node,_T("pos num"),pos_num);
+			if (pos_num)
+				replaceNum(node,_T("pos num"),pos_num);
 		}
 
 		VAL *vals = cg_->findVals(con, attrName);
@@ -829,6 +893,25 @@ inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, bool i
 	return reduceIt;
 }
 
+bool DICTTok::checkCase(_TCHAR *name, Node<Pn> *node, bool &lower, bool &cap, bool &upper) {
+	bool found = false;
+	if (unicu::isStrAlphabetic(name)) {
+		if (unicu::isStrLower(name)) {
+			lower = true;
+			found = true;
+		}
+		else {
+			cap = true;
+			_TCHAR ucstr[MAXSTR];
+			str_to_upper(name, ucstr);
+			if (!_tcscmp(name,ucstr)) {
+				upper = true;
+			}
+			found = true;
+		}
+	}
+	return found;
+}
 
 /********************************************
 * FN:		REPLACENUM
