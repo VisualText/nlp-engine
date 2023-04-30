@@ -22,6 +22,13 @@ All rights reserved.
 #include "htab.h"
 #include <unicode/uchar.h>
 
+enum TokWhite
+	{
+	TKNOT,	// Not white space
+	TKNL,	// New line
+	TKTAB	// Tab
+	};
+
 /********************************************
 * CLASS:	TOK
 * CR:		10/09/98 AM.
@@ -74,7 +81,7 @@ public:
 			int32_t &ulen,		// Unicode chars in token.	// [UNICODE]
 			int32_t length,
 			enum Pntype &typ,	// Token type.
-			bool &lineflag		// Flag new line number.				// 05/17/01 AM.
+			TokWhite &white		// White type
 			);
 
 	Sym *internTok(

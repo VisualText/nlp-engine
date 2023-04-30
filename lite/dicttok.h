@@ -52,6 +52,8 @@ public:
 	bool Tokenize(Parse *);	// Perform the tokenization.
 	bool ApplyDictFiles();
 	Node<Pn>* MatchLongest(CONCEPT *con, Node<Pn> *parentN, CONCEPT **end, int &length, int level);
+	bool copyAttrsToSuggested(Pn *pn, Node<Pn> *suggestedPn, Node<Pn> *endNode);
+	bool checkCase(_TCHAR *name, Node<Pn> *node, bool &lower, bool &cap, bool &upper);
 	void FirstToken(Tree<Pn> *tree, Htab *htab, _TCHAR* *buf, const char* s, int32_t length,
 										int32_t &start, int32_t &ustart, Node<Pn>* &last,
 										long &line	// Line number.		// 05/17/01 AM.
@@ -93,6 +95,8 @@ public:
 		_TCHAR *lcstr,
 		Htab *htab
 		);
+
+	void makeTextAttrs(Node<Pn> *node, Node<Pn> *last);
 
 	inline bool findAttrs(
 		Node<Pn> *node,

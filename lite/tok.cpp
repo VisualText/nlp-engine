@@ -246,14 +246,14 @@ void Tok::FirstToken(
 {
 	int32_t end = 0;
 	enum Pntype typ;
-	bool lineflag = false;														// 05/17/01 AM.
+	enum TokWhite white;
 
 	int32_t uend = 0;	// [UNICODE]
 	int32_t ulen = 0;	// [UNICODE]
 	ustart = 0;	// [UNICODE]
 
 	// Get first token information.
-	nextTok(s, start, end, ulen, length, typ, lineflag);
+	nextTok(s, start, end, ulen, length, typ, white);
 	int len = end-start+1;
 	uend = ustart + ulen - 1;	// [UNICODE]
 
@@ -264,8 +264,9 @@ void Tok::FirstToken(
 	str = sym->getStr();
 	last = Pn::makeTnode(start, end, ustart, uend, typ, *buf, str, sym, line);												// 05/17/01 AM.
 	tree->firstNode(*last);	// Attach first node to tree.
-	if (lineflag)		// First token was a newline!						// 05/17/01 AM.
+	if (white == TKNL) {		// First token was a newline!						// 05/17/01 AM.
 		++line;																		// 05/17/01 AM.
+	}
 
 	/* UP */
 	start = ++end;	// Continue tokenizing from next char.
@@ -295,13 +296,13 @@ bool Tok::NextToken(
 {
 	int32_t end = start;
 	enum Pntype typ;
-	bool lineflag = false;
+	enum TokWhite white;
 	long e = end;
 
 
 	// Get next token information.
 	int32_t ulen = 0;	// [UNICODE]
-	nextTok(s, start, end, ulen, length, typ, lineflag);
+	nextTok(s, start, end, ulen, length, typ, white);
 	int32_t len = end-start+1;
 	int32_t uend = ustart + ulen - 1;	// [UNICODE]
 
@@ -324,7 +325,7 @@ bool Tok::NextToken(
 
 	tree->insertRight(*node, *last);
 	last = node;		// node is last node of list now.
-	if (lineflag)																	// 05/17/01 AM.
+	if (white == TKNL)																	// 05/17/01 AM.
 		++line;																		// 05/17/01 AM.
 
 	/* UP */
@@ -350,13 +351,13 @@ void Tok::nextTok(
 	int32_t &ulen,		// Number of chars in token.	// [UNICODE]
 	int32_t length,		// Length of input text.
 	enum Pntype &typ,	// Type of token.
-	bool &lineflag		// Flag new line number.						// 05/17/01 AM.
+	enum TokWhite &white		// White type
 	)
 {
 	ulen = 0;	// [UNICODE]
 	end = start;
 	typ = PNALPHA;
-	lineflag = false;
+	white = TKNOT;
 	int32_t lastEnd = end;
 	int32_t len = 0;
 
@@ -417,7 +418,9 @@ void Tok::nextTok(
 		}
 		else if (unicu::isWhiteSpace(c)) {
 			if (c == '\n')
-				lineflag = true;
+				white = TKNL;
+			else if (c == '\t')
+				white = TKTAB;
 			typ = PNWHITE;
 			++ulen;
 		}
