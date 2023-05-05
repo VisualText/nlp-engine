@@ -228,25 +228,8 @@ int NLP_ENGINE::init(
 //        VTRun_Ptr->addAna(m_nlp);   // Add ana to runtime manager.    // [DEGLOB]	// 10/15/20 AM.
         m_vtrun->addAna(m_nlp); // Register analyzer.   // [DEGLOB]	// 10/15/20 AM.
 
-
-        /////////////////////////////////////////////////
-        // SET UP THE KNOWLEDGE BASE
-        /////////////////////////////////////////////////
-
-         m_cg = m_vtrun->makeCG(                                        // 07/21/03 AM.
-                m_anadir,
-                true,      // LOAD COMPILED KB IF POSSIBLE.
-                m_nlp);      // Associated analyzer object.              // 07/21/03 AM.
-
-
-        if (!m_cg)                                                       // 07/21/03 AM.
-        {
-            std::_t_cerr << _T("[Couldn't make knowledge base.]") << std::endl;  // 07/21/03 AM.
-            m_vtrun->rmAna(m_nlp);  // 09/27/20 AM.
-            m_vtrun->deleteNLP(m_nlp);                                     // 07/21/03 AM.
-    //        VTRun::deleteVTRun(m_vtrun);                                 // 07/21/03 AM.
+        if (LoadKB() == -1)
             return -1;
-        }
 
         std::_t_cerr << _T("[Loaded knowledge base.]") << std::endl;             // 02/19/19 AM.
 
@@ -289,13 +272,36 @@ int NLP_ENGINE::init(
 
     return 0;
 }
+
+int NLP_ENGINE::LoadKB() {
+    m_cg = m_vtrun->makeCG(                                        // 07/21/03 AM.
+        m_anadir,
+        true,      // LOAD COMPILED KB IF POSSIBLE.
+        m_nlp);      // Associated analyzer object.              // 07/21/03 AM.
+
+    if (!m_cg)                                                       // 07/21/03 AM.
+    {
+        std::_t_cerr << _T("[Couldn't make knowledge base.]") << std::endl;  // 07/21/03 AM.
+        m_vtrun->rmAna(m_nlp);  // 09/27/20 AM.
+        m_vtrun->deleteNLP(m_nlp);                                     // 07/21/03 AM.
+        //        VTRun::deleteVTRun(m_vtrun);                                 // 07/21/03 AM.
+        return -1;
+    }
+    return 1;
+}
+
+void NLP_ENGINE::DeleteKB() {
+    m_nlp->deleteCG();
+}
+
 int NLP_ENGINE::analyze(
     _TCHAR *analyzer,
     _TCHAR *infile,
     _TCHAR *outdir,
 	bool develop,
 	bool silent,
-    bool compiled
+    bool compiled,
+    bool reloadKB
 	)
 {   
     NLP_ENGINE::init(analyzer,develop,silent,compiled);
@@ -313,6 +319,11 @@ int NLP_ENGINE::analyze(
     m_nlp->setFinteractive(true);
 
     for (std::vector<std::filesystem::path>::iterator it = m_files.begin() ; it != m_files.end(); ++it) {
+        if (reloadKB && !m_nlp->getIsFirstFile()) {
+            DeleteKB();
+            if (LoadKB() == -1)
+                return -1;
+        }
         file = it->string();
         if (std::next(it) == m_files.end()) {
             m_nlp->setIsLastFile(true);
@@ -382,7 +393,8 @@ int NLP_ENGINE::analyze(
     long outlen,
 	bool develop,
 	bool silent,
-    bool compiled
+    bool compiled,
+    bool reloadKB
 	)
 {
  
@@ -426,7 +438,8 @@ int NLP_ENGINE::analyze(
     std::ostringstream *oss,
 	bool develop,
 	bool silent,
-    bool compiled
+    bool compiled,
+    bool reloadKB
 	)
 {
  

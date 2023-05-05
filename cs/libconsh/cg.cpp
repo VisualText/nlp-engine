@@ -320,8 +320,10 @@ asym_->sym_pp(cgerr);														// 06/29/03 AM.
 
 consh_clean(this);
 
-if (kbm_)																		// 06/11/02 AM.
-	delete kbm_;																// 06/11/02 AM.
+if (kbm_) {															// 06/11/02 AM.
+	delete kbm_;
+	kbm_ = 0;															// 06/11/02 AM.
+}
 
 // alist_ is just a reference.  DO NOT FREE IT.						// 08/14/02 AM.
 

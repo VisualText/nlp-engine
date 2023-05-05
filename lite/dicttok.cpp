@@ -396,7 +396,6 @@ if (parse->Verbose())
 cg_ = parse->getAna()->getCG();
 //CONCEPT *root = cg_->findRoot();
 
-
 text_ = parse->text;
 
 if (!parse->text)

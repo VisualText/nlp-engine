@@ -15,9 +15,9 @@ All rights reserved.
 #include "lite/nlp_engine.h"
 #include "version.h"
 
-#define NLP_ENGINE_VERSION "2.8.7"
+#define NLP_ENGINE_VERSION "2.9.0"
 
-bool cmdReadArgs(int,_TCHAR*argv[],_TCHAR*&,_TCHAR*&,_TCHAR*&,_TCHAR*&,bool&,bool&,bool&);
+bool cmdReadArgs(int,_TCHAR*argv[],_TCHAR*&,_TCHAR*&,_TCHAR*&,_TCHAR*&,bool&,bool&,bool&,bool&);
 void cmdHelpargs(_TCHAR*);
 
 #ifdef LINUX
@@ -40,17 +40,18 @@ bool develop = false;    	// Development mode.
 _TCHAR *sequence=0;
 bool compiled=false;       	// Run compiled/interp analyzer.
 bool silent=false;			// No log/debug output files.
+bool reloadKB=false;
 
 /////////////////////////////////////////////////
 // GET APP INFORMATION
 /////////////////////////////////////////////////
 
 // Get analyzer name, input and output filenames from command line.
-if (!cmdReadArgs(argc,argv,analyzerpath,input,output,workdir,develop,compiled,silent))
+if (!cmdReadArgs(argc,argv,analyzerpath,input,output,workdir,develop,compiled,silent,reloadKB))
    exit(1);
 
 NLP_ENGINE *nlpEngine = new NLP_ENGINE(workdir);
-nlpEngine->analyze(analyzerpath,input,output,develop,silent,compiled);
+nlpEngine->analyze(analyzerpath,input,output,develop,silent,compiled,reloadKB);
 delete nlpEngine;
 
 }
@@ -72,7 +73,8 @@ bool cmdReadArgs(
 	_TCHAR* &workdir,	// Working directory from args.
 	bool &develop,		// Development mode (output intermediate files).
 	bool &compiled,		// true - compiled ana. false=interp(DEFAULT).
-	bool &silent		// true == only output files specified by analyzer.
+	bool &silent,		// true == only output files specified by analyzer.
+	bool &reloadKB		// Reload KB after each file
 	)
 {
 _TCHAR *ptr;
@@ -182,6 +184,15 @@ for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 				compiled = true;
 				}
 			}
+		else if (!strcmp_i(ptr, _T("reloadkb")))	// Run compiled analyzer.
+			{
+			if (reloadKB)
+				std::_t_cerr << _T("[Ignoring extra reload kb flag.]");
+			else
+				{
+				reloadKB = true;
+				}
+			}
 		}
 	else if (flag)							// Expected an argument value.
 		{
@@ -272,6 +283,7 @@ std::_t_cout << std::endl
 	<< _T("           [-OUT outdir] output directory") << std::endl
 	<< _T("           [-WORK workdir] working directory") << std::endl
 	<< _T("           [-DEV][-SILENT] -DEV generates logs, -SILENT (default) does not") << std::endl
+	<< _T("           [-RELOADKB] forces a reload of the KB after each file processed") << std::endl
 	<< _T("           [infile [outfile]] when no -IN or -OUT specified") << std::endl
 	<< std::endl
 	<< _T("Directories in the nlp.exe files:") << std::endl

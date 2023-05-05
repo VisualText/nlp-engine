@@ -86,6 +86,7 @@ public:
     bool m_develop;
     bool m_silent;
     bool m_compiled;
+    bool m_reloadKB;
 
     void setWorkingFolder(_TCHAR *workingFolder);
     void zeroInit();
@@ -98,13 +99,17 @@ public:
         bool compiled=false
     );
 
+    int LoadKB();
+    void DeleteKB();
+
     int analyze(
         _TCHAR *analyzer,
         _TCHAR *infile,
         _TCHAR *outfile,
         bool develop=false,
         bool silent=false,
-        bool compiled=false
+        bool compiled=false,
+        bool reloadKB=false
     );
 
     int analyze(
@@ -115,7 +120,8 @@ public:
         long outlen,
         bool develop=false,
         bool silent=false,
-        bool compiled=false
+        bool compiled=false,
+        bool reloadKB=false
     );
 
     int analyze(
@@ -124,7 +130,8 @@ public:
         std::ostringstream *oss,
         bool develop=false,
         bool silent=false,
-        bool compiled=false
+        bool compiled=false,
+        bool reloadKB=false
     );
 
     int close();

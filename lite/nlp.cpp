@@ -243,13 +243,7 @@ if (stab_)
 if (ana_)
 	delete ana_;
 
-// FOR NOW, NLP OBJECT "OWNS" THE KB.									// 07/18/03 AM.
-if (cg_)																			// 07/18/03 AM.
-	{
-//	delete cg_;																	// 07/18/03 AM.
-	CG::deleteCG(cg_);														// 07/28/03 AM.
-	cg_ = 0;																		// 07/18/03 AM.
-	}
+deleteCG();
 
 #ifndef LINUX
 if (hdll_)
@@ -275,6 +269,16 @@ logfile_ = 0;	// VTLOG	// 05/06/13 AM.
 #ifndef STABLE_
 --count_;
 #endif
+}
+
+void NLP::deleteCG() {
+	// FOR NOW, NLP OBJECT "OWNS" THE KB.									// 07/18/03 AM.
+	if (cg_)																			// 07/18/03 AM.
+		{
+	//	delete cg_;																	// 07/18/03 AM.
+		CG::deleteCG(cg_);														// 07/28/03 AM.
+		cg_ = 0;																		// 07/18/03 AM.
+		}
 }
 
 /********************************************
@@ -1843,6 +1847,7 @@ parse->setDatum(datum);														// 03/13/03 AM.
 // Execute steps as described in analyzer sequence.
 // Each pass traverses parse tree, applying rules and actions.
 
+// CG *cgg = parse->getAna()->getCG();
 
 if (parse->getText())
 	{

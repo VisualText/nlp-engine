@@ -359,13 +359,15 @@ public:
 		Eana  *erfa					// 10/13/99 AM.
 		);
 
+	void deleteCG();
+
 	GUI *gui;																	// 11/29/99 DD.
 
 	///////////////////////
 	///////////////////////
 
 	// Class-wide
-
+	
 private:
 	void init(_TCHAR *appdir, bool develop,
 		bool silent,															// 06/16/02 AM.
