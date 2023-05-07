@@ -120,6 +120,26 @@ bool unicu::isStrLower(_TCHAR *str) {
 	return nonLower ? false : true;
 }
 
+bool unicu::isStrWhiteSpace(_TCHAR *str) {
+	UChar32 c = 1;
+	int32_t e = 0;
+	icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
+	const UChar *strBuff = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
+	int32_t length = unicu::strLen(strBuff);
+	U8_NEXT(str, e, length, c);
+	bool nonWhite = false;
+
+	// Skip white space (SHOULD NOT BE THERE)
+	while (e <= length) {
+		if (!unicu::isWhiteSpace(c)) {
+			nonWhite = true;
+			break;
+		}
+		U8_NEXT(str, e, length, c);
+	}
+	return nonWhite ? false : true;
+}
+
 int unicu::strLen(const UChar *str) {
 	return u_strlen(str);
 }
