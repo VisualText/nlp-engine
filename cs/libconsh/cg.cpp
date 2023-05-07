@@ -3512,17 +3512,21 @@ bool CG::readDicts(std::vector<std::filesystem::path> files) {
 
 bool CG::readDict(std::string file) {
 	bool dirty;
-	bool hasAttrs;
-	bool isPhrase;
 	CONCEPT *wordCon, *parentCon;
 	_TCHAR buf[MAXMSG];
-	_TCHAR word[MAXSTR];
+	_TCHAR token[MAXSTR];
 	_TCHAR attr[MAXSTR];
 	_TCHAR val[MAXSTR];
+	int lineCount = 0;
+
+	// For error printouts
+	std::size_t botDirPos = file.find_last_of(DIR_CH);
+	std::string filename = file.substr(botDirPos+1, file.length()-2);
 
 	allDictStream_.open(file, std::ios::in);
 		
 	while (allDictStream_.getline(buf, MAXMSG)) {
+		lineCount++;
 		icu::StringPiece sp(buf);
 		const char *line = sp.data();
 		int32_t length = sp.length();
@@ -3532,95 +3536,152 @@ bool CG::readDict(std::string file) {
 		int32_t ulen = 0;
 		int start = e;
 		int wordCount = 0;
+		int eqSign = -1;
 		bool suggestedAttr = false;
+		bool comment = false;
+		int begins[30];
+		int lens[30];
+		bool lastWhite = false;
+		bool backSlash = false;
+		bool inWord = false;
+		int tokint = 0;
+
+		for (int i = 0; i<30; i++) {
+			begins[i] = -1;
+			lens[i] = -1;
+		}
 
 		U8_NEXT(line, e, length, c);
 
-		// Skip white space (SHOULD NOT BE THERE)
-		while (unicu::isWhiteSpace(c)) {
+		// get tokens
+		while (c) {
+			if (c == '#') {
+				comment = true;
+				break;
+			}
+			else if (c == '\\') {
+				backSlash = true;
+			}
+			else if (unicu::isWhiteSpace(c)) {
+				if (inWord) {
+					lens[tokint] = e - begins[tokint] - 1;
+					tokint++;
+					inWord = false;
+				}
+				start = e - 1;
+				lastWhite = true;
+			}
+			else if (unicu::isPunct(c) || c == '=' || c == '"') {
+				if (inWord) {
+					lens[tokint] = e - begins[tokint] - 1;
+					tokint++;
+				}
+				if (c == '=' && eqSign == -1 && !backSlash) {
+					eqSign = tokint;
+				}
+				begins[tokint] = backSlash ? e - 2 : e - 1;
+				lens[tokint++] = backSlash ? 2 : 1;
+				inWord = false;
+				lastWhite = false;
+				backSlash = false;
+			}
+			else {
+				if (!inWord) {
+					inWord = true;
+					begins[tokint] = e - 1;
+				}
+				lastWhite = false;
+				backSlash = false;
+			}
 			U8_NEXT(line, e, length, c);
-			start = e;
 		}
-
+		if (inWord) {
+			lens[tokint] = e - begins[tokint] - 1;
+			tokint++;
+		}
+		
 		// If comment, skip line
-		if (c == '#')
+		if (comment)
 			continue;
 
-		UChar32 cLast = c;
-		int32_t eLast = e;
-		hasAttrs = false;
-		isPhrase = false;
-		parentCon = NULL;
-		wordCount = 0;
+		if (eqSign == -1) {
+			sprintf(errout_, "%d 1 [missing equal sign - %s]", lineCount, filename.c_str());
+			*cgerr << errout_ << std::endl;
+			return false;
+		}
 
-		// Find word or word phrase
-		while (c) {
-			if (c == '=') { 
-				hasAttrs = true;
-				break;
-			} else if (unicu::isWhiteSpace(c)) {
-				_tcsnccpy(word, &line[start],e-start-1);
-				word[e-start-1] = '\0';
-				wordCount++;
-				wordCon = kbm_->dict_get_word(word,dirty);
+		// Loop through tokens
+
+		bool isPhrase = false;
+		parentCon = NULL;
+		bool attrFlag = false;
+		int doubleQuote = -1;
+		int doubleEnd = 0;
+		_TCHAR cc = 0;
+
+		for (int i=0; i<tokint; i++) {
+			_tcsnccpy(token, &line[begins[i]],lens[i]);
+			token[lens[i]] = '\0';
+			cc = token[0];
+
+			// Tokens before the first token before the equals sign
+			if (i < eqSign - 1) {
+				wordCon = kbm_->dict_get_word(token,dirty);
 				if (parentCon) {
-					parentCon = getConcept(parentCon,word);
+					parentCon = getConcept(parentCon,token);
 					isPhrase = true;
 				} else {
 					parentCon = wordCon;
 				}
-				start = e;
-				cLast = c;
-				eLast = e;
+
+			} else if (cc == '=') {
+				int donothing = 1;
+
+			} else if (cc == '"' && doubleQuote == -1) {
+				doubleQuote = begins[i] + 1;
+
+			} else if (doubleQuote != -1 && cc != '"') {
+				doubleEnd = begins[i] + lens[i];
+
+			} else if (attrFlag && (doubleQuote == -1 || cc == '"')) {
+				if (doubleEnd) {
+					_tcsnccpy(val, &line[doubleQuote], doubleEnd-doubleQuote);
+					val[doubleEnd-doubleQuote] = '\0';
+				} else {
+					_tcsnccpy(val, token, lens[i]);
+					val[lens[i]] = '\0';
+				}
+
+				if (unicu::isNumeric(val)) {
+					long long vnum = 0;
+					unicu::strToLong(val,vnum);
+					addVal(parentCon,attr,vnum);
+				} else
+					addSval(parentCon,attr,val);
+				attrFlag = false;
+				doubleQuote = -1;
+				doubleEnd = 0;
 			}
-			U8_NEXT(line, e, length, c);
+			else {
+				_tcsnccpy(attr, token, lens[i]);
+				attr[lens[i]] = '\0';
+				attrFlag = true;
+				if (!_tcsicmp(attr, _T("s"))) {
+					suggestedAttr = true;
+				}
+			}
 		}
-		
-		c = cLast;
-		e = eLast;
 
-		// If found, parse the attributes and add
-		if (hasAttrs) {
-			start = e;
-			bool attrFlag = false;
-			bool doubleQuote = false;
-			bool backslash = false;
-			bool isNumeric = false;
+		if (doubleQuote != -1) {
+			sprintf(errout_, "%d %d [missing ending double quote - %s]", lineCount, doubleEnd, filename.c_str());
+			*cgerr << errout_ << std::endl;
+			return false;
+		}
 
-			while (c) {
-				U8_NEXT(line, e, length, c);
-				if (c == '\\') {
-					backslash = true;
-				}
-				else if (!doubleQuote && attrFlag && !backslash && c == '"') {
-					doubleQuote = true;
-					start++;
-				}
-				else if (attrFlag && ((doubleQuote && c == '"') || (!doubleQuote && unicu::isWhiteSpace(c)) || !c)) {
-					_tcsnccpy(val, &line[start],e-start-1);
-					val[e-start-1] = '\0';
-					if (unicu::isNumeric(val)) {
-						long long vnum = 0;
-						unicu::strToLong(val,vnum);
-						addVal(parentCon,attr,vnum);
-					} else
-						addSval(parentCon,attr,val);
-					attrFlag = false;
-					start = doubleQuote ? e + 1 : e;
-					doubleQuote = false;
-					
-				} else if (c == '=') {
-					_tcsnccpy(attr, &line[start],e-start-1);
-					attr[e-start-1] = '\0';
-					if (!_tcsicmp(attr, _T("s"))) {
-						suggestedAttr = true;
-					}
-					start = e;
-					attrFlag = true;
-				} else if (backslash) {
-					backslash = false;
-				}
-			}
+		if (attrFlag) {
+			sprintf(errout_, "%d %d [missing attribute value - %s]", lineCount, begins[tokint-1]+1, filename.c_str());
+			*cgerr << errout_ << std::endl;
+			return false;
 		}
 
 		if (isPhrase && !suggestedAttr) {
