@@ -33,6 +33,7 @@ namespace unicu
     bool isUpper(UChar32 c);
     bool isLower(UChar32 c);
     bool isStrLower(_TCHAR *str);
+    bool isStrWhiteSpace(_TCHAR *str);
     bool isStrAlphabetic(_TCHAR *str);
     int strLen(const UChar *str);
     int strCmp(_TCHAR *str1, _TCHAR *str2);
