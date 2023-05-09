@@ -3573,7 +3573,7 @@ bool CG::readDict(std::string file) {
 				start = e - 1;
 				lastWhite = true;
 			}
-			else if (unicu::isPunct(c) || c == '=' || c == '"') {
+			else if (c != '_' && (unicu::isPunct(c) || c == '=' || c == '"')) {
 				if (inWord) {
 					lens[tokint] = e - begins[tokint] - 1;
 					tokint++;
