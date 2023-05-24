@@ -302,7 +302,6 @@ int NLP_ENGINE::analyze(
 
     readFiles(infile);
     std::string file;
-    struct stat st;
 
     std::filesystem::path fname(analyzer);
     fname /= _T("logs");
@@ -332,8 +331,7 @@ int NLP_ENGINE::analyze(
 
         bool create = true;
         if (outdir) {
-            stat(outdir, &st);
-            if ((st.st_mode & S_IFREG) == S_IFDIR) {
+            if (std::filesystem::is_directory(outdir)) {
                 _stprintf(m_outdir, _T("%s"), outdir);
                 create = false;
             }
