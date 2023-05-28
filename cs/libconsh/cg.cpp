@@ -3527,9 +3527,10 @@ bool CG::readDict(std::string file) {
 	allDictStream_.open(file, std::ios::in);
 		
 	while (allDictStream_.getline(buf, MAXMSG)) {
+		lineCount++;
 		if (unicu::isStrWhiteSpace(buf))
 			continue;
-		lineCount++;
+
 		caller.line = lineCount;
 		icu::StringPiece sp(buf);
 		const char *line = sp.data();
