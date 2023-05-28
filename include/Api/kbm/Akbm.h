@@ -16,6 +16,23 @@ All rights reserved.
 
 #include "kbm/st.h"	// 10/30/06 AM.
 
+typedef enum {
+   DICT_CALL_DEFAULT,
+   DICT_CALL_FILE
+} DICTCALL_TYPE;
+
+class DICT_CALL {
+  public:
+    DICT_CALL() {
+		type = DICT_CALL_DEFAULT;
+		file = "";
+		line = 0;
+    }
+    DICTCALL_TYPE type;
+    std::string file;
+	int line;
+};
+
 // Forward reference.
 class ACON;
 class AST;
@@ -241,12 +258,14 @@ public:
 	CON *dict_add_unknown(_TCHAR*);
 	bool dict_add_white();
 	CON *dict_add_word(_TCHAR*);
-	CON *dict_add_word_con(ASYM*,bool&);	// 06/29/03 AM.
+	CON *dict_add_word_dict(_TCHAR*,DICT_CALL);
+	CON *dict_add_word_con(ASYM*,bool&,DICT_CALL);	// 06/29/03 AM.
 	CON *dict_find_index(_TCHAR*);
 	CON *dict_find_index(CON*,_TCHAR*);
 	bool dict_rm_word(_TCHAR *str);				// 07/17/00 AM.
 	CON *dict_find_word(_TCHAR *name);
 	CON *dict_get_word(_TCHAR*,bool&);			// 06/29/03 AM.
+	CON *dict_get_word(_TCHAR*,bool&,DICT_CALL);
 	CON *dict_find_word_lc(_TCHAR *name);
 	CON *dict_first();							// 03/21/03 AM.
 	CON *dict_next(CON*);						// 03/21/03 AM.

@@ -21,6 +21,7 @@ All rights reserved.
 #include "StdAfx.h"
 #include <ctype.h>		// 03/07/00 AM.
 #include <iostream>											// Upgrade	// 01/24/01 AM.
+#include <filesystem>
 #include "prim/libprim.h"
 #include "kbm/libkbm.h"
 
@@ -160,8 +161,27 @@ if (!(sym = asym_->sym_get(name,dirty))) /* Find or make sym */
 if (sym->con)
    return(CNULL);					// Exists already.
 
-return dict_add_word_con((ASYM*)sym,dirty);
+DICT_CALL caller;
+return dict_add_word_con((ASYM*)sym,dirty,caller);
 }
+
+CON *AKBM::dict_add_word_dict(
+	_TCHAR *name,
+	DICT_CALL caller
+	)
+{
+SYM *sym;
+bool dirty;									// 06/29/03 AM.
+
+if (!(sym = asym_->sym_get(name,dirty))) /* Find or make sym */
+   return(CNULL);
+
+if (sym->con)
+   return(CNULL);					// Exists already.
+
+return dict_add_word_con((ASYM*)sym,dirty,caller);
+}
+
 
 
 /**************************************************
@@ -177,7 +197,8 @@ return dict_add_word_con((ASYM*)sym,dirty);
 
 inline CON *AKBM::dict_add_word_con(
 	ASYM *sym,
-	bool &dirty		// 06/29/03 AM.
+	bool &dirty,		// 06/29/03 AM.
+	DICT_CALL caller
 	)
 {
 CON *con, *hier, *index;
@@ -220,7 +241,12 @@ else if (unicu::isDigit(ch))									// 05/13/99 AM.
 	}
 else	// Catchall																// 06/19/03 AM.
 	{
-   std::_t_cerr << _T("[dict_add_word: Unhandled word=") << name << _T("]") << std::endl;
+	if (caller.type == DICT_CALL_FILE) {
+		std::string s = std::filesystem::path(caller.file).filename().string();
+    	std::_t_cerr << _T("[") << s << _T(": ") << caller.line << _T(" Unhandled word=") << name << _T("]") << std::endl;
+	} else {
+    	std::_t_cerr << _T("[dict_add_word: Unhandled word=") << name << _T("]") << std::endl;
+	}
 	hier = acon_->c_dict_ALPHA;											// 06/19/03 AM.
 	}
 
@@ -380,7 +406,23 @@ SYM *sym;
 sym = asym_->sym_get(name,dirty);				// 06/29/03 AM.
 if (sym->con)											// 06/29/03 AM.
    return(sym->con);									// 06/29/03 AM.
-return dict_add_word_con((ASYM*)sym,dirty);	// 06/29/03 AM.
+DICT_CALL caller;
+return dict_add_word_con((ASYM*)sym,dirty,caller);	// 06/29/03 AM.
+}
+
+CON *
+AKBM::dict_get_word(
+	_TCHAR *name,	// Word string to look up.
+	bool &dirty,	// If KB has changed.
+	DICT_CALL caller
+	)
+{
+SYM *sym;
+
+sym = asym_->sym_get(name,dirty);				// 06/29/03 AM.
+if (sym->con)											// 06/29/03 AM.
+   return(sym->con);									// 06/29/03 AM.
+return dict_add_word_con((ASYM*)sym,dirty,caller);	// 06/29/03 AM.
 }
 
 

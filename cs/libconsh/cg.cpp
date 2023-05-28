@@ -3518,6 +3518,7 @@ bool CG::readDict(std::string file) {
 	_TCHAR attr[MAXSTR];
 	_TCHAR val[MAXSTR];
 	int lineCount = 0;
+	DICT_CALL caller;
 
 	// For error printouts
 	std::size_t botDirPos = file.find_last_of(DIR_CH);
@@ -3529,6 +3530,7 @@ bool CG::readDict(std::string file) {
 		if (unicu::isStrWhiteSpace(buf))
 			continue;
 		lineCount++;
+		caller.line = lineCount;
 		icu::StringPiece sp(buf);
 		const char *line = sp.data();
 		int32_t length = sp.length();
@@ -3621,6 +3623,9 @@ bool CG::readDict(std::string file) {
 		int doubleEnd = 0;
 		_TCHAR cc = 0;
 
+		caller.file = file;
+		caller.type = DICT_CALL_FILE;
+
 		for (int i=0; i<tokint; i++) {
 			_tcsnccpy(token, &line[begins[i]],lens[i]);
 			token[lens[i]] = '\0';
@@ -3628,7 +3633,7 @@ bool CG::readDict(std::string file) {
 
 			// Tokens before the first token before the equals sign
 			if (i < eqSign - 1) {
-				wordCon = kbm_->dict_get_word(token,dirty);
+				wordCon = kbm_->dict_get_word(token,dirty,caller);
 				if (parentCon) {
 					parentCon = getConcept(parentCon,token);
 					isPhrase = true;

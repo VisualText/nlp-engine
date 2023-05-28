@@ -56,7 +56,7 @@ public:
 //	CON_ID dict_add_unknown(_TCHAR*);	// OBSOLETE.	// 02/19/07 AM.
 	bool dict_add_white();
 	CON_ID dict_add_word(_TCHAR*);
-	CON_ID dict_add_word_con(STR_ID,_TCHAR*,bool&);	// 06/29/03 AM.	// Todo: Reimplement. // 02/14/07 AM.
+	CON_ID dict_add_word_con(STR_ID,_TCHAR*,bool&,DICT_CALL);	// 06/29/03 AM.	// Todo: Reimplement. // 02/14/07 AM.
 	XCON_S *dict_find_index(_TCHAR*);
 	XCON_S *dict_find_index(XCON_S*,_TCHAR*);
 	bool dict_rm_word(_TCHAR *str);				// 07/17/00 AM.
