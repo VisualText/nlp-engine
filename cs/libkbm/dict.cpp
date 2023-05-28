@@ -243,7 +243,7 @@ else	// Catchall																// 06/19/03 AM.
 	{
 	if (caller.type == DICT_CALL_FILE) {
 		std::string s = std::filesystem::path(caller.file).filename().string();
-    	std::_t_cerr << _T("[") << s << _T(": ") << caller.line << _T(" Unhandled word=") << name << _T("]") << std::endl;
+    	std::_t_cerr << caller.line << _T(" 0 [Unhandled \"") << name << "\" " << s << _T("]") << std::endl;
 	} else {
     	std::_t_cerr << _T("[dict_add_word: Unhandled word=") << name << _T("]") << std::endl;
 	}
