@@ -647,7 +647,7 @@ _TCHAR *prefix = _T("ana");		// Prefix for naming files.
 bool flogfiles = eana_->getFlogfiles();								// 10/13/99 AM.
 bool ftimepass = eana_->getFtimepass();								// 10/13/99 AM.
 
-iniPass(num,prefix,flogfiles,ftimepass,sfile,salgo,				// 05/20/00 AM.
+iniPass(num,prefix,flogfiles,ftimepass,pass->getActive(),sfile,salgo,				// 05/20/00 AM.
 			/*DU*/fout,sout,s_time,pretname);
 
 if (pass->getActive() && algo)	// Execute active pass.			// 01/08/99 AM.
@@ -666,7 +666,8 @@ else if (!algo && pass->getActive())									// 01/15/99 AM.
 	return ::errOut(&gerrStr,false);
 	}
 
-finPass(num,flogfiles,fout,sout,pretname,ftimepass,s_time);		// 05/20/00 AM.
+if (pass->getActive())
+	finPass(num,flogfiles,fout,sout,pretname,ftimepass,s_time);		// 05/20/00 AM.
 return true;
 }
 
@@ -685,6 +686,7 @@ inline
 	_TCHAR *prefix,			// Prefix for naming dump files.
 	bool flogfiles,
 	bool ftimepass,
+	bool active,
 	_TCHAR *sfile,			// Name of rulesfile.
 	_TCHAR *salgo,			// Name of algorithm.
 	/*DU*/
@@ -717,7 +719,7 @@ if (flogfiles || ftimepass)												// 10/13/99 AM.
 		pretname = sfile;
 	}
 
-if (flogfiles)																	// 10/13/99 AM.
+if (flogfiles && active)																	// 10/13/99 AM.
 	{
 	bool save;																	// 10/13/99 AM.
 	save = eana_->getFverbose();											// 10/13/99 AM.

@@ -116,7 +116,7 @@ _TCHAR *prefix = _T("ana");		// Prefix for naming files.
 bool flogfiles = parse->eana_->getFlogfiles();
 bool ftimepass = parse->eana_->getFtimepass();
 
-parse->iniPass(num,prefix,flogfiles,ftimepass,0,salgo,			// 05/21/00 AM.
+parse->iniPass(num,prefix,flogfiles,ftimepass,true,0,salgo,			// 05/21/00 AM.
 			/*DU*/fout,sout,s_time,pretname);
 
 Tok tok;			// Create object.
@@ -150,7 +150,7 @@ _TCHAR *prefix = _T("ana");		// Prefix for naming files.
 bool flogfiles = parse->eana_->getFlogfiles();
 bool ftimepass = parse->eana_->getFtimepass();
 
-parse->iniPass(num,prefix,flogfiles,ftimepass,0,salgo,
+parse->iniPass(num,prefix,flogfiles,ftimepass,true,0,salgo,
 			/*DU*/fout,sout,s_time,pretname);
 
 CMLTok cmltok;			// Create object.
@@ -185,7 +185,7 @@ _TCHAR *prefix = _T("ana");		// Prefix for naming files.
 bool flogfiles = parse->eana_->getFlogfiles();
 bool ftimepass = parse->eana_->getFtimepass();
 
-parse->iniPass(num,prefix,flogfiles,ftimepass,0,salgo,
+parse->iniPass(num,prefix,flogfiles,ftimepass,true,0,salgo,
 			/*DU*/fout,sout,s_time,pretname);
 
 DICTTok dicttok;			// Create object.
@@ -221,7 +221,7 @@ _TCHAR *prefix = _T("ana");		// Prefix for naming files.
 bool flogfiles = parse->eana_->getFlogfiles();
 bool ftimepass = parse->eana_->getFtimepass();
 
-parse->iniPass(num,prefix,flogfiles,ftimepass,0,salgo,
+parse->iniPass(num,prefix,flogfiles,ftimepass,true,0,salgo,
 			/*DU*/fout,sout,s_time,pretname);
 
 DICTTok dicttokz;			// Create object.
@@ -255,7 +255,7 @@ _TCHAR *prefix = _T("ana");		// Prefix for naming files.
 bool flogfiles = parse->eana_->getFlogfiles();
 bool ftimepass = parse->eana_->getFtimepass();
 
-parse->iniPass(num,prefix,flogfiles,ftimepass,0,salgo,			// 05/21/00 AM.
+parse->iniPass(num,prefix,flogfiles,ftimepass,true,0,salgo,			// 05/21/00 AM.
 			/*DU*/fout,sout,s_time,pretname);
 
 Line ln;			// Create object.
@@ -297,7 +297,7 @@ _TCHAR *prefix = _T("ana");		// Prefix for naming files.
 bool flogfiles = parse->eana_->getFlogfiles();
 bool ftimepass = parse->eana_->getFtimepass();
 
-parse->iniPass(num,prefix,flogfiles,ftimepass,sfile,salgo,		// 05/20/00 AM.
+parse->iniPass(num,prefix,flogfiles,ftimepass,true,sfile,salgo,		// 05/20/00 AM.
 			/*DU*/fout,sout,s_time,pretname);
 
 // if (pass->getActive())	// Need to get active flag.
@@ -348,7 +348,7 @@ _TCHAR *prefix = _T("ana");		// Prefix for naming files.
 bool flogfiles = parse->eana_->getFlogfiles();
 bool ftimepass = parse->eana_->getFtimepass();
 
-parse->iniPass(num,prefix,flogfiles,ftimepass,sfile,salgo,		// 05/20/00 AM.
+parse->iniPass(num,prefix,flogfiles,ftimepass,true,sfile,salgo,		// 05/20/00 AM.
 			/*DU*/fout,sout,s_time,pretname);
 
 // if (pass->getActive())	// Need to get active flag.

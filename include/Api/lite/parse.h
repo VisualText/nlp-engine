@@ -519,6 +519,7 @@ public:
 		_TCHAR *prefix,			// Prefix for naming dump files.
 		bool flogfiles,
 		bool ftimepass,
+		bool active,
 		_TCHAR *sfile,
 		_TCHAR *salgo,
 		/*DU*/
