@@ -105,17 +105,17 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./nlpm.exe"
         
-    - name: Add icudt72.dll asset
+    - name: Add icudt73.dll asset
       uses: shogo82148/actions-upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./icudt72.dll"
+        asset_path: "./icudt73.dll"
                 
-    - name: Add icuuc72.dll asset
+    - name: Add icuuc73.dll asset
       uses: shogo82148/actions-upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./icuuc72.dll"
+        asset_path: "./icuuc73.dll"
                 
     - name: Add libicutu.a asset
       uses: shogo82148/actions-upload-release-asset@v1
