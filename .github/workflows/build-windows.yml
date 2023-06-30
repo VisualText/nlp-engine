@@ -25,6 +25,10 @@ jobs:
         run: vcpkg install
         working-directory: vcpkg
 
+      - name: List $RUNNER_WORKSPACE before build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+
       - name: Make build directory
         run: mkdir build
 
@@ -47,17 +51,17 @@ jobs:
           name: nlpw.exe
           path: bin/Release/nlpw.exe
 
-      - name: Upload icudt72.dll
+      - name: Upload icudt73.dll
         uses: actions/upload-artifact@v3
         with:
-          name: icudt72.dll
-          path: bin/Release/icudt72.dll
+          name: icudt73.dll
+          path: bin/Release/icudt73.dll
 
-      - name: Upload icuuc72.dll
+      - name: Upload icuuc73.dll
         uses: actions/upload-artifact@v3
         with:
-          name: icuuc72.dll
-          path: bin/Release/icuuc72.dll
+          name: icuuc73.dll
+          path: bin/Release/icuuc73.dll
 
       - name: Checkout Analyzers repo
         uses: actions/checkout@v3

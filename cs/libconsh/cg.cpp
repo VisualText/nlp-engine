@@ -3538,6 +3538,7 @@ bool CG::readDict(std::string file) {
 
 		UChar32 c = 1;
 		int32_t e = 0;
+		int32_t eLast = 0;
 		int32_t ulen = 0;
 		int start = e;
 		int wordCount = 0;
@@ -3549,6 +3550,7 @@ bool CG::readDict(std::string file) {
 		bool lastWhite = false;
 		bool backSlash = false;
 		bool inWord = false;
+		bool firstTime = true;
 		int tokint = 0;
 
 		for (int i = 0; i<30; i++) {
@@ -3576,6 +3578,11 @@ bool CG::readDict(std::string file) {
 				start = e - 1;
 				lastWhite = true;
 			}
+			else if (unicu::isSingle(c)) {
+				begins[tokint] = firstTime ? 0 : eLast;
+				lens[tokint] = e - eLast;
+				tokint++;
+			}
 			else if (c != '_' && (unicu::isPunct(c) || c == '=' || c == '"')) {
 				if (inWord) {
 					lens[tokint] = e - begins[tokint] - 1;
@@ -3593,12 +3600,14 @@ bool CG::readDict(std::string file) {
 			else {
 				if (!inWord) {
 					inWord = true;
-					begins[tokint] = e - 1;
+					begins[tokint] = firstTime ? 0 : e - 1;
 				}
 				lastWhite = false;
 				backSlash = false;
 			}
+			eLast = e;
 			U8_NEXT(line, e, length, c);
+			firstTime = false;
 		}
 		if (inWord) {
 			lens[tokint] = e - begins[tokint] - 1;
