@@ -20,13 +20,13 @@ jobs:
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: build-windows.yml
-        name: "icudt72.dll"
+        name: "icudt73.dll"
 
     - name: Fetch Windows icu2
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: build-windows.yml
-        name: "icuuc72.dll"
+        name: "icuuc73.dll"
         
     - name: Fetch Linux exe
       uses: dawidd6/action-download-artifact@v2
