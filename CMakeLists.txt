@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 include(CTest)
 enable_testing()
 
-find_package(ICU REQUIRED COMPONENTS uc i18n io)
+find_package(ICU REQUIRED COMPONENTS i18n uc data io)
 set(CMAKE_GENERATOR_PLATFORM Win32 HINT)
 
 if(MSVC)
