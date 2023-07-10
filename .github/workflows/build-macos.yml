@@ -40,7 +40,7 @@ jobs:
         run: mkdir build
 
       - name: Generate Solution MacOs
-        run: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_BUILD_TYPE=release -DCMAKE_PREFIX_PATH=/usr/local/opt/icu4c -B build -S . -DCMAKE_CXX_FLAGS=-std=c++11
+        run: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_BUILD_TYPE=release -B build -S . -DCMAKE_CXX_FLAGS=-std=c++11 -DCMAKE_TOOLCHAIN_FILE='${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake'
 
       - name: Cmake Build all targets MaxOs
         run: cmake --build build/ --target all
@@ -56,27 +56,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: nlpm.exe
-          path: bin/nlpm.exe
-                              
-      - name: Copy libicutu.a to libicutum.a
-        run: cp vcpkg_installed/x64-osx/lib/libicutu.a vcpkg_installed/x64-osx/lib/libicutum.a
-        shell: bash
-          
-      - name: Upload libicutum.a
-        uses: actions/upload-artifact@v3
-        with:
-          name: libicutum.a
-          path: vcpkg_installed/x64-osx/lib/libicutum.a
-                    
-      - name: Copy libicuuc.a to libicuucm.a
-        run: cp vcpkg_installed/x64-osx/lib/libicuuc.a vcpkg_installed/x64-osx/lib/libicuucm.a
-        shell: bash
-
-      - name: Upload libicuucm.a
-        uses: actions/upload-artifact@v3
-        with:
-          name: libicuucm.a
-          path: vcpkg_installed/x64-osx/lib/libicuucm.a
+          path: bin/nlpm.exe                              
           
       - name: Checkout Analyzers repo
         uses: actions/checkout@v3
