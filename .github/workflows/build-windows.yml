@@ -33,7 +33,7 @@ jobs:
         run: mkdir build
 
       - name: Generate Solution Windows
-        run: cmake -B build -A Win32 -DCMAKE_TOOLCHAIN_FILE='${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake'
+        run: cmake -B build -A x64 -DCMAKE_TOOLCHAIN_FILE='${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake'
 
       - name: Cmake Build all targets Windows
         run: cmake --build build --config Release --target nlp
