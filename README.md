@@ -98,13 +98,14 @@ To compile the nlp-engine for the Mac:
 * Select the "Clang kit" using the bottom status bar
 * Click on "Build" in the status bar
 
-# NLP-ENGINE Development - Unicode (In Development)
+# NLP-ENGINE Development
+
+All the dependencies for building nlp engine from source are included in this repository. We use VCPkg to checkout and build ICU from source. We use CMake to build the nlp engine making sure the ICU library is "found" through VCPkg.
 
 ## Linux / MacOS
 ```
-git clone https://github.com/visualtext/nlp-engine
+git clone --recurse-submodules https://github.com/visualtext/nlp-engine
 cd nlp-engine
-git submodule update --init --recursive
 ```
 
 ### Fetch the third-party libraries (via vcpkg)
@@ -114,30 +115,30 @@ cd vcpkg
 ./vcpkg install
 ```
 
-### Create an out of source build folder
+### Configure Cmake for out of source build
 ```
 cd ..
-mkdir build
-cd build
-```
-
-### Cmake
-```
-cmake ..
+cmake -DCMAKE_BUILD_TYPE=Release -B build -S . -DCMAKE_TOOLCHAIN_FILE='./vcpkg/scripts/buildsystems/vcpkg.cmake'
 ```
 
 ### Build
 ```
-cmake --build . --config Debug -- -m
+cmake --build build/ --target all
 ```
+
+Once the build succeedes, the nlp executable should be in the bin folder along with test-nlp.exe.
 
 ## Windows
 
 ### Clone the repository
 ```
-git clone https://github.com/visualtext/nlp-engine
+git clone --recurse-submodules https://github.com/visualtext/nlp-engine
 cd nlp-engine
-git submodule update --init --recursive
+```
+
+### Make sure VCPkg builds 64 bit binaries (Note: VCPkg is expected to make this the default by Sept 2023 after which this step won't be necessary)
+```
+set VCPKG_DEFAULT_TRIPLET=x64-windows
 ```
 
 ### Fetch the third-party libraries (via vcpkg)
@@ -147,25 +148,14 @@ bootstrap-vcpkg.bat
 vcpkg install
 ```
 
-### Create an out of source build folder
+### Configure Cmake for out of source build
 ```
 cd ..
-mkdir build
-cd build
-```
-
-### Generate Visual Studio Solution
-```
-cmake .. -G "Visual Studio 16 2019" -A Win32 -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
+cmake -G "Visual Studio 16 2019" -A x64 -B build -S . -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
 ```
 
 ### Build
 ```
-cmake --build . --config Debug -- -m
+cmake --build build --config Release
 ```
 
-### Debug using VSCode
-```
-cd ..
-code .
-```
