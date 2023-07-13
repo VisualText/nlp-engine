@@ -220,15 +220,19 @@ bool DICTTok::ApplyDictFiles() {
 	Node<Pn> *last = NULL;
 	Node<Pn> *curr = NULL;
 	CONCEPT *con = NULL;
-	_TCHAR *suggested, *str, *lcstr;
+	_TCHAR *name, *suggested, *str, *lcstr;
 	bool reduceIt = false;
 	_TCHAR buf[PATHSIZ];
-	_TCHAR *name;
 
 	while (node) {
 		name = node->data.getName();
-		lcstr = str_to_lower(name,buf);
-		con = cg_->findWordConcept(lcstr);
+		con = cg_->findWordConcept(name);
+		if (con) {
+			lcstr = name;
+		} else {
+			lcstr = str_to_lower(name,buf);
+			con = cg_->findWordConcept(lcstr);
+		}
 		CON *c = (CON *)con;
 
 		int length = 0;
