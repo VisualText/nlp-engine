@@ -118,7 +118,7 @@ cd vcpkg
 ### Configure Cmake for out of source build
 ```
 cd ..
-cmake -DCMAKE_BUILD_TYPE=Release -B build -S . -DCMAKE_TOOLCHAIN_FILE='./vcpkg/scripts/buildsystems/vcpkg.cmake'
+cmake -DCMAKE_BUILD_TYPE=Debug -B build -S . -DCMAKE_TOOLCHAIN_FILE='./vcpkg/scripts/buildsystems/vcpkg.cmake'
 ```
 
 ### Build
