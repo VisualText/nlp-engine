@@ -222,16 +222,12 @@ bool DICTTok::ApplyDictFiles() {
 	CONCEPT *con = NULL;
 	_TCHAR *name, *suggested, *str, *lcstr;
 	bool reduceIt = false;
-	_TCHAR buf[PATHSIZ];
 
 	while (node) {
 		name = node->data.getName();
 		con = cg_->findWordConcept(name);
 		if (con) {
 			lcstr = name;
-		} else {
-			lcstr = str_to_lower(name,buf);
-			con = cg_->findWordConcept(lcstr);
 		}
 		CON *c = (CON *)con;
 
@@ -327,7 +323,7 @@ Node<Pn>* DICTTok::MatchLongest(CONCEPT *con, Node<Pn> *parentN, CONCEPT **end, 
 			parentN = parentN->pRight;
 		}
 		else {
-			if (!_tcsicmp(conName, pnName)) {
+			if (!_tcscmp(conName, pnName)) {
 				*end = next;
 				length = len;
 				pn = parentN;
@@ -735,7 +731,6 @@ if (!node)
 // Put attributes on.
 CONCEPT *con = 0;
 CONCEPT *conChild = 0;
-bool reduceIt = false;
 _TCHAR *suggested = 0;
 
 switch (typ)
@@ -751,10 +746,14 @@ switch (typ)
 	case PNALPHA:
 	case PNEMOJI:
 		makeTextAttrs(node,last);
-		if (lcstr && *lcstr) {
-			con = cg_->findWordConcept(lcstr);
-			reduceIt = findAttrs(node, con, str, false);
+		con = NULL;
+		if (str && *str) {
+			con = cg_->findWordConcept(str);
 		}
+		if (!con && lcstr && *lcstr) {
+			con = cg_->findWordConcept(lcstr);
+		}
+		findAttrs(node, con, str, false);
 		break;
 	case PNNUM:	// Placed here for easy reference.
 		++totnums_;
