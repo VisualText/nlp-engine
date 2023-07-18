@@ -222,12 +222,16 @@ bool DICTTok::ApplyDictFiles() {
 	CONCEPT *con = NULL;
 	_TCHAR *name, *suggested, *str, *lcstr;
 	bool reduceIt = false;
+	_TCHAR buf[PATHSIZ];
 
 	while (node) {
 		name = node->data.getName();
 		con = cg_->findWordConcept(name);
 		if (con) {
 			lcstr = name;
+		} else {
+			lcstr = str_to_lower(name,buf);
+			con = cg_->findWordConcept(lcstr);
 		}
 		CON *c = (CON *)con;
 
@@ -323,7 +327,7 @@ Node<Pn>* DICTTok::MatchLongest(CONCEPT *con, Node<Pn> *parentN, CONCEPT **end, 
 			parentN = parentN->pRight;
 		}
 		else {
-			if (!_tcscmp(conName, pnName)) {
+			if (!_tcsicmp(conName, pnName)) {
 				*end = next;
 				length = len;
 				pn = parentN;
