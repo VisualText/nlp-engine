@@ -223,6 +223,7 @@ bool DICTTok::ApplyDictFiles() {
 	_TCHAR *name, *suggested, *str, *lcstr;
 	bool reduceIt = false;
 	_TCHAR buf[PATHSIZ];
+	_TCHAR conName[MAXSTR];
 
 	while (node) {
 		name = node->data.getName();
@@ -243,6 +244,14 @@ bool DICTTok::ApplyDictFiles() {
 			con = end;
 			std::string text = lcstr;
 			Pn *pnEnd = (Pn *)endNode;
+
+			// Construct phrase text from con and end
+			CONCEPT *start = con;
+			while (start) {
+				cg_->conceptName(start,conName);
+				text = text + " " + conName;
+				start = cg_->Down(start);
+			}
 
 			VAL *vals = cg_->findVals(con, _T("s"));
 			_TCHAR suggName[MAXSTR];
