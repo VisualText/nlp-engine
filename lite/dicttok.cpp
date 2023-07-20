@@ -242,15 +242,16 @@ bool DICTTok::ApplyDictFiles() {
 		if (endNode && end) {
 			CON *e = (CON *)end;
 
-			// Construct phrase text from con and end
-			CONCEPT *start = con;
-			std::string text = lcstr;
+			// Construct phrase text from the end up
+			std::string text = "";
+			CONCEPT *start = end;
 			while (start) {
-				start = cg_->Down(start);
 				cg_->conceptName(start,conName);
-				text = text + " " + conName;
-				if (start == end)
+				std::string word = conName;
+				text = word + " " + text;
+				if (con == start)
 					break;
+				start = cg_->Up(start);
 			}
 
 			con = end;
