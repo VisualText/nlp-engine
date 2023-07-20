@@ -408,7 +408,7 @@ void Tok::nextTok(
 			if (getSeparateChars()) {
 				++ulen;
 			} else {
-				while (c && unicu::isAlphabetic(c) && !unicu::isSingle(c)) {
+				while (c && (unicu::isAlphabetic(c) || unicu::isGlyph(c)) && !unicu::isSingle(c)) {
 					lastEnd = end;
 					U8_NEXT(s, end, length, c);
 					++ulen;
