@@ -31,6 +31,10 @@ bool unicu::isSingle(UChar32 c) {
 	return isChinese(c) || isEmoji(c);
 }
 
+bool unicu::isGlyph(UChar32 c) {
+	return isTamilGlyph(c);
+}
+
 bool unicu::isChinese(UChar32 c) {
 	return (
 		(0x4E00 <= c && c <= 0x9FFF) ||
@@ -69,6 +73,12 @@ bool unicu::isEmojiVariation(UChar32 c) {
 		(0x1F3FB <= c && c <= 0x1F3FF) ||	// skin tone indicator
 		0x2642 == c ||	// male
 		0x2640 == c		// female
+	);
+}
+
+bool unicu::isTamilGlyph(UChar32 c) {
+	return (
+		0x0BCD == c || 0x0BCE == c
 	);
 }
 
