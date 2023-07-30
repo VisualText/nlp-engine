@@ -3551,6 +3551,7 @@ bool CG::readDict(std::string file) {
 		bool backSlash = false;
 		bool inWord = false;
 		bool firstTime = true;
+		bool doNext = true;
 		int tokint = 0;
 
 		for (int i = 0; i<30; i++) {
@@ -3562,6 +3563,7 @@ bool CG::readDict(std::string file) {
 
 		// get tokens
 		while (c) {
+			doNext =  true;
 			if (c == '#') {
 				comment = true;
 				break;
@@ -3579,6 +3581,20 @@ bool CG::readDict(std::string file) {
 				lastWhite = true;
 			}
 			else if (unicu::isSingle(c)) {
+				if (unicu::isEmoji(c)) {
+					int32_t eSave = e;
+					U8_NEXT(line, e, length, c);
+					if (unicu::isEmojiVariation(c) || unicu::isEmojiJoiner(c)) {
+						bool joining = false;
+						while (c && (unicu::isEmojiVariation(c) || unicu::isEmojiJoiner(c) || joining)) {
+							joining = unicu::isEmojiJoiner(c);
+							eSave = e;
+							U8_NEXT(line, e, length, c);
+						}
+					}
+					e = eSave;
+					doNext = false;
+				}
 				begins[tokint] = firstTime ? 0 : eLast;
 				lens[tokint] = e - eLast;
 				tokint++;
@@ -3606,7 +3622,8 @@ bool CG::readDict(std::string file) {
 				backSlash = false;
 			}
 			eLast = e;
-			U8_NEXT(line, e, length, c);
+			if (doNext)
+				U8_NEXT(line, e, length, c);
 			firstTime = false;
 		}
 		if (inWord) {
