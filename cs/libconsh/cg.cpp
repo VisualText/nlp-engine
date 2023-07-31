@@ -3544,6 +3544,7 @@ bool CG::readDict(std::string file) {
 		int wordCount = 0;
 		int eqSign = -1;
 		bool suggestedAttr = false;
+		bool suggestedLit = false;
 		bool comment = false;
 		int begins[30];
 		int lens[30];
@@ -3700,7 +3701,10 @@ bool CG::readDict(std::string file) {
 				_tcsnccpy(attr, token, lens[i]);
 				attr[lens[i]] = '\0';
 				attrFlag = true;
-				if (!_tcsicmp(attr, _T("s"))) {
+				if (!_tcsicmp(attr, _T("l"))) {
+					suggestedLit = true;
+				}
+				else if (!_tcsicmp(attr, _T("s"))) {
 					suggestedAttr = true;
 				}
 			}
@@ -3718,7 +3722,9 @@ bool CG::readDict(std::string file) {
 			return false;
 		}
 
-		if (isPhrase && !suggestedAttr) {
+		if (isPhrase && suggestedLit) {
+			addSval(parentCon,_T("l"),val);
+		} else if (isPhrase && !suggestedAttr) {
 			addSval(parentCon,_T("s"),_T("phrase"));
 		}
 	}

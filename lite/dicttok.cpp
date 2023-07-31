@@ -224,6 +224,7 @@ bool DICTTok::ApplyDictFiles() {
 	bool reduceIt = false;
 	_TCHAR buf[PATHSIZ];
 	_TCHAR conName[MAXSTR];
+	bool litFlag = false;
 
 	while (node) {
 		name = node->data.getName();
@@ -256,13 +257,21 @@ bool DICTTok::ApplyDictFiles() {
 
 			con = end;
 			Pn *pnEnd = (Pn *)endNode;
+			litFlag = false;
 
 			VAL *vals = cg_->findVals(con, _T("s"));
+			if (!vals) {
+				vals = cg_->findVals(con, _T("l"));
+				litFlag = true;
+			}
 			_TCHAR suggName[MAXSTR];
 			bool reduces = true;
 			if (vals) {
 				suggested = popsval(vals);
-				sprintf(suggName,_T("_%s"),suggested);
+				if (!litFlag)
+					sprintf(suggName,_T("_%s"),suggested);
+				else
+					sprintf(suggName,_T("%s"),suggested);
 			} else if (length > 1) {
 				sprintf(suggName,_T("_phrase"));
 			} else {
