@@ -904,7 +904,7 @@ inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, bool i
 		_TCHAR *strattr, *strval;
 		parse_->internStr(attrName, strattr);
 
-		if (_tcscmp(_T("pos"),strattr) && _tcscmp(_T("s"),strattr)) {
+		if (_tcscmp(_T("pos"),strattr) && _tcscmp(_T("s"),strattr) && _tcscmp(_T("l"),strattr)) {
 			// This needs to loop if there is more than one value for the same attribute
 			if (cg_->isValStr(vals)) {
 				cg_->popSval(vals,bufval);
