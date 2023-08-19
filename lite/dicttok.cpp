@@ -369,6 +369,7 @@ Node<Pn>* DICTTok::MatchLongest(CONCEPT *con, Node<Pn> *parentN, CONCEPT **end, 
 					return pn;
 			}
 			next = cg_->Next(next);
+			con = next;
 		}
 	}
 	return pn;
