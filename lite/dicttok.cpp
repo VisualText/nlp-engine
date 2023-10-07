@@ -240,7 +240,8 @@ bool DICTTok::ApplyDictFiles() {
 		int length = 0;
 		CONCEPT *end = NULL;
 		Node<Pn> *endNode = MatchLongest(con,node,&end,length,0);
-		if (endNode && end) {
+		ATTR *attrs = cg_->findAttrs(end);
+		if (endNode && end && attrs) {
 			CON *e = (CON *)end;
 
 			// Construct phrase text from the end up

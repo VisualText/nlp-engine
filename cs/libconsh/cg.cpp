@@ -3551,9 +3551,11 @@ bool CG::readDict(std::string file) {
 		bool lastWhite = false;
 		bool backSlash = false;
 		bool inWord = false;
+		bool inString = false;
 		bool firstTime = true;
 		bool doNext = true;
 		int tokint = 0;
+		int startQuote = 0;
 
 		for (int i = 0; i<30; i++) {
 			begins[i] = -1;
@@ -3600,7 +3602,25 @@ bool CG::readDict(std::string file) {
 				lens[tokint] = e - eLast;
 				tokint++;
 			}
-			else if (c != '_' && (unicu::isPunct(c) || c == '=' || c == '"')) {
+			else if (c == '"') {
+				if (backSlash && !inString) {
+					begins[tokint] = e - 2;
+					lens[tokint++] = 2;
+					inWord = false;
+					lastWhite = false;
+					backSlash = false;
+				} else if (!backSlash) {
+					if (inString) {
+						lens[tokint++] = e - begins[tokint];
+						inString = false;
+					} else {
+						begins[tokint] = startQuote = e - 1;
+						inString = true;
+					}					
+				}
+				backSlash = false;
+			}
+			else if (c != '_' && (unicu::isPunct(c) || c == '=')) {
 				if (inWord) {
 					lens[tokint] = e - begins[tokint] - 1;
 					tokint++;
@@ -3614,7 +3634,7 @@ bool CG::readDict(std::string file) {
 				lastWhite = false;
 				backSlash = false;
 			}
-			else {
+			else if (!inString) {
 				if (!inWord) {
 					inWord = true;
 					begins[tokint] = firstTime ? 0 : e - 1;
@@ -3635,6 +3655,12 @@ bool CG::readDict(std::string file) {
 		// If comment, skip line
 		if (comment)
 			continue;
+			
+		if (inString) {
+			sprintf(errout_, "%d %d [missing ending double quote - %s]", lineCount, startQuote, filename.c_str());
+			*cgerr << errout_ << std::endl;
+			return false;
+		}
 
 		if (eqSign == -1) {
 			sprintf(errout_, "%d 1 [missing equal sign - %s]", lineCount, filename.c_str());
@@ -3647,17 +3673,26 @@ bool CG::readDict(std::string file) {
 		bool isPhrase = false;
 		parentCon = NULL;
 		bool attrFlag = false;
-		int doubleQuote = -1;
-		int doubleEnd = 0;
 		_TCHAR cc = 0;
+		bool addValue = false;
 
 		caller.file = file;
 		caller.type = DICT_CALL_FILE;
 
 		for (int i=0; i<tokint; i++) {
-			_tcsnccpy(token, &line[begins[i]],lens[i]);
-			token[lens[i]] = '\0';
+			addValue = false;
+			int len = lens[i];
+			int beg = begins[i];
+			_tcsnccpy(token, &line[beg],len);
+			token[len] = '\0';
 			cc = token[0];
+			if (cc == '\\') {
+				beg++;
+				len--;
+				_tcsnccpy(token, &line[beg],len);
+				token[len] = '\0';
+				cc = token[0];
+			}
 
 			// Tokens before the first token before the equals sign
 			if (i < eqSign - 1) {
@@ -3672,32 +3707,19 @@ bool CG::readDict(std::string file) {
 			} else if (cc == '=') {
 				int donothing = 1;
 
-			} else if (cc == '"' && doubleQuote == -1) {
-				doubleQuote = begins[i] + 1;
+			} else if (cc == '"') {
+				int len = lens[i] - 2;
+				_tcsnccpy(val, &token[1], len);
+				val[len] = '\0';
+				addValue = true;
 
-			} else if (doubleQuote != -1 && cc != '"') {
-				doubleEnd = begins[i] + lens[i];
-
-			} else if (attrFlag && (doubleQuote == -1 || cc == '"')) {
-				if (doubleEnd) {
-					_tcsnccpy(val, &line[doubleQuote], doubleEnd-doubleQuote);
-					val[doubleEnd-doubleQuote] = '\0';
-				} else {
-					_tcsnccpy(val, token, lens[i]);
-					val[lens[i]] = '\0';
-				}
-
-				if (unicu::isNumeric(val)) {
-					long long vnum = 0;
-					unicu::strToLong(val,vnum);
-					addVal(parentCon,attr,vnum);
-				} else
-					addSval(parentCon,attr,val);
+			} else if (attrFlag) {
+				_tcsnccpy(val, token, lens[i]);
+				val[lens[i]] = '\0';
+				addValue = true;
 				attrFlag = false;
-				doubleQuote = -1;
-				doubleEnd = 0;
-			}
-			else {
+
+			} else {
 				_tcsnccpy(attr, token, lens[i]);
 				attr[lens[i]] = '\0';
 				attrFlag = true;
@@ -3708,12 +3730,17 @@ bool CG::readDict(std::string file) {
 					suggestedAttr = true;
 				}
 			}
-		}
 
-		if (doubleQuote != -1) {
-			sprintf(errout_, "%d %d [missing ending double quote - %s]", lineCount, doubleEnd, filename.c_str());
-			*cgerr << errout_ << std::endl;
-			return false;
+			if (addValue) {
+				if (unicu::isNumeric(val)) {
+					long long vnum = 0;
+					unicu::strToLong(val,vnum);
+					addVal(parentCon,attr,vnum);
+				} else
+					addSval(parentCon,attr,val);
+				attrFlag = false;
+				addValue = false;
+			}
 		}
 
 		if (attrFlag) {
@@ -3784,7 +3811,8 @@ bool CG::readKBB(std::string file) {
 	bool openDouble = false;
 	bool collectingConcept = false;
 		
-	while (streamer.getline(buf, MAXMSG)) {
+	while (streamer.peek() != EOF) {
+		streamer.getline(buf,MAXMSG);
 		icu::StringPiece sp(buf);
 		const char *line = sp.data();
 		int32_t length = sp.length();
