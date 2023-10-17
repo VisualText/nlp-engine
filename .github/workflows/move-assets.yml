@@ -75,11 +75,35 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./nlpl.exe"
 
+    - name: Fetch Linux icu1
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: build-linux.yml
+        name: "libicutu.a"
+
+    - name: Fetch Linux icu2
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: build-linux.yml
+        name: "libicuuc.a"
+
     - name: Add nlpm.exe asset
       uses: shogo82148/actions-upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./nlpm.exe"
+
+    - name: Fetch MacOS icu1
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: build-macos.yml
+        name: "libicutum.a"
+
+    - name: Fetch MacOS icu2
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: build-macos.yml
+        name: "libicuucm.a"      
         
     - name: Add icudt73.dll asset
       uses: shogo82148/actions-upload-release-asset@v1
@@ -92,6 +116,30 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./icuuc73.dll"
+
+    - name: Add libicutu.a asset
+      uses: shogo82148/actions-upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: "./libicutu.a"
+
+    - name: Add libicuuc.a asset
+      uses: shogo82148/actions-upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: "./libicuuc.a"
+
+    - name: Add libicutum.a asset
+      uses: shogo82148/actions-upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: "./libicutum.a"
+
+    - name: Add libicuucm.a asset
+      uses: shogo82148/actions-upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: "./libicuucm.a"
                 
     - name: Add nlpengine.zip asset
       uses: shogo82148/actions-upload-release-asset@v1

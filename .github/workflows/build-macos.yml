@@ -56,7 +56,27 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: nlpm.exe
-          path: bin/nlpm.exe                              
+          path: bin/nlpm.exe
+
+      - name: Copy libicutu.a to libicutum.a
+        run: cp vcpkg_installed/x64-osx/lib/libicutu.a vcpkg_installed/x64-osx/lib/libicutum.a
+        shell: bash
+
+      - name: Upload libicutum.a
+        uses: actions/upload-artifact@v3
+        with:
+          name: libicutum.a
+          path: vcpkg_installed/x64-osx/lib/libicutum.a
+
+      - name: Copy libicuuc.a to libicuucm.a
+        run: cp vcpkg_installed/x64-osx/lib/libicuuc.a vcpkg_installed/x64-osx/lib/libicuucm.a
+        shell: bash
+
+      - name: Upload libicuucm.a
+        uses: actions/upload-artifact@v3
+        with:
+          name: libicuucm.a
+          path: vcpkg_installed/x64-osx/lib/libicuucm.a                              
           
       - name: Checkout Analyzers repo
         uses: actions/checkout@v3
