@@ -156,6 +156,6 @@ cmake -G "Visual Studio 16 2019" -A x64 -B build -S . -DCMAKE_TOOLCHAIN_FILE=./v
 
 ### Build
 ```
-cmake --build build --config Release
+cmake --build build --config Debug
 ```
 
