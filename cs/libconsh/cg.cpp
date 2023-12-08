@@ -3567,42 +3567,7 @@ bool CG::readDict(std::string file) {
 		// get tokens
 		while (c) {
 			doNext =  true;
-			if (c == '#') {
-				comment = true;
-				break;
-			}
-			else if (c == '\\') {
-				backSlash = true;
-			}
-			else if (unicu::isWhiteSpace(c)) {
-				if (inWord) {
-					lens[tokint] = e - begins[tokint] - 1;
-					tokint++;
-					inWord = false;
-				}
-				start = e - 1;
-				lastWhite = true;
-			}
-			else if (unicu::isSingle(c)) {
-				if (unicu::isEmoji(c)) {
-					int32_t eSave = e;
-					U8_NEXT(line, e, length, c);
-					if (unicu::isEmojiVariation(c) || unicu::isEmojiJoiner(c)) {
-						bool joining = false;
-						while (c && (unicu::isEmojiVariation(c) || unicu::isEmojiJoiner(c) || joining)) {
-							joining = unicu::isEmojiJoiner(c);
-							eSave = e;
-							U8_NEXT(line, e, length, c);
-						}
-					}
-					e = eSave;
-					doNext = false;
-				}
-				begins[tokint] = firstTime ? 0 : eLast;
-				lens[tokint] = e - eLast;
-				tokint++;
-			}
-			else if (c == '"') {
+			if (c == '"') {
 				if (backSlash && !inString) {
 					begins[tokint] = e - 2;
 					lens[tokint++] = 2;
@@ -3620,27 +3585,64 @@ bool CG::readDict(std::string file) {
 				}
 				backSlash = false;
 			}
-			else if (c != '_' && (unicu::isPunct(c) || c == '=')) {
-				if (inWord) {
-					lens[tokint] = e - begins[tokint] - 1;
+			else if (!inString) {
+				if (c == '#') {
+					comment = true;
+					break;
+				}
+				else if (c == '\\') {
+					backSlash = true;
+				}
+				else if (unicu::isWhiteSpace(c)) {
+					if (inWord) {
+						lens[tokint] = e - begins[tokint] - 1;
+						tokint++;
+						inWord = false;
+					}
+					start = e - 1;
+					lastWhite = true;
+				}
+				else if (unicu::isSingle(c)) {
+					if (unicu::isEmoji(c)) {
+						int32_t eSave = e;
+						U8_NEXT(line, e, length, c);
+						if (unicu::isEmojiVariation(c) || unicu::isEmojiJoiner(c)) {
+							bool joining = false;
+							while (c && (unicu::isEmojiVariation(c) || unicu::isEmojiJoiner(c) || joining)) {
+								joining = unicu::isEmojiJoiner(c);
+								eSave = e;
+								U8_NEXT(line, e, length, c);
+							}
+						}
+						e = eSave;
+						doNext = false;
+					}
+					begins[tokint] = firstTime ? 0 : eLast;
+					lens[tokint] = e - eLast;
 					tokint++;
 				}
-				if (c == '=' && eqSign == -1 && !backSlash) {
-					eqSign = tokint;
+				else if (c != '_' && (unicu::isPunct(c) || c == '=')) {
+					if (inWord) {
+						lens[tokint] = e - begins[tokint] - 1;
+						tokint++;
+					}
+					if (c == '=' && eqSign == -1 && !backSlash) {
+						eqSign = tokint;
+					}
+					begins[tokint] = backSlash ? e - 2 : e - 1;
+					lens[tokint++] = backSlash ? 2 : 1;
+					inWord = false;
+					lastWhite = false;
+					backSlash = false;
 				}
-				begins[tokint] = backSlash ? e - 2 : e - 1;
-				lens[tokint++] = backSlash ? 2 : 1;
-				inWord = false;
-				lastWhite = false;
-				backSlash = false;
-			}
-			else if (!inString) {
-				if (!inWord) {
-					inWord = true;
-					begins[tokint] = firstTime ? 0 : e - 1;
+				else {
+					if (!inWord) {
+						inWord = true;
+						begins[tokint] = firstTime ? 0 : e - 1;
+					}
+					lastWhite = false;
+					backSlash = false;
 				}
-				lastWhite = false;
-				backSlash = false;
 			}
 			eLast = e;
 			if (doNext)
