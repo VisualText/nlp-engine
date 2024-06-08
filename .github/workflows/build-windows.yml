@@ -51,17 +51,17 @@ jobs:
           name: nlpw.exe
           path: bin/Release/nlpw.exe
 
-      - name: Upload icudt73.dll
+      - name: Upload icudt74.dll
         uses: actions/upload-artifact@v3
         with:
-          name: icudt73.dll
-          path: bin/Release/icudt73.dll
+          name: icudt74.dll
+          path: bin/Release/icudt74.dll
 
-      - name: Upload icuuc73.dll
+      - name: Upload icuuc74.dll
         uses: actions/upload-artifact@v3
         with:
-          name: icuuc73.dll
-          path: bin/Release/icuuc73.dll
+          name: icuuc74.dll
+          path: bin/Release/icuuc74.dll
 
       - name: Checkout Analyzers repo
         uses: actions/checkout@v3
