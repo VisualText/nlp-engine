@@ -105,17 +105,17 @@ jobs:
         workflow: build-macos.yml
         name: "libicuucm.a"      
         
-    - name: Add icudt73.dll asset
+    - name: Add icudt74.dll asset
       uses: shogo82148/actions-upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./icudt73.dll"
+        asset_path: "./icudt74.dll"
                 
-    - name: Add icuuc73.dll asset
+    - name: Add icuuc74.dll asset
       uses: shogo82148/actions-upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./icuuc73.dll"
+        asset_path: "./icuuc74.dll"
 
     - name: Add libicutu.a asset
       uses: shogo82148/actions-upload-release-asset@v1
