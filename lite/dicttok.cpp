@@ -279,8 +279,10 @@ bool DICTTok::ApplyDictFiles() {
 				reduces = false;
 			}
 
+			Pn *pn = node->getData();
+			pn->setFired(true);
+
 			if (reduces) {
-				Pn *pn = node->getData();
 				long start = pn->getStart();
 				long end = pnEnd->getEnd();
 				long ustart = pn->getUstart();
