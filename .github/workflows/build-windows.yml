@@ -55,7 +55,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: icudt74.dll
-          path: bin/Release/icudt73.dll
+          path: bin/Release/icudt74.dll
 
       - name: Upload icuuc74.dll
         uses: actions/upload-artifact@v3
