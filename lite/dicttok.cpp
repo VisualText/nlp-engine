@@ -280,7 +280,6 @@ bool DICTTok::ApplyDictFiles() {
 			}
 
 			Pn *pn = node->getData();
-			pn->setFired(true);
 
 			if (reduces) {
 				long start = pn->getStart();
@@ -322,8 +321,11 @@ bool DICTTok::ApplyDictFiles() {
 				suggestedN->getData()->setText(str);
 
 				findAttrs(suggestedN, con, name, true);
-				node = suggestedN;	
+				node = suggestedN;
+				pn = node->getData();
 			}
+
+			pn->setFired(true);
 		}
 
 		last = node;
