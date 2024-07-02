@@ -188,11 +188,7 @@ while (--ptr != file)	// Go backward now.
 			}
 		return true;			// 12/03/98 AM.
 		}
-#ifndef LINUX
-	if (*ptr == '\\')		// Found backslash.  Stop looking for period.
-#else
-	if (*ptr == DIR_CH)	// Found slash.
-#endif
+	if (*ptr == DIR_CH)		// Found backslash.  Stop looking for period.
 		break;
 	}
 
@@ -641,7 +637,7 @@ ptr--;				// Back to end of string.
 // Go backward, finding backslash if any.
 while (--ptr != file)
 	{
-	if (*ptr == '\\')		// Found backslash.
+	if (*ptr == DIR_CH)		// Found backslash.
 		break;
 	}
 fname = ++ptr;		// Points to filename, if any, now.
@@ -677,7 +673,7 @@ ptr--;				// Back to end of string.
 // Go backward, finding backslash if any.
 while (--ptr != file)
 	{
-	if (*ptr == '\\')		// Found backslash.
+	if (*ptr == DIR_CH)		// Found backslash.
 		{
 		*ptr = '\0';		// Terminate path.
 		fpath = file;		// Return pointer to path.
@@ -717,7 +713,7 @@ bool file_parent(
 	// Go backward, finding backslash if any.
 	int slashCount = 0;
 	while (--ptr != file) {
-		if (*ptr == '\\') {
+		if (*ptr == DIR_CH) {
 			slashCount++;
 			if (slashCount == 1) {
 				*ptr = '\0';
@@ -763,11 +759,11 @@ while (--ptr != file)
 	{
 	if (*ptr == '.')		// Found period.
 		break;
-	if (*ptr == '\\')		// Found backslash first.
+	if (*ptr == DIR_CH)		// Found backslash first.
 		break;
 	}
 
-if (*ptr == '\\')			// Found backslash first.
+if (*ptr == DIR_CH)			// Found backslash first.
 	{
 	fhead = ++ptr;			// No extension in file string.
 	return true;
@@ -796,7 +792,7 @@ if (*ptr != '.' || ptr == file)
 // Look for backslash of beginning of file.
 while (--ptr != file)
 	{
-	if (*ptr == '\\')		// Found backslash.
+	if (*ptr == DIR_CH)		// Found backslash.
 		{
 		fhead = ++ptr;
 		return true;		// Got file head.
@@ -842,7 +838,7 @@ while (--ptr != file)
 		ftail = ++ptr;
 		return true;
 		}
-	if (*ptr == '\\')		// Found backslash first.
+	if (*ptr == DIR_CH)		// Found backslash first.
 		{
 		// No file tail (ie, extension).
 		return false;
