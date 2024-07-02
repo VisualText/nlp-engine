@@ -8826,11 +8826,11 @@ for (;;)
 		case ':':	// Got drive.
 			buf[0] = '\0';
 			bptr = buf;
-			if (*++ptr != '\\')
+			if (*++ptr != DIR_CH)
 				goto err;
 			++ptr;	// Sluff the directory char.
 			break;
-		case '\\':	// Got directory.
+		case DIR_CH:	// Got directory.
 			// Intern string, build arg.
 			*bptr = '\0';	// Terminate string.
 			parse->internStr(buf, /*UP*/ str);
