@@ -3947,7 +3947,7 @@ bool CG::readKBB(std::string file) {
 				start = end;
 				attrFlag = true;			
 			}
-			else if (!conceptDone && (c == ':' || unicu::isWhiteSpace(c) || end == length || (openDouble && !attrFlag && c == '"'))) {
+			else if (!conceptDone && (c == ':' || end == length || (openDouble && !attrFlag && c == '"'))) {
 				_tcsnccpy(word, &line[start],end-start);
 				int adjust = (c == ':' || c == '"') ? 1 : 0;
 				openDouble = false;
