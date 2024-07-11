@@ -948,6 +948,7 @@ static bool fnStruniquechars(
 		RFASem* &sem
 		);
 	static bool fnPnmakevar(Delt<Iarg>*,Nlppp*,/*UP*/RFASem*&);		// 06/26/01 AM.
+	static bool fnPnremoveval(Delt<Iarg>*,Nlppp*,/*UP*/RFASem*&);
 	static bool fnPnreplaceval(Delt<Iarg>*,Nlppp*,/*UP*/RFASem*&);	// 06/27/01 AM.
 	static bool fnPnpushval(Delt<Iarg>*,Nlppp*,/*UP*/RFASem*&);		// 12/12/14 AM.
 	static bool fnPnrpushval(Delt<Iarg>*,Nlppp*,/*UP*/RFASem*&);	// 12/12/14 AM.

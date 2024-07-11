@@ -53,6 +53,7 @@ All rights reserved.
 #include "cmd.h"
 #include "dyn.h"					// 06/29/00 AM.
 #include "lite/dir.h"
+#include "lite/io.h"
 
 #include "prim/unicu.h"
 using namespace unicu;
@@ -628,24 +629,15 @@ _stprintf(path, _T("%s%c%s%c%s"), getAppdir(),DIR_CH, kbdir,DIR_CH, dir);
 _TCHAR infile[MAXPATH*2];
 _TCHAR *suff;
 suff = _T("kb");		// Kb file suffix.
-std::vector<std::filesystem::path> files;
+std::vector<std::filesystem::path> kbfiles;
+std::vector<std::filesystem::path> dictfiles;
 bool kbLoaded = false;
 bool bound = false;
 
-if (openDict(files)) {
-	_stprintf(infile, _T("%s%chier.%s"), path,DIR_CH, suff);
-	if (!readFile(infile))
-		return false;
-	con_add_root(this);
-	bind_sys(this);
-	bound = true;
-	readDicts(files);
-	outputTime(_T("[READ dict files time="),s_time);
-	s_time = clock();
-	kbLoaded = true;
-}
+openKBB(kbfiles);
+openDict(dictfiles);
 
-if (openKBB(files)) {
+if (kbfiles.size() > 0) {
 	if (!bound) {
 		_stprintf(infile, _T("%s%chier.%s"), path,DIR_CH, suff);
 		if (!readFile(infile))
@@ -653,8 +645,21 @@ if (openKBB(files)) {
 		bind_sys(this);
 		con_add_root(this);
 	}
-	readKBBs(files);
+	readKBBs(kbfiles);
 	outputTime(_T("[READ kbb files time="),s_time);
+	s_time = clock();
+	kbLoaded = true;
+}
+
+if (dictfiles.size() > 0) {
+	_stprintf(infile, _T("%s%chier.%s"), path,DIR_CH, suff);
+	if (!readFile(infile))
+		return false;
+	con_add_root(this);
+	bind_sys(this);
+	bound = true;
+	readDicts(dictfiles,kbfiles);
+	outputTime(_T("[READ dict files time="),s_time);
 	s_time = clock();
 	kbLoaded = true;
 }
@@ -3481,6 +3486,31 @@ if (!(word = kbm_->dict_find_word(str)) )
 return word;
 }
 
+CONCEPT *CG::matchDictKB(std::string dictFilename, std::vector<std::filesystem::path> kbfiles) {
+	if (kbfiles.size() == 0) return NULL;
+	std::vector<std::filesystem::path>::iterator ptr;
+
+	_TCHAR buff[MAXSTR], buffkb[MAXSTR];
+	_TCHAR *head, *headkb;
+	CONCEPT *con, *dictcon;
+	_tcscpy(buff, dictFilename.c_str());
+	file_head(buff, head);
+
+    for (ptr = kbfiles.begin(); ptr < kbfiles.end(); ptr++) {
+		_tcscpy(buffkb, ptr->string().c_str());
+		file_head(buff, headkb);
+
+        if (!_tcscmp(head,headkb)) {
+			con = findRoot();
+			dictcon = findConcept(con,"dictionary");
+			if (dictcon) {
+				return dictcon;
+			}
+		}
+	}
+	return NULL;
+}
+
 bool CG::openDict(std::vector<std::filesystem::path>& files) {
 	bool found = false;
 	files.clear();
@@ -3501,16 +3531,16 @@ bool CG::openDict(std::vector<std::filesystem::path>& files) {
 	return found;
 }
 
-bool CG::readDicts(std::vector<std::filesystem::path> files) {
+bool CG::readDicts(std::vector<std::filesystem::path> files, std::vector<std::filesystem::path> kbfiles) {
 	std::vector<std::filesystem::path>::iterator ptr;
 	if (files.size() == 0) return false;
     for (ptr = files.begin(); ptr < files.end(); ptr++) {
-        readDict(ptr->string());
+        readDict(ptr->string(), kbfiles);
 	}
 	return true;
 }
 
-bool CG::readDict(std::string file) {
+bool CG::readDict(std::string file, std::vector<std::filesystem::path> kbfiles) {
 	bool dirty;
 	CONCEPT *wordCon, *parentCon;
 	_TCHAR buf[MAXMSG];
@@ -3519,6 +3549,8 @@ bool CG::readDict(std::string file) {
 	_TCHAR val[MAXSTR];
 	int lineCount = 0;
 	DICT_CALL caller;
+
+	CONCEPT *ambigKB = matchDictKB(file, kbfiles);
 
 	// For error printouts
 	std::size_t botDirPos = file.find_last_of(DIR_CH);
@@ -3704,6 +3736,16 @@ bool CG::readDict(std::string file) {
 					isPhrase = true;
 				} else {
 					parentCon = wordCon;
+				}
+				// add ambigous concept to word concept
+				if (ambigKB) {
+					CONCEPT *kbcon = findConcept(ambigKB,token);
+					if (kbcon) {
+						CONCEPT *ambigCon = NULL;
+						if (!findVal(wordCon,"meaning",ambigCon)) {
+							addVal(wordCon,_T("meaning"),kbcon);
+						}
+					}
 				}
 
 			} else if (cc == '=') {

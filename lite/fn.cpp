@@ -480,6 +480,8 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnPnprev(args,nlppp,/*UP*/sem);							// 10/18/00 AM.
 	case FNpnpushval:
 		return fnPnpushval(args,nlppp,/*UP*/sem);					// 12/12/14 AM.
+	case FNpnremoveval:
+		return fnPnremoveval(args,nlppp,/*UP*/sem);
 	case FNpnreplaceval:
 		return fnPnreplaceval(args,nlppp,/*UP*/sem);					// 06/27/01 AM.
 	case FNpnroot:
@@ -9816,6 +9818,76 @@ switch (typ) // 12/15/14 AM.
 // Fell through. Recover from empty case. // 12/15/14 AM.
 Ivar::nodeReplaceval(pn,name1,0LL);         // 12/15/14 AM.
 return false; // 12/15/14 AM.
+}
+
+
+/********************************************
+* FN:		FNPNREMOVEVAL
+* CR:		07/09/24
+* SUBJ:	Remove value of a PNODE variable.
+* RET:	True if ok, else false.
+* FORMS:	pnremoveval(pnode, var_str, int_val/str_val/sem_val)
+********************************************/
+
+bool Fn::fnPnremoveval(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+RFASem *sem1;
+_TCHAR *name1=0;
+
+if (!Arg::sem1(_T("pnremoveval"),nlppp,(DELTS*&)args,sem1))
+	return false;
+if (!Arg::str1(_T("pnremoveval"), /*UP*/ (DELTS*&)args, name1))
+	return false;
+if (!Arg::done((DELTS*)args, _T("pnremoveval"),parse))
+	return false;
+
+if (!sem1)
+	{
+	_stprintf(Errbuf,_T("[pnremoveval: Warning. Given no pnode.]"));
+	return parse->errOut(true); // UNFIXED
+	}
+if (!name1)
+	{
+	_stprintf(Errbuf,_T("[pnremoveval: Warning. Given no name.]"));
+	return parse->errOut(true); // UNFIXED
+	}
+
+// Get object from sem.
+if (sem1->getType() != RSNODE)
+	{
+	_stprintf(Errbuf,_T("[pnremoveval: Bad semantic arg.]"));
+	return parse->errOut(false); // UNFIXED
+	}
+
+Node<Pn> *node = sem1->getNode();
+
+if (!node)
+	{
+	_stprintf(Errbuf,_T("[pnremoveval: Couldn't fetch node.]"));
+	return parse->errOut(true); // UNFIXED
+	}
+
+if (*name1 == '$')												// Get special var.
+	{
+	_stprintf(Errbuf,_T("[pnremoveval: Variable name can't start with '$'.]"));
+	return parse->errOut(true); // UNFIXED
+	}
+
+Pn *pn = node->getData();
+
+_TCHAR *name2=0;
+nlppp->parse_->internStr(name1, /*UP*/name2);	// Intern str.
+
+Ivar::nodeRemoveval(pn, name2);
+return true;
 }
 
 

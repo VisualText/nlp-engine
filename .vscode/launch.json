@@ -5,13 +5,32 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Corp Test (linux)",
+            "name": "Ambig (linux)",
             "type": "cppdbg",
             "request": "launch",
             "program": "/home/dehilster/nlp-engine/bin/nlp",
-            "args": ["-ANA","/home/dehilster/analyzers/Test","-WORK","/home/dehilster/nlp-engine/","/home/dehilster/analyzers/Test/input/após.txt","-DEV"],
+            "args": ["-ANA","/home/dehilster/analyzers/Ambig","-WORK","/home/dehilster/nlp-engine/","/home/dehilster/analyzers/Ambig/input/após.txt","-DEV"],
             "stopAtEntry": false,
             "cwd": "/home/dehilster/nlp-engine/",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "Test (win)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "C:\\dev\\nlp-engine\\bin\\Debug\\nlp.exe",
+            "args": ["-ANA","C:\\dev\\analyzers\\Test","-WORK","C:\\dev\\nlp-engine","C:\\dev\\analyzers\\Test\\input\\test.txt","-DEV"],
+            "stopAtEntry": false,
+            "cwd": "C:\\dev\\nlp-engine",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",

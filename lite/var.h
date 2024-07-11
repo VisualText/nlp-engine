@@ -97,9 +97,15 @@ public:
 		/*DU*/
 		Dlist<Ipair>* &dlist
 		);
+	static bool delVar(				// 02/22/00 AM.
+		_TCHAR *name,
+		Dlist<Ipair>* &dlist
+		);
+
 
 	static bool setVal(_TCHAR*,long long,bool,bool,/*DU*/Dlist<Ipair>*&);			// 06/26/01 AM.
 	static bool setVal(_TCHAR*,float,bool,bool,/*DU*/Dlist<Ipair>*&);			// 08/18/01 AM.
+	static bool rmVal(_TCHAR*,Dlist<Ipair>*&,int&);
 
 	static bool setVal(Ipair*,long long);										// 11/15/99 AM.
 	static bool setVal(Ipair*,float);									// 08/18/01 AM.
@@ -107,7 +113,6 @@ public:
 	static bool setVal(Ipair*,std::_t_ostream*);								// 12/31/99 AM.
 	static bool setVal(Ipair*,RFASem*);									// 02/22/00 AM.
 	static bool setVal(Ipair*,Dlist<Iarg>*);							// 08/10/02 AM.
-
 
 	static bool pushVal( // 12/14/14 AM.
 		_TCHAR *name,
@@ -126,6 +131,10 @@ public:
 		Dlist<Ipair> *dlist,		// List of variable-value pairs.
 		/*DU*/
 		Ipair* &pair				// Pair found or null.
+		);
+	static bool remove(
+		_TCHAR *name,					// Variable name to find.
+		Dlist<Ipair> *dlist		// List of variable-value pairs.
 		);
 	static bool val(															// 08/03/99 AM.
 		_TCHAR *name, Dlist<Ipair> *dlist, /*DU*/ _TCHAR *str);

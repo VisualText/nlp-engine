@@ -206,7 +206,9 @@ public:
     static bool nodeVarEQ(Pn*,_TCHAR*,_TCHAR*);                    // 06/16/05 AM.
     static bool nodeVarEQ(Pn*,_TCHAR*,long long);                       // 06/16/05 AM.
     static bool nodeVarGTLT(Pn*,_TCHAR*,long long,bool=false);
+	static bool nodeRemoveval(Pn*,_TCHAR*);
 	static bool nodeReplaceval(Pn*,_TCHAR*,RFASem*,bool=true,bool=false);					// 06/26/01 AM.
+	static bool nodeReplaceval(Pn*,_TCHAR*,CONCEPT*,bool=true,bool=false);
 	static bool nodeReplaceval(Pn*,_TCHAR*,Dlist<Iarg>*);			// 11/14/02 AM.
 	static bool nodeReplaceval(Pn*,_TCHAR*,_TCHAR*,bool=true,bool=false);						// 06/26/01 AM.
 	static bool nodeReplaceval(Pn*,_TCHAR*,long long,bool=true,bool=false);						// 06/26/01 AM.

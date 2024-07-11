@@ -919,7 +919,11 @@ inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, bool i
 			} else if (cg_->isValNum(vals)) {
 				long long num = 0L;
 				cg_->popVal(vals,num);
-				replaceNum(node,strattr,num);	
+				replaceNum(node,strattr,num);
+			} else if (cg_->isValCon(vals)) {
+				CONCEPT *con = NULL;
+				cg_->popVal(vals,con);
+				replaceCon(node,strattr,con);
 			} else
 				cg_->nextVal(vals);
 		}
@@ -990,6 +994,20 @@ Pn *pn = node->getData();
 return Ivar::nodeReplaceval(pn, name, val);
 }
 
+
+inline bool DICTTok::replaceCon(
+	Node<Pn> *node,
+	_TCHAR *name,	// variable name.
+	CONCEPT *con
+	)
+{
+if (!node)
+	return false;
+
+Pn *pn = node->getData();
+
+return Ivar::nodeReplaceval(pn, name, con);
+}
 
 /********************************************
 * FN:		POPSVAL

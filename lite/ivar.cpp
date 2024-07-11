@@ -2330,6 +2330,52 @@ return false;
 }
 
 
+bool Ivar::nodeRemoveval(
+	Pn *pn,
+	_TCHAR *name
+	)
+{
+if (!pn || !name || !*name)
+	return false;
+
+Dlist<Ipair> *dlist = pn->getDsem();
+if (!dlist)
+	dlist = new Dlist<Ipair>();	// Empty list.
+
+int argCount = 0;
+if (!Var::rmVal(name, dlist, argCount))
+	return false;
+
+pn->setDsem(dlist);
+return true;
+}
+
+
+bool Ivar::nodeReplaceval(
+	Pn *pn,
+	_TCHAR *name,
+	CONCEPT *con,
+	bool bRM,
+	bool bPUSH
+	)
+{
+if (!pn || !name || !*name || !con)
+	return false;
+
+Dlist<Ipair> *dlist = pn->getDsem();
+if (!dlist)
+	dlist = new Dlist<Ipair>();	// Empty list.
+
+RFASem *semval = new RFASem(con,RS_KBCONCEPT);
+
+if (!Var::setVal(name, semval,bRM,bPUSH,dlist))
+	return false;
+
+pn->setDsem(dlist);
+return true;
+}
+
+
 /********************************************
 * FN:		NODEREPLACEVAL
 * CR:		06/26/01 AM.

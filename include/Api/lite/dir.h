@@ -17,11 +17,6 @@ All rights reserved.
 #include <filesystem>
 #include <regex>
 
-LITE_API bool plain_file(struct _tfinddata_t &fileinfo);
-LITE_API bool     is_dir(struct _tfinddata_t &fileinfo);
-LITE_API bool is_file(_TCHAR *name);
-LITE_API bool path_exists(_TCHAR *name);
-
 LITE_API void rm_path(
 	_TCHAR *infile,		// The path (file, directory, or directory tree).
 	bool tree			// True if removing subdirectories recursively.

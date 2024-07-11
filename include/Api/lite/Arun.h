@@ -1283,6 +1283,7 @@ public:
 	static RFASem *pnprev(Nlppp*,NODE*);								// 01/08/01 AM.
 	static RFASem *pnprev(Nlppp*,RFASem*);								// 04/29/01 AM.
 
+	static bool pnremoveval(Nlppp*,NODE*,_TCHAR*);
 	static _TCHAR *pnrename(Nlppp*,NODE*,_TCHAR*);						// 01/08/01 AM.
 	static _TCHAR *pnrename(Nlppp*,RFASem*,_TCHAR*);						// 04/28/01 AM.
 	static _TCHAR *pnrename(Nlppp*,NODE*,RFASem*);						// 04/28/01 AM.
