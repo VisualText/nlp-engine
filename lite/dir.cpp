@@ -20,9 +20,14 @@ All rights reserved.
 #include "lite/lite.h"
 #include "lite/mach.h"
 #include <sys/stat.h>
+#include "io.h"
 #include "lite/dir.h"
 
 #include <vector>
+
+#include <iostream>
+#include <filesystem>
+namespace fs = std::filesystem;
 
 /********************************************
 * FN:		RM_PATH
@@ -59,77 +64,15 @@ LITE_API void rm_dir_files(
 	_TCHAR *infile		// The directory.
 	)
 {
-#ifndef LINUX
-// Check if input file is a directory.
-struct _tfinddata_t i_file;
-struct _tfinddata_t i_tmp;	// For traversing directory.
-long h_file;
-_TCHAR buf[MAXSTR];
-
-if (!safe_dir(infile))
-	return;
-
-// Another way to check file existence also...
-if ((h_file = _tfindfirst(infile, &i_file)) == -1L)
-	{
-	std::_t_strstream gerrStr;
-	gerrStr << _T("[Directory not found=") << infile << _T("]") << std::ends;
-	errOut(&gerrStr,false);
-	}
-
-else if (i_file.attrib & _A_SUBDIR)	// Check if a directory.
-	{
-	std::_t_strstream gerrStr;
-	gerrStr << _T("[Removing from directory '") << infile << _T("']") << std::ends;
-	errOut(&gerrStr,false);
-
-	// Traverse the files of the directory, analyzing each.
-	_stprintf(buf, _T("%s\\*.*"), infile);
-	if ((h_file = _tfindfirst(buf, &i_tmp)) == -1L)
-		{
-		std::_t_strstream gerrStr;
-		gerrStr << _T("[No files in directory.]") << std::ends;
-		errOut(&gerrStr,false);
-		}
-
-	else
-		{
-		// Traverse.
-		// As usual, "." and ".." are files in every directory.
-		//*gerr << i_tmp.name << std::endl;					// First file.
-		if (plain_file(i_tmp))
-			{
-			// Glom directory and file name.
-			_stprintf(buf, _T("%s\\%s"), infile, i_tmp.name);
-			std::_t_strstream gerrStr;
-			gerrStr << _T("Remove ") << buf << std::ends;
-			errOut(&gerrStr,false);
-			remove_path(buf);
-			}
-		while (_tfindnext(h_file, &i_tmp) == 0)	// Rest of files.
-			{
-			//*gerr << i_tmp.name << std::endl;
-			if (plain_file(i_tmp))
-				{
-				// Glom directory and file name.
-				_stprintf(buf, _T("%s\\%s"), infile, i_tmp.name);
-				std::_t_strstream gerrStr;
-				gerrStr << _T("Remove ") << buf << std::ends;
-				errOut(&gerrStr,false);
-				remove_path(buf);
-				}
-			}
-		//*gerr << "[Done with files in directory.]" << std::endl;
+try {
+	for (const auto& entry : fs::directory_iterator(infile)) {
+		if (fs::is_regular_file(entry)) {
+			fs::remove(entry);
 		}
 	}
-else
-	{
-	std::_t_strstream gerrStr;
-	gerrStr << _T("Removing file ") << infile << std::ends;
-	errOut(&gerrStr,false);
-	remove_path(infile);
-	}
-#endif
+} catch (const std::exception& e) {
+	std::cerr << "Error removing files: " << e.what() << std::endl;
+}
 }
 
 
@@ -146,175 +89,18 @@ LITE_API void rm_dir_tree(
 	_TCHAR *infile		// The path (file, directory, or directory tree).
 	)
 {
-#ifndef LINUX
-// Check if input file is a directory.
-struct _tfinddata_t i_file;
-struct _tfinddata_t i_tmp;	// For traversing directory.
-long h_file;
-_TCHAR buf[MAXSTR];
 
-if (!safe_dir(infile))
-	return;
-
-// Another way to check file existence also...
-if ((h_file = _tfindfirst(infile, &i_file)) == -1L)
-	{
-	//*gerr << "[File or directory not found=" << infile << "]" << std::endl;
-	}
-else if (i_file.attrib & _A_SUBDIR)	// Check if a directory.
-	{
-	std::_t_strstream gerrStr;
-	gerrStr << _T("[Found directory=") << infile << _T("]") << std::ends;
-	errOut(&gerrStr,false);
-
-	// Traverse the directories under the directory.
-	_stprintf(buf, _T("%s\\*.*"), infile);
-	if ((h_file = _tfindfirst(buf, &i_tmp)) == -1L)
-		{
-		std::_t_strstream gerrStr;
-		gerrStr << _T("[No files in directory.]") << std::ends;
-		errOut(&gerrStr,false);
+try {
+	for (const auto& entry : fs::directory_iterator(infile)) {
+		if (fs::is_directory(entry)) {
+			fs::remove_all(entry.path());
 		}
-
-	else
-		{
-		// Traverse.
-		// As usual, "." and ".." are files in every directory.
-		//*gerr << i_tmp.name << std::endl;					// First file.
-		if (is_dir(i_tmp))
-			{
-			// Glom directory and file name.
-			_stprintf(buf, _T("%s\\%s"), infile, i_tmp.name);
-			std::_t_strstream gerrStr;
-			gerrStr << _T("Removing ") << buf << std::ends;
-			errOut(&gerrStr,false);
-			rm_path(buf, true);		// RECURSIVE.
-			}
-		while (_tfindnext(h_file, &i_tmp) == 0)	// Rest of files.
-			{
-			//*gerr << i_tmp.name << std::endl;
-			if (is_dir(i_tmp))
-				{
-				// Glom directory and file name.
-				_stprintf(buf, _T("%s\\%s"), infile, i_tmp.name);
-				std::_t_strstream gerrStr;
-				gerrStr << _T("Removing ") << buf << std::ends;
-				errOut(&gerrStr,false);
-				rm_path(buf, true);	// RECURSIVE.
-				}
-			}
-		//*gerr << "[Done with directories under directory.]" << std::endl;
-		}
-
-	gerrStr << _T("Removing directory ") << infile << std::ends;
-	errOut(&gerrStr,false);
-	rm_dir(infile);
 	}
-else
-	{
-	//*gerr << "[Found single file.]" << std::endl;
-	{
-	std::_t_strstream gerrStr;
-	gerrStr << _T("Removing ") << infile << std::ends;
-	errOut(&gerrStr,false);
-	}
-
-	remove_path(infile);
-	}
-#endif
+} catch (const std::exception& e) {
+	std::cerr << "Error deleting subdirectories: " << e.what() << std::endl;
+}
 }
 
-
-/********************************************
-* FN:		PLAIN_FILE
-* CR:		12/16/98 AM.
-* SUBJ:	See if file is a plain computer file.
-* NOTE:	Check for . .. and directories.  Doesn't check for binary files,
-*			etc.  Would be nice to be able to do that.  Or, could require a
-*			prefix (or set of prefixes:  txt htm html, etc.) in order to
-*			analyze a file.
-********************************************/
-
-#ifndef LINUX
-LITE_API bool plain_file(struct _tfinddata_t &fileinfo)
-{
-if (!_tcscmp(fileinfo.name, _T("."))
-	 || !_tcscmp(fileinfo.name, _T(".."))
-	 || (fileinfo.attrib & _A_SUBDIR)
-	 )
-	return false;
-return true;
-}
-#endif
-
-
-/********************************************
-* FN:		IS_DIR
-* CR:		12/16/98 AM.
-* SUBJ:	See if file is a directory.
-********************************************/
-
-#ifndef LINUX
-LITE_API bool is_dir(struct _tfinddata_t &fileinfo)
-{
-if (!_tcscmp(fileinfo.name, _T("."))
-	 || !_tcscmp(fileinfo.name, _T(".."))
-	 || !(fileinfo.attrib & _A_SUBDIR)
-	 )
-	return false;
-return true;
-}
-#endif
-
-
-/********************************************
-* FN:		IS_FILE
-* CR:		01/04/99 AM.
-* SUBJ:	See if a plain file, from scratch.
-********************************************/
-
-LITE_API bool is_file(_TCHAR *name)
-{
-#ifndef LINUX
-struct _tfinddata_t i_file;
-long h_file;
-
-// Another way to check file existence also...
-if ((h_file = _tfindfirst(name, &i_file)) == -1L)
-	{
-	std::_t_strstream gerrStr;
-	gerrStr << _T("[File or directory not found=") << name << _T("]") << std::ends;
-	errOut(&gerrStr,false);
-	return false;
-	}
-return plain_file(i_file);
-#else
-    return true;
-#endif
-}
-
-
-/********************************************
-* FN:		PATH_EXISTS
-* CR:		12/16/98 AM.
-* SUBJ:	See if file or directory exists.
-* NOTE:	Equivalent to file_exists in Lite.
-********************************************/
-
-LITE_API bool path_exists(_TCHAR *name)
-{
-if (!name || !*name)
-	return false;
-#ifndef LINUX
-struct _tfinddata_t i_file;
-if (_tfindfirst(name, &i_file) == -1L)
-	return false;
-return true;
-#else
-struct stat buffer;
-return (stat (name, &buffer) == 0) ? true : false;
-#endif
-}
 
 /********************************************
 * FN:		SAFE_DIR

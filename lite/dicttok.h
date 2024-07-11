@@ -122,6 +122,11 @@ public:
 		_TCHAR *name,	// variable name.
 		_TCHAR *str
 		);
+	inline bool replaceCon(
+		Node<Pn> *node,
+		_TCHAR *name,
+		CONCEPT *con
+		);
 	inline _TCHAR *popsval(
 		VAL *val
 		);

@@ -168,6 +168,7 @@ enum funcDef
 	FNpnnext,
 	FNpnprev,
 	FNpnpushval,	// 12/12/14 AM.
+	FNpnremoveval,
 	FNpnrename,
 	FNpnreplaceval,
 	FNpnroot,

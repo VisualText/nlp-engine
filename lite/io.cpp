@@ -569,47 +569,6 @@ return true;
 
 
 /********************************************
-*
-* FN:		DIRECTOUTPUT
-* CR:		12/01/98 AM.
-* SUBJ:	Direct standard output to a file.
-* NOTE:	Just rebinding the standard output stream.
-*			DOES NOT WORK.
-* STAT:	I can redirect cout to output to a file, but I can't get it
-*			back to standard output again!
-*
-********************************************/
-#ifdef JUNKYY_
-
-_t_filebuf *directOutput(_TCHAR *fname)
-{
-if (empty(fname))
-	{
-	std::_t_strstream gerrStr;
-	gerrStr << _T("[directOutput: Given null file name.]") << std::ends;
-	errOut(&gerrStr,false);
-	return 0;
-	}
-#ifndef LINUX
-int fh;
-fh = open_outfile(fname);
-_t_filebuf *fb;
-fb = new _t_filebuf(fh);
-//filebuf fb(fh); // Filebuf object attached to "test.dat"
-_t_cout = fb;	 // fb associated with cout
-_t_cerr = fb;			// ELSE CERR MESSAGES BOMB.
-_t_cout << _T("testing"); // Message goes to "test.dat" instead of stdout
-_t_cout << endl;
-_t_cout << endl;
-close_outfile(fh);
-#endif
-return 0;
-
-}
-#endif
-
-
-/********************************************
 * FN:		FILE_NAME
 * CR:		12/24/99 AM.
 * SUBJ:	Given a file, get its name without path.

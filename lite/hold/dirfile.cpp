@@ -207,26 +207,9 @@ if (!path && !*path)
 	return false;
 	}
 
-#ifndef LINUX
-
-_TCHAR buf[MAXSTR];
-_stprintf(buf, _T("%s%c*.*"), path, DIR_CH);
-
-// Another way to check file existence also...
-if ((h_file = _tfindfirst(buf, (_tfinddata_t *) s_file)) == -1L)
-	{
-//	cout << _T("[File not found=") << buf << _T("]") << endl;
-	h_file = 0;
-	return false;
-	}
-if (is_file())
-	return true;
-return next_file();
-#else
-#endif
-
-return false;
+return fs::is_regular_file(path);
 }
+
 
 //*******************************************
 bool Dirfile::next()

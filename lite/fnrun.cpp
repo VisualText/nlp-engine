@@ -8569,6 +8569,33 @@ return pnprev(nlppp,pnode);
 }
 
 
+bool Arun::pnremoveval(
+	Nlppp *nlppp,
+	NODE *nd,
+	_TCHAR *name1
+	)
+{
+if (!nd || !name1 || !*name1)
+	return false;
+
+Node<Pn> *node = (Node<Pn> *) nd;
+
+if (*name1 == '$')												// Get special var.
+	{
+	_stprintf(Errbuf,_T("[pnremoveval: Variable name can't start with '$'.]"));
+	return errOut(false); // UNFIXED
+	}
+
+_TCHAR *name2=0;	// 07/24/07 AM.
+nlppp->parse_->internStr(name1, /*UP*/name2);	// Intern str.	// 07/24/07 AM.
+
+Pn *pn = node->getData();
+Ivar::nodeRemoveval(pn,name2);
+
+return true;
+}
+
+
 /********************************************
 * FN:		PNRENAME
 * CR:		01/08/01 AM.

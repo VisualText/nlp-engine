@@ -28,6 +28,7 @@ All rights reserved.
 
 #define FNAMESIZ 256
 #define NAMESIZ  256
+#define MAXPATH  2048
 //#define PATHSIZ  512
 // SIZES	// 03/25/13 AM.
 // Messes up concept display in Attribute Editor.	// 09/14/13 AM.
@@ -212,9 +213,10 @@ public:
 	// Find dictionary concept for given string.						// 06/29/03 AM.
 	CONCEPT *findWordConcept(_TCHAR*);								// 06/29/03 AM.
 
+	CONCEPT *matchDictKB(std::string dictFilename, std::vector<std::filesystem::path> kbfiles);
 	bool openDict(std::vector<std::filesystem::path>& files);
-	bool readDicts(std::vector<std::filesystem::path> files);
-	bool readDict(std::string file);
+	bool readDicts(std::vector<std::filesystem::path> files, std::vector<std::filesystem::path> kbfiles);
+	bool readDict(std::string file, std::vector<std::filesystem::path> kbfiles);
 
 	bool openKBB(std::vector<std::filesystem::path>& files);
 	bool readKBBs(std::vector<std::filesystem::path> files);
@@ -608,7 +610,7 @@ public:
 
 private:
 	_TCHAR appdir_[FNAMESIZ];		// Base directory path.
-	_TCHAR kbdir_[FNAMESIZ];
+	_TCHAR kbdir_[MAXPATH];
 
 	std::_t_ifstream allDictStream_;
 

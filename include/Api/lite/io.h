@@ -21,13 +21,13 @@ _TCHAR *pretty_char(_TCHAR);
 _TCHAR *pretty_str(
 	_TCHAR *str,				// String to be prettified.
 	_TCHAR *buf,				// Buffer for placing prettified string.
-	long size = -1			// Buffer size. (-1 means count not used.)
+	long size
 	);
 _TCHAR *c_char(_TCHAR,_TCHAR*);												// 05/10/00 AM.
 _TCHAR *c_str(																	// 05/10/00 AM.
 	_TCHAR *str,				// String to be prettified.
 	_TCHAR *buf,				// Buffer for placing prettified string.
-	long size = -1			// Buffer size. (-1 means count not used.)
+	long size			// Buffer size. (-1 means count not used.)
 	);
 
 
@@ -65,7 +65,7 @@ bool strncat_e(
 	/*DN*/ long len,
 	/*DU*/ long &count
 	);
-	
+
 
 bool file_name(															// 12/24/99 AM.
 	_TCHAR *file,				// Buffer with full file string.

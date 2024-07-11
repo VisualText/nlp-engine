@@ -1351,6 +1351,29 @@ else
 return true;
 }
 
+
+/********************************************
+* FN:		RMVAL
+* CR:		07/09/24 Dd.
+* SUBJ:	Remove a value
+* NOTE:	
+********************************************/
+
+bool Var::rmVal(
+	_TCHAR *name,
+	Dlist<Ipair>* &dlist,
+	int &argCount
+	)
+{
+if (!name)
+	return false;
+
+Ipair *pairx = 0;
+Var::remove(name, dlist);
+
+return true;
+}
+
 //////
 
 /********************************************
@@ -1686,6 +1709,50 @@ if (dlist)
 		}
 	}
 return true;				// Didn't find it.  That's ok too.
+}
+
+
+/********************************************
+* FN:		remove
+* CR:		07/10/24 Dd.
+* SUBJ:	Rmove variable from a list.
+* RET:	True if ok, else false.
+* NOTE:	
+********************************************/
+
+bool Var::remove(
+	_TCHAR *name,					// Variable name to find.
+	Dlist<Ipair> *dlist		// List of variable-value pairs.
+	)
+{
+if (!name)
+	{
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Var::find: given null name.]") << std::ends;
+	errOut(&gerrStr,false);
+	return false;
+	}
+
+Delt<Ipair> *delt = 0;
+Ipair *pr = 0;
+if (dlist)
+	{
+	for (delt = dlist->getFirst(); delt; delt = delt->Right())
+		{
+		pr = delt->getData();
+		if (!_tcscmp(name, pr->getKey()))
+			{
+			Delt<Ipair> *left = delt->Left();
+			Delt<Ipair> *right = delt->Right();
+			left->setRight(delt->Right());
+			right->setLeft(delt->Left());
+			delete delt;
+			return true;	
+			}
+		}
+	}
+
+return true;   // Didn't find it.  That's ok too.
 }
 
 
