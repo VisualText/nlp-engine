@@ -772,26 +772,18 @@ switch (typ)
 		// Put this as a variable on the node!
 		int ansi = (unsigned char) *str;
 		replaceNum(node,_T("CTRL"),ansi);
-		makeTextAttrs(node,last);
+		findTokAttrs(node,last,con,str,lcstr);
 		}
 		break;
 	case PNALPHA:
 	case PNEMOJI:
-		makeTextAttrs(node,last);
-		con = NULL;
-		if (str && *str) {
-			con = cg_->findWordConcept(str);
-		}
-		if (!con && lcstr && *lcstr) {
-			con = cg_->findWordConcept(lcstr);
-		}
-		findAttrs(node, con, str, false);
+		findTokAttrs(node,last,con,str,lcstr);
 		break;
 	case PNNUM:	// Placed here for easy reference.
 		++totnums_;
 		// Fall through to PNPUNCT for now.
 	case PNPUNCT:
-		makeTextAttrs(node,last);
+		findTokAttrs(node,last,con,str,lcstr);
 		break;
 	case PNWHITE:
 		prevwh_ = true;
@@ -808,6 +800,18 @@ else if (root_)	// Sanity check.
 return node;
 }
 
+void DICTTok::findTokAttrs(Node<Pn> *node, 	Node<Pn> *last, CONCEPT *con, _TCHAR *str, _TCHAR *lcstr) {
+	makeTextAttrs(node,last);
+	con = NULL;
+	if (str && *str) {
+		con = cg_->findWordConcept(str);
+	}
+	if (!con && lcstr && *lcstr) {
+		con = cg_->findWordConcept(lcstr);
+	}
+	findAttrs(node, con, str, false);
+}
+
 void DICTTok::makeTextAttrs(Node<Pn> *node, Node<Pn> *last) {
 	if (prevwh_)
 		replaceNum(node,_T("SP"),1);
@@ -820,7 +824,6 @@ void DICTTok::makeTextAttrs(Node<Pn> *node, Node<Pn> *last) {
 	prevwh_ = false;
 	lines_ = tabs_ = 0;
 }
-
 
 inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, bool isSuggested) {
 	_TCHAR attrName[NAMESIZ];
