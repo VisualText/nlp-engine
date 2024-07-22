@@ -96,6 +96,7 @@ public:
 		Htab *htab
 		);
 
+	void findTokAttrs(Node<Pn> *node, Node<Pn> *last, CONCEPT *con, _TCHAR *str, _TCHAR *lcstr);
 	void makeTextAttrs(Node<Pn> *node, Node<Pn> *last);
 
 	inline bool findAttrs(
