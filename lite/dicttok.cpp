@@ -537,6 +537,7 @@ if (parse_->getEana()->getFlogfiles())						// FIX	// 02/01/00 AM.
 	{
 	//*gout << "[Tokenize: Dumping parse tree.]" << std::endl;
 	tree_->Traverse(root_, *gout);
+	Pn::TraverseSetFlags(root_,false,false);
 	}
 
 return true;
