@@ -102,6 +102,12 @@ To compile the nlp-engine for the Mac:
 
 All the dependencies for building nlp engine from source are included in this repository. We use VCPkg to checkout and build ICU from source. We use CMake to build the nlp engine making sure the ICU library is "found" through VCPkg.
 
+## NOTE** 
+If on WSL and trying to use VSCode to debug, run the following to help with a possible cmake error when trying to build using the C++ and CMake extensions for VsCode:
+```
+sudo apt-get install libicu-dev
+```
+
 ## Linux / MacOS
 ```
 git clone --recurse-submodules https://github.com/visualtext/nlp-engine
