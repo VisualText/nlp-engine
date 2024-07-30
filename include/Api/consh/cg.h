@@ -214,6 +214,7 @@ public:
 	CONCEPT *findWordConcept(_TCHAR*);								// 06/29/03 AM.
 
 	CONCEPT *matchDictKB(std::string dictFilename, std::vector<std::filesystem::path> kbfiles);
+	std::string removeExtension(const std::string& filename);
 	bool openDict(std::vector<std::filesystem::path>& files);
 	bool readDicts(std::vector<std::filesystem::path> files, std::vector<std::filesystem::path> kbfiles);
 	bool readDict(std::string file, std::vector<std::filesystem::path> kbfiles);
