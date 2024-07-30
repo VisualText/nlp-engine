@@ -14,6 +14,7 @@ All rights reserved.
 
 #include "StdAfx.h"
 #include <time.h>
+#include <filesystem>
 #include "machine-min.h"					// 03/08/00 AM.
 #include "prim/libprim.h"
 #include "lite/global.h"
@@ -53,7 +54,6 @@ All rights reserved.
 #include "cmd.h"
 #include "dyn.h"					// 06/29/00 AM.
 #include "lite/dir.h"
-#include "lite/io.h"
 
 #include "prim/unicu.h"
 using namespace unicu;
@@ -3489,18 +3489,16 @@ return word;
 CONCEPT *CG::matchDictKB(std::string dictFilename, std::vector<std::filesystem::path> kbfiles) {
 	if (kbfiles.size() == 0) return NULL;
 	std::vector<std::filesystem::path>::iterator ptr;
-
-	_TCHAR buff[MAXSTR], buffkb[MAXSTR];
-	_TCHAR *head, *headkb;
+	
 	CONCEPT *con, *dictcon;
-	_tcscpy(buff, dictFilename.c_str());
-	file_head(buff, head);
+	std::filesystem::path filePath(dictFilename);
+	std::string head = removeExtension(filePath.filename().string());
 
     for (ptr = kbfiles.begin(); ptr < kbfiles.end(); ptr++) {
-		_tcscpy(buffkb, ptr->string().c_str());
-		file_head(buff, headkb);
+		std::filesystem::path kbpath(ptr->string());
+		std::string headkb = removeExtension(kbpath.filename().string());
 
-        if (!_tcscmp(head,headkb)) {
+        if (std::strcmp(head.c_str(), headkb.c_str()) == 0) {
 			con = findRoot();
 			dictcon = findConcept(con,"dictionary");
 			if (dictcon) {
@@ -3509,6 +3507,13 @@ CONCEPT *CG::matchDictKB(std::string dictFilename, std::vector<std::filesystem::
 		}
 	}
 	return NULL;
+}
+
+std::string CG::removeExtension(const std::string& filename) {
+    size_t lastDot = filename.find_last_of(".");
+    if (lastDot == std::string::npos)
+        return filename;
+    return filename.substr(0, lastDot);
 }
 
 bool CG::openDict(std::vector<std::filesystem::path>& files) {
