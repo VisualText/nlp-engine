@@ -16,7 +16,7 @@ jobs:
           recursive: false
           dest: visualtext.zip
           
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v4
         with:
           name: visualtext.zip
           path: ${{ github.workspace }}/visualtext.zip
