@@ -496,6 +496,8 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnPnvar(args,nlppp,/*UP*/sem);							// 10/18/00 AM.
 	case FNpnvarnames:
 		return fnPnvarnames(args,nlppp,/*UP*/sem);					// 05/13/02 AM.
+	case FNpnvartype:
+		return fnPnvartype(args,nlppp,sem);
 	case FNpranchor:
 		break;
 	case FNprchild:
@@ -10931,6 +10933,63 @@ if (vars)
    sem = new RFASem(vars);
 return true;
 }
+
+/********************************************
+* FN:		FNPNVARTYPE
+* CR:		09/25/2024 Dd.
+* SUBJ:		Check what type of variable a PNODE has.
+* RET:		0 = string, 1 = int, 2 = concept, 3 = float
+********************************************/
+
+bool Fn::fnPnvartype(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+RFASem *sem1;
+_TCHAR *name1=0;
+
+if (!Arg::sem1(_T("pnvar"),nlppp,(DELTS*&)args,sem1))
+	return false;
+if (!Arg::str1(_T("pnvar"), /*UP*/ (DELTS*&)args, name1))
+	return false;
+if (!Arg::done((DELTS*)args, _T("pnvar"),parse))
+	return false;
+
+if (!sem1)
+	{
+	_stprintf(Errbuf,_T("[pnvar: Warning. Given no pnode.]"));
+	return parse->errOut(true);
+	}
+if (!name1)
+	{
+	_stprintf(Errbuf,_T("[pnvar: Warning. Given no name.]"));
+	return parse->errOut(true);
+	}
+
+// Get object from sem.
+if (sem1->getType() != RSNODE)
+	{
+	_stprintf(Errbuf,_T("[pnvar: Bad semantic arg.]"));
+	return parse->errOut(false);
+	}
+
+Node<Pn> *node = sem1->getNode();
+
+if (!node)
+	{
+	_stprintf(Errbuf,_T("[pnvar: Couldn't fetch node.]"));
+	return parse->errOut(false);
+	}
+
+sem = Arun::pnvartype(nlppp,node,name1);
+return true;
+}
+
 
 #ifdef _ODBC
 

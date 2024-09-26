@@ -1549,6 +1549,7 @@ public:
 
 	static RFASem *pnvarnames(Nlppp*,NODE*);							// 05/13/02 AM.
 	static RFASem *pnvarnames(Nlppp*,RFASem*);						// 05/13/02 AM.
+	static RFASem *pnvartype(Nlppp*,NODE*,_TCHAR*);
 
 	static bool pnmakevar(Nlppp*,NODE*,_TCHAR*,_TCHAR*);				// 07/03/02 AM.
 	static bool pnmakevar(Nlppp*,NODE*,_TCHAR*,long long);					// 07/03/02 AM.
