@@ -171,6 +171,7 @@ _T("pnsingletdown"),
 _T("pnup"),
 _T("pnvar"),
 _T("pnvarnames"),	// 05/13/02 AM.
+_T("pnvartype"),
 _T("pranchor"),
 _T("prchild"),
 _T("preaction"),

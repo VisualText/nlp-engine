@@ -177,6 +177,7 @@ enum funcDef
 	FNpnup,
 	FNpnvar,
 	FNpnvarnames,	// 05/13/02 AM.
+	FNpnvartype,
 	FNpranchor,
 	FNprchild,
 	FNpreaction,

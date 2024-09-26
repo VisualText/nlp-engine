@@ -968,6 +968,7 @@ static bool fnStruniquechars(
 	static bool fnCoutreset(Delt<Iarg>*,Nlppp*,RFASem*&);			// 05/06/02 AM.
 	static bool fnInteractive(Delt<Iarg>*,Nlppp*,RFASem*&);		// 05/06/02 AM.
 	static bool fnPnvarnames(Delt<Iarg>*,Nlppp*,RFASem*&);		// 05/13/02 AM.
+	static bool fnPnvartype(Delt<Iarg>*,Nlppp*,RFASem*&);		// 05/13/02 AM.
 
 	static bool fnDbopen(Delt<Iarg>*,Nlppp*,RFASem*&);				// 05/23/02 AM.
 	static bool fnDbclose(Delt<Iarg>*,Nlppp*,RFASem*&);			// 05/23/02 AM.

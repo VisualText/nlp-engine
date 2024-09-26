@@ -8215,7 +8215,7 @@ return str;
 * NOTE:	First NLP++ function for PNODE type!
 ********************************************/
 
-RFASem *Arun::pnvar(
+RFASem *Arun:: pnvar(
 	Nlppp *nlppp,
 	NODE *node,
 	_TCHAR *name1
@@ -13347,6 +13347,70 @@ NODE *pnode = node_sem->sem_to_node();
 delete node_sem;
 return pnvarnames(nlppp,pnode);
 }
+
+
+RFASem *Arun::pnvartype(
+	Nlppp *nlppp,
+	NODE *pnode,
+	_TCHAR *varname
+	)
+{
+RFASem *sem = 0;
+if (!nlppp || !pnode || !varname || !*varname)
+	return 0;
+
+Node<Pn> *node = (Node<Pn> *)pnode;
+Pn *pn = node->getData();
+Dlist<Ipair> *dlist = pn->getDsem();
+if (!dlist)
+	return 0;
+
+Ipair *pairx = 0;
+Var::find(varname,dlist,pairx);
+if (!pairx)
+	return 0;
+
+Dlist<Iarg> *vals = pairx->getVals();
+if (!vals)
+	return 0;
+
+Delt<Iarg> *darg = vals->getFirst();
+if (!darg)
+	return 0;
+
+long long typNum = 0;
+
+Iarg *arg = darg->getData();
+RFASem *obj;
+
+/* 0 = string, 1 = int, 2 = concept, 3 = float */
+switch (arg->getType())
+{
+case IASTR:
+	typNum = 0;
+	break;
+case IANUM:
+	typNum = 1;
+	break;
+case IASEM:
+	obj = arg->getSem();
+	if (!obj)
+		return 0;
+	switch (obj->getType())
+		{
+		case RS_KBCONCEPT:
+			typNum = 2;
+			break;
+		}
+case IAFLOAT:
+	typNum = 3;
+	break;
+}
+
+sem = new RFASem(typNum);
+return sem;
+}
+
 
 #ifdef _ODBC
 
