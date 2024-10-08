@@ -488,6 +488,8 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnPnroot(args,nlppp,/*UP*/sem);							// 10/18/00 AM.
 	case FNpnrpushval:
 		return fnPnrpushval(args,nlppp,/*UP*/sem);					// 12/12/14 AM.
+	case FNpnsetfired:
+		return fnPnsetfired(args,nlppp,sem);
 	case FNpnsingletdown:
 		return fnPnsingletdown(args,nlppp,/*UP*/sem);				// 10/18/00 AM.
 	case FNpnup:
@@ -10953,11 +10955,11 @@ Parse *parse = nlppp->parse_;
 RFASem *sem1;
 _TCHAR *name1=0;
 
-if (!Arg::sem1(_T("pnvar"),nlppp,(DELTS*&)args,sem1))
+if (!Arg::sem1(_T("pnvartype"),nlppp,(DELTS*&)args,sem1))
 	return false;
-if (!Arg::str1(_T("pnvar"), /*UP*/ (DELTS*&)args, name1))
+if (!Arg::str1(_T("pnvartype"), /*UP*/ (DELTS*&)args, name1))
 	return false;
-if (!Arg::done((DELTS*)args, _T("pnvar"),parse))
+if (!Arg::done((DELTS*)args, _T("pnvartype"),parse))
 	return false;
 
 if (!sem1)
@@ -10987,6 +10989,71 @@ if (!node)
 	}
 
 sem = Arun::pnvartype(nlppp,node,name1);
+return true;
+}
+
+
+/********************************************
+* FN:		FNPNSETFIRED
+* CR:		10/8/2024 Dd.
+* SUBJ:		Sets the fired flag of a PNODE.
+* RET:		previous value of fired flag.
+********************************************/
+
+bool Fn::fnPnsetfired(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+RFASem *sem1;
+long long num1=0;
+
+if (!Arg::sem1(_T("pnsetflag"),nlppp,(DELTS*&)args,sem1))
+	return false;
+if (!Arg::num1(_T("pnsetflag"), /*UP*/ (DELTS*&)args,num1))
+	return false;
+if (!Arg::done((DELTS*)args, _T("pnsetflag"),parse))
+	return false;
+
+if (!sem1)
+	{
+	_stprintf(Errbuf,_T("[pnsetflag: Warning. Given no pnode.]"));
+	return parse->errOut(true);
+	}
+
+if (sem1->getType() != RSNODE)
+	{
+	_stprintf(Errbuf,_T("[pnsetflag: Bad semantic arg.]"));
+	return parse->errOut(false);
+	}
+
+Node<Pn> *node = sem1->getNode();
+
+if (!node)
+	{
+	_stprintf(Errbuf,_T("[pnsetflag: Couldn't fetch node.]"));
+	return parse->errOut(false);
+	}
+
+if (num1 < 0LL || num1 > 1LL)
+	{
+	_stprintf(Errbuf,_T("[pnsetflag: Warning. Flag value out of range.]"));
+	return parse->errOut(true);
+	}
+
+bool firedFlag = (num1 == 1LL);
+if (firedFlag) {
+	Delt<Seqn> *seq = parse->getSeq();
+	Seqn *seqn = 0;
+	if (!(seqn = seq->getData()))
+		return 0;
+	seqn->setDisplaytree(true);
+}
+Arun::pnsetfired(nlppp,node,firedFlag);
 return true;
 }
 

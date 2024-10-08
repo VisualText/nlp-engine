@@ -55,6 +55,7 @@ else
 rules_ = rules;
 name_ = name;				// 11/24/98 AM.
 rulesfile_ = 0;			// 11/25/98 AM.
+displaytree_ = false;
 active_ = true;			// 01/08/99 AM.
 comment_[0] = '\0';		// 01/08/99 AM.
 passnum_ = 0;				// 09/23/99 AM.
@@ -102,6 +103,7 @@ if (comment && *comment)			// 02/12/99 AM.
 algo = 0;
 rules_ = 0;
 rulesfile_ = 0;
+displaytree_ = false;
 passnum_ = 0;							// 09/23/99 AM.
 recid_ = 0;
 
@@ -156,6 +158,7 @@ Dlist<Irule> *Seqn::getRules()			{return rules_;		}
 _TCHAR			 *Seqn::getName()				{return name_;			}
 Ifile			 *Seqn::getRulesfile()		{return rulesfile_;	}
 bool			  Seqn::getActive()			{return active_;		}
+bool			  Seqn::getDisplaytree()	{return displaytree_;	}
 _TCHAR			 *Seqn::getComment()			{return comment_;		}
 _TCHAR			 *Seqn::getAlgoname()		{return algo_name_;	}
 int			  Seqn::getPassnum()			{return passnum_;		} // 09/23/99 AM.
@@ -186,6 +189,7 @@ void Seqn::setRules(Dlist<Irule> *x)	{rules_		= x;}
 void Seqn::setName(_TCHAR *x)				{name_		= x;}
 void Seqn::setRulesfile(Ifile		*x)	{rulesfile_	= x;}
 void Seqn::setActive(bool			 x)	{active_		= x;}
+void Seqn::setDisplaytree(bool x)		{displaytree_ = x;}
 void Seqn::setPassnum(int x)				{passnum_	= x;}	// 09/23/99 AM.
 void Seqn::setRecid(int x)					{recid_		= x;}
 void Seqn::setComment(_TCHAR			*x)
