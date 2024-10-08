@@ -20,6 +20,7 @@ if(MSVC)
     add_definitions(-DNDEBUG)
     add_definitions(-D_WINDOWS)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zc:wchar_t /std:c++17")
+    find_package(7z REQUIRED)
 endif()
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
