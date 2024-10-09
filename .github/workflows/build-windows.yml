@@ -1,4 +1,4 @@
-his name: Windows
+name: Windows
 
 on:
   pull_request:
