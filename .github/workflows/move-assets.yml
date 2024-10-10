@@ -152,3 +152,27 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./visualtext.zip"
+
+    - name: Trigger nlp-engine-windows workflow
+      uses: benc-uk/workflow-dispatch@v1
+      with:
+        workflow: nlp-engine-build.yml
+        token: ${{ secrets.GITHUB_TOKEN }}
+        repo: VisualText/nlp-engine-windows
+        ref: main
+
+    - name: Trigger nlp-engine-linux workflow
+      uses: benc-uk/workflow-dispatch@v1
+      with:
+        workflow: nlp-engine-build.yml
+        token: ${{ secrets.GITHUB_TOKEN }}
+        repo: VisualText/nlp-engine-linux
+        ref: main
+
+    - name: Trigger nlp-engine-mac workflow
+      uses: benc-uk/workflow-dispatch@v1
+      with:
+        workflow: nlp-engine-build.yml
+        token: ${{ secrets.GITHUB_TOKEN }}
+        repo: VisualText/nlp-engine-mac
+        ref: main
