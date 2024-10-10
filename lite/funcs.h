@@ -167,6 +167,7 @@ _T("pnrename"),
 _T("pnreplaceval"),
 _T("pnroot"),
 _T("pnrpushval"),	// 12/12/14 AM.
+_T("pnsetfired"),
 _T("pnsingletdown"),
 _T("pnup"),
 _T("pnvar"),

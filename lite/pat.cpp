@@ -194,6 +194,8 @@ if (!rulelist)
 		gerrStr << _T("[Pat pass given no rules.]") << std::ends;
 		return errOut(&gerrStr,false);
 		}
+	if (seqn->displaytree_)
+		prettyPass(root,tree,parse);
 	return true;
 	}
 

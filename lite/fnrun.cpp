@@ -13412,6 +13412,23 @@ return sem;
 }
 
 
+bool Arun::pnsetfired(
+	Nlppp *nlppp,
+	NODE *pnode,
+	bool fired
+	)
+{
+RFASem *sem = 0;
+if (!nlppp || !pnode || !fired)
+	return 0;
+
+Node<Pn> *node = (Node<Pn> *)pnode;
+Pn *pn = node->getData();
+pn->setFired(fired);
+return fired;
+}
+
+
 #ifdef _ODBC
 
 /********************************************
