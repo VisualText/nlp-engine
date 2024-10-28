@@ -59,7 +59,7 @@ The test directory contains a call to the nlp engine using buffers.
 
 # Compiling the NLP-ENGINE
 
-The nlp engine compiles and runs on Linus, Windows, and MacOS. The easist way to compile them is using VSCode using the [C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools), [CMake](https://marketplace.visualstudio.com/items?itemName=twxs.cmake), and [CMake Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools) extensions.
+The nlp engine compiles and runs on Linux, Windows, and MacOS. The easist way to compile them is using VSCode using the [C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools), [CMake](https://marketplace.visualstudio.com/items?itemName=twxs.cmake), and [CMake Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools) extensions.
 
 ## Linux
 
@@ -106,6 +106,11 @@ All the dependencies for building nlp engine from source are included in this re
 If on WSL and trying to use VSCode to debug, run the following to help with a possible cmake error when trying to build using the C++ and CMake extensions for VsCode:
 ```
 sudo apt-get install libicu-dev
+```
+
+Also, on Linux or Mac, you may need to run:
+```
+sudo apt-get install autoconf-archive
 ```
 
 ## Linux / MacOS
