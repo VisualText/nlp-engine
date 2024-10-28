@@ -70,6 +70,7 @@ public:
 	Ifile *getRulesfile();
 	Dlist<Iarg> *getSelects();			// 11/30/98 AM.
 	bool getActive();						// 01/08/99 AM.
+	bool getDisplaytree();
 	_TCHAR *getAlgoname();					// 01/08/99 AM.
 	_TCHAR *getComment();					// 01/08/99 AM.
 	int   getPassnum();					// 09/23/99 AM.
@@ -83,6 +84,7 @@ public:
 	void setRulesfile(Ifile *);
 	void setSelects(Dlist<Iarg> *);
 	void setActive(bool);				// 01/08/99 AM.
+	void setDisplaytree(bool);
 	void setAlgoname(_TCHAR *);			// 01/08/99 AM.
 	void setComment(_TCHAR *);			// 01/08/99 AM.
 	void setPassnum(int);				// 09/23/99 AM.
@@ -141,6 +143,8 @@ private:
 	_TCHAR *name_;			// Eg, recurse passes will have a name.
 
 	Ifile *rulesfile_;	// Internal representation of rules file.// 11/25/98 AM.
+
+	bool displaytree_;			// Force tree to be displayed
 
 	// New data to enable user-editing of the analyzer sequence.// 01/08/99 AM.
 	bool active_;				// If this pass will be executed.	// 01/08/99 AM.

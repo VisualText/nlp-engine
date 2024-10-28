@@ -640,6 +640,7 @@ std::_t_ostream *sout;					// For restoring output stream.		// 12/01/98 AM.
 clock_t s_time;
 _TCHAR *pretname;
 Seqn *pass = seq->getData();
+this->seq_ = seq;
 Algo *algo = pass->getAlgo();
 _TCHAR *sfile = pass->getRulesfilename();
 _TCHAR *salgo = pass->getAlgoname();
