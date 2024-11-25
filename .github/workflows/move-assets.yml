@@ -11,43 +11,43 @@ jobs:
 
     steps:
     - name: Fetch Windows exe
-      uses: dawidd6/action-download-artifact@v2
+      uses: dawidd6/action-download-artifact@v6
       with:
         workflow: build-windows.yml
         name: nlpw.exe
 
     - name: Fetch Windows icu1
-      uses: dawidd6/action-download-artifact@v2
+      uses: dawidd6/action-download-artifact@v6
       with:
         workflow: build-windows.yml
         name: "icudt74.dll"
 
     - name: Fetch Windows icu2
-      uses: dawidd6/action-download-artifact@v2
+      uses: dawidd6/action-download-artifact@v6
       with:
         workflow: build-windows.yml
         name: "icuuc74.dll"
         
     - name: Fetch Linux exe
-      uses: dawidd6/action-download-artifact@v2
+      uses: dawidd6/action-download-artifact@v6
       with:
         workflow: build-linux.yml
         name: nlpl.exe
         
     - name: Fetch MacOS exe
-      uses: dawidd6/action-download-artifact@v2
+      uses: dawidd6/action-download-artifact@v6
       with:
         workflow: build-macos.yml
         name: nlpm.exe
 
     - name: Fetch Engine Files
-      uses: dawidd6/action-download-artifact@v2
+      uses: dawidd6/action-download-artifact@v6
       with:
         workflow: build-enginefiles.yml
         name: "nlpengine.zip"
 
     - name: Fetch VisualText Files
-      uses: dawidd6/action-download-artifact@v2
+      uses: dawidd6/action-download-artifact@v6
       with:
         workflow: build-visualfiles.yml
         name: "visualtext.zip"
@@ -76,13 +76,13 @@ jobs:
         asset_path: "./nlpl.exe"
 
     - name: Fetch Linux icu1
-      uses: dawidd6/action-download-artifact@v2
+      uses: dawidd6/action-download-artifact@v6
       with:
         workflow: build-linux.yml
         name: "libicutu.a"
 
     - name: Fetch Linux icu2
-      uses: dawidd6/action-download-artifact@v2
+      uses: dawidd6/action-download-artifact@v6
       with:
         workflow: build-linux.yml
         name: "libicuuc.a"
@@ -94,13 +94,13 @@ jobs:
         asset_path: "./nlpm.exe"
 
     - name: Fetch MacOS icu1
-      uses: dawidd6/action-download-artifact@v2
+      uses: dawidd6/action-download-artifact@v6
       with:
         workflow: build-macos.yml
         name: "libicutum.a"
 
     - name: Fetch MacOS icu2
-      uses: dawidd6/action-download-artifact@v2
+      uses: dawidd6/action-download-artifact@v6
       with:
         workflow: build-macos.yml
         name: "libicuucm.a"      
