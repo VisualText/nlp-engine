@@ -7,10 +7,10 @@ on:
 jobs:
   build_engine:
     name: Build NLP-ENGINE
-    runs-on: macOS-12
+    runs-on: macOS-latest
 
     env:
-      VCPKG_DEFAULT_TRIPLET: x64-osx
+      VCPKG_DEFAULT_TRIPLET: arm64-osx
 
     steps:
       - uses: actions/checkout@v3
@@ -22,6 +22,10 @@ jobs:
         shell: bash
         working-directory: vcpkg
         
+      - name: List $RUNNER_WORKSPACE before build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+        
       - name: Install autoconf-archive
         run: brew install autoconf-archive
 
@@ -29,7 +33,7 @@ jobs:
         run: brew install automake
 
       - name: Install 3rd Party
-        run: vcpkg install
+        run: ./vcpkg install
         working-directory: vcpkg
 
       - name: List $RUNNER_WORKSPACE before build
@@ -53,30 +57,30 @@ jobs:
         shell: bash
 
       - name: Upload nlpm.exe
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: nlpm.exe
           path: bin/nlpm.exe
 
       - name: Copy libicutu.a to libicutum.a
-        run: cp vcpkg_installed/x64-osx/lib/libicutu.a vcpkg_installed/x64-osx/lib/libicutum.a
+        run: cp vcpkg_installed/arm64-osx/lib/libicutu.a vcpkg_installed/arm64-osx/lib/libicutum.a
         shell: bash
 
       - name: Upload libicutum.a
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libicutum.a
-          path: vcpkg_installed/x64-osx/lib/libicutum.a
+          path: vcpkg_installed/arm64-osx/lib/libicutum.a
 
       - name: Copy libicuuc.a to libicuucm.a
-        run: cp vcpkg_installed/x64-osx/lib/libicuuc.a vcpkg_installed/x64-osx/lib/libicuucm.a
+        run: cp vcpkg_installed/arm64-osx/lib/libicuuc.a vcpkg_installed/arm64-osx/lib/libicuucm.a
         shell: bash
 
       - name: Upload libicuucm.a
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libicuucm.a
-          path: vcpkg_installed/x64-osx/lib/libicuucm.a                              
+          path: vcpkg_installed/arm64-osx/lib/libicuucm.a                              
           
       - name: Checkout Analyzers repo
         uses: actions/checkout@v3

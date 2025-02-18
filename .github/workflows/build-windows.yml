@@ -46,19 +46,19 @@ jobs:
         shell: bash
 
       - name: Upload nlpw.exe
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: nlpw.exe
           path: bin/Release/nlpw.exe
 
       - name: Upload icudt74.dll
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: icudt74.dll
           path: bin/Release/icudt74.dll
 
       - name: Upload icuuc74.dll
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: icuuc74.dll
           path: bin/Release/icuuc74.dll
