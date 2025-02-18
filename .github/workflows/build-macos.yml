@@ -53,7 +53,7 @@ jobs:
         shell: bash
 
       - name: Upload nlpm.exe
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: nlpm.exe
           path: bin/nlpm.exe
@@ -63,7 +63,7 @@ jobs:
         shell: bash
 
       - name: Upload libicutum.a
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libicutum.a
           path: vcpkg_installed/x64-osx/lib/libicutum.a
@@ -73,7 +73,7 @@ jobs:
         shell: bash
 
       - name: Upload libicuucm.a
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libicuucm.a
           path: vcpkg_installed/x64-osx/lib/libicuucm.a                              
