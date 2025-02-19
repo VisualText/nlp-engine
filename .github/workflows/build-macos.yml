@@ -7,7 +7,7 @@ on:
 jobs:
   build_engine:
     name: Build NLP-ENGINE
-    runs-on: macOS-12
+    runs-on: macOS-latest
 
     env:
       VCPKG_DEFAULT_TRIPLET: x64-osx
