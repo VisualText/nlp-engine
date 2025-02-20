@@ -23,7 +23,7 @@ jobs:
         name: "icudt74.dll"
 
     - name: Fetch Windows icu2
-      uses: dawidd6/action-download-artifact@v6
+      uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-windows.yml
         name: "icuuc74.dll"
@@ -76,7 +76,7 @@ jobs:
         asset_path: "./nlpl.exe"
 
     - name: Fetch Linux icu1
-      uses: C
+      uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-linux.yml
         name: "libicutu.a"
@@ -100,7 +100,7 @@ jobs:
         name: "libicutum.a"
 
     - name: Fetch MacOS icu2
-      uses: dawidd6/action-download-artifact@v6
+      uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-macos.yml
         name: "libicuucm.a"      
