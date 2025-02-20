@@ -1214,8 +1214,12 @@ if (!strcmp_i(name, _T("xmltext")))	//	$XMLTEXT $xmltext.		// 12/29/99 AM.
 
 	// TEXT BASED ON TREE, NOT JUST TEXT BUFFER.						// 09/26/00 AM.
 if (!strcmp_i(name, _T("treeraw"))	//	$TREERAW $treeraw.			// 09/26/00 AM.
- || !strcmp_i(name, _T("treetext")) ) // $TREETEXT $treetext			// 03/10/03 AM.
+ || !strcmp_i(name, _T("treetext"))
+ || !strcmp_i(name, _T("treespace"))
+) // $TREETEXT $treetext			// 03/10/03 AM.
 	{
+	bool spaces = !strcmp_i(name, _T("treespace"));
+
 	// Tree text will be <= buffer text length.
 	long len = pn->getEnd() - pn->getStart() + 1;
 	long siz = len+1;															// 10/29/04 AM.
@@ -1225,10 +1229,9 @@ if (!strcmp_i(name, _T("treeraw"))	//	$TREERAW $treeraw.			// 09/26/00 AM.
 		siz *= 2;																// 10/29/04 AM.
 	text = Chars::create(siz);												// 11/01/04 AM.
 	_TCHAR *ptr = text;					// First empty loc in text.
-	long tmp = siz;												// FIX.	// 08/01/06 AM.
-	bool ok =																	// 10/29/04 AM.
-	Pat::treeText(node, true, text, ptr,	// TRAVERSE SUBTREE.	// 09/26/00 AM.
-													tmp);							// 10/29/04 AM.
+	long tmp = siz;	
+	bool first = true;											// FIX.	// 08/01/06 AM.
+	bool ok = Pat::treeText(node, true, spaces, first, text, ptr, tmp);
 	if (!ok)																		// 10/29/04 AM.
 		{
 		Chars::destroy(text);												// 10/29/04 AM.

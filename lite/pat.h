@@ -760,6 +760,8 @@ public:
 	static bool treeText(													// 09/26/00 AM.
 		Node<Pn> *node,
 		bool root,				// If this is the top-level node of subtree.
+		bool spaces,			// If to include spaces between leaf node text
+		bool &first,				// If this is the first node in the tree.
 		_TCHAR *buf,				// Buffer to fill.
 		_TCHAR* &ptr,				// First empty spot in buffer.
 		long &siz				// Empty space left in buffer.		// 10/29/04 AM.
