@@ -4265,6 +4265,8 @@ return false;				// Exhausted rules without a match.
 bool Pat::treeText(		// 10/29/04 AM.
 	Node<Pn> *node,
 	bool root,				// If this is the top-level node of subtree.
+	bool spaces,			// If to insert spaces between words.
+	bool &first,				// If this is the first node in the list.
 	_TCHAR *buf,				// Buffer to fill.
 	_TCHAR* &ptr,				// First empty spot in buffer.
 	long &siz				// Empty space left in buffer	// 10/29/04 AM.
@@ -4284,11 +4286,14 @@ if (*name != '_')		// Literal node.			// FIX.	// 09/04/03 AM.
 	long len = _tcsclen(name);									// 10/29/04 AM.
 	if (len > (siz-1))	// buf+terminator.				// 10/29/04 AM.
 		return false;												// 10/29/04 AM.
-	strcpy_ee(ptr,name);								// FIX.	// 09/04/03 AM.
+	if (spaces && !first)
+		strcpy_ee(ptr,_T(" "));
+	first = false;
+	strcpy_ee(ptr,name);								// FIX.	// 09/04/03 AM.s
 	siz -= len;														// 10/29/04 AM.
 	}
 else if (node->pDown)
-	ok = treeText(node->pDown,false,buf,ptr,siz);		// RECURSIVE.
+	ok = treeText(node->pDown,false,spaces,first,buf,ptr,siz);		// RECURSIVE.
 else						// I am a leaf. Do my text here.
 	{
 	// Copy node text to buffer.
@@ -4316,7 +4321,7 @@ if (!(node->pLeft))		// First node in list takes care of list.
 	{
 	for (node = node->pRight; node; node = node->pRight)
 		{
-		ok = treeText(node,false,buf,ptr,siz);
+		ok = treeText(node,false,spaces,first,buf,ptr,siz);
 		if (!ok)														// 10/29/04 AM.
 		  return ok;												// 10/29/04 AM.
 		}
