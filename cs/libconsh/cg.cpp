@@ -3498,7 +3498,7 @@ CONCEPT *CG::matchDictKB(std::string dictFilename, std::vector<std::filesystem::
 		std::filesystem::path kbpath(ptr->string());
 		std::string headkb = removeExtension(kbpath.filename().string());
 
-        if (std::strcmp(head.c_str(), headkb.c_str()) == 0) {
+        if (strcmp(head.c_str(), headkb.c_str()) == 0) {
 			con = findRoot();
 			dictcon = findConcept(con,"dictionary");
 			if (dictcon) {

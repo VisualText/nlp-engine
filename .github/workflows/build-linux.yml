@@ -50,19 +50,19 @@ jobs:
         shell: bash
 
       - name: Upload nlpl.exe
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: nlpl.exe
           path: bin/nlpl.exe
 
       - name: Upload libicutu.a
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libicutu.a
           path: vcpkg_installed/x64-linux/lib/libicutu.a
 
       - name: Upload libicuuc.a
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libicuuc.a
           path: vcpkg_installed/x64-linux/lib/libicuuc.a
