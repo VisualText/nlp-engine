@@ -39,11 +39,13 @@ jobs:
     #   with:
     #     workflow: build-macos.yml
     #     name: nlpm.exe
-    - name: Fetch MacOS artifact
+    - name: Fetch MacOS exe
       uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-macos.yml
         name: nlpm
+        branch: main           # ensure you’re picking up runs from the right branch
+        allow_forks: true
 
     - name: Fetch Engine Files
       uses: dawidd6/action-download-artifact@v8
