@@ -56,7 +56,7 @@ jobs:
       #   run: cp bin/nlp bin/nlpm
       #   shell: bash
       - name: Copy nlp to nlpm
-        run: cp bin/nlp bin/nlpm
+        run: cp bin/nlp bin/nlpm.exe
         shell: bash
         
       - name: Upload nlpm
