@@ -65,10 +65,13 @@ jobs:
         run: cp bin/nlp bin/nlpm.exe
         shell: bash
         
-      - name: Ensure nlpm.exe exists before upload
-        run: test -f bin/nlpm.exe && echo "nlpm.exe exists before upload" || echo "nlpm.exe is missing before upload!"
+      
+      - name: Debug Check if nlpm.exe was created
+        run: ls -l bin/ && test -f bin/nlpm.exe && echo "nlpm.exe exists!" || echo "nlpm.exe is missing!"
         shell: bash
+
       - name: Upload nlpm.exe
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: nlpm.exe
