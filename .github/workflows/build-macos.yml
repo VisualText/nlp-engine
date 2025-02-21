@@ -56,10 +56,10 @@ jobs:
       #   run: cp bin/nlp bin/nlpm
       #   shell: bash
       - name: Copy nlp to nlpm
-        run: cp bin/nlp bin/nlpm.exe
+        run: cp bin/nlp bin/nlpm
         shell: bash
         
-      - name: Upload nlpm.exe
+      - name: Upload nlpm
         uses: actions/upload-artifact@v4
         with:
           name: nlpm.exe
