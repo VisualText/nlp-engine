@@ -33,7 +33,7 @@ jobs:
         run: brew install automake
 
       - name: Install 3rd Party
-        run: ./vcpkg install
+        run: vcpkg install
         working-directory: vcpkg
 
       - name: List $RUNNER_WORKSPACE before build
