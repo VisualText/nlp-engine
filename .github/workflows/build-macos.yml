@@ -35,6 +35,11 @@ jobs:
       - name: Install 3rd Party
         run: vcpkg install
         working-directory: vcpkg
+
+      - name: Install ICU via vcpkg
+        run: vcpkg install icu
+        working-directory: vcpkg
+        
       - name: Verify Installed Packages
         run: vcpkg list
         working-directory: vcpkg
