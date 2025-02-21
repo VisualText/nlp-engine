@@ -56,20 +56,14 @@ jobs:
       #   run: cp bin/nlp bin/nlpm
       #   shell: bash
       - name: Copy nlp.exe to nlpm.exe
-        run: |
-          if [ -f bin/nlp ]; then
-            cp bin/nlp bin/nlpm.exe
-          else
-            echo "Error: bin/nlp not found! Build may have failed."
-            exit 1
-          fi
+        run: cp bin/nlp bin/nlpm.exe
         shell: bash
+        
       - name: Upload nlpm.exe
         uses: actions/upload-artifact@v4
         with:
           name: nlpm.exe
-          path: bin/nlpm
-          
+          path: bin/nlpm.exe
 
       - name: Copy libicutu.a to libicutum.a
         run: cp vcpkg_installed/arm64-osx/lib/libicutu.a vcpkg_installed/arm64-osx/lib/libicutum.a
