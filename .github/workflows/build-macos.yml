@@ -51,6 +51,8 @@ jobs:
 
       - name: Test executable --version
         run: ./bin/nlp --version || true
+      - name: Check nlpm.exe existence
+        run: test -f bin/nlpm.exe && echo "nlpm.exe exists" || echo "nlpm.exe is missing"
 
       # - name: Copy nlp to nlpm
       #   run: cp bin/nlp bin/nlpm
@@ -67,11 +69,6 @@ jobs:
         with:
           name: nlpm.exe
           path: bin/nlpm.exe
-      - name: Check if nlpm.exe exists
-        run: ls -l bin/
-        shell: bash
-      - name: Check nlpm.exe existence
-        run: test -f bin/nlpm.exe && echo "nlpm.exe exists" || echo "nlpm.exe is missing"
 
       - name: Copy libicutu.a to libicutum.a
         run: cp vcpkg_installed/arm64-osx/lib/libicutu.a vcpkg_installed/arm64-osx/lib/libicutum.a
