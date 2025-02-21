@@ -58,12 +58,17 @@ jobs:
       - name: Copy nlp.exe to nlpm.exe
         run: cp bin/nlp bin/nlpm.exe
         shell: bash
+      - name: Verify generated binary
+        run: ls -l bin/
+        shell: bash
         
       - name: Upload nlpm.exe
         uses: actions/upload-artifact@v4
         with:
           name: nlpm.exe
           path: bin/nlpm.exe
+      - name: Check nlpm.exe existence
+        run: test -f bin/nlpm.exe && echo "nlpm.exe exists" || echo "nlpm.exe is missing"
 
       - name: Copy libicutu.a to libicutum.a
         run: cp vcpkg_installed/arm64-osx/lib/libicutu.a vcpkg_installed/arm64-osx/lib/libicutum.a
