@@ -67,6 +67,9 @@ jobs:
         with:
           name: nlpm.exe
           path: bin/nlpm.exe
+      - name: Check if nlpm.exe exists
+        run: ls -l bin/
+        shell: bash
       - name: Check nlpm.exe existence
         run: test -f bin/nlpm.exe && echo "nlpm.exe exists" || echo "nlpm.exe is missing"
 
