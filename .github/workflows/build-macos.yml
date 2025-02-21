@@ -52,8 +52,17 @@ jobs:
       - name: Test executable --version
         run: ./bin/nlp --version || true
 
+      # - name: Copy nlp to nlpm
+      #   run: cp bin/nlp bin/nlpm
+      #   shell: bash
       - name: Copy nlp to nlpm
-        run: cp bin/nlp bin/nlpm
+        run: |
+          if [ -f bin/nlp ]; then
+            cp bin/nlp bin/nlpm
+          else
+            echo "Error: bin/nlp not found! Build may have failed."
+            exit 1
+          fi
         shell: bash
       - name: Upload nlpm
         uses: actions/upload-artifact@v4
