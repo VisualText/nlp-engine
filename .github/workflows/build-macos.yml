@@ -64,14 +64,10 @@ jobs:
             exit 1
           fi
         shell: bash
-      - name: Debug
-        run: ls -la bin/
-      - name: Debug
-        run: vcpkg list
-      - name: Upload nlpm
+      - name: Upload nlpm.exe
         uses: actions/upload-artifact@v4
         with:
-          name: nlpm
+          name: nlpm.exe
           path: bin/nlpm
           
 
