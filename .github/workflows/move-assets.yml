@@ -1,6 +1,10 @@
 name: Move Assets to Release
 
 on:
+  workflow_run:
+    workflows: ["build-macos.yml"] # This ensures `move-assets.yml` runs AFTER `build-macos.yml`
+    types:
+      - completed
   push:
     tags:
     - '*'
