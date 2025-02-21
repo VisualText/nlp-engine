@@ -59,11 +59,11 @@ jobs:
         run: cp bin/nlp bin/nlpm.exe
         shell: bash
         
-      - name: Upload nlpm
+      - name: Upload nlpm.exe
         uses: actions/upload-artifact@v4
         with:
-          name: nlpm
-          path: bin/nlpm
+          name: nlpm.exe
+          path: bin/nlpm.exe
 
       - name: Copy libicutu.a to libicutum.a
         run: cp vcpkg_installed/arm64-osx/lib/libicutu.a vcpkg_installed/arm64-osx/lib/libicutum.a
