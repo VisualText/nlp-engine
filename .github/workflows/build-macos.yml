@@ -55,19 +55,19 @@ jobs:
       # - name: Copy nlp to nlpm
       #   run: cp bin/nlp bin/nlpm
       #   shell: bash
-      - name: Copy nlp to nlpm
+      - name: Copy nlp.exe to nlpm.exe
         run: |
           if [ -f bin/nlp ]; then
-            cp bin/nlp bin/nlpm
+            cp bin/nlp bin/nlpm.exe
           else
             echo "Error: bin/nlp not found! Build may have failed."
             exit 1
           fi
         shell: bash
-      - name: Upload nlpm
+      - name: Upload nlpm.exe
         uses: actions/upload-artifact@v4
         with:
-          name: nlpm
+          name: nlpm.exe
           path: bin/nlpm
 
       - name: Copy libicutu.a to libicutum.a
