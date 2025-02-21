@@ -43,10 +43,8 @@ jobs:
       uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-macos.yml
-        name: nlpm.exe
-        event: push
-        branch: main
-        allow_forks: false
+        name: nlpm
+        allow_forks: true
 
     - name: Fetch Engine Files
       uses: dawidd6/action-download-artifact@v8
