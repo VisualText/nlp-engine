@@ -34,11 +34,16 @@ jobs:
         workflow: build-linux.yml
         name: nlpl.exe
         
-    - name: Fetch MacOS exe
+    # - name: Fetch MacOS exe
+    #   uses: dawidd6/action-download-artifact@v8
+    #   with:
+    #     workflow: build-macos.yml
+    #     name: nlpm.exe
+    - name: Fetch MacOS artifact
       uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-macos.yml
-        name: nlpm.exe
+        name: nlpm
 
     - name: Fetch Engine Files
       uses: dawidd6/action-download-artifact@v8
@@ -87,11 +92,16 @@ jobs:
         workflow: build-linux.yml
         name: "libicuuc.a"
 
-    - name: Add nlpm.exe asset
+    # - name: Add nlpm.exe asset
+    #   uses: shogo82148/actions-upload-release-asset@v1
+    #   with:
+    #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+    #     asset_path: "./nlpm.exe"
+    - name: Add nlpm asset (macOS)
       uses: shogo82148/actions-upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./nlpm.exe"
+        asset_path: "./nlpm"
 
     - name: Fetch MacOS icu1
       uses: dawidd6/action-download-artifact@v8
