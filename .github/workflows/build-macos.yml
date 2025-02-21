@@ -51,8 +51,12 @@ jobs:
 
       - name: Test executable --version
         run: ./bin/nlp --version || true
-      - name: Check nlpm.exe existence
-        run: test -f bin/nlpm.exe && echo "nlpm.exe exists" || echo "nlpm.exe is missing"
+      - name: Debug Check if nlp exists before copying
+        run: ls -l bin/ && test -f bin/nlp && cp bin/nlp bin/nlpm.exe || echo "nlp not found!"
+        shell: bash
+      - name: Debug Check if nlpm.exe was created
+        run: ls -l bin/ && test -f bin/nlpm.exe && echo "nlpm.exe exists!" || echo "nlpm.exe is missing!"
+        shell: bash
 
       # - name: Copy nlp to nlpm
       #   run: cp bin/nlp bin/nlpm
@@ -60,10 +64,10 @@ jobs:
       - name: Copy nlp.exe to nlpm.exe
         run: cp bin/nlp bin/nlpm.exe
         shell: bash
-      - name: Verify generated binary
-        run: ls -l bin/ && test -f bin/nlp && cp bin/nlp bin/nlpm.exe || echo "nlp not found!"
-        shell: bash
         
+      - name: Ensure nlpm.exe exists before upload
+        run: test -f bin/nlpm.exe && echo "nlpm.exe exists before upload" || echo "nlpm.exe is missing before upload!"
+        shell: bash
       - name: Upload nlpm.exe
         uses: actions/upload-artifact@v4
         with:
