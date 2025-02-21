@@ -44,6 +44,7 @@ jobs:
       with:
         workflow: build-macos.yml
         name: nlpm
+        workflow_conclusion: any
         allow_forks: true
 
     - name: Fetch Engine Files
