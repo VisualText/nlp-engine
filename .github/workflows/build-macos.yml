@@ -62,8 +62,8 @@ jobs:
       - name: Upload nlpm
         uses: actions/upload-artifact@v4
         with:
-          name: nlpm.exe
-          path: bin/nlpm.exe
+          name: nlpm
+          path: bin/nlpm
 
       - name: Copy libicutu.a to libicutum.a
         run: cp vcpkg_installed/arm64-osx/lib/libicutu.a vcpkg_installed/arm64-osx/lib/libicutum.a
