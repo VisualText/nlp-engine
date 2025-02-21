@@ -44,8 +44,8 @@ jobs:
       with:
         workflow: build-macos.yml
         name: nlpm
-        branch: main           # ensure you’re picking up runs from the right branch
-        allow_forks: true
+        event: push
+        allow_forks: false
 
     - name: Fetch Engine Files
       uses: dawidd6/action-download-artifact@v8
