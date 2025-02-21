@@ -46,7 +46,6 @@ jobs:
         name: nlpm
         event: push
         branch: main
-        repository: VisualText/nlp-engine
         allow_forks: false
 
     - name: Fetch Engine Files
