@@ -43,8 +43,7 @@ jobs:
       uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-macos.yml
-        name: nlpm
-        workflow_conclusion: any
+        name: nlpm.exe
         allow_forks: true
 
     - name: Fetch Engine Files
@@ -99,11 +98,11 @@ jobs:
     #   with:
     #     upload_url: ${{ steps.create_release.outputs.upload_url }}
     #     asset_path: "./nlpm.exe"
-    - name: Add nlpm asset (macOS)
+    - name: Add nlpm.exe asset (macOS)
       uses: shogo82148/actions-upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./nlpm"
+        asset_path: "./nlpm.exe"
 
     - name: Fetch MacOS icu1
       uses: dawidd6/action-download-artifact@v8
