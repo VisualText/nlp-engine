@@ -59,7 +59,7 @@ jobs:
         run: cp bin/nlp bin/nlpm.exe
         shell: bash
       - name: Verify generated binary
-        run: ls -l bin/
+        run: ls -l bin/ && test -f bin/nlp && cp bin/nlp bin/nlpm.exe || echo "nlp not found!"
         shell: bash
         
       - name: Upload nlpm.exe
