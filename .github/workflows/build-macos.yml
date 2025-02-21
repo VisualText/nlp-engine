@@ -64,10 +64,10 @@ jobs:
             exit 1
           fi
         shell: bash
-      - name: Upload nlpm.exe
+      - name: Upload nlpm
         uses: actions/upload-artifact@v4
         with:
-          name: nlpm.exe
+          name: nlpm
           path: bin/nlpm
 
       - name: Copy libicutu.a to libicutum.a
