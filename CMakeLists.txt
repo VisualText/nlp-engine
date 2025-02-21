@@ -6,16 +6,7 @@ include(CTest)
 enable_testing()
 
 find_package(ICU REQUIRED COMPONENTS i18n uc data io)
-
-# Only hint the generator platform if on Windows.
-if(WIN32)
-    set(CMAKE_GENERATOR_PLATFORM Win32 HINT)
-endif()
-
-if(APPLE)
-    # Ensure no extension is added on Apple platforms.
-    set(CMAKE_EXECUTABLE_SUFFIX "")
-endif()
+set(CMAKE_GENERATOR_PLATFORM Win32 HINT)
 
 if(MSVC)
     add_compile_options(/w44005 /w44244 /w44311 /w44211 /w44302 /w44267 /w44312 /w45033 /w44624 /w44996 /w44273)
