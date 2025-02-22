@@ -51,12 +51,6 @@ jobs:
 
       - name: Test executable --version
         run: ./bin/nlp --version || true
-      - name: Debug Check if nlp exists before copying
-        run: ls -l bin/ && test -f bin/nlp && cp bin/nlp bin/nlpm.exe || echo "nlp not found!"
-        shell: bash
-      - name: Debug Check if nlpm.exe was created
-        run: ls -l bin/ && test -f bin/nlpm.exe && echo "nlpm.exe exists!" || echo "nlpm.exe is missing!"
-        shell: bash
 
       # - name: Copy nlp to nlpm
       #   run: cp bin/nlp bin/nlpm
@@ -66,8 +60,12 @@ jobs:
         shell: bash
         
       
+      - name: Debug Check if nlp exists before copying
+        run: ls -l bin/ && test -f bin/nlp && cp bin/nlp bin/nlpm.exe || echo "nlp not found!"
+        shell: bash
+
       - name: Debug Check if nlpm.exe was created
-        run: ls -l bin/ && test -f bin/nlpm.exe && echo "nlpm.exe exists!" || echo "nlpm.exe is missing!"
+        run: ls -l bin/ && test -f bin/nlpm.exe && echo "✅ nlpm.exe exists!" || echo "❌ nlpm.exe is missing!"
         shell: bash
 
       - name: Upload nlpm.exe
