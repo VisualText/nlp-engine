@@ -44,6 +44,13 @@ jobs:
 
       - name: Test executable --version
         run: ./bin/nlp --version || true
+        
+      - name: Debug Check if nlp exists before copying
+        run: |
+          echo "Checking if bin/nlp exists before copying..."
+          ls -l bin/ || echo "❌ bin directory not found"
+          test -f bin/nlp && echo "✅ bin/nlp exists!" || echo "❌ bin/nlp is missing!"
+        shell: bash
 
       - name: Copy nlp.exe to nlpl.exe
         run: cp bin/nlp bin/nlpl.exe
