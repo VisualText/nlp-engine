@@ -45,12 +45,22 @@ jobs:
         gh api repos/${{ github.repository }}/actions/runs/$LATEST_RUN_ID/artifacts --paginate | jq '.artifacts[].name'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Fetch MacOS exe
+    - name: Find Latest MacOS Workflow Run
+      id: find_run
+      run: |
+        LATEST_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-macos.yml/runs \
+        --paginate | jq -r '.workflow_runs[] | select(.conclusion=="success") | .id' | head -n 1)
+        echo "Latest run ID: $LATEST_RUN_ID"
+        echo "RUN_ID=$LATEST_RUN_ID" >> $GITHUB_ENV
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Fetch MacOS exe from Correct Run
       uses: dawidd6/action-download-artifact@v8
       with:
-        workflow: "build-macos.yml"
+        workflow: build-macos.yml
         name: nlpm.exe
-        branch: ${{ github.event.workflow_run.head_branch }}
+        run_id: ${{ env.RUN_ID }}
     
     - name: Fetch Engine Files
       uses: dawidd6/action-download-artifact@v8
