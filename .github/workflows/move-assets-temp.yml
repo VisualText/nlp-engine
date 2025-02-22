@@ -41,7 +41,7 @@ jobs:
     - name: List Available Artifacts (Debug)
       run: |
         echo "🔍 Checking available artifacts..."
-        gh api repos/:owner/:repo/actions/runs/:run_id/artifacts --paginate | jq '.artifacts[].name'
+        gh api repos/VisualText/nlp-engine/actions/runs/$(echo $GITHUB_RUN_ID)/artifacts --paginate | jq '.artifacts[].name'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Fetch MacOS exe
