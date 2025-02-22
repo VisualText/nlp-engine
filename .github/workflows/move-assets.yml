@@ -47,7 +47,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: nlpm.exe
-        path: ./
+        path: ./exe
 
     - name: Fetch Engine Files
       uses: dawidd6/action-download-artifact@v8
