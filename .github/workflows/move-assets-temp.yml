@@ -146,11 +146,18 @@ jobs:
         name: libicutum.a
         run_id: ${{ env.RUN_ID }}
 
-    - name: Fetch MacOS icu2
+    # - name: Fetch MacOS icu2
+    #   uses: dawidd6/action-download-artifact@v8
+    #   with:
+    #     workflow: build-macos.yml
+    #     name: "libicuucm.a" 
+
+    - name: Fetch MacOS libicuucm.a
       uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-macos.yml
-        name: "libicuucm.a"      
+        name: libicuucm.a
+        run_id: ${{ env.RUN_ID }}
         
     - name: Add icudt74.dll asset
       uses: shogo82148/actions-upload-release-asset@v1
