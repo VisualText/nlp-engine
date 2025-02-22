@@ -1,5 +1,9 @@
 name: Move Assets temp to Release
 
+permissions:
+  contents: write
+  actions: write
+
 on:
   workflow_dispatch:
   workflow_run:
