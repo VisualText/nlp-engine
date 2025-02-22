@@ -11,7 +11,6 @@ jobs:
 
     env:
       VCPKG_DEFAULT_TRIPLET: arm64-osx
-
     steps:
       - uses: actions/checkout@v3
         with:
@@ -52,24 +51,40 @@ jobs:
       - name: Test executable --version
         run: ./bin/nlp --version || true
 
-      # - name: Copy nlp to nlpm
-      #   run: cp bin/nlp bin/nlpm
-      #   shell: bash
-      - name: Copy nlp.exe to nlpm.exe
-        run: cp bin/nlp bin/nlpm.exe
-        shell: bash
-        
-      
+      # Debug Step 1: Check if `nlp` exists before copying
       - name: Debug Check if nlp exists before copying
-        run: ls -l bin/ && test -f bin/nlp && cp bin/nlp bin/nlpm.exe || echo "nlp not found!"
+        run: |
+          echo "Checking if bin/nlp exists before copying..."
+          ls -l bin/ || echo "❌ bin directory not found"
+          test -f bin/nlp && echo "✅ bin/nlp exists!" || echo "❌ bin/nlp is missing!"
         shell: bash
 
+      # Debug Step 2: Copy `nlp` to `nlpm.exe`
+      - name: Copy nlp to nlpm.exe
+        run: cp bin/nlp bin/nlpm.exe || echo "❌ Failed to copy nlp to nlpm.exe"
+        shell: bash
+
+      # Debug Step 3: Verify `nlpm.exe` after copying
       - name: Debug Check if nlpm.exe was created
-        run: ls -l bin/ && test -f bin/nlpm.exe && echo "✅ nlpm.exe exists!" || echo "❌ nlpm.exe is missing!"
+        run: |
+          echo "Checking if nlpm.exe exists after copying..."
+          ls -l bin/ || echo "❌ bin directory not found"
+          test -f bin/nlpm.exe && echo "✅ nlpm.exe exists!" || echo "❌ nlpm.exe is missing!"
         shell: bash
 
+      # Debug Step 4: Final check before upload
+      - name: Ensure nlpm.exe exists before upload
+        run: |
+          if [ ! -f bin/nlpm.exe ]; then
+            echo "❌ nlpm.exe is still missing! Build failed to generate it."
+            exit 1
+          else
+            echo "✅ nlpm.exe is ready for upload."
+          fi
+        shell: bash
+
+      # Upload nlpm.exe
       - name: Upload nlpm.exe
-        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: nlpm.exe
