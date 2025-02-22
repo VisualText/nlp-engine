@@ -47,8 +47,8 @@ jobs:
     - name: Download MacOS Executable
       uses: actions/download-artifact@v3
       with:
-        name: nlpl.exe
-        path: ./exe
+        name: nlpm.exe
+        path: ./
 
     - name: Fetch Engine Files
       uses: dawidd6/action-download-artifact@v8
