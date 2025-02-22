@@ -38,7 +38,12 @@ jobs:
       with:
         workflow: build-linux.yml
         name: nlpl.exe
-        
+    - name: List Available Artifacts (Debug)
+      run: |
+        echo "🔍 Checking available artifacts..."
+        gh api repos/:owner/:repo/actions/runs/:run_id/artifacts --paginate | jq '.artifacts[].name'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Fetch MacOS exe
       uses: dawidd6/action-download-artifact@v6
       with:
