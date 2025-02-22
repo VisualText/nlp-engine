@@ -1,6 +1,7 @@
 name: Move Assets temp to Release
 
 on:
+  workflow_dispatch:
   workflow_run:
     workflows: ["build-macos.yml"] # This ensures `move-assets.yml` runs AFTER `build-macos.yml`
     types:
