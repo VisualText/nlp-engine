@@ -130,15 +130,6 @@ jobs:
     #     workflow: build-macos.yml
     #     name: "libicutum.a"
 
-    - name: Find Latest MacOS Workflow Run
-      run: |
-        LATEST_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-macos.yml/runs \
-        --paginate | jq -r '.workflow_runs[] | select(.conclusion=="success") | .id' | head -n 1)
-        echo "Latest run ID: $LATEST_RUN_ID"
-        echo "RUN_ID=$LATEST_RUN_ID" >> $GITHUB_ENV
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Fetch MacOS libicutum.a
       uses: dawidd6/action-download-artifact@v8
       with:
