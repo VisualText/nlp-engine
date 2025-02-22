@@ -39,17 +39,11 @@ jobs:
         workflow: build-linux.yml
         name: nlpl.exe
         
-    # - name: Fetch MacOS exe
-    #   uses: dawidd6/action-download-artifact@v8
-    #   with:
-    #     workflow: build-macos.yml
-    #     name: nlpm.exe
-    
-    - name: Download MacOS Executable
-      uses: actions/download-artifact@v3
+    - name: Fetch MacOS exe
+      uses: dawidd6/action-download-artifact@v6
       with:
+        workflow: build-macos.yml
         name: nlpm.exe
-        path: ./
 
     - name: Fetch Engine Files
       uses: dawidd6/action-download-artifact@v8
