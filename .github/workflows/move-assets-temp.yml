@@ -38,18 +38,19 @@ jobs:
       with:
         workflow: build-linux.yml
         name: nlpl.exe
-    - name: List Available Artifacts (Debug)
+    - name: List Artifacts from MacOS Build
       run: |
-        echo "🔍 Checking available artifacts..."
-        gh api repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts --paginate | jq '.artifacts[].name'
+        echo "🔍 Checking artifacts in build-macos.yml run..."
+        LATEST_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-macos.yml/runs --paginate | jq -r '.workflow_runs[0].id')
+        gh api repos/${{ github.repository }}/actions/runs/$LATEST_RUN_ID/artifacts --paginate | jq '.artifacts[].name'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Fetch MacOS exe
       uses: dawidd6/action-download-artifact@v8
       with:
-        workflow: build-macos.yml
+        workflow: "MacOS"
         name: nlpm.exe
-        branch: master
+        branch: ${{ github.event.workflow_run.head_branch }}
     
     - name: Fetch Engine Files
       uses: dawidd6/action-download-artifact@v8
