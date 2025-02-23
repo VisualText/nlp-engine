@@ -116,36 +116,19 @@ jobs:
       with:
         workflow: build-linux.yml
         name: "libicuuc.a"
-
-    # - name: Add nlpm.exe asset
-    #   uses: shogo82148/actions-upload-release-asset@v1
-    #   with:
-    #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-    #     asset_path: "./nlpm.exe"
+        
     - name: Add nlpm asset
       uses: shogo82148/actions-upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./nlpm.exe"
-
-    # - name: Fetch MacOS icu1
-    #   uses: dawidd6/action-download-artifact@v8
-    #   with:
-    #     workflow: build-macos.yml
-    #     name: "libicutum.a"
-
+        
     - name: Fetch MacOS libicutum.a
       uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-macos.yml
         name: libicutum.a
         run_id: ${{ env.RUN_ID }}
-
-    # - name: Fetch MacOS icu2
-    #   uses: dawidd6/action-download-artifact@v8
-    #   with:
-    #     workflow: build-macos.yml
-    #     name: "libicuucm.a" 
 
     - name: Fetch MacOS libicuucm.a
       uses: dawidd6/action-download-artifact@v8
