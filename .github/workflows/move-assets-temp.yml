@@ -213,7 +213,7 @@ jobs:
       uses: benc-uk/workflow-dispatch@v1
       with:
         workflow: nlp-engine-build.yml
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         repo: VisualText/nlp-engine-windows
         ref: main
 
