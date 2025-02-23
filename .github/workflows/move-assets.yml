@@ -1,6 +1,11 @@
-name: Move Assets to Release
+name: Move Assets temp to Release
+
+permissions:
+  contents: write
+  actions: write
 
 on:
+  workflow_dispatch:
   workflow_run:
     workflows: ["build-macos.yml"] # This ensures `move-assets.yml` runs AFTER `build-macos.yml`
     types:
@@ -37,19 +42,30 @@ jobs:
       with:
         workflow: build-linux.yml
         name: nlpl.exe
-        
-    # - name: Fetch MacOS exe
-    #   uses: dawidd6/action-download-artifact@v8
-    #   with:
-    #     workflow: build-macos.yml
-    #     name: nlpm.exe
-    
-    - name: Download MacOS Executable
-      uses: actions/download-artifact@v3
-      with:
-        name: nlpm.exe
-        path: ./
+    - name: List Artifacts from MacOS Build
+      run: |
+        echo "🔍 Checking artifacts in build-macos.yml run..."
+        LATEST_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-macos.yml/runs --paginate | jq -r '.workflow_runs[0].id')
+        gh api repos/${{ github.repository }}/actions/runs/$LATEST_RUN_ID/artifacts --paginate | jq '.artifacts[].name'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Find Latest MacOS Workflow Run
+      id: find_run
+      run: |
+        LATEST_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-macos.yml/runs \
+        --paginate | jq -r '.workflow_runs[] | select(.conclusion=="success") | .id' | head -n 1)
+        echo "Latest run ID: $LATEST_RUN_ID"
+        echo "RUN_ID=$LATEST_RUN_ID" >> $GITHUB_ENV
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Fetch MacOS exe from Correct Run
+      uses: dawidd6/action-download-artifact@v8
+      with:
+        workflow: build-macos.yml
+        name: nlpm.exe
+        run_id: ${{ env.RUN_ID }}
+    
     - name: Fetch Engine Files
       uses: dawidd6/action-download-artifact@v8
       with:
@@ -62,14 +78,18 @@ jobs:
         workflow: build-visualfiles.yml
         name: "visualtext.zip"
 
+    - name: Generate a Release Tag
+      id: set_tag
+      run: echo "TAG_NAME=v1.0.$(date +%s)" >> $GITHUB_ENV
+
     - name: Create Release
       id: create_release
-      uses: actions/create-release@v1.0.0
+      uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        tag_name: ${{ env.TAG_NAME }}
+        release_name: Release ${{ env.TAG_NAME }}
         draft: false
         prerelease: false
 
@@ -108,17 +128,31 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./nlpm.exe"
 
-    - name: Fetch MacOS icu1
-      uses: dawidd6/action-download-artifact@v8
-      with:
-        workflow: build-macos.yml
-        name: "libicutum.a"
+    # - name: Fetch MacOS icu1
+    #   uses: dawidd6/action-download-artifact@v8
+    #   with:
+    #     workflow: build-macos.yml
+    #     name: "libicutum.a"
 
-    - name: Fetch MacOS icu2
+    - name: Fetch MacOS libicutum.a
       uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-macos.yml
-        name: "libicuucm.a"      
+        name: libicutum.a
+        run_id: ${{ env.RUN_ID }}
+
+    # - name: Fetch MacOS icu2
+    #   uses: dawidd6/action-download-artifact@v8
+    #   with:
+    #     workflow: build-macos.yml
+    #     name: "libicuucm.a" 
+
+    - name: Fetch MacOS libicuucm.a
+      uses: dawidd6/action-download-artifact@v8
+      with:
+        workflow: build-macos.yml
+        name: libicuucm.a
+        run_id: ${{ env.RUN_ID }}
         
     - name: Add icudt74.dll asset
       uses: shogo82148/actions-upload-release-asset@v1
@@ -168,11 +202,18 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./visualtext.zip"
 
+    - name: Debug GITHUB_TOKEN Permissions
+      run: |
+        echo "Checking GITHUB_TOKEN permissions..."
+        curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+        -H "Accept: application/vnd.github.v3+json" \
+        https://api.github.com/repos/VisualText/nlp-engine-windows
+        
     - name: Trigger nlp-engine-windows workflow
       uses: benc-uk/workflow-dispatch@v1
       with:
         workflow: nlp-engine-build.yml
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.CLASSIC_PAT }}
         repo: VisualText/nlp-engine-windows
         ref: main
 
@@ -180,7 +221,7 @@ jobs:
       uses: benc-uk/workflow-dispatch@v1
       with:
         workflow: nlp-engine-build.yml
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.CLASSIC_PAT }}
         repo: VisualText/nlp-engine-linux
         ref: main
 
@@ -188,6 +229,6 @@ jobs:
       uses: benc-uk/workflow-dispatch@v1
       with:
         workflow: nlp-engine-build.yml
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.CLASSIC_PAT }}
         repo: VisualText/nlp-engine-mac
         ref: main
