@@ -221,7 +221,7 @@ jobs:
       uses: benc-uk/workflow-dispatch@v1
       with:
         workflow: nlp-engine-build.yml
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.CLASSIC_PAT }}
         repo: VisualText/nlp-engine-linux
         ref: main
 
@@ -229,6 +229,6 @@ jobs:
       uses: benc-uk/workflow-dispatch@v1
       with:
         workflow: nlp-engine-build.yml
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.CLASSIC_PAT }}
         repo: VisualText/nlp-engine-mac
         ref: main
