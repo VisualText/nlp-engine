@@ -202,6 +202,13 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: "./visualtext.zip"
 
+    - name: Debug GITHUB_TOKEN Permissions
+      run: |
+        echo "Checking GITHUB_TOKEN permissions..."
+        curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+        -H "Accept: application/vnd.github.v3+json" \
+        https://api.github.com/repos/VisualText/nlp-engine-windows
+        
     - name: Trigger nlp-engine-windows workflow
       uses: benc-uk/workflow-dispatch@v1
       with:
