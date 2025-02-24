@@ -51,6 +51,9 @@ jobs:
 
       - name: Test executable --version
         run: ./bin/nlp --version || true
+      - name: Copy nlp.exe to nlpm.exe
+        run: cp bin/nlp bin/nlpm.exe
+        shell: bash
 
       # Upload nlpm.exe
       - name: Upload nlpm.exe
