@@ -49,6 +49,7 @@ jobs:
         gh api repos/${{ github.repository }}/actions/runs/$LATEST_RUN_ID/artifacts --paginate | jq '.artifacts[].name'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
     - name: Find Latest MacOS Workflow Run
       id: find_run
       run: |
@@ -78,18 +79,14 @@ jobs:
         workflow: build-visualfiles.yml
         name: "visualtext.zip"
 
-    - name: Generate a Release Tag
-      id: set_tag
-      run: echo "TAG_NAME=v1.0.$(date +%s)" >> $GITHUB_ENV
-
     - name: Create Release
       id: create_release
-      uses: actions/create-release@v1
+      uses: actions/create-release@v1.0.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ env.TAG_NAME }}
-        release_name: Release ${{ env.TAG_NAME }}
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
         draft: false
         prerelease: false
 
