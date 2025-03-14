@@ -4,11 +4,15 @@ on:
   workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
-      
+
 jobs:
   build_engine:
-    name: Build NLP-ENGINE
-    runs-on: ubuntu-latest
+    name: Build NLP-ENGINE on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, ubuntu-20.04, ubuntu-22.04]
 
     env:
       VCPKG_DEFAULT_TRIPLET: x64-linux
@@ -18,13 +22,16 @@ jobs:
         with:
           submodules: true
 
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y autoconf-archive build-essential cmake g++ libicu-dev
+
       - name: Vcpkg Bootstrap Shell
         run: ./bootstrap-vcpkg.sh
         shell: bash
         working-directory: vcpkg
 
-      - name: Install autoconf-archive
-        run: sudo apt-get install -y autoconf-archive
 
       - name: Install 3rd Party
         run: vcpkg install
@@ -37,35 +44,36 @@ jobs:
       - name: Make build directory
         run: mkdir build
 
-      - name: Generate Solution Linux
+      - name: Generate Solution for ${{ matrix.os }}
         run: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_BUILD_TYPE=release -B build -S . -DCMAKE_TOOLCHAIN_FILE='${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake'
 
-      - name: Cmake Build all targets Linux
+      - name: Cmake Build all targets for ${{ matrix.os }}
         run: cmake --build build/ --target all
 
       - name: Test executable --version
         run: ./bin/nlp --version || true
-        
-      - name: Copy nlp.exe to nlpl.exe
-        run: cp bin/nlp bin/nlpl.exe
-        shell: bash
 
-      - name: Upload nlpl.exe
+      - name: Copy nlp binary for specific OS
+        run: cp bin/nlp bin/nlp-${{ matrix.os }}.exe
+        shell: bash        
+
+      - name: Upload nlp binary for ${{ matrix.os }}
         uses: actions/upload-artifact@v4
         with:
-          name: nlpl.exe
-          path: bin/nlpl.exe
+          name: nlp-${{ matrix.os }}.exe
+          path: bin/nlp-${{ matrix.os }}.exe
+
 
       - name: Upload libicutu.a
         uses: actions/upload-artifact@v4
         with:
-          name: libicutu.a
+          name: libicutu-${{ matrix.os }}.a
           path: vcpkg_installed/x64-linux/lib/libicutu.a
 
       - name: Upload libicuuc.a
         uses: actions/upload-artifact@v4
         with:
-          name: libicuuc.a
+          name: libicuuc-${{ matrix.os }}.a
           path: vcpkg_installed/x64-linux/lib/libicuuc.a
 
       - name: Checkout Analyzers repo
@@ -89,4 +97,5 @@ jobs:
           new: ./analyzers/parse-en-us/input/doj.txt_log/final.tree
           mode: addition
           tolerance: same
-          output: parse-en-us-diff-lin.txt
+          output: parse-en-us-diff-${{ matrix.os }}.txt
+         
