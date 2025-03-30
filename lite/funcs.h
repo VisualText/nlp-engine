@@ -14,6 +14,7 @@ All rights reserved.
 // MUST KEEP IN SYNC WITH func_defs.h
 _TCHAR *nlpFuncs[] = {
 _T("FNNULL"),
+_T("abs"),
 _T("addarg"),
 _T("addattr"),
 _T("addcnode"),
@@ -130,6 +131,7 @@ _T("makestmt"),
 _T("merge"),
 _T("merger"),
 _T("mkdir"),		// 12/06/01 AM.
+_T("mod"),
 _T("movecleft"),
 _T("movecright"),
 _T("movesem"),
@@ -185,6 +187,7 @@ _T("prrange"),
 _T("prtree"),
 _T("prunephrases"),
 _T("prxtree"),
+_T("randomint"),
 _T("regexp"),		// 03/23/09 AM.
 _T("regexpi"),		// 03/26/09 AM.
 _T("renameattr"),

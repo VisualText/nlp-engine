@@ -20,6 +20,7 @@ extern _TCHAR *nlpFuncs[];
 enum funcDef
 	{
 	FNNULL,
+	FNabs,
 	FNaddarg,
 	FNaddattr,
 	FNaddcnode,
@@ -136,6 +137,7 @@ enum funcDef
 	FNmerge,
 	FNmerger,
 	FNmkdir,		// 12/06/01 AM.
+	FNmod,
 	FNmovecleft,
 	FNmovecright,
 	FNmovesem,
@@ -191,6 +193,7 @@ enum funcDef
 	FNprtree,
 	FNprunephrases,
 	FNprxtree,
+	FNrandomint,
 	FNregexp,			// 03/23/09 AM.
 	FNregexpi,			// 03/26/09 AM.
 	FNrenameattr,

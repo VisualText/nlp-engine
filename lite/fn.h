@@ -1004,6 +1004,9 @@ static bool fnStruniquechars(
 
 	static bool fnPermuten(Delt<Iarg>*,Nlppp*,RFASem*&);			// 03/10/04 AM.
 	static bool fnLogten(Delt<Iarg>*,Nlppp*,RFASem*&);          // 04/29/04 AM.
+	static bool fnRandomint(Delt<Iarg>*,Nlppp*,RFASem*&);
+	static bool fnAbs(Delt<Iarg>*,Nlppp*,RFASem*&);
+	static bool fnMod(Delt<Iarg>*,Nlppp*,RFASem*&);
 
 #ifdef WORDNET
 	// WordNet Functions
