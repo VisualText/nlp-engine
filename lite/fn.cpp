@@ -400,6 +400,12 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnLj(args,nlppp,/*UP*/sem);								// 10/02/00 AM.
 	case FNlogten:
 		return fnLogten(args,nlppp,/*UP*/sem);							// 04/29/04 AM.
+	case FNrandomint:
+		return fnRandomint(args,nlppp,/*UP*/sem);
+	case FNabs:
+		return fnAbs(args,nlppp,/*UP*/sem);
+	case FNmod:
+		return fnMod(args,nlppp,/*UP*/sem);
 	case FNlook:
 		break;
 	case FNlookup:
@@ -12749,6 +12755,103 @@ float loggy = log10(num1);
 sem = new RFASem(loggy);
 
 return true;
+}
+
+/********************************************
+* FN:		randomint
+* CR:		03/30/25 Dd.
+* SUBJ:		Random integer generator between two given integers.
+* RET:		True if ok, else false.
+* FORMS:	random(int,int)
+********************************************/
+
+bool Fn::fnRandomint(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+long long num1, num2 = 0;
+
+if (!Arg::num1(_T("random"), (DELTS*&)args, num1))
+	return false;
+if (!Arg::num1(_T("random"), (DELTS*&)args, num2))
+	return false;
+if (!Arg::done((DELTS*)args, _T("random"),parse))
+	return false;
+
+int randNum = num1 + (std::rand() % (num2 - num1 + 1));
+sem = new RFASem((long long)randNum);
+
+return true;
+}
+
+/********************************************
+* FN:		FNABS
+* CR:		09/25/24 Dd.
+* SUBJ:		Calculate the absolute value of a number.
+* RET:		True if ok, else false.
+* FORMS:	abs(num)
+********************************************/
+
+bool Fn::fnAbs(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	RFASem* &sem
+	)
+{
+	sem = 0;
+	Parse *parse = nlppp->parse_;
+	long long num = 0;
+
+	if (!Arg::num1(_T("abs"), (DELTS*&)args, num))
+		return false;
+	if (!Arg::done((DELTS*)args, _T("abs"), parse))
+		return false;
+
+	long long absValue = (num < 0) ? -num : num;
+	sem = new RFASem(absValue);
+
+	return true;
+}
+
+/********************************************
+* FN:		FNMOD
+* CR:		09/25/24 Dd.
+* SUBJ:		Calculate the modulus of two numbers.
+* RET:		True if ok, else false.
+* FORMS:	mod(num1, num2)
+********************************************/
+
+bool Fn::fnMod(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	RFASem* &sem
+	)
+{
+	sem = 0;
+	Parse *parse = nlppp->parse_;
+	long long num1 = 0, num2 = 0;
+
+	if (!Arg::num1(_T("mod"), (DELTS*&)args, num1))
+		return false;
+	if (!Arg::num1(_T("mod"), (DELTS*&)args, num2))
+		return false;
+	if (!Arg::done((DELTS*)args, _T("mod"), parse))
+		return false;
+
+	if (num2 == 0)
+	{
+		_stprintf(Errbuf, _T("[mod: Error. Division by zero.]"));
+		return parse->errOut(true);
+	}
+
+	long long result = num1 % num2;
+	sem = new RFASem(result);
+
+	return true;
 }
 
 #ifdef WORDNET
