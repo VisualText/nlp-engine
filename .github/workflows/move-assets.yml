@@ -19,6 +19,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Extract tag name from ref
+      id: get_tag
+      run: |
+        if [[ "${{ github.ref }}" == refs/tags/* ]]; then
+          echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+          echo "Using tag: ${GITHUB_REF#refs/tags/}"
+        else
+          # If not triggered by tag, use a timestamp-based version
+          TIMESTAMP=$(date +'%Y.%m.%d-%H%M')
+          echo "TAG_NAME=v${TIMESTAMP}" >> $GITHUB_ENV
+          echo "Not triggered by tag, using generated version: v${TIMESTAMP}"
+        fi
+
     - name: Fetch Windows exe
       uses: dawidd6/action-download-artifact@v8
       with:
@@ -42,21 +55,13 @@ jobs:
       with:
         workflow: build-linux.yml
         name: nlpl.exe
+      
     - name: List Artifacts from MacOS Build
       run: |
         echo "🔍 Checking artifacts in build-macos.yml run..."
         LATEST_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-macos.yml/runs --paginate | jq -r '.workflow_runs[0].id')
         gh api repos/${{ github.repository }}/actions/runs/$LATEST_RUN_ID/artifacts --paginate | jq '.artifacts[].name'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
-    - name: Find Latest MacOS Workflow Run
-      id: find_run
-      run: |
-        LATEST_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-macos.yml/runs \
-        --paginate | jq -r '.workflow_runs[] | select(.conclusion=="success") | .id' | head -n 1)
-        echo "Latest run ID: $LATEST_RUN_ID"
-        echo "RUN_ID=$LATEST_RUN_ID" >> $GITHUB_ENV
+        echo "LATEST_RUN_ID=$LATEST_RUN_ID" >> $GITHUB_ENV
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -65,7 +70,7 @@ jobs:
       with:
         workflow: build-macos.yml
         name: nlpm.exe
-        run_id: ${{ env.RUN_ID }}
+        run_id: ${{ env.LATEST_RUN_ID }}
     
     - name: Fetch Engine Files
       uses: dawidd6/action-download-artifact@v8
@@ -79,29 +84,6 @@ jobs:
         workflow: build-visualfiles.yml
         name: "visualtext.zip"
 
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1.0.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
-
-    - name: Add nlpw asset
-      uses: shogo82148/actions-upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./nlpw.exe"
-
-    - name: Add nlpl asset
-      uses: shogo82148/actions-upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./nlpl.exe"
-
     - name: Fetch Linux icu1
       uses: dawidd6/action-download-artifact@v8
       with:
@@ -114,101 +96,64 @@ jobs:
         workflow: build-linux.yml
         name: "libicuuc.a"
         
-    - name: Add nlpm asset
-      uses: shogo82148/actions-upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./nlpm.exe"
-        
     - name: Fetch MacOS libicutum.a
       uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-macos.yml
         name: libicutum.a
-        run_id: ${{ env.RUN_ID }}
+        run_id: ${{ env.LATEST_RUN_ID }}
 
     - name: Fetch MacOS libicuucm.a
       uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-macos.yml
         name: libicuucm.a
-        run_id: ${{ env.RUN_ID }}
-        
-    - name: Add icudt74.dll asset
-      uses: shogo82148/actions-upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./icudt74.dll"
-                
-    - name: Add icuuc74.dll asset
-      uses: shogo82148/actions-upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./icuuc74.dll"
+        run_id: ${{ env.LATEST_RUN_ID }}
 
-    - name: Add libicutu.a asset
-      uses: shogo82148/actions-upload-release-asset@v1
+    - name: Create Release
+      id: create_release
+      uses: softprops/action-gh-release@v1
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./libicutu.a"
-
-    - name: Add libicuuc.a asset
-      uses: shogo82148/actions-upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./libicuuc.a"
-
-    - name: Add libicutum.a asset
-      uses: shogo82148/actions-upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./libicutum.a"
-
-    - name: Add libicuucm.a asset
-      uses: shogo82148/actions-upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./libicuucm.a"
-                
-    - name: Add nlpengine.zip asset
-      uses: shogo82148/actions-upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./nlpengine.zip"
-                
-    - name: Add visualtext.zip asset
-      uses: shogo82148/actions-upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: "./visualtext.zip"
-
-    - name: Debug GITHUB_TOKEN Permissions
-      run: |
-        echo "Checking GITHUB_TOKEN permissions..."
-        curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-        -H "Accept: application/vnd.github.v3+json" \
-        https://api.github.com/repos/VisualText/nlp-engine-windows
+        tag_name: ${{ env.TAG_NAME }}
+        name: "Release ${{ env.TAG_NAME }}"
+        body: "NLP Engine Release ${{ env.TAG_NAME }}"
+        files: |
+          ./nlpw.exe
+          ./nlpl.exe
+          ./nlpm.exe
+          ./icudt74.dll
+          ./icuuc74.dll
+          ./libicutu.a
+          ./libicuuc.a
+          ./libicutum.a
+          ./libicuucm.a
+          ./nlpengine.zip
+          ./visualtext.zip
+        token: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Trigger nlp-engine-windows workflow
-      uses: benc-uk/workflow-dispatch@v1
+      uses: peter-evans/repository-dispatch@v2
       with:
-        workflow: nlp-engine-build.yml
         token: ${{ secrets.CLASSIC_PAT }}
-        repo: VisualText/nlp-engine-windows
-        ref: main
+        repository: VisualText/nlp-engine-windows
+        event-type: nlp-engine-release
+        client-payload: '{"tag_name": "${{ env.TAG_NAME }}"}'
+      continue-on-error: true
 
     - name: Trigger nlp-engine-linux workflow
-      uses: benc-uk/workflow-dispatch@v1
+      uses: peter-evans/repository-dispatch@v2
       with:
-        workflow: nlp-engine-build.yml
         token: ${{ secrets.CLASSIC_PAT }}
-        repo: VisualText/nlp-engine-linux
-        ref: main
+        repository: VisualText/nlp-engine-linux
+        event-type: nlp-engine-release
+        client-payload: '{"tag_name": "${{ env.TAG_NAME }}"}'
+      continue-on-error: true
 
     - name: Trigger nlp-engine-mac workflow
-      uses: benc-uk/workflow-dispatch@v1
+      uses: peter-evans/repository-dispatch@v2
       with:
-        workflow: nlp-engine-build.yml
         token: ${{ secrets.CLASSIC_PAT }}
-        repo: VisualText/nlp-engine-mac
-        ref: main
+        repository: VisualText/nlp-engine-mac
+        event-type: nlp-engine-release
+        client-payload: '{"tag_name": "${{ env.TAG_NAME }}"}'
+      continue-on-error: true
