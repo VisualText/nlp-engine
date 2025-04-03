@@ -19,18 +19,39 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Extract tag name from ref
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Fetch all history and tags
+    
+    - name: Extract tag name from ref or get latest tag
       id: get_tag
       run: |
         if [[ "${{ github.ref }}" == refs/tags/* ]]; then
-          echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
-          echo "Using tag: ${GITHUB_REF#refs/tags/}"
+          # When directly triggered by a tag push
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          echo "Using tag from push trigger: $TAG_NAME"
         else
-          # If not triggered by tag, use a timestamp-based version
-          TIMESTAMP=$(date +'%Y.%m.%d-%H%M')
-          echo "TAG_NAME=v${TIMESTAMP}" >> $GITHUB_ENV
-          echo "Not triggered by tag, using generated version: v${TIMESTAMP}"
+          # When triggered by workflow_run or workflow_dispatch
+          # Get the latest tag from the repository
+          git fetch --tags
+          TAG_NAME=$(git describe --tags --abbrev=0)
+          
+          # If no tag found, use timestamp
+          if [ -z "$TAG_NAME" ]; then
+            TIMESTAMP=$(date +'%Y.%m.%d-%H%M')
+            TAG_NAME="v${TIMESTAMP}"
+            echo "No tag found, using generated version: $TAG_NAME"
+          else
+            echo "Using latest tag from repository: $TAG_NAME"
+          fi
         fi
+        
+        # Store the tag name for later use
+        echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
+        
+        # Debug output
+        echo "Selected TAG_NAME: $TAG_NAME"
 
     - name: Fetch Windows exe
       uses: dawidd6/action-download-artifact@v8
@@ -131,29 +152,32 @@ jobs:
           ./visualtext.zip
         token: ${{ secrets.GITHUB_TOKEN }}
         
-    - name: Trigger nlp-engine-windows workflow
-      uses: peter-evans/repository-dispatch@v2
-      with:
-        token: ${{ secrets.CLASSIC_PAT }}
-        repository: VisualText/nlp-engine-windows
-        event-type: nlp-engine-release
-        client-payload: '{"tag_name": "${{ env.TAG_NAME }}"}'
+    - name: Trigger nlp-engine-windows workflow (API direct)
+      run: |
+        echo "Triggering Windows repo with tag ${{ env.TAG_NAME }}"
+        curl -X POST \
+          -H "Authorization: token ${{ secrets.CLASSIC_PAT }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/VisualText/nlp-engine-windows/dispatches \
+          -d "{\"event_type\":\"nlp-engine-release\",\"client_payload\":{\"tag_name\":\"${{ env.TAG_NAME }}\"}}"
       continue-on-error: true
 
-    - name: Trigger nlp-engine-linux workflow
-      uses: peter-evans/repository-dispatch@v2
-      with:
-        token: ${{ secrets.CLASSIC_PAT }}
-        repository: VisualText/nlp-engine-linux
-        event-type: nlp-engine-release
-        client-payload: '{"tag_name": "${{ env.TAG_NAME }}"}'
+    - name: Trigger nlp-engine-linux workflow (API direct)
+      run: |
+        echo "Triggering Linux repo with tag ${{ env.TAG_NAME }}"
+        curl -X POST \
+          -H "Authorization: token ${{ secrets.CLASSIC_PAT }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/VisualText/nlp-engine-linux/dispatches \
+          -d "{\"event_type\":\"nlp-engine-release\",\"client_payload\":{\"tag_name\":\"${{ env.TAG_NAME }}\"}}"
       continue-on-error: true
 
-    - name: Trigger nlp-engine-mac workflow
-      uses: peter-evans/repository-dispatch@v2
-      with:
-        token: ${{ secrets.CLASSIC_PAT }}
-        repository: VisualText/nlp-engine-mac
-        event-type: nlp-engine-release
-        client-payload: '{"tag_name": "${{ env.TAG_NAME }}"}'
+    - name: Trigger nlp-engine-mac workflow (API direct)
+      run: |
+        echo "Triggering Mac repo with tag ${{ env.TAG_NAME }}"
+        curl -X POST \
+          -H "Authorization: token ${{ secrets.CLASSIC_PAT }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/VisualText/nlp-engine-mac/dispatches \
+          -d "{\"event_type\":\"nlp-engine-release\",\"client_payload\":{\"tag_name\":\"${{ env.TAG_NAME }}\"}}"
       continue-on-error: true
