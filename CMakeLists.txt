@@ -6,6 +6,8 @@ include(CTest)
 enable_testing()
 
 find_package(ICU REQUIRED COMPONENTS i18n uc data io)
+find_library(DL_LIBRARY dl)  # Ensure dl library is found
+
 set(CMAKE_GENERATOR_PLATFORM Win32 HINT)
 
 if(MSVC)
