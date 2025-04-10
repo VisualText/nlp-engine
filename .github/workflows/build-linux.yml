@@ -8,81 +8,167 @@ on:
 jobs:
   build_engine:
     name: Build NLP-ENGINE
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, ubuntu-22.04, ubuntu-20.04] 
+        
 
     env:
       VCPKG_DEFAULT_TRIPLET: x64-linux
+      VERSION_SUFFIX: ${{ matrix.os == 'ubuntu-20.04' && '20.04' || (matrix.os == 'ubuntu-22.04' && '22.04' || 'latest') }}
 
     steps:
-      - uses: actions/checkout@v3
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
         with:
           submodules: true
 
-      - name: Vcpkg Bootstrap Shell
+
+     # ===============================
+      # Ubuntu 20.04 (Docker Build)
+      # ===============================
+      - name: Build and Run (Ubuntu 20.04)
+        if: matrix.os == 'ubuntu-20.04'
+        uses: addnab/docker-run-action@v3
+        with:
+          image: ubuntu:20.04
+          options: >-
+            --shm-size=512m
+            --mount type=tmpfs,destination=/dev/shm
+            -v ${{ github.workspace }}:/workspace
+            -w /workspace
+          run: |
+            export DEBIAN_FRONTEND=noninteractive
+            export TZ=Etc/UTC
+            apt update && apt install -y \
+              git build-essential cmake g++ curl unzip zip tar \
+              autoconf-archive pkg-config python3 ninja-build libicu-dev
+            git clone --recurse-submodules https://github.com/VisualText/analyzers.git analyzers
+            mkdir -p build
+            cd build
+            cmake ..
+            make -j$(nproc)
+            cd ..
+            mkdir -p rfb-logs data/rfb/spec analyzers/parse-en-us/output
+            cp ./bin/nlp ./bin/nlpl.exe
+
+            ./bin/nlp --version
+            ./bin/nlp -ANA ./analyzers/parse-en-us -WORK ./ ./analyzers/parse-en-us/input/doj.txt -LOG rfb-logs -DEV
+
+      - name: Copy ICU Shared Libraries (20.04)
+        if: matrix.os == 'ubuntu-20.04'
+        run: |
+          mkdir -p icu-libs
+          cp /usr/lib/x86_64-linux-gnu/libicu*.so* ./icu-libs/
+          zip -r icu-libs.zip icu-libs
+
+      - name: Upload ICU Libraries Zip (20.04)
+        if: matrix.os == 'ubuntu-20.04'
+        uses: actions/upload-artifact@v4
+        with:
+          name: icu-libs-ubuntu-${{ env.VERSION_SUFFIX }}
+          path: icu-libs.zip
+
+      # ===============================
+      # Non-20.04 (Normal Build)
+      # ===============================
+      - name: Install Required Dependencies (Non-20.04)
+        if: matrix.os != 'ubuntu-20.04'
+        run: |
+          sudo apt update
+          sudo apt install -y autoconf-archive pkg-config python3 ninja-build build-essential cmake g++ git curl zip unzip tar
+
+      - name: Vcpkg Bootstrap Shell (Non-20.04)
+        if: matrix.os != 'ubuntu-20.04'
         run: ./bootstrap-vcpkg.sh
         shell: bash
         working-directory: vcpkg
 
-      - name: Install autoconf-archive
-        run: sudo apt-get install -y autoconf-archive
-
-      - name: Install 3rd Party
+      - name: Install 3rd Party (Non-20.04)
+        if: matrix.os != 'ubuntu-20.04'
         run: vcpkg install
         working-directory: vcpkg
-        
-      - name: List $RUNNER_WORKSPACE before build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
 
-      - name: Make build directory
-        run: mkdir build
+      - name: Create Build Directory (Non-20.04)
+        if: matrix.os != 'ubuntu-20.04'
+        run: mkdir -p build
 
-      - name: Generate Solution Linux
-        run: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_BUILD_TYPE=release -B build -S . -DCMAKE_TOOLCHAIN_FILE='${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake'
+      - name: Generate Solution Linux (Non-20.04)
+        if: matrix.os != 'ubuntu-20.04'
+        run: |
+          cmake -DCMAKE_BUILD_TYPE=Release \
+                -DVCPKG_BUILD_TYPE=release \
+                -B build -S . \
+                -DCMAKE_TOOLCHAIN_FILE='${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake'
 
-      - name: Cmake Build all targets Linux
+      - name: Cmake Build all targets Linux (Non-20.04)
+        if: matrix.os != 'ubuntu-20.04'
         run: cmake --build build/ --target all
 
-      - name: Test executable --version
+      - name: Test executable --version (Non-20.04)
+        if: matrix.os != 'ubuntu-20.04'
         run: ./bin/nlp --version || true
-        
-      - name: Copy nlp.exe to nlpl.exe
+ 
+      - name: Copy nlp.exe to nlpl.exe (Non-20.04)
+        if: matrix.os != 'ubuntu-20.04'
         run: cp bin/nlp bin/nlpl.exe
         shell: bash
+
+
+      # ===============================
+      # Upload Artifacts (All Versions)
+      # ===============================
 
       - name: Upload nlpl.exe
         uses: actions/upload-artifact@v4
         with:
-          name: nlpl.exe
+          name: nlpl-ubuntu-${{ env.VERSION_SUFFIX }}.exe
           path: bin/nlpl.exe
 
-      - name: Upload libicutu.a
+      - name: Upload libicutu.a (non ubuntu-20.04)
+        if: matrix.os != 'ubuntu-20.04'
         uses: actions/upload-artifact@v4
         with:
-          name: libicutu.a
+          name: libicutu-ubuntu-${{ env.VERSION_SUFFIX }}.a
           path: vcpkg_installed/x64-linux/lib/libicutu.a
 
-      - name: Upload libicuuc.a
+      - name: Upload libicuuc.a (ubuntu-20.04)
+        if: matrix.os != 'ubuntu-20.04'
         uses: actions/upload-artifact@v4
         with:
-          name: libicuuc.a
-          path: vcpkg_installed/x64-linux/lib/libicuuc.a
+          name: libicuuc-ubuntu-${{ env.VERSION_SUFFIX }}.a
+          path: vcpkg_installed/x64-linux/lib/libicuuc.a          
 
-      - name: Checkout Analyzers repo
+      # ===============================
+      # Run Tests
+      # ===============================
+      - name: Checkout Analyzers Repo
+        if: matrix.os != 'ubuntu-20.04'
         uses: actions/checkout@v3
         with:
           repository: VisualText/analyzers
           submodules: recursive
           path: analyzers
 
-      - name: List runner workspace
-        run: find $RUNNER_WORKSPACE
-        shell: bash
+      - name: Full English Test (20.04)
+        if: matrix.os == 'ubuntu-20.04'
+        uses: LouisBrunner/diff-action@v0.2.0
+        with:
+          old: .github/workflows/tests/parse-en-us/final.tree
+          new: ./rfb-logs/final.tree
+          mode: addition
+          tolerance: same
+          output: parse-en-us-diff-lin.txt
 
-      - name: Run English Parser
+      - name: Run English Parser Test (Non-20.04)
+        if: matrix.os != 'ubuntu-20.04'
         run: ./bin/nlp -ANA ./analyzers/parse-en-us -WORK ./ ./analyzers/parse-en-us/input/doj.txt -DEV || true
 
-      - name: Full English Test
+      - name: Full English Test (Non-20.04)
+        if: matrix.os != 'ubuntu-20.04'
         uses: LouisBrunner/diff-action@v0.2.0
         with:
           old: .github/workflows/tests/parse-en-us/final.tree
