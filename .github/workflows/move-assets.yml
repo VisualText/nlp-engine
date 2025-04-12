@@ -7,7 +7,7 @@ permissions:
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["build-macos.yml"] # This ensures `move-assets.yml` runs AFTER `build-macos.yml`
+    workflows: ["build-windows.yml", "build-macos.yml", "build-enginefiles.yml", "build-visualfiles.yml"]
     types:
       - completed
   push:
@@ -62,10 +62,10 @@ jobs:
         echo "Windows run ID: $WIN_RUN_ID"
         echo "WIN_RUN_ID=$WIN_RUN_ID" >> $GITHUB_ENV
         
-        # Get Linux workflow run ID
-        LINUX_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-linux.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
-        echo "Linux run ID: $LINUX_RUN_ID"
-        echo "LINUX_RUN_ID=$LINUX_RUN_ID" >> $GITHUB_ENV
+        # # Linux part commented out as requested
+        # LINUX_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-linux.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
+        # echo "Linux run ID: $LINUX_RUN_ID"
+        # echo "LINUX_RUN_ID=$LINUX_RUN_ID" >> $GITHUB_ENV
         
         # Get MacOS workflow run ID
         MAC_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-macos.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
@@ -103,27 +103,27 @@ jobs:
         name: "icuuc74.dll"
         run_id: ${{ env.WIN_RUN_ID }}
         
-    # Linux artifacts with specific run ID
-    - name: Fetch Linux exe
-      uses: dawidd6/action-download-artifact@v8
-      with:
-        workflow: build-linux.yml
-        name: nlpl.exe
-        run_id: ${{ env.LINUX_RUN_ID }}
-
-    - name: Fetch Linux icu1
-      uses: dawidd6/action-download-artifact@v8
-      with:
-        workflow: build-linux.yml
-        name: "libicutu.a"
-        run_id: ${{ env.LINUX_RUN_ID }}
-
-    - name: Fetch Linux icu2
-      uses: dawidd6/action-download-artifact@v8
-      with:
-        workflow: build-linux.yml
-        name: "libicuuc.a"
-        run_id: ${{ env.LINUX_RUN_ID }}
+    # # Linux artifacts commented out as requested
+    # - name: Fetch Linux exe
+    #   uses: dawidd6/action-download-artifact@v8
+    #   with:
+    #     workflow: build-linux.yml
+    #     name: nlpl.exe
+    #     run_id: ${{ env.LINUX_RUN_ID }}
+    # 
+    # - name: Fetch Linux icu1
+    #   uses: dawidd6/action-download-artifact@v8
+    #   with:
+    #     workflow: build-linux.yml
+    #     name: "libicutu.a"
+    #     run_id: ${{ env.LINUX_RUN_ID }}
+    # 
+    # - name: Fetch Linux icu2
+    #   uses: dawidd6/action-download-artifact@v8
+    #   with:
+    #     workflow: build-linux.yml
+    #     name: "libicuuc.a"
+    #     run_id: ${{ env.LINUX_RUN_ID }}
       
     # MacOS artifacts with specific run ID
     - name: Fetch MacOS exe
@@ -166,12 +166,10 @@ jobs:
       run: |
         echo "Checking executable versions..."
         
-        # Make Linux executable runnable
-        chmod +x ./nlpl.exe || true
-        
-        # Try to get version directly from executables
-        echo "Linux executable version (nlpl.exe):"
-        ./nlpl.exe --version || echo "Could not get Linux version"
+        # # Linux part commented out as requested
+        # chmod +x ./nlpl.exe || true
+        # echo "Linux executable version (nlpl.exe):"
+        # ./nlpl.exe --version || echo "Could not get Linux version"
         
         # Check binary contents for version strings
         echo "Examining Windows executable for version strings:"
@@ -179,7 +177,7 @@ jobs:
         
         echo "File details:"
         file ./nlpw.exe
-        file ./nlpl.exe
+        # file ./nlpl.exe  # Linux file commented out
         file ./nlpm.exe
         
         echo "File modification times:"
@@ -196,16 +194,16 @@ jobs:
           
           Build information:
           - Windows build: ${{ env.WIN_RUN_ID }}
-          - Linux build: ${{ env.LINUX_RUN_ID }}
+          # - Linux build: ${{ env.LINUX_RUN_ID }}  # Linux part commented out
           - MacOS build: ${{ env.MAC_RUN_ID }}
         files: |
           ./nlpw.exe
-          ./nlpl.exe
+          # ./nlpl.exe  # Linux part commented out
           ./nlpm.exe
           ./icudt74.dll
           ./icuuc74.dll
-          ./libicutu.a
-          ./libicuuc.a
+          # ./libicutu.a  # Linux part commented out
+          # ./libicuuc.a  # Linux part commented out
           ./libicutum.a
           ./libicuucm.a
           ./nlpengine.zip
@@ -222,15 +220,15 @@ jobs:
           -d "{\"event_type\":\"nlp-engine-release\",\"client_payload\":{\"tag_name\":\"${{ env.TAG_NAME }}\"}}"
       continue-on-error: true
 
-    - name: Trigger nlp-engine-linux workflow (API direct)
-      run: |
-        echo "Triggering Linux repo with tag ${{ env.TAG_NAME }}"
-        curl -X POST \
-          -H "Authorization: token ${{ secrets.CLASSIC_PAT }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/VisualText/nlp-engine-linux/dispatches \
-          -d "{\"event_type\":\"nlp-engine-release\",\"client_payload\":{\"tag_name\":\"${{ env.TAG_NAME }}\"}}"
-      continue-on-error: true
+    # - name: Trigger nlp-engine-linux workflow (API direct)
+    #   run: |
+    #     echo "Triggering Linux repo with tag ${{ env.TAG_NAME }}"
+    #     curl -X POST \
+    #       -H "Authorization: token ${{ secrets.CLASSIC_PAT }}" \
+    #       -H "Accept: application/vnd.github.v3+json" \
+    #       https://api.github.com/repos/VisualText/nlp-engine-linux/dispatches \
+    #       -d "{\"event_type\":\"nlp-engine-release\",\"client_payload\":{\"tag_name\":\"${{ env.TAG_NAME }}\"}}"
+    #   continue-on-error: true
 
     - name: Trigger nlp-engine-mac workflow (API direct)
       run: |
