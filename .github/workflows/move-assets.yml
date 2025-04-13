@@ -102,7 +102,7 @@ jobs:
         name: "icuuc74.dll"
         run_id: ${{ env.WIN_RUN_ID }}
         
-    # # Linux artifacts commented out
+    ## Linux artifacts commented out
     # - name: Fetch Linux exe
     #   uses: dawidd6/action-download-artifact@v8
     #   with:
