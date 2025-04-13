@@ -52,7 +52,6 @@ jobs:
         
         # Debug output
         echo "Selected TAG_NAME: $TAG_NAME"
-
     - name: Find workflow run IDs
       run: |
         echo "Finding most recent successful workflow runs..."
@@ -182,7 +181,6 @@ jobs:
         
         echo "File modification times:"
         ls -la *.exe *.dll *.a
-
     - name: Create Release
       id: create_release
       uses: softprops/action-gh-release@v1
@@ -217,8 +215,8 @@ jobs:
           -H "Authorization: token ${{ secrets.CLASSIC_PAT }}" \
           -H "Accept: application/vnd.github.v3+json" \
           https://api.github.com/repos/VisualText/nlp-engine-windows/dispatches \
-          -d "{\"event_type\":\"nlp-engin
-    
+          -d "{\"event_type\":\"nlp-engine-release\",\"client_payload\":{\"tag_name\":\"${{ env.TAG_NAME }}\"}}"
+      continue-on-error: true
 
     # - name: Trigger nlp-engine-linux workflow (API direct)
     #   run: |
