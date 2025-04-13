@@ -210,97 +210,15 @@ jobs:
           ./visualtext.zip
         token: ${{ secrets.GITHUB_TOKEN }}
         
-    #- name: Trigger nlp-engine-windows workflow (API direct)
-    #  run: |
-    #    echo "Triggering Windows repo with tag ${{ env.TAG_NAME }}"
-    #    curl -X POST \
-    #      -H "Authorization: token ${{ secrets.CLASSIC_PAT }}" \
-    #      -H "Accept: application/vnd.github.v3+json" \
-    #      https://api.github.com/repos/VisualText/nlp-engine-windows/dispatches \
-    #      -d "{\"event_type\":\"nlp-engin
-    
-    - name: Debug Token Permissions
-      run: |
-        echo "Checking token permissions..."
-        TOKEN_TEST=$(curl -s -o /dev/null -w "%{http_code}" \
-          -H "Authorization: token ${{ secrets.CLASSIC_PAT }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/user)
-        
-        echo "Token permission test status code: $TOKEN_TEST"
-        
-        if [[ "$TOKEN_TEST" == "200" ]]; then
-          echo "✅ Token is valid for the GitHub API"
-        else
-          echo "❌ Token is invalid or expired (status code: $TOKEN_TEST)"
-          echo "Please create a new Personal Access Token (PAT) with these scopes:"
-          echo "- repo (full control of repositories)"
-          echo "- workflow (ability to trigger workflows)"
-        fi
-
-    - name: Trigger nlp-engine-windows workflow (with logging)
+    - name: Trigger nlp-engine-windows workflow (API direct)
       run: |
         echo "Triggering Windows repo with tag ${{ env.TAG_NAME }}"
-        RESPONSE=$(curl -s -w "\nResponse status code: %{http_code}" \
+        curl -X POST \
           -H "Authorization: token ${{ secrets.CLASSIC_PAT }}" \
           -H "Accept: application/vnd.github.v3+json" \
-          -X POST \
           https://api.github.com/repos/VisualText/nlp-engine-windows/dispatches \
-          -d "{\"event_type\":\"nlp-engine-release\",\"client_payload\":{\"tag_name\":\"${{ env.TAG_NAME }}\"}}")
-        
-        echo "$RESPONSE"
-        
-        if [[ "$RESPONSE" =~ "Response status code: 2" ]]; then
-          echo "✅ Successfully triggered Windows repository"
-        else
-          echo "❌ Failed to trigger Windows repository" 
-          echo "Ensure the token has proper permissions and the repository exists"
-          
-          # Alternative: create an issue instead of failing
-          if [[ "${{ secrets.GITHUB_TOKEN }}" != "" ]]; then
-            echo "Creating an issue in Windows repository as a notification..."
-            curl -s \
-              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-              -H "Accept: application/vnd.github.v3+json" \
-              -X POST \
-              https://api.github.com/repos/VisualText/nlp-engine-windows/issues \
-              -d "{\"title\":\"Update to release ${{ env.TAG_NAME }}\",\"body\":\"Please manually update to the latest release ${{ env.TAG_NAME }}. The automatic trigger failed.\"}" || echo "Could not create issue"
-          fi
-        fi
-      continue-on-error: true
+          -d "{\"event_type\":\"nlp-engin
     
-    - name: Trigger nlp-engine-windows workflow with debugging
-      run: |
-        echo "Triggering Windows repo with tag ${{ env.TAG_NAME }}"
-        
-        # Add -v for verbose output and capture HTTP status code
-        RESPONSE=$(curl -v -s -X POST \
-          -H "Authorization: token ${{ secrets.CLASSIC_PAT }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          -w "\n%{http_code}" \
-          https://api.github.com/repos/VisualText/nlp-engine-windows/dispatches \
-          -d "{\"event_type\":\"nlp-engine-release\",\"client_payload\":{\"tag_name\":\"${{ env.TAG_NAME }}\"}}" 2>&1)
-        
-        # Get status code from last line
-        STATUS_CODE=$(echo "$RESPONSE" | tail -n1)
-        echo "Response status code: $STATUS_CODE"
-        
-        # Print full response for debugging
-        echo "Full response (truncated):"
-        echo "$RESPONSE" | head -n 20
-        
-        if [ "$STATUS_CODE" = "204" ]; then
-          echo " Success! Repository dispatch event triggered successfully."
-        else
-          echo " Failed to trigger repository dispatch event."
-          
-          # Check token permissions
-          echo "Checking token permissions for VisualText/nlp-engine-windows..."
-          curl -s -H "Authorization: token ${{ secrets.CLASSIC_PAT }}" \
-            https://api.github.com/repos/VisualText/nlp-engine-windows | jq '.permissions'
-        fi
-      continue-on-error: true
-
 
     # - name: Trigger nlp-engine-linux workflow (API direct)
     #   run: |
