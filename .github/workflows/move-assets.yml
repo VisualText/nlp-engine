@@ -210,15 +210,47 @@ jobs:
           ./visualtext.zip
         token: ${{ secrets.GITHUB_TOKEN }}
         
-    - name: Trigger nlp-engine-windows workflow (API direct)
+    #- name: Trigger nlp-engine-windows workflow (API direct)
+    #  run: |
+    #    echo "Triggering Windows repo with tag ${{ env.TAG_NAME }}"
+    #    curl -X POST \
+    #      -H "Authorization: token ${{ secrets.CLASSIC_PAT }}" \
+    #      -H "Accept: application/vnd.github.v3+json" \
+    #      https://api.github.com/repos/VisualText/nlp-engine-windows/dispatches \
+    #      -d "{\"event_type\":\"nlp-engin
+    
+    - name: Trigger nlp-engine-windows workflow with debugging
       run: |
         echo "Triggering Windows repo with tag ${{ env.TAG_NAME }}"
-        curl -X POST \
+        
+        # Add -v for verbose output and capture HTTP status code
+        RESPONSE=$(curl -v -s -X POST \
           -H "Authorization: token ${{ secrets.CLASSIC_PAT }}" \
           -H "Accept: application/vnd.github.v3+json" \
+          -w "\n%{http_code}" \
           https://api.github.com/repos/VisualText/nlp-engine-windows/dispatches \
-          -d "{\"event_type\":\"nlp-engine-release\",\"client_payload\":{\"tag_name\":\"${{ env.TAG_NAME }}\"}}"
+          -d "{\"event_type\":\"nlp-engine-release\",\"client_payload\":{\"tag_name\":\"${{ env.TAG_NAME }}\"}}" 2>&1)
+        
+        # Get status code from last line
+        STATUS_CODE=$(echo "$RESPONSE" | tail -n1)
+        echo "Response status code: $STATUS_CODE"
+        
+        # Print full response for debugging
+        echo "Full response (truncated):"
+        echo "$RESPONSE" | head -n 20
+        
+        if [ "$STATUS_CODE" = "204" ]; then
+          echo " Success! Repository dispatch event triggered successfully."
+        else
+          echo " Failed to trigger repository dispatch event."
+          
+          # Check token permissions
+          echo "Checking token permissions for VisualText/nlp-engine-windows..."
+          curl -s -H "Authorization: token ${{ secrets.CLASSIC_PAT }}" \
+            https://api.github.com/repos/VisualText/nlp-engine-windows | jq '.permissions'
+        fi
       continue-on-error: true
+
 
     # - name: Trigger nlp-engine-linux workflow (API direct)
     #   run: |
