@@ -7,7 +7,7 @@ permissions:
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["build-windows.yml", "build-macos.yml", "build-enginefiles.yml", "build-visualfiles.yml"]
+    workflows: ["build-macos.yml"]
     types:
       - completed
   push:
@@ -22,23 +22,17 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
-        fetch-depth: 0  # Fetch all history and tags
+        fetch-depth: 0
 
-    
     - name: Extract tag name from ref or get latest tag
       id: get_tag
       run: |
         if [[ "${{ github.ref }}" == refs/tags/* ]]; then
-          # When directly triggered by a tag push
           TAG_NAME=${GITHUB_REF#refs/tags/}
           echo "Using tag from push trigger: $TAG_NAME"
         else
-          # When triggered by workflow_run or workflow_dispatch
-          # Get the latest tag from the repository
           git fetch --tags
           TAG_NAME=$(git describe --tags --abbrev=0)
-          
-          # If no tag found, use timestamp
           if [ -z "$TAG_NAME" ]; then
             TIMESTAMP=$(date +'%Y.%m.%d-%H%M')
             TAG_NAME="v${TIMESTAMP}"
@@ -47,61 +41,30 @@ jobs:
             echo "Using latest tag from repository: $TAG_NAME"
           fi
         fi
-        
-        # Store the tag name for later use
         echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
-        
-        # Debug output
         echo "Selected TAG_NAME: $TAG_NAME"
-    - name: Find workflow run IDs
-      run: |
-        echo "Finding most recent successful workflow runs..."
-        
-        # Get Windows workflow run ID
-        WIN_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-windows.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
-        echo "Windows run ID: $WIN_RUN_ID"
-        echo "WIN_RUN_ID=$WIN_RUN_ID" >> $GITHUB_ENV
-        
-        # # Linux part commented out
-        # LINUX_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-linux.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
-        # echo "Linux run ID: $LINUX_RUN_ID"
-        # echo "LINUX_RUN_ID=$LINUX_RUN_ID" >> $GITHUB_ENV
-        
-        # Get MacOS workflow run ID
-        MAC_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-macos.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
-        echo "MAC_RUN_ID=$MAC_RUN_ID" >> $GITHUB_ENV
-        
-        # Get EngineFiles workflow run ID
-        ENGINE_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-enginefiles.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
-        echo "ENGINE_RUN_ID=$ENGINE_RUN_ID" >> $GITHUB_ENV
-        
-        # Get VisualFiles workflow run ID
-        VISUAL_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-visualfiles.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
-        echo "VISUAL_RUN_ID=$VISUAL_RUN_ID" >> $GITHUB_ENV
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    # Windows artifacts with specific run ID
+    # =============================
+    # Download Artifacts
+    # =============================
+
     - name: Fetch Windows exe
       uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-windows.yml
         name: nlpw.exe
-        run_id: ${{ env.WIN_RUN_ID }}
 
-    - name: Fetch Windows icu1
+    - name: Fetch Windows ICU DLLs
       uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-windows.yml
-        name: "icudt74.dll"
-        run_id: ${{ env.WIN_RUN_ID }}
+        name: icudt74.dll
 
-    - name: Fetch Windows icu2
+    - name: Fetch Windows ICU DLLs
       uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-windows.yml
-        name: "icuuc74.dll"
-        run_id: ${{ env.WIN_RUN_ID }}
+        name: icuuc74.dll
 
     - name: Create Linux folders
       run: |
@@ -165,42 +128,47 @@ jobs:
         name: icu-libs-ubuntu-20.04
         path: ./linux/ubuntu-20.04
         
-    # MacOS artifacts with specific run ID
+    - name: List Artifacts from MacOS Build
+      run: |
+        echo "Checking artifacts in build-macos.yml run..."
+        LATEST_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-macos.yml/runs --paginate | jq -r '.workflow_runs[0].id')
+        gh api repos/${{ github.repository }}/actions/runs/$LATEST_RUN_ID/artifacts --paginate | jq '.artifacts[].name'
+        echo "LATEST_RUN_ID=$LATEST_RUN_ID" >> $GITHUB_ENV
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Fetch MacOS exe
       uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-macos.yml
         name: nlpm.exe
-        run_id: ${{ env.MAC_RUN_ID }}
-        
-    - name: Fetch MacOS libicutum.a
+        run_id: ${{ env.LATEST_RUN_ID }}
+
+    - name: Fetch MacOS ICU Static Libraries
       uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-macos.yml
         name: libicutum.a
-        run_id: ${{ env.MAC_RUN_ID }}
+        run_id: ${{ env.LATEST_RUN_ID }}
 
-    - name: Fetch MacOS libicuucm.a
+    - name: Fetch MacOS ICU Static Libraries
       uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-macos.yml
         name: libicuucm.a
-        run_id: ${{ env.MAC_RUN_ID }}
+        run_id: ${{ env.LATEST_RUN_ID }}
 
-    # Other artifacts with specific run ID
     - name: Fetch Engine Files
       uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-enginefiles.yml
-        name: "nlpengine.zip"
-        run_id: ${{ env.ENGINE_RUN_ID }}
+        name: nlpengine.zip
 
     - name: Fetch VisualText Files
       uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-visualfiles.yml
-        name: "visualtext.zip"
-        run_id: ${{ env.VISUAL_RUN_ID }}
+        name: visualtext.zip
 
     - name: Create Linux Zips
       run: |
@@ -210,21 +178,10 @@ jobs:
         zip -r ubuntu-latest.zip ubuntu-latest
         cd ..
 
-    - name: Check executable versions
-      run: |
-        echo "Checking executable versions..."
-    
-        echo "Examining Windows executable for version strings:"
-        strings ./nlpw.exe | grep -i version || echo "No version string found in Windows executable"
-    
-        echo "Examining MacOS executable for file info:"
-        file ./nlpm.exe
-    
-        echo "Windows and Mac file modification times:"
-        ls -la ./nlpw.exe ./nlpm.exe ./icudt74.dll ./icuuc74.dll ./libicutum.a ./libicuucm.a
-    
-        echo "Zipped Linux folders present:"
-        ls -la ./linux/*.zip
+
+    # =============================
+    # Create Release
+    # =============================
 
     - name: Create Release
       id: create_release
@@ -232,13 +189,7 @@ jobs:
       with:
         tag_name: ${{ env.TAG_NAME }}
         name: "Release ${{ env.TAG_NAME }}"
-        body: |
-          NLP Engine Release ${{ env.TAG_NAME }}
-        
-          Build information:
-          - Windows build: ${{ env.WIN_RUN_ID }}
-          - Linux build: ${{ env.LINUX_RUN_ID }}
-          - MacOS build: ${{ env.MAC_RUN_ID }}
+        body: "NLP Engine Release ${{ env.TAG_NAME }}"
         files: |
           ./nlpw.exe
           ./nlpm.exe
@@ -254,6 +205,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    # =============================
+    # Optional: Trigger Downstream Repos
+    # =============================
 
     - name: Trigger nlp-engine-windows workflow (API direct)
       run: |
