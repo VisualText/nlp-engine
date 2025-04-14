@@ -58,22 +58,29 @@ jobs:
       run: |
         echo "Finding most recent successful workflow runs..."
         
-        WIN_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-windows.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
+        # Get latest successful Windows workflow run ID
+        WIN_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-windows.yml/runs --paginate | jq -r ".workflow_runs | sort_by(.created_at) | reverse | .[] | select(.conclusion == \"success\") | .id" | head -n 1)
         echo "Windows run ID: $WIN_RUN_ID"
         echo "WIN_RUN_ID=$WIN_RUN_ID" >> $GITHUB_ENV
     
-        LINUX_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-linux.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
+        # Get latest successful Linux workflow run ID
+        LINUX_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-linux.yml/runs --paginate | jq -r ".workflow_runs | sort_by(.created_at) | reverse | .[] | select(.conclusion == \"success\") | .id" | head -n 1)
         echo "Linux run ID: $LINUX_RUN_ID"
         echo "LINUX_RUN_ID=$LINUX_RUN_ID" >> $GITHUB_ENV
-        
-        MAC_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-macos.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
+    
+        # Get latest successful MacOS workflow run ID
+        MAC_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-macos.yml/runs --paginate | jq -r ".workflow_runs | sort_by(.created_at) | reverse | .[] | select(.conclusion == \"success\") | .id" | head -n 1)
+        echo "MacOS run ID: $MAC_RUN_ID"
         echo "MAC_RUN_ID=$MAC_RUN_ID" >> $GITHUB_ENV
     
-        ENGINE_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-enginefiles.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
+        # Get EngineFiles run ID
+        ENGINE_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-enginefiles.yml/runs --paginate | jq -r ".workflow_runs | sort_by(.created_at) | reverse | .[] | select(.conclusion == \"success\") | .id" | head -n 1)
         echo "ENGINE_RUN_ID=$ENGINE_RUN_ID" >> $GITHUB_ENV
     
-        VISUAL_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-visualfiles.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
+        # Get VisualText run ID
+        VISUAL_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-visualfiles.yml/runs --paginate | jq -r ".workflow_runs | sort_by(.created_at) | reverse | .[] | select(.conclusion == \"success\") | .id" | head -n 1)
         echo "VISUAL_RUN_ID=$VISUAL_RUN_ID" >> $GITHUB_ENV
+    
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
