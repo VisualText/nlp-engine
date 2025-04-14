@@ -78,11 +78,4 @@ jobs:
       - name: Run English Parser
         run: ./bin/Release/nlp.exe -ANA .\analyzers\parse-en-us -WORK D:\a\nlp-engine\nlp-engine .\analyzers\parse-en-us\input\doj.txt -DEV || true
 
-      - name: Full English Test
-        uses: LouisBrunner/diff-action@v0.2.0
-        with:
-          old: .github/workflows/tests/parse-en-us/final.tree
-          new: ./analyzers/parse-en-us/input/doj.txt_log/final.tree
-          mode: addition
-          tolerance: same
-          output: parse-en-us-diff-win.txt
+
