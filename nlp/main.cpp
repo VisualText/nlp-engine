@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright © 1999-2006 Text Analysis International, Inc.
+Copyright © 1999-2025 Text Analysis International, Inc.
 All rights reserved.
 ********************************************************************************
 *
@@ -15,7 +15,7 @@ All rights reserved.
 #include "lite/nlp_engine.h"
 #include "version.h"
 
-#define NLP_ENGINE_VERSION "2.15.2"
+#define NLP_ENGINE_VERSION "2.15.4"
 
 bool cmdReadArgs(int, _TCHAR *argv[], _TCHAR *&, _TCHAR *&, _TCHAR *&, _TCHAR *&, bool &, bool &, bool &);
 void cmdHelpargs(_TCHAR *);
