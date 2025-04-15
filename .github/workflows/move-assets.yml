@@ -58,29 +58,22 @@ jobs:
       run: |
         echo "Finding most recent successful workflow runs..."
         
-        # Get latest successful Windows workflow run ID
-        WIN_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-windows.yml/runs --paginate | jq -r ".workflow_runs | sort_by(.created_at) | reverse | .[] | select(.conclusion == \"success\") | .id" | head -n 1)
+        WIN_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-windows.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
         echo "Windows run ID: $WIN_RUN_ID"
         echo "WIN_RUN_ID=$WIN_RUN_ID" >> $GITHUB_ENV
     
-        # Get latest successful Linux workflow run ID
-        LINUX_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-linux.yml/runs --paginate | jq -r ".workflow_runs | sort_by(.created_at) | reverse | .[] | select(.conclusion == \"success\") | .id" | head -n 1)
+        LINUX_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-linux.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
         echo "Linux run ID: $LINUX_RUN_ID"
         echo "LINUX_RUN_ID=$LINUX_RUN_ID" >> $GITHUB_ENV
-    
-        # Get latest successful MacOS workflow run ID
-        MAC_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-macos.yml/runs --paginate | jq -r ".workflow_runs | sort_by(.created_at) | reverse | .[] | select(.conclusion == \"success\") | .id" | head -n 1)
-        echo "MacOS run ID: $MAC_RUN_ID"
+        
+        MAC_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-macos.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
         echo "MAC_RUN_ID=$MAC_RUN_ID" >> $GITHUB_ENV
     
-        # Get EngineFiles run ID
-        ENGINE_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-enginefiles.yml/runs --paginate | jq -r ".workflow_runs | sort_by(.created_at) | reverse | .[] | select(.conclusion == \"success\") | .id" | head -n 1)
+        ENGINE_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-enginefiles.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
         echo "ENGINE_RUN_ID=$ENGINE_RUN_ID" >> $GITHUB_ENV
     
-        # Get VisualText run ID
-        VISUAL_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-visualfiles.yml/runs --paginate | jq -r ".workflow_runs | sort_by(.created_at) | reverse | .[] | select(.conclusion == \"success\") | .id" | head -n 1)
+        VISUAL_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-visualfiles.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
         echo "VISUAL_RUN_ID=$VISUAL_RUN_ID" >> $GITHUB_ENV
-    
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -118,6 +111,7 @@ jobs:
         workflow: build-linux.yml
         name: nlpl-ubuntu-20.04.exe
         path: ./linux/ubuntu-20.04
+        run_id: ${{ env.LINUX_RUN_ID }}
 
     - name: Fetch Linux exe (22.04)
       uses: dawidd6/action-download-artifact@v8
@@ -125,6 +119,7 @@ jobs:
         workflow: build-linux.yml
         name: nlpl-ubuntu-22.04.exe
         path: ./linux/ubuntu-22.04
+        run_id: ${{ env.LINUX_RUN_ID }}
         
     - name: Fetch Linux exe (latest)
       uses: dawidd6/action-download-artifact@v8
@@ -132,6 +127,7 @@ jobs:
         workflow: build-linux.yml
         name: nlpl-ubuntu-latest.exe
         path: ./linux/ubuntu-latest
+        run_id: ${{ env.LINUX_RUN_ID }}
 
     - name: Fetch Linux ICU (22.04)
       uses: dawidd6/action-download-artifact@v8
@@ -139,6 +135,7 @@ jobs:
         workflow: build-linux.yml
         name: libicutu-ubuntu-22.04.a
         path: ./linux/ubuntu-22.04
+        run_id: ${{ env.LINUX_RUN_ID }}
 
     - name: Fetch Linux ICU (22.04)
       uses: dawidd6/action-download-artifact@v8
@@ -146,6 +143,7 @@ jobs:
         workflow: build-linux.yml
         name: libicuuc-ubuntu-22.04.a
         path: ./linux/ubuntu-22.04
+        run_id: ${{ env.LINUX_RUN_ID }}
 
     - name: Fetch Linux ICU (latest)
       uses: dawidd6/action-download-artifact@v8
@@ -153,6 +151,7 @@ jobs:
         workflow: build-linux.yml
         name: libicutu-ubuntu-latest.a
         path: ./linux/ubuntu-latest
+        run_id: ${{ env.LINUX_RUN_ID }}
 
     - name: Fetch Linux ICU (latest)
       uses: dawidd6/action-download-artifact@v8
@@ -160,6 +159,7 @@ jobs:
         workflow: build-linux.yml
         name: libicuuc-ubuntu-latest.a
         path: ./linux/ubuntu-latest
+        run_id: ${{ env.LINUX_RUN_ID }}
 
     - name: Fetch ICU Shared Libraries (20.04)
       uses: dawidd6/action-download-artifact@v8
@@ -167,6 +167,7 @@ jobs:
         workflow: build-linux.yml
         name: icu-libs-ubuntu-20.04
         path: ./linux/ubuntu-20.04
+        run_id: ${{ env.LINUX_RUN_ID }}
         
     # MacOS artifacts with specific run ID
     - name: Fetch MacOS exe
