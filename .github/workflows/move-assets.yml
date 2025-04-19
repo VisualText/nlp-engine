@@ -288,3 +288,33 @@ jobs:
           https://api.github.com/repos/VisualText/nlp-engine-mac/dispatches \
           -d "{\"event_type\":\"nlp-engine-release\",\"client_payload\":{\"tag_name\":\"${{ env.TAG_NAME }}\"}}"
       continue-on-error: true
+
+    - name: Debug Trigger Setup
+      run: |
+        echo "TAG_NAME: ${{ env.TAG_NAME }}"
+        echo "Will trigger workflow in VisualText/nlp-engine-windows"
+        # Test if token is available (don't print the actual token)
+        if [ -z "${{ secrets.CLASSIC_PAT }}" ]; then
+          echo "ERROR: CLASSIC_PAT token is empty or not available!"
+        else
+          echo "CLASSIC_PAT token is available"
+        fi
+    
+    - name: Trigger nlp-engine-windows workflow with verbose output
+      run: |
+        echo "Triggering Windows repo with tag ${{ env.TAG_NAME }}"
+        # Enable verbose curl output to see what's happening
+        curl -v -X POST \
+          -H "Authorization: token ${{ secrets.CLASSIC_PAT }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Content-Type: application/json" \
+          https://api.github.com/repos/VisualText/nlp-engine-windows/dispatches \
+          -d "{\"event_type\":\"nlp-engine-release\",\"client_payload\":{\"tag_name\":\"${{ env.TAG_NAME }}\"}}" 2>&1 | sed 's/Authorization: token.*/Authorization: token [REDACTED]/g'
+        
+        # Store curl exit code to check if the request failed
+        CURL_EXIT=$?
+        if [ $CURL_EXIT -ne 0 ]; then
+          echo "::error::curl command failed with exit code $CURL_EXIT"
+          exit 1
+        fi
+      
