@@ -317,4 +317,14 @@ jobs:
           echo "::error::curl command failed with exit code $CURL_EXIT"
           exit 1
         fi
+
+    
+    - name: Trigger nlp-engine-windows workflow
+      uses: peter-evans/repository-dispatch@v2
+      with:
+        token: ${{ secrets.CLASSIC_PAT }}
+        repository: VisualText/nlp-engine-windows
+        event-type: nlp-engine-release
+        client-payload: '{"tag_name": "${{ env.TAG_NAME }}"}'
+      continue-on-error: true
       
