@@ -7,7 +7,7 @@ permissions:
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["build-windows.yml", "build-macos.yml", "build-enginefiles.yml", "build-visualfiles.yml"]
+    workflows: ["build-windows.yml", "build-macos.yml", "build-enginefiles.yml", "build-visualfiles.yml", "build-linux.yml"]
     types:
       - completed
   push:
@@ -276,4 +276,11 @@ jobs:
         client-payload: '{"tag_name": "${{ env.TAG_NAME }}"}'
       continue-on-error: true
 
-      
+    - name: Trigger nlp-engine-linux workflow
+      uses: peter-evans/repository-dispatch@v2
+      with:
+        token: ${{ secrets.CLASSIC_PAT }}
+        repository: VisualText/nlp-engine-linux
+        event-type: nlp-engine-release
+        client-payload: '{"tag_name": "${{ env.TAG_NAME }}"}'
+      continue-on-error: true  
