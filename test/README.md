@@ -30,5 +30,16 @@ those using the HPCC Systems Supercomputing framework to natively call NLP++ ana
 
 The repository for the HPCC Systems NLP plugin is found at [https://github.com/hpcc-systems/HPCC-Platform/tree/master/plugins/nlp](https://github.com/hpcc-systems/HPCC-Platform/tree/master/plugins/nlp).
 
-There is a special menu item in VisualText (the VSCode NLP++ language extension) that creates the special "mod"
-file for submitting to the HPCC Systems supercomputing cluster. 
+There are two special menu items in VisualText (the VSCode NLP++ language extension which is called VisualText) that creates an ECL file and 
+another that creates a manifest file. Here is how to use VisualText to create and use the HPCC NLP++ plugin:
+
+1. Create an folder named "analyzers" and place all the NLP++ analyers you want to use with the HPCC NLP plugin.
+2. Right-click inside the Analyzer View and choose "New ECL File" and choose the template you want to use.
+3. Edit the ECL file to your needs.
+4. Select the ecl file in the Analyzer View, right-click, and choose "Generate HPCC Manifest File".
+5. Choose the analyzers you wish to push to the HPCC Systems server and hit ok.
+6. You should now see a manifest file appear in the Analyzer View.
+
+Here is a snapshot of what you will see in VisualText (VSCode NLP++ language extension):
+
+![Alt text](../images/HPCC-ECL.png)
