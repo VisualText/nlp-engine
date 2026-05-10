@@ -131,6 +131,7 @@ int NLP_ENGINE::init(
     _TCHAR *analyzer,
 	bool develop,
 	bool silent,
+    bool compile,
     bool compiled
 )
 {   
@@ -145,6 +146,7 @@ int NLP_ENGINE::init(
     m_analyzer = analyzer;
     m_develop = develop;
     m_silent = silent;
+    m_compile = compile;
     m_compiled = compiled;
 
     struct stat st;
@@ -250,6 +252,14 @@ int NLP_ENGINE::init(
 
         std::_t_cerr << _T("[Loaded knowledge base.]") << std::endl;             // 02/19/19 AM.
 
+        // Compile the KB if requested.
+        if (m_compile)
+            {
+            std::_t_cerr << _T("[Compiling knowledge base.]") << std::endl;
+            m_cg->genKB();
+            m_cg->compileKB();
+            }
+
         /////////////////////////////////////////////////
         // BUILD ANALYZER APPLICATION
         /////////////////////////////////////////////////
@@ -259,7 +269,7 @@ int NLP_ENGINE::init(
         if (!m_nlp->make_analyzer(m_seqfile, m_anadir, m_develop,
             silent,              // Debug/log file output.             // 06/16/02 AM.
             0,
-            false,               // false == Don't compile during load.
+            m_compile,           // Compile analyzer while loading.
             compiled))           // Compiled/interp analyzer.
             {
             std::_t_cerr << _T("[Couldn't build analyzer.]") << std::endl;
@@ -295,10 +305,11 @@ int NLP_ENGINE::analyze(
     _TCHAR *outdir,
 	bool develop,
 	bool silent,
+    bool compile,
     bool compiled
 	)
 {   
-    NLP_ENGINE::init(analyzer,develop,silent,compiled);
+    NLP_ENGINE::init(analyzer,develop,silent,compile,compiled);
 
     readFiles(infile);
     std::string file;
@@ -380,11 +391,12 @@ int NLP_ENGINE::analyze(
     long outlen,
 	bool develop,
 	bool silent,
+    bool compile,
     bool compiled
 	)
 {
  
-    NLP_ENGINE::init(analyzer,develop,silent,compiled);
+    NLP_ENGINE::init(analyzer,develop,silent,compile,compiled);
 
     // Analyzer can output to a stream.
     _TCHAR ofstr[MAXSTR];
@@ -424,11 +436,12 @@ int NLP_ENGINE::analyze(
     std::ostringstream *oss,
 	bool develop,
 	bool silent,
+    bool compile,
     bool compiled
 	)
 {
  
-    NLP_ENGINE::init(analyzer,develop,silent,compiled);
+    NLP_ENGINE::init(analyzer,develop,silent,compile,compiled);
 
     // Analyzer can output to a stream.
     _TCHAR ofstr[MAXSTR];

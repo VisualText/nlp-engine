@@ -43,6 +43,7 @@ You can get help on nlp.exe:
 Switch | Function
 ------------ | -------------
 -INTERP / -COMPILED | Runs NLP++ code interpreted or compiled
+-COMPILE | Compiles the analyzer rules and KB before running
 -ANA | name of the analyzer or path to the analyzer folder
 -IN | Input file
 -OUT | Output directory
