@@ -85,6 +85,7 @@ public:
 
     bool m_develop;
     bool m_silent;
+    bool m_compile;
     bool m_compiled;
 
     void setWorkingFolder(_TCHAR *workingFolder);
@@ -95,6 +96,7 @@ public:
         _TCHAR *analyzer = NULL,
         bool develop=false,
         bool silent=false,
+        bool compile=false,
         bool compiled=false
     );
 
@@ -104,6 +106,7 @@ public:
         _TCHAR *outfile,
         bool develop=false,
         bool silent=false,
+        bool compile=false,
         bool compiled=false
     );
 
@@ -115,6 +118,7 @@ public:
         long outlen,
         bool develop=false,
         bool silent=false,
+        bool compile=false,
         bool compiled=false
     );
 
@@ -124,6 +128,7 @@ public:
         std::ostringstream *oss,
         bool develop=false,
         bool silent=false,
+        bool compile=false,
         bool compiled=false
     );
 

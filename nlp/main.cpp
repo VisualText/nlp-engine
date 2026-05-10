@@ -17,7 +17,7 @@ All rights reserved.
 
 #define NLP_ENGINE_VERSION "2.15.7"
 
-bool cmdReadArgs(int, _TCHAR *argv[], _TCHAR *&, _TCHAR *&, _TCHAR *&, _TCHAR *&, bool &, bool &, bool &);
+bool cmdReadArgs(int, _TCHAR *argv[], _TCHAR *&, _TCHAR *&, _TCHAR *&, _TCHAR *&, bool &, bool &, bool &, bool &);
 void cmdHelpargs(_TCHAR *);
 
 #ifdef LINUX
@@ -37,6 +37,7 @@ int _tmain(
 	_TCHAR *analyzerpath = 0, *input = 0, *output = 0, *workdir = 0;
 	bool develop = false; // Development mode.
 	_TCHAR *sequence = 0;
+	bool compile = false;  // Compile analyzer and KB.
 	bool compiled = false; // Run compiled/interp analyzer.
 	bool silent = false;   // No log/debug output files.
 
@@ -45,11 +46,23 @@ int _tmain(
 	/////////////////////////////////////////////////
 
 	// Get analyzer name, input and output filenames from command line.
-	if (!cmdReadArgs(argc, argv, analyzerpath, input, output, workdir, develop, compiled, silent))
+	if (!cmdReadArgs(argc, argv, analyzerpath, input, output, workdir, develop, compile, compiled, silent))
 		exit(1);
 
 	NLP_ENGINE *nlpEngine = new NLP_ENGINE(workdir);
-	nlpEngine->analyze(analyzerpath, input, output, develop, silent, compiled);
+	if (compile)
+	{
+		// Compile mode: generate C++ code for the analyzer and KB.
+		// Analysis is not run; the generated C++ must be compiled externally
+		// (e.g. via the NLP++ language extension) before running with -COMPILED.
+		std::_t_cout << _T("[Compiling analyzer and KB: ") << analyzerpath << _T("]") << std::endl;
+		nlpEngine->init(analyzerpath, develop, silent, compile, compiled);
+		std::_t_cout << _T("[Compile complete.]") << std::endl;
+	}
+	else
+	{
+		nlpEngine->analyze(analyzerpath, input, output, develop, silent, compile, compiled);
+	}
 	delete nlpEngine;
 }
 
@@ -69,6 +82,7 @@ bool cmdReadArgs(
 	_TCHAR *&output,  // Output file from args.
 	_TCHAR *&workdir, // Working directory from args.
 	bool &develop,	  // Development mode (output intermediate files).
+	bool &compile,	  // true - compile analyzer and KB.
 	bool &compiled,	  // true - compiled ana. false=interp(DEFAULT).
 	bool &silent	  // true == only output files specified by analyzer.
 )
@@ -86,6 +100,7 @@ bool cmdReadArgs(
 
 	anapath = input = output = 0;
 	develop = false;  // Default is not development mode.
+	compile = false;  // Don't compile by default.
 	compiled = false; // INTERP ANALYZER BY DEFAULT
 	silent = false;	  // Produce debug files, etc. by default.		// 06/16/02 AM.
 
@@ -183,6 +198,10 @@ bool cmdReadArgs(
 					compiled = true;
 				}
 			}
+			else if (!strcmp_i(ptr, _T("compile"))) // Compile analyzer and KB.
+			{
+				compile = true;
+			}
 		}
 		else if (flag) // Expected an argument value.
 		{
@@ -267,6 +286,7 @@ void cmdHelpargs(_TCHAR *name)
 	std::_t_cout << std::endl
 				 << _T("usage: nlp [--version] [--help]") << std::endl
 				 << _T("           [-INTERP][-COMPILED] INTERP is the default") << std::endl
+				 << _T("           [-COMPILE] compile analyzer and KB to C++ (does not run analyzer)") << std::endl
 				 << _T("           [-ANA analyzer] name or path to NLP++ analyzer folder") << std::endl
 				 << _T("           [-IN infile] input text file path") << std::endl
 				 << _T("           [-OUT outdir] output directory") << std::endl
