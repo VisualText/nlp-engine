@@ -44,7 +44,7 @@ jobs:
         run: mkdir build
 
       - name: Generate Solution MacOs
-        run: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_BUILD_TYPE=release -B build -S . -DCMAKE_CXX_FLAGS=-std=c++11 -DCMAKE_TOOLCHAIN_FILE='${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake'
+        run: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_BUILD_TYPE=release -B build -S . -DCMAKE_CXX_FLAGS=-std=c++11 -DCMAKE_TOOLCHAIN_FILE='${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake' -DCMAKE_OSX_ARCHITECTURES=arm64
 
       - name: Cmake Build all targets MaxOs
         run: cmake --build build/ --target all
