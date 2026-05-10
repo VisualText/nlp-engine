@@ -8,7 +8,7 @@ on:
 jobs:
   build_engine:
     name: Build NLP-ENGINE
-    runs-on: windows-2019
+    runs-on: windows-latest
 
     env:
       VCPKG_DEFAULT_TRIPLET: x64-windows
@@ -89,4 +89,3 @@ jobs:
           mode: addition
           tolerance: same
           output: parse-en-us-diff-win.txt
-
