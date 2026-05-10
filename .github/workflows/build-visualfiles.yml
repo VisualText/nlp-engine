@@ -21,3 +21,4 @@ jobs:
         with:
           name: visualtext.zip
           path: ${{ github.workspace }}/visualtext.zip
+          retention-days: 30

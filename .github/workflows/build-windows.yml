@@ -51,18 +51,21 @@ jobs:
         with:
           name: nlpw.exe
           path: bin/Release/nlpw.exe
+          retention-days: 30
 
       - name: Upload icudt74.dll
         uses: actions/upload-artifact@v4
         with:
           name: icudt74.dll
           path: bin/Release/icudt74.dll
+          retention-days: 30
 
       - name: Upload icuuc74.dll
         uses: actions/upload-artifact@v4
         with:
           name: icuuc74.dll
           path: bin/Release/icuuc74.dll
+          retention-days: 30
 
       - name: Checkout Analyzers repo
         uses: actions/checkout@v3
@@ -86,5 +89,4 @@ jobs:
           mode: addition
           tolerance: same
           output: parse-en-us-diff-win.txt
-
 

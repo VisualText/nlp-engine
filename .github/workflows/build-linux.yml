@@ -82,6 +82,7 @@ jobs:
         with:
           name: icu-libs-ubuntu-${{ env.VERSION_SUFFIX }}
           path: ./icu-libs.zip
+          retention-days: 30
 
       # ===============================
       # Non-20.04 (Normal Build)
@@ -138,6 +139,7 @@ jobs:
         with:
           name: nlpl-ubuntu-${{ env.VERSION_SUFFIX }}.exe
           path: bin/nlpl.exe
+          retention-days: 30
 
       - name: Upload libicutu.a (non ubuntu-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
@@ -145,13 +147,15 @@ jobs:
         with:
           name: libicutu-ubuntu-${{ env.VERSION_SUFFIX }}.a
           path: vcpkg_installed/x64-linux/lib/libicutu.a
+          retention-days: 30
 
       - name: Upload libicuuc.a (ubuntu-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         uses: actions/upload-artifact@v4
         with:
           name: libicuuc-ubuntu-${{ env.VERSION_SUFFIX }}.a
-          path: vcpkg_installed/x64-linux/lib/libicuuc.a          
+          path: vcpkg_installed/x64-linux/lib/libicuuc.a
+          retention-days: 30
 
       # ===============================
       # Run Tests

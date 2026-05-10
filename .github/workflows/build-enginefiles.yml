@@ -26,3 +26,4 @@ jobs:
         with:
           name: nlpengine.zip
           path: ${{ github.workspace }}/nlpengine.zip
+          retention-days: 30
