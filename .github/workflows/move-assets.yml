@@ -56,23 +56,60 @@ jobs:
 
     - name: Find workflow run IDs
       run: |
-        echo "Finding most recent successful workflow runs..."
-        
-        WIN_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-windows.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
+        echo "Finding successful workflow runs for release tag: $TAG_NAME"
+        RELEASE_SHA=$(git rev-list -n 1 "$TAG_NAME")
+        echo "Release SHA: $RELEASE_SHA"
+
+        get_run_id_for_sha() {
+          local workflow_file="$1"
+          gh api repos/${{ github.repository }}/actions/workflows/${workflow_file}/runs --paginate \
+            | jq -r --arg sha "$RELEASE_SHA" '.workflow_runs[] | select(.conclusion == "success" and .head_sha == $sha) | .id' \
+            | head -n 1
+        }
+
+        MAX_ATTEMPTS=30
+        SLEEP_SECONDS=60
+        ATTEMPT=1
+
+        while [ "$ATTEMPT" -le "$MAX_ATTEMPTS" ]; do
+          WIN_RUN_ID=$(get_run_id_for_sha "build-windows.yml")
+          LINUX_RUN_ID=$(get_run_id_for_sha "build-linux.yml")
+          MAC_RUN_ID=$(get_run_id_for_sha "build-macos.yml")
+          ENGINE_RUN_ID=$(get_run_id_for_sha "build-enginefiles.yml")
+          VISUAL_RUN_ID=$(get_run_id_for_sha "build-visualfiles.yml")
+
+          MISSING_WORKFLOWS=""
+          [ -z "$WIN_RUN_ID" ] && MISSING_WORKFLOWS="${MISSING_WORKFLOWS} build-windows.yml"
+          [ -z "$LINUX_RUN_ID" ] && MISSING_WORKFLOWS="${MISSING_WORKFLOWS} build-linux.yml"
+          [ -z "$MAC_RUN_ID" ] && MISSING_WORKFLOWS="${MISSING_WORKFLOWS} build-macos.yml"
+          [ -z "$ENGINE_RUN_ID" ] && MISSING_WORKFLOWS="${MISSING_WORKFLOWS} build-enginefiles.yml"
+          [ -z "$VISUAL_RUN_ID" ] && MISSING_WORKFLOWS="${MISSING_WORKFLOWS} build-visualfiles.yml"
+
+          if [ -z "$MISSING_WORKFLOWS" ]; then
+            echo "Found all required successful runs for SHA $RELEASE_SHA."
+            break
+          fi
+
+          echo "Attempt ${ATTEMPT}/${MAX_ATTEMPTS}: waiting for successful runs for:${MISSING_WORKFLOWS}"
+          if [ "$ATTEMPT" -eq "$MAX_ATTEMPTS" ]; then
+            echo "Timed out waiting for all required workflow runs to succeed for SHA $RELEASE_SHA."
+            exit 1
+          fi
+
+          ATTEMPT=$((ATTEMPT + 1))
+          sleep "$SLEEP_SECONDS"
+        done
+
         echo "Windows run ID: $WIN_RUN_ID"
-        echo "WIN_RUN_ID=$WIN_RUN_ID" >> $GITHUB_ENV
-    
-        LINUX_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-linux.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
         echo "Linux run ID: $LINUX_RUN_ID"
+        echo "MacOS run ID: $MAC_RUN_ID"
+        echo "Engine files run ID: $ENGINE_RUN_ID"
+        echo "Visual files run ID: $VISUAL_RUN_ID"
+
+        echo "WIN_RUN_ID=$WIN_RUN_ID" >> $GITHUB_ENV
         echo "LINUX_RUN_ID=$LINUX_RUN_ID" >> $GITHUB_ENV
-        
-        MAC_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-macos.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
         echo "MAC_RUN_ID=$MAC_RUN_ID" >> $GITHUB_ENV
-    
-        ENGINE_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-enginefiles.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
         echo "ENGINE_RUN_ID=$ENGINE_RUN_ID" >> $GITHUB_ENV
-    
-        VISUAL_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-visualfiles.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
         echo "VISUAL_RUN_ID=$VISUAL_RUN_ID" >> $GITHUB_ENV
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
