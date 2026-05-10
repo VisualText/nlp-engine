@@ -61,8 +61,8 @@ jobs:
 
         find_valid_run_with_live_artifacts() {
           local workflow_file="$1"
-          gh api "repos/${{ github.repository }}/actions/workflows/${workflow_file}/runs?status=completed&per_page=100" --paginate \
-            | jq -r '.workflow_runs[] | select(.conclusion == "success") | .id' \
+          gh api "repos/${{ github.repository }}/actions/workflows/${workflow_file}/runs?status=completed&conclusion=success&per_page=30" \
+            | jq -r '.workflow_runs[] | .id' \
             | while read -r run_id; do
                 [ -z "$run_id" ] && continue
                 live_artifacts=$(gh api "repos/${{ github.repository }}/actions/runs/${run_id}/artifacts?per_page=100" | jq '[.artifacts[] | select(.expired == false)] | length')
@@ -73,18 +73,18 @@ jobs:
               done
         }
 
-        if [ "${{ github.event_name }}" = "workflow_run" ] && [ "${{ github.event.workflow_run.conclusion }}" = "success" ]; then
-          SOURCE_RUN_ID="${{ github.event.workflow_run.id }}"
-          SOURCE_WORKFLOW_PATH="${{ github.event.workflow_run.path }}"
-          SOURCE_WORKFLOW_NAME="${{ github.event.workflow_run.name }}"
+        if [ "$EVENT_NAME" = "workflow_run" ] && [ "$EVENT_WORKFLOW_RUN_CONCLUSION" = "success" ]; then
+          SOURCE_RUN_ID="$EVENT_WORKFLOW_RUN_ID"
+          SOURCE_WORKFLOW_PATH="$EVENT_WORKFLOW_RUN_PATH"
+          SOURCE_WORKFLOW_NAME="$EVENT_WORKFLOW_RUN_NAME"
           echo "Triggered by successful workflow_run: ${SOURCE_WORKFLOW_NAME} (${SOURCE_RUN_ID})"
 
-          case "${SOURCE_WORKFLOW_PATH}:${SOURCE_WORKFLOW_NAME}" in
-            *build-windows.yml*:*) WIN_RUN_ID="$SOURCE_RUN_ID" ;;
-            *build-linux.yml*:*) LINUX_RUN_ID="$SOURCE_RUN_ID" ;;
-            *build-macos.yml*:*) MAC_RUN_ID="$SOURCE_RUN_ID" ;;
-            *build-enginefiles.yml*:*) ENGINE_RUN_ID="$SOURCE_RUN_ID" ;;
-            *build-visualfiles.yml*:*) VISUAL_RUN_ID="$SOURCE_RUN_ID" ;;
+          case "${SOURCE_WORKFLOW_PATH}" in
+            .github/workflows/build-windows.yml*) WIN_RUN_ID="$SOURCE_RUN_ID" ;;
+            .github/workflows/build-linux.yml*) LINUX_RUN_ID="$SOURCE_RUN_ID" ;;
+            .github/workflows/build-macos.yml*) MAC_RUN_ID="$SOURCE_RUN_ID" ;;
+            .github/workflows/build-enginefiles.yml*) ENGINE_RUN_ID="$SOURCE_RUN_ID" ;;
+            .github/workflows/build-visualfiles.yml*) VISUAL_RUN_ID="$SOURCE_RUN_ID" ;;
           esac
         fi
 
@@ -113,6 +113,11 @@ jobs:
         set_run_id VISUAL_RUN_ID build-visualfiles.yml
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        EVENT_NAME: ${{ github.event_name }}
+        EVENT_WORKFLOW_RUN_ID: ${{ github.event.workflow_run.id }}
+        EVENT_WORKFLOW_RUN_PATH: ${{ github.event.workflow_run.path }}
+        EVENT_WORKFLOW_RUN_NAME: ${{ github.event.workflow_run.name }}
+        EVENT_WORKFLOW_RUN_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
 
     # Windows artifacts with specific run ID
     - name: Fetch Windows exe
