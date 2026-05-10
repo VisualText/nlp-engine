@@ -43,7 +43,7 @@ You can get help on nlp.exe:
 Switch | Function
 ------------ | -------------
 -INTERP / -COMPILED | Runs NLP++ code interpreted or compiled
--COMPILE | Compiles the analyzer rules and KB before running
+-COMPILE | Generates C++ code for the analyzer rules and KB (does not run the analyzer). Use -COMPILED after the C++ is compiled externally to run the compiled analyzer.
 -ANA | name of the analyzer or path to the analyzer folder
 -IN | Input file
 -OUT | Output directory

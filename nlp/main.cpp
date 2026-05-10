@@ -50,7 +50,19 @@ int _tmain(
 		exit(1);
 
 	NLP_ENGINE *nlpEngine = new NLP_ENGINE(workdir);
-	nlpEngine->analyze(analyzerpath, input, output, develop, silent, compile, compiled);
+	if (compile)
+	{
+		// Compile mode: generate C++ code for the analyzer and KB.
+		// Analysis is not run; the generated C++ must be compiled externally
+		// (e.g. via the NLP++ language extension) before running with -COMPILED.
+		std::_t_cout << _T("[Compiling analyzer and KB: ") << analyzerpath << _T("]") << std::endl;
+		nlpEngine->init(analyzerpath, develop, silent, compile, compiled);
+		std::_t_cout << _T("[Compile complete.]") << std::endl;
+	}
+	else
+	{
+		nlpEngine->analyze(analyzerpath, input, output, develop, silent, compile, compiled);
+	}
 	delete nlpEngine;
 }
 
@@ -274,7 +286,7 @@ void cmdHelpargs(_TCHAR *name)
 	std::_t_cout << std::endl
 				 << _T("usage: nlp [--version] [--help]") << std::endl
 				 << _T("           [-INTERP][-COMPILED] INTERP is the default") << std::endl
-				 << _T("           [-COMPILE] compile analyzer and KB before running") << std::endl
+				 << _T("           [-COMPILE] compile analyzer and KB to C++ (does not run analyzer)") << std::endl
 				 << _T("           [-ANA analyzer] name or path to NLP++ analyzer folder") << std::endl
 				 << _T("           [-IN infile] input text file path") << std::endl
 				 << _T("           [-OUT outdir] output directory") << std::endl

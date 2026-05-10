@@ -311,6 +311,10 @@ int NLP_ENGINE::analyze(
 {   
     NLP_ENGINE::init(analyzer,develop,silent,compile,compiled);
 
+    // Compile mode: C++ code generation is done in init(); do not run analysis.
+    if (m_compile)
+        return 0;
+
     readFiles(infile);
     std::string file;
 
