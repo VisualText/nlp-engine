@@ -31,8 +31,8 @@ You can get help on nlp.exe:
                  [-IN infile] input text file path
                  [-OUT outdir] output directory
                  [-WORK workdir] working directory
-                 [-DEV][-SILENT] -DEV generates logs, -SILENT (default) does not
-                 [infile [outfile]] when no /IN or -OUT specified
+                 [-DEV][-SILENT] -DEV generates logs, -SILENT suppresses logs/output files (off by default)
+                 [infile [outfile]] when no -IN or -OUT specified
 
       Directories in the nlp.exe files:
          data        nlp engine bootstrap grammar
@@ -49,7 +49,7 @@ Switch | Function
 -IN | Input file
 -OUT | Output directory
 -WORK | Working director where the library and executable files are
--DEV / -SILENT | -DEV generates logs, -SILENT (default) does not
+-DEV / -SILENT | -DEV generates logs, -SILENT suppresses logs/output files (off by default)
 [infile [outfile]] | when no -IN or -OUT specified
 
 # Calling NLP++ Analyzers from C++

@@ -291,7 +291,7 @@ void cmdHelpargs(_TCHAR *name)
 				 << _T("           [-IN infile] input text file path") << std::endl
 				 << _T("           [-OUT outdir] output directory") << std::endl
 				 << _T("           [-WORK workdir] working directory") << std::endl
-				 << _T("           [-DEV][-SILENT] -DEV generates logs, -SILENT (default) does not") << std::endl
+				 << _T("           [-DEV][-SILENT] -DEV generates logs, -SILENT suppresses logs/output files (off by default)") << std::endl
 				 << _T("           [infile [outfile]] when no -IN or -OUT specified") << std::endl
 				 << std::endl
 				 << _T("Directories in the nlp.exe files:") << std::endl
