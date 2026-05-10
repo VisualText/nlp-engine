@@ -26,6 +26,7 @@ You can get help on nlp.exe:
 
       usage: nlp [--version] [--help]
                  [-INTERP][-COMPILED] INTERP is the default
+                 [-COMPILE] compile analyzer and KB to C++ (does not run analyzer)
                  [-ANA analyzer] name or path to NLP++ analyzer folder
                  [-IN infile] input text file path
                  [-OUT outdir] output directory
@@ -101,7 +102,7 @@ To compile the nlp-engine for the Mac:
 
 # NLP-ENGINE Development
 
-All the dependencies for building nlp engine from source are included in this repository. We use VCPkg to checkout and build ICU from source. We use CMake to build the nlp engine making sure the ICU library is "found" through VCPkg.
+All the dependencies for building nlp engine from source are included in this repository. We use VCPkg to checkout and build ICU from source. We use CMake to build the nlp engine making sure the dependencies are properly referenced. There are other ways to build the nlp engine, but this is the standard method.
 
 ## NOTE** 
 If on WSL and trying to use VSCode to debug, run the following to help with a possible cmake error when trying to build using the C++ and CMake extensions for VsCode:
@@ -170,4 +171,3 @@ cmake -G "Visual Studio 16 2019" -A x64 -B build -S . -DCMAKE_TOOLCHAIN_FILE=./v
 ```
 cmake --build build --config Debug
 ```
-
