@@ -85,13 +85,26 @@ jobs:
             .github/workflows/build-macos.yml*) MAC_RUN_ID="$SOURCE_RUN_ID" ;;
             .github/workflows/build-enginefiles.yml*) ENGINE_RUN_ID="$SOURCE_RUN_ID" ;;
             .github/workflows/build-visualfiles.yml*) VISUAL_RUN_ID="$SOURCE_RUN_ID" ;;
+            *) echo "Source workflow path not recognized (${SOURCE_WORKFLOW_PATH}); using fallback lookup for missing IDs." ;;
           esac
         fi
 
         set_run_id() {
           local var_name="$1"
           local workflow_file="$2"
-          local run_id="${!var_name:-}"
+          local run_id=""
+
+          case "$var_name" in
+            WIN_RUN_ID) run_id="${WIN_RUN_ID:-}" ;;
+            LINUX_RUN_ID) run_id="${LINUX_RUN_ID:-}" ;;
+            MAC_RUN_ID) run_id="${MAC_RUN_ID:-}" ;;
+            ENGINE_RUN_ID) run_id="${ENGINE_RUN_ID:-}" ;;
+            VISUAL_RUN_ID) run_id="${VISUAL_RUN_ID:-}" ;;
+            *)
+              echo "::error::Unknown run-id variable: ${var_name}"
+              exit 1
+              ;;
+          esac
 
           if [ -z "$run_id" ]; then
             run_id=$(find_valid_run_with_live_artifacts "$workflow_file")
@@ -101,6 +114,14 @@ jobs:
             echo "::error::Unable to find a successful run with live artifacts for ${workflow_file}"
             exit 1
           fi
+
+          case "$var_name" in
+            WIN_RUN_ID) WIN_RUN_ID="$run_id" ;;
+            LINUX_RUN_ID) LINUX_RUN_ID="$run_id" ;;
+            MAC_RUN_ID) MAC_RUN_ID="$run_id" ;;
+            ENGINE_RUN_ID) ENGINE_RUN_ID="$run_id" ;;
+            VISUAL_RUN_ID) VISUAL_RUN_ID="$run_id" ;;
+          esac
 
           echo "${var_name}=${run_id}" >> "$GITHUB_ENV"
           echo "${var_name}: ${run_id}"
