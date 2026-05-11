@@ -59,6 +59,21 @@ jobs:
         set -euo pipefail
         echo "Resolving workflow run IDs..."
 
+        WINDOWS_REQUIRED_ARTIFACTS=("nlpw.exe" "icudt74.dll" "icuuc74.dll")
+        LINUX_REQUIRED_ARTIFACTS=(
+          "nlpl-ubuntu-20.04.exe"
+          "nlpl-ubuntu-22.04.exe"
+          "nlpl-ubuntu-latest.exe"
+          "libicutu-ubuntu-22.04.a"
+          "libicuuc-ubuntu-22.04.a"
+          "libicutu-ubuntu-latest.a"
+          "libicuuc-ubuntu-latest.a"
+          "icu-libs-ubuntu-20.04"
+        )
+        MAC_REQUIRED_ARTIFACTS=("nlpm.exe" "libicutum.a" "libicuucm.a")
+        ENGINE_REQUIRED_ARTIFACTS=("nlpengine.zip")
+        VISUAL_REQUIRED_ARTIFACTS=("visualtext.zip")
+
         run_has_required_artifacts() {
           local run_id="$1"
           shift
@@ -107,27 +122,27 @@ jobs:
           case "${SOURCE_WORKFLOW_PATH}" in
             # workflow_run.path includes "@refs/..." suffix, so prefix matching is required.
             .github/workflows/build-windows.yml*)
-              if run_has_required_artifacts "$SOURCE_RUN_ID" "nlpw.exe" "icudt74.dll" "icuuc74.dll"; then
+              if run_has_required_artifacts "$SOURCE_RUN_ID" "${WINDOWS_REQUIRED_ARTIFACTS[@]}"; then
                 WIN_RUN_ID="$SOURCE_RUN_ID"
               fi
               ;;
             .github/workflows/build-linux.yml*)
-              if run_has_required_artifacts "$SOURCE_RUN_ID" "nlpl-ubuntu-20.04.exe" "nlpl-ubuntu-22.04.exe" "nlpl-ubuntu-latest.exe" "libicutu-ubuntu-22.04.a" "libicuuc-ubuntu-22.04.a" "libicutu-ubuntu-latest.a" "libicuuc-ubuntu-latest.a" "icu-libs-ubuntu-20.04"; then
+              if run_has_required_artifacts "$SOURCE_RUN_ID" "${LINUX_REQUIRED_ARTIFACTS[@]}"; then
                 LINUX_RUN_ID="$SOURCE_RUN_ID"
               fi
               ;;
             .github/workflows/build-macos.yml*)
-              if run_has_required_artifacts "$SOURCE_RUN_ID" "nlpm.exe" "libicutum.a" "libicuucm.a"; then
+              if run_has_required_artifacts "$SOURCE_RUN_ID" "${MAC_REQUIRED_ARTIFACTS[@]}"; then
                 MAC_RUN_ID="$SOURCE_RUN_ID"
               fi
               ;;
             .github/workflows/build-enginefiles.yml*)
-              if run_has_required_artifacts "$SOURCE_RUN_ID" "nlpengine.zip"; then
+              if run_has_required_artifacts "$SOURCE_RUN_ID" "${ENGINE_REQUIRED_ARTIFACTS[@]}"; then
                 ENGINE_RUN_ID="$SOURCE_RUN_ID"
               fi
               ;;
             .github/workflows/build-visualfiles.yml*)
-              if run_has_required_artifacts "$SOURCE_RUN_ID" "visualtext.zip"; then
+              if run_has_required_artifacts "$SOURCE_RUN_ID" "${VISUAL_REQUIRED_ARTIFACTS[@]}"; then
                 VISUAL_RUN_ID="$SOURCE_RUN_ID"
               fi
               ;;
@@ -165,11 +180,11 @@ jobs:
           echo "${var_name}: ${run_id}"
         }
 
-        set_run_id WIN_RUN_ID build-windows.yml "nlpw.exe" "icudt74.dll" "icuuc74.dll"
-        set_run_id LINUX_RUN_ID build-linux.yml "nlpl-ubuntu-20.04.exe" "nlpl-ubuntu-22.04.exe" "nlpl-ubuntu-latest.exe" "libicutu-ubuntu-22.04.a" "libicuuc-ubuntu-22.04.a" "libicutu-ubuntu-latest.a" "libicuuc-ubuntu-latest.a" "icu-libs-ubuntu-20.04"
-        set_run_id MAC_RUN_ID build-macos.yml "nlpm.exe" "libicutum.a" "libicuucm.a"
-        set_run_id ENGINE_RUN_ID build-enginefiles.yml "nlpengine.zip"
-        set_run_id VISUAL_RUN_ID build-visualfiles.yml "visualtext.zip"
+        set_run_id WIN_RUN_ID build-windows.yml "${WINDOWS_REQUIRED_ARTIFACTS[@]}"
+        set_run_id LINUX_RUN_ID build-linux.yml "${LINUX_REQUIRED_ARTIFACTS[@]}"
+        set_run_id MAC_RUN_ID build-macos.yml "${MAC_REQUIRED_ARTIFACTS[@]}"
+        set_run_id ENGINE_RUN_ID build-enginefiles.yml "${ENGINE_REQUIRED_ARTIFACTS[@]}"
+        set_run_id VISUAL_RUN_ID build-visualfiles.yml "${VISUAL_REQUIRED_ARTIFACTS[@]}"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         EVENT_NAME: ${{ github.event_name }}
