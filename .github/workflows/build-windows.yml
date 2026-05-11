@@ -27,8 +27,8 @@ jobs:
         working-directory: vcpkg
 
       - name: List $RUNNER_WORKSPACE before build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
+        shell: pwsh
+        run: Get-ChildItem -Path $env:RUNNER_WORKSPACE -Recurse -Force | Select-Object FullName
 
       - name: Make build directory
         run: mkdir build
@@ -75,8 +75,8 @@ jobs:
           path: analyzers
  
       - name: List runner workspace
-        run: find $RUNNER_WORKSPACE
-        shell: bash
+        shell: pwsh
+        run: Get-ChildItem -Path $env:RUNNER_WORKSPACE -Recurse -Force | Select-Object FullName
 
       - name: Run English Parser
         run: ./bin/Release/nlp.exe -ANA .\analyzers\parse-en-us -WORK D:\a\nlp-engine\nlp-engine .\analyzers\parse-en-us\input\doj.txt -DEV || true
