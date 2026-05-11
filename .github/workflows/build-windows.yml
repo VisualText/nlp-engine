@@ -60,21 +60,21 @@ jobs:
       - name: Copy ICU DLLs to bin/Release
         shell: pwsh
         run: |
-          Copy-Item "vcpkg/packages/icu_x64-windows/bin/icudt78.dll" "bin/Release/icudt74.dll"
-          Copy-Item "vcpkg/packages/icu_x64-windows/bin/icuuc78.dll" "bin/Release/icuuc74.dll"
+          Copy-Item "vcpkg/packages/icu_x64-windows/bin/icudt78.dll" "bin/Release/icudt78.dll"
+          Copy-Item "vcpkg/packages/icu_x64-windows/bin/icuuc78.dll" "bin/Release/icuuc78.dll"
 
-      - name: Upload icudt74.dll
+      - name: Upload icudt78.dll
         uses: actions/upload-artifact@v4
         with:
-          name: icudt74.dll
-          path: bin/Release/icudt74.dll
+          name: icudt78.dll
+          path: bin/Release/icudt78.dll
           retention-days: 30
 
-      - name: Upload icuuc74.dll
+      - name: Upload icuuc78.dll
         uses: actions/upload-artifact@v4
         with:
-          name: icuuc74.dll
-          path: bin/Release/icuuc74.dll
+          name: icuuc78.dll
+          path: bin/Release/icuuc78.dll
           retention-days: 30
 
       - name: Checkout Analyzers repo

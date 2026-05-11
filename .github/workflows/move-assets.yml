@@ -6,17 +6,23 @@ permissions:
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-    - '*'
+  workflow_run:
+    workflows: ["Windows"]
+    types:
+    - completed
 
 concurrency:
-  group: move-assets-${{ github.ref }}
+  group: move-assets-${{ github.event.workflow_run.head_branch || github.ref }}
   cancel-in-progress: false
 
 jobs:
   download_assets:
     runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.event == 'push' &&
+       github.event.workflow_run.head_branch != 'master')
 
     steps:
     - name: Checkout repository
@@ -27,8 +33,17 @@ jobs:
     
     - name: Extract tag name from ref or get latest tag
       id: get_tag
+      env:
+        UPSTREAM_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+        UPSTREAM_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
       run: |
-        if [[ "${{ github.ref }}" == refs/tags/* ]]; then
+        if [[ "${{ github.event_name }}" == "workflow_run" ]]; then
+          # Triggered by upstream Windows build completing on a tag push
+          TAG_NAME="$UPSTREAM_HEAD_BRANCH"
+          TARGET_HEAD_SHA="$UPSTREAM_HEAD_SHA"
+          echo "Using tag from upstream workflow_run: $TAG_NAME"
+          echo "Using head SHA from upstream workflow_run: $TARGET_HEAD_SHA"
+        elif [[ "${{ github.ref }}" == refs/tags/* ]]; then
           # When directly triggered by a tag push
           TAG_NAME=${GITHUB_REF#refs/tags/}
           TARGET_HEAD_SHA=$(git rev-list -n 1 "$TAG_NAME")
@@ -40,7 +55,7 @@ jobs:
           git fetch --tags
           TAG_NAME=$(git describe --tags --abbrev=0)
           TARGET_HEAD_SHA=$(git rev-parse HEAD)
-          
+
           # If no tag found, use timestamp
           if [ -z "$TAG_NAME" ]; then
             TIMESTAMP=$(date +'%Y.%m.%d-%H%M')
