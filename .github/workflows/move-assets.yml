@@ -1,4 +1,4 @@
-name: Updated Move Assets to Release
+name: Move Assets to Release
 
 permissions:
   contents: write
@@ -7,7 +7,7 @@ permissions:
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["build-windows.yml", "build-macos.yml", "build-enginefiles.yml", "build-visualfiles.yml", "build-linux.yml"]
+    workflows: ["Windows", "MaxOS", "Attach Engine File Assets", "Attach VisualText Files Assets", "Linux"]
     types:
       - completed
   push:
