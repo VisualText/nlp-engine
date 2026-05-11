@@ -58,8 +58,8 @@ jobs:
           retention-days: 30
 
       - name: Find ICU DLLs
-        shell: bash
-        run: Get-ChildItem -Path . -Recurse -Filter "icudt74.dll" | Select-Object FullName
+        shell: pwsh
+        run: Get-ChildItem -Path "D:/a/nlp-engine/nlp-engine/vcpkg/packages/icu_x64-windows" -Recurse -Filter "*.dll" | Select-Object FullName
 
       - name: Copy ICU DLLs to bin/Release
         shell: bash
