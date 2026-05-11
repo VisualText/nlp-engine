@@ -59,7 +59,7 @@ jobs:
 
       - name: Find ICU DLLs
         shell: bash
-        run: find . -name "icudt74.dll" -o -name "icuuc74.dll" 2>/dev/null
+        run: Get-ChildItem -Path . -Recurse -Filter "icudt74.dll" | Select-Object FullName
 
       - name: Copy ICU DLLs to bin/Release
         shell: bash
