@@ -6,13 +6,13 @@ permissions:
 
 on:
   workflow_dispatch:
-  workflow_run:
-    workflows: ["Windows", "MaxOS", "Attach Engine File Assets", "Attach VisualText Files Assets", "Linux"]
-    types:
-      - completed
   push:
     tags:
     - '*'
+
+concurrency:
+  group: move-assets-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   download_assets:
@@ -31,12 +31,15 @@ jobs:
         if [[ "${{ github.ref }}" == refs/tags/* ]]; then
           # When directly triggered by a tag push
           TAG_NAME=${GITHUB_REF#refs/tags/}
+          TARGET_HEAD_SHA=$(git rev-list -n 1 "$TAG_NAME")
           echo "Using tag from push trigger: $TAG_NAME"
+          echo "Using tag head SHA: $TARGET_HEAD_SHA"
         else
-          # When triggered by workflow_run or workflow_dispatch
+          # When triggered by workflow_dispatch
           # Get the latest tag from the repository
           git fetch --tags
           TAG_NAME=$(git describe --tags --abbrev=0)
+          TARGET_HEAD_SHA=$(git rev-parse HEAD)
           
           # If no tag found, use timestamp
           if [ -z "$TAG_NAME" ]; then
@@ -50,14 +53,19 @@ jobs:
         
         # Store the tag name for later use
         echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
+        echo "TARGET_HEAD_SHA=$TARGET_HEAD_SHA" >> $GITHUB_ENV
         
         # Debug output
         echo "Selected TAG_NAME: $TAG_NAME"
+        echo "Selected TARGET_HEAD_SHA: $TARGET_HEAD_SHA"
 
     - name: Find workflow run IDs
       run: |
         set -euo pipefail
         echo "Resolving workflow run IDs..."
+        MAX_PAGES=10
+        WAIT_ATTEMPTS=40
+        WAIT_SLEEP_SECONDS=30
 
         WINDOWS_REQUIRED_ARTIFACTS=("nlpw.exe" "icudt74.dll" "icuuc74.dll")
         LINUX_REQUIRED_ARTIFACTS=(
@@ -102,53 +110,46 @@ jobs:
           local workflow_file="$1"
           shift
           local required_artifacts=("$@")
-          gh api "repos/${{ github.repository }}/actions/workflows/${workflow_file}/runs?status=completed&conclusion=success&per_page=30" \
-            | jq -r '.workflow_runs[] | .id' \
-            | while read -r run_id; do
-                [ -z "$run_id" ] && continue
-                if run_has_required_artifacts "$run_id" "${required_artifacts[@]}"; then
-                  echo "$run_id"
-                  break
-                fi
-              done
+          local page=1
+          while [ "$page" -le "$MAX_PAGES" ]; do
+            local run_ids
+            if ! run_ids=$(gh api "repos/${{ github.repository }}/actions/workflows/${workflow_file}/runs?status=completed&conclusion=success&head_sha=${TARGET_HEAD_SHA}&per_page=100&page=${page}" \
+              | jq -r '.workflow_runs[] | .id'); then
+              echo "::error::Failed to query runs for ${workflow_file} (head_sha=${TARGET_HEAD_SHA}, page=${page})"
+              return 1
+            fi
+
+            [ -z "$run_ids" ] && break
+
+            while read -r run_id; do
+              [ -z "$run_id" ] && continue
+              if run_has_required_artifacts "$run_id" "${required_artifacts[@]}"; then
+                echo "$run_id"
+                return 0
+              fi
+            done <<< "$run_ids"
+            page=$((page + 1))
+          done
+          return 1
         }
 
-        if [ "$EVENT_NAME" = "workflow_run" ] && [ "$EVENT_WORKFLOW_RUN_CONCLUSION" = "success" ]; then
-          SOURCE_RUN_ID="$EVENT_WORKFLOW_RUN_ID"
-          SOURCE_WORKFLOW_PATH="$EVENT_WORKFLOW_RUN_PATH"
-          SOURCE_WORKFLOW_NAME="$EVENT_WORKFLOW_RUN_NAME"
-          echo "Triggered by successful workflow_run: ${SOURCE_WORKFLOW_NAME} (${SOURCE_RUN_ID})"
+        wait_for_run_with_required_artifacts() {
+          local workflow_file="$1"
+          shift
+          local required_artifacts=("$@")
+          local run_id=""
 
-          case "${SOURCE_WORKFLOW_PATH}" in
-            # workflow_run.path includes "@refs/..." suffix, so prefix matching is required.
-            .github/workflows/build-windows.yml*)
-              if run_has_required_artifacts "$SOURCE_RUN_ID" "${WINDOWS_REQUIRED_ARTIFACTS[@]}"; then
-                WIN_RUN_ID="$SOURCE_RUN_ID"
-              fi
-              ;;
-            .github/workflows/build-linux.yml*)
-              if run_has_required_artifacts "$SOURCE_RUN_ID" "${LINUX_REQUIRED_ARTIFACTS[@]}"; then
-                LINUX_RUN_ID="$SOURCE_RUN_ID"
-              fi
-              ;;
-            .github/workflows/build-macos.yml*)
-              if run_has_required_artifacts "$SOURCE_RUN_ID" "${MAC_REQUIRED_ARTIFACTS[@]}"; then
-                MAC_RUN_ID="$SOURCE_RUN_ID"
-              fi
-              ;;
-            .github/workflows/build-enginefiles.yml*)
-              if run_has_required_artifacts "$SOURCE_RUN_ID" "${ENGINE_REQUIRED_ARTIFACTS[@]}"; then
-                ENGINE_RUN_ID="$SOURCE_RUN_ID"
-              fi
-              ;;
-            .github/workflows/build-visualfiles.yml*)
-              if run_has_required_artifacts "$SOURCE_RUN_ID" "${VISUAL_REQUIRED_ARTIFACTS[@]}"; then
-                VISUAL_RUN_ID="$SOURCE_RUN_ID"
-              fi
-              ;;
-            *) echo "Source workflow path not recognized (${SOURCE_WORKFLOW_PATH}); using fallback lookup for missing IDs." ;;
-          esac
-        fi
+          for attempt in $(seq 1 "$WAIT_ATTEMPTS"); do
+            echo "Attempt ${attempt}/${WAIT_ATTEMPTS}: searching ${workflow_file} runs for head_sha ${TARGET_HEAD_SHA}..."
+            if run_id=$(find_valid_run_with_required_artifacts "$workflow_file" "${required_artifacts[@]}"); then
+              echo "$run_id"
+              return 0
+            fi
+            sleep "$WAIT_SLEEP_SECONDS"
+          done
+
+          return 1
+        }
 
         set_run_id() {
           local var_name="$1"
@@ -166,7 +167,7 @@ jobs:
           local run_id="${run_id_ref:-}"
 
           if [ -z "$run_id" ]; then
-            run_id=$(find_valid_run_with_required_artifacts "$workflow_file" "${required_artifacts[@]}")
+            run_id=$(wait_for_run_with_required_artifacts "$workflow_file" "${required_artifacts[@]}")
           fi
 
           if [ -z "$run_id" ]; then
@@ -187,11 +188,6 @@ jobs:
         set_run_id VISUAL_RUN_ID build-visualfiles.yml "${VISUAL_REQUIRED_ARTIFACTS[@]}"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        EVENT_NAME: ${{ github.event_name }}
-        EVENT_WORKFLOW_RUN_ID: ${{ github.event.workflow_run.id }}
-        EVENT_WORKFLOW_RUN_PATH: ${{ github.event.workflow_run.path }}
-        EVENT_WORKFLOW_RUN_NAME: ${{ github.event.workflow_run.name }}
-        EVENT_WORKFLOW_RUN_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
 
     # Windows artifacts with specific run ID
     - name: Fetch Windows exe
