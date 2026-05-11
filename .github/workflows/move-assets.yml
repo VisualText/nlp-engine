@@ -82,7 +82,7 @@ jobs:
         WAIT_ATTEMPTS=40
         WAIT_SLEEP_SECONDS=30
 
-        WINDOWS_REQUIRED_ARTIFACTS=("nlpw.exe" "icudt74.dll" "icuuc74.dll")
+        WINDOWS_REQUIRED_ARTIFACTS=("nlpw.exe" "icudt78.dll" "icuuc78.dll")
         LINUX_REQUIRED_ARTIFACTS=(
           "nlpl-ubuntu-20.04.exe"
           "nlpl-ubuntu-22.04.exe"
@@ -216,14 +216,14 @@ jobs:
       uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-windows.yml
-        name: "icudt74.dll"
+        name: "icudt78.dll"
         run_id: ${{ env.WIN_RUN_ID }}
 
     - name: Fetch Windows icu2
       uses: dawidd6/action-download-artifact@v8
       with:
         workflow: build-windows.yml
-        name: "icuuc74.dll"
+        name: "icuuc78.dll"
         run_id: ${{ env.WIN_RUN_ID }}
 
     - name: Create Linux folders
@@ -352,7 +352,7 @@ jobs:
         file ./nlpm.exe
     
         echo "Windows and Mac file modification times:"
-        ls -la ./nlpw.exe ./nlpm.exe ./icudt74.dll ./icuuc74.dll ./libicutum.a ./libicuucm.a
+        ls -la ./nlpw.exe ./nlpm.exe ./icudt78.dll ./icuuc78.dll ./libicutum.a ./libicuucm.a
     
         echo "Zipped Linux folders present:"
         ls -la ./linux/*.zip
@@ -373,8 +373,8 @@ jobs:
         files: |
           ./nlpw.exe
           ./nlpm.exe
-          ./icudt74.dll
-          ./icuuc74.dll
+          ./icudt78.dll
+          ./icuuc78.dll
           ./linux/ubuntu-20.04.zip
           ./linux/ubuntu-22.04.zip
           ./linux/ubuntu-latest.zip
