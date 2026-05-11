@@ -4,17 +4,21 @@ on:
   workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
- 
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+
 jobs:
   build_engine:
     name: Build NLP-ENGINE
     runs-on: windows-latest
-
     env:
       VCPKG_DEFAULT_TRIPLET: x64-windows
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
 
@@ -38,7 +42,7 @@ jobs:
 
       - name: Cmake Build all targets Windows
         run: cmake --build build --config Release --target nlp
-        
+
       - name: Test executable --version
         run: ./bin/Release/nlp.exe --version || true
 
@@ -68,12 +72,12 @@ jobs:
           retention-days: 30
 
       - name: Checkout Analyzers repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: VisualText/analyzers
           submodules: recursive
           path: analyzers
- 
+
       - name: List runner workspace
         shell: pwsh
         run: Get-ChildItem -Path $env:RUNNER_WORKSPACE -Recurse -Force | Select-Object FullName

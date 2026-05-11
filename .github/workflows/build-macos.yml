@@ -4,16 +4,21 @@ on:
   workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
-  
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+
 jobs:
   build_engine:
     name: Build NLP-ENGINE
     runs-on: macOS-latest
-
     env:
       VCPKG_DEFAULT_TRIPLET: arm64-osx
+
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
 
@@ -21,11 +26,11 @@ jobs:
         run: ./bootstrap-vcpkg.sh
         shell: bash
         working-directory: vcpkg
-        
+
       - name: List $RUNNER_WORKSPACE before build
         run: find $RUNNER_WORKSPACE
         shell: bash
-        
+
       - name: Install autoconf-archive
         run: brew install autoconf-archive
 
@@ -51,6 +56,7 @@ jobs:
 
       - name: Test executable --version
         run: ./bin/nlp --version || true
+
       - name: Copy nlp.exe to nlpm.exe
         run: cp bin/nlp bin/nlpm.exe
         shell: bash
@@ -84,14 +90,14 @@ jobs:
           name: libicuucm.a
           path: vcpkg_installed/arm64-osx/lib/libicuucm.a
           retention-days: 30
-          
+
       - name: Checkout Analyzers repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: VisualText/analyzers
           submodules: recursive
           path: analyzers
-                 
+
       - name: List runner workspace
         run: find $RUNNER_WORKSPACE
         shell: bash
