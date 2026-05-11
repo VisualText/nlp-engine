@@ -57,15 +57,11 @@ jobs:
           path: bin/Release/nlpw.exe
           retention-days: 30
 
-      - name: Find ICU DLLs
-        shell: bash
-        run: find . -name "icudt74.dll" -o -name "icuuc74.dll" 2>/dev/null
-
       - name: Copy ICU DLLs to bin/Release
-        shell: bash
+        shell: pwsh
         run: |
-          find . -name "icudt74.dll" -exec cp {} bin/Release/icudt74.dll \;
-          find . -name "icuuc74.dll" -exec cp {} bin/Release/icuuc74.dll \;
+          Copy-Item "vcpkg/packages/icu_x64-windows/bin/icudt78.dll" "bin/Release/icudt74.dll"
+          Copy-Item "vcpkg/packages/icu_x64-windows/bin/icuuc78.dll" "bin/Release/icuuc74.dll"
 
       - name: Upload icudt74.dll
         uses: actions/upload-artifact@v4
