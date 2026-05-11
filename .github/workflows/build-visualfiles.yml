@@ -4,19 +4,22 @@ on:
   workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
-    
-jobs:    
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+
+jobs:
   zip_files:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2 
+      - uses: actions/checkout@v4
       - uses: papeloto/action-zip@v1
         with:
           files: analyzers/ data/ visualtext/
           recursive: false
           dest: visualtext.zip
-          
       - uses: actions/upload-artifact@v4
         with:
           name: visualtext.zip
