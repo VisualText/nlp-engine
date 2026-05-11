@@ -63,6 +63,9 @@ jobs:
       run: |
         set -euo pipefail
         echo "Resolving workflow run IDs..."
+        MAX_PAGES=10
+        WAIT_ATTEMPTS=40
+        WAIT_SLEEP_SECONDS=30
 
         WINDOWS_REQUIRED_ARTIFACTS=("nlpw.exe" "icudt74.dll" "icuuc74.dll")
         LINUX_REQUIRED_ARTIFACTS=(
@@ -108,10 +111,13 @@ jobs:
           shift
           local required_artifacts=("$@")
           local page=1
-          while [ "$page" -le 10 ]; do
+          while [ "$page" -le "$MAX_PAGES" ]; do
             local run_ids
-            run_ids=$(gh api "repos/${{ github.repository }}/actions/workflows/${workflow_file}/runs?status=completed&conclusion=success&head_sha=${TARGET_HEAD_SHA}&per_page=100&page=${page}" \
-              | jq -r '.workflow_runs[] | .id')
+            if ! run_ids=$(gh api "repos/${{ github.repository }}/actions/workflows/${workflow_file}/runs?status=completed&conclusion=success&head_sha=${TARGET_HEAD_SHA}&per_page=100&page=${page}" \
+              | jq -r '.workflow_runs[] | .id'); then
+              echo "::error::Failed to query runs for ${workflow_file} (head_sha=${TARGET_HEAD_SHA}, page=${page})"
+              return 1
+            fi
 
             [ -z "$run_ids" ] && break
 
@@ -131,17 +137,15 @@ jobs:
           local workflow_file="$1"
           shift
           local required_artifacts=("$@")
-          local attempts=40
-          local sleep_seconds=30
           local run_id=""
 
-          for attempt in $(seq 1 "$attempts"); do
-            echo "Attempt ${attempt}/${attempts}: searching ${workflow_file} runs for head_sha ${TARGET_HEAD_SHA}..."
+          for attempt in $(seq 1 "$WAIT_ATTEMPTS"); do
+            echo "Attempt ${attempt}/${WAIT_ATTEMPTS}: searching ${workflow_file} runs for head_sha ${TARGET_HEAD_SHA}..."
             if run_id=$(find_valid_run_with_required_artifacts "$workflow_file" "${required_artifacts[@]}"); then
               echo "$run_id"
               return 0
             fi
-            sleep "$sleep_seconds"
+            sleep "$WAIT_SLEEP_SECONDS"
           done
 
           return 1
