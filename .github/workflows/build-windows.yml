@@ -4,6 +4,9 @@ on:
   workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
+  push:
+    tags:
+      - '*'
  
 jobs:
   build_engine:
@@ -45,6 +48,13 @@ jobs:
       - name: Copy nlp.exe to nlpw.exe
         run: cp bin/Release/nlp.exe bin/Release/nlpw.exe
         shell: bash
+
+      - name: Validate release artifacts
+        shell: bash
+        run: |
+          test -f bin/Release/nlpw.exe
+          test -f bin/Release/icudt74.dll
+          test -f bin/Release/icuuc74.dll
 
       - name: Upload nlpw.exe
         uses: actions/upload-artifact@v4
