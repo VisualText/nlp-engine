@@ -1,4 +1,4 @@
-name: Updated Move Assets to Release
+name: Move Assets to Release
 
 permissions:
   contents: write
@@ -7,7 +7,7 @@ permissions:
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["build-windows.yml", "build-macos.yml", "build-enginefiles.yml", "build-visualfiles.yml", "build-linux.yml"]
+    workflows: ["Windows", "MaxOS", "Attach Engine File Assets", "Attach VisualText Files Assets", "Linux"]
     types:
       - completed
   push:
@@ -59,14 +59,54 @@ jobs:
         set -euo pipefail
         echo "Resolving workflow run IDs..."
 
-        find_valid_run_with_live_artifacts() {
+        WINDOWS_REQUIRED_ARTIFACTS=("nlpw.exe" "icudt74.dll" "icuuc74.dll")
+        LINUX_REQUIRED_ARTIFACTS=(
+          "nlpl-ubuntu-20.04.exe"
+          "nlpl-ubuntu-22.04.exe"
+          "nlpl-ubuntu-latest.exe"
+          "libicutu-ubuntu-22.04.a"
+          "libicuuc-ubuntu-22.04.a"
+          "libicutu-ubuntu-latest.a"
+          "libicuuc-ubuntu-latest.a"
+          "icu-libs-ubuntu-20.04"
+        )
+        MAC_REQUIRED_ARTIFACTS=("nlpm.exe" "libicutum.a" "libicuucm.a")
+        ENGINE_REQUIRED_ARTIFACTS=("nlpengine.zip")
+        VISUAL_REQUIRED_ARTIFACTS=("visualtext.zip")
+
+        run_has_required_artifacts() {
+          local run_id="$1"
+          shift
+          local required_artifacts=("$@")
+          local artifact_names
+          local missing_artifacts=()
+
+          artifact_names=$(gh api "repos/${{ github.repository }}/actions/runs/${run_id}/artifacts?per_page=100" \
+            | jq -r '.artifacts[] | select(.expired == false) | .name')
+
+          for artifact_name in "${required_artifacts[@]}"; do
+            if ! printf '%s\n' "$artifact_names" | grep -Fxq -- "$artifact_name"; then
+              missing_artifacts+=("$artifact_name")
+            fi
+          done
+
+          if [ "${#missing_artifacts[@]}" -gt 0 ]; then
+            echo "Run ${run_id} is missing required artifacts: ${missing_artifacts[*]}" >&2
+            return 1
+          fi
+
+          return 0
+        }
+
+        find_valid_run_with_required_artifacts() {
           local workflow_file="$1"
+          shift
+          local required_artifacts=("$@")
           gh api "repos/${{ github.repository }}/actions/workflows/${workflow_file}/runs?status=completed&conclusion=success&per_page=30" \
             | jq -r '.workflow_runs[] | .id' \
             | while read -r run_id; do
                 [ -z "$run_id" ] && continue
-                live_artifacts=$(gh api "repos/${{ github.repository }}/actions/runs/${run_id}/artifacts?per_page=100" | jq '[.artifacts[] | select(.expired == false)] | length')
-                if [ "$live_artifacts" -gt 0 ]; then
+                if run_has_required_artifacts "$run_id" "${required_artifacts[@]}"; then
                   echo "$run_id"
                   break
                 fi
@@ -81,11 +121,31 @@ jobs:
 
           case "${SOURCE_WORKFLOW_PATH}" in
             # workflow_run.path includes "@refs/..." suffix, so prefix matching is required.
-            .github/workflows/build-windows.yml*) WIN_RUN_ID="$SOURCE_RUN_ID" ;;
-            .github/workflows/build-linux.yml*) LINUX_RUN_ID="$SOURCE_RUN_ID" ;;
-            .github/workflows/build-macos.yml*) MAC_RUN_ID="$SOURCE_RUN_ID" ;;
-            .github/workflows/build-enginefiles.yml*) ENGINE_RUN_ID="$SOURCE_RUN_ID" ;;
-            .github/workflows/build-visualfiles.yml*) VISUAL_RUN_ID="$SOURCE_RUN_ID" ;;
+            .github/workflows/build-windows.yml*)
+              if run_has_required_artifacts "$SOURCE_RUN_ID" "${WINDOWS_REQUIRED_ARTIFACTS[@]}"; then
+                WIN_RUN_ID="$SOURCE_RUN_ID"
+              fi
+              ;;
+            .github/workflows/build-linux.yml*)
+              if run_has_required_artifacts "$SOURCE_RUN_ID" "${LINUX_REQUIRED_ARTIFACTS[@]}"; then
+                LINUX_RUN_ID="$SOURCE_RUN_ID"
+              fi
+              ;;
+            .github/workflows/build-macos.yml*)
+              if run_has_required_artifacts "$SOURCE_RUN_ID" "${MAC_REQUIRED_ARTIFACTS[@]}"; then
+                MAC_RUN_ID="$SOURCE_RUN_ID"
+              fi
+              ;;
+            .github/workflows/build-enginefiles.yml*)
+              if run_has_required_artifacts "$SOURCE_RUN_ID" "${ENGINE_REQUIRED_ARTIFACTS[@]}"; then
+                ENGINE_RUN_ID="$SOURCE_RUN_ID"
+              fi
+              ;;
+            .github/workflows/build-visualfiles.yml*)
+              if run_has_required_artifacts "$SOURCE_RUN_ID" "${VISUAL_REQUIRED_ARTIFACTS[@]}"; then
+                VISUAL_RUN_ID="$SOURCE_RUN_ID"
+              fi
+              ;;
             *) echo "Source workflow path not recognized (${SOURCE_WORKFLOW_PATH}); using fallback lookup for missing IDs." ;;
           esac
         fi
@@ -93,6 +153,8 @@ jobs:
         set_run_id() {
           local var_name="$1"
           local workflow_file="$2"
+          shift 2
+          local required_artifacts=("$@")
           case "$var_name" in
             WIN_RUN_ID|LINUX_RUN_ID|MAC_RUN_ID|ENGINE_RUN_ID|VISUAL_RUN_ID) ;;
             *)
@@ -104,11 +166,11 @@ jobs:
           local run_id="${run_id_ref:-}"
 
           if [ -z "$run_id" ]; then
-            run_id=$(find_valid_run_with_live_artifacts "$workflow_file")
+            run_id=$(find_valid_run_with_required_artifacts "$workflow_file" "${required_artifacts[@]}")
           fi
 
           if [ -z "$run_id" ]; then
-            echo "::error::Unable to find a successful run with live artifacts for ${workflow_file}"
+            echo "::error::Unable to find a successful run with required live artifacts for ${workflow_file}: ${required_artifacts[*]}"
             exit 1
           fi
 
@@ -118,11 +180,11 @@ jobs:
           echo "${var_name}: ${run_id}"
         }
 
-        set_run_id WIN_RUN_ID build-windows.yml
-        set_run_id LINUX_RUN_ID build-linux.yml
-        set_run_id MAC_RUN_ID build-macos.yml
-        set_run_id ENGINE_RUN_ID build-enginefiles.yml
-        set_run_id VISUAL_RUN_ID build-visualfiles.yml
+        set_run_id WIN_RUN_ID build-windows.yml "${WINDOWS_REQUIRED_ARTIFACTS[@]}"
+        set_run_id LINUX_RUN_ID build-linux.yml "${LINUX_REQUIRED_ARTIFACTS[@]}"
+        set_run_id MAC_RUN_ID build-macos.yml "${MAC_REQUIRED_ARTIFACTS[@]}"
+        set_run_id ENGINE_RUN_ID build-enginefiles.yml "${ENGINE_REQUIRED_ARTIFACTS[@]}"
+        set_run_id VISUAL_RUN_ID build-visualfiles.yml "${VISUAL_REQUIRED_ARTIFACTS[@]}"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         EVENT_NAME: ${{ github.event_name }}
