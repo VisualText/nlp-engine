@@ -4,7 +4,6 @@ on:
   workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
-  push:
     branches:
       - master
     tags:
@@ -55,7 +54,6 @@ jobs:
         with:
           name: nlpw.exe
           path: bin/Release/nlpw.exe
-          retention-days: 30
 
       - name: Copy ICU DLLs to bin/Release
         shell: pwsh
@@ -68,14 +66,12 @@ jobs:
         with:
           name: icudt78.dll
           path: bin/Release/icudt78.dll
-          retention-days: 30
 
       - name: Upload icuuc78.dll
         uses: actions/upload-artifact@v4
         with:
           name: icuuc78.dll
           path: bin/Release/icuuc78.dll
-          retention-days: 30
 
       - name: Checkout Analyzers repo
         uses: actions/checkout@v4
