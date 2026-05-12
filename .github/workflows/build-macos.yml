@@ -4,12 +4,7 @@ on:
   workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
-  push:
-    branches:
-      - master
-    tags:
-      - '*'
-
+  
 jobs:
   build_engine:
     name: Build NLP-ENGINE
@@ -67,7 +62,6 @@ jobs:
         with:
           name: nlpm.exe
           path: bin/nlpm.exe
-          retention-days: 30
 
       - name: Copy libicutu.a to libicutum.a
         run: cp vcpkg_installed/arm64-osx/lib/libicutu.a vcpkg_installed/arm64-osx/lib/libicutum.a
@@ -78,7 +72,6 @@ jobs:
         with:
           name: libicutum.a
           path: vcpkg_installed/arm64-osx/lib/libicutum.a
-          retention-days: 30
 
       - name: Copy libicuuc.a to libicuucm.a
         run: cp vcpkg_installed/arm64-osx/lib/libicuuc.a vcpkg_installed/arm64-osx/lib/libicuucm.a
@@ -89,7 +82,6 @@ jobs:
         with:
           name: libicuucm.a
           path: vcpkg_installed/arm64-osx/lib/libicuucm.a
-          retention-days: 30
 
       - name: Checkout Analyzers repo
         uses: actions/checkout@v4

@@ -4,13 +4,8 @@ on:
   workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
-  push:
-    branches:
-      - master
-    tags:
-      - '*'
-
-jobs:
+    
+jobs:    
   zip_files:
     runs-on: ubuntu-latest
     steps:
@@ -24,4 +19,3 @@ jobs:
         with:
           name: visualtext.zip
           path: ${{ github.workspace }}/visualtext.zip
-          retention-days: 30

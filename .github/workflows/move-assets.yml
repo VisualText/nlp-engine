@@ -6,13 +6,13 @@ permissions:
 
 on:
   workflow_dispatch:
+  workflow_run:
+    workflows: ["build-windows.yml", "build-macos.yml", "build-enginefiles.yml", "build-visualfiles.yml", "build-linux.yml"]
+    types:
+      - completed
   push:
     tags:
-      - '*'
-
-concurrency:
-  group: move-assets-${{ github.ref }}
-  cancel-in-progress: false
+    - '*'
 
 jobs:
   download_assets:
