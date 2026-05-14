@@ -62,6 +62,25 @@ jobs:
         WAIT_ATTEMPTS=40
         WAIT_SLEEP_SECONDS=30
 
+        case "${{ github.event_name }}" in
+          workflow_run)
+            TARGET_HEAD_SHA="${{ github.event.workflow_run.head_sha }}"
+            ;;
+          push|workflow_dispatch)
+            TARGET_HEAD_SHA="${{ github.sha }}"
+            ;;
+          *)
+            TARGET_HEAD_SHA="${{ github.sha }}"
+            ;;
+        esac
+
+        if [ -z "$TARGET_HEAD_SHA" ]; then
+          echo "::error::TARGET_HEAD_SHA could not be determined"
+          exit 1
+        fi
+
+        echo "Using TARGET_HEAD_SHA=${TARGET_HEAD_SHA}"
+
         WINDOWS_REQUIRED_ARTIFACTS=("nlpw.exe" "icudt78.dll" "icuuc78.dll" "nlpengine-compile-libs.zip")
         LINUX_REQUIRED_ARTIFACTS=(
           "nlpl-ubuntu-20.04.exe"
