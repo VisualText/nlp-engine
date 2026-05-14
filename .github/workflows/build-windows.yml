@@ -73,6 +73,42 @@ jobs:
           name: icuuc78.dll
           path: bin/Release/icuuc78.dll
 
+      - name: Package compile libraries (prim/kbm/consh/words/lite)
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+
+          $outRoot = Join-Path $env:GITHUB_WORKSPACE 'compile-libs'
+          $includeRoot = Join-Path $outRoot 'include'
+          $libRoot = Join-Path $outRoot 'lib'
+          New-Item -ItemType Directory -Force -Path $includeRoot | Out-Null
+          New-Item -ItemType Directory -Force -Path $libRoot | Out-Null
+
+          # Header trees used by analyzer/KB generated C++.
+          Copy-Item -Recurse -Force 'include' (Join-Path $includeRoot 'include')
+          Copy-Item -Recurse -Force 'cs/include' (Join-Path $includeRoot 'cs-include')
+
+          $requiredLibs = @('prim','kbm','consh','words','lite')
+          foreach ($name in $requiredLibs) {
+            $lib = Get-ChildItem -Path $env:GITHUB_WORKSPACE -Recurse -File -Filter "$name.lib" |
+              Where-Object { $_.FullName -notmatch '\\vcpkg\\' } |
+              Select-Object -First 1
+
+            if (-not $lib) {
+              throw "Missing required static library: $name.lib"
+            }
+
+            Copy-Item -Force $lib.FullName (Join-Path $libRoot "$name.lib")
+          }
+
+          Compress-Archive -Path (Join-Path $outRoot '*') -DestinationPath (Join-Path $env:GITHUB_WORKSPACE 'nlpengine-compile-libs.zip') -Force
+
+      - name: Upload nlpengine-compile-libs.zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: nlpengine-compile-libs.zip
+          path: nlpengine-compile-libs.zip
+
       - name: Checkout Analyzers repo
         uses: actions/checkout@v4
         with:
