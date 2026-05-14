@@ -1,4 +1,4 @@
-name: Move Assets to Release
+name: Updated Move Assets to Release
 
 permissions:
   contents: write
@@ -31,16 +31,13 @@ jobs:
         if [[ "${{ github.ref }}" == refs/tags/* ]]; then
           # When directly triggered by a tag push
           TAG_NAME=${GITHUB_REF#refs/tags/}
-          TARGET_HEAD_SHA=$(git rev-list -n 1 "$TAG_NAME")
           echo "Using tag from push trigger: $TAG_NAME"
-          echo "Using tag head SHA: $TARGET_HEAD_SHA"
         else
-          # When triggered by workflow_dispatch
+          # When triggered by workflow_run or workflow_dispatch
           # Get the latest tag from the repository
           git fetch --tags
           TAG_NAME=$(git describe --tags --abbrev=0)
-          TARGET_HEAD_SHA=$(git rev-parse HEAD)
-
+          
           # If no tag found, use timestamp
           if [ -z "$TAG_NAME" ]; then
             TIMESTAMP=$(date +'%Y.%m.%d-%H%M')
@@ -53,11 +50,9 @@ jobs:
         
         # Store the tag name for later use
         echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
-        echo "TARGET_HEAD_SHA=$TARGET_HEAD_SHA" >> $GITHUB_ENV
         
         # Debug output
         echo "Selected TAG_NAME: $TAG_NAME"
-        echo "Selected TARGET_HEAD_SHA: $TARGET_HEAD_SHA"
 
     - name: Find workflow run IDs
       run: |
