@@ -85,8 +85,10 @@ jobs:
           New-Item -ItemType Directory -Force -Path $libRoot | Out-Null
 
           # Header trees used by analyzer/KB generated C++.
-          Copy-Item -Recurse -Force 'include' (Join-Path $includeRoot 'include')
-          Copy-Item -Recurse -Force 'cs/include' (Join-Path $includeRoot 'cs-include')
+          # Keep Api at include/Api so vscode-nlp can add include/Api as an include root.
+          New-Item -ItemType Directory -Force -Path (Join-Path $includeRoot 'Api') | Out-Null
+          Copy-Item -Recurse -Force 'include/Api/*' (Join-Path $includeRoot 'Api')
+          Copy-Item -Recurse -Force 'cs/include' (Join-Path $includeRoot 'cs')
 
           $requiredLibs = @('prim','kbm','consh','words','lite')
           foreach ($name in $requiredLibs) {
