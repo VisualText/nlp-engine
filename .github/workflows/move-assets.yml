@@ -58,6 +58,18 @@ jobs:
       run: |
         set -euo pipefail
         echo "Resolving workflow run IDs..."
+
+        if [ "${{ github.event_name }}" = "workflow_run" ]; then
+          TARGET_HEAD_SHA="${{ github.event.workflow_run.head_sha }}"
+        else
+          TARGET_HEAD_SHA="${{ github.sha }}"
+        fi
+
+        if [ -z "${TARGET_HEAD_SHA}" ]; then
+          echo "::error::TARGET_HEAD_SHA is empty"
+          exit 1
+        fi
+
         MAX_PAGES=10
         WAIT_ATTEMPTS=40
         WAIT_SLEEP_SECONDS=30
