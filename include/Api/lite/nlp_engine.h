@@ -87,6 +87,7 @@ public:
     bool m_silent;
     bool m_compile;
     bool m_compiled;
+    bool m_compileKB;
 
     void setWorkingFolder(_TCHAR *workingFolder);
     void zeroInit();
@@ -97,7 +98,8 @@ public:
         bool develop=false,
         bool silent=false,
         bool compile=false,
-        bool compiled=false
+        bool compiled=false,
+        bool compileKB=false
     );
 
     int analyze(
@@ -107,7 +109,8 @@ public:
         bool develop=false,
         bool silent=false,
         bool compile=false,
-        bool compiled=false
+        bool compiled=false,
+        bool compileKB=false
     );
 
     int analyze(
@@ -119,7 +122,8 @@ public:
         bool develop=false,
         bool silent=false,
         bool compile=false,
-        bool compiled=false
+        bool compiled=false,
+        bool compileKB=false
     );
 
     int analyze(
@@ -129,7 +133,8 @@ public:
         bool develop=false,
         bool silent=false,
         bool compile=false,
-        bool compiled=false
+        bool compiled=false,
+        bool compileKB=false
     );
 
     int close();

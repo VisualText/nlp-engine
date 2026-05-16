@@ -97,6 +97,12 @@ void NLP_ENGINE::zeroInit()
     m_nlp = 0;
     m_cg = 0;
 
+    m_develop = false;
+    m_silent = false;
+    m_compile = false;
+    m_compiled = false;
+    m_compileKB = false;
+
     #ifdef TEST_RUG_
     m_gram = 0;
     m_rug = 0;
@@ -132,9 +138,10 @@ int NLP_ENGINE::init(
 	bool develop,
 	bool silent,
     bool compile,
-    bool compiled
+    bool compiled,
+    bool compileKB
 )
-{   
+{
 //     NLP_ENGINE::zeroInit();    // [DEGLOB]	// 10/15/20 AM.
     // If calling a different analyzer, clear out info. // [DEGLOB]	// 10/15/20 AM.
     // Todo: The NLP object should store all analyzer information.  // [DEGLOB]	// 10/15/20 AM.
@@ -148,6 +155,7 @@ int NLP_ENGINE::init(
     m_silent = silent;
     m_compile = compile;
     m_compiled = compiled;
+    m_compileKB = compileKB;
 
     struct stat st;
     char str[MAXPATH] = _T("");
@@ -253,12 +261,16 @@ int NLP_ENGINE::init(
         std::_t_cerr << _T("[Loaded knowledge base.]") << std::endl;             // 02/19/19 AM.
 
         // Compile the KB if requested.
-        if (m_compile)
+        if (m_compile || m_compileKB)
             {
             std::_t_cerr << _T("[Compiling knowledge base.]") << std::endl;
             m_cg->genKB();
             m_cg->compileKB();
             }
+
+        // KB-only compile: skip building the analyzer.
+        if (m_compileKB && !m_compile)
+            return 0;
 
         /////////////////////////////////////////////////
         // BUILD ANALYZER APPLICATION
@@ -306,13 +318,14 @@ int NLP_ENGINE::analyze(
 	bool develop,
 	bool silent,
     bool compile,
-    bool compiled
+    bool compiled,
+    bool compileKB
 	)
-{   
-    NLP_ENGINE::init(analyzer,develop,silent,compile,compiled);
+{
+    NLP_ENGINE::init(analyzer,develop,silent,compile,compiled,compileKB);
 
     // Compile mode: C++ code generation is done in init(); do not run analysis.
-    if (m_compile)
+    if (m_compile || m_compileKB)
         return 0;
 
     readFiles(infile);
@@ -396,11 +409,15 @@ int NLP_ENGINE::analyze(
 	bool develop,
 	bool silent,
     bool compile,
-    bool compiled
+    bool compiled,
+    bool compileKB
 	)
 {
- 
-    NLP_ENGINE::init(analyzer,develop,silent,compile,compiled);
+
+    NLP_ENGINE::init(analyzer,develop,silent,compile,compiled,compileKB);
+
+    if (m_compile || m_compileKB)
+        return 0;
 
     // Analyzer can output to a stream.
     _TCHAR ofstr[MAXSTR];
@@ -441,11 +458,15 @@ int NLP_ENGINE::analyze(
 	bool develop,
 	bool silent,
     bool compile,
-    bool compiled
+    bool compiled,
+    bool compileKB
 	)
 {
- 
-    NLP_ENGINE::init(analyzer,develop,silent,compile,compiled);
+
+    NLP_ENGINE::init(analyzer,develop,silent,compile,compiled,compileKB);
+
+    if (m_compile || m_compileKB)
+        return 0;
 
     // Analyzer can output to a stream.
     _TCHAR ofstr[MAXSTR];
