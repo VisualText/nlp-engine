@@ -7905,15 +7905,15 @@ return (val ? true : false);
 // the inner result is `long`, but the sink overload set only has `long long`/`float`/etc.,
 // so `long → long long` and `long → float` rank equally and MSVC reports ambiguity.
 // These (long[, long]) overloads provide exact matches and delegate to the long long version.
-long Arun::eq(long a, long b)     { return eq((long long)a, (long long)b); }
-long Arun::ne(long a, long b)     { return ne((long long)a, (long long)b); }
-long Arun::gt(long a, long b)     { return gt((long long)a, (long long)b); }
-long Arun::lt(long a, long b)     { return lt((long long)a, (long long)b); }
-long Arun::ge(long a, long b)     { return ge((long long)a, (long long)b); }
-long Arun::le(long a, long b)     { return le((long long)a, (long long)b); }
-long Arun::vtand(long a, long b)  { return vtand((long long)a, (long long)b); }
-long Arun::vtor(long a, long b)   { return vtor((long long)a, (long long)b); }
-long Arun::vtnot(long a)          { return vtnot((long long)a); }
+long long Arun::eq(long a, long b)     { return eq((long long)a, (long long)b); }
+long long Arun::ne(long a, long b)     { return ne((long long)a, (long long)b); }
+long long Arun::gt(long a, long b)     { return gt((long long)a, (long long)b); }
+long long Arun::lt(long a, long b)     { return lt((long long)a, (long long)b); }
+long long Arun::ge(long a, long b)     { return ge((long long)a, (long long)b); }
+long long Arun::le(long a, long b)     { return le((long long)a, (long long)b); }
+long long Arun::vtand(long a, long b)  { return vtand((long long)a, (long long)b); }
+long long Arun::vtor(long a, long b)   { return vtor((long long)a, (long long)b); }
+long long Arun::vtnot(long a)          { return vtnot((long long)a); }
 bool Arun::stmt(long val)         { return stmt((long long)val); }
 
 bool Arun::truth(float val)
@@ -9986,7 +9986,7 @@ return res;
 * SUBJ:	NLP++ '==' operator, compiled runtime.
 ********************************************/
 
-long Arun::eq(RFASem *sem, long long num)
+long long Arun::eq(RFASem *sem, long long num)
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -10062,7 +10062,7 @@ delete sem;
 return res;
 }
 
-long Arun::eq(RFASem *sem, float num)									// 08/18/01 AM.
+long long Arun::eq(RFASem *sem, float num)									// 08/18/01 AM.
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -10088,7 +10088,7 @@ return res;
 }
 
 
-long Arun::eq(RFASem *sem, _TCHAR *str)
+long long Arun::eq(RFASem *sem, _TCHAR *str)
 {
 if (!sem)																		// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
@@ -10126,7 +10126,7 @@ delete sem;
 return res;
 }
 
-long Arun::eq(RFASem *sem1, RFASem *sem2)
+long long Arun::eq(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
 long num = 0L;															// FIX	// 08/17/01 AM.
@@ -10340,19 +10340,19 @@ return num;
 }
 
 
-long Arun::eq(long long num1, long long num2)
+long long Arun::eq(long long num1, long long num2)
 {
 return num1 == num2;
 }
 
 
-long Arun::eq(long long num, RFASem *sem)
+long long Arun::eq(long long num, RFASem *sem)
 {
 return eq(sem,num);					// Deletes sem.					// 12/12/02 AM.
 }
 
 
-long Arun::eq(long long num, _TCHAR *str1)										// 07/11/03 AM.
+long long Arun::eq(long long num, _TCHAR *str1)										// 07/11/03 AM.
 {
 if (num != 0)
 	return 0;
@@ -10360,7 +10360,7 @@ return empty(str1) ? 1 : 0;
 }
 
 
-long Arun::eq(_TCHAR *str1, long long num)										// 07/11/03 AM.
+long long Arun::eq(_TCHAR *str1, long long num)										// 07/11/03 AM.
 {
 if (num != 0)
 	return 0;
@@ -10368,7 +10368,7 @@ return empty(str1) ? 1 : 0;
 }
 
 
-long Arun::eq(float num, RFASem *sem)									// 08/18/01 AM.
+long long Arun::eq(float num, RFASem *sem)									// 08/18/01 AM.
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -10393,7 +10393,7 @@ delete sem;
 return res;
 }
 
-long Arun::eq(_TCHAR *str1, _TCHAR *str2)
+long long Arun::eq(_TCHAR *str1, _TCHAR *str2)
 {
 if (str1 && *str1 && str2 && *str2)
 	return !_tcscmp(str1,str2) ? true : false;
@@ -10403,7 +10403,7 @@ return true;				// Both are empty.
 }
 
 
-long Arun::eq(_TCHAR *str, RFASem *sem)
+long long Arun::eq(_TCHAR *str, RFASem *sem)
 {
 if (!sem)																		// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
@@ -10449,17 +10449,17 @@ return res;
 }
 
 
-long Arun::eq(long long num1, float num2)
+long long Arun::eq(long long num1, float num2)
 {
 return num1 == num2;
 }
 
-long Arun::eq(float num1, long long num2)
+long long Arun::eq(float num1, long long num2)
 {
 return num1 == num2;
 }
 
-long Arun::eq(float num1, float num2)
+long long Arun::eq(float num1, float num2)
 {
 return num1 == num2;
 }
@@ -10472,7 +10472,7 @@ return num1 == num2;
 * NOTE:	Should return bool...	12/12/02 AM.
 ********************************************/
 
-long Arun::ne(RFASem *sem, long long num)
+long long Arun::ne(RFASem *sem, long long num)
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -10549,7 +10549,7 @@ delete sem;
 return res;
 }
 
-long Arun::ne(RFASem *sem, float num)									// 08/18/01 AM.
+long long Arun::ne(RFASem *sem, float num)									// 08/18/01 AM.
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -10575,7 +10575,7 @@ return res;
 }
 
 
-long Arun::ne(RFASem *sem1, RFASem *sem2)
+long long Arun::ne(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
 long num = 0L;															// FIX	// 08/17/01 AM.
@@ -10793,17 +10793,17 @@ return 0;																		// 08/08/02 AM.
 }
 
 
-long Arun::ne(long long num1, long long num2)
+long long Arun::ne(long long num1, long long num2)
 {
 return num1 != num2;
 }
 
-long Arun::ne(long long num, RFASem *sem)
+long long Arun::ne(long long num, RFASem *sem)
 {
 return ne(sem,num);			// Deletes sem.							// 12/12/02 AM.
 }
 
-long Arun::ne(float num, RFASem *sem)									// 08/18/01 AM.
+long long Arun::ne(float num, RFASem *sem)									// 08/18/01 AM.
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -10885,23 +10885,23 @@ return res;
 }
 
 
-long Arun::ne(float num1, long long num2)
+long long Arun::ne(float num1, long long num2)
 {
 return num1 != num2;
 }
 
-long Arun::ne(long long num1, float num2)
+long long Arun::ne(long long num1, float num2)
 {
 return num1 != num2;
 }
 
-long Arun::ne(float num1, float num2)
+long long Arun::ne(float num1, float num2)
 {
 return num1 != num2;
 }
 
 
-long Arun::ne(long long num, _TCHAR *str1)										// 07/11/03 AM.
+long long Arun::ne(long long num, _TCHAR *str1)										// 07/11/03 AM.
 {
 if (num != 0)
 	return 1;
@@ -10909,7 +10909,7 @@ return empty(str1) ? 0 : 1;
 }
 
 
-long Arun::ne(_TCHAR *str1, long long num)										// 07/11/03 AM.
+long long Arun::ne(_TCHAR *str1, long long num)										// 07/11/03 AM.
 {
 if (num != 0)
 	return 1;
@@ -10923,7 +10923,7 @@ return empty(str1) ? 0 : 1;
 * SUBJ:	NLP++ '>' operator, compiled runtime.
 ********************************************/
 
-long Arun::gt(RFASem *sem, long long num)
+long long Arun::gt(RFASem *sem, long long num)
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -10949,7 +10949,7 @@ delete sem;
 return res;
 }
 
-long Arun::gt(RFASem *sem, float num)									// 08/18/01 AM.
+long long Arun::gt(RFASem *sem, float num)									// 08/18/01 AM.
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -10976,7 +10976,7 @@ return res;
 }
 
 
-long Arun::gt(RFASem *sem1, RFASem *sem2)	// VARIANT
+long long Arun::gt(RFASem *sem1, RFASem *sem2)	// VARIANT
 {
 bool ok = true;
 long long num = 0L;
@@ -11067,12 +11067,12 @@ return num;
 }
 
 
-long Arun::gt(long long num1, long long num2)	// VARIANT
+long long Arun::gt(long long num1, long long num2)	// VARIANT
 {
 return num1 > num2;
 }
 
-long Arun::gt(long long num, RFASem *sem)
+long long Arun::gt(long long num, RFASem *sem)
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -11097,7 +11097,7 @@ delete sem;
 return res;
 }
 
-long Arun::gt(float num, RFASem *sem)									// 08/18/01 AM.
+long long Arun::gt(float num, RFASem *sem)									// 08/18/01 AM.
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -11122,17 +11122,17 @@ delete sem;
 return res;
 }
 
-long Arun::gt(float num1, long long num2)
+long long Arun::gt(float num1, long long num2)
 {
 return num1 > num2;
 }
 
-long Arun::gt(long long num1, float num2)
+long long Arun::gt(long long num1, float num2)
 {
 return num1 > num2;
 }
 
-long Arun::gt(float num1, float num2)
+long long Arun::gt(float num1, float num2)
 {
 return num1 > num2;
 }
@@ -11144,7 +11144,7 @@ return num1 > num2;
 * SUBJ:	NLP++ '<' operator, compiled runtime.
 ********************************************/
 
-long Arun::lt(RFASem *sem, long long num)
+long long Arun::lt(RFASem *sem, long long num)
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -11169,7 +11169,7 @@ delete sem;
 return res;
 }
 
-long Arun::lt(RFASem *sem, float num)									// 08/18/01 AM.
+long long Arun::lt(RFASem *sem, float num)									// 08/18/01 AM.
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -11195,7 +11195,7 @@ return res;
 }
 
 
-long Arun::lt(RFASem *sem1, RFASem *sem2)
+long long Arun::lt(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
 long num = 0L;
@@ -11288,12 +11288,12 @@ return num;
 }
 
 
-long Arun::lt(long long num1, long long num2)
+long long Arun::lt(long long num1, long long num2)
 {
 return num1 < num2;
 }
 
-long Arun::lt(long long num, RFASem *sem)
+long long Arun::lt(long long num, RFASem *sem)
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -11318,7 +11318,7 @@ delete sem;
 return res;
 }
 
-long Arun::lt(float num, RFASem *sem)									// 08/18/01 AM.
+long long Arun::lt(float num, RFASem *sem)									// 08/18/01 AM.
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -11343,17 +11343,17 @@ delete sem;
 return res;
 }
 
-long Arun::lt(float num1, long long num2)
+long long Arun::lt(float num1, long long num2)
 {
 return num1 < num2;
 }
 
-long Arun::lt(long long num1, float num2)
+long long Arun::lt(long long num1, float num2)
 {
 return num1 < num2;
 }
 
-long Arun::lt(float num1, float num2)
+long long Arun::lt(float num1, float num2)
 {
 return num1 < num2;
 }
@@ -11366,7 +11366,7 @@ return num1 < num2;
 * SUBJ:	NLP++ '>=' operator, compiled runtime.
 ********************************************/
 
-long Arun::ge(RFASem *sem, long long num)
+long long Arun::ge(RFASem *sem, long long num)
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -11391,7 +11391,7 @@ delete sem;
 return res;
 }
 
-long Arun::ge(RFASem *sem, float num)									// 08/18/01 AM.
+long long Arun::ge(RFASem *sem, float num)									// 08/18/01 AM.
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -11417,7 +11417,7 @@ return res;
 }
 
 
-long Arun::ge(RFASem *sem1, RFASem *sem2)
+long long Arun::ge(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
 long long num = 0L;
@@ -11510,12 +11510,12 @@ return num;
 }
 
 
-long Arun::ge(long long num1, long long num2)
+long long Arun::ge(long long num1, long long num2)
 {
 return num1 >= num2;
 }
 
-long Arun::ge(long long num, RFASem *sem)
+long long Arun::ge(long long num, RFASem *sem)
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -11540,7 +11540,7 @@ delete sem;
 return res;
 }
 
-long Arun::ge(float num, RFASem *sem)									// 08/18/01 AM.
+long long Arun::ge(float num, RFASem *sem)									// 08/18/01 AM.
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -11565,17 +11565,17 @@ delete sem;
 return res;
 }
 
-long Arun::ge(float num1, long long num2)
+long long Arun::ge(float num1, long long num2)
 {
 return num1 >= num2;
 }
 
-long Arun::ge(long long num1, float num2)
+long long Arun::ge(long long num1, float num2)
 {
 return num1 >= num2;
 }
 
-long Arun::ge(float num1, float num2)
+long long Arun::ge(float num1, float num2)
 {
 return num1 >= num2;
 }
@@ -11588,7 +11588,7 @@ return num1 >= num2;
 * SUBJ:	NLP++ '<=' operator, compiled runtime.
 ********************************************/
 
-long Arun::le(RFASem *sem, long long num)
+long long Arun::le(RFASem *sem, long long num)
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -11613,7 +11613,7 @@ delete sem;
 return res;
 }
 
-long Arun::le(RFASem *sem, float num)									// 08/18/01 AM.
+long long Arun::le(RFASem *sem, float num)									// 08/18/01 AM.
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -11639,7 +11639,7 @@ return res;
 }
 
 
-long Arun::le(RFASem *sem1, RFASem *sem2)
+long long Arun::le(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
 long long num = 0L;
@@ -11733,12 +11733,12 @@ return num;
 }
 
 
-long Arun::le(long long num1, long long num2)
+long long Arun::le(long long num1, long long num2)
 {
 return num1 <= num2;
 }
 
-long Arun::le(long long num, RFASem *sem)
+long long Arun::le(long long num, RFASem *sem)
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -11763,7 +11763,7 @@ delete sem;
 return res;
 }
 
-long Arun::le(float num, RFASem *sem)									// 08/18/01 AM.
+long long Arun::le(float num, RFASem *sem)									// 08/18/01 AM.
 {
 long long res;
 if (!sem)																		// 03/13/02 AM.
@@ -11788,17 +11788,17 @@ delete sem;
 return res;
 }
 
-long Arun::le(float num1, long long num2)
+long long Arun::le(float num1, long long num2)
 {
 return num1 <= num2;
 }
 
-long Arun::le(long long num1, float num2)
+long long Arun::le(long long num1, float num2)
 {
 return num1 <= num2;
 }
 
-long Arun::le(float num1, float num2)
+long long Arun::le(float num1, float num2)
 {
 return num1 <= num2;
 }
@@ -11811,7 +11811,7 @@ return num1 <= num2;
 * NOTE:	06/11/00 AM. Should take any "atomic" value types.
 ********************************************/
 
-long Arun::vtand(RFASem *sem, long long num)
+long long Arun::vtand(RFASem *sem, long long num)
 {
 if (!sem)																		// 03/13/02 AM.
 	return 0;	// Dummy recovery.										// 03/13/02 AM.
@@ -11885,7 +11885,7 @@ delete sem;
 return res;
 }
 
-long Arun::vtand(RFASem *sem1, float num2)								// 08/18/01 AM.
+long long Arun::vtand(RFASem *sem1, float num2)								// 08/18/01 AM.
 {
 if (!sem1)																		// 03/13/02 AM.
 	return 0;	// Dummy recovery.										// 03/13/02 AM.
@@ -11898,7 +11898,7 @@ return 1;
 }
 
 // 06/11/00 AM. Overhaul.
-long Arun::vtand(RFASem *sem1, RFASem *sem2)
+long long Arun::vtand(RFASem *sem1, RFASem *sem2)
 {
 if (!sem1 || !sem2)															// 03/13/02 AM.
 	{
@@ -11918,7 +11918,7 @@ if (!vtand(sem1, 1LL))		// Note: DELETES sem1.
 return vtand(sem2, 1LL);		// Note: DELETES sem2.
 }
 
-long Arun::vtand(RFASem *sem, _TCHAR *str)
+long long Arun::vtand(RFASem *sem, _TCHAR *str)
 {
 if (!sem)																		// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
@@ -11945,23 +11945,23 @@ return vtand(sem, 1LL) ? true : false;		// Note: DELETES sem1.
 }
 
 
-long Arun::vtand(long long num1, long long num2)
+long long Arun::vtand(long long num1, long long num2)
 {
 return num1 && num2;
 }
 
 // OPT:	Could optimize by inlining.
-long Arun::vtand(long long num, RFASem *sem)
+long long Arun::vtand(long long num, RFASem *sem)
 {
 return vtand(sem, num);														// 06/11/00 AM.
 }
 
-long Arun::vtand(float num, RFASem *sem)									// 08/18/01 AM.
+long long Arun::vtand(float num, RFASem *sem)									// 08/18/01 AM.
 {
 return vtand(sem, num);
 }
 
-long Arun::vtand(long long num, _TCHAR *str)										// 08/18/01 AM.
+long long Arun::vtand(long long num, _TCHAR *str)										// 08/18/01 AM.
 {
 return (num && str && *str);
 }
@@ -11971,32 +11971,32 @@ bool Arun::vtand(long long num, bool flg)										// 09/03/01 AM.
 return num && flg;
 }
 
-long Arun::vtand(float num, _TCHAR *str)									// 08/18/01 AM.
+long long Arun::vtand(float num, _TCHAR *str)									// 08/18/01 AM.
 {
 return (num && str && *str);
 }
 
-long Arun::vtand(_TCHAR *str, RFASem *sem)
+long long Arun::vtand(_TCHAR *str, RFASem *sem)
 {
 return vtand(sem, str);
 }
 
-long Arun::vtand(_TCHAR *str, long long num)
+long long Arun::vtand(_TCHAR *str, long long num)
 {
 return (str && *str && num);
 }
 
-long Arun::vtand(_TCHAR *str, float num)
+long long Arun::vtand(_TCHAR *str, float num)
 {
 return (str && *str && num);
 }
 
-long Arun::vtand(_TCHAR *str1, _TCHAR *str2)
+long long Arun::vtand(_TCHAR *str1, _TCHAR *str2)
 {
 return (str1 && *str1 && str2 && *str2);
 }
 
-long Arun::vtand(float num1, long long num2)									// 08/18/01 AM.
+long long Arun::vtand(float num1, long long num2)									// 08/18/01 AM.
 {
 return (num1 && num2);
 }
@@ -12006,12 +12006,12 @@ bool Arun::vtand(float fnum, bool flg)									// 09/03/01 AM.
 return fnum && flg;
 }
 
-long Arun::vtand(long long num1, float num2)									// 08/18/01 AM.
+long long Arun::vtand(long long num1, float num2)									// 08/18/01 AM.
 {
 return (num1 && num2);
 }
 
-long Arun::vtand(float num1, float num2)									// 08/18/01 AM.
+long long Arun::vtand(float num1, float num2)									// 08/18/01 AM.
 {
 return (num1 && num2);
 }
@@ -12059,7 +12059,7 @@ return flg1 && flg2;
 ********************************************/
 
 // 06/11/00 AM. Overhaul.
-long Arun::vtor(RFASem *sem, long long num)
+long long Arun::vtor(RFASem *sem, long long num)
 {
 if (!sem)															// FIX.	// 04/28/01 AM.
 	{
@@ -12129,7 +12129,7 @@ delete sem;
 return res;
 }
 
-long Arun::vtor(RFASem *sem1, float num2)								// 08/19/01 AM.
+long long Arun::vtor(RFASem *sem1, float num2)								// 08/19/01 AM.
 {
 if (vtor(sem1,0LL))		// Note: DELETES sem1.
 	return 1;
@@ -12137,7 +12137,7 @@ return (num2 ? 1 : 0);
 }
 
 
-long Arun::vtor(RFASem *sem1, RFASem *sem2)
+long long Arun::vtor(RFASem *sem1, RFASem *sem2)
 {
 if (vtor(sem1,0LL))		// Note: DELETES sem1.
 	{
@@ -12148,7 +12148,7 @@ if (vtor(sem1,0LL))		// Note: DELETES sem1.
 return vtor(sem2,0LL);	// Note: DELETES sem2.
 }
 
-long Arun::vtor(RFASem *sem, _TCHAR *str)
+long long Arun::vtor(RFASem *sem, _TCHAR *str)
 {
 if (str && *str)
 	{
@@ -12170,22 +12170,22 @@ return vtor(sem, 0LL) ? true : false;	// Note: DELETES sem.
 }
 
 
-long Arun::vtor(long long num1, long long num2)
+long long Arun::vtor(long long num1, long long num2)
 {
 return num1 || num2;
 }
 
-long Arun::vtor(long long num, RFASem *sem)
+long long Arun::vtor(long long num, RFASem *sem)
 {
 return vtor(sem,num);
 }
 
-long Arun::vtor(float num, RFASem *sem)									// 08/19/01 AM.
+long long Arun::vtor(float num, RFASem *sem)									// 08/19/01 AM.
 {
 return vtor(sem,num);
 }
 
-long Arun::vtor(long long num, _TCHAR *str)										// 08/19/01 AM.
+long long Arun::vtor(long long num, _TCHAR *str)										// 08/19/01 AM.
 {
 return (str && *str) || num;
 }
@@ -12195,12 +12195,12 @@ bool Arun::vtor(long long num, bool flg)										// 09/03/01 AM.
 return num || flg;
 }
 
-long Arun::vtor(float num, _TCHAR *str)										// 08/19/01 AM.
+long long Arun::vtor(float num, _TCHAR *str)										// 08/19/01 AM.
 {
 return (str && *str) || num;
 }
 
-long Arun::vtor(_TCHAR *str, RFASem *sem)
+long long Arun::vtor(_TCHAR *str, RFASem *sem)
 {
 if (str && *str)
 	{
@@ -12210,17 +12210,17 @@ if (str && *str)
 return vtor(sem,0LL);
 }
 
-long Arun::vtor(_TCHAR *str, long long num)
+long long Arun::vtor(_TCHAR *str, long long num)
 {
 return (num || (str && *str));
 }
 
-long Arun::vtor(_TCHAR *str, float num)										// 08/19/01 AM.
+long long Arun::vtor(_TCHAR *str, float num)										// 08/19/01 AM.
 {
 return (num || (str && *str));
 }
 
-long Arun::vtor(_TCHAR *str1, _TCHAR *str2)
+long long Arun::vtor(_TCHAR *str1, _TCHAR *str2)
 {
 return ((str1 && *str1) || (str2 && *str2));
 }
@@ -12230,7 +12230,7 @@ bool Arun::vtor(_TCHAR *str, bool flg)										// 09/03/01 AM.
 return ((str && *str) || flg);
 }
 
-long Arun::vtor(float num1, long long num2)									// 08/19/01 AM.
+long long Arun::vtor(float num1, long long num2)									// 08/19/01 AM.
 {
 return num1 || num2;
 }
@@ -12240,12 +12240,12 @@ bool Arun::vtor(float fnum, bool flg)										// 09/03/01 AM.
 return fnum || flg;
 }
 
-long Arun::vtor(long long num1, float num2)									// 08/19/01 AM.
+long long Arun::vtor(long long num1, float num2)									// 08/19/01 AM.
 {
 return num1 || num2;
 }
 
-long Arun::vtor(float num1, float num2)									// 08/19/01 AM.
+long long Arun::vtor(float num1, float num2)									// 08/19/01 AM.
 {
 return num1 || num2;
 }
@@ -12580,7 +12580,7 @@ return dec(typ,varname,nelt,index,nlppp);
 * CR:		06/01/00 AM.
 * SUBJ:	NLP++ '!' operator, compiled runtime.
 ********************************************/
-long Arun::vtnot(
+long long Arun::vtnot(
 	RFASem *sem
 	)
 {
@@ -12597,19 +12597,19 @@ if (!Iexpr::vtnot(sem, 0, /*UP*/ num))
 return num;
 }
 
-long Arun::vtnot(
+long long Arun::vtnot(
 	long long num
 	)
 {
 return (num ? 0 : 1);											// FIX!	// 04/29/01 AM.
 }
 
-long Arun::vtnot(float num)													// 08/19/01 AM.
+long long Arun::vtnot(float num)													// 08/19/01 AM.
 {
 return (num ? 0 : 1);
 }
 
-long Arun::vtnot(
+long long Arun::vtnot(
 	_TCHAR *str
 	)
 {
