@@ -7900,6 +7900,22 @@ bool Arun::truth(long val)
 return (val ? true : false);
 }
 
+// Forwarders: many Arun operators (eq/ne/gt/lt/ge/le/vtand/vtor/vtnot) return `long`.
+// When the code generator chains them — e.g. truth(vtor(vtnot(...), vtnot(...))) —
+// the inner result is `long`, but the sink overload set only has `long long`/`float`/etc.,
+// so `long → long long` and `long → float` rank equally and MSVC reports ambiguity.
+// These (long[, long]) overloads provide exact matches and delegate to the long long version.
+long Arun::eq(long a, long b)     { return eq((long long)a, (long long)b); }
+long Arun::ne(long a, long b)     { return ne((long long)a, (long long)b); }
+long Arun::gt(long a, long b)     { return gt((long long)a, (long long)b); }
+long Arun::lt(long a, long b)     { return lt((long long)a, (long long)b); }
+long Arun::ge(long a, long b)     { return ge((long long)a, (long long)b); }
+long Arun::le(long a, long b)     { return le((long long)a, (long long)b); }
+long Arun::vtand(long a, long b)  { return vtand((long long)a, (long long)b); }
+long Arun::vtor(long a, long b)   { return vtor((long long)a, (long long)b); }
+long Arun::vtnot(long a)          { return vtnot((long long)a); }
+bool Arun::stmt(long val)         { return stmt((long long)val); }
+
 bool Arun::truth(float val)
 {
 return (val ? true : false);
