@@ -598,6 +598,7 @@ public:
 	static long eq(RFASem *, RFASem *);
 	static long eq(RFASem *, _TCHAR *);
 	static long eq(long long, long long);
+	static long eq(long, long);                         // disambiguate (long,long) → long long path
 	static long eq(long long,RFASem*);
 	static long eq(float,RFASem*);
 	static long eq(_TCHAR *, _TCHAR *);
@@ -613,6 +614,7 @@ public:
 	static long ne(RFASem*,float);
 	static long ne(RFASem *, RFASem *);
 	static long ne(long long, long long);
+	static long ne(long, long);                         // disambiguate (long,long) → long long path
 	static long ne(long long, RFASem *);
 	static long ne(float,RFASem*);
 	static bool ne(_TCHAR *, _TCHAR *);
@@ -628,6 +630,7 @@ public:
 	static long gt(RFASem *, float);
 	static long gt(RFASem *, RFASem *);
 	static long gt(long long, long long);
+	static long gt(long, long);                         // disambiguate (long,long) → long long path
 	static long gt(long long, RFASem *);
 	static long gt(float, RFASem*);
 	static long gt(float,long long);
@@ -638,6 +641,7 @@ public:
 	static long lt(RFASem*,float);
 	static long lt(RFASem *, RFASem *);
 	static long lt(long long, long long);
+	static long lt(long, long);                         // disambiguate (long,long) → long long path
 	static long lt(long long, RFASem *);
 	static long lt(float,RFASem*);
 	static long lt(float,long long);
@@ -648,6 +652,7 @@ public:
 	static long ge(RFASem*,float);
 	static long ge(RFASem *, RFASem *);
 	static long ge(long long, long long);
+	static long ge(long, long);                         // disambiguate (long,long) → long long path
 	static long ge(long long, RFASem *);
 	static long ge(float,RFASem*);
 	static long ge(float,long long);
@@ -658,6 +663,7 @@ public:
 	static long le(RFASem*,float);
 	static long le(RFASem *, RFASem *);
 	static long le(long long, long long);
+	static long le(long, long);                         // disambiguate (long,long) → long long path
 	static long le(long long, RFASem *);
 	static long le(float,RFASem*);
     static long le(float,long long);
@@ -670,6 +676,7 @@ public:
 	static long vtand(RFASem *, _TCHAR *);									// 06/11/00 AM.
 	static bool vtand(RFASem*,bool);										// 09/03/01 AM.
 	static long vtand(long long, long long);
+	static long vtand(long, long);                      // disambiguate (long,long) → long long path
 	static long vtand(long long, RFASem *);
 	static long vtand(long long, _TCHAR *);										// 06/11/00 AM.
 	static long vtand(long long,float);
@@ -696,6 +703,7 @@ public:
 	static long vtor(RFASem *, _TCHAR *);									// 06/11/00 AM.
 	static bool vtor(RFASem*,bool);											// 09/03/01 AM.
 	static long vtor(long long, long long);
+	static long vtor(long, long);                       // disambiguate (long,long) → long long path
 	static long vtor(long long,float);
 	static long vtor(long long, RFASem *);
 	static long vtor(long long, _TCHAR *);											// 06/11/00 AM.
@@ -740,6 +748,7 @@ public:
 	static long long dec(int,_TCHAR*,int,RFASem*,Nlppp*);              // 07/15/03 AM.
 
 	static long vtnot(long long);
+	static long vtnot(long);                            // disambiguate long → long long path
 	static long vtnot(float);
 	static long vtnot(RFASem *);
 	static long vtnot(_TCHAR *);
@@ -792,6 +801,7 @@ public:
 	static bool stmt(RFASem *);
 	static bool stmt(std::_t_ostream *);
 	static bool stmt(long long);
+	static bool stmt(long);                             // disambiguate long → long long path
 	static bool stmt(float);
 	static bool stmt(_TCHAR *);
 	static bool stmt(bool);													// 09/03/01 AM.
