@@ -1000,12 +1000,15 @@ for (; darg; darg = darg->Right())
 			break;
 		case IANUM:
 			num = iarg->getNum();											// 05/04/01 AM.
+			// Arun integer overloads (e.g. vareq/varne) take `long long`, not `long`.
+			// Emitting `(long)0` is ambiguous against the `_TCHAR*` overload under MSVC's
+			// permissive null-pointer-constant rules; `(long long)` makes it an exact match.
 			if (num)																// 05/04/01 AM.
 				*fcode
-							<< _T("(long)")											// 09/09/01 AM.
+							<< _T("(long long)")									// 09/09/01 AM.
 							<< num;												// 05/04/01 AM.
 			else																	// 05/04/01 AM.
-				*fcode << _T("(long)0");				// Unambiguous.		// 05/04/01 AM.
+				*fcode << _T("(long long)0");		// Unambiguous.		// 05/04/01 AM.
 			break;
 		case IAFLOAT:															// 08/17/01 AM.
 			*fcode	<< _T("(float)")											// 09/09/01 AM.
