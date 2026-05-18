@@ -7895,6 +7895,11 @@ bool Arun::truth(long long val)
 return (val ? true : false);
 }
 
+bool Arun::truth(long val)
+{
+return (val ? true : false);
+}
+
 bool Arun::truth(float val)
 {
 return (val ? true : false);
