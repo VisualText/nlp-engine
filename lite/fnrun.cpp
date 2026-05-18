@@ -261,7 +261,7 @@ if (!meth_sem)
 	return 0;
 	}
 
-long num = 0;
+long long num = 0;
 _TCHAR *name = 0;
 switch (meth_sem->getType())
 	{
@@ -2414,7 +2414,7 @@ if (!num_sem)
 	return 0;
 	}
 bool ok = false;
-long num = num_sem->sem_to_long(ok);
+long long num = num_sem->sem_to_long(ok);
 delete num_sem;
 if (!ok)
 	{
@@ -2451,7 +2451,7 @@ if (!num_sem)
 _TCHAR *name = name_sem->sem_to_str();
 delete name_sem;
 bool ok = false;
-long num = num_sem->sem_to_long(ok);
+long long num = num_sem->sem_to_long(ok);
 delete num_sem;
 if (!ok)
 	{
@@ -2481,7 +2481,7 @@ RFASem *Arun::addconcept(
 	Nlppp *nlppp,
 	RFASem *con_sem,
 	RFASem *child_sem,
-	long pos_num		/*OPTIONAL*/
+	long long pos_num		/*OPTIONAL*/
 	)
 {
 if (!con_sem || !child_sem || pos_num < 0 || !nlppp)
@@ -2669,7 +2669,7 @@ if (!num_sem)
 	return false;
 	}
 bool ok = false;
-long num = num_sem->sem_to_long(ok);
+long long num = num_sem->sem_to_long(ok);
 delete num_sem;
 if (!ok)
 	{
@@ -2706,7 +2706,7 @@ if (!num_sem)
 _TCHAR *attr_str = attr_sem->sem_to_str();
 delete attr_sem;
 bool ok = false;
-long num = num_sem->sem_to_long(ok);
+long long num = num_sem->sem_to_long(ok);
 delete num_sem;
 if (!ok)
 	{
@@ -2913,7 +2913,7 @@ if (!num_sem)
 	return false;
 	}
 bool ok = false;
-long num = num_sem->sem_to_long(ok);
+long long num = num_sem->sem_to_long(ok);
 delete num_sem;
 if (!ok)
 	{
@@ -2950,7 +2950,7 @@ if (!num_sem)
 _TCHAR *attr_str = attr_sem->sem_to_str();
 delete attr_sem;
 bool ok = false;
-long num = num_sem->sem_to_long(ok);
+long long num = num_sem->sem_to_long(ok);
 delete num_sem;
 if (!ok)
 	{
@@ -3250,7 +3250,7 @@ if (!meth_sem)
 	return false;
 	}
 
-long num = 0;
+long long num = 0;
 _TCHAR *name = 0;
 switch (meth_sem->getType())
 	{
@@ -3993,7 +3993,7 @@ if (!num_sem)
 	return false;
 	}
 bool ok = false;
-long num = num_sem->sem_to_long(ok);
+long long num = num_sem->sem_to_long(ok);
 delete num_sem;
 if (!ok)
 	{
@@ -4047,7 +4047,7 @@ if (!str_sem)
 	return false;
 	}
 bool ok = false;
-long num = num_sem->sem_to_long(ok);
+long long num = num_sem->sem_to_long(ok);
 delete num_sem;
 if (!ok)
 	{
@@ -4425,7 +4425,7 @@ return cg->sortHier(conc1);
 * FORM:	phraselength(concept)
 ********************************************/
 
-long Arun::phraselength(
+long long Arun::phraselength(
 	Nlppp *nlppp,
 	RFASem *sem1
 	)
@@ -4593,7 +4593,7 @@ return new RFASem(node, RS_KBCONCEPT, cg);
 RFASem *Arun::findnode(
 	Nlppp *nlppp,
 	RFASem *sem1,
-	long num1
+	long long num1
 	)
 {
 if (!sem1 || num1 <= 0 || !nlppp)
@@ -4641,7 +4641,7 @@ if (!meth_sem)
 	return 0;
 	}
 
-long num = 0;
+long long num = 0;
 _TCHAR *name = 0;
 switch (meth_sem->getType())
 	{
@@ -4953,7 +4953,7 @@ RFASem *Arun::addnode(
 	Nlppp *nlppp,
 	RFASem *phr_sem,
 	_TCHAR *str,
-	long num
+	long long num
 	)
 {
 if (!phr_sem || !str || !*str || num <= 0 || !nlppp)
@@ -4986,7 +4986,7 @@ RFASem *Arun::addnode(
 	Nlppp *nlppp,
 	RFASem *phr_sem,
 	RFASem *str_sem,
-	long num
+	long long num
 	)
 {
 if (!str_sem)
@@ -5015,7 +5015,7 @@ if (!num_sem)
 	return 0;
 	}
 bool ok = false;
-long num = num_sem->sem_to_long(ok);
+long long num = num_sem->sem_to_long(ok);
 delete num_sem;
 if (!ok)
 	{
@@ -5052,7 +5052,7 @@ if (!num_sem)
 _TCHAR *str = str_sem->sem_to_str();
 delete str_sem;
 bool ok = false;
-long num = num_sem->sem_to_long(ok);
+long long num = num_sem->sem_to_long(ok);
 delete num_sem;
 if (!ok)
 	{
@@ -5237,7 +5237,7 @@ return cg->renameNode(phr1, name1, rename);
 bool Arun::renamenode(
 	Nlppp *nlppp,
 	RFASem *sem1,
-	long num1,
+	long long num1,
 	_TCHAR *rename
 	)
 {
@@ -5289,7 +5289,7 @@ return renamenode(nlppp,sem1,name1,rename);
 bool Arun::renamenode(
 	Nlppp *nlppp,
 	RFASem *sem1,
-	long num1,
+	long long num1,
 	RFASem *rename_sem
 	)
 {
@@ -5320,7 +5320,7 @@ if (!meth_sem)
 	return false;
 	}
 
-long num = 0;
+long long num = 0;
 _TCHAR *name = 0;
 switch (meth_sem->getType())
 	{
@@ -5364,7 +5364,7 @@ if (!meth_sem)
 	return false;
 	}
 
-long num = 0;
+long long num = 0;
 _TCHAR *name = 0;
 switch (meth_sem->getType())
 	{
@@ -5474,8 +5474,8 @@ return strcontains(nlppp,name1,name2);
 
 bool Arun::strcontains(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num1,
-	long num2
+	long long num1,
+	long long num2
 	)
 {
 return false;
@@ -5485,7 +5485,7 @@ return false;
 bool Arun::strcontains(		// 07/11/03 AM.
 	Nlppp *nlppp,
 	_TCHAR *name1,
-	long num
+	long long num
 	)
 {
 return false;
@@ -5494,7 +5494,7 @@ return false;
 
 bool Arun::strcontains(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	_TCHAR *name1
 	)
 {
@@ -5505,7 +5505,7 @@ return false;
 bool Arun::strcontains(		// 07/11/03 AM.
 	Nlppp *nlppp,
 	RFASem *sem1,
-	long num
+	long long num
 	)
 {
 if (sem1)
@@ -5516,7 +5516,7 @@ return false;
 
 bool Arun::strcontains(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	RFASem *sem1
 	)
 {
@@ -5606,8 +5606,8 @@ return strcontainsnocase(nlppp,name1,name2);
 
 bool Arun::strcontainsnocase(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num1,
-	long num2
+	long long num1,
+	long long num2
 	)
 {
 return false;
@@ -5617,7 +5617,7 @@ return false;
 bool Arun::strcontainsnocase(		// 07/11/03 AM.
 	Nlppp *nlppp,
 	_TCHAR *name1,
-	long num
+	long long num
 	)
 {
 return false;
@@ -5626,7 +5626,7 @@ return false;
 
 bool Arun::strcontainsnocase(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	_TCHAR *name1
 	)
 {
@@ -5637,7 +5637,7 @@ return false;
 bool Arun::strcontainsnocase(		// 07/11/03 AM.
 	Nlppp *nlppp,
 	RFASem *sem1,
-	long num
+	long long num
 	)
 {
 if (sem1)
@@ -5648,7 +5648,7 @@ return false;
 
 bool Arun::strcontainsnocase(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	RFASem *sem1
 	)
 {
@@ -5738,7 +5738,7 @@ return strequal(nlppp,name1,name2);
 bool Arun::strequal(		// 07/11/03 AM.
 	Nlppp *nlppp,
 	RFASem *name1_sem,
-	long num
+	long long num
 	)
 {
 if (!name1_sem)
@@ -5760,7 +5760,7 @@ return true;
 
 bool Arun::strequal(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	RFASem *name1_sem
 	)
 {
@@ -5784,7 +5784,7 @@ return true;
 
 bool Arun::strequal(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	_TCHAR *name2
 	)
 {
@@ -5805,7 +5805,7 @@ return false;
 bool Arun::strequal(		// 07/11/03 AM.
 	Nlppp *nlppp,
 	_TCHAR *name2,
-	long num
+	long long num
 	)
 {
 if (num != 0)
@@ -5823,8 +5823,8 @@ return false;
 
 bool Arun::strequal(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num1,
-	long num2
+	long long num1,
+	long long num2
 	)
 {
 if (num1 != 0 || num2 != 0)
@@ -5918,7 +5918,7 @@ return strnotequal(nlppp,name1,name2);
 bool Arun::strnotequal(		// 07/11/03 AM.
 	Nlppp *nlppp,
 	RFASem *name1_sem,
-	long num
+	long long num
 	)
 {
 if (!name1_sem)
@@ -5940,7 +5940,7 @@ return false;
 
 bool Arun::strnotequal(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	RFASem *name1_sem
 	)
 {
@@ -5964,7 +5964,7 @@ return false;
 
 bool Arun::strnotequal(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	_TCHAR *name2
 	)
 {
@@ -5985,7 +5985,7 @@ return true;
 bool Arun::strnotequal(		// 07/11/03 AM.
 	Nlppp *nlppp,
 	_TCHAR *name2,
-	long num
+	long long num
 	)
 {
 if (num != 0)
@@ -6003,8 +6003,8 @@ return true;
 
 bool Arun::strnotequal(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num1,
-	long num2
+	long long num1,
+	long long num2
 	)
 {
 if (num1 != 0 || num2 != 0)
@@ -6098,7 +6098,7 @@ return strequalnocase(nlppp,name1,name2);
 bool Arun::strequalnocase(		// 07/11/03 AM.
 	Nlppp *nlppp,
 	RFASem *name1_sem,
-	long num
+	long long num
 	)
 {
 if (!name1_sem)
@@ -6120,7 +6120,7 @@ return true;
 
 bool Arun::strequalnocase(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	RFASem *name1_sem
 	)
 {
@@ -6144,7 +6144,7 @@ return true;
 
 bool Arun::strequalnocase(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	_TCHAR *name2
 	)
 {
@@ -6165,7 +6165,7 @@ return false;
 bool Arun::strequalnocase(		// 07/11/03 AM.
 	Nlppp *nlppp,
 	_TCHAR *name2,
-	long num
+	long long num
 	)
 {
 if (num != 0)
@@ -6183,8 +6183,8 @@ return false;
 
 bool Arun::strequalnocase(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num1,
-	long num2
+	long long num1,
+	long long num2
 	)
 {
 if (num1 != 0 || num2 != 0)
@@ -6277,7 +6277,7 @@ return strnotequalnocase(nlppp,name1,name2);
 bool Arun::strnotequalnocase(		// 07/11/03 AM.
 	Nlppp *nlppp,
 	RFASem *name1_sem,
-	long num
+	long long num
 	)
 {
 if (!name1_sem)
@@ -6299,7 +6299,7 @@ return false;
 
 bool Arun::strnotequalnocase(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	RFASem *name1_sem
 	)
 {
@@ -6323,7 +6323,7 @@ return false;
 
 bool Arun::strnotequalnocase(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	_TCHAR *name2
 	)
 {
@@ -6344,7 +6344,7 @@ return true;
 bool Arun::strnotequalnocase(		// 07/11/03 AM.
 	Nlppp *nlppp,
 	_TCHAR *name2,
-	long num
+	long long num
 	)
 {
 if (num != 0)
@@ -6362,8 +6362,8 @@ return true;
 
 bool Arun::strnotequalnocase(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num1,
-	long num2
+	long long num1,
+	long long num2
 	)
 {
 if (num1 != 0 || num2 != 0)
@@ -6458,7 +6458,7 @@ return strgreaterthan(nlppp,name1,name2);
 bool Arun::strgreaterthan(		// 07/11/03 AM.
 	Nlppp *nlppp,
 	RFASem *name1_sem,
-	long num
+	long long num
 	)
 {
 if (!name1_sem)
@@ -6480,7 +6480,7 @@ return false;
 
 bool Arun::strgreaterthan(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	RFASem *name1_sem
 	)
 {
@@ -6504,7 +6504,7 @@ return false;
 
 bool Arun::strgreaterthan(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	_TCHAR *name2
 	)
 {
@@ -6525,7 +6525,7 @@ return false;
 bool Arun::strgreaterthan(		// 07/11/03 AM.
 	Nlppp *nlppp,
 	_TCHAR *name2,
-	long num
+	long long num
 	)
 {
 if (num != 0)
@@ -6543,8 +6543,8 @@ return true;
 
 bool Arun::strgreaterthan(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num1,
-	long num2
+	long long num1,
+	long long num2
 	)
 {
 if (num1 != 0 || num2 != 0)
@@ -6638,7 +6638,7 @@ return strlessthan(nlppp,name1,name2);
 bool Arun::strlessthan(		// 07/11/03 AM.
 	Nlppp *nlppp,
 	RFASem *name1_sem,
-	long num
+	long long num
 	)
 {
 if (!name1_sem)
@@ -6660,7 +6660,7 @@ return false;
 
 bool Arun::strlessthan(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	RFASem *name1_sem
 	)
 {
@@ -6684,7 +6684,7 @@ return false;
 
 bool Arun::strlessthan(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	_TCHAR *name2
 	)
 {
@@ -6705,7 +6705,7 @@ return true;
 bool Arun::strlessthan(		// 07/11/03 AM.
 	Nlppp *nlppp,
 	_TCHAR *name2,
-	long num
+	long long num
 	)
 {
 if (num != 0)
@@ -6723,8 +6723,8 @@ return false;
 
 bool Arun::strlessthan(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num1,
-	long num2
+	long long num1,
+	long long num2
 	)
 {
 if (num1 != 0 || num2 != 0)
@@ -6860,7 +6860,7 @@ return strtolower(nlppp,name_str);
 // VARIANT.
 _TCHAR *Arun::strtolower(													// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return 0;
@@ -6911,7 +6911,7 @@ return strtoupper(nlppp,name_str);
 // VARIANT.
 _TCHAR *Arun::strtoupper(													// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return 0;
@@ -6971,7 +6971,7 @@ return addword(nlppp,name_str);
 * NOTE:
 ********************************************/
 
-long Arun::strlength(
+long long Arun::strlength(
 	Nlppp *nlppp,
 	_TCHAR *name1
 	)
@@ -6982,7 +6982,7 @@ return _tcsclen(name1);
 }
 
 // VARIANT.																// 01/23/01/00 AM.
-long Arun::strlength(
+long long Arun::strlength(
 	Nlppp *nlppp,
 	RFASem *sem
 	)
@@ -7007,9 +7007,9 @@ if (!st || !*st)
 return _tcsclen(st);
 }
 
-long Arun::strlength(		// 07/11/03 AM.
+long long Arun::strlength(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return 0;
@@ -7029,21 +7029,21 @@ return 0;
 _TCHAR *Arun::strpiece(
 	Nlppp *nlppp,
 	_TCHAR *str1,
-	long start,
-	long end
+	long long start,
+	long long end
 	)
 {
 if (!str1 || !*str1 || !nlppp)
 	return 0;
 
 //char buf[MAXSTR];
-long len = _tcsclen(str1);
+long long len = _tcsclen(str1);
 if (end > len)
 	end = len - 1;
 
 #ifdef JUNK_
 _TCHAR *c;
-long i = 0;
+long long i = 0;
 
 for (c = str1; i < len && i < MAXSTR; ++c)
 	{
@@ -7055,7 +7055,7 @@ if (!buf[0])														// FIX.	// 02/09/01 AM.
 	return 0;														// FIX.	// 02/09/01 AM.
 #endif
 
-long xlen = end - start + 1;												// 07/16/03 AM.
+long long xlen = end - start + 1;												// 07/16/03 AM.
 _TCHAR *buf = Chars::create(xlen+1);										// 07/16/03 AM.
 
 if (!str_piece(str1,start,end,xlen+1,/*UP*/buf))					// 11/18/02 AM.
@@ -7076,8 +7076,8 @@ return str;
 _TCHAR *Arun::strpiece(
 	Nlppp *nlppp,
 	RFASem *str_sem,
-	long start,
-	long end
+	long long start,
+	long long end
 	)
 {
 if (!str_sem)
@@ -7092,13 +7092,13 @@ _TCHAR *Arun::strpiece(
 	Nlppp *nlppp,
 	_TCHAR *str,
 	RFASem *start_sem,
-	long end
+	long long end
 	)
 {
 if (!start_sem)
 	return 0;
 bool ok = false;
-long start = start_sem->sem_to_long(ok);
+long long start = start_sem->sem_to_long(ok);
 delete start_sem;
 if (!ok)
 	return 0;
@@ -7109,14 +7109,14 @@ return strpiece(nlppp,str,start,end);
 _TCHAR *Arun::strpiece(
 	Nlppp *nlppp,
 	_TCHAR *str,
-	long start,
+	long long start,
 	RFASem *end_sem
 	)
 {
 if (!end_sem)
 	return 0;
 bool ok = false;
-long end = end_sem->sem_to_long(ok);
+long long end = end_sem->sem_to_long(ok);
 delete end_sem;
 if (!ok)
 	return 0;
@@ -7128,7 +7128,7 @@ _TCHAR *Arun::strpiece(
 	Nlppp *nlppp,
 	RFASem *str_sem,
 	RFASem *start_sem,
-	long end
+	long long end
 	)
 {
 if (!str_sem)
@@ -7145,7 +7145,7 @@ if (!start_sem)
 _TCHAR *str = str_sem->sem_to_str();
 delete str_sem;
 bool ok = false;
-long start = start_sem->sem_to_long(ok);
+long long start = start_sem->sem_to_long(ok);
 delete start_sem;
 if (!ok)
 	return 0;
@@ -7156,7 +7156,7 @@ return strpiece(nlppp,str,start,end);
 _TCHAR *Arun::strpiece(
 	Nlppp *nlppp,
 	RFASem *str_sem,
-	long start,
+	long long start,
 	RFASem *end_sem
 	)
 {
@@ -7174,7 +7174,7 @@ if (!end_sem)
 _TCHAR *str = str_sem->sem_to_str();
 delete str_sem;
 bool ok = false;
-long end = end_sem->sem_to_long(ok);
+long long end = end_sem->sem_to_long(ok);
 delete end_sem;
 if (!ok)
 	return 0;
@@ -7213,7 +7213,7 @@ if (!end_sem)
 _TCHAR *str = str_sem->sem_to_str();
 delete str_sem;
 bool ok = false;
-long start = start_sem->sem_to_long(ok);
+long long start = start_sem->sem_to_long(ok);
 delete start_sem;
 if (!ok)
 	{
@@ -7222,7 +7222,7 @@ if (!ok)
 	return 0;
 	}
 bool ok1 = false;
-long end = end_sem->sem_to_long(ok1);
+long long end = end_sem->sem_to_long(ok1);
 delete end_sem;
 if (!ok1)
 	{
@@ -7261,7 +7261,7 @@ if (!end_sem)
 	return 0;
 	}
 bool ok = false;
-long start = start_sem->sem_to_long(ok);
+long long start = start_sem->sem_to_long(ok);
 delete start_sem;
 if (!ok)
 	{
@@ -7269,7 +7269,7 @@ if (!ok)
 	return 0;
 	}
 bool ok1 = false;
-long end = end_sem->sem_to_long(ok1);
+long long end = end_sem->sem_to_long(ok1);
 delete end_sem;
 if (!ok1)
 	{
@@ -7282,7 +7282,7 @@ return strpiece(nlppp,str,start,end);
 // NULL VARIANTS.	// 07/11/03 AM.
 _TCHAR *Arun::strpiece(	// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	RFASem *start_sem,
 	RFASem *end_sem
 	)
@@ -7296,8 +7296,8 @@ return 0;
 
 _TCHAR *Arun::strpiece(	// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
-	long num1,
+	long long num,
+	long long num1,
 	RFASem *end_sem
 	)
 {
@@ -7308,9 +7308,9 @@ return 0;
 
 _TCHAR *Arun::strpiece(	// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	RFASem *start_sem,
-	long num1
+	long long num1
 	)
 {
 if (start_sem)
@@ -7320,9 +7320,9 @@ return 0;
 
 _TCHAR *Arun::strpiece(	// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
-	long num1,
-	long num2
+	long long num,
+	long long num1,
+	long long num2
 	)
 {
 return 0;
@@ -7342,7 +7342,7 @@ return 0;
 _TCHAR *Arun::strchar(
 	Nlppp *nlppp,
 	_TCHAR *name1,
-	long charnum
+	long long charnum
 	)
 {
 if (!name1 || !*name1
@@ -7366,7 +7366,7 @@ return str;
 _TCHAR *Arun::strchar(
 	Nlppp *nlppp,
 	RFASem *name_sem,
-	long charnum
+	long long charnum
 	)
 {
 if (!name_sem)
@@ -7386,7 +7386,7 @@ _TCHAR *Arun::strchar(
 if (!charnum_sem)
 	return 0;
 bool ok = false;
-long charnum = charnum_sem->sem_to_long(ok);
+long long charnum = charnum_sem->sem_to_long(ok);
 delete charnum_sem;
 if (!ok)
 	return 0;
@@ -7412,7 +7412,7 @@ _TCHAR *name = name_sem->sem_to_str();
 delete name_sem;
 
 bool ok = false;
-long charnum = 0;
+long long charnum = 0;
 if (charnum_sem)
 	{
 	charnum = charnum_sem->sem_to_long(ok);
@@ -7426,7 +7426,7 @@ return strchar(nlppp,name,charnum);
 // NULL VARIANTS.	// 07/11/03 AM.
 _TCHAR *Arun::strchar(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	RFASem *charnum_sem
 	)
 {
@@ -7437,8 +7437,8 @@ return 0;
 
 _TCHAR *Arun::strchar(		// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num,
-	long num1
+	long long num,
+	long long num1
 	)
 {
 return 0;
@@ -7498,7 +7498,7 @@ return strisdigit(nlppp,str);
 
 bool Arun::strisdigit(	// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return false;
@@ -7558,7 +7558,7 @@ return strisalpha(nlppp,str);
 
 bool Arun::strisalpha(	// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return false;
@@ -7618,7 +7618,7 @@ return strhaspunct(nlppp,str);
 
 bool Arun::strhaspunct(	// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return false;
@@ -7863,7 +7863,7 @@ switch (sem->getType())
 		break;
 	case RSFLOAT:																// 08/16/01 AM.
 		// NOTE: Will truncate the float.								// 08/16/01 AM.
-		nm = (long) sem->getFloat();		// .NET COMPLAINT.		// 06/11/03 AM.
+		nm = (long long) sem->getFloat();		// .NET COMPLAINT.		// 06/11/03 AM.
 //		nm = (float) sem->getFloat();										// 09/27/01 AM.
 		break;																	// 08/16/01 AM.
 	default:
@@ -7882,7 +7882,7 @@ return num;
 }
 
 // Trying to get compiled/interpreted behavior the same.	// 08/10/08 AM.
-// Also, this will eliminate a float -> long conversion error in C++ compile
+// Also, this will eliminate a float -> long long conversion error in C++ compile
 // of the RUN.DLL project.	// 08/10/08 AM.
 long long Arun::num(
 	Nlppp *nlppp,
@@ -7979,11 +7979,11 @@ return str;
 * CR:		01/04/01 AM.
 * SUBJ:	Get length of an array.
 * RET:	True if ok, else false.
-* FORMS:	long arraylength(var)
+* FORMS:	long long arraylength(var)
 * NOTE:	Return 1 for simple types.
 ********************************************/
 
-long Arun::arraylength(
+long long Arun::arraylength(
 	Nlppp *nlppp,
 	_TCHAR *str
 	)
@@ -7992,7 +7992,7 @@ return 1L;
 }
 
 // VARIANT.
-long Arun::arraylength(
+long long Arun::arraylength(
 	Nlppp *nlppp,
 	long long num
 	)
@@ -8001,7 +8001,7 @@ return 1L;
 }
 
 // VARIANT
-long Arun::arraylength(
+long long Arun::arraylength(
 	Nlppp *nlppp,
 	RFASem *sem1
 	)
@@ -8014,7 +8014,7 @@ switch (sem1->getType())
 	case RSARGS:
 	   {
 		// Array.  Compute length.
-		long len = sem1->getArgs()->getLength();						// 08/07/02 AM.
+		long long len = sem1->getArgs()->getLength();						// 08/07/02 AM.
 		delete sem1;										// MEM LEAK.	// 08/07/02 AM.
 		return len;																// 08/07/02 AM.
 		}
@@ -8037,7 +8037,7 @@ return 1L;
 
 RFASem *Arun::lasteltnode(
 	Nlppp *nlppp,
-	long num1
+	long long num1
 	)
 {
 if (!nlppp || num1 < 0)
@@ -8082,7 +8082,7 @@ if (sem->getType() != RSLONG)
 	delete sem;		// MEMLEAK.	// 05/15/08 AM.
 	return 0;
 	}
-long num1 = sem->getLong();
+long long num1 = sem->getLong();
 delete sem;		// MEMLEAK.	// 05/15/08 AM.
 
 if (num1 < 0)
@@ -8121,7 +8121,7 @@ if (!nlppp)
 
 // Removed check for region here.							// FIX.	// 04/29/01 AM.
 
-long len  = 0;
+long long len  = 0;
 _TCHAR *text=0;
 _TCHAR *str=0;
 Node<Pn> *nstart= nlppp->getFirst();	// First node matching rule.
@@ -8172,7 +8172,7 @@ if (!nlppp)
 
 // Removed check for region here.							// FIX.	// 04/29/01 AM.
 
-long len  = 0;
+long long len  = 0;
 _TCHAR *text=0;
 _TCHAR *str=0;
 Node<Pn> *nstart= nlppp->getFirst();	// First node matching rule.
@@ -8628,7 +8628,7 @@ Pn *pn = ((Node<Pn> *)pnode)->getData();
 pn->setName(str);
 
 // Silently tell where this node rename came from.					// 09/16/08 AM.
-long ruleline = (nlppp->sugg_ ? nlppp->sugg_->ruleline : 0);	// 09/16/08 AM.
+long long ruleline = (nlppp->sugg_ ? nlppp->sugg_->ruleline : 0);	// 09/16/08 AM.
 pn->setPassnum(nlppp->parse_->currpass_);								// 09/16/08 AM.
 pn->setRuleline(ruleline);													// 09/16/08 AM.
 
@@ -8740,7 +8740,7 @@ return pndeletechilds(nlppp,pnode);
 RFASem *Arun::varinlist(
 	Nlppp *nlppp,
 	_TCHAR *name1,
-	long num1
+	long long num1
 	)
 {
 RFASem *sem = 0;
@@ -8787,7 +8787,7 @@ return sem;
 RFASem *Arun::varinlist(
 	Nlppp *nlppp,
 	RFASem *name_sem,
-	long num
+	long long num
 	)
 {
 if (!name_sem)
@@ -8807,7 +8807,7 @@ RFASem *Arun::varinlist(
 if (!num_sem)
 	return NULL;	// 09/26/19 AM.
 bool ok = false;
-long num = num_sem->sem_to_long(ok);
+long long num = num_sem->sem_to_long(ok);
 delete num_sem;
 if (!ok)
 	return NULL;	// 09/26/19 AM.
@@ -8835,7 +8835,7 @@ if (!num_sem)
 _TCHAR *name = name_sem->sem_to_str();
 delete name_sem;
 bool ok = false;
-long num = num_sem->sem_to_long(ok);
+long long num = num_sem->sem_to_long(ok);
 delete num_sem;
 if (!ok)
 	return NULL;	// 09/26/19 AM.
@@ -8981,7 +8981,7 @@ return unpackdirs(nlppp, filepath);
 
 RFASem *Arun::unpackdirs(	// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return 0;
@@ -9086,7 +9086,7 @@ return strclean(nlppp,name);
 
 _TCHAR *Arun::strclean(	// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return 0;
@@ -9143,7 +9143,7 @@ return strtrim(nlppp,name);
 
 _TCHAR *Arun::strtrim(	// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return 0;
@@ -9520,7 +9520,7 @@ return strchr(nlppp,name1,ch_str);	// FIXED.	// 05/14/08 AM.
 * NOTE:
 ********************************************/
 
-long Arun::strchrcount(
+long long Arun::strchrcount(
 	Nlppp *nlppp,
 	_TCHAR *name1,
 	_TCHAR *ch_str
@@ -9545,7 +9545,7 @@ if (ch_str[1])
 	}
 
 
-long count = 0;
+long long count = 0;
 for (; *name1; ++name1)
 	if (*name1 == *ch_str)
 		++count;
@@ -9554,7 +9554,7 @@ return count;
 }
 
 // VARIANTS.																	// 12/15/02 AM.
-long Arun::strchrcount(														// 12/15/02 AM.
+long long Arun::strchrcount(														// 12/15/02 AM.
 	Nlppp *nlppp,
 	RFASem *name1_sem,
 	_TCHAR *ch_str
@@ -9568,7 +9568,7 @@ return strchrcount(nlppp,name1,ch_str);
 }
 
 
-long Arun::strchrcount(														// 12/15/02 AM.
+long long Arun::strchrcount(														// 12/15/02 AM.
 	Nlppp *nlppp,
 	_TCHAR *name1,
 	RFASem *ch_str_sem
@@ -9582,7 +9582,7 @@ return strchrcount(nlppp,name1,ch_str);
 }
 
 
-long Arun::strchrcount(														// 12/15/02 AM.
+long long Arun::strchrcount(														// 12/15/02 AM.
 	Nlppp *nlppp,
 	RFASem *name1_sem,
 	RFASem *ch_str_sem
@@ -9711,7 +9711,7 @@ return strrchr(nlppp,name,ch_str);
 /********************************************
 * FN:		STRWRAP
 * CR:	   01/09/01 Dd.
-* SUBJ: Takes a long string and wraps it.
+* SUBJ: Takes a long long string and wraps it.
 * RET:  True if ok, else false.
 *		       UP - returns the wrapped version of the string
 * FORMS:	strwrap(str1,int)
@@ -9721,7 +9721,7 @@ return strrchr(nlppp,name,ch_str);
 _TCHAR *Arun::strwrap(
 	Nlppp *nlppp,
 	_TCHAR *name1,
-	long wrapSize
+	long long wrapSize
 	)
 {
 if (!nlppp)
@@ -9757,7 +9757,7 @@ return str;
 _TCHAR *Arun::strwrap(
 	Nlppp *nlppp,
 	RFASem *name_str,
-	long wrap
+	long long wrap
 	)
 {
 if (!name_str)
@@ -9777,7 +9777,7 @@ _TCHAR *Arun::strwrap(
 if (!wrap_sem)
 	return 0;
 bool ok = false;
-long wrap = wrap_sem->sem_to_long(ok);
+long long wrap = wrap_sem->sem_to_long(ok);
 delete wrap_sem;
 if (!ok)
 	return 0;
@@ -9804,7 +9804,7 @@ if (!wrap_sem)
 	}
 _TCHAR *name = name_sem->sem_to_str();
 bool ok = false;
-long wrap = wrap_sem->sem_to_long(ok);
+long long wrap = wrap_sem->sem_to_long(ok);
 delete wrap_sem;
 if (!ok)
 	return 0;
@@ -10021,7 +10021,7 @@ _TCHAR *Arun::strsubst(	// 07/12/08 AM.
 	Nlppp *nlppp,
 	_TCHAR *name,
 	_TCHAR *sold,
-	long lnew
+	long long lnew
 	)
 {
 if (lnew != 0)	// Error.
@@ -10033,7 +10033,7 @@ _TCHAR *Arun::strsubst(	// 07/12/08 AM.
 	Nlppp *nlppp,
 	RFASem *name_sem,
 	_TCHAR *sold,
-	long lnew
+	long long lnew
 	)
 {
 if (!name_sem)
@@ -10052,7 +10052,7 @@ _TCHAR *Arun::strsubst(	// 07/12/08 AM.
 	Nlppp *nlppp,
 	_TCHAR *name,
 	RFASem *sold_sem,
-	long lnew
+	long long lnew
 	)
 {
 if (!sold_sem)
@@ -10068,7 +10068,7 @@ _TCHAR *Arun::strsubst(	// 07/12/08 AM.
 	Nlppp *nlppp,
 	RFASem *name_sem,
 	RFASem *sold_sem,
-	long lnew
+	long long lnew
 	)
 {
 if (!name_sem)
@@ -10739,9 +10739,9 @@ return openfile(nlppp,fname,a,b,c);
 RFASem *Arun::openfile( // 07/26/11 AM.
 	Nlppp *nlppp,
 	RFASem *fname_sem,
-	long a,
-	long b,
-	long c
+	long long a,
+	long long b,
+	long long c
 	)
 {
 if (!fname_sem)
@@ -10757,9 +10757,9 @@ return openfile(nlppp,fname,(_TCHAR*)0,(_TCHAR*)0,(_TCHAR*)0);
 RFASem *Arun::openfile( // 07/26/11 AM.
 	Nlppp *nlppp,
 	_TCHAR *fname,
-	long a,
-	long b,
-	long c
+	long long a,
+	long long b,
+	long long c
 	)
 {
 // Todo: If these nums aren't zero, flag error.
@@ -10947,7 +10947,7 @@ return strspellcandidate(nlppp,str1,str2);
 * NOTE:
 ********************************************/
 
-long Arun::strspellcompare(
+long long Arun::strspellcompare(
 	Nlppp *nlppp,
 	_TCHAR *str1,
 	_TCHAR *str2
@@ -10971,7 +10971,7 @@ return weight;
 }
 
 
-long Arun::strspellcompare(
+long long Arun::strspellcompare(
 	Nlppp *nlppp,
 	RFASem *str1_sem,
 	_TCHAR *str2
@@ -10985,7 +10985,7 @@ return strspellcompare(nlppp,str1,str2);
 }
 
 
-long Arun::strspellcompare(
+long long Arun::strspellcompare(
 	Nlppp *nlppp,
 	_TCHAR *str1,
 	RFASem *str2_sem
@@ -10999,7 +10999,7 @@ return strspellcompare(nlppp,str1,str2);
 }
 
 
-long Arun::strspellcompare(
+long long Arun::strspellcompare(
 	Nlppp *nlppp,
 	RFASem *str1_sem,
 	RFASem *str2_sem
@@ -11073,7 +11073,7 @@ return spellcandidates(nlppp,str);
 
 _TCHAR *Arun::spellcandidates(	// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return 0;
@@ -11103,14 +11103,14 @@ if (!str || !*str)
 	return false;
 
 // Convert to lowercase.
-long len = _tcsclen(str);
+long long len = _tcsclen(str);
 if (len > MAXWORDLENGTH)										// FIX	// 11/13/01 AM.
 	return false;													// FIX	// 11/13/01 AM.
 
 _TCHAR *lcstr = Chars::create(len + 1);
 str_to_lower(str, lcstr);
 
-long pos;
+long pos;	// kept as `long` to match binary_spell's long& reference param
 //int ans;
 flag = (binary_spell(lcstr, word_arrays[len],word_lengths[len], /*UP*/pos)
 	? true : false);
@@ -11147,7 +11147,7 @@ return spellword(nlppp,st);
 
 bool Arun::spellword(	// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return false;
@@ -11177,7 +11177,7 @@ bool cap = (is_upper((_TUCHAR)*str) ? true : false);		// 12/16/01 AM.
 // Forget about mix cap!
 
 // Convert to lowercase.													// 09/28/00 AM.
-long len = _tcsclen(str);														// 10/16/00 AM.
+long long len = _tcsclen(str);														// 10/16/00 AM.
 if (len > MAXWORDLENGTH)			// Forget it.			// FIX	// 11/13/01 AM.
 	return 0;														// FIX	// 11/13/01 AM.
 
@@ -11188,7 +11188,7 @@ Parse *parse = nlppp->getParse();
 _TCHAR *istr = 0;
 
 _TCHAR buf2[1001];
-long pos;
+long pos;	// kept as `long` to match binary_spell's long& reference param
 if (!binary_spell(lcstr, word_arrays[len],word_lengths[len], /*UP*/pos))
 	{
 	// Get corrected spell here.
@@ -11250,7 +11250,7 @@ return spellcorrect(nlppp,str);
 
 _TCHAR *Arun::spellcorrect(	// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return 0;
@@ -11271,7 +11271,7 @@ return 0;
 _TCHAR *Arun::lj(
 	Nlppp *nlppp,
 	_TCHAR *sptr,
-	long fieldsize
+	long long fieldsize
 	)
 {
 if (!nlppp || fieldsize < 1)
@@ -11304,7 +11304,7 @@ return str;
 _TCHAR *Arun::lj(
 	Nlppp *nlppp,
 	RFASem *sem,
-	long fieldsize
+	long long fieldsize
 	)
 {
 _TCHAR *st = 0;
@@ -11335,7 +11335,7 @@ _TCHAR *Arun::lj(
 if (!field_sem)
 	return 0;
 bool ok = false;
-long field = field_sem->sem_to_long(ok);
+long long field = field_sem->sem_to_long(ok);
 delete field_sem;
 if (!ok)
 	return 0;
@@ -11363,7 +11363,7 @@ if (!field_sem)
 _TCHAR *sptr = sptr_sem->sem_to_str();
 delete sptr_sem;
 bool ok = false;
-long field = field_sem->sem_to_long(ok);
+long long field = field_sem->sem_to_long(ok);
 delete field_sem;
 if (!ok)
 	return 0;
@@ -11374,7 +11374,7 @@ return lj(nlppp,sptr,field);
 _TCHAR *Arun::LJ(
 	Nlppp *nlppp,
 	_TCHAR *sptr,
-	long fieldsize
+	long long fieldsize
 	)
 {
 return lj(nlppp,sptr,fieldsize);
@@ -11385,7 +11385,7 @@ return lj(nlppp,sptr,fieldsize);
 _TCHAR *Arun::LJ(
 	Nlppp *nlppp,
 	RFASem *sem,
-	long fieldsize
+	long long fieldsize
 	)
 {
 return lj(nlppp,sem,fieldsize);
@@ -11398,7 +11398,7 @@ _TCHAR *Arun::LJ(
 	RFASem *sem
 	)
 {
-long num = 0;
+long long num = 0;
 _TCHAR *st = 0;
 if (!sem)
 	return 0;
@@ -11446,8 +11446,8 @@ return lj(nlppp,sptr_sem,field_sem);
 
 _TCHAR *Arun::rightjustifynum(
 	Nlppp *nlppp,
-	long num,
-	long fieldsize
+	long long num,
+	long long fieldsize
 	)
 {
 if (!nlppp || fieldsize < 1)
@@ -11471,14 +11471,14 @@ return str;
 _TCHAR *Arun::rightjustifynum(
 	Nlppp *nlppp,
 	RFASem *sem,
-	long fieldsize
+	long long fieldsize
 	)
 {
-long num = 0;
+long long num = 0;
 _TCHAR *st = 0;
 if (!sem)
 //	return 0;																	// 11/19/02 AM.
-	return rightjustifynum(nlppp,0L,fieldsize);				// 11/19/02 AM.
+	return rightjustifynum(nlppp,0LL,fieldsize);				// 11/19/02 AM.
 
 switch (sem->getType())
 	{
@@ -11504,14 +11504,14 @@ return rightjustifynum(nlppp,num,fieldsize);
 
 _TCHAR *Arun::rightjustifynum(
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	RFASem *field_sem
 	)
 {
 if (!field_sem)
 	return 0;
 bool ok = false;
-long field = field_sem->sem_to_long(ok);
+long long field = field_sem->sem_to_long(ok);
 delete field_sem;
 if (!ok)
 	return 0;
@@ -11537,7 +11537,7 @@ if (!field_sem)
 	return 0;
 	}
 bool ok1 = false;
-long num = num_sem->sem_to_long(ok1);
+long long num = num_sem->sem_to_long(ok1);
 delete num_sem;
 if (!ok1)
 	{
@@ -11546,7 +11546,7 @@ if (!ok1)
 	return 0;
 	}
 bool ok = false;
-long field = field_sem->sem_to_long(ok);
+long long field = field_sem->sem_to_long(ok);
 delete field_sem;
 if (!ok)
 	return 0;
@@ -11565,8 +11565,8 @@ return rightjustifynum(nlppp,num,field);
 
 _TCHAR *percentstr(
 	Nlppp *nlppp,
-	long numerator,
-	long denominator
+	long long numerator,
+	long long denominator
 	)
 {
 int fieldsize = 3;
@@ -11609,13 +11609,13 @@ return str;
 _TCHAR *percentstr(
 	Nlppp *nlppp,
 	RFASem *num_sem,
-	long den
+	long long den
 	)
 {
 if (!num_sem)
 	return 0;
 bool ok = false;
-long num = num_sem->sem_to_long(ok);
+long long num = num_sem->sem_to_long(ok);
 delete num_sem;
 if (!ok)
 	return 0;
@@ -11625,14 +11625,14 @@ return percentstr(nlppp,num,den);
 
 _TCHAR *percentstr(
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	RFASem *den_sem
 	)
 {
 if (!den_sem)
 	return 0;
 bool ok = false;
-long den = den_sem->sem_to_long(ok);
+long long den = den_sem->sem_to_long(ok);
 delete den_sem;
 if (!ok)
 	return 0;
@@ -11658,12 +11658,12 @@ if (!den_sem)
 	return 0;
 	}
 bool ok = false;
-long num = num_sem->sem_to_long(ok);
+long long num = num_sem->sem_to_long(ok);
 delete num_sem;
 if (!ok)
 	return 0;
 ok = false;
-long den = den_sem->sem_to_long(ok);
+long long den = den_sem->sem_to_long(ok);
 delete den_sem;
 if (!ok)
 	return 0;
@@ -11680,11 +11680,11 @@ return percentstr(nlppp,num,den);
 *			factor_num - A fudge factor.  Typical values range from 3 to 13.
 ********************************************/
 
-long Arun::hitconf(
+long long Arun::hitconf(
 	Nlppp *nlppp,
-	long hits,
-	long tot,
-	long factor
+	long long hits,
+	long long tot,
+	long long factor
 	)
 {
 int pct=0;
@@ -11705,34 +11705,34 @@ return pct;
 }
 
 
-long Arun::hitconf(
+long long Arun::hitconf(
 	Nlppp *nlppp,
 	RFASem *hits_sem,
-	long tot,
-	long factor
+	long long tot,
+	long long factor
 	)
 {
 if (!hits_sem)
 	return 0;
 bool ok = false;
-long hits = hits_sem->sem_to_long(ok);
+long long hits = hits_sem->sem_to_long(ok);
 delete hits_sem;
 if (!ok)
 	return 0;
 return hitconf(nlppp,hits,tot,factor);
 }
 
-long Arun::hitconf(
+long long Arun::hitconf(
 	Nlppp *nlppp,
-	long hits,
+	long long hits,
 	RFASem *tot_sem,
-	long factor
+	long long factor
 	)
 {
 if (!tot_sem)
 	return 0;
 bool ok = false;
-long tot = tot_sem->sem_to_long(ok);
+long long tot = tot_sem->sem_to_long(ok);
 delete tot_sem;
 if (!ok)
 	return 0;
@@ -11740,28 +11740,28 @@ return hitconf(nlppp,hits,tot,factor);
 }
 
 
-long Arun::hitconf(
+long long Arun::hitconf(
 	Nlppp *nlppp,
-	long hits,
-	long tot,
+	long long hits,
+	long long tot,
 	RFASem *factor_sem
 	)
 {
 if (!factor_sem)
 	return 0;
 bool ok = false;
-long factor = factor_sem->sem_to_long(ok);
+long long factor = factor_sem->sem_to_long(ok);
 if (!ok)
 	return 0;
 return hitconf(nlppp,hits,tot,factor);
 }
 
 
-long Arun::hitconf(
+long long Arun::hitconf(
 	Nlppp *nlppp,
 	RFASem *hits_sem,
 	RFASem *tot_sem,
-	long factor
+	long long factor
 	)
 {
 if (!hits_sem)
@@ -11776,7 +11776,7 @@ if (!tot_sem)
 	return 0;
 	}
 bool ok = false;
-long hits = hits_sem->sem_to_long(ok);
+long long hits = hits_sem->sem_to_long(ok);
 delete hits_sem;
 if (!ok)
 	{
@@ -11785,7 +11785,7 @@ if (!ok)
 	return 0;
 	}
 ok = false;
-long tot = tot_sem->sem_to_long(ok);
+long long tot = tot_sem->sem_to_long(ok);
 delete tot_sem;
 if (!ok)
 	return 0;
@@ -11793,9 +11793,9 @@ return hitconf(nlppp,hits,tot,factor);
 }
 
 
-long Arun::hitconf(
+long long Arun::hitconf(
 	Nlppp *nlppp,
-	long hits,
+	long long hits,
 	RFASem *tot_sem,
 	RFASem *factor_sem
 	)
@@ -11812,7 +11812,7 @@ if (!factor_sem)
 	return 0;
 	}
 bool ok = false;
-long tot = tot_sem->sem_to_long(ok);
+long long tot = tot_sem->sem_to_long(ok);
 delete tot_sem;
 if (!ok)
 	{
@@ -11821,7 +11821,7 @@ if (!ok)
 	return 0;
 	}
 ok = false;
-long factor = factor_sem->sem_to_long(ok);
+long long factor = factor_sem->sem_to_long(ok);
 delete factor_sem;
 if (!ok)
 	return 0;
@@ -11829,10 +11829,10 @@ return hitconf(nlppp,hits,tot,factor);
 }
 
 
-long Arun::hitconf(
+long long Arun::hitconf(
 	Nlppp *nlppp,
 	RFASem *hits_sem,
-	long tot,
+	long long tot,
 	RFASem *factor_sem
 	)
 {
@@ -11848,7 +11848,7 @@ if (!factor_sem)
 	return 0;
 	}
 bool ok = false;
-long hits = hits_sem->sem_to_long(ok);
+long long hits = hits_sem->sem_to_long(ok);
 delete hits_sem;
 if (!ok)
 	{
@@ -11857,14 +11857,14 @@ if (!ok)
 	return 0;
 	}
 ok = false;
-long factor = factor_sem->sem_to_long(ok);
+long long factor = factor_sem->sem_to_long(ok);
 if (!ok)
 	return 0;
 return hitconf(nlppp,hits,tot,factor);
 }
 
 
-long Arun::hitconf(
+long long Arun::hitconf(
 	Nlppp *nlppp,
 	RFASem *hits_sem,
 	RFASem *tot_sem,
@@ -11893,7 +11893,7 @@ if (!factor_sem)
 	return 0;
 	}
 bool ok = false;
-long hits = hits_sem->sem_to_long(ok);
+long long hits = hits_sem->sem_to_long(ok);
 delete hits_sem;
 if (!ok)
 	{
@@ -11904,7 +11904,7 @@ if (!ok)
 	return 0;
 	}
 ok = false;
-long tot = tot_sem->sem_to_long(ok);
+long long tot = tot_sem->sem_to_long(ok);
 delete tot_sem;
 if (!ok)
 	{
@@ -11913,7 +11913,7 @@ if (!ok)
 	return 0;
 	}
 ok = false;
-long factor = factor_sem->sem_to_long(ok);
+long long factor = factor_sem->sem_to_long(ok);
 delete factor_sem;
 if (!ok)
 	return 0;
@@ -12008,13 +12008,13 @@ bool Arun::pncopyvars(
 	Nlppp *nlppp
 	)
 {
-return pncopyvars(nlppp,0L);
+return pncopyvars(nlppp,0LL);
 }
 
 // VARIANT.
 bool Arun::pncopyvars(
 	Nlppp *nlppp,
-	long num1
+	long long num1
 	)
 {
 if (!nlppp || num1 < 0)
@@ -12069,7 +12069,7 @@ if (sem1->getType() == RSNODE)
 	}
 
 bool ok = false;
-long num1 = sem1->sem_to_long(ok);
+long long num1 = sem1->sem_to_long(ok);
 delete sem1;
 if (!ok)
 	return false;
@@ -12788,7 +12788,7 @@ return (float)0.0;
 * CR:		03/07/02 AM.
 * SUBJ:	Conversions to sem object.
 * RET:	Sem object.
-* FORMS:	sem(long)
+* FORMS:	sem(long long)
 *			sem(str)
 *			sem(float)
 *			sem(sem) -- noop.
@@ -12869,7 +12869,7 @@ return false;
 
 bool Arun::strisupper(	// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return false;
@@ -12920,7 +12920,7 @@ return false;
 
 bool Arun::strislower(	// 07/11/03 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return false;
@@ -13103,7 +13103,7 @@ return 0;	// 01/08/07 AM.
 * CR:		03/11/02 AM.
 * SUBJ:	Special return for user-defined functions.
 * RET:	Sem object.
-* FORMS:	ret(nlppp,loc,locstrs,long)
+* FORMS:	ret(nlppp,loc,locstrs,long long)
 *			ret(nlppp,loc,locstrs,str)
 *			ret(nlppp,loc,locstrs,float)
 *			ret(nlppp,loc,locstrs,sem)
@@ -13177,18 +13177,18 @@ return new RFASem(str, RSSTR);
 * CR:		03/09/14 AM.
 * SUBJ:	Cleanup when catching an exception.
 * RET:	0
-* FORMS:	excepth(nlppp,loc,locstrs,long)
+* FORMS:	excepth(nlppp,loc,locstrs,long long)
 * NOTE:	Don't create a sem, as ret() does.
 ********************************************/
-long Arun::excepth(
+long long Arun::excepth(
 	Nlppp *nlppp,
 	void *loc,	// List of L() local vars from calling frame.
 	void *locstrs,
 	int e	// THE EXCEPTION NUMBER.
 	)
 {
-long ruleline = 0;
-long passnum = 0;
+long long ruleline = 0;
+long long passnum = 0;
 // For debugging.	// 03/10/14 AM.
 #ifdef _DEBUG_STUFFNJUNK_
 if (nlppp)
@@ -14045,9 +14045,9 @@ return str;
 
 bool Arun::dbbindcol(
 	Nlppp *nlppp,
-	long column_num,
+	long long column_num,
 	_TCHAR *typ,
-	long bsiz,
+	long long bsiz,
 	RFASem *var,
 	RFASem *flagv
 	)
@@ -14071,9 +14071,9 @@ return ok;
 
 bool Arun::dbbindcol_int(
 	Nlppp *nlppp,
-	long column_num,
+	long long column_num,
 	_TCHAR *typ,
-	long bsiz,
+	long long bsiz,
 	RFASem *var,
 	RFASem *flagv
 	)
@@ -14126,7 +14126,7 @@ switch (sqltyp)																// 06/07/02 AM.
 	case SQL_C_SLONG:															// 06/07/02 AM.
 	case SQL_C_SSHORT:														// 06/07/02 AM.
 		// Ignoring user-supplied length.
-		success = Fn::dbbind2long(nlppp,var,SQL_C_LONG,column_num,	// 06/08/02 AM.
+		success = Fn::dbbind2long long(nlppp,var,SQL_C_LONG,column_num,	// 06/08/02 AM.
 							flagv);												// 06/12/02 AM.
 		break;
 	case SQL_C_DOUBLE:														// 06/07/02 AM.
@@ -14163,7 +14163,7 @@ bool Arun::dbbindcol(
 	Nlppp *nlppp,
 	RFASem *columnsem,
 	_TCHAR *typ,
-	long bsiz,
+	long long bsiz,
 	RFASem *var,
 	RFASem *flagv
 	)
@@ -14171,7 +14171,7 @@ bool Arun::dbbindcol(
 if (!columnsem)
 	return false;
 bool ok = false;
-long column_num = columnsem->sem_to_long(ok);
+long long column_num = columnsem->sem_to_long(ok);
 delete columnsem;
 if (!ok)
 	return false;
@@ -14182,9 +14182,9 @@ return dbbindcol(nlppp,column_num,typ,bsiz,var,flagv);
 // VARIANT.
 bool Arun::dbbindcol(
 	Nlppp *nlppp,
-	long column_num,
+	long long column_num,
 	RFASem *typsem,
-	long bsiz,
+	long long bsiz,
 	RFASem *var,
 	RFASem *flagv
 	)
@@ -14200,7 +14200,7 @@ return dbbindcol(nlppp,column_num,typ,bsiz,var,flagv);
 // VARIANT.
 bool Arun::dbbindcol(
 	Nlppp *nlppp,
-	long column_num,
+	long long column_num,
 	_TCHAR *typ,
 	RFASem *bsizsem,
 	RFASem *var,
@@ -14210,7 +14210,7 @@ bool Arun::dbbindcol(
 if (!bsizsem)
 	return false;
 bool ok = false;
-long bsiz = bsizsem->sem_to_long(ok);
+long long bsiz = bsizsem->sem_to_long(ok);
 delete bsizsem;
 if (!ok)
 	return false;
@@ -14223,7 +14223,7 @@ bool Arun::dbbindcol(
 	Nlppp *nlppp,
 	RFASem *columnsem,
 	RFASem *typsem,
-	long bsiz,
+	long long bsiz,
 	RFASem *var,
 	RFASem *flagv
 	)
@@ -14243,7 +14243,7 @@ else if (!typsem)
 
 bool ok = false;
 _TCHAR *typ = typsem->sem_to_str();
-long column_num = columnsem->sem_to_long(ok);
+long long column_num = columnsem->sem_to_long(ok);
 delete columnsem;
 delete typsem;
 if (!ok)
@@ -14278,8 +14278,8 @@ else if (!bsizsem)
 
 bool ok1 = false;
 bool ok2 = false;
-long column_num = columnsem->sem_to_long(ok1);
-long bsiz = bsizsem->sem_to_long(ok2);
+long long column_num = columnsem->sem_to_long(ok1);
+long long bsiz = bsizsem->sem_to_long(ok2);
 delete columnsem;
 delete bsizsem;
 if (!ok1 || !ok2)
@@ -14291,7 +14291,7 @@ return dbbindcol(nlppp,column_num,typ,bsiz,var,flagv);
 // VARIANT.
 bool Arun::dbbindcol(
 	Nlppp *nlppp,
-	long column_num,
+	long long column_num,
 	RFASem *typsem,
 	RFASem *bsizsem,
 	RFASem *var,
@@ -14312,7 +14312,7 @@ else if (!bsizsem)
 	}
 
 bool ok = false;
-long bsiz = bsizsem->sem_to_long(ok);
+long long bsiz = bsizsem->sem_to_long(ok);
 _TCHAR *typ = typsem->sem_to_str();
 delete bsizsem;
 delete typsem;
@@ -14344,9 +14344,9 @@ if (!columnsem || !typsem || !bsizsem)
 
 bool ok1 = false;
 bool ok2 = false;
-long column_num = columnsem->sem_to_long(ok1);
+long long column_num = columnsem->sem_to_long(ok1);
 _TCHAR *typ = typsem->sem_to_str();
-long bsiz = bsizsem->sem_to_long(ok2);
+long long bsiz = bsizsem->sem_to_long(ok2);
 delete columnsem;
 delete typsem;
 delete bsizsem;
@@ -16014,7 +16014,7 @@ RFASem *Arun::pninsert(
 	Nlppp *nlppp,
 	_TCHAR *name_str,
 	NODE *pos_nd,
-	long after_num
+	long long after_num
 	)
 {
 RFASem *sem = 0;
@@ -16047,14 +16047,14 @@ if (*name_str != '_')
 Tree<Pn> *tree = (Tree<Pn> *)parse->getTree();
 
 // DUMMY UP A NODE.
-long o_start = -1;
-long o_end = -1;
-long ustart = -1;	// [UNICODE]
-long uend = -1;	// [UNICODE]
+long long o_start = -1;
+long long o_end = -1;
+long long ustart = -1;	// [UNICODE]
+long long uend = -1;	// [UNICODE]
 _TCHAR *text = 0;
 Sym *sym = parse->getSym(name_str);
 _TCHAR *str = sym->getStr();
-long len = _tcslen(str);
+long long len = _tcslen(str);
 enum Pntype typ = PNNULL;
 
 // Todo: These type checks are hooks for future enhancement of pninsert.
@@ -16105,7 +16105,7 @@ RFASem *Arun::pninsert(
 	Nlppp *nlppp,
 	RFASem *name_sem,
 	NODE *pos_nd,
-	long after_num
+	long long after_num
 	)
 {
 if (!name_sem)
@@ -16125,7 +16125,7 @@ RFASem *Arun::pninsert(
 	)
 {
 bool ok;
-long after_num = 0;
+long long after_num = 0;
 if (after_sem)
 	{
 	after_num = after_sem->sem_to_long(ok);
@@ -16155,7 +16155,7 @@ _TCHAR *name_str = name_sem->sem_to_str();
 delete name_sem;
 
 bool ok;
-long after_num = 0;
+long long after_num = 0;
 if (after_sem)
 	{
 	after_num = after_sem->sem_to_long(ok);
@@ -16171,7 +16171,7 @@ RFASem *Arun::pninsert(
 	Nlppp *nlppp,
 	_TCHAR *name_str,
 	RFASem *pos_sem,
-	long after_num
+	long long after_num
 	)
 {
 if (!pos_sem)
@@ -16190,7 +16190,7 @@ RFASem *Arun::pninsert(
 	Nlppp *nlppp,
 	RFASem *name_sem,
 	RFASem *pos_sem,
-	long after_num
+	long long after_num
 	)
 {
 if (!name_sem && !pos_sem)
@@ -16231,7 +16231,7 @@ if (!pos_sem)
 	}
 
 bool ok;
-long after_num = 0;
+long long after_num = 0;
 if (after_sem)
 	{
 	after_num = after_sem->sem_to_long(ok);
@@ -16281,7 +16281,7 @@ NODE *pos_nd = pos_sem->sem_to_node();
 delete pos_sem;
 
 bool ok;
-long after_num = 0;
+long long after_num = 0;
 if (after_sem)
 	{
 	after_num = after_sem->sem_to_long(ok);
@@ -16305,7 +16305,7 @@ RFASem *Arun::pnmove(
 	Nlppp *nlppp,
 	NODE *pn_nd,	// Node to excise and move. (FROM)
 	NODE *pos_nd,	// Node at destination.  (TO)
-	long after_num
+	long long after_num
 	)
 {
 RFASem *sem = 0;
@@ -16349,7 +16349,7 @@ RFASem *Arun::pnmove(
 	Nlppp *nlppp,
 	RFASem *pn_sem,
 	NODE *pos_nd,
-	long after_num
+	long long after_num
 	)
 {
 if (!pn_sem)
@@ -16369,7 +16369,7 @@ RFASem *Arun::pnmove(
 	)
 {
 bool ok;
-long after_num = 0;
+long long after_num = 0;
 if (after_sem)
 	{
 	after_num = after_sem->sem_to_long(ok);
@@ -16399,7 +16399,7 @@ NODE *pn_nd = pn_sem->sem_to_node();
 delete pn_sem;
 
 bool ok;
-long after_num = 0;
+long long after_num = 0;
 if (after_sem)
 	{
 	after_num = after_sem->sem_to_long(ok);
@@ -16415,7 +16415,7 @@ RFASem *Arun::pnmove(
 	Nlppp *nlppp,
 	NODE *pn_nd,
 	RFASem *pos_sem,
-	long after_num
+	long long after_num
 	)
 {
 if (!pos_sem)
@@ -16432,7 +16432,7 @@ RFASem *Arun::pnmove(
 	Nlppp *nlppp,
 	RFASem *pn_sem,
 	RFASem *pos_sem,
-	long after_num
+	long long after_num
 	)
 {
 if (!pn_sem && !pos_sem)
@@ -16476,7 +16476,7 @@ if (!pos_sem)
 	}
 
 bool ok;
-long after_num = 0;
+long long after_num = 0;
 if (after_sem)
 	{
 	after_num = after_sem->sem_to_long(ok);
@@ -16526,7 +16526,7 @@ NODE *pos_nd = pos_sem->sem_to_node();
 delete pos_sem;
 
 bool ok;
-long after_num = 0;
+long long after_num = 0;
 if (after_sem)
 	{
 	after_num = after_sem->sem_to_long(ok);
@@ -16604,8 +16604,8 @@ RFASem *Arun::sortconsbyattr(
 	Nlppp *nlppp,
 	RFASem *array_sem,
 	_TCHAR *attr,
-	long numeric,
-	long descending
+	long long numeric,
+	long long descending
 	)
 {
 if (!array_sem)
@@ -16660,8 +16660,8 @@ RFASem *Arun::sortconsbyattr(											// 12/14/02 AM.
 	Nlppp *nlppp,
 	RFASem *array_sem,
 	RFASem *attr_sem,
-	long numeric,
-	long descending
+	long long numeric,
+	long long descending
 	)
 {
 if (!attr_sem)
@@ -16702,13 +16702,13 @@ return sortconsbyattr(nlppp,array_sem,attr,numeric,descending);
 
 _TCHAR *Arun::inputrange(
 	Nlppp *nlppp,
-	long start,
-	long end
+	long long start,
+	long long end
 	)
 {
 Parse *parse = nlppp->getParse();
 _TCHAR *text = parse->getText();	// Entire input text.
-long length = parse->getLength();	// Length of input text.
+long long length = parse->getLength();	// Length of input text.
 
 if (start >= length || end >= length
  || start < 0 || end < 0
@@ -16719,7 +16719,7 @@ if (start >= length || end >= length
 	return 0;
 	}
 
-long len = end - start + 1;
+long long len = end - start + 1;
 
 _TCHAR *buf = Chars::create(len+1);
 _tcsnccpy(buf,&(text[start]),len);
@@ -16735,13 +16735,13 @@ return str;
 _TCHAR *Arun::inputrange(
 	Nlppp *nlppp,
 	RFASem *start_sem,
-	long end
+	long long end
 	)
 {
 if (!start_sem)
 	return 0;
 bool ok;
-long start = start_sem->sem_to_long(ok);
+long long start = start_sem->sem_to_long(ok);
 delete start_sem;
 if (!ok)
 	return 0;
@@ -16752,14 +16752,14 @@ return inputrange(nlppp,start,end);
 // VARIANT.
 _TCHAR *Arun::inputrange(
 	Nlppp *nlppp,
-	long start,
+	long long start,
 	RFASem *end_sem
 	)
 {
 if (!end_sem)
 	return 0;
 bool ok;
-long end = end_sem->sem_to_long(ok);
+long long end = end_sem->sem_to_long(ok);
 delete end_sem;
 if (!ok)
 	return 0;
@@ -16787,11 +16787,11 @@ if (!end_sem)
 	}
 
 bool ok1;
-long start = start_sem->sem_to_long(ok1);
+long long start = start_sem->sem_to_long(ok1);
 delete start_sem;
 
 bool ok2;
-long end = end_sem->sem_to_long(ok2);
+long long end = end_sem->sem_to_long(ok2);
 delete end_sem;
 
 if (!ok1 || !ok2)
@@ -16816,7 +16816,7 @@ _TCHAR *Arun::xmlstr(
 {
 if (!str1 || !*str1)
 	return 0;
-long len = _tcsclen(str1);
+long long len = _tcsclen(str1);
 _TCHAR *xstr = Xml::text2xml(str1, len, nlppp->htab());
 return xstr;
 }
@@ -16833,7 +16833,7 @@ _TCHAR *str1 = strsem->sem_to_str();
 delete strsem;
 if (!str1 || !*str1)
 	return 0;
-long len = _tcsclen(str1);
+long long len = _tcsclen(str1);
 _TCHAR *xstr = Xml::text2xml(str1, len, nlppp->htab());
 return xstr;
 }
@@ -16861,7 +16861,7 @@ _TCHAR *Arun::sqlstr(
 {
 if (!str1 || !*str1)
 	return 0;
-long len = _tcsclen(str1);
+long long len = _tcsclen(str1);
 _TCHAR *xstr = Xml::text2sql(str1, len, nlppp->htab());
 return xstr;
 }
@@ -16878,7 +16878,7 @@ _TCHAR *str1 = strsem->sem_to_str();
 delete strsem;
 if (!str1 || !*str1)
 	return 0;
-long len = _tcsclen(str1);
+long long len = _tcsclen(str1);
 _TCHAR *xstr = Xml::text2sql(str1, len, nlppp->htab());
 return xstr;
 }
@@ -17024,8 +17024,8 @@ return false;
 
 bool Arun::inputrangetofile(
 	Nlppp *nlppp,
-	long num1,
-	long num2,
+	long long num1,
+	long long num2,
 	std::_t_ostream *ostr
 	)
 {
@@ -17068,8 +17068,8 @@ return true;
 // VARIANT
 bool Arun::inputrangetofile(
 	Nlppp *nlppp,
-	long num1,
-	long num2,
+	long long num1,
+	long long num2,
 	RFASem *ostr_sem
 	)
 {
@@ -17084,7 +17084,7 @@ return inputrangetofile(nlppp,num1,num2,ostr);
 // VARIANT
 bool Arun::inputrangetofile(
 	Nlppp *nlppp,
-	long num1,
+	long long num1,
 	RFASem *num2_sem,
 	std::_t_ostream *ostr
 	)
@@ -17092,7 +17092,7 @@ bool Arun::inputrangetofile(
 if (!num2_sem)
 	return false;
 bool ok = false;
-long num2 = num2_sem->sem_to_long(ok);
+long long num2 = num2_sem->sem_to_long(ok);
 delete num2_sem;
 if (!ok)
 	return false;
@@ -17104,14 +17104,14 @@ return inputrangetofile(nlppp,num1,num2,ostr);
 bool Arun::inputrangetofile(
 	Nlppp *nlppp,
 	RFASem *num1_sem,
-	long num2,
+	long long num2,
 	std::_t_ostream *ostr
 	)
 {
 if (!num1_sem)
 	return false;
 bool ok = false;
-long num1 = num1_sem->sem_to_long(ok);
+long long num1 = num1_sem->sem_to_long(ok);
 delete num1_sem;
 if (!ok)
 	return false;
@@ -17124,7 +17124,7 @@ return inputrangetofile(nlppp,num1,num2,ostr);
 // VARIANT
 bool Arun::inputrangetofile(
 	Nlppp *nlppp,
-	long num1,
+	long long num1,
 	RFASem *num2_sem,
 	RFASem *ostr_sem
 	)
@@ -17142,7 +17142,7 @@ if (!num2_sem)
 	return false;
 	}
 bool ok = false;
-long num2 = num2_sem->sem_to_long(ok);
+long long num2 = num2_sem->sem_to_long(ok);
 delete num2_sem;
 std::_t_ostream *ostr = sem_to_ostream(ostr_sem);
 delete ostr_sem;
@@ -17174,10 +17174,10 @@ if (!num2_sem)
 	}
 
 bool ok1 = false;
-long num1 = num1_sem->sem_to_long(ok1);
+long long num1 = num1_sem->sem_to_long(ok1);
 delete num1_sem;
 bool ok2 = false;
-long num2 = num2_sem->sem_to_long(ok2);
+long long num2 = num2_sem->sem_to_long(ok2);
 delete num2_sem;
 if (!ok1 || !ok2)
 	return false;
@@ -17189,7 +17189,7 @@ return inputrangetofile(nlppp,num1,num2,ostr);
 bool Arun::inputrangetofile(
 	Nlppp *nlppp,
 	RFASem *num1_sem,
-	long num2,
+	long long num2,
 	RFASem *ostr_sem
 	)
 {
@@ -17207,7 +17207,7 @@ if (!ostr_sem)
 	}
 
 bool ok1 = false;
-long num1 = num1_sem->sem_to_long(ok1);
+long long num1 = num1_sem->sem_to_long(ok1);
 delete num1_sem;
 std::_t_ostream *ostr = sem_to_ostream(ostr_sem);
 delete ostr_sem;
@@ -17226,7 +17226,7 @@ bool Arun::inputrangetofile(
 	)
 {
 bool ok1 = false;
-long num1 = 0;
+long long num1 = 0;
 if (num1_sem)
 	{
 	num1 = num1_sem->sem_to_long(ok1);
@@ -17234,7 +17234,7 @@ if (num1_sem)
 	}
 
 bool ok2 = false;
-long num2 = 0;
+long long num2 = 0;
 if (num2_sem)
 	{
 	num2 = num2_sem->sem_to_long(ok2);
@@ -17514,8 +17514,8 @@ return split(nlppp,buf,chrs);
 // VARIANT.
 RFASem *Arun::split(
 	Nlppp *nlppp,
-	long buf_num,
-	long chrs_num
+	long long buf_num,
+	long long chrs_num
 	)
 {
 return 0;
@@ -17524,7 +17524,7 @@ return 0;
 // VARIANT.
 RFASem *Arun::split(
 	Nlppp *nlppp,
-	long buf_num,
+	long long buf_num,
 	_TCHAR *chrs
 	)
 {
@@ -17534,7 +17534,7 @@ return 0;
 // VARIANT.
 RFASem *Arun::split(
 	Nlppp *nlppp,
-	long buf_num,
+	long long buf_num,
 	RFASem *chrs_sem
 	)
 {
@@ -17547,7 +17547,7 @@ return 0;
 RFASem *Arun::split(
 	Nlppp *nlppp,
 	_TCHAR *buf,
-	long chrs_num
+	long long chrs_num
 	)
 {
 return 0;
@@ -17557,7 +17557,7 @@ return 0;
 RFASem *Arun::split(
 	Nlppp *nlppp,
 	RFASem *buf_sem,
-	long chrs_num
+	long long chrs_num
 	)
 {
 if (buf_sem)
@@ -17581,7 +17581,7 @@ _TCHAR *Arun::deaccent(
 {
 if (!str1 || !*str1)
 	return 0;
-long len = _tcsclen(str1);
+long long len = _tcsclen(str1);
 _TCHAR *xstr = Xml::de_accent(str1, len, nlppp->htab());
 return xstr;
 }
@@ -17598,14 +17598,14 @@ _TCHAR *str1 = strsem->sem_to_str();
 delete strsem;
 if (!str1 || !*str1)
 	return 0;
-long len = _tcsclen(str1);
+long long len = _tcsclen(str1);
 _TCHAR *xstr = Xml::de_accent(str1, len, nlppp->htab());
 return xstr;
 }
 
 _TCHAR *Arun::deaccent(	// 09/07/03 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return 0;
@@ -17627,7 +17627,7 @@ _TCHAR *Arun::dejunk(
 {
 if (!str1 || !*str1)
 	return 0;
-long len = _tcsclen(str1);
+long long len = _tcsclen(str1);
 _TCHAR *xstr = Xml::de_junk(str1, len, nlppp->htab());
 return xstr;
 }
@@ -17644,14 +17644,14 @@ _TCHAR *str1 = strsem->sem_to_str();
 delete strsem;
 if (!str1 || !*str1)
 	return 0;
-long len = _tcsclen(str1);
+long long len = _tcsclen(str1);
 _TCHAR *xstr = Xml::de_junk(str1, len, nlppp->htab());
 return xstr;
 }
 
 _TCHAR *Arun::dejunk(	// 09/09/11 AM.
 	Nlppp *nlppp,
-	long num
+	long long num
 	)
 {
 return 0;
@@ -17705,7 +17705,7 @@ bool Arun::setlookahead(
 if (!num1_sem)
 	return 0;
 bool ok = false;
-long num1 = num1_sem->sem_to_long(ok);
+long long num1 = num1_sem->sem_to_long(ok);
 delete num1_sem;
 if (!ok)
 	return 0;
@@ -17716,7 +17716,7 @@ return setlookahead(nlppp,num1);
 // RUNTIME VARIANT.
 bool Arun::setlookahead(
 	Nlppp *nlppp,
-	long num1
+	long long num1
 	)
 {
 if (!nlppp)
@@ -17800,7 +17800,7 @@ RFASem *Arun::permuten(
 if (!num1_sem)
 	return 0;
 bool ok = false;
-long num1 = num1_sem->sem_to_long(ok);
+long long num1 = num1_sem->sem_to_long(ok);
 delete num1_sem;
 if (!ok)
 	return 0;
@@ -17811,7 +17811,7 @@ return permuten(nlppp,num1);
 // VARIANT.
 RFASem *Arun::permuten(
 	Nlppp *nlppp,
-	long num1
+	long long num1
 	)
 {
 if (num1 <= 0)
@@ -17821,18 +17821,18 @@ if (num1 == 1)	// Trivial case.
 	return new RFASem(0LL);
 
 // Create buf of length n-1.
-long *buf = new long[num1];
+long long *buf = new long long[num1];
 
 // Order elements 0, 1, .... n-1.
-long ii = 0;
+long long ii = 0;
 for (; ii < num1; ++ii)
 	buf[ii] = ii;
 
 
 // Traverse each element.
 // Permute only those with arr[i] == i.
-long rr = 0;
-long tmp = 0;
+long long rr = 0;
+long long tmp = 0;
 for (ii = 0; ii < num1; ++ii)
 	{
 	if (buf[ii] == ii)
@@ -17863,7 +17863,7 @@ for (ii = 0; ii < num1; ++ii)
 	}
 
 // Delete allocated buf.
-delete [] (long *) buf;
+delete [] (long long *) buf;
 
 // Return an array of ints...
 return new RFASem(list);
@@ -17914,7 +17914,7 @@ return log10(num1);
 
 RFASem *Arun::eltnode(
 	Nlppp *nlppp,
-	long num1
+	long long num1
 	)
 {
 if (!nlppp || num1 < 0)
@@ -17958,7 +17958,7 @@ if (sem->getType() != RSLONG)
 	delete sem;		// MEMLEAK.	// 05/15/08 AM.
 	return 0;
 	}
-long num1 = sem->getLong();
+long long num1 = sem->getLong();
 if (num1 < 0)
 	{
 	delete sem;		// MEMLEAK.	// 05/15/08 AM.
@@ -17991,7 +17991,7 @@ return sem1;
 * FORMS:	levenshtein(str1,str2)
 ********************************************/
 
-long Arun::levenshtein(
+long long Arun::levenshtein(
 	Nlppp *nlppp,
 	_TCHAR *name1,
 	_TCHAR *name2
@@ -18001,7 +18001,7 @@ return levenshtein_int(name1,name2);
 }
 
 
-long Arun::levenshtein(
+long long Arun::levenshtein(
 	Nlppp *nlppp,
 	RFASem *name1_sem,
 	_TCHAR *name2
@@ -18015,7 +18015,7 @@ return levenshtein(nlppp,name1,name2);
 }
 
 
-long Arun::levenshtein(
+long long Arun::levenshtein(
 	Nlppp *nlppp,
 	_TCHAR *name1,
 	RFASem *name2_sem
@@ -18029,7 +18029,7 @@ return levenshtein(nlppp,name1,name2);
 }
 
 
-long Arun::levenshtein(
+long long Arun::levenshtein(
 	Nlppp *nlppp,
 	RFASem *name1_sem,
 	RFASem *name2_sem
@@ -18053,10 +18053,10 @@ delete name2_sem;
 return levenshtein(nlppp,name1,name2);
 }
 
-long Arun::levenshtein(
+long long Arun::levenshtein(
 	Nlppp *nlppp,
 	RFASem *name1_sem,
-	long num
+	long long num
 	)
 {
 if (!name1_sem)
@@ -18074,9 +18074,9 @@ return -1;
 }
 
 
-long Arun::levenshtein(
+long long Arun::levenshtein(
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	RFASem *name1_sem
 	)
 {
@@ -18096,9 +18096,9 @@ return -1;
 
 
 
-long Arun::levenshtein(
+long long Arun::levenshtein(
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	_TCHAR *name2
 	)
 {
@@ -18114,10 +18114,10 @@ return -1;
 }
 
 
-long Arun::levenshtein(
+long long Arun::levenshtein(
 	Nlppp *nlppp,
 	_TCHAR *name2,
-	long num
+	long long num
 	)
 {
 if (num != 0)
@@ -18131,10 +18131,10 @@ if (num != 0)
 return -1;
 }
 
-long Arun::levenshtein(
+long long Arun::levenshtein(
 	Nlppp *nlppp,
-	long num1,
-	long num2
+	long long num1,
+	long long num2
 	)
 {
 if (num1 != 0 || num2 != 0)
@@ -18313,7 +18313,7 @@ return urltofile(nlppp,name1,name2);
 _TCHAR *Arun::urltofile(
 	Nlppp *nlppp,
 	RFASem *name1_sem,
-	long num
+	long long num
 	)
 {
 if (!name1_sem)
@@ -18326,7 +18326,7 @@ return 0;
 
 _TCHAR *Arun::urltofile(
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	RFASem *name1_sem
 	)
 {
@@ -18341,7 +18341,7 @@ return 0;
 
 _TCHAR *Arun::urltofile(
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	_TCHAR *name2
 	)
 {
@@ -18352,7 +18352,7 @@ return 0;
 _TCHAR *Arun::urltofile(
 	Nlppp *nlppp,
 	_TCHAR *name2,
-	long num
+	long long num
 	)
 {
 return 0;
@@ -18436,7 +18436,7 @@ bool Arun::DICTphraselookup(
 	_TCHAR*key_str,   // k
 	_TCHAR*match_str, // m
 	_TCHAR*list_str,  // a
-	long punct_num    // p
+	long long punct_num    // p
 	)
 {
 if (!nlppp || !pn_node || !key_str || !match_str || !list_str)
@@ -18447,7 +18447,7 @@ Parse *parse = nlppp->getParse();
 
 // Get pnode text
 _TCHAR buf[512];
-long siz=512;
+long siz=512;	// kept as `long` to match Fn::prosify's long& reference param
 buf[0] = '\0';
 _TCHAR *ptr = buf;
 Fn::prosify((Node<Pn> *)pn_node,true,buf,ptr,siz);
@@ -18474,7 +18474,7 @@ if (!cg->findVal(wc,key_str,/*UP*/ cc))
 	return true;	// No phrase start concept; done.
 
 // Now we are at first word's concept in phrase hierarchy.
-long len = 1;	// Length of matched phrase.
+long long len = 1;	// Length of matched phrase.
 
 
 Htab *ht = parse->getHtab();	// Current hash table for strings.
@@ -18523,7 +18523,7 @@ return true;
 
 /////////////////
 
-bool Arun::DICTphraselookup(Nlppp*nlppp,RFASem*ns,_TCHAR*k,_TCHAR*m,_TCHAR*a,long p)
+bool Arun::DICTphraselookup(Nlppp*nlppp,RFASem*ns,_TCHAR*k,_TCHAR*m,_TCHAR*a,long long p)
 {
 NODE *n = 0;
 if (ns) { n = ns->sem_to_node(); delete ns; }
@@ -18532,7 +18532,7 @@ return DICTphraselookup(nlppp,n,k,m,a,p);
 }
 
 // VARIANT
-bool Arun::DICTphraselookup(Nlppp*nlppp,NODE*n,RFASem*ks,_TCHAR*m,_TCHAR*a,long p)
+bool Arun::DICTphraselookup(Nlppp*nlppp,NODE*n,RFASem*ks,_TCHAR*m,_TCHAR*a,long long p)
 {
 _TCHAR *k = 0;
 
@@ -18542,7 +18542,7 @@ return DICTphraselookup(nlppp,n,k,m,a,p);
 }
 
 // VARIANT
-bool Arun::DICTphraselookup(Nlppp*nlppp,NODE*n,_TCHAR*k,RFASem*ms,_TCHAR*a,long p)
+bool Arun::DICTphraselookup(Nlppp*nlppp,NODE*n,_TCHAR*k,RFASem*ms,_TCHAR*a,long long p)
 {
 _TCHAR *m = 0;
 
@@ -18552,7 +18552,7 @@ return DICTphraselookup(nlppp,n,k,m,a,p);
 }
 
 // VARIANT
-bool Arun::DICTphraselookup(Nlppp*nlppp,NODE*n,_TCHAR*k,_TCHAR*m,RFASem*as,long p)
+bool Arun::DICTphraselookup(Nlppp*nlppp,NODE*n,_TCHAR*k,_TCHAR*m,RFASem*as,long long p)
 {
 _TCHAR *a = 0;
 
@@ -18565,7 +18565,7 @@ return DICTphraselookup(nlppp,n,k,m,a,p);
 bool Arun::DICTphraselookup(Nlppp*nlppp,NODE*n,_TCHAR*k,_TCHAR*m,_TCHAR*a,RFASem*ps)
 {
 bool ok = false;
-long p = 0;
+long long p = 0;
 if (ps) { p = ps->sem_to_long(ok); delete ps; }
 
 return DICTphraselookup(nlppp,n,k,m,a,p);
@@ -18573,7 +18573,7 @@ return DICTphraselookup(nlppp,n,k,m,a,p);
 
 
 // VARIANT
-bool Arun::DICTphraselookup(Nlppp*nlppp,RFASem*ns,RFASem*ks,_TCHAR*m,_TCHAR*a,long p)
+bool Arun::DICTphraselookup(Nlppp*nlppp,RFASem*ns,RFASem*ks,_TCHAR*m,_TCHAR*a,long long p)
 {
 NODE *n = 0;
 if (ns) { n = ns->sem_to_node(); delete ns; }
@@ -18586,7 +18586,7 @@ return DICTphraselookup(nlppp,n,k,m,a,p);
 }
 
 // VARIANT
-bool Arun::DICTphraselookup(Nlppp*nlppp,RFASem*ns,_TCHAR*k,RFASem*ms,_TCHAR*a,long p)
+bool Arun::DICTphraselookup(Nlppp*nlppp,RFASem*ns,_TCHAR*k,RFASem*ms,_TCHAR*a,long long p)
 {
 NODE *n = 0;
 if (ns) { n = ns->sem_to_node(); delete ns; }
@@ -18599,7 +18599,7 @@ return DICTphraselookup(nlppp,n,k,m,a,p);
 }
 
 // VARIANT
-bool Arun::DICTphraselookup(Nlppp*nlppp,RFASem*ns,_TCHAR*k,_TCHAR*m,RFASem*as,long p)
+bool Arun::DICTphraselookup(Nlppp*nlppp,RFASem*ns,_TCHAR*k,_TCHAR*m,RFASem*as,long long p)
 {
 NODE *n = 0;
 if (ns) { n = ns->sem_to_node(); delete ns; }
@@ -18618,14 +18618,14 @@ NODE *n = 0;
 if (ns) { n = ns->sem_to_node(); delete ns; }
 
 bool ok = false;
-long p = 0;
+long long p = 0;
 if (ps) { p = ps->sem_to_long(ok); delete ps; }
 
 return DICTphraselookup(nlppp,n,k,m,a,p);
 }
 
 // VARIANT
-bool Arun::DICTphraselookup(Nlppp*nlppp,NODE*n,RFASem*ks,RFASem*ms,_TCHAR*a,long p)
+bool Arun::DICTphraselookup(Nlppp*nlppp,NODE*n,RFASem*ks,RFASem*ms,_TCHAR*a,long long p)
 {
 _TCHAR *k = 0;
 _TCHAR *m = 0;
@@ -18637,7 +18637,7 @@ return DICTphraselookup(nlppp,n,k,m,a,p);
 }
 
 // VARIANT
-bool Arun::DICTphraselookup(Nlppp*nlppp,NODE*n,RFASem*ks,_TCHAR*m,RFASem*as,long p)
+bool Arun::DICTphraselookup(Nlppp*nlppp,NODE*n,RFASem*ks,_TCHAR*m,RFASem*as,long long p)
 {
 _TCHAR *k = 0;
 _TCHAR *a = 0;
@@ -18656,14 +18656,14 @@ _TCHAR *k = 0;
 if (ks) { k = ks->sem_to_str(); delete ks; }
 
 bool ok = false;
-long p = 0;
+long long p = 0;
 if (ps) { p = ps->sem_to_long(ok); delete ps; }
 
 return DICTphraselookup(nlppp,n,k,m,a,p);
 }
 
 // VARIANT
-bool Arun::DICTphraselookup(Nlppp*nlppp,NODE*n,_TCHAR*k,RFASem*ms,RFASem*as,long p)
+bool Arun::DICTphraselookup(Nlppp*nlppp,NODE*n,_TCHAR*k,RFASem*ms,RFASem*as,long long p)
 {
 _TCHAR *m = 0;
 _TCHAR *a = 0;
@@ -18682,7 +18682,7 @@ _TCHAR *m = 0;
 if (ms) { m = ms->sem_to_str(); delete ms; }
 
 bool ok = false;
-long p = 0;
+long long p = 0;
 if (ps) { p = ps->sem_to_long(ok); delete ps; }
 
 return DICTphraselookup(nlppp,n,k,m,a,p);
@@ -18696,7 +18696,7 @@ _TCHAR *a = 0;
 if (as) { a = as->sem_to_str(); delete as; }
 
 bool ok = false;
-long p = 0;
+long long p = 0;
 if (ps) { p = ps->sem_to_long(ok); delete ps; }
 
 return DICTphraselookup(nlppp,n,k,m,a,p);
@@ -18704,7 +18704,7 @@ return DICTphraselookup(nlppp,n,k,m,a,p);
 
 
 // VARIANT
-bool Arun::DICTphraselookup(Nlppp*nlppp,RFASem*ns,RFASem*ks,RFASem*ms,_TCHAR*a,long p)
+bool Arun::DICTphraselookup(Nlppp*nlppp,RFASem*ns,RFASem*ks,RFASem*ms,_TCHAR*a,long long p)
 {
 NODE *n = 0;
 if (ns) { n = ns->sem_to_node(); delete ns; }
@@ -18719,7 +18719,7 @@ return DICTphraselookup(nlppp,n,k,m,a,p);
 }
 
 // VARIANT
-bool Arun::DICTphraselookup(Nlppp*nlppp,RFASem*ns,RFASem*ks,_TCHAR*m,RFASem*as,long p)
+bool Arun::DICTphraselookup(Nlppp*nlppp,RFASem*ns,RFASem*ks,_TCHAR*m,RFASem*as,long long p)
 {
 NODE *n = 0;
 if (ns) { n = ns->sem_to_node(); delete ns; }
@@ -18744,14 +18744,14 @@ _TCHAR *k = 0;
 if (ks) { k = ks->sem_to_str(); delete ks; }
 
 bool ok = false;
-long p = 0;
+long long p = 0;
 if (ps) { p = ps->sem_to_long(ok); delete ps; }
 
 return DICTphraselookup(nlppp,n,k,m,a,p);
 }
 
 // VARIANT
-bool Arun::DICTphraselookup(Nlppp*nlppp,RFASem*ns,_TCHAR*k,RFASem*ms,RFASem*as,long p)
+bool Arun::DICTphraselookup(Nlppp*nlppp,RFASem*ns,_TCHAR*k,RFASem*ms,RFASem*as,long long p)
 {
 NODE *n = 0;
 if (ns) { n = ns->sem_to_node(); delete ns; }
@@ -18776,7 +18776,7 @@ _TCHAR *m = 0;
 if (ms) { m = ms->sem_to_str(); delete ms; }
 
 bool ok = false;
-long p = 0;
+long long p = 0;
 if (ps) { p = ps->sem_to_long(ok); delete ps; }
 
 return DICTphraselookup(nlppp,n,k,m,a,p);
@@ -18793,14 +18793,14 @@ _TCHAR *a = 0;
 if (as) { a = as->sem_to_str(); delete as; }
 
 bool ok = false;
-long p = 0;
+long long p = 0;
 if (ps) { p = ps->sem_to_long(ok); delete ps; }
 
 return DICTphraselookup(nlppp,n,k,m,a,p);
 }
 
 // VARIANT
-bool Arun::DICTphraselookup(Nlppp*nlppp,NODE*n,RFASem*ks,RFASem*ms,RFASem*as,long p)
+bool Arun::DICTphraselookup(Nlppp*nlppp,NODE*n,RFASem*ks,RFASem*ms,RFASem*as,long long p)
 {
 _TCHAR *k = 0;
 _TCHAR *m = 0;
@@ -18823,7 +18823,7 @@ if (ks) { k = ks->sem_to_str(); delete ks; }
 if (ms) { m = ms->sem_to_str(); delete ms; }
 
 bool ok = false;
-long p = 0;
+long long p = 0;
 if (ps) { p = ps->sem_to_long(ok); delete ps; }
 
 return DICTphraselookup(nlppp,n,k,m,a,p);
@@ -18839,7 +18839,7 @@ if (ks) { k = ks->sem_to_str(); delete ks; }
 if (as) { a = as->sem_to_str(); delete as; }
 
 bool ok = false;
-long p = 0;
+long long p = 0;
 if (ps) { p = ps->sem_to_long(ok); delete ps; }
 
 return DICTphraselookup(nlppp,n,k,m,a,p);
@@ -18855,7 +18855,7 @@ if (ms) { m = ms->sem_to_str(); delete ms; }
 if (as) { a = as->sem_to_str(); delete as; }
 
 bool ok = false;
-long p = 0;
+long long p = 0;
 if (ps) { p = ps->sem_to_long(ok); delete ps; }
 
 return DICTphraselookup(nlppp,n,k,m,a,p);
@@ -18874,7 +18874,7 @@ if (ms) { m = ms->sem_to_str(); delete ms; }
 if (as) { a = as->sem_to_str(); delete as; }
 
 bool ok = false;
-long p = 0;
+long long p = 0;
 if (ps) { p = ps->sem_to_long(ok); delete ps; }
 
 return DICTphraselookup(nlppp,n,k,m,a,p);
@@ -18893,7 +18893,7 @@ if (ms) { m = ms->sem_to_str(); delete ms; }
 if (as) { a = as->sem_to_str(); delete as; }
 
 bool ok = false;
-long p = 0;
+long long p = 0;
 if (ps) { p = ps->sem_to_long(ok); delete ps; }
 
 return DICTphraselookup(nlppp,n,k,m,a,p);
@@ -18912,7 +18912,7 @@ if (ks) { k = ks->sem_to_str(); delete ks; }
 if (as) { a = as->sem_to_str(); delete as; }
 
 bool ok = false;
-long p = 0;
+long long p = 0;
 if (ps) { p = ps->sem_to_long(ok); delete ps; }
 
 return DICTphraselookup(nlppp,n,k,m,a,p);
@@ -18931,14 +18931,14 @@ if (ks) { k = ks->sem_to_str(); delete ks; }
 if (ms) { m = ms->sem_to_str(); delete ms; }
 
 bool ok = false;
-long p = 0;
+long long p = 0;
 if (ps) { p = ps->sem_to_long(ok); delete ps; }
 
 return DICTphraselookup(nlppp,n,k,m,a,p);
 }
 
 // VARIANT
-bool Arun::DICTphraselookup(Nlppp*nlppp,RFASem*ns,RFASem*ks,RFASem*ms,RFASem*as,long p)
+bool Arun::DICTphraselookup(Nlppp*nlppp,RFASem*ns,RFASem*ks,RFASem*ms,RFASem*as,long long p)
 {
 NODE *n = 0;
 if (ns) { n = ns->sem_to_node(); delete ns; }
@@ -18969,7 +18969,7 @@ if (ms) { m = ms->sem_to_str(); delete ms; }
 if (as) { a = as->sem_to_str(); delete as; }
 
 bool ok = false;
-long p = 0;
+long long p = 0;
 if (ps) { p = ps->sem_to_long(ok); delete ps; }
 
 return DICTphraselookup(nlppp,n,k,m,a,p);

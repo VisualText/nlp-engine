@@ -4780,7 +4780,7 @@ if (!htab)	// If there's only a list of must-try rules.
 
 Pn *pn = 0;
 int *narr;			// Node's array of rules.
-long nsize=0;
+long long nsize=0;	// widened to match Arun::hfind_lc's long long& out-param
 int *marr;			// Merged array.
 while (node)
 	{

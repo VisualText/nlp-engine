@@ -88,7 +88,7 @@ _TCHAR *specialArr[] =															// 06/09/00 AM.
 
 // Length of above array to be determined by a one-time call to
 // set_specialarr_len.														// 06/09/00 AM.
-long SPECIALARR_LEN = 0;	// Global to keep length of array.	// 06/09/00 AM.
+long long SPECIALARR_LEN = 0;	// Global to keep length of array.	// 06/09/00 AM.
 
 /******************************************************************************/
 // PASSES
@@ -1120,7 +1120,7 @@ bool Arun::match_simple_deaccent(NODE *node, const ELT *elt, Nlppp *nlppp)
 
 Pn *pn = &(((Node<Pn> *)node)->data);
 _TCHAR *nname = pn->name_;
-long len = _tcsclen(nname);
+long long len = _tcsclen(nname);
 _TCHAR *dbuf = Chars::create(len + 2);
 Xml::de_accent(nname,/*DU*/dbuf);
 
@@ -1153,7 +1153,7 @@ bool Arun::match_simple_dejunk(NODE *node, const ELT *elt, Nlppp *nlppp)
 
 Pn *pn = &(((Node<Pn> *)node)->data);
 _TCHAR *nname = pn->name_;
-long len = _tcsclen(nname);
+long long len = _tcsclen(nname);
 _TCHAR *dbuf = Chars::create(len + 2);
 Xml::de_junk(nname,/*DU*/dbuf);
 
@@ -1241,7 +1241,7 @@ bool Arun::match_singlet_deaccent(NODE *node, const ELT *elt, Nlppp *nlppp)
 {
 Pn *pn;
 bool success = false;
-long len;
+long long len;
 _TCHAR *dbuf;
 _TCHAR *nname;
 Node<Pn> *nd = (Node<Pn> *) node;
@@ -1321,7 +1321,7 @@ bool Arun::match_singlet_dejunk(NODE *node, const ELT *elt, Nlppp *nlppp)
 {
 Pn *pn;
 bool success = false;
-long len;
+long long len;
 _TCHAR *dbuf;
 _TCHAR *nname;
 Node<Pn> *nd = (Node<Pn> *) node;
@@ -1506,7 +1506,7 @@ if (!node)
 
 Pn *pn = &(((Node<Pn> *)node)->data);
 _TCHAR *nname = pn->name_;
-long len = _tcsclen(nname);
+long long len = _tcsclen(nname);
 _TCHAR *dbuf = Chars::create(len + 2);
 Xml::de_accent(nname,/*DU*/dbuf);
 
@@ -1548,7 +1548,7 @@ if (!node)
 
 Pn *pn = &(((Node<Pn> *)node)->data);
 _TCHAR *nname = pn->name_;
-long len = _tcsclen(nname);
+long long len = _tcsclen(nname);
 _TCHAR *dbuf = Chars::create(len + 2);
 Xml::de_accent(nname,/*DU*/dbuf);
 
@@ -1618,7 +1618,7 @@ if (!node)
 
 Pn *pn = &(((Node<Pn> *)node)->data);
 _TCHAR *nname = pn->name_;
-long len = _tcsclen(nname);
+long long len = _tcsclen(nname);
 _TCHAR *dbuf = Chars::create(len + 2);
 Xml::de_junk(nname,/*DU*/dbuf);
 
@@ -1660,7 +1660,7 @@ if (!node)
 
 Pn *pn = &(((Node<Pn> *)node)->data);
 _TCHAR *nname = pn->name_;
-long len = _tcsclen(nname);
+long long len = _tcsclen(nname);
 _TCHAR *dbuf = Chars::create(len + 2);
 Xml::de_junk(nname,/*DU*/dbuf);
 
@@ -1770,7 +1770,7 @@ bool Arun::match_list_deaccent(NODE *node, const ELT *elt,
 {
 Pn *pn = &(((Node<Pn> *)node)->data);
 _TCHAR *nname = pn->name_;
-long len = _tcsclen(nname);
+long long len = _tcsclen(nname);
 _TCHAR *dbuf = Chars::create(len + 2);
 Xml::de_accent(nname,/*DU*/dbuf);
 
@@ -1836,7 +1836,7 @@ bool Arun::match_list_dejunk(NODE *node, const ELT *elt,
 {
 Pn *pn = &(((Node<Pn> *)node)->data);
 _TCHAR *nname = pn->name_;
-long len = _tcsclen(nname);
+long long len = _tcsclen(nname);
 _TCHAR *dbuf = Chars::create(len + 2);
 Xml::de_junk(nname,/*DU*/dbuf);
 
@@ -1952,7 +1952,7 @@ bool Arun::match_fails_deaccent(NODE *node, const ELT *elt,
 {
 Pn *pn = &(((Node<Pn> *)node)->data);
 _TCHAR *nname = pn->name_;
-long len = _tcsclen(nname);
+long long len = _tcsclen(nname);
 _TCHAR *dbuf = Chars::create(len + 2);
 Xml::de_accent(nname,/*DU*/dbuf);
 
@@ -2018,7 +2018,7 @@ bool Arun::match_fails_dejunk(NODE *node, const ELT *elt,
 {
 Pn *pn = &(((Node<Pn> *)node)->data);
 _TCHAR *nname = pn->name_;
-long len = _tcsclen(nname);
+long long len = _tcsclen(nname);
 _TCHAR *dbuf = Chars::create(len + 2);
 Xml::de_junk(nname,/*DU*/dbuf);
 
@@ -2291,7 +2291,7 @@ bool Arun::match_list_singlet_deaccent(NODE *node, const ELT *elt,
 {
 Pn *pn;
 bool success = false;
-long len;
+long long len;
 _TCHAR *dbuf;
 _TCHAR *nname;
 bool attop = true;	// for _xSTART,_xEND,_xEOF		// FIX.	// 07/08/03 AM.
@@ -2402,7 +2402,7 @@ bool Arun::match_list_singlet_dejunk(NODE *node, const ELT *elt,
 {
 Pn *pn;
 bool success = false;
-long len;
+long long len;
 _TCHAR *dbuf;
 _TCHAR *nname;
 bool attop = true;	// for _xSTART,_xEND,_xEOF		// FIX.	// 07/08/03 AM.
@@ -2593,7 +2593,7 @@ bool Arun::match_fails_singlet_deaccent(NODE *node, const ELT *elt,
 Pn *pn;
 bool success = false;
 Node<Pn> *nd = (Node<Pn> *) node;							// FIX	// 06/07/00 AM.
-long len;
+long long len;
 _TCHAR *dbuf;
 _TCHAR *nname;
 
@@ -2703,7 +2703,7 @@ bool Arun::match_fails_singlet_dejunk(NODE *node, const ELT *elt,
 Pn *pn;
 bool success = false;
 Node<Pn> *nd = (Node<Pn> *) node;							// FIX	// 06/07/00 AM.
-long len;
+long long len;
 _TCHAR *dbuf;
 _TCHAR *nname;
 
@@ -3366,7 +3366,7 @@ if (!(match)(node,elt,nlppp))
 // Matched, so check exception list, if any.
 Pn *pn = &(((Node<Pn> *)node)->data);
 _TCHAR *nname = pn->name_;
-long len = _tcsclen(nname);
+long long len = _tcsclen(nname);
 _TCHAR *dbuf = Chars::create(len + 2);
 Xml::de_accent(nname,/*DU*/dbuf);
 
@@ -3408,7 +3408,7 @@ if (!(match)(node,elt,nlppp))
 // Matched, so check exception list, if any.
 Pn *pn = &(((Node<Pn> *)node)->data);
 _TCHAR *nname = pn->name_;
-long len = _tcsclen(nname);
+long long len = _tcsclen(nname);
 _TCHAR *dbuf = Chars::create(len + 2);
 Xml::de_junk(nname,/*DU*/dbuf);
 
@@ -3527,7 +3527,7 @@ for (nd = (Node<Pn> *)node; nd; nd = ((Node<Pn> *)nd)->Down())
 	{
 	pn = &(((Node<Pn> *)nd)->data);
 	_TCHAR *nname = pn->name_;
-	long len = _tcsclen(nname);
+	long long len = _tcsclen(nname);
 	_TCHAR *dbuf = Chars::create(len + 2);
 	Xml::de_accent(nname,/*DU*/dbuf);
 	if (elt->except.reg && find_str_nocase(dbuf, elt->except.reg))
@@ -3592,7 +3592,7 @@ for (nd = (Node<Pn> *)node; nd; nd = ((Node<Pn> *)nd)->Down())
 	{
 	pn = &(((Node<Pn> *)nd)->data);
 	_TCHAR *nname = pn->name_;
-	long len = _tcsclen(nname);
+	long long len = _tcsclen(nname);
 	_TCHAR *dbuf = Chars::create(len + 2);
 	Xml::de_junk(nname,/*DU*/dbuf);
 	if (elt->except.reg && find_str_nocase(dbuf, elt->except.reg))
@@ -4431,8 +4431,8 @@ return strlen_eq(Pat::leafNode(nlppp->node_)->getData()->getName(), len);
 
 bool Arun::lengthr(
 	Nlppp *nlppp,
-	long len1,
-	long len2
+	long long len1,
+	long long len2
 	)
 {
 if (len1 < 0 || len2 < 0 || (len1 > len2))
@@ -4446,7 +4446,7 @@ if (len1 < 0 || len2 < 0 || (len1 > len2))
 
 Pn *pn = Pat::leafNode(nlppp->node_)->getData();
 
-long len = _tcsclen(pn->getName());
+long long len = _tcsclen(pn->getName());
 if ((len >= len1) && (len <= len2))
 	return true;
 return false;
@@ -4850,8 +4850,8 @@ return true;
 
 bool Arun::singler(
 	Nlppp *nlppp,
-	long from,
-	long to
+	long long from,
+	long long to
 	)
 {
 //Node<Pn> *savefirst = nlppp->first_;
@@ -4909,8 +4909,8 @@ return ok;
 
 bool Arun::singlex(
 	Nlppp *nlppp,
-	long from,
-	long to
+	long long from,
+	long long to
 	)
 {
 Node<Pn> *nfirst = 0, *nlast = 0;
@@ -5045,14 +5045,14 @@ if (!nlppp->coll_)
 //Isugg *sugg = nlppp->rule_->getSugg();	// Suggested elt.
 
 // Create a new node for the reduced rule.
-long o_start, o_end;
+long long o_start, o_end;
 _TCHAR *text;
 Pn *tmpf = nlppp->first_->getData();
-long line = tmpf->line_;	// Line number for new node.				// 05/17/01 AM.
+long long line = tmpf->line_;	// Line number for new node.				// 05/17/01 AM.
 o_start	= tmpf->getStart();
 text		= tmpf->getText();
 o_end		= nlppp->last_->getData()->getEnd();
-long ustart, uend;	// [UNICODE]	// 06/15/22 AM.
+long long ustart, uend;	// [UNICODE]	// 06/15/22 AM.
 ustart = tmpf->getUstart();	// [UNICODE]	// 06/15/22 AM.
 uend = tmpf->getUend();	// [UNICODE]	// 06/15/22 AM.
 
@@ -5132,8 +5132,8 @@ return Pat::merge(nlppp);
 
 bool Arun::merger(
 	Nlppp *nlppp,
-	long from,
-	long to
+	long long from,
+	long long to
 	)
 {
 //Node<Pn> *savefirst = nlppp->first_;
@@ -5185,8 +5185,8 @@ return ok;
 
 bool Arun::listadd(
 	Nlppp *nlppp,
-	long num1,		// LIST
-	long num2,		// ITEM
+	long long num1,		// LIST
+	long long num2,		// ITEM
 	_TCHAR *skeep		// (bool) flag."true" or "false".
 	)
 {
@@ -5195,7 +5195,7 @@ if (nlppp->red_)
 if (!num1 || !num2)
 	return false;
 
-long keep;
+long long keep;
 if (!_tcscmp(_T("true"),skeep))
 	keep = true;
 else if (!_tcscmp(_T("false"), skeep))
@@ -5375,9 +5375,9 @@ return true;
 
 bool Arun::listaddleft(
 	Nlppp *nlppp,
-	long num1,		// ITEM (to the left of list).
-	long num2,		// LIST
-	long keep		// (bool) flag.
+	long long num1,		// ITEM (to the left of list).
+	long long num2,		// LIST
+	long long keep		// (bool) flag.
 	)
 {
 if (nlppp->red_)
@@ -5521,8 +5521,8 @@ return true;
 
 bool Arun::splice(
 	Nlppp *nlppp,
-	long num1,
-	long num2
+	long long num1,
+	long long num2
 	)
 {
 if (nlppp->red_)
@@ -5586,8 +5586,8 @@ return true;
 #ifdef SPLICE_OLD
 bool Arun::splice(
 	Nlppp *nlppp,
-	long num1,
-	long num2
+	long long num1,
+	long long num2
 	)
 {
 if (nlppp->red_)
@@ -5632,7 +5632,7 @@ return true;
 
 bool Arun::setbase(
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	_TCHAR *str
 	)
 {
@@ -5669,7 +5669,7 @@ return true;
 
 bool Arun::setunsealed(
 	Nlppp *nlppp,
-	long num,
+	long long num,
 	_TCHAR *str
 	)
 {
@@ -5795,7 +5795,7 @@ coll->start = coll->end = node;
 int ii;
 
 // NOTE:	ALIGNING COMPILED VERSION WITH INTERP.						// 08/06/03 AM.
-long newlen = nlppp->len_ - (to - from);								// 08/06/03 AM.
+long long newlen = nlppp->len_ - (to - from);								// 08/06/03 AM.
 COLL *ptr = &(nlppp->coll_[to]);											// 08/06/03 AM.
 for (ii = (to+1); ii <= newlen; ++ii)									// 08/06/03 AM.
 	{
@@ -6109,7 +6109,7 @@ COLL *coll = &(nlppp->coll_[from-1]);									// 08/06/03 AM.
 int ii;																			// 08/06/03 AM.
 
 // NOTE:	ALIGNING COMPILED VERSION WITH INTERP.						// 08/06/03 AM.
-long newlen = nlppp->len_ - (to - from + 1);							// 08/06/03 AM.
+long long newlen = nlppp->len_ - (to - from + 1);							// 08/06/03 AM.
 COLL *ptr = &(nlppp->coll_[to]);											// 08/06/03 AM.
 for (ii = (to+1); ii <= newlen; ++ii)									// 08/06/03 AM.
 	{
@@ -6173,7 +6173,7 @@ return true;
 bool Arun::addstrs(
 	Nlppp *nlppp,
 	_TCHAR *var,
-	long num
+	long long num
 	)
 {
 if (!var || !*var)
@@ -6239,8 +6239,8 @@ return true;
 
 bool Arun::printr(
 	Nlppp *nlppp,
-	long num1,
-	long num2
+	long long num1,
+	long long num2
 	)
 {
 Node<Pn> *node1, *node2;
@@ -6311,8 +6311,8 @@ return true;
 bool Arun::prrange(
 	Nlppp *nlppp,
 	_TCHAR *fname,
-	long num1,
-	long num2
+	long long num1,
+	long long num2
 	)
 {
 if (!fname || !*fname)
@@ -6350,7 +6350,7 @@ return Pat::printr(node1,node2,ostr,nlppp);		// FIX.			// 06/11/00 AM.
 bool Arun::prchild(
 	Nlppp *nlppp,
 	_TCHAR *fname,
-	long num,
+	long long num,
 	_TCHAR *name
 	)
 {
@@ -6398,8 +6398,8 @@ if (!phrase)
 
 // If found, get its phrase.
 _TCHAR *str;
-long len;
-long n1, n2;
+long long len;
+long long n1, n2;
 n1 = pn->getStart();
 n2 = pn->getEnd();
 _TCHAR *txt;
@@ -6429,7 +6429,7 @@ return true;
 bool Arun::prtree(
 	Nlppp *nlppp,
 	_TCHAR *fname,
-	long num,
+	long long num,
 	_TCHAR *name
 	)
 {
@@ -6469,8 +6469,8 @@ pn = tmp->getData();
 
 // If found, get its phrase.
 _TCHAR *str;
-long len;
-long n1, n2;
+long long len;
+long long n1, n2;
 n1 = pn->getStart();
 n2 = pn->getEnd();
 _TCHAR *txt;
@@ -6501,7 +6501,7 @@ bool Arun::prxtree(
 	Nlppp *nlppp,
 	_TCHAR *fname,
 	_TCHAR *prestr,
-	long ord,
+	long long ord,
 	_TCHAR *name,
 	_TCHAR *poststr
 	)
@@ -6542,8 +6542,8 @@ pn = tmp->getData();
 
 // If found, get its phrase.
 _TCHAR *str;
-long len;
-long n1, n2;
+long long len;
+long long n1, n2;
 n1 = pn->getStart();
 n2 = pn->getEnd();
 _TCHAR *txt;
@@ -6580,7 +6580,7 @@ return true;
 bool Arun::ndump(
 	Nlppp *nlppp,
 	_TCHAR *fname,
-	long ord
+	long long ord
 	)
 {
 if (!fname || !*fname)
@@ -6643,7 +6643,7 @@ return true;
 bool Arun::xdump(
 	Nlppp *nlppp,
 	_TCHAR *fname,
-	long ord
+	long long ord
 	)
 {
 if (!fname || !*fname)
@@ -6788,7 +6788,7 @@ return true;
 * CR:		06/02/00 AM.
 * SUBJ:	Runtime variant of post action.
 * NOTE:	Backward compatibility.
-*			Belongs in FN
+*			Belong longs in FN
 ********************************************/
 
 bool Arun::addattr(
@@ -6960,7 +6960,7 @@ if (nlppp->locals_)															// 11/24/02 AM.
 // LOCAL STRING, TEMPORARY STRING MANAGEMENT.						// 01/08/07 AM.
 nlppp->freeLocals(0);														// 01/08/07 AM.
 
-// nlppp->used_	// This is no longer an issue.
+// nlppp->used_	// This is no long longer an issue.
 if (nlppp->red_)
 	{
 	if (!nlppp->sem_ && !nlppp->dsem_)
@@ -7038,7 +7038,7 @@ return Pat::Recurse(coll, rules, nlppp->parse_,
 RFASem *Arun::n(
 	_TCHAR *varname,
 	int nelt,
-	long index,					// 10/13/00 AM.
+	long long index,					// 10/13/00 AM.
 	bool ref,																	// 06/16/02 AM.
 	Nlppp *nlppp
 	)
@@ -7060,7 +7060,7 @@ RFASem *Arun::n(																// 05/04/01 AM.
 if (!index_sem)
 	return 0;
 bool flag = false;
-long index = index_sem->sem_to_long(flag);
+long long index = index_sem->sem_to_long(flag);
 delete index_sem;
 if (!flag)
 	return 0;
@@ -7076,7 +7076,7 @@ return n(varname,nelt,index,ref,nlppp);
 RFASem *Arun::x(
 	_TCHAR *varname,
 	int nelt,
-	long index,
+	long long index,
 	bool ref,																	// 06/16/02 AM.
 	Nlppp *nlppp
 	)
@@ -7098,7 +7098,7 @@ RFASem *Arun::x(															// 05/04/01 AM.
 if (!index_sem)
 	return 0;
 bool flag = false;
-long index = index_sem->sem_to_long(flag);
+long long index = index_sem->sem_to_long(flag);
 delete index_sem;
 if (!flag)
 	return 0;
@@ -7113,7 +7113,7 @@ return x(varname,nelt,index,ref,nlppp);
 
 RFASem *Arun::s(
 	_TCHAR *varname,
-	long index,
+	long long index,
 	bool ref,																	// 06/16/02 AM.
 	Nlppp *nlppp
 	)
@@ -7134,7 +7134,7 @@ RFASem *Arun::s(																// 05/04/01 AM.
 if (!index_sem)
 	return 0;
 bool flag = false;
-long index = index_sem->sem_to_long(flag);
+long long index = index_sem->sem_to_long(flag);
 delete index_sem;
 if (!flag)
 	return 0;
@@ -7149,7 +7149,7 @@ return s(varname,index,ref,nlppp);
 
 RFASem *Arun::g(
 	_TCHAR *varname,
-	long index,
+	long long index,
 	bool ref,																	// 06/16/02 AM.
 	Nlppp *nlppp
 	)
@@ -7170,7 +7170,7 @@ RFASem *Arun::g(																// 05/04/01 AM.
 if (!index_sem)
 	return 0;
 bool flag = false;
-long index = index_sem->sem_to_long(flag);
+long long index = index_sem->sem_to_long(flag);
 delete index_sem;
 if (!flag)
 	return 0;
@@ -7186,7 +7186,7 @@ return g(varname,index,ref,nlppp);
 
 RFASem *Arun::l(
 	_TCHAR *varname,
-	long index,
+	long long index,
 	bool ref,																	// 06/16/02 AM.
 	Nlppp *nlppp
 	)
@@ -7207,7 +7207,7 @@ RFASem *Arun::l(																// 03/09/02 AM.
 if (!index_sem)
 	return 0;
 bool flag = false;
-long index = index_sem->sem_to_long(flag);
+long long index = index_sem->sem_to_long(flag);
 delete index_sem;
 if (!flag)
 	return 0;
@@ -7290,7 +7290,7 @@ RFASem *Arun::assign(
 	int typ,
 	_TCHAR *varname,
 	int nelt,
-	long index,
+	long long index,
 	Nlppp *nlppp,
 	RFASem *val
 	)
@@ -7385,7 +7385,7 @@ long long Arun::assign(
 	int typ,
 	_TCHAR *varname,
 	int nelt,
-	long index,
+	long long index,
 	Nlppp *nlppp,
 	long long val)
 {
@@ -7406,7 +7406,7 @@ float Arun::assign(															// 08/18/01 AM.
 	int typ,
 	_TCHAR *varname,
 	int nelt,
-	long index,
+	long long index,
 	Nlppp *nlppp,
 	float val)
 {
@@ -7428,7 +7428,7 @@ _TCHAR *Arun::assign(
 	int typ,
 	_TCHAR *varname,
 	int nelt,
-	long index,
+	long long index,
 	Nlppp *nlppp,
 	_TCHAR *val)
 {
@@ -7449,7 +7449,7 @@ std::_t_ostream *Arun::assign(														// 11/20/02 AM.
 	int typ,
 	_TCHAR *varname,
 	int nelt,
-	long index,
+	long long index,
 	Nlppp *nlppp,
 	std::_t_ostream *val)
 {
@@ -7470,7 +7470,7 @@ bool Arun::assign(															// 12/10/02 AM.
 	int typ,
 	_TCHAR *varname,
 	int nelt,
-	long index,
+	long long index,
 	Nlppp *nlppp,
 	bool val)
 {
@@ -7501,7 +7501,7 @@ RFASem *Arun::assign(														// 05/04/01 AM.
 if (!index_sem)
 	return 0;
 bool flag = false;
-long index = index_sem->sem_to_long(flag);
+long long index = index_sem->sem_to_long(flag);
 delete index_sem;
 if (!flag)
 	return 0;
@@ -7520,7 +7520,7 @@ long long Arun::assign(															// 05/04/01 AM.
 if (!index_sem)
 	return 0;
 bool flag = false;
-long index = index_sem->sem_to_long(flag);
+long long index = index_sem->sem_to_long(flag);
 delete index_sem;
 if (!flag)
 	return 0;
@@ -7540,7 +7540,7 @@ float Arun::assign(															// 08/18/01 AM.
 if (!index_sem)
 	return 0;
 bool flag = false;
-long index = index_sem->sem_to_long(flag);
+long long index = index_sem->sem_to_long(flag);
 delete index_sem;
 if (!flag)
 	return 0;
@@ -7560,7 +7560,7 @@ _TCHAR *Arun::assign(															// 05/04/01 AM.
 if (!index_sem)
 	return 0;
 bool flag = false;
-long index = index_sem->sem_to_long(flag);
+long long index = index_sem->sem_to_long(flag);
 delete index_sem;
 if (!flag)
 	return 0;
@@ -7579,7 +7579,7 @@ std::_t_ostream *Arun::assign(														// 11/20/02 AM.
 if (!index_sem)
 	return 0;
 bool flag = false;
-long index = index_sem->sem_to_long(flag);
+long long index = index_sem->sem_to_long(flag);
 delete index_sem;
 if (!flag)
 	return 0;
@@ -7598,7 +7598,7 @@ bool Arun::assign(															// 12/10/02 AM.
 if (!index_sem)
 	return 0;
 bool flag = false;
-long index = index_sem->sem_to_long(flag);
+long long index = index_sem->sem_to_long(flag);
 delete index_sem;
 if (!flag)
 	return 0;
@@ -7616,7 +7616,7 @@ RFASem *Arun::iassign(
 	int typ,
 	_TCHAR *varname,
 	int nelt,
-	long index,
+	long long index,
 	Nlppp *nlppp,
 	RFASem *val
 	)
@@ -7643,7 +7643,7 @@ if (!val)
 	return 0;	// Assign-to place is already nulled, so done.
 
 RFASem *nval = 0;
-long numx;
+long long numx;
 CG *cg = nlppp->parse_->getAna()->getCG();
 switch(val->getType())
 	{
@@ -7723,7 +7723,7 @@ long long Arun::iassign(
 	int typ,
 	_TCHAR *varname,
 	int nelt,
-	long index,
+	long long index,
 	Nlppp *nlppp,
 	long long val)
 {
@@ -7756,7 +7756,7 @@ float Arun::iassign(
 	int typ,
 	_TCHAR *varname,
 	int nelt,
-	long index,
+	long long index,
 	Nlppp *nlppp,
 	float val)
 {
@@ -7789,7 +7789,7 @@ _TCHAR *Arun::iassign(
 	int typ,
 	_TCHAR *varname,
 	int nelt,
-	long index,
+	long long index,
 	Nlppp *nlppp,
 	_TCHAR *val)
 {
@@ -7821,7 +7821,7 @@ std::_t_ostream *Arun::iassign(										// 11/20/02 AM.
 	int typ,
 	_TCHAR *varname,
 	int nelt,
-	long index,
+	long long index,
 	Nlppp *nlppp,
 	std::_t_ostream *val)
 {
@@ -7853,7 +7853,7 @@ bool Arun::iassign(															// 12/10/02 AM.
 	int typ,
 	_TCHAR *varname,
 	int nelt,
-	long index,
+	long long index,
 	Nlppp *nlppp,
 	bool val)
 {
@@ -7894,27 +7894,6 @@ bool Arun::truth(long long val)
 {
 return (val ? true : false);
 }
-
-bool Arun::truth(long val)
-{
-return (val ? true : false);
-}
-
-// Forwarders: many Arun operators (eq/ne/gt/lt/ge/le/vtand/vtor/vtnot) return `long`.
-// When the code generator chains them — e.g. truth(vtor(vtnot(...), vtnot(...))) —
-// the inner result is `long`, but the sink overload set only has `long long`/`float`/etc.,
-// so `long → long long` and `long → float` rank equally and MSVC reports ambiguity.
-// These (long[, long]) overloads provide exact matches and delegate to the long long version.
-long long Arun::eq(long a, long b)     { return eq((long long)a, (long long)b); }
-long long Arun::ne(long a, long b)     { return ne((long long)a, (long long)b); }
-long long Arun::gt(long a, long b)     { return gt((long long)a, (long long)b); }
-long long Arun::lt(long a, long b)     { return lt((long long)a, (long long)b); }
-long long Arun::ge(long a, long b)     { return ge((long long)a, (long long)b); }
-long long Arun::le(long a, long b)     { return le((long long)a, (long long)b); }
-long long Arun::vtand(long a, long b)  { return vtand((long long)a, (long long)b); }
-long long Arun::vtor(long a, long b)   { return vtor((long long)a, (long long)b); }
-long long Arun::vtnot(long a)          { return vtnot((long long)a); }
-bool Arun::stmt(long val)         { return stmt((long long)val); }
 
 bool Arun::truth(float val)
 {
@@ -7982,7 +7961,7 @@ switch (sem1->getType())													// 08/17/01 AM.
 		// FALL THROUGH!!														// 07/11/03 AM.
 	default:																		// 08/17/01 AM.
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in plus(sem,long)]") << std::ends;
+		gerrStr << _T("[Error: Bad sem type in plus(sem,long long)]") << std::ends;
 		nlppp->parse_->errOut(&gerrStr,false);
 		delete sem1;				// Memory leak.						// 05/27/00 AM.
 		return 0;
@@ -7992,7 +7971,7 @@ else if (num == 0)	// NULL-NULL case.					// FIX.	// 07/11/03 AM.
 else																				// 03/13/02 AM.
 	{
 	std::_t_strstream gerrStr;						// 03/13/02 AM.
-	gerrStr << _T("[Error: Empty value in plus(sem,long)]") << std::ends;
+	gerrStr << _T("[Error: Empty value in plus(sem,long long)]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false);																// 03/13/02 AM.
 	sem = new RFASem(num);													// 03/13/02 AM.
 	}
@@ -8285,7 +8264,7 @@ if (sem2)																		// 03/13/02 AM.
 			// FALL THROUGH.													// 07/11/03 AM.
 		default:																	// 08/17/01 AM.
 			std::_t_strstream gerrStr;
-			gerrStr << _T("[Error: Bad sem type in plus(long,sem)]") << std::ends;
+			gerrStr << _T("[Error: Bad sem type in plus(long long,sem)]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
 			delete sem2;				// Memory leak.					// 05/27/00 AM.
 			return 0;
@@ -9027,7 +9006,7 @@ switch (sem1->getType())													// 08/17/01 AM.
 		break;
 	default:																		// 08/17/01 AM.
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in minus(sem,long)]") << std::ends;
+		gerrStr << _T("[Error: Bad sem type in minus(sem,long long)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem1;
 		return 0;
@@ -9202,7 +9181,7 @@ switch (sem2->getType())													// 08/17/01 AM.
 		break;
 	default:
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in minus(long,sem)]") << std::ends;
+		gerrStr << _T("[Error: Bad sem type in minus(long long,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem2;
 		return 0;
@@ -9335,7 +9314,7 @@ switch (sem1->getType())
 		break;
 	default:
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in times(sem,long)]") << std::ends;
+		gerrStr << _T("[Error: Bad sem type in times(sem,long long)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem1;
 		return 0;
@@ -9478,7 +9457,7 @@ switch (sem2->getType())
 		break;
 	default:
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in times(long,sem)]") << std::ends;
+		gerrStr << _T("[Error: Bad sem type in times(long long,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem2;
 		return 0;
@@ -9539,7 +9518,7 @@ RFASem *sem=0;
 if (!num)																		// 03/13/02 AM.
 	{
 	std::_t_strstream gerrStr;						// 03/13/02 AM.
-	gerrStr << _T("[Error: Divide by zero in divide(sem,long)]") << std::ends;
+	gerrStr << _T("[Error: Divide by zero in divide(sem,long long)]") << std::ends;
 	errOut(&gerrStr,false);																// 03/13/02 AM.
 	if (sem1)																	// 03/13/02 AM.
 		delete sem1;															// 03/13/02 AM.
@@ -9564,7 +9543,7 @@ switch (sem1->getType())
 		break;
 	default:
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in divide(sem,long)]") << std::ends;
+		gerrStr << _T("[Error: Bad sem type in divide(sem,long long)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem1;
 		return 0;
@@ -9738,7 +9717,7 @@ switch (sem2->getType())
 		break;
 	default:
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in divide(long,sem)]") << std::ends;
+		gerrStr << _T("[Error: Bad sem type in divide(long long,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem2;
 		return 0;
@@ -9814,7 +9793,7 @@ if (!sem)																		// 03/13/02 AM.
 if (sem->getType() != RSLONG)
 	{
 	std::_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad sem type in rem(sem,long)]") << std::ends;
+	gerrStr << _T("[Error: Bad sem type in rem(sem,long long)]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;
 	return 0;
@@ -9878,7 +9857,7 @@ if (!sem)																		// 03/13/02 AM.
 if (sem->getType() != RSLONG)
 	{
 	std::_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad sem type in rem(long,sem)]") << std::ends;
+	gerrStr << _T("[Error: Bad sem type in rem(long long,sem)]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;
 	return 0;
@@ -9895,7 +9874,7 @@ return res;
 * SUBJ:	NLP++ '%%' operator, compiled runtime.
 ********************************************/
 
-long Arun::conf(RFASem *sem, long num)
+long long Arun::conf(RFASem *sem, long long num)
 {
 if (!sem)																		// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
@@ -9903,22 +9882,22 @@ if (!sem)																		// 03/13/02 AM.
 if (sem->getType() != RSLONG)
 	{
 	std::_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad sem type in conf(sem,long)]") << std::ends;
+	gerrStr << _T("[Error: Bad sem type in conf(sem,long long)]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;
 	return 0;
 	}
-long res = confidence(sem->getLong(), num);
+long long res = confidence(sem->getLong(), num);
 delete sem;
 return res;
 }
 
 
-long Arun::conf(RFASem *sem1, RFASem *sem2)
+long long Arun::conf(RFASem *sem1, RFASem *sem2)
 {
 RFASem *sem=0;				// New sem.
 bool ok = true;
-long num = 0L;															// FIX	// 08/17/01 AM.
+long long num = 0L;															// FIX	// 08/17/01 AM.
 if (!sem1 || !sem2)															// 03/13/02 AM.
 	{
 	if (sem1)																	// 03/13/02 AM.
@@ -9956,12 +9935,12 @@ return num;
 }
 
 
-long Arun::conf(long num1, long num2)
+long long Arun::conf(long long num1, long long num2)
 {
 return confidence(num1, num2);
 }
 
-long Arun::conf(long num, RFASem *sem)
+long long Arun::conf(long long num, RFASem *sem)
 {
 if (!sem)																		// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
@@ -9969,7 +9948,7 @@ if (!sem)																		// 03/13/02 AM.
 if (sem->getType() != RSLONG)
 	{
 	std::_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad sem type in conf(long,sem)]") << std::ends;
+	gerrStr << _T("[Error: Bad sem type in conf(long long,sem)]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;
 	return 0;
@@ -10012,7 +9991,7 @@ switch (sem->getType())														// 08/18/01 AM.
 if (num)	// If not 0.														// 12/12/02 AM.
 	{
 	std::_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad sem type in eq(sem,long)]") << std::ends;
+	gerrStr << _T("[Error: Bad sem type in eq(sem,long long)]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;
 	return 0;
@@ -10051,7 +10030,7 @@ switch (sem->getType())														// 12/12/02 AM.
 	default:																		// 12/12/02 AM.
 		{
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in eq(sem,long)]") << std::ends;
+		gerrStr << _T("[Error: Bad sem type in eq(sem,long long)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -10098,7 +10077,7 @@ switch (sem->getType())
 	case RSSTR:
 	case RSNAME:
 		break;
-	case RSLONG:	// Zeroed out long is ok.							// 06/06/00 AM.
+	case RSLONG:	// Zeroed out long long is ok.							// 06/06/00 AM.
 		if (sem->getLong())
 			{
 			std::_t_strstream gerrStr;
@@ -10129,7 +10108,7 @@ return res;
 long long Arun::eq(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
-long num = 0L;															// FIX	// 08/17/01 AM.
+long long num = 0L;															// FIX	// 08/17/01 AM.
 if (!sem1 && !sem2)												// FIX.	// 07/04/06 AM.
 	return 1;																	// 07/04/06 AM.
 if (!sem1 || !sem2)															// 03/13/02 AM.
@@ -10384,7 +10363,7 @@ switch (sem->getType())
 		break;
 	default:
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in eq(long,sem)]") << std::ends;
+		gerrStr << _T("[Error: Bad sem type in eq(long long,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -10413,7 +10392,7 @@ switch (sem->getType())
 	case RSSTR:
 	case RSNAME:
 		break;
-	case RSLONG:	// Zeroed out long is ok.							// 06/06/00 AM.
+	case RSLONG:	// Zeroed out long long is ok.							// 06/06/00 AM.
 		if (sem->getLong())
 			{
 			std::_t_strstream gerrStr;
@@ -10500,7 +10479,7 @@ switch (sem->getType())														// 08/18/01 AM.
 if (num)	// If not 0.														// 12/12/02 AM.
 	{
 	std::_t_strstream gerrStr;
-	gerrStr << _T("[Error: Bad sem type in ne(sem,long)]") << std::ends;
+	gerrStr << _T("[Error: Bad sem type in ne(sem,long long)]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;
 	return 0;
@@ -10538,7 +10517,7 @@ switch (sem->getType())														// 12/12/02 AM.
 	default:																		// 12/12/02 AM.
 		{
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in ne(sem,long)]") << std::ends;
+		gerrStr << _T("[Error: Bad sem type in ne(sem,long long)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -10578,7 +10557,7 @@ return res;
 long long Arun::ne(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
-long num = 0L;															// FIX	// 08/17/01 AM.
+long long num = 0L;															// FIX	// 08/17/01 AM.
 if (!sem1 && !sem2)												// FIX.	// 07/04/06 AM.
 	return 0;																	// 07/04/06 AM.
 if (!sem1 || !sem2)															// 03/13/02 AM.
@@ -10856,7 +10835,7 @@ switch (sem->getType())
 	case RSSTR:
 	case RSNAME:
 		break;
-	case RSLONG:	// Zeroed out long is ok.
+	case RSLONG:	// Zeroed out long long is ok.
 		if (sem->getLong())
 			{
 			std::_t_strstream gerrStr;
@@ -10940,7 +10919,7 @@ switch (sem->getType())														// 08/18/01 AM.
 		break;
 	default:
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in gt(sem,long)]") << std::ends;
+		gerrStr << _T("[Error: Bad sem type in gt(sem,long long)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11088,7 +11067,7 @@ switch (sem->getType())														// 08/18/01 AM.
 		break;
 	default:
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in gt(long,sem)]") << std::ends;
+		gerrStr << _T("[Error: Bad sem type in gt(long long,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11160,7 +11139,7 @@ switch (sem->getType())														// 08/18/01 AM.
 		break;
 	default:
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in lt(sem,long)]") << std::ends;
+		gerrStr << _T("[Error: Bad sem type in lt(sem,long long)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11198,7 +11177,7 @@ return res;
 long long Arun::lt(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
-long num = 0L;
+long long num = 0L;
 if (!sem1 && !sem2)												// FIX	// 08/10/08 AM.
 	return 0;														// FIX	// 08/10/08 AM.
 if (!sem1)															// FIX	// 08/10/08 AM.
@@ -11309,7 +11288,7 @@ switch (sem->getType())														// 08/18/01 AM.
 		break;
 	default:
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in lt(long,sem)]") << std::ends;
+		gerrStr << _T("[Error: Bad sem type in lt(long long,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11382,7 +11361,7 @@ switch (sem->getType())														// 08/18/01 AM.
 		break;
 	default:
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in ge(sem,long)]") << std::ends;
+		gerrStr << _T("[Error: Bad sem type in ge(sem,long long)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11531,7 +11510,7 @@ switch (sem->getType())														// 08/18/01 AM.
 		break;
 	default:
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in ge(long,sem)]") << std::ends;
+		gerrStr << _T("[Error: Bad sem type in ge(long long,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11604,7 +11583,7 @@ switch (sem->getType())														// 08/18/01 AM.
 		break;
 	default:
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in le(sem,long)]") << std::ends;
+		gerrStr << _T("[Error: Bad sem type in le(sem,long long)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11754,7 +11733,7 @@ switch (sem->getType())														// 08/18/01 AM.
 		break;
 	default:
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in le(long,sem)]") << std::ends;
+		gerrStr << _T("[Error: Bad sem type in le(long long,sem)]") << std::ends;
 		errOut(&gerrStr,false);
 		delete sem;
 		return 0;
@@ -11858,7 +11837,7 @@ switch (sem->getType())													// 06/11/00 AM.
 	case RSNUM:				// Not allowing this.
 		{
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Num as string in and(sem,long)]")	<< std::ends;
+		gerrStr << _T("[Error: Num as string in and(sem,long long)]")	<< std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -11873,7 +11852,7 @@ switch (sem->getType())													// 06/11/00 AM.
 	default:
 		{
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in and(sem,long)]") << std::ends;
+		gerrStr << _T("[Error: Bad sem type in and(sem,long long)]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -12108,7 +12087,7 @@ switch (sem->getType())														// 06/11/00 AM.
 	case RSNUM:				// Not allowing this.
 		{
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Num as string in or(sem,long)]")	<< std::ends;
+		gerrStr << _T("[Error: Num as string in or(sem,long long)]")	<< std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -12117,7 +12096,7 @@ switch (sem->getType())														// 06/11/00 AM.
 	default:
 		{
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Error: Bad sem type in or(sem,long)]") << std::ends;
+		gerrStr << _T("[Error: Bad sem type in or(sem,long long)]") << std::ends;
 		errOut(&gerrStr,false);
 		}
 
@@ -12316,7 +12295,7 @@ long long Arun::inc(
 	int typ,
 	_TCHAR *varname,
 	int nelt,
-	long index,																	// 10/13/00 AM.
+	long long index,																	// 10/13/00 AM.
 	Nlppp *nlppp
 	)
 {
@@ -12343,7 +12322,7 @@ if (!darg && index <= 0)										// FIX.	// 07/15/03 AM.
 if (index >= 0)	// INDEXED ARRAY VALUE.								// 07/15/03 AM.
 	{
 	// See if indexed value exists.
-	long ii;																		// 07/15/03 AM.
+	long long ii;																		// 07/15/03 AM.
 	for (ii = 0; darg && ii < index;										// 07/15/03 AM.
 			++ii, darg = darg->Right())									// 07/15/03 AM.
 		;
@@ -12463,7 +12442,7 @@ long long Arun::dec(
 	int typ,
 	_TCHAR *varname,
 	int nelt,
-	long index,																	// 10/13/00 AM.
+	long long index,																	// 10/13/00 AM.
 	Nlppp *nlppp
 	)
 {
@@ -12490,7 +12469,7 @@ if (!darg && index <= 0)										// FIX.	// 07/15/03 AM.
 if (index >= 0)	// INDEXED ARRAY VALUE.								// 07/15/03 AM.
 	{
 	// See if indexed value exists.
-	long ii;																		// 07/15/03 AM.
+	long long ii;																		// 07/15/03 AM.
 	for (ii = 0; darg && ii < index;										// 07/15/03 AM.
 			++ii, darg = darg->Right())									// 07/15/03 AM.
 		;
@@ -12633,7 +12612,7 @@ long long Arun::postinc(
 	int typ,
 	_TCHAR *varname,
 	int nelt,
-	long index,																	// 10/13/00 AM.
+	long long index,																	// 10/13/00 AM.
 	Nlppp *nlppp
 	)
 {
@@ -12692,7 +12671,7 @@ long long Arun::postdec(
 	int typ,
 	_TCHAR *varname,
 	int nelt,
-	long index,																	// 10/13/00 AM.
+	long long index,																	// 10/13/00 AM.
 	Nlppp *nlppp
 	)
 {
@@ -13023,7 +13002,7 @@ return true;
 bool Arun::xrename(
 	Nlppp *nlppp,
 	_TCHAR *name,
-	long ord
+	long long ord
 	)
 {
 if (!name || !*name || ord < 0 || !nlppp)
@@ -13058,8 +13037,8 @@ else								// Get component.
 // Rename it.
 pn->setName(name);
 // Silently tell where this node rename came from.					// 08/25/08 AM.
-//long ruleline = (nlppp->rule_ ? nlppp->rule_->getLine() : 0);	// 08/25/08 AM.
-long ruleline = (nlppp->sugg_ ? nlppp->sugg_->ruleline : 0);	// 09/15/08 AM.
+//long long ruleline = (nlppp->rule_ ? nlppp->rule_->getLine() : 0);	// 08/25/08 AM.
+long long ruleline = (nlppp->sugg_ ? nlppp->sugg_->ruleline : 0);	// 09/15/08 AM.
 pn->setPassnum(nlppp->parse_->currpass_);								// 08/25/08 AM.
 pn->setRuleline(ruleline);													// 08/25/08 AM.
 
@@ -13070,7 +13049,7 @@ return true;
 bool Arun::xrename(
 	Nlppp *nlppp,
 	RFASem *name_sem,
-	long ord
+	long long ord
 	)
 {
 if (!name_sem)
@@ -13090,7 +13069,7 @@ bool Arun::xrename(
 if (!ord_sem)
 	return false;
 bool ok = false;
-long ord = ord_sem->sem_to_long(ok);
+long long ord = ord_sem->sem_to_long(ok);
 delete ord_sem;
 if (!ok)
 	return false;
@@ -13118,7 +13097,7 @@ if (!ord_sem)
 _TCHAR *name = name_sem->sem_to_str();
 delete name_sem;
 bool ok = false;
-long ord = ord_sem->sem_to_long(ok);
+long long ord = ord_sem->sem_to_long(ok);
 delete ord_sem;
 if (!ok)
 	return false;
@@ -13253,7 +13232,7 @@ bool Arun::hash_str_nocase(
 // Hash to location.
 _TCHAR buf[MAXSTR+1];
 str_to_lower(name,buf);										// 06/15/00 AM.
-long index = Htab::hashfn(buf, elist.hsize);
+long long index = Htab::hashfn(buf, elist.hsize);
 const _TCHAR **arr = elist.htab[index];
 
 // Then use
@@ -13271,9 +13250,9 @@ return find_str_nocase(name, arr);
 const int *Arun::hfind_lc(
 	_TCHAR *name,
 	const RHASH **htab,
-	long hsize,
+	long long hsize,
 	/*UP*/
-	long &len				// Length of rule array.
+	long long &len				// Length of rule array.
 	)
 {
 len = 0;
@@ -13284,8 +13263,8 @@ if (!name || !*name || !htab || hsize <= 0)
 // (Make sure string is lowercase.)
 _TCHAR buf[MAXSTR];
 str_to_lower(name, buf);
-//long index = Htab::hashfn(buf,hsize);	// WRONG HASH CLASS, but same fn.
-long index = tHtab<Slist<Irule> >::hashfn(buf,hsize);	// FIX.	// 07/08/03 AM.
+//long long index = Htab::hashfn(buf,hsize);	// WRONG HASH CLASS, but same fn.
+long long index = tHtab<Slist<Irule> >::hashfn(buf,hsize);	// FIX.	// 07/08/03 AM.
 
 // Traverse down conflict chain looking for a match.
 const RHASH *chain;
@@ -13316,9 +13295,9 @@ return 0;			// Did not find in hash table.
 
 int *Arun::mergeRules(
 	int *arr1,
-	long size1,			// Size of array.
+	long long size1,			// Size of array.
 	int *arr2,
-	long size2
+	long long size2
 	)
 {
 if (!arr1 || !arr2 || !size1 || !size2)
@@ -13464,7 +13443,7 @@ if (!darg)
   return 0;
 
 // Create an array.
-long len = 0;
+long long len = 0;
 CONCEPT **arr;
 len = ((Dlist<Iarg>*)args)->getLength();
 arr = new CONCEPT * [len];
