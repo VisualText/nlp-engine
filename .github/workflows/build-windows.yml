@@ -58,13 +58,11 @@ jobs:
       - name: Copy ICU DLLs to bin/Release
         shell: pwsh
         run: |
-          # All four ICU components are needed at link time for the analyzer DLL.
           # lite.lib references icuin78 (Collator) via find_str_nocase; without this DLL
           # downstream analyzer/KB compilation fails with LNK2019.
           Copy-Item "vcpkg/packages/icu_x64-windows/bin/icudt78.dll" "bin/Release/icudt78.dll"
           Copy-Item "vcpkg/packages/icu_x64-windows/bin/icuuc78.dll" "bin/Release/icuuc78.dll"
           Copy-Item "vcpkg/packages/icu_x64-windows/bin/icuin78.dll" "bin/Release/icuin78.dll"
-          Copy-Item "vcpkg/packages/icu_x64-windows/bin/icuio78.dll" "bin/Release/icuio78.dll"
 
       - name: Upload icudt78.dll
         uses: actions/upload-artifact@v4
@@ -83,12 +81,6 @@ jobs:
         with:
           name: icuin78.dll
           path: bin/Release/icuin78.dll
-
-      - name: Upload icuio78.dll
-        uses: actions/upload-artifact@v4
-        with:
-          name: icuio78.dll
-          path: bin/Release/icuio78.dll
 
       - name: Package compile libraries (prim/kbm/consh/words/lite)
         shell: pwsh
