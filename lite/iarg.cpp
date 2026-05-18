@@ -940,7 +940,7 @@ switch (arg->getType())
 		break;
 	case IANUM:
 		if (cast)																// 10/01/01 AM.
-			ofile <<_T("((long)")													// 10/01/01 AM.
+			ofile <<_T("((long long)")												// 10/01/01 AM.
 			<< arg->getNum()
 			<< _T(")")																// 09/09/01 AM.
 			<< std::flush;
@@ -981,7 +981,7 @@ switch (arg->getType())
 				break;															// 05/21/01 AM.
 			case RSLONG:														// 05/21/01 AM.
 				if (cast)														// 10/01/01 AM.
-					ofile <<_T("((long)")											// 10/01/01 AM.
+					ofile <<_T("((long long)")										// 10/01/01 AM.
 						<< sem->getLong()										// 05/21/01 AM.
 						<< _T(")")													// 09/09/01 AM.
 						<< std::flush;
