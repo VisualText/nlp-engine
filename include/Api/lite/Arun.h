@@ -531,6 +531,7 @@ public:
 	static bool    iassign(int,_TCHAR*,int,long,Nlppp*,bool);		// 12/10/02 AM.
 
 	static bool truth(long long);
+	static bool truth(long);												// disambiguate long against long long/float/bool
 	static bool truth(float);
 	static bool truth(_TCHAR *);
 	static bool truth(RFASem *);
