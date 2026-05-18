@@ -357,8 +357,15 @@ bool Gen::writeHeaders()
 *fcode_ << _T("#include \"ehead.h\"") << std::endl;
 *fcode_ << _T("#include \"rhead.h\"") << std::endl;
 *fcode_ << _T("#include \"data.h\"") << std::endl;
+// user.h / Ucode.h are optional legacy user-extension headers (paired with user.dll).
+// Most analyzers don't define them; guard with __has_include so the generated C++ still
+// compiles when the user/ subdirectory is absent.
+*fcode_ << _T("#if __has_include(\"..\\user\\user.h\")") << std::endl;
 *fcode_ << _T("#include \"..\\user\\user.h\"") << std::endl;				// 02/13/01 AM.
+*fcode_ << _T("#endif") << std::endl;
+*fcode_ << _T("#if __has_include(\"..\\user\\Ucode.h\")") << std::endl;
 *fcode_ << _T("#include \"..\\user\\Ucode.h\"") << std::endl;				// 02/13/01 AM.
+*fcode_ << _T("#endif") << std::endl;
 
 // analyzer.h file
 //*fhead_ << "#include \"stdafx.h\"" << std::endl;
