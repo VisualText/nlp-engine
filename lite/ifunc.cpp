@@ -787,11 +787,11 @@ for (; darg; darg = darg->Right())
 
 		ifunc->body_->genEval(gen,false);
 
-		// *fcode << _T("} catch (int e) {Arun::ret(nlppp,loc,locstrs,(long)0); throw e;}");// 09/15/08 AM.
+		// *fcode << _T("} catch (int e) {Arun::ret(nlppp,loc,locstrs,(long long)0); throw e;}");// 09/15/08 AM.
 		*fcode << _T("} catch (int e) {Arun::excepth(nlppp,loc,locstrs,e); throw e;}");// 03/09/14 AM.
 		Gen::nl(fcode);														// 09/15/08 AM.
 		}
-	*fcode << _T("return Arun::ret(nlppp,loc,locstrs,(long)0);");// 03/11/02 AM.// 01/08/07 AM.
+	*fcode << _T("return Arun::ret(nlppp,loc,locstrs,(long long)0);");// 03/11/02 AM.// 01/08/07 AM.
 	Gen::nl(fcode);															// 04/04/03 AM.
 	*fcode << _T("}");
 	Gen::nl(fcode);															// 04/04/03 AM.
