@@ -31,16 +31,13 @@ jobs:
         if [[ "${{ github.ref }}" == refs/tags/* ]]; then
           # When directly triggered by a tag push
           TAG_NAME=${GITHUB_REF#refs/tags/}
-          TARGET_HEAD_SHA=$(git rev-list -n 1 "$TAG_NAME")
           echo "Using tag from push trigger: $TAG_NAME"
-          echo "Using tag head SHA: $TARGET_HEAD_SHA"
         else
-          # When triggered by workflow_dispatch
+          # When triggered by workflow_run or workflow_dispatch
           # Get the latest tag from the repository
           git fetch --tags
           TAG_NAME=$(git describe --tags --abbrev=0)
-          TARGET_HEAD_SHA=$(git rev-parse HEAD)
-
+          
           # If no tag found, use timestamp
           if [ -z "$TAG_NAME" ]; then
             TIMESTAMP=$(date +'%Y.%m.%d-%H%M')
@@ -53,139 +50,29 @@ jobs:
         
         # Store the tag name for later use
         echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
-        echo "TARGET_HEAD_SHA=$TARGET_HEAD_SHA" >> $GITHUB_ENV
         
         # Debug output
         echo "Selected TAG_NAME: $TAG_NAME"
-        echo "Selected TARGET_HEAD_SHA: $TARGET_HEAD_SHA"
-
     - name: Find workflow run IDs
       run: |
-        set -euo pipefail
-        echo "Resolving workflow run IDs..."
-        MAX_PAGES=10
-        WAIT_ATTEMPTS=40
-        WAIT_SLEEP_SECONDS=30
-
-        WINDOWS_REQUIRED_ARTIFACTS=("nlpw.exe" "icudt78.dll" "icuuc78.dll" "nlpengine-compile-libs.zip")
-        LINUX_REQUIRED_ARTIFACTS=(
-          "nlpl-ubuntu-20.04.exe"
-          "nlpl-ubuntu-22.04.exe"
-          "nlpl-ubuntu-latest.exe"
-          "libicutu-ubuntu-22.04.a"
-          "libicuuc-ubuntu-22.04.a"
-          "libicutu-ubuntu-latest.a"
-          "libicuuc-ubuntu-latest.a"
-          "icu-libs-ubuntu-20.04"
-        )
-        MAC_REQUIRED_ARTIFACTS=("nlpm.exe" "libicutum.a" "libicuucm.a")
-        ENGINE_REQUIRED_ARTIFACTS=("nlpengine.zip")
-        VISUAL_REQUIRED_ARTIFACTS=("visualtext.zip")
-
-        run_has_required_artifacts() {
-          local run_id="$1"
-          shift
-          local required_artifacts=("$@")
-          local artifact_names
-          local missing_artifacts=()
-
-          artifact_names=$(gh api "repos/${{ github.repository }}/actions/runs/${run_id}/artifacts?per_page=100" \
-            | jq -r '.artifacts[] | select(.expired == false) | .name')
-
-          for artifact_name in "${required_artifacts[@]}"; do
-            if ! printf '%s\n' "$artifact_names" | grep -Fxq -- "$artifact_name"; then
-              missing_artifacts+=("$artifact_name")
-            fi
-          done
-
-          if [ "${#missing_artifacts[@]}" -gt 0 ]; then
-            echo "Run ${run_id} is missing required artifacts: ${missing_artifacts[*]}" >&2
-            return 1
-          fi
-
-          return 0
-        }
-
-        find_valid_run_with_required_artifacts() {
-          local workflow_file="$1"
-          shift
-          local required_artifacts=("$@")
-          local page=1
-          while [ "$page" -le "$MAX_PAGES" ]; do
-            local run_ids
-            if ! run_ids=$(gh api "repos/${{ github.repository }}/actions/workflows/${workflow_file}/runs?status=completed&conclusion=success&head_sha=${TARGET_HEAD_SHA}&per_page=100&page=${page}" \
-              | jq -r '.workflow_runs[] | .id'); then
-              echo "::error::Failed to query runs for ${workflow_file} (head_sha=${TARGET_HEAD_SHA}, page=${page})"
-              return 1
-            fi
-
-            [ -z "$run_ids" ] && break
-
-            while read -r run_id; do
-              [ -z "$run_id" ] && continue
-              if run_has_required_artifacts "$run_id" "${required_artifacts[@]}"; then
-                echo "$run_id"
-                return 0
-              fi
-            done <<< "$run_ids"
-            page=$((page + 1))
-          done
-          return 1
-        }
-
-        wait_for_run_with_required_artifacts() {
-          local workflow_file="$1"
-          shift
-          local required_artifacts=("$@")
-          local run_id=""
-
-          for attempt in $(seq 1 "$WAIT_ATTEMPTS"); do
-            echo "Attempt ${attempt}/${WAIT_ATTEMPTS}: searching ${workflow_file} runs for head_sha ${TARGET_HEAD_SHA}..."
-            if run_id=$(find_valid_run_with_required_artifacts "$workflow_file" "${required_artifacts[@]}"); then
-              echo "$run_id"
-              return 0
-            fi
-            sleep "$WAIT_SLEEP_SECONDS"
-          done
-
-          return 1
-        }
-
-        set_run_id() {
-          local var_name="$1"
-          local workflow_file="$2"
-          shift 2
-          local required_artifacts=("$@")
-          case "$var_name" in
-            WIN_RUN_ID|LINUX_RUN_ID|MAC_RUN_ID|ENGINE_RUN_ID|VISUAL_RUN_ID) ;;
-            *)
-              echo "::error::Unknown run-id variable: ${var_name}"
-              exit 1
-              ;;
-          esac
-          local -n run_id_ref="$var_name"
-          local run_id="${run_id_ref:-}"
-
-          if [ -z "$run_id" ]; then
-            run_id=$(wait_for_run_with_required_artifacts "$workflow_file" "${required_artifacts[@]}")
-          fi
-
-          if [ -z "$run_id" ]; then
-            echo "::error::Unable to find a successful run with required live artifacts for ${workflow_file}: ${required_artifacts[*]}"
-            exit 1
-          fi
-
-          run_id_ref="$run_id"
-
-          echo "${var_name}=${run_id}" >> "$GITHUB_ENV"
-          echo "${var_name}: ${run_id}"
-        }
-
-        set_run_id WIN_RUN_ID build-windows.yml "${WINDOWS_REQUIRED_ARTIFACTS[@]}"
-        set_run_id LINUX_RUN_ID build-linux.yml "${LINUX_REQUIRED_ARTIFACTS[@]}"
-        set_run_id MAC_RUN_ID build-macos.yml "${MAC_REQUIRED_ARTIFACTS[@]}"
-        set_run_id ENGINE_RUN_ID build-enginefiles.yml "${ENGINE_REQUIRED_ARTIFACTS[@]}"
-        set_run_id VISUAL_RUN_ID build-visualfiles.yml "${VISUAL_REQUIRED_ARTIFACTS[@]}"
+        echo "Finding most recent successful workflow runs..."
+        
+        WIN_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-windows.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
+        echo "Windows run ID: $WIN_RUN_ID"
+        echo "WIN_RUN_ID=$WIN_RUN_ID" >> $GITHUB_ENV
+    
+        LINUX_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-linux.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
+        echo "Linux run ID: $LINUX_RUN_ID"
+        echo "LINUX_RUN_ID=$LINUX_RUN_ID" >> $GITHUB_ENV
+        
+        MAC_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-macos.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
+        echo "MAC_RUN_ID=$MAC_RUN_ID" >> $GITHUB_ENV
+    
+        ENGINE_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-enginefiles.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
+        echo "ENGINE_RUN_ID=$ENGINE_RUN_ID" >> $GITHUB_ENV
+    
+        VISUAL_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-visualfiles.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
+        echo "VISUAL_RUN_ID=$VISUAL_RUN_ID" >> $GITHUB_ENV
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -211,13 +98,6 @@ jobs:
         name: "icuuc78.dll"
         run_id: ${{ env.WIN_RUN_ID }}
 
-    - name: Fetch Windows icu3 (i18n / Collator)
-      uses: dawidd6/action-download-artifact@v8
-      with:
-        workflow: build-windows.yml
-        name: "icuin78.dll"
-        run_id: ${{ env.WIN_RUN_ID }}
-
     - name: Fetch NLP Engine Compile Libraries
       uses: dawidd6/action-download-artifact@v8
       with:
@@ -230,7 +110,6 @@ jobs:
         mkdir -p linux/ubuntu-20.04
         mkdir -p linux/ubuntu-22.04
         mkdir -p linux/ubuntu-latest
-
     - name: Fetch Linux exe (20.04)
       uses: dawidd6/action-download-artifact@v8
       with:
@@ -339,7 +218,6 @@ jobs:
         zip -r ubuntu-22.04.zip ubuntu-22.04
         zip -r ubuntu-latest.zip ubuntu-latest
         cd ..
-
     - name: Check executable versions
       run: |
         echo "Checking executable versions..."
@@ -374,7 +252,6 @@ jobs:
           ./nlpm.exe
           ./icudt78.dll
           ./icuuc78.dll
-          ./icuin78.dll
           ./linux/ubuntu-20.04.zip
           ./linux/ubuntu-22.04.zip
           ./linux/ubuntu-latest.zip
