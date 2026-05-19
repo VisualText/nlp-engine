@@ -98,6 +98,13 @@ jobs:
         name: "icuuc78.dll"
         run_id: ${{ env.WIN_RUN_ID }}
 
+    - name: Fetch Windows icu3 (i18n / Collator)
+      uses: dawidd6/action-download-artifact@v8
+      with:
+        workflow: build-windows.yml
+        name: "icuin78.dll"
+        run_id: ${{ env.WIN_RUN_ID }}
+
     - name: Fetch NLP Engine Compile Libraries
       uses: dawidd6/action-download-artifact@v8
       with:
@@ -252,6 +259,7 @@ jobs:
           ./nlpm.exe
           ./icudt78.dll
           ./icuuc78.dll
+          ./icuin78.dll
           ./linux/ubuntu-20.04.zip
           ./linux/ubuntu-22.04.zip
           ./linux/ubuntu-latest.zip
