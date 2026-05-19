@@ -67,7 +67,7 @@ jobs:
         WAIT_ATTEMPTS=40
         WAIT_SLEEP_SECONDS=30
 
-        WINDOWS_REQUIRED_ARTIFACTS=("nlpw.exe" "icudt78.dll" "icuuc78.dll" "nlpengine-compile-libs.zip")
+        WINDOWS_REQUIRED_ARTIFACTS=("nlpw.exe" "icudt78.dll" "icuuc78.dll" "icuin78.dll" "nlpengine-compile-libs.zip")
         LINUX_REQUIRED_ARTIFACTS=(
           "nlpl-ubuntu-20.04.exe"
           "nlpl-ubuntu-22.04.exe"
