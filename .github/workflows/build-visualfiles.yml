@@ -4,8 +4,11 @@ on:
   workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
-    
-jobs:    
+  push:
+    tags:
+      - '*'
+
+jobs:
   zip_files:
     runs-on: ubuntu-latest
     steps:
