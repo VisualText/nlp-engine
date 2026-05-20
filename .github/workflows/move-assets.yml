@@ -180,7 +180,28 @@ jobs:
         name: icu-libs-ubuntu-20.04
         path: ./linux/ubuntu-20.04
         run_id: ${{ env.LINUX_RUN_ID }}
-        
+
+    - name: Fetch Linux Compile Libraries (20.04)
+      uses: dawidd6/action-download-artifact@v8
+      with:
+        workflow: build-linux.yml
+        name: nlpengine-compile-libs-linux-20.04.zip
+        run_id: ${{ env.LINUX_RUN_ID }}
+
+    - name: Fetch Linux Compile Libraries (22.04)
+      uses: dawidd6/action-download-artifact@v8
+      with:
+        workflow: build-linux.yml
+        name: nlpengine-compile-libs-linux-22.04.zip
+        run_id: ${{ env.LINUX_RUN_ID }}
+
+    - name: Fetch Linux Compile Libraries (latest)
+      uses: dawidd6/action-download-artifact@v8
+      with:
+        workflow: build-linux.yml
+        name: nlpengine-compile-libs-linux-latest.zip
+        run_id: ${{ env.LINUX_RUN_ID }}
+
     # MacOS artifacts with specific run ID
     - name: Fetch MacOS exe
       uses: dawidd6/action-download-artifact@v8
@@ -201,6 +222,13 @@ jobs:
       with:
         workflow: build-macos.yml
         name: libicuucm.a
+        run_id: ${{ env.MAC_RUN_ID }}
+
+    - name: Fetch MacOS Compile Libraries
+      uses: dawidd6/action-download-artifact@v8
+      with:
+        workflow: build-macos.yml
+        name: nlpengine-compile-libs-macos.zip
         run_id: ${{ env.MAC_RUN_ID }}
 
     # Other artifacts with specific run ID
@@ -267,6 +295,10 @@ jobs:
           ./libicuucm.a
           ./nlpengine.zip
           ./nlpengine-compile-libs.zip
+          ./nlpengine-compile-libs-linux-20.04.zip
+          ./nlpengine-compile-libs-linux-22.04.zip
+          ./nlpengine-compile-libs-linux-latest.zip
+          ./nlpengine-compile-libs-macos.zip
           ./visualtext.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
