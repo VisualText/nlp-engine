@@ -70,12 +70,36 @@ jobs:
             ./bin/nlp --version
             ./bin/nlp -ANA ./analyzers/parse-en-us -WORK ./ ./analyzers/parse-en-us/input/doj.txt -LOG rfb-logs -DEV
 
+            echo "Packaging compile libraries..."
+            rm -rf compile-libs
+            mkdir -p compile-libs/include/Api compile-libs/lib
+            cp -r include/Api/. compile-libs/include/Api/
+            cp -r cs/include compile-libs/include/cs
+            for name in prim kbm consh words lite; do
+              lib=$(find . -type f -name "lib${name}.a" -not -path "./vcpkg/*" -not -path "./compile-libs/*" | head -n1)
+              if [ -z "$lib" ]; then
+                echo "Missing required static library: lib${name}.a" >&2
+                exit 1
+              fi
+              cp "$lib" "compile-libs/lib/lib${name}.a"
+            done
+            # System ICU 66 runtime libs (dynamic) used by the 20.04 build.
+            cp /usr/lib/x86_64-linux-gnu/libicu*.so.66* compile-libs/lib/
+            (cd compile-libs && zip -r ../nlpengine-compile-libs-linux-20.04.zip .)
+
       - name: Upload ICU Libraries Zip (20.04)
         if: matrix.id == 'docker-ubuntu-20.04'
         uses: actions/upload-artifact@v4
         with:
           name: icu-libs-ubuntu-${{ env.VERSION_SUFFIX }}
           path: ./icu-libs.zip
+
+      - name: Upload nlpengine-compile-libs zip (20.04)
+        if: matrix.id == 'docker-ubuntu-20.04'
+        uses: actions/upload-artifact@v4
+        with:
+          name: nlpengine-compile-libs-linux-${{ env.VERSION_SUFFIX }}.zip
+          path: nlpengine-compile-libs-linux-20.04.zip
 
       # ===============================
       # Non-20.04 (Normal Build)
@@ -143,7 +167,44 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libicuuc-ubuntu-${{ env.VERSION_SUFFIX }}.a
-          path: vcpkg_installed/x64-linux/lib/libicuuc.a          
+          path: vcpkg_installed/x64-linux/lib/libicuuc.a
+
+      - name: Package compile libraries (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf compile-libs
+          mkdir -p compile-libs/include/Api compile-libs/lib
+          cp -r include/Api/. compile-libs/include/Api/
+          cp -r cs/include compile-libs/include/cs
+
+          for name in prim kbm consh words lite; do
+            lib=$(find "$GITHUB_WORKSPACE" -type f -name "lib${name}.a" \
+              -not -path "*/vcpkg/*" -not -path "*/vcpkg_installed/*" \
+              -not -path "*/compile-libs/*" | head -n1)
+            if [ -z "$lib" ]; then
+              echo "Missing required static library: lib${name}.a" >&2
+              exit 1
+            fi
+            cp "$lib" "compile-libs/lib/lib${name}.a"
+          done
+
+          # ICU static libs from vcpkg (matches the Windows ICU DLL trio:
+          # data/uc/i18n). Downstream analyzer/KB linking against lite needs
+          # i18n for Collator (find_str_nocase).
+          for icu_lib in libicudata.a libicuuc.a libicui18n.a; do
+            cp "vcpkg_installed/x64-linux/lib/$icu_lib" "compile-libs/lib/$icu_lib"
+          done
+
+          (cd compile-libs && zip -r "$GITHUB_WORKSPACE/nlpengine-compile-libs-linux-${VERSION_SUFFIX}.zip" .)
+
+      - name: Upload nlpengine-compile-libs zip (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        uses: actions/upload-artifact@v4
+        with:
+          name: nlpengine-compile-libs-linux-${{ env.VERSION_SUFFIX }}.zip
+          path: nlpengine-compile-libs-linux-${{ env.VERSION_SUFFIX }}.zip
 
       # ===============================
       # Run Tests

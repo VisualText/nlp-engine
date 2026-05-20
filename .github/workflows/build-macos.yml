@@ -83,6 +83,41 @@ jobs:
           name: libicuucm.a
           path: vcpkg_installed/arm64-osx/lib/libicuucm.a
 
+      - name: Package compile libraries (prim/kbm/consh/words/lite)
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf compile-libs
+          mkdir -p compile-libs/include/Api compile-libs/lib
+          cp -R include/Api/ compile-libs/include/Api/
+          cp -R cs/include compile-libs/include/cs
+
+          for name in prim kbm consh words lite; do
+            lib=$(find "$GITHUB_WORKSPACE" -type f -name "lib${name}.a" \
+              -not -path "*/vcpkg/*" -not -path "*/vcpkg_installed/*" \
+              -not -path "*/compile-libs/*" | head -n1)
+            if [ -z "$lib" ]; then
+              echo "Missing required static library: lib${name}.a" >&2
+              exit 1
+            fi
+            cp "$lib" "compile-libs/lib/lib${name}.a"
+          done
+
+          # ICU static libs from vcpkg (matches the Windows ICU DLL trio:
+          # data/uc/i18n). Downstream analyzer/KB linking against lite needs
+          # i18n for Collator (find_str_nocase).
+          for icu_lib in libicudata.a libicuuc.a libicui18n.a; do
+            cp "vcpkg_installed/arm64-osx/lib/$icu_lib" "compile-libs/lib/$icu_lib"
+          done
+
+          (cd compile-libs && zip -r "$GITHUB_WORKSPACE/nlpengine-compile-libs-macos.zip" .)
+
+      - name: Upload nlpengine-compile-libs-macos.zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: nlpengine-compile-libs-macos.zip
+          path: nlpengine-compile-libs-macos.zip
+
       - name: Checkout Analyzers repo
         uses: actions/checkout@v4
         with:
