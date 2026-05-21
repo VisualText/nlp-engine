@@ -21,6 +21,10 @@ if(MSVC)
     add_definitions(-DWIN32)
     add_definitions(-DNDEBUG)
     add_definitions(-D_WINDOWS)
+    # Enables the compiled-KB load path in CG::CG (cs/libconsh/cg.cpp).
+    # Without this, -COMPILED is a no-op: the engine never LoadLibrary's
+    # the analyzer DLL or calls kb_setup.
+    add_definitions(-DEMBEDED_KB)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zc:wchar_t /std:c++17")
 endif()
 
