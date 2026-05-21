@@ -43,7 +43,8 @@ typedef long ID;
 namespace consh_cg {		// 09/26/19 AM.
 // COMPILED KB IN LINUX.	// 02/19/19 AM.
 #ifdef LINUX
-typedef double HINSTANCE;
+// Linux compiled-KB now uses dlopen; HINSTANCE holds the dlopen handle.
+typedef void *HINSTANCE;
 #endif
 #if MSVC_VERSION >= 1900
 	typedef HINSTANCE HINSTANCE;

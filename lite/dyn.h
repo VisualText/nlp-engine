@@ -12,8 +12,8 @@ All rights reserved.
 *
 *******************************************************************************/
 
-#ifndef DYN_H_
-#define DYN_H_
+#ifndef LITE_DYN_H_
+#define LITE_DYN_H_
 
 //#include "lite/delt.h"
 

@@ -22,6 +22,7 @@ All rights reserved.
 #include "machine.h"				// 03/08/00 AM.
 #include "u_out.h"		// 01/19/06 AM.
 #include "prim/libprim.h"	// 09/15/08 AM.
+#include "prim/dyn.h"		// HINSTANCE, load_dll, unload_dll (Linux dlopen + Windows LoadLibrary)
 #ifndef DWORD
 #define DWORD double
 #endif
@@ -1223,8 +1224,6 @@ return true;
 _TCHAR buf[MAXSTR];
 
 // LOAD COMPILED RUNTIME VERSION OF ANALYZER.						// 05/14/00 AM.
-#ifndef LINUX
-hrundll_ = 0;
 
 #ifdef _DEBUG
 
@@ -1245,21 +1244,38 @@ _TCHAR *fname = _T("run");								// run.dll		// 01/23/06 AM.
 
 #endif
 
-_stprintf(buf, _T("%s%cbin%c%s.dll"),									// 01/23/06 AM.
-						appdir,DIR_CH,DIR_CH,fname);						// 01/23/06 AM.
+#ifndef LINUX
+const _TCHAR *libext = _T("dll");
+#else
+const _TCHAR *libext = _T("so");
+#endif
+
+_stprintf(buf, _T("%s%cbin%c%s.%s"),
+						appdir,DIR_CH,DIR_CH,fname,libext);
 std::_t_strstream gerrStr;
 gerrStr << _T("[Loading compiled analyzer ")							// 01/23/06 AM.
 												<< buf << _T("]") << std::ends;	// 01/23/06 AM.
 errOut(&gerrStr,false);
 
+#ifndef LINUX
 hrundll_ = load_dll(buf);
 if (!hrundll_)
+#else
+// On Linux hrundll_ isn't a member; just probe whether the .so is loadable.
+// If it loads we close the handle immediately — call_runAnalyzer path
+// (Windows-only) won't use it, and make_analyzer falls back to interpreted.
+HINSTANCE hRun = load_dll(buf);
+if (!hRun)
+#endif
 	{
 	std::_t_strstream gerrStr;
 	gerrStr << _T("[Error: Couldn't load compiled analyzer.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
+#ifdef LINUX
+unload_dll(hRun);
+return false;  // No compiled-analyzer path on Linux; trigger interpreted fallback.
 #endif
 return true;
 }

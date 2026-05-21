@@ -10,13 +10,11 @@ All rights reserved.
 *
 *******************************************************************************/
 
-#ifdef LINUX
-typedef double HINSTANCE;	// 02/19/19 AM.
-extern "C" bool kb_setup(void*);	// 02/19/19 AM.
-#endif
-
 #ifndef LIBCONSH_DYN_
 #define LIBCONSH_DYN_
+
+// HINSTANCE comes from prim/dyn.h on both platforms now.
+#include "prim/dyn.h"
 
 bool call_kb_setup(
 	HINSTANCE hLibrary,

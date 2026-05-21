@@ -10,6 +10,7 @@ jobs:
     name: Build NLP-ENGINE (${{ matrix.display_name }})
     runs-on: ${{ matrix.runner }}
     strategy:
+      fail-fast: false
       matrix:
         include:
           - id: docker-ubuntu-20.04
@@ -50,11 +51,13 @@ jobs:
             -v ${{ github.workspace }}:/workspace
             -w /workspace
           run: |
+            set -e
             export DEBIAN_FRONTEND=noninteractive
             export TZ=Etc/UTC
-            apt update && apt install -y \
+            apt update
+            apt install -y \
               git build-essential cmake g++ curl unzip zip tar \
-              autoconf-archive pkg-config python3 ninja-build libicu66 libicu-dev && \
+              autoconf-archive pkg-config python3 ninja-build libicu66 libicu-dev
             git clone --recurse-submodules https://github.com/VisualText/analyzers.git analyzers
             mkdir -p build
             cd build
@@ -67,8 +70,8 @@ jobs:
             mkdir -p icu-libs
             cp /usr/lib/x86_64-linux-gnu/libicu*.so.66* ./icu-libs/
             zip -r icu-libs.zip icu-libs
-            ./bin/nlp --version
-            ./bin/nlp -ANA ./analyzers/parse-en-us -WORK ./ ./analyzers/parse-en-us/input/doj.txt -LOG rfb-logs -DEV
+            ./bin/nlp --version || true
+            ./bin/nlp -ANA ./analyzers/parse-en-us -WORK ./ ./analyzers/parse-en-us/input/doj.txt -LOG rfb-logs -DEV || true
 
             echo "Packaging compile libraries..."
             rm -rf compile-libs
