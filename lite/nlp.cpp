@@ -967,16 +967,26 @@ if (compiled &&	// Running compiled ana and						// 07/03/00 AM.
 	resetOut(fout, sout);
 	ok = load_compiled(appdir);								// FIX.	// 09/13/00 AM.
 
+	if (ok)
+		{
+		// Perform user-defined initializations in USER Project.		// 07/28/03 AM.
+		user_ini();																	// 07/28/03 AM.
 
-	// Perform user-defined initializations in USER Project.		// 07/28/03 AM.
-	user_ini();																	// 07/28/03 AM.
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Build analyzer time= (running compiled)]") << std::ends;
+		errOut(&gerrStr,false,0,0);
+		resetErr(ferr, serr);
+		resetDbg(sdbg);															// 02/21/02 AM.
+		return ok;																	// 09/13/00 AM.
+		}
 
+	// No compiled analyzer (run.dll) available. Fall through to interpreted
+	// execution of spec/*.nlp. Lets a compiled-KB + interpreted-analyzer
+	// combination work end-to-end (ana_gen is gone, so run.dll cannot
+	// currently be produced).
 	std::_t_strstream gerrStr;
-	gerrStr << _T("[Build analyzer time= (running compiled)]") << std::ends;
+	gerrStr << _T("[No compiled analyzer; falling back to interpreted.]") << std::ends;
 	errOut(&gerrStr,false,0,0);
-	resetErr(ferr, serr);
-	resetDbg(sdbg);															// 02/21/02 AM.
-	return ok;																	// 09/13/00 AM.
 	}
 
 // GET ANALYZER SEQUENCE FROM KB IF PRESENT. ELSE FROM FILE.
