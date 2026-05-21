@@ -15,6 +15,9 @@ All rights reserved.
 #include <iostream>											// Upgrade	// 01/24/01 AM.
 #include "prim/libprim.h"
 #include "prim/dyn.h"
+#ifdef LINUX
+#include <dlfcn.h>
+#endif
 typedef int ( * lpFunc1)();
 typedef void (* lpFunc2)();
 
@@ -26,7 +29,7 @@ LIBPRIM_API HINSTANCE load_dll(_TCHAR *path)
 
         int a = 0;
     hLibrary = LoadLibrary(path);
-    
+
     if (hLibrary != NULL)
     {
     }
@@ -41,6 +44,26 @@ return hLibrary;
 LIBPRIM_API void unload_dll(HINSTANCE hLibrary)
 {
 FreeLibrary(hLibrary);         // Unload DLL from memory
+}
+
+#else
+
+LIBPRIM_API HINSTANCE load_dll(_TCHAR *path)
+{
+HINSTANCE hLibrary = dlopen(path, RTLD_NOW | RTLD_LOCAL);
+if (!hLibrary)
+	{
+	const char *err = dlerror();
+	std::_t_cerr << _T("[Couldn't load library: ") << path
+		<< _T(" (") << (err ? err : "unknown") << _T(")]") << std::endl;
+	}
+return hLibrary;
+}
+
+LIBPRIM_API void unload_dll(HINSTANCE hLibrary)
+{
+if (hLibrary)
+	dlclose(hLibrary);
 }
 
 #endif

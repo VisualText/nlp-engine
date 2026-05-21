@@ -182,20 +182,18 @@ if (compiled)																	// 04/27/01 AM.
 				appdir,DIR_CH,
 				DIR_CH,
 				fname);																// 01/21/06 AM.
-#else
-	_stprintf(bin, _T("%s%clib%c%s.a"),									// 05/06/01 AM.
-				appdir,DIR_CH,
-				DIR_CH,
-				fname);																// 01/21/06 AM.
-			*cgerr << _T("[Compiled kb=") << bin << _T("]") << std::endl;			// 02/19/02 AM.
-#endif
-
-// 02/19/19 AM.
-#ifndef LINUX
 	_TCHAR buf[MAXSTR];
 	_stprintf(buf, _T("%s%ckb%c%s.dll"), appdir,						// 04/27/01 AM.
 				DIR_CH,DIR_CH,													// 03/08/00 AM.
 				fname);																// 01/21/06 AM.
+#else
+	// Linux now mirrors the Windows compiled-KB load model: dlopen a
+	// <fname>.so out of <appdir>/bin/, resolve kb_setup via dlsym.
+	_stprintf(bin, _T("%s%cbin%c%s.so"),
+				appdir,DIR_CH,
+				DIR_CH,
+				fname);
+	*cgerr << _T("[Compiled kb=") << bin << _T("]") << std::endl;
 #endif
 
 // No longer having VisualText move the KB.DLL file around.				// 01/23/06 AM.
@@ -231,40 +229,30 @@ if (compiled)																	// 04/27/01 AM.
 	else
 #endif
 
-// TRYING TO LOAD COMPILED KB IN LINUX.	// 02/19/19 AM.
-// No compiled in Linux for now.	// 05/15/07 AM.
-#ifndef LINUX
 	if (!f_exists(bin))												// 05/06/01 AM.
 		{
-		// No kb.dll file exists for this config.						// 05/06/01 AM.
+		// No compiled-kb file exists for this config.					// 05/06/01 AM.
 		*cgerr << _T("[Error. No compiled kb for ")						// 05/06/01 AM.
 			<< fname
+#ifndef LINUX
 			<< _T(".dll .]")
+#else
+			<< _T(".so .]")
+#endif
 			<< std::endl;
 		loaded = false;														// 05/06/01 AM.
 		goto interp;															// 05/06/01 AM.
 		}
-// ASSUME COMPILED KB.	// 02/19/19 AM.
-#endif
 
 	*cgerr << _T("[Loading compiled kb: ") << bin << _T("]") << std::endl;			// 05/06/01 AM.
-#ifndef LINUX
 	hkbdll_ = load_dll(bin);												// 05/06/01 AM.
 	if (hkbdll_)
-#else
-   if (true)	// 11/13/06 AM.
-#endif
 		{
 		*cgerr << _T("[Loaded compiled kb library]") << std::endl;			// 02/19/02 AM.
 		loaded = true;
 		// NEED TO BIND VARIABLES & WHATEVER ELSE IS NEEDED TO
 		// GET THIS KB UP.
-#ifndef LINUX
 		if (!call_kb_setup(hkbdll_,this))								// 08/16/02 AM.
-#else
-		// if (false)	// 11/13/06 AM.
-		if (!call_kb_setup(hkbdll_,(void*)this))								// 08/16/02 AM.
-#endif
 			{
 			loaded = false;													// 05/07/01 AM.
 			std::_t_cerr << _T("[Error in calling kb library.]") << std::endl;		// 05/07/01 AM.
@@ -276,9 +264,7 @@ if (compiled)																	// 04/27/01 AM.
 			{
 			*cgerr << _T("[Couldn't bind vars to compiled kb.]") << std::endl;
 			loaded = false;
-#ifndef LINUX
 			unload_dll(hkbdll_);
-#endif
 			}
 		}
 	else																			// 05/07/01 AM.
@@ -334,14 +320,12 @@ if (count_ == 1)																// 08/22/02 AM.
 else
 	*cgerr << _T("[Closing KB number ") << count_ << _T("]") << std::endl;	// 08/22/02 AM.
 
-#ifndef LINUX
 // FREE UP COMPILED KB, IF ANY.											// 06/29/00 AM.
 if (hkbdll_)																	// 06/29/00 AM.
 	{
 	unload_dll(hkbdll_);														// 06/29/00 AM.
 	hkbdll_ = 0;																// 06/29/00 AM.
 	}
-#endif
 
 #ifndef STABLE_
 --count_;
@@ -799,14 +783,12 @@ return true;
 
 bool CG::unloadLib()
 {
-#ifndef LINUX
 // FREE UP COMPILED KB, IF ANY.
 if (hkbdll_)
 	{
 	unload_dll(hkbdll_);
 	hkbdll_ = 0;
 	}
-#endif
 return true;
 }
 
@@ -821,7 +803,6 @@ return true;
 
 bool CG::loadLib()
 {
-#ifndef LINUX
 if (hkbdll_)
 	{
 	*cgerr << _T("[Load kb lib: Already loaded.]") << std::endl;
@@ -847,24 +828,31 @@ _TCHAR *fname = _T("kbu");										// kbu.dll		// 01/17/06 AM.
 
 #endif
 
+#ifndef LINUX
+const _TCHAR *libext = _T("dll");
+#else
+const _TCHAR *libext = _T("so");
+#endif
+
 _TCHAR buf[MAXSTR];
-_stprintf(buf, _T("%s%ckb%c%s.dll"),										// 04/27/01 AM.
+_stprintf(buf, _T("%s%ckb%c%s.%s"),
 			getAppdir(),
 			DIR_CH,DIR_CH,
-			fname);																		// 01/21/06 AM.
+			fname,
+			libext);
 
 if (!f_exists(buf))															// 05/06/01 AM.
 	{
 	*cgerr << _T("[loadLib: Error. Can't load compiled ")			// 05/06/01 AM.
 			 << fname															// 01/21/06 AM.
-			 << _T(".dll]")													// 01/21/06 AM.
+			 << _T(".") << libext
+			 << _T("]")
 			 << std::endl;
 	return false;																// 05/06/01 AM.
 	}
 
 *cgerr << _T("[Loading compiled kb: ") << buf << _T("]") << std::endl;
 hkbdll_ = load_dll(buf);
-#endif
 return true;
 }
 

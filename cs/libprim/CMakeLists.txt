@@ -7,3 +7,8 @@ endif()
 
 file(GLOB prim_src "*.h" "*.cpp")
 add_library(prim STATIC ${prim_src})
+
+# dyn.cpp uses dlopen/dlclose on Linux; propagate -ldl to consumers.
+if(NOT WIN32)
+  target_link_libraries(prim PUBLIC ${CMAKE_DL_LIBS})
+endif()
