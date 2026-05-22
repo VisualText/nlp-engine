@@ -37,16 +37,18 @@ All rights reserved.
 // Upped size by factor of 2.												// 04/20/01 AM.
 #define SEG_SIZE	( ( _32_K * (long)2 ) - (long) 768)
 
-#ifdef MACINTOSH
-#define DIR_SEP _T(":")			// 04/23/99 AM.
-#endif
-
-#ifdef PC
-#define DIR_SEP _T("\\")			// 04/23/99 AM.
-#endif
-
-#ifdef UNIX
-#define DIR_SEP _T("/")			// 04/23/99 AM.
+// DIR_SEP is used by the -COMPILE emitter to join paths when writing
+// generated KB files (cs/libconsh/*_gen.cpp, cs/libconsh/cmd.cpp). It
+// must match the host filesystem's separator: backslash on Windows,
+// forward slash on POSIX. Previously gated on PC / UNIX macros which
+// were #define'd unconditionally (PC unconditional at line 26 above),
+// so Linux builds were emitting backslash paths and the generated
+// files landed in the analyzer root with literal '\' in their names.
+// Mirrors the DIR_CH treatment in include/Api/machine-min.h.
+#ifdef LINUX
+#define DIR_SEP _T("/")
+#else
+#define DIR_SEP _T("\\")
 #endif
 
 //#ifdef __cplusplus
