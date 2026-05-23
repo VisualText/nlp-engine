@@ -1696,6 +1696,11 @@ _stprintf(eltarr, _T("elts%d_%d_%d"),											// 05/30/00 AM.
 				gen->id_,gen->recid_,gen->ruleid_);						// 05/30/00 AM.
 Ielt::genElts(phrase_,eltarr,gen);	// Array for rule elts.		// 05/17/00 AM.
 
+// Per-rule provenance anchor for the compile-service error parser.
+// File context inherits from the `// nlp-source-file:` line emitted at top of pass.
+*fcode << indent << _T("// nlp-source: ") << line_;
+Gen::nl(fcode);
+
 // Initialize rule data.
 *fcode << indent
 		 << _T("Arun::init_rule(")
