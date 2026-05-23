@@ -528,22 +528,14 @@ _TCHAR o_main[4096];
 _stprintf(o_main, _T("%s%cmain.%s"), path, DIR_CH, suff);
 std::_t_ofstream f_main(TCHAR2A(o_main));
 
-#ifdef LINUX
-f_main << _T("take \"kb\\\\user\\\\hier.kb\"") << std::endl;
-f_main << _T("bind sys") << std::endl;
-f_main << _T("take \"kb\\\\user\\\\word.kb\"") << std::endl;
-f_main << _T("take \"kb\\\\user\\\\phr.kb\"") << std::endl;
-
-long ii;
-for (ii=1; ii <= n_attr; ++ii)
-	f_main
-		<< _T("take \"kb\\\\user\\\\attr")
-		<< ii
-		<< _T(".kb\"")
-		<< std::endl;
-f_main << _T("quit") << std::endl;
-#else
-
+// Use forward-slash separators in the generated `take` statements. The
+// take parser (cmd_take -> resolve_file in cs/libprim/io.cpp) does NOT
+// normalize backslashes to slashes on Linux; resolve_file_unix
+// concatenates verbatim and then fopen sees one filename with literal
+// '\' chars. Windows historically accepted forward slashes here, so
+// emitting them on both platforms preserves Windows behavior bit-for-bit
+// while fixing the Linux take. The previous #ifdef LINUX branch was
+// inverted (emitting backslashes on Linux, slashes on Windows).
 f_main << _T("take \"kb/user/hier.kb\"") << std::endl;
 f_main << _T("bind sys") << std::endl;
 f_main << _T("take \"kb/user/word.kb\"") << std::endl;
@@ -557,7 +549,6 @@ for (ii=1; ii <= n_attr; ++ii)
 		<< _T(".kb\"")
 		<< std::endl;
 f_main << _T("quit") << std::endl;
-#endif
 
 return true;
 }
