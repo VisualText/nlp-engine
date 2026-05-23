@@ -461,6 +461,9 @@ _TCHAR *algo = parse->getAlgo();											// 05/31/00 AM.
 
 
 *fcode << _T("// Automatically generated: ") << today() << std::endl;	// 04/03/09 AM.
+// File-level provenance anchor consumed by the compile-service error parser.
+// Per-construct `// nlp-source: <line>` comments downstream inherit this file.
+*fcode << _T("// nlp-source-file: ") << sfile << std::endl;
 
 *fcode << _T("#include \"analyzer.h\"") << std::endl;			// 04/03/09 AM.
 *fcode << _T("#include \"ehead.h\"") << std::endl;				// 04/03/09 AM.
