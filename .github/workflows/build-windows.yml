@@ -112,6 +112,19 @@ jobs:
             Copy-Item -Force $lib.FullName (Join-Path $libRoot "$name.lib")
           }
 
+          # ICU import libs from vcpkg. lite.lib's find_str_nocase references
+          # icuin78 (Collator), and prim.lib pulls in icuuc78/icudt78.
+          # Downstream analyzer/KB compilation linking against the engine
+          # static libs above will fail with LNK2019 without these.
+          $icuLibDir = Join-Path $env:GITHUB_WORKSPACE 'vcpkg/packages/icu_x64-windows/lib'
+          $icuLibs = Get-ChildItem -Path $icuLibDir -File -Filter "icu*.lib" -ErrorAction Stop
+          if ($icuLibs.Count -lt 3) {
+            throw "Expected at least 3 ICU import libs in $icuLibDir, found $($icuLibs.Count)"
+          }
+          foreach ($icu in $icuLibs) {
+            Copy-Item -Force $icu.FullName (Join-Path $libRoot $icu.Name)
+          }
+
           Compress-Archive -Path (Join-Path $outRoot '*') -DestinationPath (Join-Path $env:GITHUB_WORKSPACE 'nlpengine-compile-libs.zip') -Force
 
       - name: Upload nlpengine-compile-libs.zip
