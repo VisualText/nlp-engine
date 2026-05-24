@@ -513,6 +513,11 @@ public:
 	static _TCHAR   *assign(int,_TCHAR*,int,long long,Nlppp*,_TCHAR*);
 	static std::_t_ostream *assign(int,_TCHAR*,int,long long,Nlppp*,std::_t_ostream*);	// 11/20/02 AM.
 	static bool		assign(int,_TCHAR*,int,long long,Nlppp*,bool);		// 12/10/02 AM.
+	// `int` rhs disambiguator (NLP-ENGINE-492): codegen emits Arun::attrtype(...)
+	// (returns int) as the rhs of an assign; `int` implicitly converts to bool /
+	// long long / float so the call is ambiguous. This exact-match overload
+	// routes through the long long form.
+	static long long    assign(int,_TCHAR*,int,long long,Nlppp*,int);
 
 	// VARIANTS.
 	static RFASem  *assign(int,_TCHAR*,int,RFASem*,Nlppp*,RFASem*);
@@ -521,6 +526,7 @@ public:
 	static _TCHAR    *assign(int,_TCHAR*,int,RFASem*,Nlppp*,_TCHAR*);
 	static std::_t_ostream *assign(int,_TCHAR*,int,RFASem*,Nlppp*,std::_t_ostream*);//11/20/02 AM.
 	static bool     assign(int,_TCHAR*,int,RFASem*,Nlppp*,bool);	// 12/10/02 AM.
+	static long long     assign(int,_TCHAR*,int,RFASem*,Nlppp*,int);
 
 	// INDEXED ASSIGNMENT.
 	static RFASem *iassign(int,_TCHAR*,int,long long,Nlppp*,RFASem*);
@@ -529,6 +535,7 @@ public:
 	static _TCHAR   *iassign(int,_TCHAR*,int,long long,Nlppp*,_TCHAR*);
 	static std::_t_ostream *iassign(int,_TCHAR*,int,long long,Nlppp*,std::_t_ostream*); // 11/20/02 AM.
 	static bool    iassign(int,_TCHAR*,int,long long,Nlppp*,bool);		// 12/10/02 AM.
+	static long long    iassign(int,_TCHAR*,int,long long,Nlppp*,int);
 
 	static bool truth(long long);
 	static bool truth(float);

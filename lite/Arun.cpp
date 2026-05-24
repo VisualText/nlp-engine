@@ -7487,6 +7487,13 @@ Var::setVal(pair, (val ? 1LL : 0LL));	// No boolean vars yet.
 return val;
 }
 
+// `int` rhs disambiguator (NLP-ENGINE-492). See Arun.h header block.
+long long Arun::assign(
+	int typ, _TCHAR *varname, int nelt, long long index, Nlppp *nlppp, int val)
+{
+return assign(typ, varname, nelt, index, nlppp, (long long)val);
+}
+
 // VARIANTS OF ASSIGN.
 
 RFASem *Arun::assign(														// 05/04/01 AM.
@@ -7605,11 +7612,18 @@ if (!flag)
 return assign(typ,varname,nelt,index,nlppp,val);
 }
 
+// `int` rhs disambiguator (NLP-ENGINE-492). See Arun.h header block.
+long long Arun::assign(
+	int typ, _TCHAR *varname, int nelt, RFASem *index_sem, Nlppp *nlppp, int val)
+{
+return assign(typ, varname, nelt, index_sem, nlppp, (long long)val);
+}
+
 /********************************************
 * FN:		IASSIGN
 * CR:		03/11/02 AM.
 * SUBJ:	INDEXED NLP++ assignment statement, compiled runtime.
-* NOTE:	
+* NOTE:
 ********************************************/
 
 RFASem *Arun::iassign(
@@ -7879,6 +7893,13 @@ arg->setType(IANUM);
 arg->setNum((val ? 1 : 0));
 
 return val;
+}
+
+// `int` rhs disambiguator (NLP-ENGINE-492). See Arun.h header block.
+long long Arun::iassign(
+	int typ, _TCHAR *varname, int nelt, long long index, Nlppp *nlppp, int val)
+{
+return iassign(typ, varname, nelt, index, nlppp, (long long)val);
 }
 
 
