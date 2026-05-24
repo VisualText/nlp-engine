@@ -503,6 +503,26 @@ delete sem;
 return type;
 }
 
+// NLP++ source may pass the attribute-name arg as a local variable (e.g.
+// `L("name")`), in which case codegen emits Arun::l(...) returning RFASem*
+// where this fn's _TCHAR* third arg is expected. Extract the string at
+// call time and delegate to the existing impl. Mirrors the existing
+// pnrename(Nlppp*,NODE*,RFASem*) / pnrename(Nlppp*,RFASem*,_TCHAR*) etc.
+// overload pattern in this file.
+int Arun::attrtype(
+	Nlppp *nlppp,
+	RFASem *sem,
+	RFASem *name_sem
+	)
+{
+if (!name_sem)
+	return attrtype(nlppp, sem, (_TCHAR*)0);
+_TCHAR *name = name_sem->sem_to_str();
+int result = attrtype(nlppp, sem, name);
+delete name_sem;
+return result;
+}
+
 
 
 /********************************************
@@ -8595,6 +8615,21 @@ Ivar::nodeRemoveval(pn,name2);
 return true;
 }
 
+// RFASem overload — see attrtype overload near line 506 for rationale.
+bool Arun::pnremoveval(
+	Nlppp *nlppp,
+	NODE *nd,
+	RFASem *name_sem
+	)
+{
+if (!name_sem)
+	return false;
+_TCHAR *name = name_sem->sem_to_str();
+bool result = pnremoveval(nlppp, nd, name);
+delete name_sem;
+return result;
+}
+
 
 /********************************************
 * FN:		PNRENAME
@@ -13409,6 +13444,21 @@ case IAFLOAT:
 
 sem = new RFASem(typNum);
 return sem;
+}
+
+// RFASem overload — see attrtype overload near line 506 for rationale.
+RFASem *Arun::pnvartype(
+	Nlppp *nlppp,
+	NODE *pnode,
+	RFASem *name_sem
+	)
+{
+if (!name_sem)
+	return 0;
+_TCHAR *name = name_sem->sem_to_str();
+RFASem *result = pnvartype(nlppp, pnode, name);
+delete name_sem;
+return result;
 }
 
 

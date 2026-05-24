@@ -842,6 +842,7 @@ public:
 
 	static _TCHAR *attrname(Nlppp*,RFASem*);
 	static int attrtype(Nlppp*,RFASem*,_TCHAR*);
+	static int attrtype(Nlppp*,RFASem*,RFASem*);
 	static RFASem *attrvals(Nlppp*,RFASem*);
 
 	static RFASem *findvals(Nlppp*,RFASem*,_TCHAR*);
@@ -1286,6 +1287,7 @@ public:
 	static RFASem *pnprev(Nlppp*,RFASem*);								// 04/29/01 AM.
 
 	static bool pnremoveval(Nlppp*,NODE*,_TCHAR*);
+	static bool pnremoveval(Nlppp*,NODE*,RFASem*);
 	static _TCHAR *pnrename(Nlppp*,NODE*,_TCHAR*);						// 01/08/01 AM.
 	static _TCHAR *pnrename(Nlppp*,RFASem*,_TCHAR*);						// 04/28/01 AM.
 	static _TCHAR *pnrename(Nlppp*,NODE*,RFASem*);						// 04/28/01 AM.
@@ -1552,6 +1554,7 @@ public:
 	static RFASem *pnvarnames(Nlppp*,NODE*);							// 05/13/02 AM.
 	static RFASem *pnvarnames(Nlppp*,RFASem*);						// 05/13/02 AM.
 	static RFASem *pnvartype(Nlppp*,NODE*,_TCHAR*);
+	static RFASem *pnvartype(Nlppp*,NODE*,RFASem*);
 
 	static bool pnsetfired(Nlppp*,NODE*,bool);
 
