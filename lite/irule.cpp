@@ -1697,8 +1697,12 @@ _stprintf(eltarr, _T("elts%d_%d_%d"),											// 05/30/00 AM.
 Ielt::genElts(phrase_,eltarr,gen);	// Array for rule elts.		// 05/17/00 AM.
 
 // Per-rule provenance anchor for the compile-service error parser.
-// File context inherits from the `// nlp-source-file:` line emitted at top of pass.
-*fcode << indent << _T("// nlp-source: ") << line_;
+// File context inherits from the `// nlp-source-file:` line emitted at top
+// of pass. Must use C-style `/* ... */` (not `//`) because Gen::nl is a no-op
+// without GENPRETTY_ defined in release builds, so the surrounding code is
+// emitted on a single line and a `//` comment would swallow the rest of the
+// case body (including the switch's closing brace).
+*fcode << indent << _T("/* nlp-source: ") << line_ << _T(" */");
 Gen::nl(fcode);
 
 // Initialize rule data.
