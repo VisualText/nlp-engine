@@ -19026,3 +19026,230 @@ return DICTphraselookup(nlppp,n,k,m,a,p);
 }
 
 //////////////////////////
+
+
+// =========================================================================
+// RFASem-substitution overloads (NLP-ENGINE-490). See block at end of
+// include/Api/lite/Arun.h for rationale. Each takes RFASem* where the
+// original takes _TCHAR* at positions > 0, extracts the string via
+// sem_to_str(), delegates to the existing impl, and deletes the sem.
+// =========================================================================
+
+// 24 RFASem-substitution overloads (NLP-ENGINE-490)
+
+bool Arun::addattr(Nlppp* a0, RFASem * s1_sem, RFASem * s2_sem, RFASem * s3_sem)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+_TCHAR *str2 = s2_sem ? s2_sem->sem_to_str() : 0;
+_TCHAR *str3 = s3_sem ? s3_sem->sem_to_str() : 0;
+bool _r = addattr(a0, str1, str2, str3);
+if (s1_sem) delete s1_sem;
+if (s2_sem) delete s2_sem;
+if (s3_sem) delete s3_sem;
+return _r;
+}
+
+bool Arun::addstrs(Nlppp * a0, RFASem * s1_sem, long long a2)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+bool _r = addstrs(a0, str1, a2);
+if (s1_sem) delete s1_sem;
+return _r;
+}
+
+bool Arun::fileout(Nlppp * a0, RFASem * s1_sem)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+bool _r = fileout(a0, str1);
+if (s1_sem) delete s1_sem;
+return _r;
+}
+
+bool Arun::fprintvar(Nlppp* a0, RFASem * s1_sem, RFASem * s2_sem, RFASem * s3_sem)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+_TCHAR *str2 = s2_sem ? s2_sem->sem_to_str() : 0;
+_TCHAR *str3 = s3_sem ? s3_sem->sem_to_str() : 0;
+bool _r = fprintvar(a0, str1, str2, str3);
+if (s1_sem) delete s1_sem;
+if (s2_sem) delete s2_sem;
+if (s3_sem) delete s3_sem;
+return _r;
+}
+
+bool Arun::gdump(Nlppp* a0, RFASem * s1_sem)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+bool _r = gdump(a0, str1);
+if (s1_sem) delete s1_sem;
+return _r;
+}
+
+bool Arun::gtolower(Nlppp * a0, RFASem * s1_sem)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+bool _r = gtolower(a0, str1);
+if (s1_sem) delete s1_sem;
+return _r;
+}
+
+bool Arun::guniq(Nlppp * a0, RFASem * s1_sem)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+bool _r = guniq(a0, str1);
+if (s1_sem) delete s1_sem;
+return _r;
+}
+
+long long Arun::inc(int a0, RFASem * s1_sem, int a2, long long a3, Nlppp * a4)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+long long _r = inc(a0, str1, a2, a3, a4);
+if (s1_sem) delete s1_sem;
+return _r;
+}
+
+long long Arun::inc(int a0, RFASem * s1_sem, int a2, RFASem* a3, Nlppp* a4)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+long long _r = inc(a0, str1, a2, a3, a4);
+if (s1_sem) delete s1_sem;
+return _r;
+}
+
+bool Arun::lookup(Nlppp * a0, RFASem * s1_sem, RFASem * s2_sem, RFASem * s3_sem)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+_TCHAR *str2 = s2_sem ? s2_sem->sem_to_str() : 0;
+_TCHAR *str3 = s3_sem ? s3_sem->sem_to_str() : 0;
+bool _r = lookup(a0, str1, str2, str3);
+if (s1_sem) delete s1_sem;
+if (s2_sem) delete s2_sem;
+if (s3_sem) delete s3_sem;
+return _r;
+}
+
+bool Arun::ndump(Nlppp* a0, RFASem * s1_sem, long long a2)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+bool _r = ndump(a0, str1, a2);
+if (s1_sem) delete s1_sem;
+return _r;
+}
+
+bool Arun::prchild(Nlppp * a0, RFASem * s1_sem, long long a2, RFASem * s3_sem)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+_TCHAR *str3 = s3_sem ? s3_sem->sem_to_str() : 0;
+bool _r = prchild(a0, str1, a2, str3);
+if (s1_sem) delete s1_sem;
+if (s3_sem) delete s3_sem;
+return _r;
+}
+
+bool Arun::print(Nlppp * a0, RFASem * s1_sem)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+bool _r = print(a0, str1);
+if (s1_sem) delete s1_sem;
+return _r;
+}
+
+bool Arun::prlit(Nlppp * a0, RFASem * s1_sem, RFASem * s2_sem)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+_TCHAR *str2 = s2_sem ? s2_sem->sem_to_str() : 0;
+bool _r = prlit(a0, str1, str2);
+if (s1_sem) delete s1_sem;
+if (s2_sem) delete s2_sem;
+return _r;
+}
+
+bool Arun::prrange(Nlppp * a0, RFASem * s1_sem, long long a2, long long a3)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+bool _r = prrange(a0, str1, a2, a3);
+if (s1_sem) delete s1_sem;
+return _r;
+}
+
+bool Arun::prtree(Nlppp * a0, RFASem * s1_sem, long long a2, RFASem * s3_sem)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+_TCHAR *str3 = s3_sem ? s3_sem->sem_to_str() : 0;
+bool _r = prtree(a0, str1, a2, str3);
+if (s1_sem) delete s1_sem;
+if (s3_sem) delete s3_sem;
+return _r;
+}
+
+bool Arun::prxtree(Nlppp* a0, RFASem * s1_sem, RFASem * s2_sem, long long a3, RFASem * s4_sem, RFASem * s5_sem)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+_TCHAR *str2 = s2_sem ? s2_sem->sem_to_str() : 0;
+_TCHAR *str4 = s4_sem ? s4_sem->sem_to_str() : 0;
+_TCHAR *str5 = s5_sem ? s5_sem->sem_to_str() : 0;
+bool _r = prxtree(a0, str1, str2, a3, str4, str5);
+if (s1_sem) delete s1_sem;
+if (s2_sem) delete s2_sem;
+if (s4_sem) delete s4_sem;
+if (s5_sem) delete s5_sem;
+return _r;
+}
+
+bool Arun::sdump(Nlppp* a0, RFASem * s1_sem)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+bool _r = sdump(a0, str1);
+if (s1_sem) delete s1_sem;
+return _r;
+}
+
+bool Arun::setbase(Nlppp * a0, long long a1, RFASem * s2_sem)
+{
+_TCHAR *str2 = s2_sem ? s2_sem->sem_to_str() : 0;
+bool _r = setbase(a0, a1, str2);
+if (s2_sem) delete s2_sem;
+return _r;
+}
+
+bool Arun::setunsealed(Nlppp * a0, long long a1, RFASem * s2_sem)
+{
+_TCHAR *str2 = s2_sem ? s2_sem->sem_to_str() : 0;
+bool _r = setunsealed(a0, a1, str2);
+if (s2_sem) delete s2_sem;
+return _r;
+}
+
+bool Arun::sortvals(Nlppp * a0, RFASem * s1_sem)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+bool _r = sortvals(a0, str1);
+if (s1_sem) delete s1_sem;
+return _r;
+}
+
+bool Arun::vareq(Nlppp* a0, RFASem * s1_sem, long long a2)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+bool _r = vareq(a0, str1, a2);
+if (s1_sem) delete s1_sem;
+return _r;
+}
+
+bool Arun::varne(Nlppp* a0, RFASem * s1_sem, long long a2)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+bool _r = varne(a0, str1, a2);
+if (s1_sem) delete s1_sem;
+return _r;
+}
+
+bool Arun::xdump(Nlppp* a0, RFASem * s1_sem, long long a2)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+bool _r = xdump(a0, str1, a2);
+if (s1_sem) delete s1_sem;
+return _r;
+}
+

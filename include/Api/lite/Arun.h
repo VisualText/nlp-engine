@@ -1832,6 +1832,48 @@ public:
 		);
 
 
+	// =====================================================================
+	// RFASem-substitution overloads for NLP++ builtins with _TCHAR* args.
+	//
+	// NLP++ source can pass any string arg as a local variable (e.g.
+	// `L("name")`), in which case -COMPILE codegen at iaction.cpp:942
+	// emits `Arun::l(...)` returning RFASem*. When the receiving function
+	// expects _TCHAR* at that position, the generated C++ doesn't compile.
+	//
+	// Each overload below takes RFASem* at every position where the
+	// original took _TCHAR* (positions > 0), extracts the string via
+	// sem_to_str(), delegates to the existing impl, then deletes the sem.
+	// Same pattern as the attrtype/pnremoveval/pnvartype overloads added
+	// in NLP-ENGINE-489; this PR fans out to the remaining 24 builtins
+	// found by walking funcs.h × Arun.h.
+	//
+	// Matching impls live at the bottom of lite/fnrun.cpp.
+	static bool addattr(Nlppp*, RFASem *, RFASem *, RFASem *);
+	static bool addstrs(Nlppp *, RFASem *, long long);
+	static bool fileout(Nlppp *, RFASem *);
+	static bool fprintvar(Nlppp*, RFASem *, RFASem *, RFASem *);
+	static bool gdump(Nlppp*, RFASem *);
+	static bool gtolower(Nlppp *, RFASem *);
+	static bool guniq(Nlppp *, RFASem *);
+	static long long inc(int, RFASem *, int, long long, Nlppp *);
+	static long long inc(int, RFASem *, int, RFASem*, Nlppp*);
+	static bool lookup(Nlppp *, RFASem *, RFASem *, RFASem *);
+	static bool ndump(Nlppp*, RFASem *, long long);
+	static bool prchild(Nlppp *, RFASem *, long long, RFASem *);
+	static bool print(Nlppp *, RFASem *);
+	static bool prlit(Nlppp *, RFASem *, RFASem *);
+	static bool prrange(Nlppp *, RFASem *, long long, long long);
+	static bool prtree(Nlppp *, RFASem *, long long, RFASem *);
+	static bool prxtree(Nlppp*, RFASem *, RFASem *, long long, RFASem *, RFASem *);
+	static bool sdump(Nlppp*, RFASem *);
+	static bool setbase(Nlppp *, long long, RFASem *);
+	static bool setunsealed(Nlppp *, long long, RFASem *);
+	static bool sortvals(Nlppp *, RFASem *);
+	static bool vareq(Nlppp*, RFASem *, long long);
+	static bool varne(Nlppp*, RFASem *, long long);
+	static bool xdump(Nlppp*, RFASem *, long long);
+
+
 };		// End of Arun class.
 
 
