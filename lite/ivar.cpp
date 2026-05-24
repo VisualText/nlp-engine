@@ -1959,7 +1959,7 @@ switch (getType())
 if (index_)															// FIX.	// 05/04/01 AM.
 	index_->genEval(gen);											// FIX.	// 05/04/01 AM.
 else																	// FIX.	// 05/04/01 AM.
-	*fcode << FULLARRAY;											// FIX.	// 05/04/01 AM.
+	*fcode << _T("(long long)") << FULLARRAY;											// FIX.	// 05/04/01 AM.
 
 // CALL-BY-REFERENCE.														// 06/16/02 AM.
 if (ref)																			// 06/16/02 AM.

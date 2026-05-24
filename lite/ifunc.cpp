@@ -773,7 +773,7 @@ for (; darg; darg = darg->Right())
 		*fcode << _T("Arun::stmt(Arun::assign(")							// 03/11/02 AM.
 				 << LOCALVAR << _T(", ")											// 03/11/02 AM.
 				 << _T("_T(\"") << varg->getStr() << _T("\"), 0,")					// 03/11/02 AM.
-				 << FULLARRAY													// 03/11/02 AM.
+				 << _T("(long long)") << FULLARRAY													// 03/11/02 AM.
 				 << _T(", nlppp, ")												// 03/11/02 AM.
 				 << _T("L") << ii << _T("));");										// 03/11/02 AM.
 		Gen::nl(fcode);														// 04/04/03 AM.
