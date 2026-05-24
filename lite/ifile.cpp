@@ -463,7 +463,16 @@ _TCHAR *algo = parse->getAlgo();											// 05/31/00 AM.
 *fcode << _T("// Automatically generated: ") << today() << std::endl;	// 04/03/09 AM.
 // File-level provenance anchor consumed by the compile-service error parser.
 // Per-construct `// nlp-source: <line>` comments downstream inherit this file.
-*fcode << _T("// nlp-source-file: ") << sfile << std::endl;
+// sfile (from parse->getInput()) may be NULL/empty/"NIL" — same null-check
+// pattern used at the existing fdata emission below (around line 678). Without
+// this, streaming a NULL _TCHAR* into ostream is undefined behavior and
+// segfaults on MSVC's runtime, crashing -COMPILE before producing any pass file.
+{
+    _TCHAR *src = sfile;
+    if (!src || !*src || !strcmp_i(src, _T("NIL")))
+        src = _T("0");
+    *fcode << _T("// nlp-source-file: ") << src << std::endl;
+}
 
 *fcode << _T("#include \"analyzer.h\"") << std::endl;			// 04/03/09 AM.
 *fcode << _T("#include \"ehead.h\"") << std::endl;				// 04/03/09 AM.
