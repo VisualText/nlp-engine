@@ -3678,7 +3678,7 @@ switch (type_)		// Type of expression.
 		if (index)													// FIX.	// 05/04/01 AM.
 			index->genEval(gen);									// FIX.	// 05/04/01 AM.
 		else															// FIX.	// 05/04/01 AM.
-			*fcode << FULLARRAY;									// FIX.	// 05/04/01 AM.
+			*fcode << _T("(long long)") << FULLARRAY;									// FIX.	// 05/04/01 AM.
 		*fcode														// FIX.	// 05/04/01 AM.
 				 << _T(", nlppp, ")
 				 << _T("(");
@@ -3709,7 +3709,7 @@ switch (type_)		// Type of expression.
 				if (index)											// FIX.	// 05/04/01 AM.
 					index->genEval(gen);							// FIX.	// 05/04/01 AM.
 				else													// FIX.	// 05/04/01 AM.
-					*fcode << FULLARRAY;							// FIX.	// 05/04/01 AM.
+					*fcode << _T("(long long)") << FULLARRAY;							// FIX.	// 05/04/01 AM.
 				*fcode												// FIX.	// 05/04/01 AM.
 				 << _T(", ")															// 01/09/01 AM.
 						 << _T("nlppp")
@@ -3733,7 +3733,7 @@ switch (type_)		// Type of expression.
 				if (index)											// FIX.	// 05/04/01 AM.
 					index->genEval(gen);							// FIX.	// 05/04/01 AM.
 				else													// FIX.	// 05/04/01 AM.
-					*fcode << FULLARRAY;							// FIX.	// 05/04/01 AM.
+					*fcode << _T("(long long)") << FULLARRAY;							// FIX.	// 05/04/01 AM.
 				*fcode												// FIX.	// 05/04/01 AM.
 				 << _T(", ")															// 01/09/01 AM.
 						 << _T("nlppp")
@@ -3788,7 +3788,7 @@ switch (type_)		// Type of expression.
 				if (index)											// FIX.	// 05/04/01 AM.
 					index->genEval(gen);							// FIX.	// 05/04/01 AM.
 				else													// FIX.	// 05/04/01 AM.
-					*fcode << FULLARRAY;							// FIX.	// 05/04/01 AM.
+					*fcode << _T("(long long)") << FULLARRAY;							// FIX.	// 05/04/01 AM.
 				*fcode												// FIX.	// 05/04/01 AM.
 				 << _T(", ")															// 01/09/01 AM.
 						 << _T("nlppp")
@@ -3812,7 +3812,7 @@ switch (type_)		// Type of expression.
 				if (index)											// FIX.	// 05/04/01 AM.
 					index->genEval(gen);							// FIX.	// 05/04/01 AM.
 				else													// FIX.	// 05/04/01 AM.
-					*fcode << FULLARRAY;							// FIX.	// 05/04/01 AM.
+					*fcode << _T("(long long)") << FULLARRAY;							// FIX.	// 05/04/01 AM.
 				*fcode												// FIX.	// 05/04/01 AM.
 				 << _T(", ")															// 01/09/01 AM.
 						 << _T("nlppp")
