@@ -105,3 +105,56 @@ gen_file_head(fp);
 //   return;
 delete fp;
 }
+
+
+/**************************************************
+*						CC_GEN_KB_SETUP
+* FUN:	cc_gen_kb_setup
+* SUBJ:	Generate kb_setup.cpp + kb_setup.h in the analyzer's kb/ folder.
+* NOTE:	NLP-ENGINE-495. The engine's call_kb_setup (cs/libconsh/dyn.cpp)
+*			resolves "kb_setup" via GetProcAddress / dlsym from the compiled
+*			KB library. Without this generated wrapper the symbol isn't
+*			present and patExecute<n> for the `kb` pass crashes in compiled
+*			runs because the compiled KB data structures never get
+*			initialized. Wrap in extern "C" + __declspec(dllexport) on
+*			Windows so the symbol is exported from the cmake-built DLL.
+**************************************************/
+
+void cc_gen_kb_setup(
+	_TCHAR *dir,		/* Output directory for gend code.		*/
+	_TCHAR *tail		/* Tail for naming generated files.		*/
+	)
+{
+std::_t_ofstream *fp;
+_TCHAR s_nam[PATH];
+
+// kb_setup.h
+_stprintf(s_nam, _T("%s%skb_setup.h%s"), dir, DIR_SEP, tail);
+fp = new std::_t_ofstream(TCHAR2A(s_nam));
+gen_file_head(fp);
+*fp << _T("extern \"C\" bool kb_setup(void*);") << std::endl;
+delete fp;
+
+// kb_setup.cpp
+_stprintf(s_nam, _T("%s%skb_setup.cpp%s"), dir, DIR_SEP, tail);
+fp = new std::_t_ofstream(TCHAR2A(s_nam));
+gen_file_head(fp);
+#ifdef LINUX
+*fp << _T("#include \"stdafx.h\"") << std::endl;
+#else
+*fp << _T("#include \"StdAfx.h\"") << std::endl;
+#endif
+*fp << _T("#include \"Cc_code.h\"") << std::endl;
+*fp << _T("#include \"kb_setup.h\"") << std::endl;
+*fp << _T("#ifdef _WIN32") << std::endl;
+*fp << _T("#define NLP_KB_EXPORT __declspec(dllexport)") << std::endl;
+*fp << _T("#else") << std::endl;
+*fp << _T("#define NLP_KB_EXPORT") << std::endl;
+*fp << _T("#endif") << std::endl;
+*fp << _T("extern \"C\" NLP_KB_EXPORT bool kb_setup(void *cg)") << std::endl;
+*fp << _T("{") << std::endl;
+*fp << _T("if (!cc_ini(cg)) return false;") << std::endl;
+*fp << _T("return true;") << std::endl;
+*fp << _T("}") << std::endl;
+delete fp;
+}

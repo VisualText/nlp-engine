@@ -1111,6 +1111,7 @@ tail = _T("");			/* 10/1/95 AM */
 _t_cerr << _T("Generating overall code.") << endl;
 cc_gen_hdr(dir, tail);
 cc_gen_ini(dir, tail);
+cc_gen_kb_setup(dir, tail);					// NLP-ENGINE-495 AM.
 
 /* Generate analyzer code first, because it modifies the kb.
    Creates trigger attributes, for example. */
