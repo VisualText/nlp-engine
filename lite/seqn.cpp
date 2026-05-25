@@ -567,11 +567,24 @@ Arun::set_specialarr_len();												// 06/09/00 AM.
 
 
 // Output prototype.
-*fhead << _T("extern \"C\" bool run_analyzer(Parse *);");
+// __declspec(dllexport) on Windows so GetProcAddress("run_analyzer") can
+// find it inside the compiled run.dll. Without it MSVC builds a DLL with
+// zero exported symbols and the engine's call_runAnalyzer fails silently.
+*fhead << _T("#ifdef _WIN32");
+Gen::nl(fhead);
+*fhead << _T("#define NLP_RUN_EXPORT __declspec(dllexport)");
+Gen::nl(fhead);
+*fhead << _T("#else");
+Gen::nl(fhead);
+*fhead << _T("#define NLP_RUN_EXPORT");
+Gen::nl(fhead);
+*fhead << _T("#endif");
+Gen::nl(fhead);
+*fhead << _T("extern \"C\" NLP_RUN_EXPORT bool run_analyzer(Parse *);");
 Gen::nl(fhead);																// 04/04/03 AM.
 
 // Output function head.
-*fcode << _T("bool run_analyzer(Parse *parse)");
+*fcode << _T("extern \"C\" NLP_RUN_EXPORT bool run_analyzer(Parse *parse)");
 Gen::nl(fcode);																// 04/04/03 AM.
 *fcode << _T("{");
 Gen::nl(fcode);																// 04/04/03 AM.
