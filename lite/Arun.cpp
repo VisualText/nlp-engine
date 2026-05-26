@@ -13375,6 +13375,13 @@ _TCHAR *Arun::sem_to_str(
 if (!sem)																		// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
 
+// NLP-ENGINE-498: RSLONG with non-zero value and RSFLOAT used to fall
+// through to the "Bad sem type in sem_to_str" error path and return NULL.
+// Callers in user-function codegen (Arun::numval, Arun::addnumval, etc.)
+// then either propagated the NULL or dereferenced it, causing SIGSEGVs
+// inside the kb-update pass of compiled analyzers. Convert numeric sems
+// to their string representation using a thread-local buffer.
+static thread_local _TCHAR num_buf_[64];
 switch (sem->getType())														// 08/08/02 AM.
 	{
 	case RSSTR:																	// 08/08/02 AM.
@@ -13385,7 +13392,11 @@ switch (sem->getType())														// 08/08/02 AM.
 		// Zero is acceptable as "empty string".
 		if (sem->getLong() == 0)											// 08/08/02 AM.
 			return 0;															// 08/08/02 AM.
-		break;
+		_stprintf(num_buf_, _T("%lld"), sem->getLong());
+		return num_buf_;
+	case RSFLOAT:
+		_stprintf(num_buf_, _T("%g"), sem->getFloat());
+		return num_buf_;
 	case RSARGS:																// 08/08/02 AM.
 		{
 		std::_t_strstream gerrStr;

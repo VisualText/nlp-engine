@@ -923,7 +923,14 @@ return 0;
 
 _TCHAR *RFASem::sem_to_str()
 {
-_TCHAR *st = 0;
+// NLP-ENGINE-498: RSLONG with non-zero value and RSFLOAT used to fall
+// through to the "Bad sem type in sem_to_str" error path and return NULL.
+// Callers in user-function codegen (Arun::numval, Arun::addnumval, etc.)
+// then either propagated the NULL or dereferenced it, causing SIGSEGVs
+// inside the kb-update pass of compiled analyzers. Convert numeric sems
+// to their string representation using a thread-local buffer so the
+// caller gets a usable string instead of a NULL.
+static thread_local _TCHAR num_buf_[64];
 switch (type_)
 	{
 	case RSSTR:
@@ -933,7 +940,11 @@ switch (type_)
 	case RSLONG:																// 08/08/02 AM.
 		if (val_.long_ == 0)													// 08/08/02 AM.
 			return 0;															// 08/08/02 AM.
-		break;
+		_stprintf(num_buf_, _T("%lld"), val_.long_);
+		return num_buf_;
+	case RSFLOAT:
+		_stprintf(num_buf_, _T("%g"), val_.float_);
+		return num_buf_;
 	case RSARGS:																// 08/08/02 AM.
 		{
 		std::_t_strstream gerrStr;
