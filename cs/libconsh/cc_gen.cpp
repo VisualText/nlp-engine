@@ -129,13 +129,25 @@ std::_t_ofstream *fp;
 _TCHAR s_nam[PATH];
 
 // kb_setup.h
+// Define the NLP_KB_EXPORT macro here so the declaration and the
+// definition in kb_setup.cpp agree on linkage. MSVC errors out with
+// "redefinition; different linkage" (C2375) if the header declares
+// kb_setup without __declspec(dllexport) and the .cpp defines it with
+// dllexport.
 _stprintf(s_nam, _T("%s%skb_setup.h%s"), dir, DIR_SEP, tail);
 fp = new std::_t_ofstream(TCHAR2A(s_nam));
 gen_file_head(fp);
-*fp << _T("extern \"C\" bool kb_setup(void*);") << std::endl;
+*fp << _T("#ifdef _WIN32") << std::endl;
+*fp << _T("#define NLP_KB_EXPORT __declspec(dllexport)") << std::endl;
+*fp << _T("#else") << std::endl;
+*fp << _T("#define NLP_KB_EXPORT") << std::endl;
+*fp << _T("#endif") << std::endl;
+*fp << _T("extern \"C\" NLP_KB_EXPORT bool kb_setup(void*);") << std::endl;
 delete fp;
 
-// kb_setup.cpp
+// kb_setup.cpp — definition uses the same NLP_KB_EXPORT macro from the
+// header so MSVC sees identical linkage between declaration and
+// definition.
 _stprintf(s_nam, _T("%s%skb_setup.cpp%s"), dir, DIR_SEP, tail);
 fp = new std::_t_ofstream(TCHAR2A(s_nam));
 gen_file_head(fp);
@@ -146,11 +158,6 @@ gen_file_head(fp);
 #endif
 *fp << _T("#include \"Cc_code.h\"") << std::endl;
 *fp << _T("#include \"kb_setup.h\"") << std::endl;
-*fp << _T("#ifdef _WIN32") << std::endl;
-*fp << _T("#define NLP_KB_EXPORT __declspec(dllexport)") << std::endl;
-*fp << _T("#else") << std::endl;
-*fp << _T("#define NLP_KB_EXPORT") << std::endl;
-*fp << _T("#endif") << std::endl;
 *fp << _T("extern \"C\" NLP_KB_EXPORT bool kb_setup(void *cg)") << std::endl;
 *fp << _T("{") << std::endl;
 *fp << _T("if (!cc_ini(cg)) return false;") << std::endl;
