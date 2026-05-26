@@ -578,16 +578,22 @@ if (!kbm_ || !ast_ || !aptr_ || !asym_ || !acon_)	// 07/29/03 AM.
 	return false;
 	}
 
-// ASSUME COMPILED KB.	// 02/19/19 AM.
-// #ifndef LINUX
-hkbdll_ = 0;
+// If a compiled KB library was loaded by the CG constructor (kb.dll
+// resolved + kb_setup ran + bind_all succeeded), the KB tables are
+// already populated. Reading the interpreted .kb files on top would
+// re-add every concept, hierarchy, etc. and produce a flood of
+// "[Hierarchy already exists.]" messages — and worse, leave the KB
+// in a state that crashes the compiled `kb` pass at run time.
+//
+// NLP-ENGINE-497: removed a 2019 `hkbdll_ = 0;` debug hack from above
+// this check that made the guard always-false. The hack was latent
+// for years because nothing ever produced a working compiled KB
+// until NLP-ENGINE-495/496 generated kb_setup with proper dllexport.
 if (hkbdll_)
 	{
 	*cgerr << _T("[Using compiled kb. readKB ignored.]") << std::endl;	// 06/29/00 AM.
 	return true;		// This is just info, ok.						// 06/29/00 AM.
 	}
-// ASSUME COMPILED KB.	// 02/19/19 AM.
-//#endif
 
 // For example, path= C:\apps\Resume\kb\user.
 _TCHAR *kbdir = _T("kb");
