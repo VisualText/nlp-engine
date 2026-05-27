@@ -13461,6 +13461,49 @@ delete name_sem;
 return result;
 }
 
+// NLP-ENGINE-500: RFASem-first-arg overloads. Compiled user code passes
+// `Arun::l("node")` (which returns RFASem*) as the node arg. Without
+// these overloads the compiler unsafely matched a NODE*-first version,
+// reinterpreting the RFASem* memory as a Node<Pn>*, which crashed
+// inside `node->getData()` in pass-16-like KB-mutating user code.
+// Pattern mirrors the Arun::pnvar(RFASem*, ...) overloads.
+RFASem *Arun::pnvartype(
+	Nlppp *nlppp,
+	RFASem *node_sem,
+	_TCHAR *name
+	)
+{
+if (!node_sem)
+	return 0;
+NODE *pnode = node_sem->sem_to_node();
+delete node_sem;
+return pnvartype(nlppp, pnode, name);
+}
+
+RFASem *Arun::pnvartype(
+	Nlppp *nlppp,
+	RFASem *node_sem,
+	RFASem *name_sem
+	)
+{
+if (!node_sem)
+	{
+	if (name_sem)
+		delete name_sem;
+	return 0;
+	}
+if (!name_sem)
+	{
+	delete node_sem;
+	return 0;
+	}
+NODE *pnode = node_sem->sem_to_node();
+delete node_sem;
+_TCHAR *name = name_sem->sem_to_str();
+delete name_sem;
+return pnvartype(nlppp, pnode, name);
+}
+
 
 bool Arun::pnsetfired(
 	Nlppp *nlppp,
