@@ -8426,8 +8426,18 @@ if (!Var::filevar(fname,nlppp->getParse(),
 	delete sem;												// MEM LEAK.	// 06/12/00 AM.
 	return 0;
 	}
+// NLP-ENGINE-499: flush after each write so user-facing diagnostic output
+// (e.g. `"dbg.txt" << "marker N";` from NLP++ source) is visible in the
+// file as it's produced, not only at clean shutdown. Without flushing,
+// buffered writes are lost if the process crashes mid-pass, making it
+// impossible to bisect a SIGSEGV by sprinkling print statements in the
+// .nlp source. Performance impact is negligible for typical diagnostic
+// volumes; the streams aren't being hammered.
 if (ostr)																		// 08/04/02 AM.
+	{
 	sem->out(ostr);
+	ostr->flush();
+	}
 delete sem;				// No one using sem past this point.		// 05/27/00 AM.
 return ostr;
 }
@@ -8448,7 +8458,10 @@ if (!Var::filevar(fname,nlppp->getParse(),
 	}
 if (str && *str																// 04/30/01 AM.
 	&& ostr)																		// 08/04/02 AM.
+	{
 	*ostr << str;
+	ostr->flush();					// NLP-ENGINE-499
+	}
 return ostr;
 }
 
@@ -8466,7 +8479,11 @@ if (!Var::filevar(fname,nlppp->getParse(),
 	nlppp->parse_->errOut(&gerrStr,false);
 	return 0;
 	}
-*ostr << num;
+if (ostr)								// NLP-ENGINE-499
+	{
+	*ostr << num;
+	ostr->flush();
+	}
 return ostr;
 }
 
@@ -8485,7 +8502,11 @@ if (!Var::filevar(fname,nlppp->getParse(),
 	nlppp->parse_->errOut(&gerrStr,false);
 	return 0;
 	}
-*ostr << (flag ? 1 : 0);
+if (ostr)								// NLP-ENGINE-499
+	{
+	*ostr << (flag ? 1 : 0);
+	ostr->flush();
+	}
 return ostr;
 }
 
@@ -8506,7 +8527,10 @@ if (!Var::filevar(fname,nlppp->getParse(),
 	return 0;
 	}
 if (ostr)																		// 08/04/02 AM.
+	{
 	*ostr << num;
+	ostr->flush();					// NLP-ENGINE-499
+	}
 return ostr;
 }
 
