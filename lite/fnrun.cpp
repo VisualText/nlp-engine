@@ -476,7 +476,7 @@ if (!sem || !name || !*name || !nlppp)
 if (sem->getType() != RS_KBCONCEPT)
 	{
 	std::_t_strstream gerrStr;
-	gerrStr << _T("[fltval: Bad semantic arg.]") << std::ends;
+	gerrStr << _T("[attrtype: Bad semantic arg.]") << std::ends;
 	errOut(&gerrStr,false);
 	delete sem;
 	return 0;
@@ -486,16 +486,14 @@ CONCEPT *conc1 = sem->getKBconcept();
 // Need to get the current KB.
 CG *cg = nlppp->getParse()->getAna()->getCG();
 
-// Get concept from sem.
-if (sem->getType() != RS_KBATTR)
-	{
-	std::_t_strstream gerrStr;
-	gerrStr << _T("[attrname: Bad semantic arg.]") << std::ends;
-	errOut(&gerrStr,false);
-	delete sem;												// MEM LEAK.	// 06/27/00 AM.
-	return 0;
-	}
-ATTR *attr = sem->getKBattr();
+// NLP-ENGINE-501: removed a copy-paste-bug check that required
+// `sem->getType() != RS_KBATTR` and unconditionally returned 0 with
+// an "[attrname: Bad semantic arg.]" error, because `sem` had just
+// been verified to be RS_KBCONCEPT (mutually exclusive with
+// RS_KBATTR). The function therefore always returned 0 regardless
+// of the actual attribute type, which routed DisplayAttributes
+// (KBFuncs.nlp) into the string-val branch for every attribute and
+// crashed when getstrval() was called on a numeric value.
 
 int type = cg->attrValType(conc1,name);
 
