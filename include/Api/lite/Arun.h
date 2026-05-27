@@ -1562,6 +1562,13 @@ public:
 	static RFASem *pnvarnames(Nlppp*,RFASem*);						// 05/13/02 AM.
 	static RFASem *pnvartype(Nlppp*,NODE*,_TCHAR*);
 	static RFASem *pnvartype(Nlppp*,NODE*,RFASem*);
+	// NLP-ENGINE-500: RFASem-first-arg overloads. Compiled user code
+	// passes `Arun::l("node")` (RFASem*) as the second arg; without
+	// these overloads C++ silently picks one of the NODE*-second
+	// versions and treats the RFASem* memory as a NODE*, crashing
+	// inside `node->getData()` when the impl tries to dereference.
+	static RFASem *pnvartype(Nlppp*,RFASem*,_TCHAR*);
+	static RFASem *pnvartype(Nlppp*,RFASem*,RFASem*);
 
 	static bool pnsetfired(Nlppp*,NODE*,bool);
 
