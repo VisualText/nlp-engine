@@ -19286,6 +19286,22 @@ if (s1_sem) delete s1_sem;
 return _r;
 }
 
+bool Arun::vargt(Nlppp* a0, RFASem * s1_sem, long long a2)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+bool _r = vargt(a0, str1, a2);
+if (s1_sem) delete s1_sem;
+return _r;
+}
+
+bool Arun::varlt(Nlppp* a0, RFASem * s1_sem, long long a2)
+{
+_TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;
+bool _r = varlt(a0, str1, a2);
+if (s1_sem) delete s1_sem;
+return _r;
+}
+
 bool Arun::xdump(Nlppp* a0, RFASem * s1_sem, long long a2)
 {
 _TCHAR *str1 = s1_sem ? s1_sem->sem_to_str() : 0;

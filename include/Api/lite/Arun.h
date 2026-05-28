@@ -475,12 +475,18 @@ public:
 	static bool varz(Nlppp*,_TCHAR*);                           // 10/01/05 AM.
 	static bool vareq(Nlppp*,_TCHAR*,_TCHAR*);                  // 10/01/05 AM.
 	static bool vareq(Nlppp*,_TCHAR*,long long);                     // 10/01/05 AM.
+	static bool vargt(Nlppp*,_TCHAR*,_TCHAR*);
+	static bool vargt(Nlppp*,_TCHAR*,long long);
+	static bool varlt(Nlppp*,_TCHAR*,_TCHAR*);
+	static bool varlt(Nlppp*,_TCHAR*,long long);
 	static bool varne(Nlppp*,_TCHAR*,_TCHAR*);                  // 10/01/05 AM.
 	static bool varne(Nlppp*,_TCHAR*,long long);                     // 10/01/05 AM.
 
 	static bool var(Nlppp*,RFASem*);                            // 10/04/05 AM.
 	static bool varz(Nlppp*,RFASem*);                           // 10/04/05 AM.
 	static bool vareq(Nlppp*,RFASem*,RFASem*);                  // 10/04/05 AM.
+	static bool vargt(Nlppp*,RFASem*,RFASem*);
+	static bool varlt(Nlppp*,RFASem*,RFASem*);
 	static bool varne(Nlppp*,RFASem*,RFASem*);                  // 10/04/05 AM.
 
 	static bool regexp(Nlppp*,RFASem*);                         // 03/23/09 AM.
@@ -1884,6 +1890,8 @@ public:
 	static bool setunsealed(Nlppp *, long long, RFASem *);
 	static bool sortvals(Nlppp *, RFASem *);
 	static bool vareq(Nlppp*, RFASem *, long long);
+	static bool vargt(Nlppp*, RFASem *, long long);
+	static bool varlt(Nlppp*, RFASem *, long long);
 	static bool varne(Nlppp*, RFASem *, long long);
 	static bool xdump(Nlppp*, RFASem *, long long);
 
