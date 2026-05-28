@@ -4577,6 +4577,52 @@ bool Arun::varne(
 {
  return !Ivar::nodeVarEQ(nlppp->node_->getData(),str,nval);
 }
+/********************************************
+* FN:		VARGT
+* SUBJ:	Runtime variant of pre action.  Var greater than a number.
+* NOTE:	gt/lt are only defined numerically; a string value never matches.
+********************************************/
+
+bool Arun::vargt(
+	Nlppp *nlppp,
+	_TCHAR *str,
+	_TCHAR *sval
+	)
+{
+ return false;
+}
+
+bool Arun::vargt(
+	Nlppp *nlppp,
+	_TCHAR *str,
+	long long nval
+	)
+{
+ return Ivar::nodeVarGTLT(nlppp->node_->getData(),str,nval,false);
+}
+/********************************************
+* FN:		VARLT
+* SUBJ:	Runtime variant of pre action.  Var less than a number.
+* NOTE:	gt/lt are only defined numerically; a string value never matches.
+********************************************/
+
+bool Arun::varlt(
+	Nlppp *nlppp,
+	_TCHAR *str,
+	_TCHAR *sval
+	)
+{
+ return false;
+}
+
+bool Arun::varlt(
+	Nlppp *nlppp,
+	_TCHAR *str,
+	long long nval
+	)
+{
+ return Ivar::nodeVarGTLT(nlppp->node_->getData(),str,nval,true);
+}
 
 
 
@@ -4713,6 +4759,90 @@ switch (val_sem->getType())
 		return !Ivar::nodeVarEQ(nlppp->node_->getData(),str,nval);
 		break;
 	default:
+		delete val_sem;
+		return false;
+	}
+return false;
+}
+
+/********************************************
+* FN:		VARGT
+* SUBJ:	Runtime variant of pre action.  Var greater than a number.
+* NOTE:	gt/lt are only defined numerically; a string value never matches.
+********************************************/
+
+bool Arun::vargt(
+	Nlppp *nlppp,
+	RFASem *str_sem,
+	RFASem *val_sem
+	)
+{
+if (!str_sem)
+	{
+	if (val_sem) delete val_sem;
+	return false;
+	}
+_TCHAR *str = sem_to_str(str_sem);
+delete str_sem;
+
+if (!val_sem)
+	return false;
+
+bool ok = true;
+long long nval = 0;
+switch (val_sem->getType())
+	{
+	case RSLONG:
+		nval = val_sem->sem_to_long(ok);
+		delete val_sem;
+		if (!ok)
+			return false;
+		return Ivar::nodeVarGTLT(nlppp->node_->getData(),str,nval,false);
+		break;
+	default:
+		// gt/lt undefined for non-numeric values.
+		delete val_sem;
+		return false;
+	}
+return false;
+}
+
+/********************************************
+* FN:		VARLT
+* SUBJ:	Runtime variant of pre action.  Var less than a number.
+* NOTE:	gt/lt are only defined numerically; a string value never matches.
+********************************************/
+
+bool Arun::varlt(
+	Nlppp *nlppp,
+	RFASem *str_sem,
+	RFASem *val_sem
+	)
+{
+if (!str_sem)
+	{
+	if (val_sem) delete val_sem;
+	return false;
+	}
+_TCHAR *str = sem_to_str(str_sem);
+delete str_sem;
+
+if (!val_sem)
+	return false;
+
+bool ok = true;
+long long nval = 0;
+switch (val_sem->getType())
+	{
+	case RSLONG:
+		nval = val_sem->sem_to_long(ok);
+		delete val_sem;
+		if (!ok)
+			return false;
+		return Ivar::nodeVarGTLT(nlppp->node_->getData(),str,nval,true);
+		break;
+	default:
+		// gt/lt undefined for non-numeric values.
 		delete val_sem;
 		return false;
 	}

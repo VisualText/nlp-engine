@@ -328,9 +328,11 @@ enum funcDef
 	FNurltofile,	// 02/11/03 AM.
 	FNvar,			// 06/14/05 AM.
 	FNvareq,			// 07/25/06 AM.
+	FNvargt,			// MUST stay aligned with funcs.h (vargt).
 	FNvarfn,
 	FNvarfnarray,
 	FNvarinlist,
+	FNvarlt,			// MUST stay aligned with funcs.h (varlt).
 	FNvarne,			// 07/25/06 AM.
 	FNvarstrs,
 	FNvarz,			// 07/25/06 AM.

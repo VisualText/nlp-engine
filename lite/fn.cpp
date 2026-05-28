@@ -757,11 +757,15 @@ switch (fnid)																	// 12/21/01 AM.
 		break;
 	case FNvareq:																// 07/25/06 AM.
 		break;
+	case FNvargt:
+		break;
 	case FNvarfn:
 	case FNvarfnarray:
 		break;
 	case FNvarinlist:
 		return fnVarinlist(args,nlppp,/*UP*/sem);						// 11/21/00 AM.
+	case FNvarlt:
+		break;
 	case FNvarne:																// 07/25/06 AM.
 		break;
 	case FNvarstrs:
