@@ -176,9 +176,19 @@ int NLP_ENGINE::init(
     }
     
     if (m_ananame[0] == '\0') {
-        _TCHAR *ana = _tcsrchr(m_anadir,DIR_CH);
-        ++ana;
-        _stprintf(m_ananame,_T("%s"),ana);           
+        // Accept both DIR_CH and '/'. On Windows DIR_CH is '\\', but paths
+        // arriving from CMake, VSCode ${workspaceFolder} substitutions, and
+        // forward-slash CLI args are common; a NULL from _tcsrchr followed by
+        // ++ana + sprintf("%s",...) used to dereference 0x1 and AV.
+        _TCHAR *ana = _tcsrchr(m_anadir, DIR_CH);
+#ifndef LINUX
+        _TCHAR *fwd = _tcsrchr(m_anadir, '/');
+        if (fwd > ana) ana = fwd;
+#endif
+        if (ana && *(ana + 1) != '\0')
+            _stprintf(m_ananame, _T("%s"), ana + 1);
+        else
+            _stprintf(m_ananame, _T("%s"), m_anadir);
     }
 
 	std::_t_cout << _T("[analyzer directory: ") << m_anadir << _T("]") << std::endl;
@@ -515,7 +525,11 @@ int NLP_ENGINE::close()
     std::_t_cout << _T("[AFTER VTRUN DELETE: ]") << std::endl;    // 09/27/20 AM.
 
     // Report memory leaks to standard output.
-    object_counts();    // 09/27/20 AM.
+    // Disabled: deleteVTRun above tears down the runtime, after which
+    // `gout` (used by every prettyCount writer) points at a deleted stream
+    // and *gout AVs. The other four object_counts() call sites in this file
+    // are already commented out for the same reason; this one was missed.
+    // object_counts();    // 09/27/20 AM.
 
     return 0;
 }

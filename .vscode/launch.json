@@ -154,6 +154,118 @@
                     "ignoreFailures": true
                 }
             ]
+        },
+        {
+            "name": "Analyzer -COMPILED (prompts for path + input) [GENERIC]",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Debug/nlp.exe",
+            "args": [
+                "-COMPILED",
+                "-ANA", "${input:analyzerDir}",
+                "-WORK", "${workspaceFolder}",
+                "${input:inputFile}",
+                "-DEV"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "preLaunchTask": "Build+Compile Analyzer (Debug, prompts)",
+            "symbolOptions": {
+                "searchPaths": [ "${input:analyzerDir}/bin" ],
+                "searchMicrosoftSymbolServer": false
+            },
+            "sourceFileMap": {
+                "${input:analyzerDir}/kb": "${input:analyzerDir}/kb"
+            }
+        },
+        {
+            "name": "Analyzer -COMPILE (prompts, debug engine emit)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Debug/nlp.exe",
+            "args": [
+                "-COMPILE",
+                "-ANA", "${input:analyzerDir}",
+                "-WORK", "${workspaceFolder}",
+                "${input:inputFile}"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false
+        },
+        {
+            "name": "Analyzer -COMPILEKB (prompts, debug KB-only emit)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Debug/nlp.exe",
+            "args": [
+                "-COMPILEKB",
+                "-ANA", "${input:analyzerDir}",
+                "-WORK", "${workspaceFolder}",
+                "${input:inputFile}"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false
+        },
+        {
+            "name": "Tutorial-15 -COMPILED (debug runtime)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Debug/nlp.exe",
+            "args": [
+                "-COMPILED",
+                "-ANA", "C:\\git\\analyzers\\nlp-tutorials\\tutorial-15",
+                "-WORK", "${workspaceFolder}",
+                "C:\\git\\analyzers\\nlp-tutorials\\tutorial-15\\input\\text.txt",
+                "-DEV"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "preLaunchTask": "Build+Compile Tutorial-15 (Debug)",
+            "symbolOptions": {
+                "searchPaths": [ "C:\\git\\analyzers\\nlp-tutorials\\tutorial-15\\bin" ],
+                "searchMicrosoftSymbolServer": false
+            },
+            "sourceFileMap": {
+                "C:\\git\\analyzers\\nlp-tutorials\\tutorial-15\\kb": "C:\\git\\analyzers\\nlp-tutorials\\tutorial-15\\kb"
+            }
+        },
+        {
+            "name": "Tutorial-15 -COMPILE (debug engine emit)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Debug/nlp.exe",
+            "args": [
+                "-COMPILE",
+                "-ANA", "C:\\git\\analyzers\\nlp-tutorials\\tutorial-15",
+                "-WORK", "${workspaceFolder}",
+                "C:\\git\\analyzers\\nlp-tutorials\\tutorial-15\\input\\text.txt"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false
+        }
+    ],
+    "inputs": [
+        {
+            "id": "analyzerDir",
+            "type": "promptString",
+            "description": "Path to the analyzer directory (backslashes; use forward slashes only if you've taken the engine fix for forward-slash paths)",
+            "default": "C:\\git\\analyzers\\nlp-tutorials\\tutorial-15"
+        },
+        {
+            "id": "inputFile",
+            "type": "promptString",
+            "description": "Path to the input file (defaults to <analyzer>\\input\\text.txt)",
+            "default": "C:\\git\\analyzers\\nlp-tutorials\\tutorial-15\\input\\text.txt"
         }
     ]
 }
