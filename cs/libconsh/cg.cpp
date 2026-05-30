@@ -1684,7 +1684,11 @@ vals = (VAL *) ((PTR *)vals)->next;
 
 if (ptr->kind != pST)
 	{
-	*cgerr << _T("[popVal: Attribute not a string.]") << std::endl;
+	// NLP-ENGINE-506: cgerr can be null when the @CODE-block runtime
+	// hits a type-mismatched value (e.g. compiled NLP++ doing
+	// `getstrval(numAttrVal)` on a pNUM value) before any CG instance
+	// has reopened the cgerr.log stream. Guard the deref.
+	if (cgerr) *cgerr << _T("[popVal: Attribute not a string.]") << std::endl;
 	return;
 	}
 
@@ -1704,7 +1708,8 @@ vals = (VAL *) ((PTR *)vals)->next;
 
 if (ptr->kind != pNUM)
 	{
-	*cgerr << _T("[popVal: Attribute not a num.]") << std::endl;
+	// NLP-ENGINE-506: see popVal(_TCHAR*) above.
+	if (cgerr) *cgerr << _T("[popVal: Attribute not a num.]") << std::endl;
 	return;
 	}
 val = ptr->v.vnum;
@@ -1723,7 +1728,8 @@ vals = (VAL *) ((PTR *)vals)->next;
 
 if (ptr->kind != pFLOAT)
 	{
-	*cgerr << _T("[popVal: Attribute not a float.]") << std::endl;
+	// NLP-ENGINE-506: see popVal(_TCHAR*) above.
+	if (cgerr) *cgerr << _T("[popVal: Attribute not a float.]") << std::endl;
 	return;
 	}
 val = ptr->v.vfloat;
@@ -1742,7 +1748,8 @@ vals = (VAL *) ((PTR *)vals)->next;
 
 if (ptr->kind != pCON)
 	{
-	*cgerr << _T("[popVal: Attribute not a concept.]") << std::endl;
+	// NLP-ENGINE-506: see popVal(_TCHAR*) above.
+	if (cgerr) *cgerr << _T("[popVal: Attribute not a concept.]") << std::endl;
 	return;
 	}
 val = ptr->v.vcon;
