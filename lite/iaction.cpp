@@ -932,120 +932,166 @@ else
 
 // Gen function call, then code for eval'ing the args.
 // nlppp - Hardwired argument to all runtime fns.
-if (top) *fcode << indent << _T("Arun::stmt(");
 
+// NLP-ENGINE-507: figure out the call prefix first ("Arun::fn",
+// "scope::fn", or just "fn" for user-defined) so we can switch between an
+// inline emission and a lambda-wrapped one that hoists args into auto
+// temps.
+_TCHAR callPrefix[MAXSTR + 64];
+callPrefix[0] = '\0';
 bool userdef = false;	// User-defined in NLP++					// 03/11/02 AM.
 if (!scope_ || !*scope_)													// 02/13/01 AM.
 	{
 //	if (VTRun_Ptr->isBuiltin(fnname))	// 08/28/02 AM.	// [DEGLOB]	// 10/15/20 AM.
 	if (vtrun->isBuiltin(fnname))						// [DEGLOB]	// 10/15/20 AM.
-		*fcode << _T("Arun::") << fnname << _T("(");
+		_stprintf(callPrefix, _T("Arun::%s"), fnname);
 	else																			// 12/24/01 AM.
 		{
 		userdef = true;				// Flag these.						// 03/11/02 AM.
-		*fcode << fnname << _T("(");		// User-defined NLP++ fn.		// 12/24/01 AM.
+		_stprintf(callPrefix, _T("%s"), fnname);
 		}
 	}
 else		// Fn defined in USER project.								// 02/13/01 AM.
-	*fcode << scope_ << _T("::") << fnname << _T("(");							// 02/13/01 AM.
+	_stprintf(callPrefix, _T("%s::%s"), scope_, fnname);
 
-Delt<Iarg> *darg = 0;
-if (args_)
-	darg = args_->getFirst();
-Iarg *iarg;
-RFASem *sem;
+// NLP-ENGINE-507: pre-scan args. If there are 2+ args and none is IAREF
+// (call-by-reference) or IAOSTREAM (early-return stream arg), we'll wrap
+// the call in an immediately-invoked lambda that hoists each arg into an
+// `auto` local before the call. C++ leaves argument evaluation order
+// unspecified, so callsites like
+//   Arun::addnumval(nlppp, X, N("type",6,S("c")),
+//                          num(N("val",6,postinc("c",...))))
+// can evaluate the postinc BEFORE the read of S("c") under MSVC, silently
+// corrupting attribute-name/value pairing. Hoisting forces left-to-right
+// sequencing.
+int argCount = 0;
+bool wrapLambda = true;
+{
+	Delt<Iarg> *scan = args_ ? args_->getFirst() : 0;
+	for (; scan; scan = scan->Right())
+		{
+		argCount++;
+		enum Iargtype t = scan->getData()->getType();
+		if (t == IAREF || t == IAOSTREAM)
+			wrapLambda = false;
+		}
+}
+if (argCount < 2)
+	wrapLambda = false;
 
-// Add a hard-wired arg to all runtime fns.
+// Resolve the hard-wired first arg ("nlppp" for every supported region).
+const _TCHAR *firstArg = _T("nlppp");
 switch (gen->region_)
 	{
 	case REGCODE:
 	case REGCODEFIN:
 	case REGCOND:
 	case REGDECL:																// 12/25/01 AM.
-		//*fcode << "parse";													// 06/04/00 AM.
-		*fcode << _T("nlppp");	// USE A "DUMMY" Nlppp object.		// 06/04/00 AM.
-		break;
 	case REGPRE:
 	case REGCHECK:
 	case REGPOST:
-		*fcode << _T("nlppp");
 		break;
 	default:
 		*fcode << _T("// ERROR: Bad region for function call.");
 		return false;
 	}
 
-if (darg)
-	*fcode << _T(", ");
+if (top) *fcode << indent << _T("Arun::stmt(");
 
-// Traverse the args, generating code for them.
-_TCHAR buf[MAXSTR+1];
-long long num = 0;																	// 05/04/01 AM.
-for (; darg; darg = darg->Right())
-	{
-	if (userdef)	// Wrap args of user-defined NLP++ fn.			// 03/11/02 AM.
-		*fcode << _T("Arun::sem(");												// 03/11/02 AM.
-	iarg = darg->getData();
+// --- Emit a single arg expression's RHS to fcode. ----------------------
+// Returns false on a structural failure (matching the legacy code paths
+// that propagate `return false` out of Iaction::genEval).
+auto emitArgExpr = [&](Iarg *iarg) -> bool {
+	_TCHAR buf[MAXSTR+1];
+	long long num = 0;
+	RFASem *sem = 0;
 	switch (iarg->getType())
 		{
-		case IASEM:			// NLP++.  Gen code to evaluate.
-			if (!(sem = iarg->getSem()))
-				return false;
-			sem->genEval(gen,false);
+		case IASEM:
+			if (!(sem = iarg->getSem())) return false;
+			sem->genEval(gen, false);
 			break;
 		case IASTR:
-			*fcode << _T("_T(\"")
-					 << c_str(iarg->getStr(),buf,MAXSTR)				// 06/04/00 AM.
-					 << _T("\")");
+			// NLP-ENGINE-507: cast to _TCHAR* so `auto _aN = ...` (used in the
+			// lambda-wrapped emission path) deduces _TCHAR* instead of
+			// const char *, matching the existing Arun::* overloads that
+			// take _TCHAR*. Harmless in the legacy inline path too.
+			*fcode << _T("(_TCHAR*)_T(\"") << c_str(iarg->getStr(), buf, MAXSTR) << _T("\")");
 			break;
 		case IANUM:
-			num = iarg->getNum();											// 05/04/01 AM.
-			// Arun integer overloads (e.g. vareq/varne) take `long long`, not `long`.
-			// Emitting `(long)0` is ambiguous against the `_TCHAR*` overload under MSVC's
-			// permissive null-pointer-constant rules; `(long long)` makes it an exact match.
-			if (num)																// 05/04/01 AM.
-				*fcode
-							<< _T("(long long)")									// 09/09/01 AM.
-							<< num;												// 05/04/01 AM.
-			else																	// 05/04/01 AM.
-				*fcode << _T("(long long)0");		// Unambiguous.		// 05/04/01 AM.
+			num = iarg->getNum();
+			if (num)
+				*fcode << _T("(long long)") << num;
+			else
+				*fcode << _T("(long long)0");
 			break;
-		case IAFLOAT:															// 08/17/01 AM.
-			*fcode	<< _T("(float)")											// 09/09/01 AM.
-						<< iarg->getFloat();									// 08/17/01 AM.
-			break;																// 08/17/01 AM.
-		case IAREF:		// CALL-BY-REFERENCE.							// 06/15/02 AM.
-			if (!(sem = iarg->getSem()))									// 06/15/02 AM.
+		case IAFLOAT:
+			*fcode << _T("(float)") << iarg->getFloat();
+			break;
+		case IAREF:
+			if (!(sem = iarg->getSem()))
 				{
-				*fcode << _T("BUG_CALL_BY_REFERENCE");						// 06/15/02 AM.
-				break;	// Recover.											// 06/15/02 AM.
-				}
-			if (sem->getType() != RSVAR)									// 06/15/02 AM.
-				{
-				*fcode << _T("ERROR_NONVAR_CALL_BY_REFERENCE");			// 06/15/02 AM.
+				*fcode << _T("BUG_CALL_BY_REFERENCE");
 				break;
 				}
-			// Generate special for call by reference.
-			sem->getVar()->genEval(gen,true);							// 06/16/02 AM.
-
+			if (sem->getType() != RSVAR)
+				{
+				*fcode << _T("ERROR_NONVAR_CALL_BY_REFERENCE");
+				break;
+				}
+			sem->getVar()->genEval(gen, true);
 			break;
-		case IAOSTREAM:
+		default:
+			*fcode << _T("\nBUG_FUNCTION_ARG\n");
+		}
+	return true;
+};
+
+if (wrapLambda)
+	{
+	// Hoist args into auto temps inside an IIFE so the C++ compiler
+	// sequences evaluation left-to-right.
+	*fcode << _T("([&]() { ");
+	int idx = 0;
+	for (Delt<Iarg> *d = args_->getFirst(); d; d = d->Right(), ++idx)
+		{
+		*fcode << _T("auto _a") << idx << _T(" = ");
+		if (userdef) *fcode << _T("Arun::sem(");
+		if (!emitArgExpr(d->getData())) return false;
+		if (userdef) *fcode << _T(")");
+		*fcode << _T("; ");
+		}
+	*fcode << _T("return ") << callPrefix << _T("(") << firstArg;
+	for (int i = 0; i < argCount; ++i)
+		*fcode << _T(", _a") << i;
+	*fcode << _T("); }())");
+	}
+else
+	{
+	// Legacy inline path: preserved for 0/1-arg calls and for calls that
+	// contain IAREF or IAOSTREAM args (the latter intentionally early-
+	// returns from Iaction::genEval — that quirk lives here).
+	*fcode << callPrefix << _T("(") << firstArg;
+	Delt<Iarg> *darg = args_ ? args_->getFirst() : 0;
+	if (darg) *fcode << _T(", ");
+	for (; darg; darg = darg->Right())
+		{
+		Iarg *iarg = darg->getData();
+		if (iarg->getType() == IAOSTREAM)
+			{
 			if (iarg->getOstream())
 				return true;
 			return false;
-			break;
-		default:
-			*fcode << _T("\nBUG_FUNCTION_ARG\n");							// 06/15/02 AM.
-//			return false;	// Better recovery is continue.			// 06/15/02 AM.
+			}
+		if (userdef) *fcode << _T("Arun::sem(");
+		if (!emitArgExpr(iarg)) return false;
+		if (userdef) *fcode << _T(")");
+		if (darg->Right())
+			*fcode << _T(", ");
 		}
-	if (userdef)																// 03/11/02 AM.
-		*fcode << _T(")");															// 03/11/02 AM.
-	if (darg->Right())
-		*fcode << _T(", ");		// Separator.
+	*fcode << _T(")");
 	}
 
-
-*fcode << _T(")");
 if (top) *fcode << _T(")");		// Close stmt.
 return true;
 }
