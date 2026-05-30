@@ -84,9 +84,12 @@ if (-not (Test-Path -LiteralPath $VcpkgToolchain)) {
     Fail "Vcpkg toolchain not found at $VcpkgToolchain. Run: vcpkg\bootstrap-vcpkg.bat then vcpkg\vcpkg.exe install --triplet x64-windows"
 }
 
-# Output DLL name the engine LoadLibrarys (cs/libconsh/cg.cpp line ~157+).
-# We're not using UNICODE in the engine build, so kbd.dll / kb.dll.
-$DllBase = if ($Config -eq 'Debug') { 'kbd' } else { 'kb' }
+# Output DLL names the engine LoadLibrarys.
+#   Compiled KB:  cs/libconsh/cg.cpp ~ line 157 — kbd.dll / kb.dll (Debug / Release).
+#   Compiled rules: lite/nlp.cpp ~ line 1232 — rund.dll / run.dll.
+# We're not using UNICODE in the engine build.
+$KbDllBase  = if ($Config -eq 'Debug') { 'kbd' }  else { 'kb' }
+$RunDllBase = if ($Config -eq 'Debug') { 'rund' } else { 'run' }
 
 Write-Host ""
 Write-Host "==> [1/3] nlp.exe -COMPILE  ($AnalyzerDir)"
@@ -162,7 +165,7 @@ endif()
 
 add_library(nlp_kb SHARED `${GENERATED_CPP})
 set_target_properties(nlp_kb PROPERTIES
-    OUTPUT_NAME "$DllBase"
+    OUTPUT_NAME "$KbDllBase"
     PREFIX ""
 )
 
@@ -201,6 +204,44 @@ target_link_libraries(nlp_kb PRIVATE
     prim kbm consh words lite
     ICU::i18n ICU::uc ICU::data ICU::io
 )
+
+# --- Compiled analyzer (run.dll / rund.dll) -----------------------------
+# Engine looks for <appdir>/bin/rund.dll (Debug) or run.dll (Release) at
+# load_compiled time (lite/nlp.cpp ~ line 1232). Empty run/ -> skipped.
+file(GLOB RUN_CPP "$AnaCmake/run/*.cpp")
+if(RUN_CPP)
+    add_library(nlp_run SHARED `${RUN_CPP})
+    set_target_properties(nlp_run PROPERTIES
+        OUTPUT_NAME "$RunDllBase"
+        PREFIX ""
+    )
+    target_include_directories(nlp_run PRIVATE
+        "$SrcDirCmake"
+        "$AnaCmake"
+        "$AnaCmake/run"
+        "$AnaCmake/kb"
+        "$EngineRootCmake/include"
+        "$EngineRootCmake/include/Api"
+        "$EngineRootCmake/include/Api/lite"
+        "$EngineRootCmake/cs/include"
+    )
+    target_compile_definitions(nlp_run PRIVATE
+        _CRT_SECURE_NO_WARNINGS
+        _CRT_NON_CONFORMING_SWPRINTFS
+        _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
+        NONSTD_
+        _CONSOLE
+        WIN32
+        _WINDOWS
+        MSVC_VERSION=`${MSVC_VERSION}
+    )
+    target_compile_options(nlp_run PRIVATE /FI"StdAfx.h" /Zc:wchar_t)
+    target_link_directories(nlp_run PRIVATE "$EngineLibDirCmake")
+    target_link_libraries(nlp_run PRIVATE
+        prim kbm consh words lite
+        ICU::i18n ICU::uc ICU::data ICU::io
+    )
+endif()
 "@
 
 Set-Content -LiteralPath (Join-Path $SrcDir 'CMakeLists.txt') -Encoding utf8 -Value $cmakeLists
@@ -222,12 +263,17 @@ Write-Host "==> [3/3] cmake --build --config $Config"
 & cmake --build $BuildDir --config $Config
 if ($LASTEXITCODE -ne 0) { Fail "cmake build failed (exit $LASTEXITCODE)" }
 
-$Out = Join-Path $AnalyzerDir ("bin\{0}.dll" -f $DllBase)
-if (Test-Path -LiteralPath $Out) {
-    Write-Host ""
-    Write-Host "Built: $Out"
-    Write-Host "Run:   $NlpExe -COMPILED -ANA `"$AnalyzerDir`" -WORK `"$EngineRoot`" `"$InputFile`""
-    Write-Host ""
-} else {
-    Fail "Expected output $Out was not produced."
+$KbOut  = Join-Path $AnalyzerDir ("bin\{0}.dll" -f $KbDllBase)
+$RunOut = Join-Path $AnalyzerDir ("bin\{0}.dll" -f $RunDllBase)
+if (-not (Test-Path -LiteralPath $KbOut)) {
+    Fail "Expected output $KbOut was not produced."
 }
+Write-Host ""
+Write-Host "Built KB: $KbOut"
+if (Test-Path -LiteralPath $RunOut) {
+    Write-Host "Built run: $RunOut"
+} else {
+    Write-Host "(no run/*.cpp present - analyzer rules will run interpreted)"
+}
+Write-Host "Run:   $NlpExe -COMPILED -ANA $AnalyzerDir -WORK $EngineRoot $InputFile"
+Write-Host ""

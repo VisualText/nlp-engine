@@ -8750,7 +8750,10 @@ if (!sem)																		// 08/19/01 AM.
 	}
 
 if (ostr)																		// 08/04/02 AM.
-	sem->out(ostr);	// PRINT IT.										// 08/19/01 AM. 
+	{
+	sem->out(ostr);	// PRINT IT.										// 08/19/01 AM.
+	ostr->flush();			// NLP-ENGINE-505 (var-LHS counterpart to 499).
+	}
 
 delete ostrsem;																// 08/19/01 AM.
 delete sem;				// No one using sem past this point.		// 05/27/00 AM.
@@ -8831,7 +8834,10 @@ if (!str || !*str)															// 08/19/01 AM.
 	}
 
 if (ostr)																		// 08/04/02 AM.
-	*ostr << str;	// PRINT IT.											// 08/19/01 AM. 
+	{
+	*ostr << str;	// PRINT IT.											// 08/19/01 AM.
+	ostr->flush();			// NLP-ENGINE-505 (var-LHS counterpart to 499).
+	}
 
 delete ostrsem;																// 08/19/01 AM.
 return ostr;																	// 08/19/01 AM.
@@ -8905,7 +8911,10 @@ switch(ostrsem->getType())													// 08/07/02 AM.
 	}
 
 if (ostr)																		// 08/04/02 AM.
-	*ostr << num;	// PRINT IT.											// 08/19/01 AM. 
+	{
+	*ostr << num;	// PRINT IT.											// 08/19/01 AM.
+	ostr->flush();			// NLP-ENGINE-505 (var-LHS counterpart to 499).
+	}
 
 delete ostrsem;																// 08/19/01 AM.
 return ostr;																	// 08/19/01 AM.
@@ -8981,7 +8990,10 @@ switch(ostrsem->getType())
 	}
 
 if (ostr)
+	{
 	*ostr << (flag ? 1 : 0);	// PRINT IT.
+	ostr->flush();			// NLP-ENGINE-505 (var-LHS counterpart to 499).
+	}
 
 delete ostrsem;
 return ostr;
@@ -9056,7 +9068,10 @@ switch(ostrsem->getType())													// 08/07/02 AM.
 	}
 
 if (ostr)																		// 08/04/02 AM.
-	*ostr << num;	// PRINT IT.											// 08/19/01 AM. 
+	{
+	*ostr << num;	// PRINT IT.											// 08/19/01 AM.
+	ostr->flush();			// NLP-ENGINE-505 (var-LHS counterpart to 499).
+	}
 
 delete ostrsem;																// 08/19/01 AM.
 return ostr;																	// 08/19/01 AM.
@@ -9069,7 +9084,10 @@ if (!sem)
 	return ostr;
 
 if (ostr)																		// 08/04/02 AM.
+	{
 	sem->out(ostr);	// PRINT IT.
+	ostr->flush();			// NLP-ENGINE-505 (chained-write counterpart to 499).
+	}
 delete sem;
 return ostr;
 }
@@ -9078,28 +9096,40 @@ std::_t_ostream *Arun::out(std::_t_ostream *ostr, _TCHAR *str, Nlppp *nlppp)
 {
 if (str && *str																// 04/30/01 AM.
 		  && ostr)																// 08/04/02 AM.
+	{
 	*ostr << str;
+	ostr->flush();			// NLP-ENGINE-505 (chained-write counterpart to 499).
+	}
 return ostr;
 }
 
 std::_t_ostream *Arun::out(std::_t_ostream *ostr, long long num, Nlppp *nlppp)
 {
 if (ostr)																		// 08/04/02 AM.
+	{
 	*ostr << num;
+	ostr->flush();			// NLP-ENGINE-505 (chained-write counterpart to 499).
+	}
 return ostr;
 }
 
 std::_t_ostream *Arun::out(std::_t_ostream *ostr, bool flag, Nlppp *nlppp)		// 07/11/03 AM.
 {
 if (ostr)
+	{
 	*ostr << (flag ? 1 : 0);
+	ostr->flush();			// NLP-ENGINE-505 (chained-write counterpart to 499).
+	}
 return ostr;
 }
 
 std::_t_ostream *Arun::out(std::_t_ostream *ostr, float num, Nlppp *nlppp)		// 08/19/01 AM.
 {
 if (ostr)																		// 08/04/02 AM.
+	{
 	*ostr << num;
+	ostr->flush();			// NLP-ENGINE-505 (chained-write counterpart to 499).
+	}
 return ostr;
 }
 
