@@ -91,12 +91,8 @@ for (ii = 0; ii <= seg_curr; ii++)
    //   return;
 	fp = new std::_t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
    gen_file_head(fp);
-// LINUX: Need to resolve to same capitalization in file name.	// 03/23/19 AM.
-#ifdef LINUX
-	*fp << _T("#include \"stdafx.h\"") << std::endl;	// 03/23/19 AM.
-#else
-	*fp << _T("#include \"StdAfx.h\"") << std::endl;	// 06/28/00 AM.
-#endif
+// NLP-ENGINE-510: emit StdAfx.h (mixed case) on every platform.
+*fp << _T("#include \"StdAfx.h\"") << std::endl;
 
    ptr = st_segs[ii];
    count = -1;
@@ -270,21 +266,9 @@ fp = new std::_t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
 
 gen_file_head(fp);
 
-#ifdef LINUX
-*fp << _T("#include \"stdafx.h\"") << std::endl;			// 06/28/00 AM.
-*fp << _T("#include <stdio.h>") << std::endl;
-*fp << _T("#include <stdlib.h>") << std::endl;	
-//*fp << "#include <fstream.h>" << std::endl;			// 04/23/99 AM.
-*fp << _T("#include <iostream>") << std::endl;	// Upgrade.	// 01/24/01 AM.
-*fp << _T("#include <fstream>") << std::endl;	// Upgrade.	// 01/24/01 AM.
-*fp << _T("#include \"prim\\libprim.h\"") << std::endl;
-*fp << _T("#include \"prim\\prim.h\"") << std::endl;
-//*fp << "#include \"prim\\mach.h\"" << std::endl;			// 04/23/99 AM.
-*fp << _T("#include \"kbm\\libkbm.h\"") << std::endl;
-*fp << _T("#include \"kbm\\st.h\"") << std::endl;
-*fp << _T("#include \"consh\\libconsh.h\"") << std::endl;		// 08/15/02 AM.
-*fp << _T("#include \"consh\\cg.h\"") << std::endl;			// 08/15/02 AM.
-#else
+// NLP-ENGINE-510: removed `#ifdef LINUX` branch (lowercase stdafx.h +
+// backslash paths). The legacy `#else` branch below uses StdAfx.h with
+// forward slashes and works on every platform.
 *fp << _T("#include \"StdAfx.h\"") << std::endl;			// 06/28/00 AM.
 *fp << _T("#include <stdio.h>") << std::endl;
 *fp << _T("#include <stdlib.h>") << std::endl;
@@ -298,7 +282,6 @@ gen_file_head(fp);
 *fp << _T("#include \"kbm/st.h\"") << std::endl;
 *fp << _T("#include \"consh/libconsh.h\"") << std::endl;		// 08/15/02 AM.
 *fp << _T("#include \"consh/cg.h\"") << std::endl;			// 08/15/02 AM.
-#endif
 *fp << _T("#include \"") << tbase << _T("_ini.h\"") << std::endl;
 *fp << _T("\nbool cc_st_ini(void *xcg)") << std::endl;		// 08/15/02 AM.
 *fp << _T("{") << std::endl;
