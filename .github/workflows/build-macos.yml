@@ -44,7 +44,16 @@ jobs:
         run: mkdir build
 
       - name: Generate Solution MacOs
-        run: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_BUILD_TYPE=release -B build -S . -DCMAKE_CXX_FLAGS=-std=c++11 -DCMAKE_TOOLCHAIN_FILE='${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake' -DCMAKE_OSX_ARCHITECTURES=arm64
+        # NLP-ENGINE-509: dropped `-DCMAKE_CXX_FLAGS=-std=c++11`. The engine
+        # uses std::filesystem (C++17) in lite/dir.cpp::read_files (which
+        # loads the analyzer's kb/user/*.{kb,dict,kbb} dictionary files) and
+        # in cs/libconsh/cg.cpp / lite/nlp_engine.cpp. With Apple libc++ +
+        # -std=c++11, directory_iterator behaved differently from
+        # Windows/Linux and the analyzer's user lexicon never got loaded —
+        # parse-en-us produced "unknown 1" on every word, blowing up the
+        # English-test diff. The engine's CMakeLists already sets
+        # CMAKE_CXX_STANDARD 17; let that drive macOS too.
+        run: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_BUILD_TYPE=release -B build -S . -DCMAKE_TOOLCHAIN_FILE='${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake' -DCMAKE_OSX_ARCHITECTURES=arm64
 
       - name: Cmake Build all targets MaxOs
         run: cmake --build build/ --target all
