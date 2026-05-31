@@ -360,11 +360,13 @@ bool Gen::writeHeaders()
 // user.h / Ucode.h are optional legacy user-extension headers (paired with user.dll).
 // Most analyzers don't define them; guard with __has_include so the generated C++ still
 // compiles when the user/ subdirectory is absent.
-*fcode_ << _T("#if __has_include(\"..\\user\\user.h\")") << std::endl;
-*fcode_ << _T("#include \"..\\user\\user.h\"") << std::endl;				// 02/13/01 AM.
+// NLP-ENGINE-512: use forward slashes (case-sensitive Linux FS treats `\` as a literal
+// character, not a path separator, so the include silently misses).
+*fcode_ << _T("#if __has_include(\"../user/user.h\")") << std::endl;
+*fcode_ << _T("#include \"../user/user.h\"") << std::endl;
 *fcode_ << _T("#endif") << std::endl;
-*fcode_ << _T("#if __has_include(\"..\\user\\Ucode.h\")") << std::endl;
-*fcode_ << _T("#include \"..\\user\\Ucode.h\"") << std::endl;				// 02/13/01 AM.
+*fcode_ << _T("#if __has_include(\"../user/Ucode.h\")") << std::endl;
+*fcode_ << _T("#include \"../user/Ucode.h\"") << std::endl;
 *fcode_ << _T("#endif") << std::endl;
 
 // analyzer.h file
@@ -400,7 +402,7 @@ bool Gen::writeHeaders()
 *ehead_  << _T("// Automatically generated: ") << today() << std::endl;
 *ehead_ << _T("#include <stdlib.h>") << std::endl;
 *ehead_ << _T("#include <stdio.h>") << std::endl;
-*ehead_ << _T("#include \"lite\\Arun.h\"") << std::endl;
+*ehead_ << _T("#include \"lite/Arun.h\"") << std::endl;	// NLP-ENGINE-512: forward slash
 
 *edata_  << _T("// Automatically generated: ") << today() << std::endl;
 *edata_ << _T("// INCLUDED IN EHASH.CPP ONLY.") << std::endl;
@@ -417,7 +419,7 @@ bool Gen::writeHeaders()
 *rhead_  << _T("// Automatically generated: ") << today() << std::endl;
 *rhead_ << _T("#include <stdlib.h>") << std::endl;
 *rhead_ << _T("#include <stdio.h>") << std::endl;
-*rhead_ << _T("#include \"lite\\Arun.h\"") << std::endl;
+*rhead_ << _T("#include \"lite/Arun.h\"") << std::endl;	// NLP-ENGINE-512: forward slash
 
 *rdata_  << _T("// Automatically generated: ") << today() << std::endl;
 *rdata_ << _T("// INCLUDED IN RHASH.CPP ONLY.") << std::endl;

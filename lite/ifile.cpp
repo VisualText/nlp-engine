@@ -480,11 +480,12 @@ _TCHAR *algo = parse->getAlgo();											// 05/31/00 AM.
 *fcode << _T("#include \"data.h\"") << std::endl;					// 04/03/09 AM.
 // Same legacy user-extension headers as gen.cpp::writeHeaders — guard with __has_include
 // so per-pass files compile when the user/ subdirectory is absent.
-*fcode << _T("#if __has_include(\"..\\user\\user.h\")") << std::endl;
-*fcode << _T("#include \"..\\user\\user.h\"") << std::endl;	// 04/03/09 AM.
+// NLP-ENGINE-512: forward slashes so the include resolves on Linux.
+*fcode << _T("#if __has_include(\"../user/user.h\")") << std::endl;
+*fcode << _T("#include \"../user/user.h\"") << std::endl;
 *fcode << _T("#endif") << std::endl;
-*fcode << _T("#if __has_include(\"..\\user\\Ucode.h\")") << std::endl;
-*fcode << _T("#include \"..\\user\\Ucode.h\"") << std::endl;	// 04/03/09 AM.
+*fcode << _T("#if __has_include(\"../user/Ucode.h\")") << std::endl;
+*fcode << _T("#include \"../user/Ucode.h\"") << std::endl;
 *fcode << _T("#endif") << std::endl;
 
 // Point to the corresponding header file.					// 04/04/09 AM.
