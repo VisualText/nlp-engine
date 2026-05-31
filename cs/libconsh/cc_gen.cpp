@@ -152,11 +152,8 @@ delete fp;
 _stprintf(s_nam, _T("%s%skb_setup.cpp%s"), dir, DIR_SEP, tail);
 fp = new std::_t_ofstream(TCHAR2A(s_nam));
 gen_file_head(fp);
-#ifdef LINUX
-*fp << _T("#include \"stdafx.h\"") << std::endl;
-#else
+// NLP-ENGINE-510: emit StdAfx.h (mixed case) on every platform.
 *fp << _T("#include \"StdAfx.h\"") << std::endl;
-#endif
 *fp << _T("#include \"Cc_code.h\"") << std::endl;
 *fp << _T("#include \"kb_setup.h\"") << std::endl;
 *fp << _T("extern \"C\" NLP_KB_EXPORT bool kb_setup(void *cg)") << std::endl;
