@@ -80,11 +80,12 @@ _stprintf(s_nam, _T("%s%s%s_code.cpp%s"), dir, DIR_SEP, consh_CC_BASE, tail);
 fp = new std::_t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
 
 gen_file_head(fp);
-#ifdef LINUX
-*fp << _T("#include \"stdafx.h\"") << std::endl;								// 05/05/01 AM.
-#else
-*fp << _T("#include \"StdAfx.h\"") << std::endl;								// 05/05/01 AM.
-#endif
+// NLP-ENGINE-510: emit StdAfx.h (mixed case) on every platform. Linux is
+// case-sensitive, and the compile-service (cloud + local Linux/Mac scripts)
+// drops a StdAfx.h next to the generated sources; emitting a lowercase
+// `#include "stdafx.h"` for LINUX broke the cloud build with
+// `fatal error: stdafx.h: No such file or directory`.
+*fp << _T("#include \"StdAfx.h\"") << std::endl;
 *fp << _T("extern bool cc_st_ini(void*);") << std::endl;						// 08/15/02 AM.
 *fp << _T("extern bool cc_sym_ini(void*);") << std::endl;					// 08/15/02 AM.
 *fp << _T("extern bool cc_con_ini(void*);") << std::endl;					// 08/15/02 AM.
