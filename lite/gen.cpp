@@ -369,15 +369,24 @@ bool Gen::writeHeaders()
 
 // analyzer.h file
 //*fhead_ << "#include \"stdafx.h\"" << std::endl;
+// NLP-ENGINE-510: <windows.h>, <tchar.h>, and <streamClasses.h> are
+// Windows-only — keep them gated. <my_tchar.h> provides the _TCHAR / _T()
+// substitutes on Linux. Also switch lite\\Arun.h to a forward-slash path
+// so the include compiles on Linux (NTFS lets you spell either separator;
+// ext4 does not).
 #ifndef LINUX
 *fhead_ << _T("#include <windows.h>") << std::endl;
 #endif
 *fhead_ << _T("#include <stdlib.h>") << std::endl;
 *fhead_ << _T("#include <stdio.h>") << std::endl;
+#ifndef LINUX
 *fhead_ << _T("#include <tchar.h>") << std::endl;				// Unicode	// 02/07/05 AM.
+#endif
 *fhead_ << _T("#include <my_tchar.h>") << std::endl;			// Unicode	// 02/07/05 AM.
+#ifndef LINUX
 *fhead_ << _T("#include <streamClasses.h>") << std::endl;	// Unicode	// 02/07/05 AM.
-*fhead_ << _T("#include \"lite\\Arun.h\"") << std::endl;
+#endif
+*fhead_ << _T("#include \"lite/Arun.h\"") << std::endl;
 *fhead_ << std::endl;
 
 *faux_ << _T("#include \"analyzer.h\"") << std::endl;
