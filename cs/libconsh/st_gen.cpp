@@ -93,6 +93,11 @@ for (ii = 0; ii <= seg_curr; ii++)
    gen_file_head(fp);
 // NLP-ENGINE-510: emit StdAfx.h (mixed case) on every platform.
 *fp << _T("#include \"StdAfx.h\"") << std::endl;
+// NLP-ENGINE-513: on Linux the engine's StdAfx.h is empty (#ifndef LINUX),
+// so St*.cpp had no source for _TCHAR. libprim.h ends with my_tchar.h, which
+// defines `#define _TCHAR char` under LINUX. Without this, the cloud Linux
+// build of any analyzer fails with "'_TCHAR' does not name a type".
+*fp << _T("#include \"prim/libprim.h\"") << std::endl;
 
    ptr = st_segs[ii];
    count = -1;
@@ -180,6 +185,11 @@ for (ii = seg_curr + 1; ii < segs_tot; ii++)
 	fp = new std::_t_ofstream(TCHAR2A(s_nam));			// 04/20/99 AM.
 
    gen_file_head(fp);
+// NLP-ENGINE-513: empty-segment St*.cpp files only ever emitted the array
+// declaration (no #includes), so they had no source for _TCHAR on Linux.
+// Match the filled-segment loop above — pull in StdAfx.h + libprim.h.
+*fp << _T("#include \"StdAfx.h\"") << std::endl;
+*fp << _T("#include \"prim/libprim.h\"") << std::endl;
    gen_array_def(_T("_TCHAR"), s_tab, siz, fp);	/* Array definition. */
    //if (!file_close(s_nam, fp))
    //   return;
