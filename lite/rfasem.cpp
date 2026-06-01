@@ -657,7 +657,19 @@ switch (type_)
 	{
 	case RSNAME:
 	case RSSTR:
-		*fcode << _T("_T(\"")
+		// NLP-ENGINE-519: cast to _TCHAR* so the generated string literal can
+		// match overloads taking `_TCHAR*` (e.g. Arun::out(_TCHAR*, _TCHAR*,
+		// Nlppp*)) instead of falling through to the `bool` overload via
+		// pointer-to-bool conversion. macOS clang strictly applies C++'s
+		// "string literal is const char[N]" rule, so without this cast,
+		// _T("...") can't convert to char* (qualification conversion only
+		// adds const, never removes) but CAN convert to bool — and clang
+		// picks bool as the only viable overload, producing output like '1'
+		// instead of the intended string. gcc with -Wno-write-strings and
+		// MSVC's relaxed string handling hide the problem on Linux/Windows;
+		// clang only suppresses the warning, not the strict type. Same fix
+		// pattern as iaction.cpp:1019 (which the IASTR path already uses).
+		*fcode << _T("(_TCHAR*)_T(\"")
 				 << c_str(val_.name_, buff, MAXSTR)
 				 << _T("\")");
 		return true;
@@ -725,7 +737,10 @@ switch (type_)
 	case RS_KBPHRASE:
 	case RS_KBATTR:
 	case RS_KBVAL:
-		*fcode << _T("_T(\"") << val_.name_ << _T("\")");
+		// NLP-ENGINE-519: same cast as RSNAME/RSSTR above, for the same
+		// reason. KB-typed semantic names emitted as bare _T("...") would
+		// fall through to the bool overload on macOS clang.
+		*fcode << _T("(_TCHAR*)_T(\"") << val_.name_ << _T("\")");
 		return true;
 
 	///////// PARSE TREE OBJECTS.
