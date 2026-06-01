@@ -196,4 +196,38 @@ else
 return false;
 }
 
+#else
+// NLP-ENGINE-516: Linux equivalent of call_runAnalyzer. The Windows code
+// above uses GetProcAddress; here we use dlsym to look up the same
+// `extern "C" run_analyzer` symbol the codegen exports from the compiled
+// .so (lite/seqn.cpp:580 — NLP_RUN_EXPORT is empty on non-Windows, so the
+// symbol just gets default ELF visibility).
+//
+// The user.dll path (call_ucodeAction / call_ucodeAlgo / call_ucodeIni /
+// call_ucodeFin) intentionally stays Windows-only — VisualText's user
+// extension model isn't wired up on Linux yet.
+
+#include <dlfcn.h>
+
+bool call_runAnalyzer(
+	HINSTANCE hLibrary,
+	Parse *parse
+	)
+{
+typedef bool (* lpFunc4)(Parse *parse);
+// dlsym takes void*; HINSTANCE is the same opaque handle type on Linux
+// (typedef'd to void* in include/Api/prim/dyn.h).
+lpFunc4 Func4 = (lpFunc4) dlsym(hLibrary, "run_analyzer");
+if (Func4 != NULL)
+	return ((Func4)(parse));
+
+const char *err = dlerror();
+std::_t_strstream gerrStr;
+gerrStr << _T("Error in call_runAnalyzer (dlsym run_analyzer: ")
+		  << (err ? err : "unknown") << _T(")") << std::ends;
+errOut(&gerrStr,false);
+
+return false;
+}
+
 #endif
