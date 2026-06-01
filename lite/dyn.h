@@ -22,6 +22,16 @@ class Iarg;
 class Auser;		// 02/13/01 AM.
 class NLP;			// 01/23/02 AM.
 
+// NLP-ENGINE-516: HINSTANCE typedef on Linux. Same shape as the typedef in
+// prim/dyn.h and lite/nlp.h — guarded so all three are duplicate-safe. On
+// Windows HINSTANCE comes from <windows.h> via StdAfx.h.
+#ifdef LINUX
+#ifndef NLP_HINSTANCE_TYPEDEF_
+#define NLP_HINSTANCE_TYPEDEF_
+typedef void *HINSTANCE;
+#endif
+#endif
+
 //extern void load_dll();
 // NLP-ENGINE-516: call_runAnalyzer is cross-platform — uses GetProcAddress
 // on Windows and dlsym on Linux/macOS. load_dll/unload_dll prototypes come
