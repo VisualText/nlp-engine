@@ -825,8 +825,14 @@ _TCHAR *fname = _T("kbu");										// kbu.dll		// 01/17/06 AM.
 
 #endif
 
+// NLP-ENGINE-517: same three-way split as lite/nlp.cpp's load_compiled.
+// macOS gets LINUX defined by the engine's cmake but the actual KB file
+// next to the analyzer is kb.dylib (not kb.so), so the load path needs
+// the platform-correct extension.
 #ifndef LINUX
 const _TCHAR *libext = _T("dll");
+#elif defined(__APPLE__)
+const _TCHAR *libext = _T("dylib");
 #else
 const _TCHAR *libext = _T("so");
 #endif

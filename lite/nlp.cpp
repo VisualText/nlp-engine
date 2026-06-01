@@ -1252,8 +1252,15 @@ _TCHAR *fname = _T("run");								// run.dll		// 01/23/06 AM.
 
 #endif
 
+// NLP-ENGINE-517: three-way split. The engine cmake defines LINUX on every
+// non-Windows platform (lite/CMakeLists.txt etc.), so macOS would hit the
+// LINUX branch and look for bin/run.so — but cmake on Darwin actually
+// produces <analyzer>.dylib (and the extension stages it as bin/run.dylib).
+// Detect Apple separately so the load path matches the real artifact.
 #ifndef LINUX
 const _TCHAR *libext = _T("dll");
+#elif defined(__APPLE__)
+const _TCHAR *libext = _T("dylib");
 #else
 const _TCHAR *libext = _T("so");
 #endif
