@@ -54,6 +54,18 @@ All rights reserved.
 #include "global.h"		// 02/05/00 AM. (for FNAME_SIZE).
 #include "vtrun.h"		// [DEGLOB]	// 10/14/20 AM.
 
+// NLP-ENGINE-516: hrundll_ / getHrundll() below now exist on every
+// platform. On Windows HINSTANCE comes from <windows.h> (force-included
+// via StdAfx.h); on Linux we mirror the typedef from prim/dyn.h to avoid
+// pulling that header (and its LIBPRIM_API decorations) transitively into
+// every translation unit that just needs the Ana / NLP types.
+#ifdef LINUX
+#ifndef NLP_HINSTANCE_TYPEDEF_
+#define NLP_HINSTANCE_TYPEDEF_
+typedef void *HINSTANCE;
+#endif
+#endif
+
 LITE_API void object_counts(
 	std::_t_ofstream* =0	// 07/18/03 AM.
 	);
