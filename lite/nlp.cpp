@@ -133,8 +133,8 @@ isLastFile_ = false;
 isFirstFile_ = false;
 #ifndef LINUX
 hdll_ = 0;													// 01/29/99 AM.
-hrundll_ = 0;												// 05/14/00 AM.
 #endif
+hrundll_ = 0;												// 05/14/00 AM. NLP-ENGINE-516: also init on Linux.
 cg_   = 0;													// 02/15/00 AM.
 gui	= 0;							// Dave snuck this var in.			// 02/21/02 AM.
 dbgout_	= 0;																	// 08/26/02 AM.
@@ -180,8 +180,8 @@ isLastFile_ = false;
 isFirstFile_ = false;
 #ifndef LINUX
 hdll_ = 0;
-hrundll_ = 0;
 #endif
+hrundll_ = 0;	// NLP-ENGINE-516: also init on Linux.
 cg_   = 0;
 gui	= 0;
 dbgout_	= 0;
@@ -263,6 +263,14 @@ if (hrundll_)
 	unload_dll(hdll_);	// 05/14/00 AM.
 	hrundll_ = 0;			// 05/14/00 AM.
 	}
+#else
+// NLP-ENGINE-516: unload compiled-analyzer .so on Linux too. (User-dll
+// hdll_ stays Windows-only — that's a separate feature.)
+if (hrundll_)
+	{
+	unload_dll(hrundll_);
+	hrundll_ = 0;
+	}
 #endif
 
 if (dbgout_)																	// 08/26/02 AM.
@@ -290,8 +298,8 @@ void *NLP::getStab()			{return stab_;}							// 05/26/02 AM.
 VTRun *NLP::getVTRun()			{return vtrun_;}	// [DEGLOB]	// 10/15/20 AM.
 #ifndef LINUX
 HINSTANCE NLP::getHdll()	{return hdll_;}							// 01/29/99 AM.
-HINSTANCE NLP::getHrundll(){return hrundll_;}						// 05/14/00 AM.
 #endif
+HINSTANCE NLP::getHrundll(){return hrundll_;}						// 05/14/00 AM. NLP-ENGINE-516: also on Linux.
 //char *NLP::getDatadir()		{return datadir_;}					// 12/08/99 AM.
 CG	  *NLP::getCG()			{return cg_;}								// 02/15/00 AM.
 bool	NLP::getFbatchstart(){return fbatchstart_;}					// 10/19/00 AM.
@@ -1257,26 +1265,17 @@ gerrStr << _T("[Loading compiled analyzer ")							// 01/23/06 AM.
 												<< buf << _T("]") << std::ends;	// 01/23/06 AM.
 errOut(&gerrStr,false);
 
-#ifndef LINUX
+// NLP-ENGINE-516: hrundll_ is now a member on every platform. Store the
+// handle so the runAnalyzer dispatch below can call into run_analyzer via
+// call_runAnalyzer (GetProcAddress on Windows, dlsym on Linux/macOS).
 hrundll_ = load_dll(buf);
 if (!hrundll_)
-#else
-// On Linux hrundll_ isn't a member; just probe whether the .so is loadable.
-// If it loads we close the handle immediately — call_runAnalyzer path
-// (Windows-only) won't use it, and make_analyzer falls back to interpreted.
-HINSTANCE hRun = load_dll(buf);
-if (!hRun)
-#endif
 	{
 	std::_t_strstream gerrStr;
 	gerrStr << _T("[Error: Couldn't load compiled analyzer.]") << std::ends;
 	errOut(&gerrStr,false);
 	return false;
 	}
-#ifdef LINUX
-unload_dll(hRun);
-return false;  // No compiled-analyzer path on Linux; trigger interpreted fallback.
-#endif
 return true;
 }
 
@@ -2303,14 +2302,13 @@ if (parse->getText())
   cout << "runAnalyzer: RUNEMBED_ calling run_analyzer(parse)" << std::endl;
   run_analyzer(parse);
 #else
-#ifndef LINUX
+	// NLP-ENGINE-516: same dispatch on every platform. hrundll_ is set by
+	// load_compiled() when -COMPILED finds bin/run.<ext>; call_runAnalyzer
+	// uses GetProcAddress on Windows and dlsym on Linux/macOS (see dyn.cpp).
 	if (!hrundll_)
 		parse->execute();
 	else
 		call_runAnalyzer(hrundll_,parse);
-#else
-	parse->execute();
-#endif
 #endif
 	}
 
@@ -2412,14 +2410,13 @@ if (parse->getText())
   cout << "runAnalyzer: RUNEMBED_ calling run_analyzer(parse)" << std::endl;
   run_analyzer(parse);
 #else
-#ifndef LINUX
+	// NLP-ENGINE-516: same dispatch on every platform. hrundll_ is set by
+	// load_compiled() when -COMPILED finds bin/run.<ext>; call_runAnalyzer
+	// uses GetProcAddress on Windows and dlsym on Linux/macOS (see dyn.cpp).
 	if (!hrundll_)
 		parse->execute();
 	else
 		call_runAnalyzer(hrundll_,parse);
-#else
-	parse->execute();
-#endif
 #endif
 	}
 #ifdef LINUX

@@ -108,8 +108,8 @@ public:
 	VTRun *getVTRun();	// [DEGLOB]	// 10/15/20 AM.
 #ifndef LINUX
 	HINSTANCE getHdll();						// 01/29/99 AM.
-	HINSTANCE getHrundll();					// 05/14/00 AM.
 #endif
+	HINSTANCE getHrundll();					// 05/14/00 AM. NLP-ENGINE-516: also Linux.
 //	char *getDatadir();						// 12/08/99 AM.
 	CG   *getCG();								// 02/15/00 AM.
 	bool getFbatchstart();					// 10/19/00 AM.
@@ -389,10 +389,13 @@ private:
 #ifndef LINUX
 	// USER DLL TO LOAD DYNAMICALLY.										// 01/29/99 AM.
 	HINSTANCE hdll_;															// 01/29/99 AM.
+#endif
 
 	// COMPILED ANALYZER TO LOAD DYNAMICALLY.							// 05/14/00 AM.
-	HINSTANCE hrundll_;														// 05/14/00 AM.
-#endif
+	// NLP-ENGINE-516: now available on Linux too — the .so produced by
+	// `nlp -COMPILE` exports `run_analyzer` and is dlopen'd via
+	// libprim/dyn.cpp's load_dll, resolved via dlsym in lite/dyn.cpp.
+	HINSTANCE hrundll_;
 
 	// If not defined by user, initialize data directory to one
 	// defined by the environment variable %TAI%.			// 12/08/99 AM.

@@ -23,7 +23,18 @@ class Auser;		// 02/13/01 AM.
 class NLP;			// 01/23/02 AM.
 
 //extern void load_dll();
+// NLP-ENGINE-516: call_runAnalyzer is cross-platform — uses GetProcAddress
+// on Windows and dlsym on Linux/macOS. load_dll/unload_dll prototypes come
+// from include/Api/prim/dyn.h (also cross-platform).
+bool call_runAnalyzer(
+	HINSTANCE hLibrary,
+	Parse *parse
+	);
+
 #ifndef LINUX
+// Legacy lite-side prototypes for the Windows user.dll path. load_dll /
+// unload_dll are duplicated here from prim/dyn.h; the user-extension
+// helpers below are Windows-only.
 HINSTANCE load_dll(_TCHAR *path);
 
 bool call_ucodeAction(
@@ -32,10 +43,6 @@ bool call_ucodeAction(
 	Delt<Iarg> *args,
 	Auser *auser
 //	Parse *parse
-	);
-bool call_runAnalyzer(														// 05/15/00 AM.
-	HINSTANCE hLibrary,
-	Parse *parse
 	);
 bool call_ucodeAlgo(															// 02/27/01 AM.
 	HINSTANCE hLibrary,
