@@ -1881,7 +1881,13 @@ if (posts)																	// 09/15/08 AM.
 	{
 	*fcode << indent;														// 09/15/08 AM.
 //	*fcode << _T("} catch (...) {}");						// 09/15/08 AM.
-	*fcode << _T("} catch (int e) {e=e;}");						// 09/16/08 AM.
+	// NLP-ENGINE-518: log the exception code instead of swallowing silently.
+	// Diagnoses why date-time's verbose summary section is missing on macOS
+	// compiled mode while the compact KB-dump section writes fine: an
+	// int exception (one of Arun's ex_EXITPASS / ex_FAIL / ex_SUCCEED) is
+	// almost certainly being thrown mid-pass and caught here. Knowing the
+	// code tells us which Arun:: function bailed.
+	*fcode << _T("} catch (int e) {std::_t_cerr << _T(\"[pass post catch: int e=\") << e << _T(\"]\") << std::endl;}");
 	Gen::nl(fcode);														// 09/15/08 AM.
 	}
 
@@ -1999,7 +2005,9 @@ for (dcode = codes->getFirst(); dcode; dcode = dcode->Right())
 	}
 
 //*fcode << _T("} catch (...) {}");								// 09/15/08 AM.
-*fcode << _T("} catch (int e) {e=e;}");						// 09/16/08 AM.
+// NLP-ENGINE-518: log the exception code instead of swallowing silently.
+// Same rationale as the post-action catch above.
+*fcode << _T("} catch (int e) {std::_t_cerr << _T(\"[pass code catch: int e=\") << e << _T(\"]\") << std::endl;}");
 Gen::nl(fcode);														// 09/15/08 AM.
 
 return true;
