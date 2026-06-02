@@ -1046,6 +1046,19 @@ if (compile)																	// 05/10/00 AM.
 	{
 	// Build a gen object to control code gen and compilation.
 
+	// Ensure the run/ output directory exists before generating into it.
+	// The std::ofstreams below open run/<file> directly, and the C++
+	// runtime does NOT create the parent directory: on a fresh analyzer
+	// (no run/ yet) every open silently fails, so -COMPILE emits no
+	// analyzer-pass code and the staged run library ends up with no
+	// run_analyzer entry point -> empty tree at runtime. Mirror the
+	// outdir/logdir handling in NLP::init and create it up front.
+	_TCHAR rundir[MAXSTR];
+	_stprintf(rundir, _T("%s%c%s"),
+				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR);
+	if (!dir_exists(rundir))
+		make_dir(rundir);
+
 	// Set up an output file for code generation.
 	_stprintf(buf, _T("%s%c%s%canalyzer.cpp"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR, DIR_CH);
