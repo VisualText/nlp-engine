@@ -124,6 +124,9 @@ for (ii = 0; ii <= seg_curr; ii++)
                case '\n':
                   *fp << _T("'\\n'");
                   break;
+               case '\r':
+                  *fp << _T("'\\r'");
+                  break;
                case '\t':
                   *fp << _T("'\\t'");
                   break;
