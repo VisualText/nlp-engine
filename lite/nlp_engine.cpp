@@ -49,7 +49,11 @@ NLP_ENGINE::NLP_ENGINE(
     static _TCHAR logfile[MAXSTR];
     static _TCHAR rfbdir[MAXSTR];
     if (!workingFolder.empty()) {
-        _stprintf(m_workingFolder,_T("%s"),workingFolder.c_str());
+        // NLP-ENGINE-521: m_workingFolder is _TCHAR[MAXPATH]; the caller-
+        // supplied std::string can be longer (CI tempdir paths,
+        // deeply-nested project layouts). Bound the copy.
+        _stprintf(m_workingFolder, _T("%.*s"), (int)(MAXPATH - 1),
+                  workingFolder.c_str());
         _stprintf(logfile,"%s%s%s",workingFolder.c_str(),DIR_STR,_T("vtrun_logfile.out"));
         _stprintf(rfbdir,"%s%sdata%srfb%sspec",workingFolder.c_str(),DIR_STR,DIR_STR,DIR_STR);
     } else {
@@ -165,7 +169,10 @@ int NLP_ENGINE::init(
         strcpy(str,m_analyzer);
         if (stat(str,&st) != 0) {
             _stprintf(m_anadir, _T("%s%sanalyzers%s%s"),m_workingFolder,DIR_STR,DIR_STR,m_analyzer);
-            _stprintf(m_ananame, _T("%s"),m_analyzer);          
+            // NLP-ENGINE-521: m_ananame is MAXPATH bytes; m_analyzer is an
+            // unbounded caller-supplied _TCHAR*. Bound the copy so we can't
+            // overflow the stack buffer on long analyzer paths.
+            _stprintf(m_ananame, _T("%.*s"), (int)(MAXPATH - 1), m_analyzer);
         }
     }
     
@@ -185,10 +192,18 @@ int NLP_ENGINE::init(
         _TCHAR *fwd = _tcsrchr(m_anadir, '/');
         if (fwd > ana) ana = fwd;
 #endif
+        // NLP-ENGINE-521: m_ananame is _TCHAR[MAXPATH] but m_anadir is
+        // _TCHAR[MAXPATH*2], so an unbounded %s copy can overflow by up
+        // to MAXPATH bytes onto the stack — gcc 13 flags this with
+        // -Wformat-overflow, and CI under deep tmpdir paths
+        // (/tmp/test-nlpplusXXX/analyzers/parse-en-us etc.) ends up
+        // close enough to the limit that it likely caused the
+        // py-package-nlpengine test segfault. Bound the writes to
+        // MAXPATH-1 characters via the printf precision specifier.
         if (ana && *(ana + 1) != '\0')
-            _stprintf(m_ananame, _T("%s"), ana + 1);
+            _stprintf(m_ananame, _T("%.*s"), (int)(MAXPATH - 1), ana + 1);
         else
-            _stprintf(m_ananame, _T("%s"), m_anadir);
+            _stprintf(m_ananame, _T("%.*s"), (int)(MAXPATH - 1), m_anadir);
     }
 
 	std::_t_cout << _T("[analyzer directory: ") << m_anadir << _T("]") << std::endl;
