@@ -16,6 +16,7 @@ All rights reserved.
 #ifdef _WINDOWS
 #include "StdAfx.h"
 #endif
+#include <filesystem>	// NLP-ENGINE-527: rundir creation in compile branch.
 #include <iostream>	// 09/27/19 AM.
 #include <strstream>	// 09/27/19 AM.
 #include <time.h>
@@ -1051,13 +1052,26 @@ if (compile)																	// 05/10/00 AM.
 	// runtime does NOT create the parent directory: on a fresh analyzer
 	// (no run/ yet) every open silently fails, so -COMPILE emits no
 	// analyzer-pass code and the staged run library ends up with no
-	// run_analyzer entry point -> empty tree at runtime. Mirror the
-	// outdir/logdir handling in NLP::init and create it up front.
+	// run_analyzer entry point -> empty tree at runtime.
+	//
+	// NLP-ENGINE-527: use std::filesystem::create_directory rather than
+	// the LITE_API make_dir() / dir_exists() pair. BOTH of those are
+	// #ifndef LINUX no-ops in lite/mach.cpp -- dir_exists() returns
+	// true unconditionally on Linux/macOS, which would short-circuit
+	// the guard, and make_dir() is also a no-op. The other 7
+	// lite/nlp.cpp make_dir() call sites (outdir, logdir, etc.) rely
+	// on the no-op behaviour and the parse-en-us regression test on
+	// macOS depends on it, so we don't fix the underlying lite/mach.cpp
+	// here. Surgical create_directory unblocks -COMPILE without
+	// touching the other call sites. The std::error_code overload is
+	// noexcept; create_directory returns false (no error) if the
+	// directory already exists, so the previous dir_exists() guard is
+	// redundant and is dropped.
 	_TCHAR rundir[MAXSTR];
 	_stprintf(rundir, _T("%s%c%s"),
 				ana_->getAppdir(), DIR_CH, DEFAULT_RUNDIR);
-	if (!dir_exists(rundir))
-		make_dir(rundir);
+	std::error_code ec;
+	std::filesystem::create_directory(rundir, ec);
 
 	// Set up an output file for code generation.
 	_stprintf(buf, _T("%s%c%s%canalyzer.cpp"),
