@@ -533,6 +533,17 @@ int NLP_ENGINE::close()
     // Compiled analyzers: need to close the user.dll for the application also.
     // Shutdown the runtime manager.
 
+    // NLP-ENGINE-523: make close() idempotent so it can be called explicitly
+    // before ~NLP_ENGINE without double-tearing-down. The Python binding in
+    // py-package-nlpengine exposes this as Engine.close() so callers (and
+    // Engine.__del__ / __exit__) can deterministically release the open
+    // <workfolder>/logs/cgerr.log file handle before TemporaryDirectory
+    // cleanup runs at interpreter shutdown — on Windows that handle blocks
+    // the temp-dir delete and surfaces as PermissionError, currently
+    // band-aided in NLPPlus via TemporaryDirectory(ignore_cleanup_errors=True).
+    if (!m_vtrun)
+        return 0;
+
 //    VTRun::deleteVTRun(VTRun_Ptr);                      // 9/27/20 AM.
 //    VTRun_Ptr = 0;      // Clear out static var.        // 09/27/20 AM.
     VTRun::deleteVTRun(m_vtrun);    // [DEGLOB]	// 10/15/20 AM.
