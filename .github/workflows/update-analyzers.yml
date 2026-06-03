@@ -9,6 +9,9 @@
 # you merge; merging it (a human action) DOES trigger the normal build/test
 # workflows, unlike a GITHUB_TOKEN auto-commit.
 #
+# Event-driven: fired by analyzers (event-type analyzers-release) when its
+# parse-en-us bump releases — no more nightly polling. Still runnable by hand.
+#
 # PREREQUISITE: the `analyzers` submodule must actually be attached in the tree
 # (see nlp-engine PR #643 "Re-attach orphaned analyzers submodule"). Until that
 # merges, there is no analyzers/ gitlink for this job to bump.
@@ -17,8 +20,8 @@ name: Update analyzers submodule
 
 on:
   workflow_dispatch: {}
-  schedule:
-    - cron: '0 7 * * *'   # nightly 07:00 UTC; remove if you prefer manual-only
+  repository_dispatch:
+    types: [analyzers-release]   # ping sent by analyzers/parse-en-us.yml
 
 permissions:
   contents: write
