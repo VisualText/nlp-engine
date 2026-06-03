@@ -1,0 +1,54 @@
+# Install at: VisualText/nlp-engine  ->  .github/workflows/update-analyzers.yml
+#
+# Bumps the `analyzers` submodule to the latest upstream and opens a PR.
+#
+# Why a PR (not commit+tag+release like the analyzers/visualtext-files jobs):
+# nlp-engine has its own version (NLP_ENGINE_VERSION in nlp/main.cpp) and a
+# heavy per-platform release pipeline. A submodule bump should NOT auto-cut an
+# engine release, and shouldn't land on master unreviewed. So this opens a PR
+# you merge; merging it (a human action) DOES trigger the normal build/test
+# workflows, unlike a GITHUB_TOKEN auto-commit.
+#
+# PREREQUISITE: the `analyzers` submodule must actually be attached in the tree
+# (see nlp-engine PR #643 "Re-attach orphaned analyzers submodule"). Until that
+# merges, there is no analyzers/ gitlink for this job to bump.
+
+name: Update analyzers submodule
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '0 7 * * *'   # nightly 07:00 UTC; remove if you prefer manual-only
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  bump-analyzers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Move analyzers to latest upstream
+        run: |
+          git submodule update --remote --recursive analyzers
+          echo "Status:"; git submodule status analyzers
+
+      - name: Open PR if the pointer moved
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: auto/bump-analyzers
+          delete-branch: true
+          title: "Auto: bump analyzers submodule to latest upstream"
+          commit-message: "Auto: bump analyzers submodule to latest upstream"
+          body: |
+            Automated bump of the `analyzers` submodule to the latest upstream
+            commit (which includes whatever has been released into analyzers,
+            e.g. parse-en-us fixes).
+
+            Review the pointer change and merge. If this PR is empty, analyzers
+            was already current.
