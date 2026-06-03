@@ -10,7 +10,11 @@ All rights reserved.
 *
 *******************************************************************************/
 #include "StdAfx.h"
-#ifndef LINUX
+#ifdef LINUX
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+#else
 #include <direct.h>
 #endif
 #include <stdlib.h>
@@ -30,7 +34,10 @@ make_dir(_TCHAR *dir)
 {
 if (!dir || !*dir)
 	return false;
-#ifndef LINUX
+#ifdef LINUX
+if (mkdir(dir, 0755) == 0)
+	return true;
+#else
 if (_tmkdir(dir) == 0)
 	return true;
 #endif
@@ -50,7 +57,10 @@ rm_dir(_TCHAR *dir)
 {
 if (!dir || !*dir)
 	return false;
-#ifndef LINUX
+#ifdef LINUX
+if (rmdir(dir) == 0)
+	return true;
+#else
 if (_trmdir(dir) == 0)
 	return true;
 #endif
