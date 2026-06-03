@@ -58,6 +58,7 @@ jobs:
             apt install -y \
               git build-essential cmake g++ curl unzip zip tar \
               autoconf-archive pkg-config python3 ninja-build libicu66 libicu-dev
+            rm -rf analyzers   # drop the pinned submodule copy; test wants fresh analyzers master
             git clone --recurse-submodules https://github.com/VisualText/analyzers.git analyzers
             mkdir -p build
             cd build
@@ -212,6 +213,10 @@ jobs:
       # ===============================
       # Run Tests
       # ===============================
+      - name: Remove submodule analyzers before fresh checkout (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        run: rm -rf analyzers   # drop the pinned submodule copy so the checkout below lands cleanly
+
       - name: Checkout Analyzers Repo
         if: matrix.id != 'docker-ubuntu-20.04'
         uses: actions/checkout@v4
@@ -243,3 +248,4 @@ jobs:
           mode: addition
           tolerance: same
           output: parse-en-us-diff-lin.txt
+
