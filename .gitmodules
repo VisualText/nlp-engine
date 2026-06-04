@@ -1,6 +1,7 @@
 [submodule "analyzers"]
 	path = analyzers
 	url = https://github.com/VisualText/analyzers.git
+	branch = master
 	
 [submodule "vckpg"]
 	path = vcpkg
