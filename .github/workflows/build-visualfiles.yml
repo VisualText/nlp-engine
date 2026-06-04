@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - uses: papeloto/action-zip@v1
         with:
           files: analyzers/ data/ visualtext/
@@ -19,3 +21,4 @@ jobs:
         with:
           name: visualtext.zip
           path: ${{ github.workspace }}/visualtext.zip
+

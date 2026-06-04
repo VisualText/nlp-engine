@@ -49,7 +49,7 @@ jobs:
         # loads the analyzer's kb/user/*.{kb,dict,kbb} dictionary files) and
         # in cs/libconsh/cg.cpp / lite/nlp_engine.cpp. With Apple libc++ +
         # -std=c++11, directory_iterator behaved differently from
-        # Windows/Linux and the analyzer's user lexicon never got loaded —
+        # Windows/Linux and the analyzer's user lexicon never got loaded �
         # parse-en-us produced "unknown 1" on every word, blowing up the
         # English-test diff. The engine's CMakeLists already sets
         # CMAKE_CXX_STANDARD 17; let that drive macOS too.
@@ -127,6 +127,10 @@ jobs:
           name: nlpengine-compile-libs-macos.zip
           path: nlpengine-compile-libs-macos.zip
 
+      - name: Remove submodule analyzers before fresh checkout
+        run: rm -rf analyzers   # drop the pinned submodule copy so the checkout below lands cleanly
+        shell: bash
+
       - name: Checkout Analyzers repo
         uses: actions/checkout@v4
         with:
@@ -149,3 +153,4 @@ jobs:
           mode: addition
           tolerance: same
           output: parse-en-us-diff-mac.txt
+
