@@ -171,3 +171,10 @@ cmake -G "Visual Studio 16 2019" -A x64 -B build -S . -DCMAKE_TOOLCHAIN_FILE=./v
 ```
 cmake --build build --config Debug
 ```
+
+## Cross-repo release automation
+
+Analyzer / parse-en-us updates auto-propagate across the VisualText repos via
+GitHub `repository_dispatch`. See **[docs/PERCOLATION.md](docs/PERCOLATION.md)**
+for the full map — the chain, event-types, the `CLASSIC_PAT` secret, and the
+`vcpkg` caveat.
