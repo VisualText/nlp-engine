@@ -12,6 +12,17 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
+      - name: Strip VCS metadata from submodules before packaging
+        run: |
+          # Submodule working trees carry a .git pointer file plus repo dotfiles
+          # (.github, .gitmodules, ...); these should not ship inside visualtext.zip.
+          find analyzers data visualtext \
+            \( -name '.git' -o -name '.gitmodules' -o -name '.gitignore' -o -name '.gitattributes' \) \
+            -exec rm -rf {} + 2>/dev/null || true
+          find analyzers data visualtext -type d -name '.github' \
+            -exec rm -rf {} + 2>/dev/null || true
+          echo "Remaining VCS metadata under packaged dirs (expected: none):"
+          find analyzers data visualtext \( -name '.git*' -o -name '.github' \) 2>/dev/null || true
       - uses: papeloto/action-zip@v1
         with:
           files: analyzers/ data/ visualtext/
