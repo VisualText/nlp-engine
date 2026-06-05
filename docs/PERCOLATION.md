@@ -8,6 +8,7 @@ source of truth for the wiring; the individual workflow files link back here.
 
 ```
 parse-en-us ──(v* tag)──► parse-en-us-release ──► analyzers
+                                              ├──► analyzer-templates
                                               └──► visualtext-files
 
 analyzer-templates ──(v* tag)──► analyzer-templates-release ──► nlp-engine-linux
@@ -41,7 +42,7 @@ which has a workflow triggered by `repository_dispatch: types: [<event>]`.
 
 | Sender | Fires on | event-type | Listeners | Sender workflow |
 |---|---|---|---|---|
-| parse-en-us | `v*` tag | `parse-en-us-release` | analyzers, visualtext-files | `dispatch-update-parse-en-us.yml` |
+| parse-en-us | `v*` tag | `parse-en-us-release` | analyzers, analyzer-templates, visualtext-files | `dispatch-update-parse-en-us.yml` |
 | analyzer-templates | `v*` tag | `analyzer-templates-release` | nlp-engine-{linux,windows,mac}, visualtext-files | `dispatch-update-analyzer-templates.yml` |
 | analyzers | end of its bump job | `analyzers-release` | nlp-engine | `parse-en-us.yml` (final step) |
 | nlp-engine | release / build complete | `nlp-engine-release` | nlp-engine-{linux,windows,mac} | `move-assets.yml` |
@@ -51,6 +52,7 @@ which has a workflow triggered by `repository_dispatch: types: [<event>]`.
 | Listener | event-type | Listener workflow | What it does |
 |---|---|---|---|
 | analyzers | `parse-en-us-release` | `parse-en-us.yml` | bump parse-en-us submodule, version-tag, release, then ping nlp-engine |
+| analyzer-templates | `parse-en-us-release` | `update-parse-en-us.yml` | bump parse-en-us submodule, version-tag (pushed with `CLASSIC_PAT` so the tag fires its own `dispatch-update-analyzer-templates.yml`) |
 | visualtext-files | `parse-en-us-release` | `update-parse-en-us.yml` | bump parse-en-us submodule, version-tag, release |
 | visualtext-files | `analyzer-templates-release` | `update-analyzer-templates.yml` | bump analyzer-templates submodule |
 | nlp-engine | `analyzers-release` | `update-analyzers.yml` | open a PR bumping the analyzers submodule (no auto-release) |
@@ -60,6 +62,7 @@ which has a workflow triggered by `repository_dispatch: types: [<event>]`.
 ## Submodule embedding (what bumps what)
 
 - **analyzers** embeds `parse-en-us`, `nlp-tutorials`, `nlpfix-analyzers`.
+- **analyzer-templates** embeds `parse-en-us` (at path `parse-en-us`).
 - **visualtext-files** embeds `parse-en-us` (at `analyzers/parse-en-us`) and `analyzer-templates`.
 - **nlp-engine** embeds `analyzers` and `vcpkg`.
   - ⚠️ **Never auto-bump `vcpkg`** — it is intentionally pinned. Only the
