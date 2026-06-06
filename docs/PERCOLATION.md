@@ -12,9 +12,11 @@ parse-en-us ──(v* tag)──► parse-en-us-release ──► analyzers
                                               ├──► visualtext-files
                                               └──► package-analyzers
 
+(edit an analyzer + push to package-analyzers main) ──► auto v* tag
 package-analyzers ──(v* tag)──► package-analyzers-release ──► npm-package-nlpengine
                                                          └──► py-package-nlpengine
-                                                              (each opens a PR)
+                                                              (each auto-bumps + tags
+                                                               → publishes to npm/PyPI)
 
 analyzer-templates ──(v* tag)──► analyzer-templates-release ──► nlp-engine-linux
                                                             ├──► nlp-engine-windows
@@ -41,14 +43,18 @@ which has a workflow triggered by `repository_dispatch: types: [<event>]`.
 - **Secret:** the dispatch call needs a real credential — the default
   `GITHUB_TOKEN` **cannot trigger workflows in other repos** by design. We use a
   classic PAT (`repo` scope) stored as the secret **`CLASSIC_PAT`** in every
-  **sender** repo. Listener-only repos don't need it.
+  **sender** repo. Listeners that only bump a submodule and stop don't need it —
+  but `npm-package-nlpengine` and `py-package-nlpengine` do, because their
+  listener pushes a `v*` tag whose job is to *trigger* `publish.yml` (a
+  `GITHUB_TOKEN`-pushed tag wouldn't). Simplest is to make `CLASSIC_PAT` an
+  organization secret so every repo has it.
 
 ## Who sends what
 
 | Sender | Fires on | event-type | Listeners | Sender workflow |
 |---|---|---|---|---|
 | parse-en-us | `v*` tag | `parse-en-us-release` | analyzers, analyzer-templates, visualtext-files, package-analyzers | `dispatch-update-parse-en-us.yml` |
-| package-analyzers | `v*` tag | `package-analyzers-release` | npm-package-nlpengine, py-package-nlpengine | `dispatch-update-package-analyzers.yml` |
+| package-analyzers | `v*` tag (auto-created by `tag-on-push.yml` on any analyzer edit pushed to main, or by `update-parse-en-us.yml` on a parse-en-us release) | `package-analyzers-release` | npm-package-nlpengine, py-package-nlpengine | `dispatch-update-package-analyzers.yml` |
 | analyzer-templates | `v*` tag | `analyzer-templates-release` | nlp-engine-{linux,windows,mac}, visualtext-files | `dispatch-update-analyzer-templates.yml` |
 | analyzers | end of its bump job | `analyzers-release` | nlp-engine | `parse-en-us.yml` (final step) |
 | nlp-engine | release / build complete | `nlp-engine-release` | nlp-engine-{linux,windows,mac} | `move-assets.yml` |
@@ -61,8 +67,8 @@ which has a workflow triggered by `repository_dispatch: types: [<event>]`.
 | analyzer-templates | `parse-en-us-release` | `update-parse-en-us.yml` | bump parse-en-us submodule, version-tag (pushed with `CLASSIC_PAT` so the tag fires its own `dispatch-update-analyzer-templates.yml`) |
 | visualtext-files | `parse-en-us-release` | `update-parse-en-us.yml` | bump parse-en-us submodule, version-tag, release |
 | package-analyzers | `parse-en-us-release` | `update-parse-en-us.yml` | bump parse-en-us submodule, version-tag, release (the `v*` tag fires its own `dispatch-update-package-analyzers.yml`) |
-| npm-package-nlpengine | `package-analyzers-release` | `update-analyzers.yml` | open a PR bumping the `analyzers` submodule (no auto-publish) |
-| py-package-nlpengine | `package-analyzers-release` | `update-analyzers.yml` | open a PR bumping the `NLPPlus/analyzers` submodule (no auto-publish) |
+| npm-package-nlpengine | `package-analyzers-release` | `update-analyzers.yml` | bump the `analyzers` submodule, `npm version patch`, push v* tag → `publish.yml` publishes to npm |
+| py-package-nlpengine | `package-analyzers-release` | `update-analyzers.yml` | bump the `NLPPlus/analyzers` submodule, push next v* tag → `publish.yml` publishes to PyPI |
 | visualtext-files | `analyzer-templates-release` | `update-analyzer-templates.yml` | bump analyzer-templates submodule |
 | nlp-engine | `analyzers-release` | `update-analyzers.yml` | open a PR bumping the analyzers submodule (no auto-release) |
 | nlp-engine-{linux,windows,mac} | `analyzer-templates-release` | `update-analyzer-templates.yml` | bump analyzer-templates submodule |
@@ -96,10 +102,16 @@ which has a workflow triggered by `repository_dispatch: types: [<event>]`.
   pipeline, so a submodule bump shouldn't auto-cut an engine release or land on
   `master` unreviewed. Merging the PR (a human action) triggers the normal
   build/test jobs.
-- **npm-package-nlpengine / py-package-nlpengine** likewise open a **PR** (not an
-  auto-release): each has its own package version and publishes to npm / PyPI via
-  its `publish.yml`. A `package-analyzers` submodule bump must never auto-publish
-  — a human reviews and merges the PR, then publishes deliberately.
+- **npm-package-nlpengine / py-package-nlpengine** are **fully automatic**: on a
+  `package-analyzers-release` ping, `update-analyzers.yml` bumps the analyzers
+  submodule, bumps the version (npm: `npm version patch`; py: the new git tag *is*
+  the version via setuptools_scm) and pushes a `v*` tag with `CLASSIC_PAT`. That
+  tag fires each package's `publish.yml`, which builds and publishes to npm
+  (OIDC trusted publisher) / PyPI (trusted publishing). No human step — editing an
+  analyzer in `package-analyzers` lands new releases on both registries.
+  - ⚠️ The tag push **must** use `CLASSIC_PAT`; a `GITHUB_TOKEN`-pushed tag does
+    not trigger `publish.yml`. So `CLASSIC_PAT` is required as a secret in
+    `npm-package-nlpengine` and `py-package-nlpengine` (not just the senders).
 
 ## Testing the chain without a real release
 
