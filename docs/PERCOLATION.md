@@ -9,7 +9,12 @@ source of truth for the wiring; the individual workflow files link back here.
 ```
 parse-en-us ──(v* tag)──► parse-en-us-release ──► analyzers
                                               ├──► analyzer-templates
-                                              └──► visualtext-files
+                                              ├──► visualtext-files
+                                              └──► package-analyzers
+
+package-analyzers ──(v* tag)──► package-analyzers-release ──► npm-package-nlpengine
+                                                         └──► py-package-nlpengine
+                                                              (each opens a PR)
 
 analyzer-templates ──(v* tag)──► analyzer-templates-release ──► nlp-engine-linux
                                                             ├──► nlp-engine-windows
@@ -42,7 +47,8 @@ which has a workflow triggered by `repository_dispatch: types: [<event>]`.
 
 | Sender | Fires on | event-type | Listeners | Sender workflow |
 |---|---|---|---|---|
-| parse-en-us | `v*` tag | `parse-en-us-release` | analyzers, analyzer-templates, visualtext-files | `dispatch-update-parse-en-us.yml` |
+| parse-en-us | `v*` tag | `parse-en-us-release` | analyzers, analyzer-templates, visualtext-files, package-analyzers | `dispatch-update-parse-en-us.yml` |
+| package-analyzers | `v*` tag | `package-analyzers-release` | npm-package-nlpengine, py-package-nlpengine | `dispatch-update-package-analyzers.yml` |
 | analyzer-templates | `v*` tag | `analyzer-templates-release` | nlp-engine-{linux,windows,mac}, visualtext-files | `dispatch-update-analyzer-templates.yml` |
 | analyzers | end of its bump job | `analyzers-release` | nlp-engine | `parse-en-us.yml` (final step) |
 | nlp-engine | release / build complete | `nlp-engine-release` | nlp-engine-{linux,windows,mac} | `move-assets.yml` |
@@ -54,6 +60,9 @@ which has a workflow triggered by `repository_dispatch: types: [<event>]`.
 | analyzers | `parse-en-us-release` | `parse-en-us.yml` | bump parse-en-us submodule, version-tag, release, then ping nlp-engine |
 | analyzer-templates | `parse-en-us-release` | `update-parse-en-us.yml` | bump parse-en-us submodule, version-tag (pushed with `CLASSIC_PAT` so the tag fires its own `dispatch-update-analyzer-templates.yml`) |
 | visualtext-files | `parse-en-us-release` | `update-parse-en-us.yml` | bump parse-en-us submodule, version-tag, release |
+| package-analyzers | `parse-en-us-release` | `update-parse-en-us.yml` | bump parse-en-us submodule, version-tag, release (the `v*` tag fires its own `dispatch-update-package-analyzers.yml`) |
+| npm-package-nlpengine | `package-analyzers-release` | `update-analyzers.yml` | open a PR bumping the `analyzers` submodule (no auto-publish) |
+| py-package-nlpengine | `package-analyzers-release` | `update-analyzers.yml` | open a PR bumping the `NLPPlus/analyzers` submodule (no auto-publish) |
 | visualtext-files | `analyzer-templates-release` | `update-analyzer-templates.yml` | bump analyzer-templates submodule |
 | nlp-engine | `analyzers-release` | `update-analyzers.yml` | open a PR bumping the analyzers submodule (no auto-release) |
 | nlp-engine-{linux,windows,mac} | `analyzer-templates-release` | `update-analyzer-templates.yml` | bump analyzer-templates submodule |
@@ -62,6 +71,12 @@ which has a workflow triggered by `repository_dispatch: types: [<event>]`.
 ## Submodule embedding (what bumps what)
 
 - **analyzers** embeds `parse-en-us`, `nlp-tutorials`, `nlpfix-analyzers`.
+- **package-analyzers** embeds `parse-en-us` (at path `parse-en-us`). It also
+  holds the `address-parser`, `emailaddress`, `links`, `telephone` analyzers
+  directly. This is the shared analyzer set for the npm/Python packages —
+  distinct from the `analyzers` repo above.
+- **npm-package-nlpengine** embeds `package-analyzers` at path `analyzers`.
+- **py-package-nlpengine** embeds `package-analyzers` at path `NLPPlus/analyzers`.
 - **analyzer-templates** embeds `parse-en-us` (at path `parse-en-us`).
 - **visualtext-files** embeds `parse-en-us` (at `analyzers/parse-en-us`) and `analyzer-templates`.
 - **nlp-engine** embeds `analyzers` and `vcpkg`.
@@ -81,6 +96,10 @@ which has a workflow triggered by `repository_dispatch: types: [<event>]`.
   pipeline, so a submodule bump shouldn't auto-cut an engine release or land on
   `master` unreviewed. Merging the PR (a human action) triggers the normal
   build/test jobs.
+- **npm-package-nlpengine / py-package-nlpengine** likewise open a **PR** (not an
+  auto-release): each has its own package version and publishes to npm / PyPI via
+  its `publish.yml`. A `package-analyzers` submodule bump must never auto-publish
+  — a human reviews and merges the PR, then publishes deliberately.
 
 ## Testing the chain without a real release
 
