@@ -40,6 +40,7 @@ All rights reserved.
 #include "ifile.h"			// 12/17/98 AM.
 #include "lite/Arun.h"		// 06/08/00 AM.
 #include "var.h"				// 08/31/00 AM.
+#include "ivar.h"				// _xVAR("attr") node attr lookup.	// 06/07/26 DD.
 #include "pat.h"
 
 // For pretty printing the algorithm name.
@@ -2449,7 +2450,8 @@ else
 			bool succ = modeFails(elist,htab,					// 11/09/99 AM.
 								 pn->getName(), pn->getType(),	// 10/18/99 AM.
 								 ielt->getDeaccent(),				// 01/28/05 AM.
-								 ielt->getDejunk()					// 09/09/11 AM.
+								 ielt->getDejunk(),					// 09/09/11 AM.
+								 pn										// 06/07/26 DD.
 								 );
 //			if (!succ)								// FIX.			// 12/15/99 AM.
 //				return false;						// FIX.			// 12/15/99 AM.
@@ -2577,7 +2579,8 @@ else if (!_tcscmp(name, _T("_xWILD")))						// Restricted wildcard.
 			if (modeMatch1(nname, typ,
 									delt->getData()->getStr(),	// 12/04/98 AM
 									deaccent,						// 01/28/05 AM.
-									dejunk							// 09/09/11 AM.
+									dejunk,							// 09/09/11 AM.
+									pn									// 06/07/26 DD.
 									))
 				return true;
 			}
@@ -2596,7 +2599,8 @@ else if (!_tcscmp(name, _T("_xWILD")))						// Restricted wildcard.
 			if (modeMatch1(nname, typ,
 								delt->getData()->getStr(),	// 12/04/98 AM
 								deaccent,						// 01/28/05 AM.
-								dejunk							// 09/09/11 AM.
+								dejunk,							// 09/09/11 AM.
+								pn									// 06/07/26 DD.
 								))
 				return false;
 			}
@@ -2638,11 +2642,16 @@ bool Pat::modeMatch1(
 	enum Pntype ntype,		// Node type.
 	_TCHAR *ename,					// One of rule element names from a match/fail list.
 	bool deaccent,				// 01/28/05 AM.
-	bool dejunk					// 09/09/11 AM.
+	bool dejunk,				// 09/09/11 AM.
+	Pn *pn						// Node, for _xVAR("attr") lookup.	// 06/07/26 DD.
 	)
 {
 if (!nname || !ename)
 	return false;
+
+// _xVAR("attr"): match if node has attribute "attr" with a value.	// 06/07/26 DD.
+if (!_tcsncmp(ename, _T("_xVAR("), 6))
+	return xvarMatch(ename, pn);
 
 if (!_tcscmp(ename, _T("_xALPHA")))	// Alpha token.
 	return (ntype == PNALPHA) ? true : false;							// 07/20/04 AM.
@@ -2684,6 +2693,55 @@ else			// LITERAL MATCH.
 	else
 		return deaccentMatch(ename,nname);								// 01/28/05 AM.
 	}
+}
+
+
+/********************************************
+* FN:		XVARMATCH
+* CR:		06/07/26 DD.
+* SUBJ:	Match a _xVAR("attr") match-list entry against a node.
+* RET:	True if the node has attribute "attr" with a value.
+* NOTE:	ename has the form _xVAR("attr") (or _xVAR(attr)).  We pull out the
+*			attribute name between the parens, strip any surrounding double
+*			quotes, then test for the named attribute on the node.
+********************************************/
+
+bool Pat::xvarMatch(
+	_TCHAR *ename,				// Match-list entry of form _xVAR("attr").
+	Pn *pn						// Node being matched.
+	)
+{
+if (!ename || !pn)
+	return false;
+
+// Find the attribute name between the parens.
+_TCHAR *open = _tcschr(ename, '(');
+if (!open)
+	return false;
+_TCHAR *start = open + 1;
+
+// Copy out the attribute name, up to the closing paren.
+_TCHAR buf[MAXSTR];
+_TCHAR *out = &(buf[0]);
+_TCHAR *end = &(buf[MAXSTR - 1]);
+_TCHAR *p = start;
+while (*p && *p != ')' && out < end)
+	*out++ = *p++;
+*out = '\0';
+
+// Strip a surrounding pair of double quotes, if present.
+_TCHAR *attr = &(buf[0]);
+long len = (long) _tcsclen(attr);
+if (len >= 2 && attr[0] == '"' && attr[len-1] == '"')
+	{
+	attr[len-1] = '\0';
+	++attr;
+	}
+
+if (!*attr)
+	return false;			// No attribute name given.
+
+return Ivar::nodeVarhasval(pn, attr);
 }
 
 
@@ -2741,7 +2799,8 @@ bool Pat::modeMatches(
 	_TCHAR *nname,							// Node name.
 	enum Pntype typ,						// Node type.
 	bool deaccent,															// 01/28/05 AM.
-	bool dejunk																// 09/09/11 AM.
+	bool dejunk,															// 09/09/11 AM.
+	Pn *pn									// _xVAR("attr") lookup.	// 06/07/26 DD.
 	)
 {
 Delt<Iarg> *delt;
@@ -2751,7 +2810,7 @@ if (htab && modeHash(nname, htab,				// 11/09/99 AM.
 	return true;										// 11/09/99 AM.
 for (delt = list->getFirst(); delt; delt = delt->Right())
 	{
-	if (modeMatch1(nname, typ, delt->getData()->getStr(), deaccent,dejunk))
+	if (modeMatch1(nname, typ, delt->getData()->getStr(), deaccent,dejunk,pn))
 		return true;
 	}
 return false;
@@ -2771,7 +2830,8 @@ bool Pat::modeFails(
 	_TCHAR *nname,							// Node name.
 	enum Pntype typ,						// Node type.
 	bool deaccent,															// 01/28/05 AM.
-	bool dejunk																// 09/09/11 AM.
+	bool dejunk,															// 09/09/11 AM.
+	Pn *pn									// _xVAR("attr") lookup.	// 06/07/26 DD.
 	)
 {
 Delt<Iarg> *delt;
@@ -2783,7 +2843,8 @@ for (delt = list->getFirst(); delt; delt = delt->Right())
 	{
 	if (modeMatch1(nname, typ, delt->getData()->getStr(),
 			deaccent,														// 01/28/05 AM.
-			dejunk															// 09/09/11 AM.
+			dejunk,															// 09/09/11 AM.
+			pn																// 06/07/26 DD.
 			))
 		return false;
 	}
@@ -2957,7 +3018,8 @@ while (node)		// Look down the subtree.
 						 pn->getName(),
 						 pn->getType(),
 						 deaccent,							// 01/28/05 AM.
-						 dejunk								// 09/09/11 AM.
+						 dejunk,								// 09/09/11 AM.
+						 pn									// 06/07/26 DD.
 						 ))
 		return failmode;						// Fail/succeed appropriately.
 
@@ -3049,7 +3111,8 @@ if (node == 0)
 Pn *pn = node->getData();
 if (modeMatches(elist,htab, pn->getName(), pn->getType(),
 			deaccent,														// 01/28/05 AM.
-			dejunk															// 09/09/11 AM.
+			dejunk,															// 09/09/11 AM.
+			pn																// 06/07/26 DD.
 			))
 	return true;
 

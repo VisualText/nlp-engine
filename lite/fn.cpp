@@ -588,6 +588,7 @@ switch (fnid)																	// 12/21/01 AM.
 	case FNrfasugg:
 	case FNrfaunary:
 	case FNrfavar:
+	case FNrfaxvar:															// 06/07/26 DD.
 	case FNrfbarg:
 	case FNrfbdecl:															// 12/19/01 AM.
 	case FNrfbdecls:															// 12/19/01 AM.

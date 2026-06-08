@@ -240,6 +240,7 @@ enum funcDef
 	FNrfasugg,
 	FNrfaunary,
 	FNrfavar,
+	FNrfaxvar,				// 06/07/26 DD.
 	FNrfbarg,
 	FNrfbdecl,				// 12/19/01 AM.
 	FNrfbdecls,				// 12/19/01 AM.

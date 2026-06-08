@@ -1,0 +1,16 @@
+###############################################
+# FILE:     XVAR.PAT
+# SUBJ:     Merge _xVAR("attr") into a single nonliteral match-list token.
+# NOTE:     Runs after bigtok forms _NONLIT/_STR and whitespace is zapped,
+#           and before list collects parenthesized match lists, so the inner
+#           parens of _xVAR("attr") never reach the list grammar.  The merged
+#           token _xVAR("attr") then flows through as one restricted-wildcard
+#           match-list entry; Pat::modeMatch1 tests the node attribute at
+#           runtime.
+###############################################
+
+@POST
+	rfaxvar(1,3)
+	single()
+@RULES
+_NONLIT [base] <- _NONLIT \( _STR \) @@

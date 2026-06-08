@@ -310,7 +310,12 @@ public:
 		enum Pntype ntype,		// Node type.
 		_TCHAR *ename,					// One of rule elt names from a match/fail list.
 		bool deaccent,						// 01/28/05 AM.
-		bool dejunk                               // 09/09/11 AM.
+		bool dejunk,                              // 09/09/11 AM.
+		Pn *pn = 0					// Node, for _xVAR("attr") attr lookup.	// 06/07/26 DD.
+		);
+	static bool xvarMatch(		// _xVAR("attr") match.		// 06/07/26 DD.
+		_TCHAR *ename,				// Match-list entry of form _xVAR("attr").
+		Pn *pn						// Node being matched.
 		);
 	static bool modeHash(			// 12/12/98 AM.
 		_TCHAR *nname,				// Node name.
@@ -324,7 +329,8 @@ public:
 		_TCHAR *nname,							// Node name.
 		enum Pntype typ,						// Node type.
 		bool deaccent,										// 01/28/05 AM.
-		bool dejunk                               // 09/09/11 AM.
+		bool dejunk,                              // 09/09/11 AM.
+		Pn *pn = 0					// Node, for _xVAR("attr") attr lookup.	// 06/07/26 DD.
 		);
 	static bool modeFails(						// 10/16/99 AM.
 		Dlist<Iarg> *list,					// EXCEPTS list.
@@ -332,7 +338,8 @@ public:
 		_TCHAR *nname,							// Node name.
 		enum Pntype typ,						// Node type.
 		bool deaccent,										// 01/28/05 AM.
-		bool dejunk                               // 09/09/11 AM.
+		bool dejunk,                              // 09/09/11 AM.
+		Pn *pn = 0					// Node, for _xVAR("attr") attr lookup.	// 06/07/26 DD.
 		);
 	static bool deaccentMatch(	// 01/28/05 AM.
 		_TCHAR *ename,

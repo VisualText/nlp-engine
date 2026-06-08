@@ -644,6 +644,87 @@ return true;
 
 
 /********************************************
+* FN:		POSTRFAXVAR
+* CR:		06/07/26 DD.
+* SUBJ:	Merge _xVAR ( "attr" ) into a single match-list token.
+* RET:	True if ok, else false.
+* RULE:	_NONLIT <- _NONLIT \( _STR \) @@
+* FORM:	rfaxvar(1,3) -- arg 1 is the nonliteral, arg 3 is the string.
+* NOTE:	Builds the combined name _xVAR("attr") so the restricted-wildcard
+*			match list carries it as one entry.  At runtime Pat::modeMatch1
+*			recognizes the _xVAR(...) form and tests the node's attribute.
+********************************************/
+
+bool PostRFA::postRFAxvar(
+	Delt<Iarg> *args,
+	Nlppp *nlppp
+	)
+{
+Node<Pn> *n1 = 0, *n2 = 0;
+
+if (!args_0to2(_T("rfaxvar"),args,nlppp->collect_,nlppp->sem_, /*DU*/ n1,n2))
+	return false;
+
+if (!n1 || !n2)
+	{
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rfaxvar: Two args required.]") << std::ends;
+	return errOut(&gerrStr,false);
+	}
+
+if (nlppp->sem_)
+	{
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rfaxvar: Semantic object already built.]") << std::ends;
+	return errOut(&gerrStr,false);
+	}
+
+// Get the nonliteral name (eg, _xVAR) and the string content (eg, attr).
+RFASem *sem1, *sem2;
+if (!(sem1 = (RFASem *) n1->getData()->getSem())
+ || !(sem2 = (RFASem *) n2->getData()->getSem()))
+	{
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rfaxvar: Missing semantic object.]") << std::ends;
+	return errOut(&gerrStr,false);
+	}
+
+_TCHAR *name1 = sem1->getName();		// Eg, _xVAR
+_TCHAR *name2 = sem2->getName();		// Eg, attr (string content, no quotes)
+if (!name1 || !name2)
+	{
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rfaxvar: Empty name.]") << std::ends;
+	return errOut(&gerrStr,false);
+	}
+
+// Build the combined match-list token:  name1("name2")
+_TCHAR buf[MAXSTR];
+_TCHAR *ptr = &(buf[0]);
+long count = MAXSTR;
+buf[0] = '\0';
+if (!strcat_e(ptr, name1, count)
+ || !strcat_e(ptr, _T("(\""), count)
+ || !strcat_e(ptr, name2, count)
+ || !strcat_e(ptr, _T("\")"), count))
+	{
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[rfaxvar: Token too long.]") << std::ends;
+	return errOut(&gerrStr,false);
+	}
+
+Sym *sym = nlppp->parse_->getSym(buf);
+assert(sym);
+_TCHAR *name = sym->getStr();
+
+RFASem *rfasem = new RFASem(name);
+nlppp->sem_ = rfasem;
+
+return true;
+}
+
+
+/********************************************
 * FN:		POSTRFASTR
 * CR:		11/19/98 AM.
 * SUBJ:	Create a string semantic object for RFA.
