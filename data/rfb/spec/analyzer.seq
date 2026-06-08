@@ -3,7 +3,8 @@ tokenize		#
 line		# 
 pat	retok	# 
 pat	bigtok	# 
-pat	x_white	# 
+pat	x_white	#
+pat	xvar	# merge _xVAR("attr") into one nonliteral token
 pat	nlppp	# comment here
 pat	un_mark	# comment here
 pat	list	# 
