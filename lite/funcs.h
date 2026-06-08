@@ -234,6 +234,7 @@ _T("rfastr"),
 _T("rfasugg"),
 _T("rfaunary"),
 _T("rfavar"),
+_T("rfaxvar"),				// 06/07/26 DD.
 _T("rfbarg"),
 _T("rfbdecl"),				// 12/19/01 AM.
 _T("rfbdecls"),				// 12/19/01 AM.

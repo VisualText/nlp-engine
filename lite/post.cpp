@@ -459,6 +459,8 @@ if (!strcmp_i(func, _T("rfafloat")))
 	return PostRFA::postRFAfloat(args,nlppp);							// 08/19/01 AM.
 else if (!strcmp_i(func, _T("rfanonlit")))
 	return PostRFA::postRFAnonlit(args,nlppp);
+else if (!strcmp_i(func, _T("rfaxvar")))									// 06/07/26 DD.
+	return PostRFA::postRFAxvar(args,nlppp);
 else if (!strcmp_i(func, _T("rfastr")))
 	return PostRFA::postRFAstr(args,nlppp);
 else if (!strcmp_i(func, _T("rfaarg")))

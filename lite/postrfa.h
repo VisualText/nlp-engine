@@ -44,6 +44,10 @@ public:
 		Delt<Iarg> *args,
 		Nlppp *nlppp															// 11/19/99 AM.
 		);
+	static bool postRFAxvar(													// 06/07/26 DD.
+		Delt<Iarg> *args,
+		Nlppp *nlppp
+		);
 	static bool postRFAstr(
 		Delt<Iarg> *args,
 		Nlppp *nlppp															// 11/19/99 AM.
