@@ -64,7 +64,6 @@ public:
 	static void rfa_retok(Ana &rfa);
 	static void rfa_bigtok(Ana &rfa);
 	static void rfa_components(Ana &rfa);
-	static void rfa_xvar(Ana &rfa);				// 06/07/26 DD.
 	static void rfa_list(Ana &rfa);
 	static void rfa_action(Ana &rfa);
 	static void rfa_pair(Ana &rfa);

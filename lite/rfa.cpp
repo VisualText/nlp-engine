@@ -175,9 +175,6 @@ rfa_components(rfa);
 rfa_excise(_T("_xWHITE"), _T("x_white"), rfa);			// 11/20/98 AM.
 //rfa_x_white(rfa);									// 11/20/98 AM.
 
-// PASS 7.5: Merge _xVAR ( "attr" ) into one nonliteral token.	// 06/07/26 DD.
-rfa_xvar(rfa);
-
 // PASS 8: Parenthesized lists of items.
 rfa_list(rfa);
 
@@ -1381,89 +1378,6 @@ if (rfa.Verbose())
 Seqn *pass;
 pass = new Seqn(0,0, rules, _T("listarg"));	// Name recurse.	// 11/04/99 AM.
 return pass;
-}
-
-
-/********************************************
-* FN:		RFA_XVAR
-* CR:		06/07/26 DD.
-* SUBJ:	RFA pass to merge _xVAR("attr") into a single nonliteral token.
-* NOTE:	Runs after whitespace is zapped and before parenthesized lists are
-*			collected, so the inner parens of _xVAR("attr") never reach the
-*			list grammar.  The combined token _xVAR("attr") then flows through
-*			as a single restricted-wildcard match-list entry.
-********************************************/
-
-void RFA::rfa_xvar(Ana &rfa)
-{
-Delt<Seqn> *delt;
-Algo *algo;
-
-Dlist<Irule> *rules;					// List of rules.
-rules = new Dlist<Irule>();		// Create empty rules list.
-
-// Convenience variables for each rule.
-Dlist<Ielt> *phr;						// Rule phrase.
-Isugg *sugg;							// Suggested elt.
-Dlist<Iaction> *pres;					// List of pre actions.
-Dlist<Iaction> *posts;					// List of post actions.
-Delt<Ielt> *trig;						// Trigger elt.
-Iarg *arg1, *arg2;
-Dlist<Iarg> *args;
-
-pres = 0;
-posts = 0;
-trig = 0;
-
-///////////////////////////////////////
-// RULE  1:   _NONLIT <- _NONLIT \( _STR \) @@
-///////////////////////////////////////
-// Action:  rfaxvar(1,3)
-//				where 1 is the nonliteral (eg, _xVAR) and 3 is the string.
-
-_TCHAR *func;
-func = _T("rfaxvar");
-arg1 = new Iarg(_T("1"));
-arg2 = new Iarg(_T("3"));
-args = new Dlist<Iarg>();
-args->rpush(arg1);
-args->rpush(arg2);
-posts = Iaction::makeDlist(func, args);
-
-// Do the reduce also.
-func = _T("single");
-Iaction::addDelt(posts, func, 0);
-
-phr = new Dlist<Ielt>();					// Create rule phrase.
-Ielt::addDelt(phr, _T("_NONLIT"),0,1,1);	// Add element to phrase.
-Ielt::addDelt(phr, _T("("),0,1,1);			// Add element to phrase.
-Ielt::addDelt(phr, _T("_STR"),0,1,1);		// Add element to phrase.
-Ielt::addDelt(phr, _T(")"),0,1,1);			// Add element to phrase.
-// Create and attach list of pairs.
-
-sugg = new Isugg(_T("_NONLIT"));			// Create suggested elt.
-sugg->setBase(true);
-// Create and attach list of pairs.
-
-Irule::addDelt(rules, phr, sugg, 0, 0, posts);	// Create and add rule to list.
-
-///////////////////////////////////////
-//      END OF RULES
-///////////////////////////////////////
-
-if (rfa.Verbose())
-	{
-	*gout << *rules;
-	*gout << _T("******************************") << std::endl;
-	}
-
-// Attach pass rules to current pass.
-algo = new Pat();
-algo->setDebug(RFA::Debug());
-delt = Seqn::makeDelt(algo, _T("xvar"), rules);
-Seqn *seqn = delt->getData();
-seqn->setAlgoname(_T("nlp"));
-rfa.addSeq(delt);
 }
 
 
