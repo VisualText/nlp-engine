@@ -28,6 +28,7 @@ All rights reserved.
 #include <string>
 #include <cstdint>
 #include <set>
+#include <list>
 
 #define FNAMESIZ 256
 #define NAMESIZ  256
@@ -233,17 +234,27 @@ public:
 	CONCEPT *addConceptByPath(const char *line, std::vector<std::pair<int,int>> conIndices);
 
 	// Lazy per-word loading from a sorted "*full.kbb"/"*full.dict" file.	// 06/10/26.
+	// One open "*full" file. Several can be open at once (eg en-full.dict plus
+	// en-firstnames-full.dict), so each kind is kept in a list below. // 06/11/26.
+	struct FullFile {
+		std::_t_ifstream stream;	// The open file.
+		std::streamoff   size = 0;	// Byte length (binary-search upper bound).
+		std::string      file;		// Path (parseDictLine messages / diagnostics).
+		CONCEPT         *root = 0;	// kbb only: "dictionary" concept words hang off.
+	};
 	bool stemEndsWithFull(const std::string &stem);
 	bool openFullKBB(const std::string &file);
 	bool openFullDict(const std::string &file);
-	bool kbbFileSorted();
-	bool dictFileSorted();
+	bool kbbFileSorted(FullFile &f);
+	bool dictFileSorted(FullFile &f);
 	bool parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, int lineCount);
-	bool nextKBBKey(std::streamoff &keyStart, std::string &key, std::streamoff &afterKey);
-	bool nextDictKey(std::streamoff &keyStart, std::string &key, std::streamoff &afterKey);
+	bool nextKBBKey(FullFile &f, std::streamoff &keyStart, std::string &key, std::streamoff &afterKey);
+	bool nextDictKey(FullFile &f, std::streamoff &keyStart, std::string &key, std::streamoff &afterKey);
 	CONCEPT *findFullWord(_TCHAR *str);
 	CONCEPT *findFullKBBWord(_TCHAR *str);
 	CONCEPT *findFullDictWord(_TCHAR *str);
+	CONCEPT *searchKBBFile(FullFile &f, _TCHAR *str);
+	CONCEPT *searchDictFile(FullFile &f, _TCHAR *str);
 	void cacheWordCon(_TCHAR *name, CONCEPT *con);
 	void logMissingWord(_TCHAR *str);
 	// Directory for missing-words.log (eg the per-file output "*_log" folder).
@@ -643,14 +654,10 @@ private:
 	// Lazy "*full" dictionary support: instead of loading a whole "*full.kbb"
 	// or "*full.dict" into the KB, keep the (sorted) file open and binary-search
 	// it for one word at a time, the first time that word is needed.	// 06/10/26.
-	std::_t_ifstream fullKBBStream_;	// Open "*full.kbb" (indented format).
-	std::_t_ifstream fullDictStream_;	// Open "*full.dict" (flat format).
-	bool fullKBBOpen_  = false;
-	bool fullDictOpen_ = false;
-	std::streamoff fullKBBSize_  = 0;
-	std::streamoff fullDictSize_ = 0;
-	CONCEPT *fullKBBRoot_ = 0;			// "dictionary" root for kbb words.
-	std::string fullDictFile_;			// Path, for parseDictLine error messages.
+	// Several "*full" files can be open at once (eg en-full.dict plus
+	// en-firstnames-full.dict); FullFile is defined above.			// 06/11/26.
+	std::list<FullFile> fullKBBs_;		// Open "*full.kbb" files (indented format).
+	std::list<FullFile> fullDicts_;		// Open "*full.dict" files (flat format).
 
 	// Negative cache + log of words not found in any "*full" file, so each
 	// unknown word is searched once and recorded once for later KB curation.
