@@ -96,7 +96,7 @@ _soRULES [base layer=(_startMark)] <- \@ RULES [t] @@
 	rfanonlit(2)
 	single()
 @RULES
-_NONLIT [base] <- \_ _xWILD [s one match=(_xALPHA _xEMOJI)] @@
+_NONLIT [base] <- \_ _xWILD [s plus match=(_xALPHA _xEMOJI _xNUM)] @@	# 06/11/26 DD. plus + _xNUM: allow digits in names (_B2, _34, _C25g).
 
 @RULES
 _ARROW [base] <- \< \- @@
