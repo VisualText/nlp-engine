@@ -25,6 +25,9 @@ All rights reserved.
 
 #include <vector>
 #include <filesystem>
+#include <string>
+#include <cstdint>
+#include <set>
 
 #define FNAMESIZ 256
 #define NAMESIZ  256
@@ -223,7 +226,28 @@ public:
 	bool openKBB(std::vector<std::filesystem::path>& files);
 	bool readKBBs(std::vector<std::filesystem::path> files);
 	bool readKBB(std::string file);
+	// Parse a single line of a "*.kbb" file (indented "dictionary" format) into
+	// the KB. cons/index carry the indentation state between calls; root is the
+	// parent for top-level (indent 0) concepts.							// 06/10/26.
+	void parseKBBLine(_TCHAR *buf, std::vector<CONCEPT *> &cons, int32_t &index, CONCEPT *root);
 	CONCEPT *addConceptByPath(const char *line, std::vector<std::pair<int,int>> conIndices);
+
+	// Lazy per-word loading from a sorted "*full.kbb"/"*full.dict" file.	// 06/10/26.
+	bool stemEndsWithFull(const std::string &stem);
+	bool openFullKBB(const std::string &file);
+	bool openFullDict(const std::string &file);
+	bool kbbFileSorted();
+	bool dictFileSorted();
+	bool parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, int lineCount);
+	bool nextKBBKey(std::streamoff &keyStart, std::string &key, std::streamoff &afterKey);
+	bool nextDictKey(std::streamoff &keyStart, std::string &key, std::streamoff &afterKey);
+	CONCEPT *findFullWord(_TCHAR *str);
+	CONCEPT *findFullKBBWord(_TCHAR *str);
+	CONCEPT *findFullDictWord(_TCHAR *str);
+	void cacheWordCon(_TCHAR *name, CONCEPT *con);
+	void logMissingWord(_TCHAR *str);
+	// Directory for missing-words.log (eg the per-file output "*_log" folder).
+	void setMissingLogDir(const _TCHAR *dir);
 
 	void outputTime(_TCHAR *timeMsg, clock_t s_time);
 
@@ -615,6 +639,26 @@ private:
 	_TCHAR kbdir_[MAXPATH];
 
 	std::_t_ifstream allDictStream_;
+
+	// Lazy "*full" dictionary support: instead of loading a whole "*full.kbb"
+	// or "*full.dict" into the KB, keep the (sorted) file open and binary-search
+	// it for one word at a time, the first time that word is needed.	// 06/10/26.
+	std::_t_ifstream fullKBBStream_;	// Open "*full.kbb" (indented format).
+	std::_t_ifstream fullDictStream_;	// Open "*full.dict" (flat format).
+	bool fullKBBOpen_  = false;
+	bool fullDictOpen_ = false;
+	std::streamoff fullKBBSize_  = 0;
+	std::streamoff fullDictSize_ = 0;
+	CONCEPT *fullKBBRoot_ = 0;			// "dictionary" root for kbb words.
+	std::string fullDictFile_;			// Path, for parseDictLine error messages.
+
+	// Negative cache + log of words not found in any "*full" file, so each
+	// unknown word is searched once and recorded once for later KB curation.
+	std::set<std::string> fullMissCache_;	// Run-wide: words absent, skip re-search.
+	std::set<std::string> loggedThisFile_;	// Per-file: words already in this file's log.
+	std::_t_ofstream fullMissLog_;
+	bool fullMissLogOpen_ = false;
+	std::string missingLogDir_;			// Where to write missing-words.log (else kbdir_).
 
 	bool dirty_;					// KB dirty flag.						// 05/12/00 AM.
 
