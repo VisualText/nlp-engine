@@ -520,8 +520,8 @@ return true;
 * CR:		11/10/98 AM.
 * SUBJ:	Create a semantic object to hold nonlit node's proper name.
 * RET:	True if ok, else false.
-* RULE:	_NONLIT <- \_ _xALPHA @@
-* FORM:	postRFAnonlit("2") -- arg is for the rhs alphabetic token.
+* RULE:	_NONLIT <- \_ _xWILD [s plus match=(_xALPHA _xEMOJI _xNUM)] @@
+* FORM:	postRFAnonlit("2") -- arg is for the rhs alpha/emoji/numeric token(s).
 * NOTE:	Could have a generic glom text action, but keeping this for
 *			RFA-specific semantic work, if any.
 ********************************************/
@@ -593,31 +593,28 @@ while (--num1 > 0)
 coll1 = colls;
 
 
-// Get needed stuff from each collect.
-Node<Pn> *nelt;
-nelt = coll1->Down();
+// Get needed stuff from the collect.  The name may span one or more
+// adjacent alpha/numeric tokens (eg, _C25g => "_" "C" "25" "g").	// 06/11/26 DD.
+Node<Pn> *nelts, *nend;
+nelts = coll1->Down();
+nend  = coll1->eDown();
 
 if (Verbose())
 	*gout << _T("   [Executing RFA nonlit action.]") << std::endl;
 
+if (!nelts || !nend)
+	return false;
+
 if (Debug())
 	{
-	*gout << _T("token=") << *nelt << std::endl;
+	*gout << _T("token=") << *nelts << std::endl;
 	}
 
 ////////////////////////
 // BUILD SEM FOR NONLIT
 ////////////////////////
 
-// GET DATA.
-Pn *pn;
-_TCHAR *text;
-long len;
-pn = nelt->getData();
-text = pn->getText();
-len = pn->getEnd() - pn->getStart() + 1;
-
-// Glom underscore back onto node's text.
+// Glom underscore back onto the gathered token text.
 _TCHAR buf[MAXSTR];					// Build string in here.
 _TCHAR *ptr;
 long count;
@@ -625,8 +622,21 @@ count = MAXSTR;					// Track space left in buffer.
 buf[0] = '\0';
 ptr = &(buf[0]);					// Track first empty loc in buffer.
 strcat_e(ptr, _T("_"), count);
-if (!strncat_e(ptr, text, len, count))
-	return false;
+
+// Traverse the matched tokens, gathering their covered text.
+Node<Pn> *bound;
+bound = nend->Right();			// One past the last matched token.
+Pn *pn;
+_TCHAR *text;
+long len;
+for (; nelts != bound; nelts = nelts->Right())
+	{
+	pn = nelts->getData();
+	text = pn->getText();
+	len = pn->getEnd() - pn->getStart() + 1;
+	if (!strncat_e(ptr, text, len, count))
+		return false;
+	}
 
 _TCHAR *name;
 //name = make_str(buf);		// 11/19/98 AM.
