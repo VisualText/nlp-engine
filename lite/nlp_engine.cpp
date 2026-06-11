@@ -395,6 +395,10 @@ int NLP_ENGINE::analyze(
         }
         std::_t_cout << _T("[outdir path: ") << m_outdir << _T("]") << std::endl;
 
+        // Write missing-words.log into this file's output "*_log" folder.
+        if (m_cg)
+            m_cg->setMissingLogDir(m_outdir);
+
         // Analyzer can output to a stream.
         _TCHAR ofstr[MAXSTR];
         #ifdef LINUX
