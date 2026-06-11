@@ -7,9 +7,9 @@ Many of you have been asking for tutorial videos on NLP++ and here is the first 
 1. Analyzers used in the videos: https://github.com/VisualText/nlp-tutorials
 1. VisualText tutorial videos: http://vttutorials.visualtext.org
 
-## Glitter Chat
+## Community
 
-[![Join the chat at https://gitter.im/NLPplusplus/NLP-Engine](https://badges.gitter.im/NLPplusplus/NLP-Engine.svg)](https://gitter.im/NLPplusplus/NLP-Engine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) Join us on Glitter chat!
+Join the discussion at [https://nlp.discourse.group](https://nlp.discourse.group)
 
 ## About
 
