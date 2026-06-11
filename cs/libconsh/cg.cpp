@@ -3486,7 +3486,7 @@ CONCEPT *word;
 if (!(word = kbm_->dict_find_word(str)) )
 		{
 		// Not in memory: try a lazily-loaded "*full" dictionary.	// 06/10/26.
-		if (fullKBBOpen_ || fullDictOpen_)
+		if (!fullKBBs_.empty() || !fullDicts_.empty())
 			{
 			if (fullMissCache_.count(str))
 				{
@@ -4180,15 +4180,15 @@ void CG::setMissingLogDir(const _TCHAR *dir)
 // Read forward from the current position to the next "word:" line (indent 2) in
 // the open *full.kbb. Returns its word, the byte offset of the line, and the
 // byte offset just after it. false at end of file.
-bool CG::nextKBBKey(std::streamoff &keyStart, std::string &key, std::streamoff &afterKey)
+bool CG::nextKBBKey(FullFile &f, std::streamoff &keyStart, std::string &key, std::streamoff &afterKey)
 {
 	_TCHAR line[MAXMSG];
 	while (true) {
-		std::streamoff pos = fullKBBStream_.tellg();
+		std::streamoff pos = f.stream.tellg();
 		if (pos < 0)
 			return false;
-		fullKBBStream_.getline(line, MAXMSG);
-		if (fullKBBStream_.fail())
+		f.stream.getline(line, MAXMSG);
+		if (f.stream.fail())
 			return false;
 		chompCRLF(line);
 		int sp = 0;
@@ -4200,7 +4200,7 @@ bool CG::nextKBBKey(std::streamoff &keyStart, std::string &key, std::streamoff &
 				w += line[i];
 			keyStart = pos;
 			key = w;
-			afterKey = fullKBBStream_.tellg();
+			afterKey = f.stream.tellg();
 			return true;
 		}
 	}
@@ -4208,15 +4208,15 @@ bool CG::nextKBBKey(std::streamoff &keyStart, std::string &key, std::streamoff &
 
 // Read forward from the current position to the next non-comment line in the
 // open *full.dict and return its first token (the word).
-bool CG::nextDictKey(std::streamoff &keyStart, std::string &key, std::streamoff &afterKey)
+bool CG::nextDictKey(FullFile &f, std::streamoff &keyStart, std::string &key, std::streamoff &afterKey)
 {
 	_TCHAR line[MAXMSG];
 	while (true) {
-		std::streamoff pos = fullDictStream_.tellg();
+		std::streamoff pos = f.stream.tellg();
 		if (pos < 0)
 			return false;
-		fullDictStream_.getline(line, MAXMSG);
-		if (fullDictStream_.fail())
+		f.stream.getline(line, MAXMSG);
+		if (f.stream.fail())
 			return false;
 		chompCRLF(line);
 		int i = 0;
@@ -4229,46 +4229,46 @@ bool CG::nextDictKey(std::streamoff &keyStart, std::string &key, std::streamoff 
 			w += line[i];
 		keyStart = pos;
 		key = w;
-		afterKey = fullDictStream_.tellg();
+		afterKey = f.stream.tellg();
 		return true;
 	}
 }
 
 // Verify the open *full.kbb is sorted by word (a precondition of binary search).
-bool CG::kbbFileSorted()
+bool CG::kbbFileSorted(FullFile &f)
 {
-	fullKBBStream_.clear();
-	fullKBBStream_.seekg(0);
+	f.stream.clear();
+	f.stream.seekg(0);
 	std::streamoff keyStart, afterKey;
 	std::string key, prev;
 	bool first = true;
-	while (nextKBBKey(keyStart, key, afterKey)) {
+	while (nextKBBKey(f, keyStart, key, afterKey)) {
 		if (!first && strcmp(key.c_str(), prev.c_str()) < 0)
 			return false;
 		prev = key;
 		first = false;
 	}
-	fullKBBStream_.clear();
-	fullKBBStream_.seekg(0);
+	f.stream.clear();
+	f.stream.seekg(0);
 	return true;
 }
 
 // Verify the open *full.dict is sorted by word.
-bool CG::dictFileSorted()
+bool CG::dictFileSorted(FullFile &f)
 {
-	fullDictStream_.clear();
-	fullDictStream_.seekg(0);
+	f.stream.clear();
+	f.stream.seekg(0);
 	std::streamoff keyStart, afterKey;
 	std::string key, prev;
 	bool first = true;
-	while (nextDictKey(keyStart, key, afterKey)) {
+	while (nextDictKey(f, keyStart, key, afterKey)) {
 		if (!first && strcmp(key.c_str(), prev.c_str()) < 0)
 			return false;
 		prev = key;
 		first = false;
 	}
-	fullDictStream_.clear();
-	fullDictStream_.seekg(0);
+	f.stream.clear();
+	f.stream.seekg(0);
 	return true;
 }
 
@@ -4276,29 +4276,29 @@ bool CG::dictFileSorted()
 // if it can't be opened or is not sorted.
 bool CG::openFullKBB(const std::string &file)
 {
-	fullKBBStream_.close();
-	fullKBBStream_.clear();
-	fullKBBStream_.open(file, std::ios::in | std::ios::binary);
-	if (!fullKBBStream_) {
+	fullKBBs_.emplace_back();					// In-place: ifstream is not movable.
+	FullFile &f = fullKBBs_.back();
+	f.file = file;
+	f.stream.open(file, std::ios::in | std::ios::binary);
+	if (!f.stream) {
 		std::_t_cerr << _T("[openFullKBB: couldn't open ") << file << _T("]") << std::endl;
+		fullKBBs_.pop_back();
 		return false;
 	}
-	fullKBBStream_.seekg(0, std::ios::end);
-	fullKBBSize_ = fullKBBStream_.tellg();
-	fullKBBStream_.seekg(0);
-	fullKBBOpen_ = true;
+	f.stream.seekg(0, std::ios::end);
+	f.size = f.stream.tellg();
+	f.stream.seekg(0);
 
-	if (!kbbFileSorted()) {
+	if (!kbbFileSorted(f)) {
 		std::_t_cerr << _T("[openFullKBB: ") << file
 					 << _T(" is not sorted; loading it the normal way.]") << std::endl;
-		fullKBBStream_.close();
-		fullKBBOpen_ = false;
+		fullKBBs_.pop_back();
 		return false;
 	}
 
 	// The kbb's top concept ("dictionary"). Lazily-loaded words hang off this,
 	// matching the output pass's getconcept(findroot(),"dictionary").
-	fullKBBRoot_ = getConcept(findRoot(), _T("dictionary"));
+	f.root = getConcept(findRoot(), _T("dictionary"));
 
 	std::_t_cerr << _T("[Lazy-loading words from ") << file << _T("]") << std::endl;
 	return true;
@@ -4308,24 +4308,23 @@ bool CG::openFullKBB(const std::string &file)
 // if it can't be opened or is not sorted.
 bool CG::openFullDict(const std::string &file)
 {
-	fullDictStream_.close();
-	fullDictStream_.clear();
-	fullDictStream_.open(file, std::ios::in | std::ios::binary);
-	if (!fullDictStream_) {
+	fullDicts_.emplace_back();					// In-place: ifstream is not movable.
+	FullFile &f = fullDicts_.back();
+	f.file = file;
+	f.stream.open(file, std::ios::in | std::ios::binary);
+	if (!f.stream) {
 		std::_t_cerr << _T("[openFullDict: couldn't open ") << file << _T("]") << std::endl;
+		fullDicts_.pop_back();
 		return false;
 	}
-	fullDictStream_.seekg(0, std::ios::end);
-	fullDictSize_ = fullDictStream_.tellg();
-	fullDictStream_.seekg(0);
-	fullDictOpen_ = true;
-	fullDictFile_ = file;
+	f.stream.seekg(0, std::ios::end);
+	f.size = f.stream.tellg();
+	f.stream.seekg(0);
 
-	if (!dictFileSorted()) {
+	if (!dictFileSorted(f)) {
 		std::_t_cerr << _T("[openFullDict: ") << file
 					 << _T(" is not sorted; loading it the normal way.]") << std::endl;
-		fullDictStream_.close();
-		fullDictOpen_ = false;
+		fullDicts_.pop_back();
 		return false;
 	}
 
@@ -4341,10 +4340,10 @@ bool CG::openFullDict(const std::string &file)
 CONCEPT *CG::findFullWord(_TCHAR *str)
 {
 	CONCEPT *word = 0;
-	if (fullDictOpen_)
+	if (!fullDicts_.empty())
 		word = findFullDictWord(str);
 
-	if (fullKBBOpen_) {
+	if (!fullKBBs_.empty()) {
 		CONCEPT *kbbWord = findFullKBBWord(str);		// Loads it under "dictionary".
 		if (kbbWord) {
 			if (!word)
@@ -4359,26 +4358,34 @@ CONCEPT *CG::findFullWord(_TCHAR *str)
 	return word;
 }
 
-// Binary-search the open *full.kbb for str. If found, build that word's block
-// (the word line plus its indented senses) into the KB, cache it, and return it.
+// Look up str across every open *full.kbb, returning the first match.
 CONCEPT *CG::findFullKBBWord(_TCHAR *str)
 {
-	if (!fullKBBOpen_)
-		return 0;
+	for (FullFile &f : fullKBBs_) {
+		CONCEPT *word = searchKBBFile(f, str);
+		if (word)
+			return word;
+	}
+	return 0;
+}
 
+// Binary-search one open *full.kbb for str. If found, build that word's block
+// (the word line plus its indented senses) into the KB, cache it, and return it.
+CONCEPT *CG::searchKBBFile(FullFile &f, _TCHAR *str)
+{
 	_TCHAR line[MAXMSG];
-	std::streamoff lo = 0, hi = fullKBBSize_;
+	std::streamoff lo = 0, hi = f.size;
 	std::streamoff keyStart, afterKey;
 	std::string key;
 
 	// Lower-bound: first word line whose word >= str.
 	while (lo < hi) {
 		std::streamoff mid = lo + (hi - lo) / 2;
-		fullKBBStream_.clear();
-		fullKBBStream_.seekg(mid);
+		f.stream.clear();
+		f.stream.seekg(mid);
 		if (mid != 0)
-			fullKBBStream_.getline(line, MAXMSG);		// Align to a line start.
-		if (!nextKBBKey(keyStart, key, afterKey)) {
+			f.stream.getline(line, MAXMSG);		// Align to a line start.
+		if (!nextKBBKey(f, keyStart, key, afterKey)) {
 			hi = mid;
 			continue;
 		}
@@ -4391,33 +4398,33 @@ CONCEPT *CG::findFullKBBWord(_TCHAR *str)
 	// lo is <= the target's word line and a line boundary. The midpoint search
 	// can leave it a line or two short, so scan forward past any remaining
 	// word lines < str.
-	fullKBBStream_.clear();
-	fullKBBStream_.seekg(lo);
+	f.stream.clear();
+	f.stream.seekg(lo);
 	do {
-		if (!nextKBBKey(keyStart, key, afterKey))
+		if (!nextKBBKey(f, keyStart, key, afterKey))
 			return 0;
 	} while (strcmp(key.c_str(), str) < 0);
 	if (strcmp(key.c_str(), str) != 0)
 		return 0;
 
 	// Build the word's block under the "dictionary" root.
-	fullKBBStream_.clear();
-	fullKBBStream_.seekg(keyStart);
+	f.stream.clear();
+	f.stream.seekg(keyStart);
 
 	std::vector<CONCEPT *> cons;
-	cons.push_back(fullKBBRoot_);				// cons[0] = parent for the word.
+	cons.push_back(f.root);						// cons[0] = parent for the word.
 	int32_t index = 0;
 
-	fullKBBStream_.getline(line, MAXMSG);		// The word line.
+	f.stream.getline(line, MAXMSG);				// The word line.
 	chompCRLF(line);
-	parseKBBLine(line, cons, index, fullKBBRoot_);
+	parseKBBLine(line, cons, index, f.root);
 	CONCEPT *word = cons.size() > 1 ? cons[1] : 0;
 
 	while (true) {
-		if (fullKBBStream_.peek() == EOF)
+		if (f.stream.peek() == EOF)
 			break;
-		fullKBBStream_.getline(line, MAXMSG);
-		if (fullKBBStream_.fail())
+		f.stream.getline(line, MAXMSG);
+		if (f.stream.fail())
 			break;
 		chompCRLF(line);
 		int sp = 0;
@@ -4425,33 +4432,41 @@ CONCEPT *CG::findFullKBBWord(_TCHAR *str)
 			sp++;
 		if (line[sp] == '\0' || sp <= 2)		// Blank, or next word/root: done.
 			break;
-		parseKBBLine(line, cons, index, fullKBBRoot_);
+		parseKBBLine(line, cons, index, f.root);
 	}
 
 	cacheWordCon(str, word);
 	return word;
 }
 
-// Binary-search the open *full.dict for str. If found, parse every consecutive
-// line for that word (one sense per line) into the KB and return it. Flat-dict
-// words are routed through dict_get_word, so they are findable/cached for free.
+// Look up str across every open *full.dict, returning the first match.
 CONCEPT *CG::findFullDictWord(_TCHAR *str)
 {
-	if (!fullDictOpen_)
-		return 0;
+	for (FullFile &f : fullDicts_) {
+		CONCEPT *word = searchDictFile(f, str);
+		if (word)
+			return word;
+	}
+	return 0;
+}
 
+// Binary-search one open *full.dict for str. If found, parse every consecutive
+// line for that word (one sense per line) into the KB and return it. Flat-dict
+// words are routed through dict_get_word, so they are findable/cached for free.
+CONCEPT *CG::searchDictFile(FullFile &f, _TCHAR *str)
+{
 	_TCHAR line[MAXMSG];
-	std::streamoff lo = 0, hi = fullDictSize_;
+	std::streamoff lo = 0, hi = f.size;
 	std::streamoff keyStart, afterKey;
 	std::string key;
 
 	while (lo < hi) {
 		std::streamoff mid = lo + (hi - lo) / 2;
-		fullDictStream_.clear();
-		fullDictStream_.seekg(mid);
+		f.stream.clear();
+		f.stream.seekg(mid);
 		if (mid != 0)
-			fullDictStream_.getline(line, MAXMSG);
-		if (!nextDictKey(keyStart, key, afterKey)) {
+			f.stream.getline(line, MAXMSG);
+		if (!nextDictKey(f, keyStart, key, afterKey)) {
 			hi = mid;
 			continue;
 		}
@@ -4464,23 +4479,23 @@ CONCEPT *CG::findFullDictWord(_TCHAR *str)
 	// lo is <= the target's line and a line boundary. The midpoint search can
 	// leave it a line or two short (hi may settle below the matching line's
 	// start), so scan forward past any remaining keys < str.
-	fullDictStream_.clear();
-	fullDictStream_.seekg(lo);
+	f.stream.clear();
+	f.stream.seekg(lo);
 	do {
-		if (!nextDictKey(keyStart, key, afterKey))
+		if (!nextDictKey(f, keyStart, key, afterKey))
 			return 0;
 	} while (strcmp(key.c_str(), str) < 0);
 	if (strcmp(key.c_str(), str) != 0)
 		return 0;
 
 	// Parse all consecutive lines belonging to this word.
-	fullDictStream_.clear();
-	fullDictStream_.seekg(keyStart);
+	f.stream.clear();
+	f.stream.seekg(keyStart);
 	while (true) {
-		if (fullDictStream_.peek() == EOF)
+		if (f.stream.peek() == EOF)
 			break;
-		fullDictStream_.getline(line, MAXMSG);
-		if (fullDictStream_.fail())
+		f.stream.getline(line, MAXMSG);
+		if (f.stream.fail())
 			break;
 		chompCRLF(line);
 		int i = 0;
@@ -4493,7 +4508,7 @@ CONCEPT *CG::findFullDictWord(_TCHAR *str)
 			w += line[j];
 		if (strcmp(w.c_str(), str) != 0)
 			break;								// Reached the next word.
-		parseDictLine(line, 0, fullDictFile_, 0);
+		parseDictLine(line, 0, f.file, 0);
 	}
 
 	return (CONCEPT *) kbm_->dict_find_word(str);
