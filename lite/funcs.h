@@ -120,6 +120,8 @@ _T("listadd"),
 _T("listnode"),
 _T("LJ"),
 _T("lj"),
+_T("loaddict"),	// 06/11/26 DD.
+_T("loadkbb"),		// 06/11/26 DD.
 _T("logten"),		// 04/29/04 AM.
 _T("look"),
 _T("lookup"),
