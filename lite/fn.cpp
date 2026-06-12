@@ -398,6 +398,10 @@ switch (fnid)																	// 12/21/01 AM.
 	case FNLJ:
 	case FNlj:
 		return fnLj(args,nlppp,/*UP*/sem);								// 10/02/00 AM.
+	case FNloaddict:
+		return fnLoaddict(args,nlppp,/*UP*/sem);						// 06/11/26 DD.
+	case FNloadkbb:
+		return fnLoadkbb(args,nlppp,/*UP*/sem);						// 06/11/26 DD.
 	case FNlogten:
 		return fnLogten(args,nlppp,/*UP*/sem);							// 04/29/04 AM.
 	case FNrandomint:
@@ -10493,6 +10497,121 @@ if (!dir)
 CG *cg = parse->getAna()->getCG();
 
 bool ok = cg->writeKB(dir);
+
+sem = new RFASem(ok ? 1LL : 0LL);
+return true;
+}
+
+
+/********************************************
+* FN:		FNLOADKBB
+* CR:		06/11/26 DD.
+* SUBJ:		Load a single "*.kbb" file from kb/user into the KB.
+* RET:		True if ok, else false.
+*			UP num - 1 if the file was loaded, else 0.
+* FORMS:	loadkbb(filename)
+* NOTE:		filename is the name of a file in the app's kb/user directory,
+*			eg loadkbb("extra.kbb").
+********************************************/
+
+bool Fn::fnLoadkbb(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+_TCHAR *name1=0;
+
+if (!Arg::str1(_T("loadkbb"), /*UP*/ (DELTS*&)args, name1))
+	return false;
+if (!Arg::done((DELTS*)args, _T("loadkbb"),parse))
+	return false;
+
+if (!name1)
+	{
+	_stprintf(Errbuf,_T("[loadkbb: Warning. Given no filename.]"));
+	return parse->errOut(false); // UNFIXED
+	}
+
+// Need to get the current KB.
+CG *cg = parse->getAna()->getCG();
+
+// Resolve the file relative to the app's kb/user directory.
+std::filesystem::path p(cg->getAppdir());
+p /= _T("kb");
+p /= _T("user");
+p /= name1;
+
+if (!std::filesystem::exists(p))
+	{
+	_stprintf(Errbuf,_T("[loadkbb: File not found in kb/user=%s]"),name1);
+	return parse->errOut(false); // UNFIXED
+	}
+
+bool ok = cg->readKBB(p.string());
+
+sem = new RFASem(ok ? 1LL : 0LL);
+return true;
+}
+
+
+/********************************************
+* FN:		FNLOADDICT
+* CR:		06/11/26 DD.
+* SUBJ:		Load a single "*.dict" file from kb/user into the KB.
+* RET:		True if ok, else false.
+*			UP num - 1 if the file was loaded, else 0.
+* FORMS:	loaddict(filename)
+* NOTE:		filename is the name of a file in the app's kb/user directory,
+*			eg loaddict("extra.dict").
+********************************************/
+
+bool Fn::fnLoaddict(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+_TCHAR *name1=0;
+
+if (!Arg::str1(_T("loaddict"), /*UP*/ (DELTS*&)args, name1))
+	return false;
+if (!Arg::done((DELTS*)args, _T("loaddict"),parse))
+	return false;
+
+if (!name1)
+	{
+	_stprintf(Errbuf,_T("[loaddict: Warning. Given no filename.]"));
+	return parse->errOut(false); // UNFIXED
+	}
+
+// Need to get the current KB.
+CG *cg = parse->getAna()->getCG();
+
+// Resolve the file relative to the app's kb/user directory.
+std::filesystem::path p(cg->getAppdir());
+p /= _T("kb");
+p /= _T("user");
+p /= name1;
+
+if (!std::filesystem::exists(p))
+	{
+	_stprintf(Errbuf,_T("[loaddict: File not found in kb/user=%s]"),name1);
+	return parse->errOut(false); // UNFIXED
+	}
+
+// Gather the kb/user "*.kbb" files so the dictionary can be paired with its
+// ambiguity KB (same stem), mirroring how readKB loads dictionaries.
+std::vector<std::filesystem::path> kbfiles;
+cg->openKBB(kbfiles);
+
+bool ok = cg->readDict(p.string(), kbfiles);
 
 sem = new RFASem(ok ? 1LL : 0LL);
 return true;

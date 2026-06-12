@@ -126,6 +126,8 @@ enum funcDef
 	FNlistnode,
 	FNLJ,
 	FNlj,
+	FNloaddict,	// 06/11/26 DD.
+	FNloadkbb,	// 06/11/26 DD.
 	FNlogten,	// 04/29/04 AM.
 	FNlook,
 	FNlookup,
