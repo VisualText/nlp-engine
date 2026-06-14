@@ -1003,6 +1003,7 @@ static bool fnStruniquechars(
 	static bool fnLevenshtein(Delt<Iarg>*,Nlppp*,RFASem*&);		// 03/06/07 AM.
 	static bool fnPninsert(Delt<Iarg>*,Nlppp*,RFASem*&);        // 07/14/08 AM.
 	static bool fnPnmove(Delt<Iarg>*,Nlppp*,RFASem*&);          // 10/06/13 AM.
+	static bool fnPnpush(Delt<Iarg>*,Nlppp*,RFASem*&);          // 06/14/26 AM.
 
 	static bool fnPermuten(Delt<Iarg>*,Nlppp*,RFASem*&);			// 03/10/04 AM.
 	static bool fnLogten(Delt<Iarg>*,Nlppp*,RFASem*&);          // 04/29/04 AM.

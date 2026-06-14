@@ -6160,6 +6160,103 @@ return Arun::group(nlppp,from,to,name);
 
 
 /********************************************
+* FN:		PNPUSH
+* CR:		06/14/26 AM.
+* SUBJ:	Interpose a new suggested node above a parse tree node.
+* RET:	sem - The new (parent) node, else 0.
+* FORMS:	pnpush(pnode, name_str)
+*	Builds a new node named name_str in the place of pnode, and makes
+*	pnode (keeping its own subtree) the single child of the new node.
+*	Implemented as a single-node group(), so it carries the same
+*	rule-scanner bookkeeping and is safe to call from @POST.
+********************************************/
+
+RFASem *Arun::pnpush(
+	Nlppp *nlppp,
+	NODE *pn_nd,
+	_TCHAR *name_str
+	)
+{
+Node<Pn> *pn_node = (Node<Pn> *) pn_nd;
+
+if (!pn_node || !name_str || !*name_str)
+	return 0;
+
+if (*name_str != '_')
+	{
+	_stprintf(Errbuf,_T("[pnpush: Only nonliteral node name allowed.]"));
+	errOut(false); // UNFIXED
+	return 0;
+	}
+
+Parse *parse = nlppp->getParse();
+_TCHAR *name1=0;
+parse->internStr(name_str, /*UP*/name1);	// Intern the name.
+
+// pnpush == group a single node under a new suggested parent.
+Node<Pn> *new_node = Pat::group(pn_node, pn_node, name1, nlppp);
+if (!new_node)
+	return 0;
+
+return new RFASem(new_node);	// Return the new (parent) node.
+}
+
+// VARIANT
+RFASem *Arun::pnpush(
+	Nlppp *nlppp,
+	RFASem *pn_sem,
+	_TCHAR *name_str
+	)
+{
+if (!pn_sem)
+	return 0;
+NODE *pn_nd = pn_sem->sem_to_node();
+delete pn_sem;
+return pnpush(nlppp,pn_nd,name_str);
+}
+
+// VARIANT
+RFASem *Arun::pnpush(
+	Nlppp *nlppp,
+	NODE *pn_nd,
+	RFASem *name_sem
+	)
+{
+if (!name_sem)
+	return 0;
+_TCHAR *name_str = name_sem->sem_to_str();
+delete name_sem;
+return pnpush(nlppp,pn_nd,name_str);
+}
+
+// VARIANT
+RFASem *Arun::pnpush(
+	Nlppp *nlppp,
+	RFASem *pn_sem,
+	RFASem *name_sem
+	)
+{
+if (!pn_sem)
+	{
+	if (name_sem)
+		delete name_sem;
+	return 0;
+	}
+if (!name_sem)
+	{
+	if (pn_sem)
+		delete pn_sem;
+	return 0;
+	}
+NODE *pn_nd = pn_sem->sem_to_node();
+delete pn_sem;
+_TCHAR *name_str = name_sem->sem_to_str();
+delete name_sem;
+return pnpush(nlppp,pn_nd,name_str);
+}
+
+
+/********************************************
 * FN:		EXCISE
 * CR:		05/11/00 AM.
 * SUBJ:	Runtime variant of excise post action.

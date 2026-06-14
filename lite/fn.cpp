@@ -488,6 +488,8 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnPnnext(args,nlppp,/*UP*/sem);							// 10/18/00 AM.
 	case FNpnprev:
 		return fnPnprev(args,nlppp,/*UP*/sem);							// 10/18/00 AM.
+	case FNpnpush:
+		return fnPnpush(args,nlppp,/*UP*/sem);							// 06/14/26 AM.
 	case FNpnpushval:
 		return fnPnpushval(args,nlppp,/*UP*/sem);					// 12/12/14 AM.
 	case FNpnremoveval:
@@ -13626,6 +13628,88 @@ else
 	tree->insertLeft(*pn_node, *pos_node);
 
 sem = new RFASem(pn_node);	// Return the node.
+return true;
+}
+
+
+/********************************************
+* FN:		FNPNPUSH
+* CR:		06/14/26 AM.
+* SUBJ:	Interpose a new suggested node above a parse tree node.
+* RET:	True if ok, else false.
+* FORMS:	pnpush(pnode, name_str)
+*	Builds a new node named name_str in the place of pnode, and makes
+*	pnode (keeping its own subtree) the single child of the new node.
+*	name_str must be a nonliteral (suggested) name, beginning with '_'.
+********************************************/
+
+bool Fn::fnPnpush(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+RFASem *pn_sem;
+_TCHAR *name_str=0;
+
+if (!Arg::sem1(_T("pnpush"),nlppp,(DELTS*&)args,pn_sem))
+	return false;
+if (!Arg::str1(_T("pnpush"), /*UP*/ (DELTS*&)args, name_str))
+	return false;
+if (!Arg::done((DELTS*)args, _T("pnpush"),parse))
+	return false;
+
+if (!pn_sem)
+	{
+	_stprintf(Errbuf,_T("[pnpush: Warning. Given no pnode.]"));
+	return parse->errOut(true); // UNFIXED
+	}
+
+if (!name_str)
+	{
+	_stprintf(Errbuf,_T("[pnpush: Warning. Given no node name.]"));
+	return parse->errOut(true); // UNFIXED
+	}
+
+if (pn_sem->getType() != RSNODE)
+	{
+	_stprintf(Errbuf,_T("[pnpush: Bad semantic arg.]"));
+	return parse->errOut(false); // UNFIXED
+	}
+
+Node<Pn> *pn_node = pn_sem->sem_to_node();
+
+if (!pn_node)
+	{
+	_stprintf(Errbuf,_T("[pnpush: Couldn't fetch node.]"));
+	return parse->errOut(false); // UNFIXED
+	}
+
+if (*name_str != '_')
+	{
+	_stprintf(Errbuf,_T("[pnpush: Only nonliteral node name allowed.]"));
+	return parse->errOut(false); // UNFIXED
+	}
+
+// pnpush is "group a single node under a new suggested parent."
+// Reuse Pat::group so the parse-tree splice AND the rule-scanner
+// bookkeeping (first_/last_/rightmost_/restart_) are handled exactly
+// as the group() builtin does -- needed for use in @POST regions.
+_TCHAR *name1=0;
+parse->internStr(name_str, /*UP*/name1);	// Intern the name.
+Node<Pn> *new_node = Pat::group(pn_node, pn_node, name1, nlppp);
+
+if (!new_node)
+	{
+	_stprintf(Errbuf,_T("[pnpush: Couldn't build node.]"));
+	return parse->errOut(false); // UNFIXED
+	}
+
+sem = new RFASem(new_node);	// Return the new (parent) node.
 return true;
 }
 

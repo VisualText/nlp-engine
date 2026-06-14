@@ -165,6 +165,7 @@ _T("pnmove"),	   // 10/06/13 AM.
 _T("pnname"),
 _T("pnnext"),
 _T("pnprev"),
+_T("pnpush"),	// 06/14/26 AM.
 _T("pnpushval"),	// 12/12/14 AM.
 _T("pnremoveval"),
 _T("pnrename"),

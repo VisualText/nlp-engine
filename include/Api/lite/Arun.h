@@ -1660,6 +1660,11 @@ public:
 	static RFASem *pnmove(Nlppp*,NODE*,RFASem*,RFASem*);      // 10/06/13 AM.
 	static RFASem *pnmove(Nlppp*,RFASem*,RFASem*,RFASem*);    // 10/06/13 AM.
 
+	static RFASem *pnpush(Nlppp*,NODE*,_TCHAR*);             // 06/14/26 AM.
+	static RFASem *pnpush(Nlppp*,RFASem*,_TCHAR*);           // 06/14/26 AM.
+	static RFASem *pnpush(Nlppp*,NODE*,RFASem*);             // 06/14/26 AM.
+	static RFASem *pnpush(Nlppp*,RFASem*,RFASem*);           // 06/14/26 AM.
+
 	static bool dbopen(Nlppp*,_TCHAR*,_TCHAR*,_TCHAR*);					// 06/15/02 AM.
 	static bool dbopen(Nlppp*,RFASem*,_TCHAR*,_TCHAR*);					// 06/15/02 AM.
 	static bool dbopen(Nlppp*,_TCHAR*,RFASem*,_TCHAR*);					// 06/15/02 AM.
