@@ -106,6 +106,7 @@ void NLP_ENGINE::zeroInit()
     m_compile = false;
     m_compiled = false;
     m_compileKB = false;
+    m_compileAna = false;
 
     #ifdef TEST_RUG_
     m_gram = 0;
@@ -143,7 +144,8 @@ int NLP_ENGINE::init(
 	bool silent,
     bool compile,
     bool compiled,
-    bool compileKB
+    bool compileKB,
+    bool compileAna
 )
 {
 //     NLP_ENGINE::zeroInit();    // [DEGLOB]	// 10/15/20 AM.
@@ -160,6 +162,7 @@ int NLP_ENGINE::init(
     m_compile = compile;
     m_compiled = compiled;
     m_compileKB = compileKB;
+    m_compileAna = compileAna;
 
     struct stat st;
     char str[MAXPATH] = _T("");
@@ -285,7 +288,7 @@ int NLP_ENGINE::init(
 
         std::_t_cerr << _T("[Loaded knowledge base.]") << std::endl;             // 02/19/19 AM.
 
-        // Compile the KB if requested.
+        // Compile the KB if requested. Analyzer-only compile skips this.
         if (m_compile || m_compileKB)
             {
             std::_t_cerr << _T("[Compiling knowledge base.]") << std::endl;
@@ -306,7 +309,7 @@ int NLP_ENGINE::init(
         if (!m_nlp->make_analyzer(m_seqfile, m_anadir, m_develop,
             silent,              // Debug/log file output.             // 06/16/02 AM.
             0,
-            m_compile,           // Compile analyzer while loading.
+            m_compile || m_compileAna, // Compile analyzer while loading.
             compiled))           // Compiled/interp analyzer.
             {
             std::_t_cerr << _T("[Couldn't build analyzer.]") << std::endl;
@@ -344,13 +347,14 @@ int NLP_ENGINE::analyze(
 	bool silent,
     bool compile,
     bool compiled,
-    bool compileKB
+    bool compileKB,
+    bool compileAna
 	)
 {
-    NLP_ENGINE::init(analyzer,develop,silent,compile,compiled,compileKB);
+    NLP_ENGINE::init(analyzer,develop,silent,compile,compiled,compileKB,compileAna);
 
     // Compile mode: C++ code generation is done in init(); do not run analysis.
-    if (m_compile || m_compileKB)
+    if (m_compile || m_compileKB || m_compileAna)
         return 0;
 
     readFiles(infile);
@@ -439,13 +443,14 @@ int NLP_ENGINE::analyze(
 	bool silent,
     bool compile,
     bool compiled,
-    bool compileKB
+    bool compileKB,
+    bool compileAna
 	)
 {
 
-    NLP_ENGINE::init(analyzer,develop,silent,compile,compiled,compileKB);
+    NLP_ENGINE::init(analyzer,develop,silent,compile,compiled,compileKB,compileAna);
 
-    if (m_compile || m_compileKB)
+    if (m_compile || m_compileKB || m_compileAna)
         return 0;
 
     // Analyzer can output to a stream.
@@ -488,13 +493,14 @@ int NLP_ENGINE::analyze(
 	bool silent,
     bool compile,
     bool compiled,
-    bool compileKB
+    bool compileKB,
+    bool compileAna
 	)
 {
 
-    NLP_ENGINE::init(analyzer,develop,silent,compile,compiled,compileKB);
+    NLP_ENGINE::init(analyzer,develop,silent,compile,compiled,compileKB,compileAna);
 
-    if (m_compile || m_compileKB)
+    if (m_compile || m_compileKB || m_compileAna)
         return 0;
 
     // Analyzer can output to a stream.
