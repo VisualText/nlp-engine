@@ -13709,6 +13709,12 @@ if (!new_node)
 	return parse->errOut(false); // UNFIXED
 	}
 
+// Copy all of pn_node's attributes up onto the new parent node.
+Dlist<Ipair> *fmlist = pn_node->getData()->getDsem();
+Dlist<Ipair> *tolist = new_node->getData()->getDsem();
+Var::copy_vars(fmlist, /*DU*/ tolist);
+new_node->getData()->setDsem(tolist);
+
 sem = new RFASem(new_node);	// Return the new (parent) node.
 return true;
 }

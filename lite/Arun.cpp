@@ -6198,6 +6198,12 @@ Node<Pn> *new_node = Pat::group(pn_node, pn_node, name1, nlppp);
 if (!new_node)
 	return 0;
 
+// Copy all of pn_node's attributes up onto the new parent node.
+Dlist<Ipair> *fmlist = pn_node->getData()->getDsem();
+Dlist<Ipair> *tolist = new_node->getData()->getDsem();
+Var::copy_vars(fmlist, /*DU*/ tolist);
+new_node->getData()->setDsem(tolist);
+
 return new RFASem(new_node);	// Return the new (parent) node.
 }
 
