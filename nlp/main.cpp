@@ -15,9 +15,9 @@ All rights reserved.
 #include "lite/nlp_engine.h"
 #include "version.h"
 
-#define NLP_ENGINE_VERSION "3.5.1"
+#define NLP_ENGINE_VERSION "3.6.0"
 
-bool cmdReadArgs(int, _TCHAR *argv[], _TCHAR *&, _TCHAR *&, _TCHAR *&, _TCHAR *&, bool &, bool &, bool &, bool &, bool &);
+bool cmdReadArgs(int, _TCHAR *argv[], _TCHAR *&, _TCHAR *&, _TCHAR *&, _TCHAR *&, bool &, bool &, bool &, bool &, bool &, bool &);
 void cmdHelpargs(_TCHAR *);
 
 #ifdef LINUX
@@ -41,13 +41,14 @@ int _tmain(
 	bool compiled = false;  // Run compiled/interp analyzer.
 	bool silent = false;    // No log/debug output files.
 	bool compileKB = false; // Compile only the KB to C++.
+	bool compileAna = false; // Compile only the analyzer to C++.
 
 	/////////////////////////////////////////////////
 	// GET APP INFORMATION
 	/////////////////////////////////////////////////
 
 	// Get analyzer name, input and output filenames from command line.
-	if (!cmdReadArgs(argc, argv, analyzerpath, input, output, workdir, develop, compile, compiled, silent, compileKB))
+	if (!cmdReadArgs(argc, argv, analyzerpath, input, output, workdir, develop, compile, compiled, silent, compileKB, compileAna))
 		exit(1);
 
 	NLP_ENGINE *nlpEngine = new NLP_ENGINE(workdir);
@@ -57,7 +58,7 @@ int _tmain(
 		// Analysis is not run; the generated C++ must be compiled externally
 		// (e.g. via the NLP++ language extension) before running with -COMPILED.
 		std::_t_cout << _T("[Compiling analyzer and KB: ") << analyzerpath << _T("]") << std::endl;
-		nlpEngine->init(analyzerpath, develop, silent, compile, compiled, compileKB);
+		nlpEngine->init(analyzerpath, develop, silent, compile, compiled, compileKB, compileAna);
 		std::_t_cout << _T("[Compile complete.]") << std::endl;
 	}
 	else if (compileKB)
@@ -65,12 +66,20 @@ int _tmain(
 		// KB-only compile: generate C++ code for the KB.
 		// The analyzer grammar is not loaded.
 		std::_t_cout << _T("[Compiling KB only: ") << analyzerpath << _T("]") << std::endl;
-		nlpEngine->init(analyzerpath, develop, silent, compile, compiled, compileKB);
+		nlpEngine->init(analyzerpath, develop, silent, compile, compiled, compileKB, compileAna);
 		std::_t_cout << _T("[KB compile complete.]") << std::endl;
+	}
+	else if (compileAna)
+	{
+		// Analyzer-only compile: generate C++ code for the analyzer rules.
+		// The KB is loaded but not regenerated/recompiled.
+		std::_t_cout << _T("[Compiling analyzer only: ") << analyzerpath << _T("]") << std::endl;
+		nlpEngine->init(analyzerpath, develop, silent, compile, compiled, compileKB, compileAna);
+		std::_t_cout << _T("[Analyzer compile complete.]") << std::endl;
 	}
 	else
 	{
-		nlpEngine->analyze(analyzerpath, input, output, develop, silent, compile, compiled, compileKB);
+		nlpEngine->analyze(analyzerpath, input, output, develop, silent, compile, compiled, compileKB, compileAna);
 	}
 	delete nlpEngine;
 }
@@ -94,7 +103,8 @@ bool cmdReadArgs(
 	bool &compile,	   // true - compile analyzer and KB.
 	bool &compiled,	   // true - compiled ana. false=interp(DEFAULT).
 	bool &silent,	   // true == only output files specified by analyzer.
-	bool &compileKB    // true - compile only the KB to C++.
+	bool &compileKB,   // true - compile only the KB to C++.
+	bool &compileAna   // true - compile only the analyzer to C++.
 )
 {
 	_TCHAR *ptr;
@@ -114,6 +124,7 @@ bool cmdReadArgs(
 	compiled = false;  // INTERP ANALYZER BY DEFAULT
 	silent = false;	   // Produce debug files, etc. by default.		// 06/16/02 AM.
 	compileKB = false; // Don't compile KB-only by default.
+	compileAna = false; // Don't compile analyzer-only by default.
 
 	for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 	{
@@ -217,6 +228,10 @@ bool cmdReadArgs(
 			{
 				compileKB = true;
 			}
+			else if (!strcmp_i(ptr, _T("compileana"))) // Compile only the analyzer to C++.
+			{
+				compileAna = true;
+			}
 		}
 		else if (flag) // Expected an argument value.
 		{
@@ -303,6 +318,7 @@ void cmdHelpargs(_TCHAR *name)
 				 << _T("           [-INTERP][-COMPILED] INTERP is the default") << std::endl
 				 << _T("           [-COMPILE] compile analyzer and KB to C++ (does not run analyzer)") << std::endl
 				 << _T("           [-COMPILEKB] compile only the KB to C++ (does not load grammar or run analyzer)") << std::endl
+				 << _T("           [-COMPILEANA] compile only the analyzer to C++ (does not regenerate the KB or run analyzer)") << std::endl
 				 << _T("           [-ANA analyzer] name or path to NLP++ analyzer folder") << std::endl
 				 << _T("           [-IN infile] input text file path") << std::endl
 				 << _T("           [-OUT outdir] output directory") << std::endl
