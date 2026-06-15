@@ -28,7 +28,11 @@ analyzers ──(after its auto-bump release)──► analyzers-release ──�
 
 nlp-engine ──(release / move-assets)──► nlp-engine-release ──► nlp-engine-linux
                                                            ├──► nlp-engine-windows
-                                                           └──► nlp-engine-mac
+                                                           ├──► nlp-engine-mac
+                                                           ├──► npm-package-nlpengine
+                                                           └──► py-package-nlpengine
+                                                                (each bumps the nlp-engine
+                                                                 submodule + tags → publishes)
 ```
 
 ## Mechanism
@@ -57,7 +61,7 @@ which has a workflow triggered by `repository_dispatch: types: [<event>]`.
 | package-analyzers | `v*` tag (auto-created by `tag-on-push.yml` on any analyzer edit pushed to main, or by `update-parse-en-us.yml` on a parse-en-us release) | `package-analyzers-release` | npm-package-nlpengine, py-package-nlpengine | `dispatch-update-package-analyzers.yml` |
 | analyzer-templates | `v*` tag | `analyzer-templates-release` | nlp-engine-{linux,windows,mac}, visualtext-files | `dispatch-update-analyzer-templates.yml` |
 | analyzers | end of its bump job | `analyzers-release` | nlp-engine | `parse-en-us.yml` (final step) |
-| nlp-engine | release / build complete | `nlp-engine-release` | nlp-engine-{linux,windows,mac} | `move-assets.yml` |
+| nlp-engine | release / build complete | `nlp-engine-release` | nlp-engine-{linux,windows,mac}, npm-package-nlpengine, py-package-nlpengine | `move-assets.yml` |
 
 ## Who listens for what
 
@@ -73,6 +77,8 @@ which has a workflow triggered by `repository_dispatch: types: [<event>]`.
 | nlp-engine | `analyzers-release` | `update-analyzers.yml` | open a PR bumping the analyzers submodule (no auto-release) |
 | nlp-engine-{linux,windows,mac} | `analyzer-templates-release` | `update-analyzer-templates.yml` | bump analyzer-templates submodule |
 | nlp-engine-{linux,windows,mac} | `nlp-engine-release` | `nlp-engine-build.yml` | build the platform package |
+| npm-package-nlpengine | `nlp-engine-release` | `update-nlp-engine.yml` | bump the `nlp-engine` submodule, `npm version patch`, push v* tag → `publish.yml` publishes to npm |
+| py-package-nlpengine | `nlp-engine-release` | `update-nlp-engine.yml` | bump the `nlp-engine` submodule, push next v* tag → `publish.yml` publishes to PyPI |
 
 ## Submodule embedding (what bumps what)
 
@@ -109,6 +115,9 @@ which has a workflow triggered by `repository_dispatch: types: [<event>]`.
   tag fires each package's `publish.yml`, which builds and publishes to npm
   (OIDC trusted publisher) / PyPI (trusted publishing). No human step — editing an
   analyzer in `package-analyzers` lands new releases on both registries.
+  Likewise, on a `nlp-engine-release` ping, `update-nlp-engine.yml` bumps the
+  `nlp-engine` submodule and republishes — so a tagged **engine** release also
+  lands on both registries with no manual submodule bump.
   - ⚠️ The tag push **must** use `CLASSIC_PAT`; a `GITHUB_TOKEN`-pushed tag does
     not trigger `publish.yml`. So `CLASSIC_PAT` is required as a secret in
     `npm-package-nlpengine` and `py-package-nlpengine` (not just the senders).
