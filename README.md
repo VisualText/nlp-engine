@@ -27,6 +27,8 @@ You can get help on nlp.exe:
       usage: nlp [--version] [--help]
                  [-INTERP][-COMPILED] INTERP is the default
                  [-COMPILE] compile analyzer and KB to C++ (does not run analyzer)
+                 [-COMPILEKB] compile only the KB to C++ (does not load grammar or run analyzer)
+                 [-COMPILEANA] compile only the analyzer to C++ (does not regenerate the KB or run analyzer)
                  [-ANA analyzer] name or path to NLP++ analyzer folder
                  [-IN infile] input text file path
                  [-OUT outdir] output directory
@@ -45,6 +47,8 @@ Switch | Function
 ------------ | -------------
 -INTERP / -COMPILED | Runs NLP++ code interpreted or compiled
 -COMPILE | Generates C++ code for the analyzer rules and KB (does not run the analyzer). Use -COMPILED after the C++ is compiled externally to run the compiled analyzer.
+-COMPILEKB | Generates C++ code for the KB only (does not load the grammar or run the analyzer). Use when only the KB changed.
+-COMPILEANA | Generates C++ code for the analyzer rules only, skipping KB regeneration (does not run the analyzer). Use when only the rules changed and the KB is already compiled.
 -ANA | name of the analyzer or path to the analyzer folder
 -IN | Input file
 -OUT | Output directory
