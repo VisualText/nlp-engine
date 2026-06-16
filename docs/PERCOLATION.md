@@ -61,7 +61,7 @@ which has a workflow triggered by `repository_dispatch: types: [<event>]`.
 | package-analyzers | `v*` tag (auto-created by `tag-on-push.yml` on any analyzer edit pushed to main, or by `update-parse-en-us.yml` on a parse-en-us release) | `package-analyzers-release` | npm-package-nlpengine, py-package-nlpengine | `dispatch-update-package-analyzers.yml` |
 | analyzer-templates | `v*` tag | `analyzer-templates-release` | nlp-engine-{linux,windows,mac}, visualtext-files | `dispatch-update-analyzer-templates.yml` |
 | analyzers | end of its bump job | `analyzers-release` | nlp-engine | `parse-en-us.yml` (final step) |
-| nlp-engine | release / build complete | `nlp-engine-release` | nlp-engine-{linux,windows,mac}, npm-package-nlpengine, py-package-nlpengine | `move-assets.yml` |
+| nlp-engine | `v*` tag push | `nlp-engine-release` | nlp-engine-{linux,windows,mac}, npm-package-nlpengine, py-package-nlpengine | `move-assets.yml` |
 
 ## Who listens for what
 
@@ -139,6 +139,32 @@ its submodule pointer is already current.
    [<repo>-release]` to the workflow that updates that submodule, defaulting any
    version bump to `patch` on a ping (a `repository_dispatch` event has no
    `inputs.bump`).
+
+## Engine release binaries: attach the build of the *tagged* commit
+
+The engine's per-platform binaries (`nlpw.exe`, `nlpm.exe`, Linux zips, ICU/compile
+libs) are built by `build-windows.yml` / `build-macos.yml` / `build-linux.yml` /
+`build-enginefiles.yml` / `build-visualfiles.yml`, then collected onto the GitHub
+Release by `move-assets.yml`.
+
+Two rules keep the attached binary's version in sync with the tag:
+
+1. **Each build workflow triggers on the tag push** (`push: tags: ['*']`), so the
+   tagged commit itself is compiled. (`NLP_ENGINE_VERSION` is baked into the binary
+   at compile time, so the binary must be built *from the release commit*.)
+2. **`move-assets.yml` selects the build run whose `head_sha` == the tag's commit**
+   and *waits* for it to go green, instead of grabbing whatever build is newest.
+
+> **History:** these workflows originally only built on `pull_request` (the
+> `build-windows.yml` `tags:` filter was mis-nested under `pull_request`, where
+> GitHub ignores it), and `move-assets` grabbed the *most recent successful* build
+> of any branch. The result: v3.5.4 shipped a binary from an older PR whose
+> `main.cpp` still said 3.5.3. Tag-SHA pinning + tag-triggered builds fix this.
+
+To **re-release a tag** (e.g. fix a bad asset): Actions → "Move Assets to Release"
+→ Run workflow, and set the **`tag`** input (e.g. `v3.5.4`). It resolves that tag's
+commit, waits for that commit's builds, and re-attaches. If those builds don't
+exist yet, dispatch each `build-*` workflow on the tag ref first.
 
 ## Gotcha: re-attaching a submodule that workflows fetch manually
 

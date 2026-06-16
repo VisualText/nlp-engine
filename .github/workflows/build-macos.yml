@@ -4,7 +4,11 @@ on:
   workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
-  
+  # Build the tagged commit so the release binary carries the right version.
+  push:
+    tags:
+      - '*'
+
 jobs:
   build_engine:
     name: Build NLP-ENGINE
