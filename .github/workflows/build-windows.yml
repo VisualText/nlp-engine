@@ -6,6 +6,10 @@ on:
     types: [opened, synchronize, reopened]
     branches:
       - master
+  # Build the tagged commit itself so the release binary carries the right
+  # version. (A `tags:` filter under `pull_request` is ignored by GitHub --
+  # it must live under `push:`.)
+  push:
     tags:
       - '*'
 

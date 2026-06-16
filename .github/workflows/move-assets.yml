@@ -5,14 +5,24 @@ permissions:
   actions: write
 
 on:
+  # Manual re-release: pass an explicit tag (e.g. v3.5.4) to rebuild that
+  # release's assets from the exact tagged commit.
   workflow_dispatch:
-  workflow_run:
-    workflows: ["build-windows.yml", "build-macos.yml", "build-enginefiles.yml", "build-visualfiles.yml", "build-linux.yml"]
-    types:
-      - completed
+    inputs:
+      tag:
+        description: "Tag to (re)build release assets for, e.g. v3.5.4. Defaults to the latest tag."
+        required: false
+        type: string
+  # Primary trigger: a tag push. We then WAIT for that tag's builds to finish
+  # (see "Find workflow run IDs") rather than grabbing whatever build is newest.
   push:
     tags:
     - '*'
+
+# Never let two asset-moves touch the same release at once.
+concurrency:
+  group: move-assets-${{ github.event.inputs.tag || github.ref }}
+  cancel-in-progress: false
 
 jobs:
   download_assets:
@@ -25,56 +35,81 @@ jobs:
         fetch-depth: 0  # Fetch all history and tags
 
     
-    - name: Extract tag name from ref or get latest tag
+    - name: Extract tag name and resolve its commit
       id: get_tag
       run: |
-        if [[ "${{ github.ref }}" == refs/tags/* ]]; then
-          # When directly triggered by a tag push
+        git fetch --tags --force
+        if [[ -n "${{ github.event.inputs.tag }}" ]]; then
+          # Manual re-release for a specific tag.
+          TAG_NAME="${{ github.event.inputs.tag }}"
+          echo "Using tag from workflow_dispatch input: $TAG_NAME"
+        elif [[ "${{ github.ref }}" == refs/tags/* ]]; then
+          # Triggered by a tag push.
           TAG_NAME=${GITHUB_REF#refs/tags/}
           echo "Using tag from push trigger: $TAG_NAME"
         else
-          # When triggered by workflow_run or workflow_dispatch
-          # Get the latest tag from the repository
-          git fetch --tags
+          # Fallback: latest tag.
           TAG_NAME=$(git describe --tags --abbrev=0)
-          
-          # If no tag found, use timestamp
-          if [ -z "$TAG_NAME" ]; then
-            TIMESTAMP=$(date +'%Y.%m.%d-%H%M')
-            TAG_NAME="v${TIMESTAMP}"
-            echo "No tag found, using generated version: $TAG_NAME"
-          else
-            echo "Using latest tag from repository: $TAG_NAME"
-          fi
+          echo "Using latest tag from repository: $TAG_NAME"
         fi
-        
-        # Store the tag name for later use
+
+        if [ -z "$TAG_NAME" ]; then
+          echo "ERROR: could not determine a tag to release." >&2
+          exit 1
+        fi
+
+        # The commit this tag points to. The release MUST attach binaries built
+        # from THIS commit, not whatever build happened to be newest -- that bug
+        # stapled a 3.5.3 binary onto the v3.5.4 release.
+        TAG_SHA=$(git rev-list -n1 "$TAG_NAME")
         echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
-        
-        # Debug output
-        echo "Selected TAG_NAME: $TAG_NAME"
-    - name: Find workflow run IDs
-      run: |
-        echo "Finding most recent successful workflow runs..."
-        
-        WIN_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-windows.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
-        echo "Windows run ID: $WIN_RUN_ID"
-        echo "WIN_RUN_ID=$WIN_RUN_ID" >> $GITHUB_ENV
-    
-        LINUX_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-linux.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
-        echo "Linux run ID: $LINUX_RUN_ID"
-        echo "LINUX_RUN_ID=$LINUX_RUN_ID" >> $GITHUB_ENV
-        
-        MAC_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-macos.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
-        echo "MAC_RUN_ID=$MAC_RUN_ID" >> $GITHUB_ENV
-    
-        ENGINE_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-enginefiles.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
-        echo "ENGINE_RUN_ID=$ENGINE_RUN_ID" >> $GITHUB_ENV
-    
-        VISUAL_RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/build-visualfiles.yml/runs --paginate | jq -r ".workflow_runs[] | select(.conclusion == \"success\") | .id" | head -n 1)
-        echo "VISUAL_RUN_ID=$VISUAL_RUN_ID" >> $GITHUB_ENV
+        echo "TAG_SHA=$TAG_SHA" >> $GITHUB_ENV
+        echo "Selected TAG_NAME=$TAG_NAME -> TAG_SHA=$TAG_SHA"
+    - name: Find workflow run IDs for the tagged commit
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        set -euo pipefail
+        # Pick the build run whose head_sha == this tag's commit, and WAIT for it
+        # to finish. Previously this grabbed the newest *successful* build of any
+        # branch/PR, which stapled a stale (wrong-version) binary onto the
+        # release. Each build workflow now triggers on the tag push, so a run for
+        # $TAG_SHA exists; we just have to wait for it to go green.
+        wait_for_run() {
+          local wf="$1"
+          local timeout=5400 interval=30 waited=0   # up to 90 min
+          while true; do
+            local json id pending bad
+            json=$(gh api "repos/${{ github.repository }}/actions/workflows/$wf/runs?head_sha=$TAG_SHA&per_page=100" 2>/dev/null || echo '{}')
+            id=$(echo "$json" | jq -r '(.workflow_runs // []) | map(select(.conclusion=="success")) | .[0].id // empty')
+            if [ -n "$id" ]; then echo "$id"; return 0; fi
+            pending=$(echo "$json" | jq -r '(.workflow_runs // []) | map(select(.status!="completed")) | length')
+            bad=$(echo "$json" | jq -r '(.workflow_runs // []) | map(select(.conclusion=="failure" or .conclusion=="cancelled" or .conclusion=="timed_out" or .conclusion=="startup_failure")) | .[0].id // empty')
+            if [ "$pending" = "0" ] && [ -n "$bad" ]; then
+              echo "ERROR: $wf for $TAG_SHA finished without success (run $bad)." >&2
+              return 1
+            fi
+            if [ "$waited" -ge "$timeout" ]; then
+              echo "ERROR: timed out after ${timeout}s waiting for a successful $wf run for $TAG_SHA." >&2
+              return 1
+            fi
+            echo "Waiting for $wf build of $TAG_SHA to succeed... (${waited}s elapsed)" >&2
+            sleep "$interval"; waited=$((waited+interval))
+          done
+        }
+
+        WIN_RUN_ID=$(wait_for_run build-windows.yml)
+        echo "WIN_RUN_ID=$WIN_RUN_ID" >> $GITHUB_ENV
+        LINUX_RUN_ID=$(wait_for_run build-linux.yml)
+        echo "LINUX_RUN_ID=$LINUX_RUN_ID" >> $GITHUB_ENV
+        MAC_RUN_ID=$(wait_for_run build-macos.yml)
+        echo "MAC_RUN_ID=$MAC_RUN_ID" >> $GITHUB_ENV
+        ENGINE_RUN_ID=$(wait_for_run build-enginefiles.yml)
+        echo "ENGINE_RUN_ID=$ENGINE_RUN_ID" >> $GITHUB_ENV
+        VISUAL_RUN_ID=$(wait_for_run build-visualfiles.yml)
+        echo "VISUAL_RUN_ID=$VISUAL_RUN_ID" >> $GITHUB_ENV
+
+        echo "Resolved runs for $TAG_SHA: win=$WIN_RUN_ID linux=$LINUX_RUN_ID mac=$MAC_RUN_ID engine=$ENGINE_RUN_ID visual=$VISUAL_RUN_ID"
 
     # Windows artifacts with specific run ID
     - name: Fetch Windows exe
@@ -277,7 +312,9 @@ jobs:
         name: "Release ${{ env.TAG_NAME }}"
         body: |
           NLP Engine Release ${{ env.TAG_NAME }}
-        
+
+          Built from commit ${{ env.TAG_SHA }}
+
           Build information:
           - Windows build: ${{ env.WIN_RUN_ID }}
           - Linux build: ${{ env.LINUX_RUN_ID }}

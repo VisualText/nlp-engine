@@ -4,8 +4,12 @@ on:
   workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
-    
-jobs:    
+  # Build the tagged commit so release assets match the tagged version.
+  push:
+    tags:
+      - '*'
+
+jobs:
   zip_files:
     runs-on: ubuntu-latest
     steps:
