@@ -71,7 +71,10 @@ bool dirt;	// 06/29/03 AM.
 
 if (cg->cg_CONCEPT)
    {
-   std::_t_cerr << _T("[con_add_root: Root concept of kb already exists.]") << std::endl;
+   // Root already exists: re-issuing ADD ROOT on an initialized KB is an
+   // expected, harmless no-op (every kb/dict and lazy "*-full" load re-runs
+   // it), so skip silently instead of spamming stderr. Uncomment to trace.
+   // std::_t_cerr << _T("[con_add_root: Root concept of kb already exists.]") << std::endl;
    return;
    }
 
