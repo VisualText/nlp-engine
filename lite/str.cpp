@@ -1592,6 +1592,8 @@ _TCHAR *str_wrap(_TCHAR *str, long wrapSize, _TCHAR *buf)
 buf[0] = '\0';
 if (empty(str))
 	return 0;
+if (wrapSize < 1)		// Guard against an infinite hard-wrap loop.
+	wrapSize = 1;
 _TCHAR *ptr;
 ptr = &(buf[0]);
 _TCHAR *lastSpace = NULL;
@@ -1612,19 +1614,29 @@ while (*str)
 		{
 		if (lastSpace)
 			{
+			// Break at the last space: turn it into a newline and
+			// resume from the character right after it.
 			str = lastSpace;
 			ptr = lastNewSpace;
+			*ptr++ = '\n';
+			++str;
 			}
-
-		*ptr++ = '\n';
-		++str;
+		else
+			{
+			// No space to break on (a word longer than wrapSize):
+			// hard-break *before* the current character. #544: the old
+			// code did ++str here too, silently dropping one character
+			// at every hard wrap (the first char of each wrapped line).
+			// Leave str on the current char so it starts the new line.
+			*ptr++ = '\n';
+			}
 		count = 0;
 		lastSpace = NULL;
 		lastNewSpace = NULL;
+		continue;	// reprocess the current char; the newline isn't counted
 		}
-	else
-		*ptr++ = *str++;
 
+	*ptr++ = *str++;
 	++count;
 	}
 
@@ -2458,9 +2470,11 @@ if (_istspace((_TUCHAR)*str))
 	{
 	while (_istspace((_TUCHAR)*++str))
 		;
-	if (!*str)      // String was all whitespace.
+	if (!*str)      // String was all whitespace -> empty after trimming.
 		{
-		*buf++ = ' ';   // Convert to one space.
+		// #506: the old code wrote "*buf++ = ' '" here, leaving a single
+		// space. strtrim() removes leading AND trailing whitespace, so an
+		// all-whitespace string must trim to the empty string.
 		*buf = '\0';
 		return true;
 		}
