@@ -328,4 +328,25 @@ jobs:
         repository: VisualText/nlp-engine-linux
         event-type: nlp-engine-release
         client-payload: '{"tag_name": "${{ env.TAG_NAME }}"}'
-      continue-on-error: true  
+      continue-on-error: true
+
+    # Package repos build the engine from source via their nlp-engine submodule,
+    # so an engine release must bump that submodule + republish. See
+    # docs/PERCOLATION.md ("nlp-engine -> npm/py packages").
+    - name: Trigger py-package-nlpengine workflow
+      uses: peter-evans/repository-dispatch@v2
+      with:
+        token: ${{ secrets.CLASSIC_PAT }}
+        repository: VisualText/py-package-nlpengine
+        event-type: nlp-engine-release
+        client-payload: '{"tag_name": "${{ env.TAG_NAME }}"}'
+      continue-on-error: true
+
+    - name: Trigger npm-package-nlpengine workflow
+      uses: peter-evans/repository-dispatch@v2
+      with:
+        token: ${{ secrets.CLASSIC_PAT }}
+        repository: VisualText/npm-package-nlpengine
+        event-type: nlp-engine-release
+        client-payload: '{"tag_name": "${{ env.TAG_NAME }}"}'
+      continue-on-error: true
