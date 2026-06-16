@@ -65,6 +65,29 @@ jobs:
         echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
         echo "TAG_SHA=$TAG_SHA" >> $GITHUB_ENV
         echo "Selected TAG_NAME=$TAG_NAME -> TAG_SHA=$TAG_SHA"
+
+    - name: Hide any empty pre-existing release during the build wait
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        set -euo pipefail
+        # If a release for this tag was created up front (e.g. via the GitHub UI)
+        # it is published but empty until the builds finish ~15 min later. An
+        # update-checker hitting /releases/latest (the VS Code NLP++ extension
+        # does this) would see a new version with no downloadable assets and
+        # break for that window. Mark such a release a draft now; the "Create
+        # Release" step below republishes it with assets (draft: false). If a
+        # build fails, it safely stays a draft instead of shipping empty.
+        rel=$(gh api "repos/${{ github.repository }}/releases/tags/$TAG_NAME" 2>/dev/null || echo '{}')
+        is_draft=$(echo "$rel" | jq -r '.draft // empty')
+        n_assets=$(echo "$rel" | jq -r '(.assets // []) | length')
+        if [ "$is_draft" = "false" ] && [ "${n_assets:-0}" = "0" ]; then
+          echo "Release $TAG_NAME is published but empty -> drafting it until assets are ready."
+          gh release edit "$TAG_NAME" --repo "${{ github.repository }}" --draft
+        else
+          echo "Nothing to hide (exists=$([ -n "$is_draft" ] && echo yes || echo no), draft=$is_draft, assets=${n_assets:-0})."
+        fi
+
     - name: Find workflow run IDs for the tagged commit
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -310,6 +333,9 @@ jobs:
       with:
         tag_name: ${{ env.TAG_NAME }}
         name: "Release ${{ env.TAG_NAME }}"
+        # Publish (un-draft) now that the assets below are attached. This also
+        # re-publishes a release the draft-guard step hid at the start.
+        draft: false
         body: |
           NLP Engine Release ${{ env.TAG_NAME }}
 
