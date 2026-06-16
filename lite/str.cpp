@@ -2470,9 +2470,11 @@ if (_istspace((_TUCHAR)*str))
 	{
 	while (_istspace((_TUCHAR)*++str))
 		;
-	if (!*str)      // String was all whitespace.
+	if (!*str)      // String was all whitespace -> empty after trimming.
 		{
-		*buf++ = ' ';   // Convert to one space.
+		// #506: the old code wrote "*buf++ = ' '" here, leaving a single
+		// space. strtrim() removes leading AND trailing whitespace, so an
+		// all-whitespace string must trim to the empty string.
 		*buf = '\0';
 		return true;
 		}
