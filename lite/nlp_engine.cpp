@@ -368,6 +368,17 @@ int NLP_ENGINE::analyze(
     if (!m_nlp)  // defensive: never analyze without a live analyzer object.
         return -1;
 
+    // #639: a missing input-file argument (easy to hit with -COMPILED, whose
+    // syntax differs from -COMPILE only by the trailing input path) used to
+    // reach readFiles(NULL) -> std::filesystem::is_directory(NULL) and SIGSEGV.
+    // Fail with a clear diagnostic instead of crashing.
+    if (!infile || !*infile)
+        {
+        std::_t_cerr << _T("[Error: no input file given. Usage: nlp [-COMPILED] ")
+                     << _T("-ANA <analyzer> -WORK <dir> <input-file>]") << std::endl;
+        return -1;
+        }
+
     readFiles(infile);
     std::string file;
 
