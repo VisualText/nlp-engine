@@ -366,7 +366,11 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    # Percolate downstream only on a genuine new release (tag push). A manual
+    # re-release (workflow_dispatch, e.g. re-attaching an old tag's binary) must
+    # NOT re-bump downstream packages to that older engine version.
     - name: Trigger nlp-engine-windows workflow
+      if: github.event_name == 'push'
       uses: peter-evans/repository-dispatch@v2
       with:
         token: ${{ secrets.CLASSIC_PAT }}
@@ -376,6 +380,7 @@ jobs:
       continue-on-error: true
 
     - name: Trigger nlp-engine-mac workflow
+      if: github.event_name == 'push'
       uses: peter-evans/repository-dispatch@v2
       with:
         token: ${{ secrets.CLASSIC_PAT }}
@@ -385,6 +390,7 @@ jobs:
       continue-on-error: true
 
     - name: Trigger nlp-engine-linux workflow
+      if: github.event_name == 'push'
       uses: peter-evans/repository-dispatch@v2
       with:
         token: ${{ secrets.CLASSIC_PAT }}
@@ -397,6 +403,7 @@ jobs:
     # so an engine release must bump that submodule + republish. See
     # docs/PERCOLATION.md ("nlp-engine -> npm/py packages").
     - name: Trigger py-package-nlpengine workflow
+      if: github.event_name == 'push'
       uses: peter-evans/repository-dispatch@v2
       with:
         token: ${{ secrets.CLASSIC_PAT }}
@@ -406,6 +413,7 @@ jobs:
       continue-on-error: true
 
     - name: Trigger npm-package-nlpengine workflow
+      if: github.event_name == 'push'
       uses: peter-evans/repository-dispatch@v2
       with:
         token: ${{ secrets.CLASSIC_PAT }}
