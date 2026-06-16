@@ -76,7 +76,10 @@ XCON_S *con = &con_x;	// 02/14/07 AM.
 
 if (cg->cg_CONCEPT)
    {
-   _t_cerr << _T("[con_add_root: Root concept of kb already exists.]") << endl;
+   // Root already exists: re-issuing ADD ROOT on an initialized KB is an
+   // expected, harmless no-op (every kb/dict and lazy "*-full" load re-runs
+   // it), so skip silently instead of spamming stderr. Uncomment to trace.
+   // _t_cerr << _T("[con_add_root: Root concept of kb already exists.]") << endl;
    return;
    }
 
