@@ -42,54 +42,27 @@ jobs:
       # ===============================
       - name: Build and Run (Ubuntu 20.04)
         if: matrix.id == 'docker-ubuntu-20.04'
-        uses: addnab/docker-run-action@v3
-        with:
-          image: ubuntu:20.04
-          options: >-
-            --shm-size=512m
-            --mount type=tmpfs,destination=/dev/shm
-            -v ${{ github.workspace }}:/workspace
-            -w /workspace
-          run: |
-            set -e
-            export DEBIAN_FRONTEND=noninteractive
-            export TZ=Etc/UTC
-            apt update
-            apt install -y \
-              git build-essential cmake g++ curl unzip zip tar \
-              autoconf-archive pkg-config python3 ninja-build libicu66 libicu-dev
-            rm -rf analyzers   # drop the pinned submodule copy; test wants fresh analyzers master
-            git clone --recurse-submodules https://github.com/VisualText/analyzers.git analyzers
-            mkdir -p build
-            cd build
-            cmake ..
-            make -j$(nproc)
-            cd ..
-            mkdir -p rfb-logs data/rfb/spec analyzers/parse-en-us/output
-            cp ./bin/nlp ./bin/nlpl.exe
-            echo "Copying ICU 66 libraries..."
-            mkdir -p icu-libs
-            cp /usr/lib/x86_64-linux-gnu/libicu*.so.66* ./icu-libs/
-            zip -r icu-libs.zip icu-libs
-            ./bin/nlp --version || true
-            ./bin/nlp -ANA ./analyzers/parse-en-us -WORK ./ ./analyzers/parse-en-us/input/doj.txt -LOG rfb-logs -DEV || true
-
-            echo "Packaging compile libraries..."
-            rm -rf compile-libs
-            mkdir -p compile-libs/include/Api compile-libs/lib
-            cp -r include/Api/. compile-libs/include/Api/
-            cp -r cs/include compile-libs/include/cs
-            for name in prim kbm consh words lite; do
-              lib=$(find . -type f -name "lib${name}.a" -not -path "./vcpkg/*" -not -path "./compile-libs/*" | head -n1)
-              if [ -z "$lib" ]; then
-                echo "Missing required static library: lib${name}.a" >&2
-                exit 1
-              fi
-              cp "$lib" "compile-libs/lib/lib${name}.a"
-            done
-            # System ICU 66 runtime libs (dynamic) used by the 20.04 build.
-            cp /usr/lib/x86_64-linux-gnu/libicu*.so.66* compile-libs/lib/
-            (cd compile-libs && zip -r ../nlpengine-compile-libs-linux-20.04.zip .)
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Pull the target image directly (with retries) and run the build
+          # script in it via the runner's pre-installed Docker. This replaces
+          # addnab/docker-run-action@v3, which first builds a docker:20.10
+          # helper image -- that Docker Hub pull was intermittently timing out
+          # ("failed to resolve docker.io/library/docker:20.10 ... i/o timeout")
+          # and failing the whole Linux job.
+          for attempt in 1 2 3 4 5; do
+            if docker pull ubuntu:20.04; then break; fi
+            echo "docker pull ubuntu:20.04 failed (attempt $attempt); retrying in 20s..."
+            sleep 20
+          done
+          docker run --rm \
+            --shm-size=512m \
+            --mount type=tmpfs,destination=/dev/shm \
+            -v "${{ github.workspace }}:/workspace" \
+            -w /workspace \
+            ubuntu:20.04 \
+            bash scripts/build-ubuntu-2004.sh
 
       - name: Upload ICU Libraries Zip (20.04)
         if: matrix.id == 'docker-ubuntu-20.04'
