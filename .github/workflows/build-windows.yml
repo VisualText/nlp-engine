@@ -49,6 +49,18 @@ jobs:
       - name: Test executable --version
         run: ./bin/Release/nlp.exe --version || true
 
+      - name: Full-dict binary-search hang regression (#669)
+        # An em-dash sorts after every word in the lazy "*full.dict"; pre-fix the
+        # dict binary search looped forever (afterKey=-1 at EOF -> lo=-1). The
+        # self-contained fixture must complete; if it hangs, this step exceeds
+        # timeout-minutes and fails the job (no `|| true`).
+        timeout-minutes: 3
+        shell: bash
+        run: |
+          ./bin/Release/nlp.exe -ANA .github/workflows/tests/fulldict-hang \
+            -WORK ./ .github/workflows/tests/fulldict-hang/input/dash.txt
+          echo "[#669 regression] analyzer completed without hanging"
+
       - name: Copy nlp.exe to nlpw.exe
         run: cp bin/Release/nlp.exe bin/Release/nlpw.exe
         shell: bash

@@ -122,6 +122,19 @@ jobs:
         if: matrix.id != 'docker-ubuntu-20.04'
         run: ./bin/nlp --version || true
 
+      - name: Full-dict binary-search hang regression (#669, Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          # An em-dash sorts after every word in the lazy "*full.dict"; that used
+          # to make the dict binary search loop forever (#669: afterKey=-1 at EOF
+          # -> lo=-1). The fixture is self-contained (tiny sorted zz-full.dict +
+          # em-dash input). A hang -> `timeout` exits 124 -> this step fails.
+          # NOTE: no `|| true` here on purpose -- we WANT a hang to fail CI.
+          timeout 120 ./bin/nlp -ANA .github/workflows/tests/fulldict-hang \
+            -WORK ./ .github/workflows/tests/fulldict-hang/input/dash.txt
+          echo "[#669 regression] analyzer completed without hanging"
+
       - name: Copy nlp.exe to nlpl.exe (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         run: cp bin/nlp bin/nlpl.exe
