@@ -148,4 +148,8 @@ public:
 private:
     int createDir(_TCHAR *dirPath);
     int readFiles(_TCHAR *directoryPath);
+    // Canonical registry name for an analyzer (its path basename). init() and
+    // close() must key the VTRun analyzer registry on this so the same analyzer
+    // passed as different path-forms maps to one entry -- see #658 / #380.
+    void anaRegName(const _TCHAR *path, _TCHAR *out);
 };
