@@ -138,6 +138,27 @@ void NLP_ENGINE::zeroAna()
 
 }
 
+// Canonical registry name for an analyzer: its last path component, accepting
+// both DIR_CH and '/'. init() stores this as the NLP name and keys findAna on
+// it; close() normalizes its argument the same way. Without a shared rule the
+// same analyzer passed as "emailaddress" vs ".../analyzers/emailaddress" maps to
+// two registry entries, so a re-entrant analyze() rebuilds from scratch and
+// orphans the prior NLP (#658, #380). The MAXPATH-1 precision bound preserves
+// the NLP-ENGINE-521 stack-overflow fix.
+void NLP_ENGINE::anaRegName(const _TCHAR *path, _TCHAR *out)
+{
+    if (!path || !*path) { out[0] = '\0'; return; }
+    const _TCHAR *ana = _tcsrchr(path, DIR_CH);
+#ifndef LINUX
+    const _TCHAR *fwd = _tcsrchr(path, '/');
+    if (fwd > ana) ana = fwd;
+#endif
+    if (ana && *(ana + 1) != '\0')
+        _stprintf(out, _T("%.*s"), (int)(MAXPATH - 1), ana + 1);
+    else
+        _stprintf(out, _T("%.*s"), (int)(MAXPATH - 1), path);
+}
+
 int NLP_ENGINE::init(
     _TCHAR *analyzer,
 	bool develop,
@@ -186,27 +207,11 @@ int NLP_ENGINE::init(
     }
     
     if (m_ananame[0] == '\0') {
-        // Accept both DIR_CH and '/'. On Windows DIR_CH is '\\', but paths
-        // arriving from CMake, VSCode ${workspaceFolder} substitutions, and
-        // forward-slash CLI args are common; a NULL from _tcsrchr followed by
-        // ++ana + sprintf("%s",...) used to dereference 0x1 and AV.
-        _TCHAR *ana = _tcsrchr(m_anadir, DIR_CH);
-#ifndef LINUX
-        _TCHAR *fwd = _tcsrchr(m_anadir, '/');
-        if (fwd > ana) ana = fwd;
-#endif
-        // NLP-ENGINE-521: m_ananame is _TCHAR[MAXPATH] but m_anadir is
-        // _TCHAR[MAXPATH*2], so an unbounded %s copy can overflow by up
-        // to MAXPATH bytes onto the stack — gcc 13 flags this with
-        // -Wformat-overflow, and CI under deep tmpdir paths
-        // (/tmp/test-nlpplusXXX/analyzers/parse-en-us etc.) ends up
-        // close enough to the limit that it likely caused the
-        // py-package-nlpengine test segfault. Bound the writes to
-        // MAXPATH-1 characters via the printf precision specifier.
-        if (ana && *(ana + 1) != '\0')
-            _stprintf(m_ananame, _T("%.*s"), (int)(MAXPATH - 1), ana + 1);
-        else
-            _stprintf(m_ananame, _T("%.*s"), (int)(MAXPATH - 1), m_anadir);
+        // Canonical registry name = basename of the resolved analyzer dir.
+        // Shared with close() via anaRegName() so different path-forms of the
+        // same analyzer share one registry entry (#658, #380). The helper also
+        // carries the NLP-ENGINE-521 overflow-safe bounding.
+        anaRegName(m_anadir, m_ananame);
     }
 
 	std::_t_cout << _T("[analyzer directory: ") << m_anadir << _T("]") << std::endl;
@@ -245,26 +250,28 @@ int NLP_ENGINE::init(
     /////////////////////////////////////////////////
     // INITIALIZE ANALYZER RUNTIME ENGINE
     /////////////////////////////////////////////////
-//    if (m_nlp = VTRun_Ptr->findAna(analyzer))   // [DEGLOB]	// 10/15/20 AM.
-    if ((m_nlp = m_vtrun->findAna(analyzer)))   // [DEGLOB]	// 10/15/20 AM.
+    // Key the lookup on the canonical name (m_ananame), NOT the raw path, so a
+    // re-entrant analyze() of an already-loaded analyzer -- even when the caller
+    // spells the path differently -- reuses the loaded NLP instead of rebuilding
+    // and orphaning it (#658, #380).
+    if ((m_nlp = m_vtrun->findAna(m_ananame)))
         {
-        std::_t_cout << _T("Analyzer found: ") << analyzer << analyzer << std::endl;
-        std::_t_cout << _T("[TODO: RELOAD ANALYZER (NLP) INTO NLPENGINE HERE.]") << analyzer << std::endl;
-        // return 1;    // If reloading same analyzer, done init....
+        // Reuse the already-loaded analyzer (this IS the "RELOAD ANALYZER" path
+        // the old TODO referred to): grab its concept graph and skip the rebuild.
+        std::_t_cout << _T("[Reusing loaded analyzer: ") << m_ananame << _T("]") << std::endl;
         m_cg = m_nlp->getCG();
-
- 
-        //    std::_t_cout << _T("Analyzer not found: ") << analyzer << std::endl;
         }
     else
         {
         // Create and initialize an NLP object to manage text analysis.
         // NOTE: This init will dynamically load the user extensions dll at
         // appdir\user\debug\user.dll
-        m_nlp = m_vtrun->makeNLP(m_anadir,m_analyzer,m_develop,m_silent,m_compiled);  // 07/21/03 AM.
-
-//        VTRun_Ptr->addAna(m_nlp);   // Add ana to runtime manager.    // [DEGLOB]	// 10/15/20 AM.
-        m_vtrun->addAna(m_nlp); // Register analyzer.   // [DEGLOB]	// 10/15/20 AM.
+        // Build under the canonical name so findAna() above can match it on a
+        // later re-entry. makeNLP -> NLP::NLP already registers the instance via
+        // VTRun::addAna (nlp.cpp), so no explicit addAna is needed here -- a
+        // second call only produced the spurious "Named analyzer already
+        // present" noise (#632).
+        m_nlp = m_vtrun->makeNLP(m_anadir,m_ananame,m_develop,m_silent,m_compiled);  // 07/21/03 AM.
 
 
         /////////////////////////////////////////////////
@@ -613,13 +620,24 @@ int NLP_ENGINE::close(_TCHAR *analyzer)
 
     //NLP_ENGINE::close();
 
-    // This will close the user.dll for the application also.
- //   m_vtrun->deleteNLP(m_nlp);                                         // 07/21/03 AM.
- //   VTRun::deleteVTRun(m_vtrun);                                     // 07/21/03 AM.
-//    m_nlp = VTRun_Ptr->findAna(analyzer); // [DEGLOB]	// 10/15/20 AM.
-    m_nlp = m_vtrun->findAna(analyzer); // [DEGLOB]	// 10/15/20 AM.
-    m_vtrun->rmAna(m_nlp);  // 09/27/20 AM.
-    m_vtrun->deleteNLP(m_nlp);   // Remove analyzer from manager.    // 09/27/20 AM.
+    if (!m_vtrun)
+        return 0;
+
+    // Look up by the same canonical name init() registered under (basename via
+    // anaRegName), so a path-form mismatch can't leave the analyzer registered
+    // -- and thus leaked -- on teardown (#658, #380). Only rm/delete if actually
+    // found; the old code passed a possibly-NULL findAna result straight into
+    // rmAna/deleteNLP, which logged errors and could dangle m_nlp.
+    _TCHAR name[MAXPATH];
+    anaRegName(analyzer, name);
+    NLP *nlp = m_vtrun->findAna(name);
+    if (nlp)
+        {
+        m_vtrun->rmAna(nlp);  // 09/27/20 AM.
+        m_vtrun->deleteNLP(nlp);   // Remove analyzer from manager.    // 09/27/20 AM.
+        if (m_nlp == nlp)
+            m_nlp = 0;  // current-analyzer pointer now dangling; clear it.
+        }
 
     return 0;
 }
