@@ -4201,6 +4201,13 @@ bool CG::nextKBBKey(FullFile &f, std::streamoff &keyStart, std::string &key, std
 			keyStart = pos;
 			key = w;
 			afterKey = f.stream.tellg();
+			// Reading the file's last line (no trailing newline) leaves the
+			// stream at EOF, where tellg() returns -1. The position past the
+			// last key is end-of-file; returning -1 made searchKBBFile set
+			// lo = -1, so the binary search never terminated for any key that
+			// sorts after the last word in the file (e.g. an em-dash). See #669.
+			if (afterKey < 0)
+				afterKey = f.size;
 			return true;
 		}
 	}
@@ -4230,6 +4237,13 @@ bool CG::nextDictKey(FullFile &f, std::streamoff &keyStart, std::string &key, st
 		keyStart = pos;
 		key = w;
 		afterKey = f.stream.tellg();
+		// Reading the file's last line (no trailing newline) leaves the stream
+		// at EOF, where tellg() returns -1. The position past the last key is
+		// end-of-file; returning -1 made searchDictFile set lo = -1, so the
+		// binary search never terminated for any key that sorts after the last
+		// word in the file (e.g. an em-dash U+2014 / en-dash U+2013). See #669.
+		if (afterKey < 0)
+			afterKey = f.size;
 		return true;
 	}
 }
@@ -4389,9 +4403,11 @@ CONCEPT *CG::searchKBBFile(FullFile &f, _TCHAR *str)
 			hi = mid;
 			continue;
 		}
-		if (strcmp(key.c_str(), str) < 0)
+		if (strcmp(key.c_str(), str) < 0) {
+			if (afterKey <= lo)		// Defensive: never move lo backwards/sideways
+				break;				// (would loop forever). str is past EOF here.
 			lo = afterKey;
-		else
+		} else
 			hi = mid;
 	}
 
@@ -4470,9 +4486,11 @@ CONCEPT *CG::searchDictFile(FullFile &f, _TCHAR *str)
 			hi = mid;
 			continue;
 		}
-		if (strcmp(key.c_str(), str) < 0)
+		if (strcmp(key.c_str(), str) < 0) {
+			if (afterKey <= lo)		// Defensive: never move lo backwards/sideways
+				break;				// (would loop forever). str is past EOF here.
 			lo = afterKey;
-		else
+		} else
 			hi = mid;
 	}
 

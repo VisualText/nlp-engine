@@ -1,0 +1,4 @@
+# The #669 regression depends on zz-full.dict's last line having NO trailing
+# newline (so getline hits EOF and tellg() returns -1). Treat it as binary so
+# git never normalizes line endings or otherwise rewrites the file on checkout.
+kb/user/zz-full.dict binary
