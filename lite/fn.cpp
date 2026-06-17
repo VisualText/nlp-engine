@@ -5924,13 +5924,17 @@ if (!name1)																		// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 
-_TCHAR *buf = Chars::create(_tcsclen(name1) + 1);			// FIX.	// 07/16/03 AM.
-str_to_lower(name1, buf);			// 06/03/00 AM.
+// Convert with ICU and intern the exact result. Sizing a fixed buffer to
+// the *input* byte length overflows when case folding expands the string
+// (e.g. German 'ß' upper-cases to "SS"), so size to the converted result
+// instead of the input.										// 06/17/26 AM.
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(name1));
+ustr.toLower();
+std::string converted;
+ustr.toUTF8String(converted);
 
 _TCHAR *str;
-parse->internStr(buf, /*UP*/ str);
-
-Chars::destroy(buf);	// FIX.	// 07/16/03 AM.
+parse->internStr(&converted[0], /*UP*/ str);
 
 // Return as str type.
 sem = new RFASem(str, RSSTR);
@@ -5972,12 +5976,15 @@ if (!name1)																		// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 
-_TCHAR *buf = Chars::create(_tcsclen(name1)+1);					// FIX.	// 07/16/03 AM.
-str_to_upper(name1, buf);			// 06/03/00 AM.
+// See fnStrtolower: size to the converted result, not the input, so case
+// expansion (e.g. 'ß' -> "SS") cannot overflow the buffer.	// 06/17/26 AM.
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(name1));
+ustr.toUpper();
+std::string converted;
+ustr.toUTF8String(converted);
 
 _TCHAR *str;
-parse->internStr(buf, /*UP*/ str);
-Chars::destroy(buf);													// FIX.	// 07/16/03 AM.
+parse->internStr(&converted[0], /*UP*/ str);
 
 // Return as str type.
 sem = new RFASem(str, RSSTR);
@@ -6196,11 +6203,35 @@ if (!name1)																		// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 
-_TCHAR buf[2];
-buf[0] = name1[charnum];
-buf[1] = '\0';
-if (!buf[0])														// FIX.	// 02/09/01 AM.
-	return true;													// FIX.	// 02/09/01 AM.
+// Index by Unicode code point, not byte. The old code returned the raw
+// byte name1[charnum], which split multi-byte UTF-8 characters.	// 06/17/26 AM.
+if (charnum < 0)
+	return true;
+
+icu::StringPiece sp(name1);
+const char *spd = sp.data();
+int32_t length = sp.length();
+UChar32 c = 0;
+int32_t s = 0;
+long long idx = 0;
+while (idx < charnum && s < length)
+	{
+	U8_NEXT(spd, s, length, c);
+	++idx;
+	}
+if (idx < charnum || s >= length)					// charnum past end of string
+	return true;
+
+int32_t start = s;
+U8_NEXT(spd, s, length, c);
+if (c < 0)											// malformed UTF-8
+	return true;
+
+_TCHAR buf[8];
+int32_t blen = s - start;
+for (int32_t k = 0; k < blen; ++k)
+	buf[k] = name1[start + k];
+buf[blen] = '\0';
 
 _TCHAR *str;
 parse->internStr(buf, /*UP*/ str);
@@ -6394,6 +6425,89 @@ return true;
 
 
 /********************************************
+* UTF-8 helpers for the strchr/strrchr/strchrcount family.	// 06/17/26 AM.
+* These let the "single character" argument be any Unicode code point
+* (1-4 UTF-8 bytes), not just a single byte, and match on code-point
+* boundaries so multi-byte characters are never split.
+********************************************/
+
+// True if str holds exactly one Unicode code point; sets cp to it.
+static bool u8_single_char(_TCHAR *str, UChar32 &cp)
+{
+if (!str || !*str)
+	return false;
+icu::StringPiece sp(str);
+const char *spd = sp.data();
+int32_t length = sp.length();
+int32_t s = 0;
+cp = 0;
+U8_NEXT(spd, s, length, cp);
+return (cp >= 0 && s == length);
+}
+
+// Pointer to the first occurrence of code point cp in str, else NULL.
+static _TCHAR *u8_chr(_TCHAR *str, UChar32 cp)
+{
+if (!str)
+	return NULL;
+icu::StringPiece sp(str);
+const char *spd = sp.data();
+int32_t length = sp.length();
+int32_t s = 0;
+UChar32 c = 0;
+while (s < length)
+	{
+	int32_t prev = s;
+	U8_NEXT(spd, s, length, c);
+	if (c == cp)
+		return str + prev;
+	}
+return NULL;
+}
+
+// Pointer to the last occurrence of code point cp in str, else NULL.
+static _TCHAR *u8_rchr(_TCHAR *str, UChar32 cp)
+{
+if (!str)
+	return NULL;
+icu::StringPiece sp(str);
+const char *spd = sp.data();
+int32_t length = sp.length();
+int32_t s = 0;
+UChar32 c = 0;
+_TCHAR *found = NULL;
+while (s < length)
+	{
+	int32_t prev = s;
+	U8_NEXT(spd, s, length, c);
+	if (c == cp)
+		found = str + prev;
+	}
+return found;
+}
+
+// Count occurrences of code point cp in str.
+static long long u8_chr_count(_TCHAR *str, UChar32 cp)
+{
+if (!str)
+	return 0;
+icu::StringPiece sp(str);
+const char *spd = sp.data();
+int32_t length = sp.length();
+int32_t s = 0;
+UChar32 c = 0;
+long long count = 0;
+while (s < length)
+	{
+	U8_NEXT(spd, s, length, c);
+	if (c == cp)
+		++count;
+	}
+return count;
+}
+
+
+/********************************************
 * FN:	   FNSTRCHR
 * CR:	   11/18/00 AM.
 * SUBJ: Find first occurrence of chars in string
@@ -6428,14 +6542,15 @@ if (!name1 || !*name1 || !ch_str || !*ch_str)
 	_stprintf(Errbuf,_T("[strchr: Warning: Given no str or char.]"));
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
-if (ch_str[1])
+UChar32 target = 0;
+if (!u8_single_char(ch_str, target))
 	{
-	_stprintf(Errbuf,_T("[strchr: Warning: 2nd arg must be string of length 1.]"));
+	_stprintf(Errbuf,_T("[strchr: Warning: 2nd arg must be a single character.]"));
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 
 
-_TCHAR *str = _tcschr(name1, ch_str[0]);
+_TCHAR *str = u8_chr(name1, target);
 if (!str || !*str)
 	return true;
 
@@ -6485,16 +6600,14 @@ if (!name1 || !*name1 || !ch_str || !*ch_str)
 	_stprintf(Errbuf,_T("[strchrcount: Warning: Given no str or char.]"));
 	return parse->errOut(true); // UNFIXED
 	}
-if (ch_str[1])
+UChar32 target = 0;
+if (!u8_single_char(ch_str, target))
 	{
-	_stprintf(Errbuf,_T("[strchrcount: Warning: 2nd arg must be string of length 1.]"));
+	_stprintf(Errbuf,_T("[strchrcount: Warning: 2nd arg must be a single character.]"));
 	return parse->errOut(true); // UNFIXED
 	}
 
-long long count = 0;
-for (; *name1; ++name1)
-	if (*name1 == *ch_str)
-		++count;
+long long count = u8_chr_count(name1, target);
 sem = new RFASem(count);
 
 return true;
@@ -6537,14 +6650,15 @@ if (!name1 || !*name1 || !ch_str || !*ch_str)
 	_stprintf(Errbuf,_T("[strrchr: Warning: Given no str or char.]"));
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
-if (ch_str[1])
+UChar32 target = 0;
+if (!u8_single_char(ch_str, target))
 	{
-	_stprintf(Errbuf,_T("[strrchr: Warning: 2nd arg must be string of length 1.]"));
+	_stprintf(Errbuf,_T("[strrchr: Warning: 2nd arg must be a single character.]"));
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 
 
-_TCHAR *str = _tcsrchr(name1, ch_str[0]);
+_TCHAR *str = u8_rchr(name1, target);
 if (!str || !*str)
 	return true;
 
@@ -6934,12 +7048,15 @@ if (!name1)																		// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 
-_TCHAR *buf = Chars::create(_tcsclen(name1)+1);				// FIX.	// 07/16/03 AM.
-str_to_title(name1, buf);
+// See fnStrtolower: size to the converted result, not the input, so case
+// changes cannot overflow the buffer.						// 06/17/26 AM.
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(name1));
+ustr.toTitle(NULL, icu::Locale::getUS());
+std::string converted;
+ustr.toUTF8String(converted);
 
 _TCHAR *str;
-parse->internStr(buf, /*UP*/ str);
-Chars::destroy(buf);												// FIX.	// 07/16/03 AM.
+parse->internStr(&converted[0], /*UP*/ str);
 
 // Return as str type.
 sem = new RFASem(str, RSSTR);
@@ -10684,12 +10801,15 @@ if (!Arg::done((DELTS*)args, _T("isupper"),parse))
 
 long long isUpper=0;
 if (str1 && *str1) {
-	icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str1));
-	const UChar *strBuf = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
-	UChar32 c = 1;
+	// Read the first code point straight from the UTF-8 source. The old
+	// code ran the UTF-8 macro U8_NEXT over a UTF-16 buffer, so it only
+	// worked for an ASCII first character.					// 06/17/26 AM.
+	icu::StringPiece sp(str1);
+	const char *spd = sp.data();
+	int32_t length = sp.length();
+	UChar32 c = 0;
 	int32_t e = 0;
-	int32_t length = unicu::strLen(strBuf);
-	U8_NEXT(strBuf, e, length, c);
+	U8_NEXT(spd, e, length, c);
 	if (unicu::isUpper(c))
 		isUpper = 1;
 }
@@ -10727,12 +10847,14 @@ if (!Arg::done((DELTS*)args, _T("islower"),parse))
 
 long long isLower=0;
 if (str1 && *str1) {
-	icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str1));
-	const UChar *strBuf = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
-	UChar32 c = 1;
+	// Read the first code point straight from the UTF-8 source (see
+	// fnStrisupper).										// 06/17/26 AM.
+	icu::StringPiece sp(str1);
+	const char *spd = sp.data();
+	int32_t length = sp.length();
+	UChar32 c = 0;
 	int32_t e = 0;
-	int32_t length = unicu::strLen(strBuf);
-	U8_NEXT(strBuf, e, length, c);
+	U8_NEXT(spd, e, length, c);
 	if (unicu::isLower(c))
 		isLower = 1;
 }

@@ -1636,7 +1636,15 @@ while (*str)
 		continue;	// reprocess the current char; the newline isn't counted
 		}
 
-	*ptr++ = *str++;
+	// Copy one whole UTF-8 character so wrapSize counts code points (not
+	// bytes) and a hard wrap never splits a multi-byte character.
+	int clen = 1;										// 06/17/26 AM.
+	unsigned char lead = (unsigned char)*str;
+	if (lead >= 0xF0)		clen = 4;
+	else if (lead >= 0xE0)	clen = 3;
+	else if (lead >= 0xC0)	clen = 2;
+	for (int k = 0; k < clen && *str; ++k)
+		*ptr++ = *str++;
 	++count;
 	}
 
