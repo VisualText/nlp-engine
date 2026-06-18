@@ -40,6 +40,7 @@ All rights reserved.
 #include "thtab.h"		// 02/26/01 AM.
 #include "pat.h"
 #include "rec.h"			// 11/08/99 AM.
+#include "python.h"		// Python pass (gap-filler / enricher hook).
 #include "stub_s.h"		// 06/23/99 AM.
 #include "stub_e.h"		// 06/23/99 AM.
 #include "angen.h"		// 04/27/00 AM.
@@ -688,6 +689,17 @@ else if (!strcmp_i(s_algo, _T("rec")))				// 11/08/99 AM.
 		rules = rulesfile->getRules();
 
 	algo = new Rec();									// 11/08/99 AM.
+	}
+else if (!strcmp_i(s_algo, _T("python")))			// Python pass (post-tokenize).
+	{
+	// Second column is the script base name (spec/<name>.py).  No rules to parse.
+	algo = new Pyalgo(false);
+	}
+else if (	!strcmp_i(s_algo, _T("pythonpre"))		// Python pass (pre-tokenize).
+			|| !strcmp_i(s_algo, _T("pypre"))
+		  )
+	{
+	algo = new Pyalgo(true);
 	}
 else if (	!strcmp_i(s_algo, _T("stub"))			// 06/23/99 AM.
 		  )
