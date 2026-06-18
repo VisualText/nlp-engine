@@ -690,16 +690,12 @@ else if (!strcmp_i(s_algo, _T("rec")))				// 11/08/99 AM.
 
 	algo = new Rec();									// 11/08/99 AM.
 	}
-else if (!strcmp_i(s_algo, _T("python")))			// Python pass (post-tokenize).
+else if (!strcmp_i(s_algo, _T("python")))			// Python pass (any position).
 	{
 	// Second column is the script base name (spec/<name>.py).  No rules to parse.
-	algo = new Pyalgo(false);
-	}
-else if (	!strcmp_i(s_algo, _T("pythonpre"))		// Python pass (pre-tokenize).
-			|| !strcmp_i(s_algo, _T("pypre"))
-		  )
-	{
-	algo = new Pyalgo(true);
+	// May be placed anywhere, including before the tokenizer; the pre/post phase
+	// is detected automatically in Pyalgo::Execute.
+	algo = new Pyalgo();
 	}
 else if (	!strcmp_i(s_algo, _T("stub"))			// 06/23/99 AM.
 		  )
