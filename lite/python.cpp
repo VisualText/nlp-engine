@@ -4,8 +4,10 @@
 * SUBJ:	Analyzer pass that runs a Python script (gap-filler / enricher hook).
 * NOTE:	See python.h.  The pass shells out to:
 *			  python "<appdir>/spec/<script>.py" "<appdir>" "<inputfile>" pre|post
-*			Use "pythonpre" as the first pass (before the tokenizer) to update the
-*			dictionary/KB on raw text; use "python" anywhere after tokenization.
+*			A "python" pass may sit anywhere in the sequence, including before the
+*			tokenizer (e.g. to update the dictionary/KB on raw text).  The pre|post
+*			argument is detected automatically: a parse tree exists only after
+*			tokenization, so no tree => "pre", tree present => "post".
 *******************************************************************************/
 
 #include "StdAfx.h"
@@ -33,17 +35,15 @@ static _TCHAR algo_name[] = _T("python");
 * FN:		Special Functions for Pyalgo class.
 ********************************************/
 
-Pyalgo::Pyalgo(bool pre)			// Default constructor.
+Pyalgo::Pyalgo()					// Default constructor.
 	: Algo(algo_name)
 {
-pre_ = pre;
 }
 
 Pyalgo::Pyalgo(const Pyalgo &orig)	// Copy constructor.
 {
 name = orig.name;
 debug_ = orig.debug_;
-pre_ = orig.pre_;
 }
 
 /********************************************
@@ -86,13 +86,16 @@ if (!script || !*script)
 _TCHAR *appdir = parse->getAppdir();
 _TCHAR *input  = parse->getInput();
 
+// Detect phase: a parse tree exists only after tokenization.
+bool pre = (parse->getTree() == 0);
+
 _TCHAR cmd[8192];
 _stprintf(cmd, _T("python \"%s/spec/%s.py\" \"%s\" \"%s\" %s"),
 			(appdir ? appdir : _T(".")),
 			script,
 			(appdir ? appdir : _T(".")),
 			(input ? input : _T("")),
-			(pre_ ? _T("pre") : _T("post")));
+			(pre ? _T("pre") : _T("post")));
 
 if (parse->Verbose())
 	*gout << _T("[python pass: ") << cmd << _T("]") << std::endl;
