@@ -689,18 +689,25 @@ if (nlppp->sem_)
 	return errOut(&gerrStr,false);
 	}
 
-// Get the nonliteral name (eg, _xVAR) and the string content (eg, attr).
-RFASem *sem1, *sem2;
-if (!(sem1 = (RFASem *) n1->getData()->getSem())
- || !(sem2 = (RFASem *) n2->getData()->getSem()))
+// Get the nonliteral name (eg, _xVAR).  The nonliteral always carries a sem.
+RFASem *sem1;
+if (!(sem1 = (RFASem *) n1->getData()->getSem()))
 	{
 	std::_t_strstream gerrStr;
 	gerrStr << _T("[rfaxvar: Missing semantic object.]") << std::ends;
 	return errOut(&gerrStr,false);
 	}
-
 _TCHAR *name1 = sem1->getName();		// Eg, _xVAR
-_TCHAR *name2 = sem2->getName();		// Eg, attr (string content, no quotes)
+
+// Get the attribute name (eg, attr).  Quoted form is a _STR whose sem holds
+// the unquoted content; the unquoted form is a _LIT/_NUM bareword with no sem,
+// where the literal text is the node's name (see postRFAname).	// 06/18/26 DD.
+_TCHAR *name2;
+RFASem *sem2 = (RFASem *) n2->getData()->getSem();
+if (sem2)
+	name2 = sem2->getName();			// Eg, attr (string content, no quotes)
+else
+	name2 = n2->getData()->getName();	// Eg, attr (unquoted bareword text)
 if (!name1 || !name2)
 	{
 	std::_t_strstream gerrStr;
