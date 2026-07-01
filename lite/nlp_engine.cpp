@@ -13,6 +13,7 @@ MIT License
 #include "nlp_engine.h"
 
 #include <filesystem>
+#include <ctime>
 
 #ifdef LINUX
 #include <unistd.h>
@@ -278,6 +279,7 @@ int NLP_ENGINE::init(
         // SET UP THE KNOWLEDGE BASE
         /////////////////////////////////////////////////
 
+         clock_t kb_s_time = clock();                                  // KB read timing.
          m_cg = m_vtrun->makeCG(                                        // 07/21/03 AM.
                 m_anadir,
                 true,      // LOAD COMPILED KB IF POSSIBLE.
@@ -294,7 +296,8 @@ int NLP_ENGINE::init(
             return -1;
         }
 
-        std::_t_cerr << _T("[Loaded knowledge base.]") << std::endl;             // 02/19/19 AM.
+        double kb_tot = (double)(clock() - kb_s_time) / CLOCKS_PER_SEC;
+        std::_t_cerr << _T("[Loaded knowledge base: ") << kb_tot << _T(" sec]") << std::endl;             // 02/19/19 AM.
 
         // Compile the KB if requested. Analyzer-only compile skips this.
         if (m_compile || m_compileKB)
