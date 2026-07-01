@@ -317,6 +317,7 @@ int NLP_ENGINE::init(
         // Create an analyzer dynamically using the sequence file and rules files
         // under appdir\spec.
 
+        clock_t ana_s_time = clock();                                 // Analyzer load timing.
         if (!m_nlp->make_analyzer(m_seqfile, m_anadir, m_develop,
             silent,              // Debug/log file output.             // 06/16/02 AM.
             0,
@@ -330,6 +331,13 @@ int NLP_ENGINE::init(
     //        VTRun::deleteVTRun(m_vtrun);                                 // 07/21/03 AM.
             return -1;
             }
+
+        // Report analyzer load time. `compiled` loads bin/run.<ext>; otherwise
+        // the analyzer is built/interned from spec/ rules.            // 06/18/26 DD.
+        double ana_tot = (double)(clock() - ana_s_time) / CLOCKS_PER_SEC;
+        std::_t_cerr << _T("[Loaded ")
+                     << (compiled ? _T("compiled analyzer: ") : _T("analyzer: "))
+                     << ana_tot << _T(" sec]") << std::endl;
         }   // end ELSE...
 
     /////////////////////////////
