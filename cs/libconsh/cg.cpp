@@ -249,7 +249,11 @@ if (compiled)																	// 04/27/01 AM.
 		}
 
 	*cgerr << _T("[Loading compiled kb: ") << bin << _T("]") << std::endl;			// 05/06/01 AM.
-	clock_t ckb_s_time = clock();											// Compiled KB load timing.	// 06/18/26 DD.
+	// Split decl/assign (as readKB does) so the earlier `goto interp` may skip
+	// this scalar legally -- jumping across an initialization is ill-formed
+	// under GCC (crosses initialization of 'ckb_s_time').				// 06/18/26 DD.
+	clock_t ckb_s_time;
+	ckb_s_time = clock();													// Compiled KB load timing.
 	hkbdll_ = load_dll(bin);												// 05/06/01 AM.
 	if (hkbdll_)
 		{
