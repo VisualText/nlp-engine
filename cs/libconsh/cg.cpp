@@ -249,6 +249,11 @@ if (compiled)																	// 04/27/01 AM.
 		}
 
 	*cgerr << _T("[Loading compiled kb: ") << bin << _T("]") << std::endl;			// 05/06/01 AM.
+	// Split decl/assign (as readKB does) so the earlier `goto interp` may skip
+	// this scalar legally -- jumping across an initialization is ill-formed
+	// under GCC (crosses initialization of 'ckb_s_time').				// 06/18/26 DD.
+	clock_t ckb_s_time;
+	ckb_s_time = clock();													// Compiled KB load timing.
 	hkbdll_ = load_dll(bin);												// 05/06/01 AM.
 	if (hkbdll_)
 		{
@@ -269,6 +274,12 @@ if (compiled)																	// 04/27/01 AM.
 			*cgerr << _T("[Couldn't bind vars to compiled kb.]") << std::endl;
 			loaded = false;
 			unload_dll(hkbdll_);
+			}
+		// Report compiled-KB load time (DLL load + kb_setup + bind).	// 06/18/26 DD.
+		if (loaded)
+			{
+			double ckb_tot = (double)(clock() - ckb_s_time) / CLOCKS_PER_SEC;
+			std::_t_cerr << _T("[Loaded compiled KB library: ") << ckb_tot << _T(" sec]") << std::endl;
 			}
 		}
 	else																			// 05/07/01 AM.
@@ -694,9 +705,11 @@ return true;
 
 void CG::outputTime(_TCHAR *timeMsg, clock_t s_time) {
 clock_t e_time = clock();
-*cgerr << timeMsg << _T(" ")
-	  << (double) (e_time - s_time)/CLOCKS_PER_SEC
-	  << _T(" sec]") << std::endl;
+double secs = (double) (e_time - s_time)/CLOCKS_PER_SEC;
+*cgerr << timeMsg << _T(" ") << secs << _T(" sec]") << std::endl;
+// Also surface KB/dictionary load timings on the visible log stream so the
+// interpreted-KB times appear alongside [Loaded knowledge base: ...].	// 06/18/26 DD.
+std::_t_cerr << timeMsg << _T(" ") << secs << _T(" sec]") << std::endl;
 }
 
 /********************************************
