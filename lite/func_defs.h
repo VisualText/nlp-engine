@@ -357,6 +357,12 @@ enum funcDef
 	FNxmlstr,		// 05/10/03 AM.
 	FNxrename,
 
+	// File-system functions.	// 07/03/26 DD.
+	FNdeletefile,
+	FNdirexists,
+	FNfileexists,
+	FNfilesize,
+
 	FNXXYYZZ };
 
 #endif

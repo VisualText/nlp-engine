@@ -959,6 +959,10 @@ static bool fnStruniquechars(
 	static bool fnWriteKB(Delt<Iarg>*,Nlppp*,RFASem*&);
 	static bool fnLoadkbb(Delt<Iarg>*,Nlppp*,RFASem*&);				// 06/11/26 DD.
 	static bool fnLoaddict(Delt<Iarg>*,Nlppp*,RFASem*&);			// 06/11/26 DD.
+	static bool fnFileexists(Delt<Iarg>*,Nlppp*,RFASem*&);			// 07/03/26 DD.
+	static bool fnDirexists(Delt<Iarg>*,Nlppp*,RFASem*&);			// 07/03/26 DD.
+	static bool fnFilesize(Delt<Iarg>*,Nlppp*,RFASem*&);			// 07/03/26 DD.
+	static bool fnDeletefile(Delt<Iarg>*,Nlppp*,RFASem*&);			// 07/03/26 DD.
 	static bool fnStriscaps(Delt<Iarg>*,Nlppp*,RFASem*&);
 	static bool fnStrisupper(Delt<Iarg>*,Nlppp*,RFASem*&);			// 11/20/01 AM.
 	static bool fnStrislower(Delt<Iarg>*,Nlppp*,RFASem*&);			// 11/20/01 AM.

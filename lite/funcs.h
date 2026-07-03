@@ -350,4 +350,9 @@ _T("xdump"),
 _T("xinc"),
 _T("xmlstr"),		// 05/10/03 AM.
 _T("xrename"),
+// File-system functions.	// 07/03/26 DD.
+_T("deletefile"),
+_T("direxists"),
+_T("fileexists"),
+_T("filesize"),
 0 };
