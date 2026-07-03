@@ -402,6 +402,14 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnLoaddict(args,nlppp,/*UP*/sem);						// 06/11/26 DD.
 	case FNloadkbb:
 		return fnLoadkbb(args,nlppp,/*UP*/sem);						// 06/11/26 DD.
+	case FNfileexists:
+		return fnFileexists(args,nlppp,/*UP*/sem);					// 07/03/26 DD.
+	case FNdirexists:
+		return fnDirexists(args,nlppp,/*UP*/sem);						// 07/03/26 DD.
+	case FNfilesize:
+		return fnFilesize(args,nlppp,/*UP*/sem);						// 07/03/26 DD.
+	case FNdeletefile:
+		return fnDeletefile(args,nlppp,/*UP*/sem);					// 07/03/26 DD.
 	case FNlogten:
 		return fnLogten(args,nlppp,/*UP*/sem);							// 04/29/04 AM.
 	case FNrandomint:
@@ -10968,6 +10976,155 @@ sem = new RFASem(1LL);	// 04/12/03 AM.
 return true;
 }
 
+
+/********************************************
+* FN:		FNFILEEXISTS
+* CR:		07/03/26 DD.
+* SUBJ:	Test whether a path names an existing regular file.
+* RET:	True (executed ok); sem = 1 if a regular file exists, else 0.
+* FORMS:	fileexists(path_str)
+********************************************/
+
+bool Fn::fnFileexists(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+_TCHAR *str;
+if (!Arg::str1(_T("fileexists"), /*UP*/ (DELTS*&)args, str))
+	return false;
+if (!Arg::done((DELTS*)args, _T("fileexists"),parse))
+	return false;
+
+bool yes = false;
+if (str && *str)
+	{
+	std::error_code ec;
+	yes = std::filesystem::is_regular_file(std::filesystem::path(str), ec) && !ec;
+	}
+sem = new RFASem(yes ? 1LL : 0LL);
+return true;
+}
+
+
+/********************************************
+* FN:		FNDIREXISTS
+* CR:		07/03/26 DD.
+* SUBJ:	Test whether a path names an existing directory.
+* RET:	True (executed ok); sem = 1 if the directory exists, else 0.
+* FORMS:	direxists(path_str)
+********************************************/
+
+bool Fn::fnDirexists(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+_TCHAR *str;
+if (!Arg::str1(_T("direxists"), /*UP*/ (DELTS*&)args, str))
+	return false;
+if (!Arg::done((DELTS*)args, _T("direxists"),parse))
+	return false;
+
+bool yes = false;
+if (str && *str)
+	{
+	std::error_code ec;
+	yes = std::filesystem::is_directory(std::filesystem::path(str), ec) && !ec;
+	}
+sem = new RFASem(yes ? 1LL : 0LL);
+return true;
+}
+
+
+/********************************************
+* FN:		FNFILESIZE
+* CR:		07/03/26 DD.
+* SUBJ:	Size of a regular file, in bytes.
+* RET:	True (executed ok); sem = byte count, or -1 if not a readable file.
+* FORMS:	filesize(path_str)
+********************************************/
+
+bool Fn::fnFilesize(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+_TCHAR *str;
+if (!Arg::str1(_T("filesize"), /*UP*/ (DELTS*&)args, str))
+	return false;
+if (!Arg::done((DELTS*)args, _T("filesize"),parse))
+	return false;
+
+long long bytes = -1LL;
+if (str && *str)
+	{
+	std::error_code ec;
+	std::filesystem::path p(str);
+	if (std::filesystem::is_regular_file(p, ec) && !ec)
+		{
+		std::uintmax_t sz = std::filesystem::file_size(p, ec);
+		if (!ec)
+			bytes = (long long) sz;
+		}
+	}
+sem = new RFASem(bytes);
+return true;
+}
+
+
+/********************************************
+* FN:		FNDELETEFILE
+* CR:		07/03/26 DD.
+* SUBJ:	Delete a regular file.
+* RET:	True (executed ok); sem = 1 if a file was deleted, else 0.
+* NOTE:	Only removes regular files, never directories.
+* FORMS:	deletefile(path_str)
+********************************************/
+
+bool Fn::fnDeletefile(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+_TCHAR *str;
+if (!Arg::str1(_T("deletefile"), /*UP*/ (DELTS*&)args, str))
+	return false;
+if (!Arg::done((DELTS*)args, _T("deletefile"),parse))
+	return false;
+
+bool done = false;
+if (str && *str)
+	{
+	std::error_code ec;
+	std::filesystem::path p(str);
+	// Guard: never remove a directory via deletefile.
+	if (std::filesystem::is_regular_file(p, ec) && !ec)
+		done = std::filesystem::remove(p, ec) && !ec;
+	}
+sem = new RFASem(done ? 1LL : 0LL);
+return true;
+}
 
 
 /********************************************
