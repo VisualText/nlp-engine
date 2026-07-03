@@ -3573,11 +3573,17 @@ bool CG::readDicts(std::vector<std::filesystem::path> files, std::vector<std::fi
 	std::vector<std::filesystem::path>::iterator ptr;
 	if (files.size() == 0) return false;
     for (ptr = files.begin(); ptr < files.end(); ptr++) {
-		// A "*full.dict" is loaded lazily, one word at a time. If openFullDict
-		// fails (eg the file is not sorted) read it the normal way.	// 06/10/26.
+		// A "*full.dict" is lazy-loaded and is huge by design. If it can't be
+		// lazy-loaded (eg not byte-sorted) do NOT fall back to a normal load --
+		// reading ~1M entries into the KB exhausts memory / stalls. Report and
+		// skip it so the engine fails fast instead of hanging.	// 07/03/26.
 		std::string stem = removeExtension(ptr->filename().string());
-		if (stemEndsWithFull(stem) && openFullDict(ptr->string()))
+		if (stemEndsWithFull(stem)) {
+			if (!openFullDict(ptr->string()))
+				std::_t_cerr << _T("[Error: ") << ptr->string()
+					<< _T(" is not byte-sorted (LC_ALL=C); cannot lazy-load. Skipping.]") << std::endl;
 			continue;
+		}
         readDict(ptr->string(), kbfiles);
 	}
 	return true;
@@ -3884,11 +3890,17 @@ bool CG::readKBBs(std::vector<std::filesystem::path> files) {
 	std::vector<std::filesystem::path>::iterator ptr;
 	if (files.size() == 0) return false;
     for (ptr = files.begin(); ptr < files.end(); ptr++) {
-		// A "*full.kbb" is loaded lazily, one word at a time. If openFullKBB
-		// fails (eg the file is not sorted) read it the normal way.	// 06/10/26.
+		// A "*full.kbb" is lazy-loaded and is huge by design. If it can't be
+		// lazy-loaded (eg not byte-sorted) do NOT fall back to a normal load --
+		// reading ~1M entries into the KB exhausts memory / stalls. Report and
+		// skip it so the engine fails fast instead of hanging.	// 07/03/26.
 		std::string stem = removeExtension(ptr->filename().string());
-		if (stemEndsWithFull(stem) && openFullKBB(ptr->string()))
+		if (stemEndsWithFull(stem)) {
+			if (!openFullKBB(ptr->string()))
+				std::_t_cerr << _T("[Error: ") << ptr->string()
+					<< _T(" is not byte-sorted (LC_ALL=C); cannot lazy-load. Skipping.]") << std::endl;
 			continue;
+		}
         readKBB(ptr->string());
 	}
 	return true;
@@ -4318,7 +4330,7 @@ bool CG::openFullKBB(const std::string &file)
 
 	if (!kbbFileSorted(f)) {
 		std::_t_cerr << _T("[openFullKBB: ") << file
-					 << _T(" is not sorted; loading it the normal way.]") << std::endl;
+					 << _T(" is not sorted.]") << std::endl;
 		fullKBBs_.pop_back();
 		return false;
 	}
@@ -4350,7 +4362,7 @@ bool CG::openFullDict(const std::string &file)
 
 	if (!dictFileSorted(f)) {
 		std::_t_cerr << _T("[openFullDict: ") << file
-					 << _T(" is not sorted; loading it the normal way.]") << std::endl;
+					 << _T(" is not sorted.]") << std::endl;
 		fullDicts_.pop_back();
 		return false;
 	}
