@@ -15,6 +15,7 @@ All rights reserved.
 #include "StdAfx.h"
 #include <time.h>
 #include <filesystem>
+#include <limits>
 #include "machine-min.h"					// 03/08/00 AM.
 #include "prim/libprim.h"
 #include "lite/global.h"
@@ -3597,8 +3598,25 @@ bool CG::readDict(std::string file, std::vector<std::filesystem::path> kbfiles) 
 
 	allDictStream_.open(file, std::ios::in);
 
-	while (allDictStream_.getline(buf, MAXMSG)) {
+	for (;;) {
+		allDictStream_.getline(buf, MAXMSG);
+		if (allDictStream_.bad())
+			break;								// unrecoverable I/O error
+		if (allDictStream_.eof() && allDictStream_.gcount() == 0)
+			break;								// clean end of file
 		lineCount++;
+		// A line longer than the buffer leaves failbit set (but not eof).
+		// Recover -- clear the error and discard the rest of the line -- so the
+		// remaining entries are still read, instead of getline() aborting the
+		// whole file and silently dropping every entry after an over-long line.
+		if (allDictStream_.fail() && !allDictStream_.eof()) {
+			allDictStream_.clear();
+			allDictStream_.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
+			sprintf(errout_, "%d 1 [dict line too long (limit %d chars), skipped - %s]",
+					lineCount, MAXMSG - 1, file.c_str());
+			*cgerr << errout_ << std::endl;
+			continue;
+		}
 		if (unicu::isStrWhiteSpace(buf))
 			continue;
 		if (!parseDictLine(buf, ambigKB, file, lineCount))
@@ -3640,8 +3658,13 @@ bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, i
 		bool suggestedAttr = false;
 		bool suggestedLit = false;
 		bool comment = false;
-		int begins[30];
-		int lens[30];
+		// Max tokens captured from a single dict line. Was a bare 30, which
+		// begins[]/lens[] indexed without any bound check -- a line with more
+		// tokens overflowed these stack arrays (UB). Cap generously and guard
+		// the loop below.	// #481-followup.
+		const int MAXDICTTOKS = 256;
+		int begins[MAXDICTTOKS];
+		int lens[MAXDICTTOKS];
 		bool lastWhite = false;
 		bool backSlash = false;
 		bool inWord = false;
@@ -3651,7 +3674,7 @@ bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, i
 		int tokint = 0;
 		int startQuote = 0;
 
-		for (int i = 0; i<30; i++) {
+		for (int i = 0; i<MAXDICTTOKS; i++) {
 			begins[i] = -1;
 			lens[i] = -1;
 		}
@@ -3660,6 +3683,14 @@ bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, i
 
 		// get tokens
 		while (c) {
+			// A single iteration can emit up to two tokens; stop before
+			// begins[]/lens[] can overflow and report the over-long line.
+			if (tokint >= MAXDICTTOKS - 2) {
+				sprintf(errout_, "%d 1 [dict line has too many tokens (limit %d) - %s]",
+						lineCount, MAXDICTTOKS, filename.c_str());
+				*cgerr << errout_ << std::endl;
+				return false;
+			}
 			doNext =  true;
 			if (c == '"') {
 				if (backSlash && !inString) {
