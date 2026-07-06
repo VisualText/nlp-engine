@@ -3771,6 +3771,7 @@ bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, i
 		bool attrFlag = false;
 		_TCHAR cc = 0;
 		bool addValue = false;
+		bool wasQuoted = false;		// value came in double-quoted -> keep as string.
 
 		caller.file = file;
 		caller.type = DICT_CALL_FILE;
@@ -3818,6 +3819,7 @@ bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, i
 				_tcsnccpy(val, &token[1], len);
 				val[len] = '\0';
 				addValue = true;
+				wasQuoted = true;
 
 			} else if (attrFlag) {
 				_tcsnccpy(val, token, lens[i]);
@@ -3838,7 +3840,9 @@ bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, i
 			}
 
 			if (addValue) {
-				if (unicu::isNumeric(val)) {
+				// A double-quoted value is always a string, even if it looks
+				// numeric (at="123"): preserve the author's intent.	// #385.
+				if (!wasQuoted && unicu::isNumeric(val)) {
 					long long vnum = 0;
 					unicu::strToLong(val,vnum);
 					addVal(parentCon,attr,vnum);
@@ -3846,6 +3850,7 @@ bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, i
 					addSval(parentCon,attr,val);
 				attrFlag = false;
 				addValue = false;
+				wasQuoted = false;
 			}
 		}
 
