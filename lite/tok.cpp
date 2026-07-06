@@ -424,6 +424,10 @@ void Tok::nextTok(
 			typ = PNWHITE;
 			++ulen;
 		}
+		else if (unicu::isSymbol(c)) {	// currency/symbol chars, e.g. $ £ ¥ € -- #500.
+			typ = PNPUNCT;
+			++ulen;
+		}
 		else {
 			typ = PNCTRL;
 			++ulen;

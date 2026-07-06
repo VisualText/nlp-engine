@@ -24,6 +24,7 @@ namespace unicu
     bool isWhiteSpace(UChar32 c);
     bool isPunct(UChar32 c);
     bool isPunct128(UChar32 c);
+    bool isSymbol(UChar32 c);
     bool isSingle(UChar32 c);
     bool isGlyph(UChar32 c);
     bool isChinese(UChar32 c);
