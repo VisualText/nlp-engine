@@ -15,6 +15,7 @@ All rights reserved.
 #include "StdAfx.h"
 #include <time.h>
 #include <filesystem>
+#include <limits>
 #include "machine-min.h"					// 03/08/00 AM.
 #include "prim/libprim.h"
 #include "lite/global.h"
@@ -3597,8 +3598,25 @@ bool CG::readDict(std::string file, std::vector<std::filesystem::path> kbfiles) 
 
 	allDictStream_.open(file, std::ios::in);
 
-	while (allDictStream_.getline(buf, MAXMSG)) {
+	for (;;) {
+		allDictStream_.getline(buf, MAXMSG);
+		if (allDictStream_.bad())
+			break;								// unrecoverable I/O error
+		if (allDictStream_.eof() && allDictStream_.gcount() == 0)
+			break;								// clean end of file
 		lineCount++;
+		// A line longer than the buffer leaves failbit set (but not eof).
+		// Recover -- clear the error and discard the rest of the line -- so the
+		// remaining entries are still read, instead of getline() aborting the
+		// whole file and silently dropping every entry after an over-long line.
+		if (allDictStream_.fail() && !allDictStream_.eof()) {
+			allDictStream_.clear();
+			allDictStream_.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
+			sprintf(errout_, "%d 1 [dict line too long (limit %d chars), skipped - %s]",
+					lineCount, MAXMSG - 1, file.c_str());
+			*cgerr << errout_ << std::endl;
+			continue;
+		}
 		if (unicu::isStrWhiteSpace(buf))
 			continue;
 		if (!parseDictLine(buf, ambigKB, file, lineCount))
