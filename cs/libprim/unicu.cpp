@@ -27,6 +27,21 @@ bool unicu::isPunct128(UChar32 c) {
 	);
 }
 
+// Printable symbol characters: currency ($ EUR GBP JPY), math, modifier, and
+// other symbols. Tokenizers treat these like punctuation instead of dropping
+// them into the PNCTRL (control-char) bucket -- see #500.
+bool unicu::isSymbol(UChar32 c) {
+	switch (u_charType(c)) {
+		case U_CURRENCY_SYMBOL:
+		case U_MATH_SYMBOL:
+		case U_MODIFIER_SYMBOL:
+		case U_OTHER_SYMBOL:
+			return true;
+		default:
+			return false;
+	}
+}
+
 bool unicu::isSingle(UChar32 c) {
 	return isChinese(c) || isEmoji(c);
 }
