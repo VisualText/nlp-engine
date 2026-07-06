@@ -3822,8 +3822,22 @@ bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, i
 				wasQuoted = true;
 
 			} else if (attrFlag) {
-				_tcsnccpy(val, token, lens[i]);
-				val[lens[i]] = '\0';
+				// Unquoted value. The line tokenizer splits on punctuation, so a
+				// value such as A-B-C arrives as separate tokens (A, -, B, -, C).
+				// Re-join tokens that are contiguous in the source (no whitespace
+				// gap) so hyphens/dots inside an unquoted value are preserved
+				// rather than mis-read as extra attributes. -- #481.
+				int vbeg = begins[i];
+				int vend = begins[i] + lens[i];
+				while (i + 1 < tokint && begins[i+1] == vend) {
+					i++;
+					vend = begins[i] + lens[i];
+				}
+				int vlen = vend - vbeg;
+				if (vlen >= MAXSTR)
+					vlen = MAXSTR - 1;
+				_tcsnccpy(val, &line[vbeg], vlen);
+				val[vlen] = '\0';
 				addValue = true;
 				attrFlag = false;
 
