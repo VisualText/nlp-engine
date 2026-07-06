@@ -3640,8 +3640,13 @@ bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, i
 		bool suggestedAttr = false;
 		bool suggestedLit = false;
 		bool comment = false;
-		int begins[30];
-		int lens[30];
+		// Max tokens captured from a single dict line. Was a bare 30, which
+		// begins[]/lens[] indexed without any bound check -- a line with more
+		// tokens overflowed these stack arrays (UB). Cap generously and guard
+		// the loop below.	// #481-followup.
+		const int MAXDICTTOKS = 256;
+		int begins[MAXDICTTOKS];
+		int lens[MAXDICTTOKS];
 		bool lastWhite = false;
 		bool backSlash = false;
 		bool inWord = false;
@@ -3651,7 +3656,7 @@ bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, i
 		int tokint = 0;
 		int startQuote = 0;
 
-		for (int i = 0; i<30; i++) {
+		for (int i = 0; i<MAXDICTTOKS; i++) {
 			begins[i] = -1;
 			lens[i] = -1;
 		}
@@ -3660,6 +3665,14 @@ bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, i
 
 		// get tokens
 		while (c) {
+			// A single iteration can emit up to two tokens; stop before
+			// begins[]/lens[] can overflow and report the over-long line.
+			if (tokint >= MAXDICTTOKS - 2) {
+				sprintf(errout_, "%d 1 [dict line has too many tokens (limit %d) - %s]",
+						lineCount, MAXDICTTOKS, filename.c_str());
+				*cgerr << errout_ << std::endl;
+				return false;
+			}
 			doNext =  true;
 			if (c == '"') {
 				if (backSlash && !inString) {
