@@ -4100,7 +4100,16 @@ void CG::parseKBBLine(_TCHAR *buf, std::vector<CONCEPT *> &cons, int32_t &index,
 				_tcsnccpy(val, &line[start],end-start);
 				int adjust = length && c != ']' && c != '"' && c != ',' ? 0 : 1;
 				val[end-start-adjust] = '\0';
-				addSval(con,attr,val);
+				// An unquoted numeric value is stored as a number; a quoted value
+				// (openDouble) is always a string. This is what lets a KBB round-
+				// trip num/float vs string, instead of everything being a string.
+				// -- #439.
+				if (!openDouble && unicu::isNumeric(val)) {
+					long long vnum = 0;
+					unicu::strToLong(val,vnum);
+					addVal(con,attr,vnum);
+				} else
+					addSval(con,attr,val);
 				start = end;
 				if (end >= length) {
 					conceptDone = false;
