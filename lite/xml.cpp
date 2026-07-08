@@ -23,6 +23,47 @@ All rights reserved.
 #include "io.h"
 #include "string.h"
 #include "htab.h"
+#include "unicode/utypes.h"		// UChar32			// #488.
+#include "unicode/utf8.h"			// U8_NEXT			// #488.
+
+// Map an accented Latin-1 Supplement / Windows-1252 codepoint to its ASCII base
+// letter, or 0 if the codepoint is not a mapped accented letter. The byte values
+// in the original Latin-1 table are the same numbers as these Unicode codepoints
+// (U+00C0..U+00FF); the 0x8A..0x9F Windows-1252 letters map to their real Unicode
+// codepoints (Scaron U+0160, OElig U+0152, ...).			// #488.
+static _TCHAR de_accent_cp(UChar32 c)
+{
+switch (c)
+	{
+	case 0x0160: return 'S';	// Scaron
+	case 0x0152: return 'E';	// OElig
+	case 0x0161: return 's';	// scaron
+	case 0x0153: return 'e';	// oelig
+	case 0x0178: return 'Y';	// Yuml
+
+	case 0xC0: case 0xC1: case 0xC2: case 0xC3: case 0xC4: case 0xC5: return 'A';
+	case 0xC6: return 'E';		// AElig
+	case 0xC7: return 'C';		// Ccedil
+	case 0xC8: case 0xC9: case 0xCA: case 0xCB: return 'E';
+	case 0xCC: case 0xCD: case 0xCE: case 0xCF: return 'I';
+	case 0xD1: return 'N';		// Ntilde
+	case 0xD2: case 0xD3: case 0xD4: case 0xD5: case 0xD6: case 0xD8: return 'O';
+	case 0xD9: case 0xDA: case 0xDB: case 0xDC: return 'U';
+	case 0xDD: return 'Y';		// Yacute
+
+	case 0xE0: case 0xE1: case 0xE2: case 0xE3: case 0xE4: case 0xE5: return 'a';
+	case 0xE6: return 'e';		// aelig
+	case 0xE7: return 'c';		// ccedil
+	case 0xE8: case 0xE9: case 0xEA: case 0xEB: return 'e';
+	case 0xEC: case 0xED: case 0xEE: case 0xEF: return 'i';
+	case 0xF1: return 'n';		// ntilde
+	case 0xF2: case 0xF3: case 0xF4: case 0xF5: case 0xF6: case 0xF8: return 'o';
+	case 0xF9: case 0xFA: case 0xFB: case 0xFC: return 'u';
+	case 0xFD: case 0xFF: return 'y';
+
+	default: return 0;
+	}
+}
 
 inline void xstrcpy_e(													// 12/30/99 AM.
 	_TCHAR* &ptr,			// Pointer to buffer for copying into.
@@ -635,13 +676,26 @@ _TCHAR *Xml::de_accent(
 if (!xml || !text)
 	return 0;
 _TCHAR *save = xml;
-*xml = '\0';
 
---xml;	// Just a convenience to start here.
-while (*text)
-	de_accent_ch(xml,text);
-
-*++xml = '\0';			// Terminate.
+// Walk UTF-8 codepoints (not bytes) so multi-byte accented letters like
+// e-acute (0xC3 0xA9) de-accent to their base rather than being mangled.	// #488.
+int32_t len = (int32_t) _tcsclen(text);
+int32_t i = 0;
+while (i < len)
+	{
+	int32_t start = i;
+	UChar32 c;
+	U8_NEXT(text, i, len, c);
+	_TCHAR base = de_accent_cp(c);
+	if (base)
+		*xml++ = base;
+	else if (c >= 0 && c < 0x80)
+		*xml++ = (_TCHAR) c;
+	else							// unmapped (ASCII already handled): keep bytes.
+		for (int32_t j = start; j < i; j++)
+			*xml++ = text[j];
+	}
+*xml = '\0';			// Terminate.
 return save;
 }
 
@@ -662,12 +716,25 @@ _TCHAR *Xml::de_accent(
 if (!xml || !text || len <= 0)
 	return 0;
 _TCHAR *save = xml;
-*xml = '\0';
 
---xml;	// Just a convenience to start here.
-while (len--)					// For the given length.
-	de_accent_ch(xml,text);
-*++xml = '\0';			// Terminate.
+// Walk UTF-8 codepoints (not bytes) over the given byte length.		// #488.
+int32_t ilen = (int32_t) len;
+int32_t i = 0;
+while (i < ilen)
+	{
+	int32_t start = i;
+	UChar32 c;
+	U8_NEXT(text, i, ilen, c);
+	_TCHAR base = de_accent_cp(c);
+	if (base)
+		*xml++ = base;
+	else if (c >= 0 && c < 0x80)
+		*xml++ = (_TCHAR) c;
+	else							// unmapped (ASCII already handled): keep bytes.
+		for (int32_t j = start; j < i; j++)
+			*xml++ = text[j];
+	}
+*xml = '\0';			// Terminate.
 return save;
 }
 
@@ -699,94 +766,6 @@ return xml;											// Return string.
 }
 
 
-/********************************************
-* FN:		DE_ACCENT_CH
-* CR:		09/06/03 AM.
-* SUBJ:	Convert a text char to de-accented equivalent.
-*********************************************/
-
-inline void Xml::de_accent_ch(
-	_TCHAR* &xml,				// Pointer to last filled char in converted buffer.
-	_TCHAR* &text				// Pointer to next char to convert in text buffer.
-	)
-{
-switch (*text)
-	{
-	case '\x8A':	xstrcpy_e(xml, _T("S"));		++text;	break;	// Scaron
-	case '\x8C':	xstrcpy_e(xml, _T("E"));		++text;	break;	// OElig
-	case '\x9A':	xstrcpy_e(xml, _T("s"));		++text;	break;	// scaron
-	case '\x9C':	xstrcpy_e(xml, _T("e"));		++text;	break;	// oelig
-	case '\x9F':	xstrcpy_e(xml, _T("Y"));		++text;	break;	// Yuml
-
-	// Upper Case Latin-1 Letters
-	case '\xC0':	xstrcpy_e(xml, _T("A"));		++text;	break;	// Agrave
-	case '\xC1':	xstrcpy_e(xml, _T("A"));		++text;	break;	// Aacute
-	case '\xC2':	xstrcpy_e(xml, _T("A"));		++text;	break;	// Acirc
-	case '\xC3':	xstrcpy_e(xml, _T("A"));		++text;	break;	// Atilde
-	case '\xC4':	xstrcpy_e(xml, _T("A"));		++text;	break;	// Auml
-	case '\xC5':	xstrcpy_e(xml, _T("A"));		++text;	break;	// Aring
-	case '\xC6':	xstrcpy_e(xml, _T("E"));		++text;	break;	// AElig
-	case '\xC7':	xstrcpy_e(xml, _T("C"));		++text;	break;	// Ccedil
-	case '\xC8':	xstrcpy_e(xml, _T("E"));		++text;	break;	// Egrave
-	case '\xC9':	xstrcpy_e(xml, _T("E"));		++text;	break;	// Eacute
-	case '\xCA':	xstrcpy_e(xml, _T("E"));		++text;	break;	// Ecirc
-	case '\xCB':	xstrcpy_e(xml, _T("E"));		++text;	break;	// Euml
-	case '\xCC':	xstrcpy_e(xml, _T("I"));		++text;	break;	// Igrave
-	case '\xCD':	xstrcpy_e(xml, _T("I"));		++text;	break;	// Iacute
-	case '\xCE':	xstrcpy_e(xml, _T("I"));		++text;	break;	// Icirc
-	case '\xCF':	xstrcpy_e(xml, _T("I"));		++text;	break;	// Iuml
-
-//	case '\xD0':	xstrcpy_e(xml, "&ETH;");			++text;	break;
-	case '\xD1':	xstrcpy_e(xml, _T("N"));		++text;	break;	// Ntilde
-	case '\xD2':	xstrcpy_e(xml, _T("O"));		++text;	break;	// Ograve
-	case '\xD3':	xstrcpy_e(xml, _T("O"));		++text;	break;	// Oacute
-	case '\xD4':	xstrcpy_e(xml, _T("O"));		++text;	break;	// Ocirc
-	case '\xD5':	xstrcpy_e(xml, _T("O"));		++text;	break;	// Otilde
-	case '\xD6':	xstrcpy_e(xml, _T("O"));		++text;	break;	// Ouml
-	case '\xD8':	xstrcpy_e(xml, _T("O"));		++text;	break;	// Oslash
-	case '\xD9':	xstrcpy_e(xml, _T("U"));		++text;	break;	// Ugrave
-	case '\xDA':	xstrcpy_e(xml, _T("U"));		++text;	break;	// Uacute
-	case '\xDB':	xstrcpy_e(xml, _T("U"));		++text;	break;	// Ucirc
-	case '\xDC':	xstrcpy_e(xml, _T("U"));		++text;	break;	// Uuml
-	case '\xDD':	xstrcpy_e(xml, _T("Y"));		++text;	break;	// Yacute
-	
-	// Lower Case Latin-1 Letters
-	case '\xE0':	xstrcpy_e(xml, _T("a"));		++text;	break;	// agrave
-	case '\xE1':	xstrcpy_e(xml, _T("a"));		++text;	break;	// aacute
-	case '\xE2':	xstrcpy_e(xml, _T("a"));		++text;	break;	// acirc
-	case '\xE3':	xstrcpy_e(xml, _T("a"));		++text;	break;	// atilde
-	case '\xE4':	xstrcpy_e(xml, _T("a"));		++text;	break;	// auml
-	case '\xE5':	xstrcpy_e(xml, _T("a"));		++text;	break;	// aring
-	case '\xE6':	xstrcpy_e(xml, _T("e"));		++text;	break;	// aelig
-	case '\xE7':	xstrcpy_e(xml, _T("c"));		++text;	break;	// ccedil
-	case '\xE8':	xstrcpy_e(xml, _T("e"));		++text;	break;	// egrave
-	case '\xE9':	xstrcpy_e(xml, _T("e"));		++text;	break;	// eacute
-	case '\xEA':	xstrcpy_e(xml, _T("e"));		++text;	break;	// ecirc
-	case '\xEB':	xstrcpy_e(xml, _T("e"));		++text;	break;	// euml
-	case '\xEC':	xstrcpy_e(xml, _T("i"));		++text;	break;	// igrave
-	case '\xED':	xstrcpy_e(xml, _T("i"));		++text;	break;	// iacute
-	case '\xEE':	xstrcpy_e(xml, _T("i"));		++text;	break;	// icirc
-	case '\xEF':	xstrcpy_e(xml, _T("i"));		++text;	break;	// iuml
-
-	case '\xF1':	xstrcpy_e(xml, _T("n"));		++text;	break;	// ntilde
-	case '\xF2':	xstrcpy_e(xml, _T("o"));		++text;	break;	// ograve
-	case '\xF3':	xstrcpy_e(xml, _T("o"));		++text;	break;	// oacute
-	case '\xF4':	xstrcpy_e(xml, _T("o"));		++text;	break;	// ocirc
-	case '\xF5':	xstrcpy_e(xml, _T("o"));		++text;	break;	// otilde
-	case '\xF6':	xstrcpy_e(xml, _T("o"));		++text;	break;	// ouml
-	case '\xF8':	xstrcpy_e(xml, _T("o"));		++text;	break;	// oslash
-	case '\xF9':	xstrcpy_e(xml, _T("u"));		++text;	break;	// ugrave
-	case '\xFA':	xstrcpy_e(xml, _T("u"));		++text;	break;	// uacute
-	case '\xFB':	xstrcpy_e(xml, _T("u"));		++text;	break;	// ucirc
-	case '\xFC':	xstrcpy_e(xml, _T("u"));		++text;	break;	// uuml
-	case '\xFD':	xstrcpy_e(xml, _T("y"));		++text;	break;	// yacute
-	case '\xFF':	xstrcpy_e(xml, _T("y"));		++text;	break;	// yuml
-
-	default:		// All other chars.
-		*++xml = *text++;
-		break;
-	}
-}
 
 
 //////////////////////////////
