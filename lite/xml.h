@@ -74,7 +74,6 @@ public:
 	static _TCHAR *de_accent(_TCHAR*,_TCHAR*);									// 09/07/03 AM.
 	static _TCHAR *de_accent(_TCHAR*,long,_TCHAR*);								// 09/07/03 AM.
 	static _TCHAR *de_accent(_TCHAR*,long,Htab*);								// 09/07/03 AM.
-	static inline void de_accent_ch(_TCHAR*&,_TCHAR*&);						// 09/06/03 AM.
 
 	static _TCHAR *de_junk(_TCHAR*,_TCHAR*);          // 09/09/11 AM.
 	static _TCHAR *de_junk(_TCHAR*,long,_TCHAR*);     // 09/09/11 AM.
