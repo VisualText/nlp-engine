@@ -515,7 +515,8 @@ return 0;
 CG *VTRun::makeCG(
 	_TCHAR *appdir,	// Directory housing kb folder.
 	bool compiled,	// If loading compiled kb.
-	NLP *nlp			// Associated analyzer if any.
+	NLP *nlp,			// Associated analyzer if any.
+	bool deferUserKB	// Create the CG but do NOT read kb/user yet.	// 07/11/26 DD.
 	)
 {
 if (!appdir || !*appdir)
@@ -536,20 +537,28 @@ if (!cg)
    return 0;
    }
 
+// Defer the kb/user read for interpreted runs: Parse::execute reads it just
+// before the first tokenizer/grammar pass, so pre-tokenizer passes (eg a
+// python pass that GENERATES kbb/dict files) run first and the normal load
+// then picks up whatever they produced.							// 07/11/26 DD.
+if (!deferUserKB)
+   {
 //return cg;	///// TESTING!!!!!!!!!!!!  // 07/28/03 AM.
 #ifdef QDBM_
 if (!cg->getLoaded())		// QDBM ...	// 03/04/07 AM.
 #endif
-if (!cg->readKB(_T("user")))	// 09/23/20 AM.
-   {
-   std::_t_cerr << _T("[Couldn't read knowledge base.]") << std::endl;
+   if (!cg->readKB(_T("user")))	// 09/23/20 AM.
+      {
+      std::_t_cerr << _T("[Couldn't read knowledge base.]") << std::endl;
 //   if (cg) delete cg;	// 07/18/03 AM.
-	CG::deleteCG(cg);
-   return 0;
-   }
+	   CG::deleteCG(cg);
+      return 0;
+      }
+   cg->setUserkbLoaded(true);								// 07/11/26 DD.
 #ifdef QDBM_
-cg->setLoaded(true);	// 03/04/07 AM.
+   cg->setLoaded(true);	// 03/04/07 AM.
 #endif
+   }
 
 if (nlp)
 	nlp->setCG(cg);      // Give analyzer the CG REFERENCE.

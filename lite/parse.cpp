@@ -45,6 +45,8 @@ All rights reserved.
 #include "ana.h"
 #include "seqn.h"				// 02/26/01 AM.
 #include "Eana.h"				// 02/26/01 AM.
+#include "consh/libconsh.h"	// CG (deferred user-KB load).	// 07/11/26 DD.
+#include "consh/cg.h"
 //#include "iarg.h"				// 05/23/01 AM.
 #include "parse.h"
 #include "lite/nlp.h"		// FOR DEBUGGING!!!	// 10/10/99 AM.
@@ -438,6 +440,23 @@ return true;
 * SUBJ:	Perform the analysis of the current text.
 ********************************************/
 
+// Does this pass consume the user KB (tokenizer or grammar pass)?  The user KB
+// is read into memory just before the first such pass, so any pre-tokenizer
+// pass (eg a python pass that generates kbb/dict files) runs first.	// 07/11/26 DD.
+static bool kbConsumerAlgo(_TCHAR *salgo)
+{
+if (!salgo || !*salgo)
+	return false;
+return !strcmp_i(salgo, _T("dicttok"))
+	 || !strcmp_i(salgo, _T("dicttokz"))
+	 || !strcmp_i(salgo, _T("cmltok"))
+	 || !strcmp_i(salgo, _T("chartok"))
+	 || !strcmp_i(salgo, _T("tok"))
+	 || !strcmp_i(salgo, _T("nlp"))
+	 || !strcmp_i(salgo, _T("rec"))
+	 || !strcmp_i(salgo, _T("pat"));
+}
+
 void Parse::execute()
 {
 Delt<Seqn> *seq;
@@ -481,10 +500,22 @@ if (!ana)	// 05/05/09 AM.
 	return;	// 05/05/09 AM.
 	}
 
+// KB whose kb/user read was deferred (interpreted run): load it just before
+// the first pass that consumes it, so pre-tokenizer passes run first.	// 07/11/26 DD.
+CG *cg = ana->getCG();
+
 // Cosmetic rewrite as for loop.											// 11/10/99 AM.
 for (seq = ana->getSeq(); seq; seq = seq->Right())
 	{
 	++rulepass_;																// 02/03/05 AM.
+
+	if (cg && !cg->getUserkbLoaded()										// 07/11/26 DD.
+		 && kbConsumerAlgo(seq->getData()->getAlgoname()))
+		{
+		cg->readKB(_T("user"));
+		cg->setUserkbLoaded(true);
+		}
+
 	if (!stepExecute(seq, ++currpass_))		// 05/15/99 AM.		// 08/22/02 AM.
 		return;																	// 05/15/99 AM.
 

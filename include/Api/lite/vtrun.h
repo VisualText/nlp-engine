@@ -86,7 +86,8 @@ public:
 	CG *makeCG(         // 07/18/03 AM.
 		_TCHAR *appdir,    // Folder housing the kb folder.
 		bool compiled,   // If loading the compiled kb.
-		NLP *nlp         // Associated analyzer, if any.
+		NLP *nlp,        // Associated analyzer, if any.
+		bool deferUserKB = false  // Create the CG but do NOT read kb/user yet.	// 07/11/26 DD.
 		);
 
 	// API: Delete a knowledge base.
