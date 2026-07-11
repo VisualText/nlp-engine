@@ -279,11 +279,19 @@ int NLP_ENGINE::init(
         // SET UP THE KNOWLEDGE BASE
         /////////////////////////////////////////////////
 
+        // Interpreted run: defer reading kb/user until Parse::execute reaches
+        // the first tokenizer/grammar pass, so any pre-tokenizer pass (eg a
+        // python pass that generates kbb/dict files) runs first and the load
+        // then sees what it produced. Compile modes and compiled-analyzer runs
+        // still load eagerly here (they don't go through Parse::execute).	// 07/11/26 DD.
+        bool deferUserKB = !m_compile && !m_compileKB && !m_compileAna && !m_compiled;
+
          clock_t kb_s_time = clock();                                  // KB read timing.
          m_cg = m_vtrun->makeCG(                                        // 07/21/03 AM.
                 m_anadir,
                 true,      // LOAD COMPILED KB IF POSSIBLE.
-                m_nlp);      // Associated analyzer object.              // 07/21/03 AM.
+                m_nlp,       // Associated analyzer object.              // 07/21/03 AM.
+                deferUserKB);                                           // 07/11/26 DD.
 
 
         if (!m_cg)                                                       // 07/21/03 AM.
@@ -297,7 +305,8 @@ int NLP_ENGINE::init(
         }
 
         double kb_tot = (double)(clock() - kb_s_time) / CLOCKS_PER_SEC;
-        std::_t_cerr << _T("[Loaded knowledge base: ") << kb_tot << _T(" sec]") << std::endl;             // 02/19/19 AM.
+        if (!deferUserKB)                                                // 07/11/26 DD.
+            std::_t_cerr << _T("[Loaded knowledge base: ") << kb_tot << _T(" sec]") << std::endl;             // 02/19/19 AM.
 
         // Compile the KB if requested. Analyzer-only compile skips this.
         if (m_compile || m_compileKB)

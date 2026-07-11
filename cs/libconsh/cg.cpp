@@ -85,6 +85,7 @@ nlp_PUNCT =
 0;
 
 dirty_ = false;																// 05/12/00 AM.
+userkbLoaded_ = false;														// 07/11/26 DD.
 // Must run on Linux too: hkbdll_ was previously only zeroed under
 // #ifndef LINUX, leaving it uninitialized on Linux. readKB() treats a
 // nonzero hkbdll_ as "compiled KB loaded" and skips reading the dict
@@ -376,6 +377,7 @@ if (cg)
 
 _TCHAR	*CG::getAppdir()	{return appdir_;}
 bool	 CG::getDirty()	{return dirty_;}								// 05/12/00 AM.
+bool	 CG::getUserkbLoaded()	{return userkbLoaded_;}				// 07/11/26 DD.
 AKBM	*CG::getKBM()		{return kbm_;}									// 06/11/02 AM.
 ALIST *CG::getALIST()	{return alist_;}								// 08/14/02 AM.
 #ifndef LINUX
@@ -388,6 +390,7 @@ HINSTANCE CG::getHkbdll()	{return hkbdll_;}
 ********************************************/
 void	CG::setAppdir(_TCHAR *x)	{_tcscpy(appdir_, x);	}
 void	CG::setDirty(bool x)		{dirty_ = x;			}				// 05/12/00 AM.
+void	CG::setUserkbLoaded(bool x)	{userkbLoaded_ = x;	}				// 07/11/26 DD.
 void	CG::setKBM(AKBM *x)		{kbm_	= x;				}				// 06/11/02 AM.
 void	CG::setALIST(ALIST *x)	{alist_ = x;			}
 #ifndef LINUX

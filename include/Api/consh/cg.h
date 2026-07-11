@@ -106,6 +106,10 @@ public:
 	// Modify
 	void setAppdir(_TCHAR *);
 	void setDirty(bool);														// 05/12/00 AM.
+	// Has the user KB (kb/user) been read into memory yet?  Loading is deferred
+	// for interpreted runs so pre-tokenizer passes run first.			// 07/11/26 DD.
+	bool getUserkbLoaded();
+	void setUserkbLoaded(bool);
 	void setKBM(AKBM*);														// 06/11/02 AM.
 	void setALIST(ALIST*);													// 08/14/02 AM.
 //#ifndef LINUX
@@ -668,6 +672,7 @@ private:
 	std::string missingLogDir_;			// Where to write missing-words.log (else kbdir_).
 
 	bool dirty_;					// KB dirty flag.						// 05/12/00 AM.
+	bool userkbLoaded_;			// True once the user KB has been read in.	// 07/11/26 DD.
 
 	// For diverting the libconsh error output.						// 09/16/99 AM.
 	std::_t_ostream *serr_;															// 09/16/99 AM.
