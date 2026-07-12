@@ -4397,11 +4397,35 @@ bool CG::openFullKBB(const std::string &file)
 		return false;
 	}
 
-	// The kbb's top concept ("dictionary"). Lazily-loaded words hang off this,
-	// matching the output pass's getconcept(findroot(),"dictionary").
-	f.root = getConcept(findRoot(), _T("dictionary"));
+	// The kbb's top concept. Read it from the file (the first non-comment line
+	// at indent 0) rather than assuming "dictionary": an isolated kbb such as
+	// "en-roots-full.kbb" has its own top concept ("roots"), and its words must
+	// hang off that so the analyzer can find it (getconcept(findroot(),"roots")).
+	// This also creates that concept up front, before any word is looked up.
+	_TCHAR rootName[MAXMSG];
+	rootName[0] = '\0';
+	f.stream.clear();
+	f.stream.seekg(0);
+	{
+		_TCHAR line[MAXMSG];
+		while (f.stream.getline(line, MAXMSG)) {
+			chompCRLF(line);
+			if (line[0] == '#' || line[0] == '\0' || line[0] == ' ')
+				continue;					// comment, blank, or indented line
+			int i = 0;
+			while (line[i] && line[i] != ':') {
+				rootName[i] = line[i];
+				i++;
+			}
+			rootName[i] = '\0';
+			break;
+		}
+	}
+	f.root = getConcept(findRoot(), (rootName[0] ? rootName : _T("dictionary")));
 
-	std::_t_cerr << _T("[Lazy-loading words from ") << file << _T("]") << std::endl;
+	std::_t_cerr << _T("[Lazy-loading words from ") << file
+				 << _T(" under \"") << (rootName[0] ? rootName : _T("dictionary"))
+				 << _T("\"]") << std::endl;
 	return true;
 }
 
@@ -4459,15 +4483,21 @@ CONCEPT *CG::findFullWord(_TCHAR *str)
 	return word;
 }
 
-// Look up str across every open *full.kbb, returning the first match.
+// Look up str in every open *full.kbb. Each kbb is an independent knowledge
+// source with its own top concept (eg "dictionary" for en-full.kbb, "roots"
+// for en-roots-full.kbb), so we build the word under each one that has it --
+// not just the first -- and return the first match to the caller (the token's
+// primary word concept). Lookups are cached after the first hit, so this whole
+// scan runs at most once per distinct word.
 CONCEPT *CG::findFullKBBWord(_TCHAR *str)
 {
+	CONCEPT *first = 0;
 	for (FullFile &f : fullKBBs_) {
 		CONCEPT *word = searchKBBFile(f, str);
-		if (word)
-			return word;
+		if (word && !first)
+			first = word;
 	}
-	return 0;
+	return first;
 }
 
 // Binary-search one open *full.kbb for str. If found, build that word's block
