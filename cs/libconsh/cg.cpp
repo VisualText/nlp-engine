@@ -4421,11 +4421,12 @@ bool CG::openFullKBB(const std::string &file)
 			break;
 		}
 	}
-	f.root = getConcept(findRoot(), (rootName[0] ? rootName : _T("dictionary")));
+	if (!rootName[0])
+		strcpy(rootName, _T("dictionary"));	// no top concept found; fall back
+	f.root = getConcept(findRoot(), rootName);
 
 	std::_t_cerr << _T("[Lazy-loading words from ") << file
-				 << _T(" under \"") << (rootName[0] ? rootName : _T("dictionary"))
-				 << _T("\"]") << std::endl;
+				 << _T(" under \"") << rootName << _T("\"]") << std::endl;
 	return true;
 }
 
