@@ -4043,24 +4043,6 @@ void CG::parseKBBLine(_TCHAR *buf, std::vector<CONCEPT *> &cons, int32_t &index,
 			if (c == '#') {
 				break;
 			}
-			// A space ends an unquoted attribute value in the inline KBB form
-			// "attr=val attr=val ..." (eg "m01: pos=verb vform=past tense=past").
-			// Without this, each space just reset start and every value but the
-			// last one (which EOL terminates) was silently dropped.
-			else if (conceptDone && attrFlag && !openDouble && !openSquare
-						&& unicu::isWhiteSpace(c)) {
-				_tcsnccpy(val, &line[start], end-start-1);
-				val[end-start-1] = '\0';
-				if (unicu::isNumeric(val)) {
-					long long vnum = 0;
-					unicu::strToLong(val, vnum);
-					addVal(con, attr, vnum);
-				} else
-					addSval(con, attr, val);
-				start = end;
-				attrFlag = false;
-				openDouble = false;
-			}
 			else if (conceptDone && !openDouble && unicu::isWhiteSpace(c)) {
 				int doNothing = 1;
 				start = end;
