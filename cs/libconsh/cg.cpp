@@ -611,6 +611,13 @@ if (!kbm_ || !ast_ || !aptr_ || !asym_ || !acon_)	// 07/29/03 AM.
 if (hkbdll_)
 	{
 	*cgerr << _T("[Using compiled kb. readKB ignored.]") << std::endl;	// 06/29/00 AM.
+	// The compiled kb.dll holds the hierarchy/dict/kbb concepts, but a
+	// "*full.dict"/"*full.kbb" is never compiled in -- it stays a sorted file
+	// on disk that we binary-search per unknown word. readKB normally opens
+	// those via readDicts/readKBBs below, but that code is skipped for a
+	// compiled KB, so open them explicitly here or lazy lookup never runs
+	// in a compiled analyzer.									// 07/13/26 DD.
+	openFullFiles();
 	return true;		// This is just info, ok.						// 06/29/00 AM.
 	}
 
@@ -3551,6 +3558,46 @@ std::string CG::removeExtension(const std::string& filename) {
     if (lastDot == std::string::npos)
         return filename;
     return filename.substr(0, lastDot);
+}
+
+// Scan the kb dir for lazy "*full.dict"/"*full.kbb" files and open them for
+// on-disk stream lookup (openFullDict/openFullKBB) without loading them into
+// the KB. Used by the compiled-KB path, where readKB() returns early before it
+// would otherwise open them via readDicts/readKBBs.
+//
+// Note: we glob "*.dict"/"*.kbb" directly rather than reusing openDict()/
+// openKBB(), which short-circuit to a consolidated all.dict/all.kbb and would
+// not surface the separate full files. Each hit is filtered through
+// stemEndsWithFull so the same "-full"/"_full" boundary rule applies.	// 07/13/26 DD.
+void CG::openFullFiles() {
+	// In a compiled analyzer the source kb/user dir may be stripped down to just
+	// the lazy "*full" blobs -- or removed entirely. read_files() opens a
+	// directory_iterator, which throws on a missing dir, so bail out quietly if
+	// there is nothing to scan.
+	std::error_code ec;
+	if (!std::filesystem::is_directory(kbdir_, ec))
+		return;
+
+	std::vector<std::filesystem::path> files;
+	std::vector<std::filesystem::path>::iterator ptr;
+
+	read_files(kbdir_, _T("(.*\\.kbb)$"), files);
+	for (ptr = files.begin(); ptr < files.end(); ptr++) {
+		if (!stemEndsWithFull(removeExtension(ptr->filename().string())))
+			continue;
+		if (!openFullKBB(ptr->string()))
+			std::_t_cerr << _T("[Error: ") << ptr->string()
+				<< _T(" is not byte-sorted (LC_ALL=C); cannot lazy-load. Skipping.]") << std::endl;
+	}
+
+	read_files(kbdir_, _T("(.*\\.dict)$"), files);
+	for (ptr = files.begin(); ptr < files.end(); ptr++) {
+		if (!stemEndsWithFull(removeExtension(ptr->filename().string())))
+			continue;
+		if (!openFullDict(ptr->string()))
+			std::_t_cerr << _T("[Error: ") << ptr->string()
+				<< _T(" is not byte-sorted (LC_ALL=C); cannot lazy-load. Skipping.]") << std::endl;
+	}
 }
 
 bool CG::openDict(std::vector<std::filesystem::path>& files) {
