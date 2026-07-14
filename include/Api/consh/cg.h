@@ -231,6 +231,12 @@ public:
 	bool openKBB(std::vector<std::filesystem::path>& files);
 	bool readKBBs(std::vector<std::filesystem::path> files);
 	bool readKBB(std::string file);
+
+	// Open the lazy "*full.dict"/"*full.kbb" files for on-disk stream lookup
+	// WITHOUT loading them into the KB. Called both from the interpreted load
+	// (implicitly, via readDicts/readKBBs) and from the compiled-KB path, where
+	// readKB() otherwise returns early and would leave the full files unopened.
+	void openFullFiles();
 	// Parse a single line of a "*.kbb" file (indented "dictionary" format) into
 	// the KB. cons/index carry the indentation state between calls; root is the
 	// parent for top-level (indent 0) concepts.							// 06/10/26.
