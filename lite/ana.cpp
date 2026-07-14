@@ -696,6 +696,8 @@ else if (!strcmp_i(s_algo, _T("python")))			// Python pass (any position).
 	// May be placed anywhere, including before the tokenizer; the pre/post phase
 	// is detected automatically in Pyalgo::Execute.
 	algo = new Pyalgo();
+	if (gen)		// Gen'ing code for analyzer: emit the python<N> wrapper so
+		genPython(pass, gen);	// run_analyzer's python<N>(parse) call resolves.	// 07/14/26.
 	}
 else if (	!strcmp_i(s_algo, _T("stub"))			// 06/23/99 AM.
 		  )
@@ -1101,6 +1103,43 @@ Gen::nl(fcode);
 Gen::nl(fcode);
 // Return false if fatal error on tokenization.
 *fcode << _T("if (!Arun::dicttokz(parse,") << id << _T(")) return false;");
+Gen::nl(fcode);
+*fcode << _T("return true;");
+Gen::nl(fcode);
+*fcode << _T("}");
+Gen::nl(fcode);
+return true;
+}
+
+/********************************************
+* FN:		GENPYTHON
+* CR:		07/14/26.
+* SUBJ:	Gen code for a python pass (compiled analyzer).
+* NOTE:	run_analyzer emits a python<N>(parse) call for every python pass;
+*			this writes the matching python<N> body, which runs the script by
+*			its base name via Arun::python. The name is baked in as a literal
+*			because a compiled analyzer has no sequence/Seqn at runtime.
+********************************************/
+
+bool Ana::genPython(Seqn *pass, Gen *gen)
+{
+std::_t_ofstream *fcode = gen->getFcode();
+std::_t_ofstream *fhead = gen->getFhead();
+long id = pass->getPassnum();
+_TCHAR *script = pass->getRulesfilename();		// The spec/<script>.py base name.
+
+// Write out prototype.
+*fhead << _T("bool python") << id << _T("(Parse *);");
+Gen::nl(fhead);
+
+// Write out function.
+Gen::nl(fcode);
+*fcode << _T("bool python") << id << _T("(Parse *parse)");
+Gen::nl(fcode);
+*fcode << _T("{");
+Gen::nl(fcode);
+*fcode << _T("if (!Arun::python(parse,") << id << _T(",_T(\"")
+		<< (script ? script : _T("")) << _T("\"))) return false;");
 Gen::nl(fcode);
 *fcode << _T("return true;");
 Gen::nl(fcode);

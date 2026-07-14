@@ -76,6 +76,18 @@ void Pyalgo::setup(_TCHAR * /*s_data*/)
 bool Pyalgo::Execute(Parse *parse, Seqn *seqn)
 {
 _TCHAR *script = seqn ? seqn->getRulesfilename() : 0;
+return run(parse, script);
+}
+
+/********************************************
+* FN:		RUN
+* SUBJ:	Run the Python script for this pass by base name.
+* NOTE:	Shared by the interpreted (Execute) and compiled (generated python<N>)
+*			paths, so both build the identical command line.
+********************************************/
+
+bool Pyalgo::run(Parse *parse, const _TCHAR *script)
+{
 if (!script || !*script)
 	{
 	if (parse->Verbose())
