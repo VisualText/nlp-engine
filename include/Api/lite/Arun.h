@@ -1554,6 +1554,7 @@ public:
 	static void *fnstart(Nlppp*,void*&,void*&);	// 03/11/02 AM. // 01/08/07 AM.
 
 	static RFASem *ret(Nlppp*,void*,void*,long long);						// 03/11/02 AM.
+	static RFASem *ret(Nlppp*,void*,void*,bool);					// 07/14/26. bool->0/1, avoids long long/float ambiguity.
 	static RFASem *ret(Nlppp*,void*,void*,float);					// 03/11/02 AM.
 	static RFASem *ret(Nlppp*,void*,void*,_TCHAR*);					// 03/11/02 AM.
 	static RFASem *ret(Nlppp*,void*,void*,RFASem*);					// 03/11/02 AM.

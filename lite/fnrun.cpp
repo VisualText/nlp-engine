@@ -13174,6 +13174,23 @@ nlppp->freeLocals((Slist<_TCHAR> *)locstrs);					// 01/08/07 AM.
 return new RFASem(num);
 }
 
+// A boolean return value (eg an NLP++ rule that returns a comparison). Without
+// this, generated code passing a bool matched both the long long and float
+// overloads ambiguously (C2668). Treat true/false as the integer 1/0.	// 07/14/26.
+RFASem *Arun::ret(
+	Nlppp *nlppp,
+	void *loc,	// List of L() local vars from calling frame.
+	void *locstrs,
+	bool b
+	)
+{
+if (nlppp->locals_)
+	Dlist<Ipair>::DeleteDlistAndData(nlppp->locals_);
+nlppp->locals_ = (Dlist<Ipair> *) loc;		// "Pop" the stack.
+nlppp->freeLocals((Slist<_TCHAR> *)locstrs);
+return new RFASem((long long) b);
+}
+
 RFASem *Arun::ret(
 	Nlppp *nlppp,
 	void *loc,	// List of L() local vars from calling frame.
