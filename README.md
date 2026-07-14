@@ -18,6 +18,35 @@ The NLP engine is the engine that runs text analyzers writtein in [NLP++](http:/
 1. Calling the nlp.exe command line executable (this is what the VSCode NLP++ Language Extension does)
 1. Calling from within C++ or another language that can call c++ functions
 
+## What's New in Version 3
+
+Version 3 is the release line in which NLP++ became **compilable, cloud-buildable, and installable from package managers**, while hardening the engine across all supported platforms. NLP++ is *glass-box*, **deterministic** NLP — the same input always produces the same output from rules you can read — and Version 3 makes that engine faster, easier to build, and easier to adopt.
+
+### Compiled analyzers (NLP++ → C++ → native library)
+- **One-click compilation.** Compiling an analyzer and its knowledge base to a native shared library (`.dll` / `.so` / `.dylib`) was always technically possible but effectively expert-only. Version 3 turns it into a one-click action (in the VS Code extension) with no C++ knowledge required. Use `-COMPILE` to generate the C++, then `-COMPILED` to run the compiled analyzer.
+- **Granular compile targets.** `-COMPILE` (analyzer + KB), `-COMPILEKB` (KB only), and `-COMPILEANA` (rules only) so you can recompile just what changed.
+- **Compiled Python passes.** A `python` pass anywhere in `analyzer.seq` (including before the tokenizer, e.g. to build a KB/dictionary from JSON) is now emitted into the compiled analyzer and runs from the native library — previously these only worked interpreted.
+- **Cross-platform generated code.** The generated C++ compiles and links on Windows, Linux, and macOS; compiled-run dispatch works uniformly across all three.
+
+### Cloud compile
+- A **cloud-compile service** builds the native libraries for Windows, Linux, and macOS on hosted runners, so users don't need a local C++ toolchain. Available from the VS Code extension and the language bindings.
+
+### Lazy dictionaries & knowledge bases (large lexicons)
+- **`*-full.dict` / `*-full.kbb` files load lazily** — the engine binary-searches the sorted file on disk one word at a time instead of loading the whole lexicon into memory, dramatically cutting memory and startup cost. Multiple lazy files can be open at once.
+- Lazy files are **never compiled into the library** — they stay as data files and are stream-searched at runtime, so they work identically in interpreted and compiled analyzers. This lets you ship a compiled analyzer whose only visible data is the `*-full` lexicon.
+- New `loadkbb` and `loaddict` NLP++ functions.
+
+### Native language bindings
+- **Node.js** — `npm install nlpplus` embeds the engine directly (new in Version 3).
+- **Python** — `pip install NLPPlus` native bindings gained the compile / cloud-compile APIs (`compile()`, `cloud_compile()`).
+
+### NLP++ language & robustness
+- `_xVAR("attribute")` match-list special for attribute access in rules.
+- Digits allowed in underscore-prefixed token names (e.g. `_token2`).
+- A long list of compiled-mode correctness fixes (output flushing, null-guards, evaluation-order) and cross-platform build fixes.
+
+For a fuller narrative of the Version 3 work across all the VisualText repos, see the overview in `docs/version-3/VERSION-3-OVERVIEW.md`.
+
 # Command Line
 
 You can get help on nlp.exe:

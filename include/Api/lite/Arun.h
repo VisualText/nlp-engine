@@ -196,6 +196,7 @@ public:
 	static bool cmltokenize(Parse *, int);                      // 08/18/08 AM.
 	static bool dicttok(Parse *, int);                          // 07/29/11 AM.
 	static bool dicttokz(Parse *, int);                         // 08/16/11 AM.
+	static bool python(Parse *, int, const _TCHAR *);           // 07/14/26. compiled python pass.
 	static bool lines(Parse *, int);
 	static bool patExecute(
 		Parse *,

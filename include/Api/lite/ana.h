@@ -111,6 +111,7 @@ public:
 	bool genCMLTok(Seqn *pass, Gen *gen);								// 08/18/08 AM.
 	bool genDICTTok(Seqn *pass, Gen *gen);								// 07/29/11 AM.
 	bool genDICTTokz(Seqn *pass, Gen *gen);							// 08/16/11 AM.
+	bool genPython(Seqn *pass, Gen *gen);								// 07/14/26.
 	bool genLines(Seqn *pass, Gen *gen);								// 05/10/00 AM.
 
 private:

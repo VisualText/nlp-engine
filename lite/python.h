@@ -34,6 +34,12 @@ public:
 	virtual Algo &dup();
 	virtual void setup(_TCHAR *s_data);
 	virtual bool Execute(Parse *, Seqn *);
+
+	// Run the Python script named by its base name (spec/<script>.py). Shared by
+	// the interpreted pass (Execute reads the name from the Seqn) and the compiled
+	// pass (the generated python<N> function passes the name as a literal, since a
+	// compiled analyzer has no Seqn at runtime).					// 07/14/26.
+	static bool run(Parse *, const _TCHAR *script);
 };
 
 #endif

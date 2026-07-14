@@ -32,6 +32,7 @@ All rights reserved.
 #include "tok.h"
 #include "cmltok.h"					// 08/18/08 AM.
 #include "dicttok.h"					// 07/29/11 AM.
+#include "python.h"					// 07/14/26. compiled python pass.
 #include "line.h"
 
 #include "irule.h"					// 01/06/02 AM.
@@ -233,6 +234,42 @@ parse->finPass(num,flogfiles,fout,sout,
 										pretname,ftimepass,s_time);
 return true;
 }
+
+/********************************************
+* FN:		PYTHON
+* CR:		07/14/26.
+* SUBJ:	Runtime variant of the python pass (compiled analyzer).
+* NOTE:	A compiled analyzer has no Seqn at runtime, so the generated
+*			python<N> function passes the script base name as a literal.
+*			Pyalgo::run builds the same command line as the interpreted pass.
+********************************************/
+
+bool Arun::python(
+	Parse *parse,
+	int num,									// Pass number.
+	const _TCHAR *script						// Script base name (spec/<script>.py).
+	)
+{
+std::_t_ofstream *fout;				// File pass output.
+std::_t_ostream *sout;					// For restoring output stream.
+clock_t s_time;
+_TCHAR *pretname;
+_TCHAR *salgo = _T("python");
+_TCHAR *prefix = _T("ana");		// Prefix for naming files.
+bool flogfiles = parse->eana_->getFlogfiles();
+bool ftimepass = parse->eana_->getFtimepass();
+
+parse->iniPass(num,prefix,flogfiles,ftimepass,true,0,salgo,
+			/*DU*/fout,sout,s_time,pretname);
+
+if (!Pyalgo::run(parse, script))
+	return false;
+
+parse->finPass(num,flogfiles,fout,sout,
+										pretname,ftimepass,s_time);
+return true;
+}
+
 /********************************************
 * FN:		LINES
 * CR:		05/11/00 AM.
