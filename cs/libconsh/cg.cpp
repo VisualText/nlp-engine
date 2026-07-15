@@ -618,6 +618,11 @@ if (hkbdll_)
 	// compiled KB, so open them explicitly here or lazy lookup never runs
 	// in a compiled analyzer.									// 07/13/26 DD.
 	openFullFiles();
+	// Likewise, per-run data dropped in as a "<stem>.json"/"<stem>.kbb" pair
+	// (e.g. data.json converted to data.kbb) is not part of the compiled KB;
+	// load such pairs into the live KB so a compiled analyzer still sees
+	// run-time data.											// 07/14/26 DD.
+	loadJsonPairedKBBs();
 	return true;		// This is just info, ok.						// 06/29/00 AM.
 	}
 
@@ -3597,6 +3602,36 @@ void CG::openFullFiles() {
 		if (!openFullDict(ptr->string()))
 			std::_t_cerr << _T("[Error: ") << ptr->string()
 				<< _T(" is not byte-sorted (LC_ALL=C); cannot lazy-load. Skipping.]") << std::endl;
+	}
+}
+
+// Load per-run incoming data into a compiled-KB analyzer. The static KB is
+// baked into kb.dll, so readKB() returns early (above) and never runs the
+// normal readKBBs load -- but data supplied at run time (e.g. a caller drops
+// "data.json" into kb/user and a json2kbb pass converts it to "data.kbb") is
+// NOT part of the compiled KB and must still reach the live KB. The signal is
+// the pair: a "<stem>.kbb" that has a matching "<stem>.json" sibling is loaded
+// normally here. Anything without a ".json" mate is assumed already compiled
+// in (so it is skipped, not double-loaded); a "*full" file is skipped too
+// (those are lazy-opened by openFullFiles(), never read whole). Generic: works
+// for any XXX.json/XXX.kbb pair, not just "data".					// 07/14/26 DD.
+void CG::loadJsonPairedKBBs() {
+	std::error_code ec;
+	if (!std::filesystem::is_directory(kbdir_, ec))
+		return;
+
+	std::vector<std::filesystem::path> files;
+	std::vector<std::filesystem::path>::iterator ptr;
+
+	read_files(kbdir_, _T("(.*\\.kbb)$"), files);
+	for (ptr = files.begin(); ptr < files.end(); ptr++) {
+		std::string stem = removeExtension(ptr->filename().string());
+		if (stemEndsWithFull(stem))
+			continue;						// lazy full file: opened by openFullFiles(), never loaded whole
+		std::filesystem::path jsonpath = ptr->parent_path() / (stem + ".json");
+		if (!std::filesystem::exists(jsonpath, ec))
+			continue;						// no ".json" mate: part of the compiled KB, do not re-load
+		readKBB(ptr->string());				// incoming run-time data: load into the live KB
 	}
 }
 
