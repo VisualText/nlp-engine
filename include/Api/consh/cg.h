@@ -237,6 +237,13 @@ public:
 	// (implicitly, via readDicts/readKBBs) and from the compiled-KB path, where
 	// readKB() otherwise returns early and would leave the full files unopened.
 	void openFullFiles();
+	// In a compiled-KB analyzer, load any "<stem>.kbb" that has a matching
+	// "<stem>.json" sibling in kb/user into the live KB. Such a pair is per-run
+	// incoming data (a caller-supplied "<stem>.json" converted to "<stem>.kbb"
+	// by a json2kbb pass), NOT part of the baked compiled KB -- and the
+	// early-returning compiled-KB path skips the normal readKBBs load, so it
+	// must load these explicitly. A "*full" file is never loaded whole here.
+	void loadJsonPairedKBBs();
 	// Parse a single line of a "*.kbb" file (indented "dictionary" format) into
 	// the KB. cons/index carry the indentation state between calls; root is the
 	// parent for top-level (indent 0) concepts.							// 06/10/26.
