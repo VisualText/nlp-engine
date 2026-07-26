@@ -1912,8 +1912,36 @@
             <param name="Local" value="Table_of_Math_Functions.htm">
           </object>
           <li><object type="text/sitemap">
+            <param name="Name" value="ceiling">
+            <param name="Local" value="ceiling.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="floor">
+            <param name="Local" value="floor.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="log">
+            <param name="Local" value="log.htm">
+          </object>
+          <li><object type="text/sitemap">
             <param name="Name" value="logten">
             <param name="Local" value="logten.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="pow">
+            <param name="Local" value="pow.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="round">
+            <param name="Local" value="round.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="sqrt">
+            <param name="Local" value="sqrt.htm">
+          </object>
+          <li><object type="text/sitemap">
+            <param name="Name" value="truncate">
+            <param name="Local" value="truncate.htm">
           </object>
           </ul>
         <li><object type="text/sitemap">

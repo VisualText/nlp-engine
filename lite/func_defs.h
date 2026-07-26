@@ -363,6 +363,15 @@ enum funcDef
 	FNfileexists,
 	FNfilesize,
 
+	// Math functions.	// 07/26/26 DD.
+	FNceiling,
+	FNfloor,
+	FNlog,
+	FNpow,
+	FNround,
+	FNsqrt,
+	FNtruncate,
+
 	FNXXYYZZ };
 
 #endif

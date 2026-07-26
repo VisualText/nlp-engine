@@ -1789,6 +1789,24 @@ public:
    static float logten(Nlppp*,RFASem*);                        // 04/29/04 AM.
    static float logten(Nlppp*,float);                          // 04/29/04 AM.
 
+	// Math functions.	// 07/26/26 DD.
+	static long long floor(Nlppp*,RFASem*);
+	static long long floor(Nlppp*,float);
+	static long long ceiling(Nlppp*,RFASem*);
+	static long long ceiling(Nlppp*,float);
+	static long long round(Nlppp*,RFASem*);
+	static long long round(Nlppp*,float);
+	static long long truncate(Nlppp*,RFASem*);
+	static long long truncate(Nlppp*,float);
+	static float sqrt(Nlppp*,RFASem*);
+	static float sqrt(Nlppp*,float);
+	static float log(Nlppp*,RFASem*);
+	static float log(Nlppp*,float);
+	static float pow(Nlppp*,RFASem*,RFASem*);
+	static float pow(Nlppp*,RFASem*,float);
+	static float pow(Nlppp*,float,RFASem*);
+	static float pow(Nlppp*,float,float);
+
 
 	static _TCHAR *urltofile(Nlppp*,_TCHAR*,_TCHAR*); // 05/14/14 AM.
 	static _TCHAR *urltofile(Nlppp*,RFASem*,_TCHAR*); // 05/14/14 AM.

@@ -15,6 +15,7 @@ All rights reserved.
 #include <limits.h>	//MAXINT,MAXLONG,MAX_INT,MAX_LONG			// 01/20/00 AM.
 #include <locale.h>	// For char handling.							// 01/06/03 AM.
 #include <math.h>		// For math, log10.								// 04/29/04 AM.
+#include <float.h>	// For FLT_MAX.									// 07/26/26 DD.
 //#include <process.h>				// 06/20/00 AM.
 //#include <atlstr.h>	// 05/19/14 DDH.
 
@@ -418,6 +419,20 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnAbs(args,nlppp,/*UP*/sem);
 	case FNmod:
 		return fnMod(args,nlppp,/*UP*/sem);
+	case FNceiling:
+		return fnCeiling(args,nlppp,/*UP*/sem);						// 07/26/26 DD.
+	case FNfloor:
+		return fnFloor(args,nlppp,/*UP*/sem);							// 07/26/26 DD.
+	case FNlog:
+		return fnLog(args,nlppp,/*UP*/sem);								// 07/26/26 DD.
+	case FNpow:
+		return fnPow(args,nlppp,/*UP*/sem);								// 07/26/26 DD.
+	case FNround:
+		return fnRound(args,nlppp,/*UP*/sem);							// 07/26/26 DD.
+	case FNsqrt:
+		return fnSqrt(args,nlppp,/*UP*/sem);							// 07/26/26 DD.
+	case FNtruncate:
+		return fnTruncate(args,nlppp,/*UP*/sem);						// 07/26/26 DD.
 	case FNlook:
 		break;
 	case FNlookup:
@@ -13255,6 +13270,227 @@ bool Fn::fnMod(
 
 	long long result = num1 % num2;
 	sem = new RFASem(result);
+
+	return true;
+}
+
+/********************************************
+* FN:		FNFLOOR
+* CR:		07/26/26 DD.
+* SUBJ:		Round a number down to the nearest whole number.
+* RET:		True if ok, else false.
+* FORMS:	floor(num)
+********************************************/
+
+bool Fn::fnFloor(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	RFASem* &sem
+	)
+{
+	sem = 0;
+	Parse *parse = nlppp->parse_;
+	float num = 0;
+
+	if (!Arg::float1(_T("floor"), (DELTS*&)args, num))
+		return false;
+	if (!Arg::done((DELTS*)args, _T("floor"), parse))
+		return false;
+
+	sem = new RFASem((long long)::floor((double)num));
+
+	return true;
+}
+
+/********************************************
+* FN:		FNCEILING
+* CR:		07/26/26 DD.
+* SUBJ:		Round a number up to the nearest whole number.
+* RET:		True if ok, else false.
+* FORMS:	ceiling(num)
+********************************************/
+
+bool Fn::fnCeiling(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	RFASem* &sem
+	)
+{
+	sem = 0;
+	Parse *parse = nlppp->parse_;
+	float num = 0;
+
+	if (!Arg::float1(_T("ceiling"), (DELTS*&)args, num))
+		return false;
+	if (!Arg::done((DELTS*)args, _T("ceiling"), parse))
+		return false;
+
+	sem = new RFASem((long long)::ceil((double)num));
+
+	return true;
+}
+
+/********************************************
+* FN:		FNROUND
+* CR:		07/26/26 DD.
+* SUBJ:		Round a number to the nearest whole number.
+* RET:		True if ok, else false.
+* FORMS:	round(num)
+* NOTE:		Halfway cases round away from zero, as in C/C++ round.
+********************************************/
+
+bool Fn::fnRound(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	RFASem* &sem
+	)
+{
+	sem = 0;
+	Parse *parse = nlppp->parse_;
+	float num = 0;
+
+	if (!Arg::float1(_T("round"), (DELTS*&)args, num))
+		return false;
+	if (!Arg::done((DELTS*)args, _T("round"), parse))
+		return false;
+
+	sem = new RFASem((long long)::round((double)num));
+
+	return true;
+}
+
+/********************************************
+* FN:		FNTRUNCATE
+* CR:		07/26/26 DD.
+* SUBJ:		Discard the fractional part of a number.
+* RET:		True if ok, else false.
+* FORMS:	truncate(num)
+* NOTE:		Rounds toward zero, unlike floor which rounds toward -infinity.
+********************************************/
+
+bool Fn::fnTruncate(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	RFASem* &sem
+	)
+{
+	sem = 0;
+	Parse *parse = nlppp->parse_;
+	float num = 0;
+
+	if (!Arg::float1(_T("truncate"), (DELTS*&)args, num))
+		return false;
+	if (!Arg::done((DELTS*)args, _T("truncate"), parse))
+		return false;
+
+	sem = new RFASem((long long)::trunc((double)num));
+
+	return true;
+}
+
+/********************************************
+* FN:		FNSQRT
+* CR:		07/26/26 DD.
+* SUBJ:		Calculate the square root of a number.
+* RET:		True if ok, else false.
+* FORMS:	sqrt(num)
+********************************************/
+
+bool Fn::fnSqrt(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	RFASem* &sem
+	)
+{
+	sem = 0;
+	Parse *parse = nlppp->parse_;
+	float num = 0;
+
+	if (!Arg::float1(_T("sqrt"), (DELTS*&)args, num))
+		return false;
+	if (!Arg::done((DELTS*)args, _T("sqrt"), parse))
+		return false;
+
+	if (num < 0)
+		{
+		_stprintf(Errbuf, _T("[sqrt: Error. Negative argument.]"));
+		return parse->errOut(true);
+		}
+
+	sem = new RFASem((float)::sqrt((double)num));
+
+	return true;
+}
+
+/********************************************
+* FN:		FNPOW
+* CR:		07/26/26 DD.
+* SUBJ:		Raise a number to the given power.
+* RET:		True if ok, else false.
+* FORMS:	pow(base, exponent)
+********************************************/
+
+bool Fn::fnPow(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	RFASem* &sem
+	)
+{
+	sem = 0;
+	Parse *parse = nlppp->parse_;
+	float base = 0, expon = 0;
+
+	if (!Arg::float1(_T("pow"), (DELTS*&)args, base))
+		return false;
+	if (!Arg::float1(_T("pow"), (DELTS*&)args, expon))
+		return false;
+	if (!Arg::done((DELTS*)args, _T("pow"), parse))
+		return false;
+
+	double result = ::pow((double)base, (double)expon);
+	if (!(result == result) 			// NaN, eg negative base to a fractional power.
+	 || result > FLT_MAX || result < -FLT_MAX)
+		{
+		_stprintf(Errbuf, _T("[pow: Error. Result undefined or out of range.]"));
+		return parse->errOut(true);
+		}
+
+	sem = new RFASem((float)result);
+
+	return true;
+}
+
+/********************************************
+* FN:		FNLOG
+* CR:		07/26/26 DD.
+* SUBJ:		Compute the natural (base e) logarithm of a number.
+* RET:		True if ok, else false.
+* FORMS:	log(num)
+* NOTE:		See logten for the base 10 logarithm.
+********************************************/
+
+bool Fn::fnLog(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	RFASem* &sem
+	)
+{
+	sem = 0;
+	Parse *parse = nlppp->parse_;
+	float num = 0;
+
+	if (!Arg::float1(_T("log"), (DELTS*&)args, num))
+		return false;
+	if (!Arg::done((DELTS*)args, _T("log"), parse))
+		return false;
+
+	if (num <= 0)
+		{
+		_stprintf(Errbuf, _T("[log: Error. Argument must be positive.]"));
+		return parse->errOut(true);
+		}
+
+	sem = new RFASem((float)::log((double)num));
 
 	return true;
 }

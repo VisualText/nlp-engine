@@ -1014,6 +1014,13 @@ static bool fnStruniquechars(
 	static bool fnRandomint(Delt<Iarg>*,Nlppp*,RFASem*&);
 	static bool fnAbs(Delt<Iarg>*,Nlppp*,RFASem*&);
 	static bool fnMod(Delt<Iarg>*,Nlppp*,RFASem*&);
+	static bool fnCeiling(Delt<Iarg>*,Nlppp*,RFASem*&);			// 07/26/26 DD.
+	static bool fnFloor(Delt<Iarg>*,Nlppp*,RFASem*&);				// 07/26/26 DD.
+	static bool fnLog(Delt<Iarg>*,Nlppp*,RFASem*&);					// 07/26/26 DD.
+	static bool fnPow(Delt<Iarg>*,Nlppp*,RFASem*&);					// 07/26/26 DD.
+	static bool fnRound(Delt<Iarg>*,Nlppp*,RFASem*&);				// 07/26/26 DD.
+	static bool fnSqrt(Delt<Iarg>*,Nlppp*,RFASem*&);				// 07/26/26 DD.
+	static bool fnTruncate(Delt<Iarg>*,Nlppp*,RFASem*&);			// 07/26/26 DD.
 
 #ifdef WORDNET
 	// WordNet Functions

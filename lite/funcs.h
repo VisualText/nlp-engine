@@ -355,4 +355,12 @@ _T("deletefile"),
 _T("direxists"),
 _T("fileexists"),
 _T("filesize"),
+// Math functions.	// 07/26/26 DD.
+_T("ceiling"),
+_T("floor"),
+_T("log"),
+_T("pow"),
+_T("round"),
+_T("sqrt"),
+_T("truncate"),
 0 };

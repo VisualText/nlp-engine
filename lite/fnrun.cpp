@@ -18013,6 +18013,243 @@ return log10(num1);
 
 
 /********************************************
+* FN:		FLOOR, CEILING, ROUND, TRUNCATE
+* CR:		07/26/26 DD.
+* SUBJ:	Rounding functions for compiled analyzers.
+* RET:	Whole number as a long long.
+* NOTE:	The global C functions must be called with the :: qualifier,
+*			else these would recurse into themselves.
+********************************************/
+
+long long Arun::floor(
+	Nlppp *nlppp,
+	float num1
+	)
+{
+return (long long)::floor((double)num1);
+}
+
+long long Arun::floor(
+	Nlppp *nlppp,
+	RFASem *num1_sem
+	)
+{
+if (!num1_sem)
+	return 0;
+bool ok = false;
+float num1 = num1_sem->sem_to_float(ok);
+delete num1_sem;
+if (!ok)
+	return 0;
+return floor(nlppp,num1);
+}
+
+long long Arun::ceiling(
+	Nlppp *nlppp,
+	float num1
+	)
+{
+return (long long)::ceil((double)num1);
+}
+
+long long Arun::ceiling(
+	Nlppp *nlppp,
+	RFASem *num1_sem
+	)
+{
+if (!num1_sem)
+	return 0;
+bool ok = false;
+float num1 = num1_sem->sem_to_float(ok);
+delete num1_sem;
+if (!ok)
+	return 0;
+return ceiling(nlppp,num1);
+}
+
+long long Arun::round(
+	Nlppp *nlppp,
+	float num1
+	)
+{
+return (long long)::round((double)num1);
+}
+
+long long Arun::round(
+	Nlppp *nlppp,
+	RFASem *num1_sem
+	)
+{
+if (!num1_sem)
+	return 0;
+bool ok = false;
+float num1 = num1_sem->sem_to_float(ok);
+delete num1_sem;
+if (!ok)
+	return 0;
+return round(nlppp,num1);
+}
+
+long long Arun::truncate(
+	Nlppp *nlppp,
+	float num1
+	)
+{
+return (long long)::trunc((double)num1);
+}
+
+long long Arun::truncate(
+	Nlppp *nlppp,
+	RFASem *num1_sem
+	)
+{
+if (!num1_sem)
+	return 0;
+bool ok = false;
+float num1 = num1_sem->sem_to_float(ok);
+delete num1_sem;
+if (!ok)
+	return 0;
+return truncate(nlppp,num1);
+}
+
+
+/********************************************
+* FN:		SQRT, LOG, POW
+* CR:		07/26/26 DD.
+* SUBJ:	Power and logarithm functions for compiled analyzers.
+* RET:	Float.
+********************************************/
+
+float Arun::sqrt(
+	Nlppp *nlppp,
+	float num1
+	)
+{
+if (num1 < 0)
+	{
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[sqrt: Negative argument.]") << std::ends;
+	errOut(&gerrStr,false);
+	return 0;
+	}
+return (float)::sqrt((double)num1);
+}
+
+float Arun::sqrt(
+	Nlppp *nlppp,
+	RFASem *num1_sem
+	)
+{
+if (!num1_sem)
+	return 0;
+bool ok = false;
+float num1 = num1_sem->sem_to_float(ok);
+delete num1_sem;
+if (!ok)
+	return 0;
+return sqrt(nlppp,num1);
+}
+
+float Arun::log(
+	Nlppp *nlppp,
+	float num1
+	)
+{
+if (num1 <= 0)
+	{
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[log: Argument must be positive.]") << std::ends;
+	errOut(&gerrStr,false);
+	return 0;
+	}
+return (float)::log((double)num1);
+}
+
+float Arun::log(
+	Nlppp *nlppp,
+	RFASem *num1_sem
+	)
+{
+if (!num1_sem)
+	return 0;
+bool ok = false;
+float num1 = num1_sem->sem_to_float(ok);
+delete num1_sem;
+if (!ok)
+	return 0;
+return log(nlppp,num1);
+}
+
+float Arun::pow(
+	Nlppp *nlppp,
+	float base,
+	float expon
+	)
+{
+double result = ::pow((double)base, (double)expon);
+if (!(result == result))		// NaN, eg negative base to a fractional power.
+	{
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[pow: Result undefined.]") << std::ends;
+	errOut(&gerrStr,false);
+	return 0;
+	}
+return (float)result;
+}
+
+float Arun::pow(
+	Nlppp *nlppp,
+	RFASem *base_sem,
+	float expon
+	)
+{
+if (!base_sem)
+	return 0;
+bool ok = false;
+float base = base_sem->sem_to_float(ok);
+delete base_sem;
+if (!ok)
+	return 0;
+return pow(nlppp,base,expon);
+}
+
+float Arun::pow(
+	Nlppp *nlppp,
+	float base,
+	RFASem *expon_sem
+	)
+{
+if (!expon_sem)
+	return 0;
+bool ok = false;
+float expon = expon_sem->sem_to_float(ok);
+delete expon_sem;
+if (!ok)
+	return 0;
+return pow(nlppp,base,expon);
+}
+
+float Arun::pow(
+	Nlppp *nlppp,
+	RFASem *base_sem,
+	RFASem *expon_sem
+	)
+{
+if (!base_sem || !expon_sem)
+	return 0;
+bool ok1 = false, ok2 = false;
+float base = base_sem->sem_to_float(ok1);
+float expon = expon_sem->sem_to_float(ok2);
+delete base_sem;
+delete expon_sem;
+if (!ok1 || !ok2)
+	return 0;
+return pow(nlppp,base,expon);
+}
+
+
+/********************************************
 * FN:		ELTNODE
 * CR:		09/12/06 AM.
 * SUBJ:	Get first node matching a rule element.
