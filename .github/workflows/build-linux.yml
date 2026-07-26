@@ -149,9 +149,17 @@ jobs:
           FIX=.github/workflows/tests/fnname-digits
           rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
           ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
-          cat "$FIX/logs/make_ana.log"
+          # Windows always leaves a make_ana.log behind; Linux only writes one
+          # when the build had something to say. Print it if it's there.
+          if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
+          OUT="$FIX/input/text.txt_log/out.txt"
           TREE="$FIX/input/text.txt_log/final.tree"
-          got=$(tr -d '\r' < "$FIX/input/text.txt_log/out.txt")
+          # nlp exits 0 even when the analyzer fails to build, so assert the
+          # output, not the exit code.
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(#698): no out.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
           if [ "$got" != "3 21 201 2001 1 8 71" ]; then
             echo "FAIL(#698): out.txt was '$got'"; exit 1
           fi
