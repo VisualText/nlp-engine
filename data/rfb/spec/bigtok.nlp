@@ -101,6 +101,28 @@ _NONLIT [base] <- \_ _xWILD [s plus match=(_xALPHA _xEMOJI _xNUM)] @@	# 06/11/26
 @RULES
 _ARROW [base] <- \< \- @@
 
+# FUNCTION NAMES CONTAINING DIGITS OR UNDERSCORES.				# 07/26/26 DD.
+# The rule-file tokenizer splits "Round2" into "Round" + "2", so a user
+# function named Round2 (or Clamp01, Round_2, Fixed2) never matched the
+# _LIT \( function grammar and died with a misleading "Missing ';'".
+# Glom the adjacent alpha/numeric/underscore tokens back into one _LIT,
+# but ONLY when they are immediately followed by an UNESCAPED "(" -- ie, a
+# function definition header or a function call.  @RULES literals write
+# "\(" and key=(val) pairs put "=" before the paren, so element literals
+# and pair values keep their old tokenization.
+# The second element is [plus], so single-token names (if, while, return,
+# L, N, X, G, P, s) never come here; they fall through to the keyword
+# rules below.
+@POST
+	rfaname(1,2)
+	singler(1,2)
+@RULES
+_LIT [base] <-
+	_xALPHA
+	_xWILD [s plus match=(_xALPHA _xNUM \_)]
+	\( [lookahead]
+	@@
+
 @POST
 	rfaname(1)
 	single()

@@ -141,7 +141,9 @@ if (count_)
 * SUBJ:	Create a semantic object to hold node's proper name.
 * RET:	True if ok, else false.
 * RULE:	_LIT <- _xALPHA @@
-* FORM:	postRFAname("1") -- arg is for the rhs token.
+*			_LIT <- _xALPHA _xWILD [s plus match=(_xALPHA _xNUM \_)] \( [lookahead] @@
+* FORM:	postRFAname("1")	 -- arg is for the rhs token.
+*			postRFAname("1","2") -- name spans the given range of collects.
 ********************************************/
 
 bool PostRFA::postRFAname(
@@ -163,6 +165,56 @@ if (nlppp->sem_)
 	gerrStr << _T("[RFA name action: Semantic object already built.]") << std::ends;
 	nlppp->parse_->errOut(&gerrStr,false,true);
 	return false;
+	}
+
+// TWO-ARG FORM.  The name spans a range of collects, because the rule-file
+// tokenizer split it into several adjacent tokens (eg, Round2 => "Round" "2",
+// Round_2 => "Round" "_" "2").  Glom their covered text back together.
+//																					// 07/26/26 DD.
+if (args->Right())
+	{
+	Node<Pn> *nfirst, *nlast;
+	nfirst = nlast = 0;
+	if (!args_range(_T("name"), args, nlppp->collect_, nlppp->sem_, nlppp,
+						 /*DU*/ nfirst, nlast))
+		return false;
+	if (!nfirst || !nlast)
+		return false;
+
+	if (Verbose())
+		*gout << _T("   [Executing RFA name action (range).]") << std::endl;
+
+	_TCHAR buf[MAXSTR];				// Build string in here.
+	_TCHAR *ptr;
+	long count;
+	count = MAXSTR;					// Track space left in buffer.
+	buf[0] = '\0';
+	ptr = &(buf[0]);					// Track first empty loc in buffer.
+
+	// Traverse the matched tokens, gathering their covered text.
+	Node<Pn> *nelt, *bound;
+	bound = nlast->Right();			// One past the last matched token.
+	Pn *pn;
+	_TCHAR *text;
+	long len;
+	for (nelt = nfirst; nelt && nelt != bound; nelt = nelt->Right())
+		{
+		pn = nelt->getData();
+		text = pn->getText();
+		len = pn->getEnd() - pn->getStart() + 1;
+		if (!strncat_e(ptr, text, len, count))
+			return false;
+		}
+
+	Sym *sym;
+	sym = nlppp->parse_->getSym(buf);
+	assert(sym);
+
+	RFASem *rangesem;
+	rangesem = new RFASem(sym->getStr());
+	nlppp->sem_ = rangesem;
+
+	return true;
 	}
 
 Iarg *arg1;

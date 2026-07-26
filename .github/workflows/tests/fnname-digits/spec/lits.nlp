@@ -1,0 +1,16 @@
+###############################################
+# FILE:     lits.nlp
+# SUBJ:     Guard the OTHER half of issue #698's fix: glomming digit-bearing
+#           names must NOT change how @RULES literals tokenize.
+# NOTE:     "covid19" must stay TWO rule elements ("covid" then "19") so it
+#           keeps matching the two tokens the text tokenizer produces, and an
+#           escaped "\(" must not trigger the function-name glom.
+###############################################
+
+@NODES _ROOT
+
+@RULES
+_COVID <- covid19 @@
+
+@RULES
+_APAREN <- a1 \( @@
