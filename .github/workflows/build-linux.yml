@@ -135,6 +135,30 @@ jobs:
             -WORK ./ .github/workflows/tests/fulldict-hang/input/dash.txt
           echo "[#669 regression] analyzer completed without hanging"
 
+      - name: Function names with digits regression (#698, Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # The rule-file tokenizer splits "Round2" into "Round" + "2", so
+          # user functions whose name held a digit or an underscore never
+          # matched the "_LIT \(" function grammar and the analyzer died with
+          # a misleading "[Warning: Missing ';']". The fixture also asserts
+          # that @RULES literals ("covid19", "a1 \(") still tokenize the old
+          # way -- the glom must only fire on an unescaped "(".
+          FIX=.github/workflows/tests/fnname-digits
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          cat "$FIX/logs/make_ana.log"
+          TREE="$FIX/input/text.txt_log/final.tree"
+          got=$(tr -d '\r' < "$FIX/input/text.txt_log/out.txt")
+          if [ "$got" != "3 21 201 2001 1 8 71" ]; then
+            echo "FAIL(#698): out.txt was '$got'"; exit 1
+          fi
+          grep -q '_COVID' "$TREE" || { echo "FAIL(#698): literal covid19 no longer matches two tokens"; exit 1; }
+          grep -q '_APAREN' "$TREE" || { echo "FAIL(#698): escaped '\\(' literal regressed"; exit 1; }
+          echo "[#698 regression] digit/underscore function names compile and run"
+
       - name: Copy nlp.exe to nlpl.exe (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         run: cp bin/nlp bin/nlpl.exe

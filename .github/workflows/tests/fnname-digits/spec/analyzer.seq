@@ -1,0 +1,3 @@
+tokenize	nil	# tokenize only -- fixture needs no dictionary
+nlp	fndigits	# #698: function names containing digits/underscores
+nlp	lits	# @RULES literals must tokenize as before

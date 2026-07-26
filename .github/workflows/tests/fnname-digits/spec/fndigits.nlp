@@ -1,0 +1,59 @@
+###############################################
+# FILE:     fndigits.nlp
+# SUBJ:     Regression for issue #698 -- user function names that contain a
+#           digit or an underscore.
+# NOTE:     The rule-file tokenizer splits "Round2" into "Round" + "2", so
+#           before the fix every one of these definitions died with a
+#           misleading "[Warning: Missing ';']" + "[Syntax error.]" and the
+#           analyzer never built.  Expected out.txt: "3 21 201 2001 1 8 71".
+###############################################
+
+@DECL
+
+Round2(L("x")) {
+	return L("x") + 2;
+}
+
+R2ound(L("x")) {
+	return L("x") + 20;
+}
+
+x2Round(L("x")) {
+	return L("x") + 200;
+}
+
+Round_2(L("x")) {
+	return L("x") + 2000;
+}
+
+Clamp01(L("x")) {
+	if (L("x") > 1)
+		return 1;
+	if (L("x") < 0)
+		return 0;
+	return L("x");
+}
+
+# Digits in LOCAL VARIABLE names always worked.  Keep checking them.
+RoundTwo(L("x2")) {
+	L("y2") = L("x2") + 7;
+	return L("y2");
+}
+
+Round_Two(L("x")) {
+	return L("x") + 70;
+}
+
+@@DECL
+
+@CODE
+
+"out.txt" << str(Round2(1)) << " ";
+"out.txt" << str(R2ound(1)) << " ";
+"out.txt" << str(x2Round(1)) << " ";
+"out.txt" << str(Round_2(1)) << " ";
+"out.txt" << str(Clamp01(5)) << " ";
+"out.txt" << str(RoundTwo(1)) << " ";
+"out.txt" << str(Round_Two(1)) << "\n";
+
+@@CODE
