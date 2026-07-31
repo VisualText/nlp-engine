@@ -1,0 +1,7 @@
+/* Block comments work in the sequence file too, including multi-line.
+   A leading "/" already means "inactive pass" here, so "/*" would otherwise
+   be read as an inactive pass named "*". With a # hash and a "quote inside. */
+tokenize	nil	# tokenize only -- fixture needs no dictionary
+/* one-liner */
+nlp	blockcom	# /* */ in @DECL and @CODE
+nlp	blockrules	/* trailing */	# /* */ around and inside @RULES

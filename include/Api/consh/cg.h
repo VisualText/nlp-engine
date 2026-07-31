@@ -265,8 +265,12 @@ public:
 	bool kbbFileSorted(FullFile &f);
 	bool dictFileSorted(FullFile &f);
 	bool parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, int lineCount);
-	bool nextKBBKey(FullFile &f, std::streamoff &keyStart, std::string &key, std::streamoff &afterKey);
-	bool nextDictKey(FullFile &f, std::streamoff &keyStart, std::string &key, std::streamoff &afterKey);
+	// multiLine, when given, is set true if a line opened a "/*" that its own
+	// line did not close. A lazily-searched file cannot support that (the
+	// binary search seeks to an arbitrary offset and has no way to know it
+	// landed inside a comment), so the sorted-check refuses such a file.
+	bool nextKBBKey(FullFile &f, std::streamoff &keyStart, std::string &key, std::streamoff &afterKey, bool *multiLine = 0);
+	bool nextDictKey(FullFile &f, std::streamoff &keyStart, std::string &key, std::streamoff &afterKey, bool *multiLine = 0);
 	CONCEPT *findFullWord(_TCHAR *str);
 	CONCEPT *findFullKBBWord(_TCHAR *str);
 	CONCEPT *findFullDictWord(_TCHAR *str);

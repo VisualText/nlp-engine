@@ -38,7 +38,7 @@
 
 <h1>Pass Files</h1>
 
-<p>A pass file (also called a rule file), consists of NLP++™ code and rules. 
+<p>A pass file (also called a rule file), consists of NLP++ï¿½ code and rules. 
  A pass file represents a single pass of a text analyzer over a parse tree. 
  There are two different algorithms used to traverse the parse tree: PAT 
  (for pattern) and REC (for recursive).</p>
@@ -793,8 +793,29 @@ If a Rules subregion has no preceding action subregions, then it resets
 			padding-right: 1px;
 			padding-bottom: 1px;"
 	valign=top>
-<p style="margin-bottom: 0;">Comment. Text till the end of the line is 
+<p style="margin-bottom: 0;">Comment. Text till the end of the line is
  ignored.</td></tr>
+
+<tr>
+<td style="x-cell-content-align: TOP;
+			width: 18%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;"><span style="font-weight: bold;">/*&nbsp;*/</span></td>
+<td style="x-cell-content-align: TOP;
+			width: 82%;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	valign=top>
+<p style="margin-bottom: 0;">Block comment. Everything between /* and the
+ next */ is ignored, including line breaks. Block comments do not nest:
+ the first */ closes the comment. Delimiters inside a string or inside
+ a # comment are ordinary text.</td></tr>
 
 <tr>
 <td style="x-cell-content-align: TOP;
@@ -2758,7 +2779,7 @@ attr</span></td>
 						color=#000000>As </font><span style="font-weight: normal;"><font 
  style="color: #000000;"
 	color=#000000>Text Analysis International</font></span><font style="color: #000000;"
-	color=#000000>™ develops its generic analyzer, more check actions will 
+	color=#000000>ï¿½ develops its generic analyzer, more check actions will 
  be implemented.)</font></td></tr>
 </table>
 
@@ -3459,7 +3480,7 @@ attr</span></td>
 
 <p><span style="font-weight: normal;">A batch of post actions for the RFA 
  (Rules-File Analyzer) are not described, as they are not relevant to the 
- VisualText</span>™<span style="font-weight: normal;"> user. Their names 
+ VisualText</span>ï¿½<span style="font-weight: normal;"> user. Their names 
  all begin with the prefix </span><span style="font-weight: bold;">RFA</span><span 
  style="font-weight: normal;">.</span></p>
 

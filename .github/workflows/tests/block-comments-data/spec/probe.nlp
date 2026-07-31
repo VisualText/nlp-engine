@@ -1,0 +1,28 @@
+###############################################
+# FILE:     probe.nlp
+# SUBJ:     Report what the commented hier.kb / zzambig.dict / zzambig.kbb
+#           actually loaded, so the CI step can assert that block comments
+#           were skipped and that the quoted values around them survived
+#           byte-for-byte.
+# NOTE:     Expected out.txt:
+#           zzTrailing|kbliteral|kbstarslash|kept|starred
+#           The .dict attributes ride on the parse-tree nodes instead, so
+#           those are asserted against final.tree.
+###############################################
+
+@CODE
+
+# hier.kb: a command with a trailing "/* */", and quoted args that hold the
+# comment delimiters and must stay literal concept names.
+L("root") = findroot();
+if (findconcept(L("root"),"zzTrailing")) "out.txt" << "zzTrailing|";
+if (findconcept(L("root"),"/* literal in a quoted arg */")) "out.txt" << "kbliteral|";
+if (findconcept(L("root"),"zzstar*/slash")) "out.txt" << "kbstarslash|";
+
+# zzambig.kbb: the word line carried a trailing "/* */" and the block held a
+# comment line. Both words must still have built their meaning blocks.
+L("d") = findconcept(L("root"),"dictionary");
+"out.txt" << strval(findconcept(findconcept(L("d"),"zzkeep"),"m01"),"zznote") << "|";
+"out.txt" << strval(findconcept(findconcept(L("d"),"zzstar"),"m02"),"zznote") << "\n";
+
+@@CODE

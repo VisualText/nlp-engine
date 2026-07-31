@@ -93,7 +93,7 @@
 &lt;2,2&gt; <span style="color: #800080; font-weight: bold;">vareq</span>(<span 
  style="color: #ff00ff; font-weight: bold;">&quot;CTRL&quot;</span>,128); 
  <!--kadov_tag{{<spaces>}}-->&nbsp;<span style="color: #008080;"><!--kadov_tag{{</spaces>}}--># 
- Match ASCII 128 = €</span><span style="font-weight: bold; color: #0000ff;"><br>
+ Match ASCII 128 = ï¿½</span><span style="font-weight: bold; color: #0000ff;"><br>
 @POST</span><span style="color: #ff00ff;"><br>
 &quot;output.txt&quot;</span> &lt;&lt; <span style="color: #ff00ff;">&quot;Found 
  ctrl = &quot;</span> &lt;&lt; <span style="font-weight: bold; color: #ff0000;">N</span>(<span 
@@ -101,14 +101,37 @@
  style="font-weight: bold; color: #0000ff;"><br>
 @RULES</span><span style="color: #ff0000; font-weight: bold;"><br>
 _xNIL</span> &lt;-<br>
-â<span style="color: #ff0000; font-weight: bold;"><br>
+ï¿½<span style="color: #ff0000; font-weight: bold;"><br>
 _xCTRL</span><span style="color: #ff0000; font-weight: bold;"><br>
 _xALPHA</span><span style="font-weight: bold; color: #0000ff;"><br>
 @@</span></p>
 
-<p>will match the character (€) in the following text and output it.</p>
+<p>will match the character (ï¿½) in the following text and output it.</p>
 
 <p><!--kadov_tag{{<spaces>}}-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--kadov_tag{{</spaces>}}-->â€œsmall</p>
+
+<p>&nbsp;</p>
+
+<h2><a name=comments_in_analyzer_seq></a>Comments in analyzer.seq</h2>
+
+<p>A <span style="font-weight: bold;">#</span> starts a comment that runs to
+ the end of the line, and each pass line normally carries one. C-style block
+ comments, <span style="font-weight: bold;">/* ... */</span>, are also allowed
+ and may span several lines:</p>
+
+<p>&nbsp;</p>
+
+<p><span style="font-family: Courier New;">/* Zone the resume before anything reads its headers.<br />
+ &nbsp;&nbsp;&nbsp;The nestHeaders pass has to stay recursive. */<br />
+ tokenize&nbsp;&nbsp;&nbsp;nil&nbsp;&nbsp;&nbsp;# convert the input text to a parse tree<br />
+ pat&nbsp;&nbsp;&nbsp;header&nbsp;&nbsp;&nbsp;/* one-liner */&nbsp;&nbsp;&nbsp;# find the section headers</span></p>
+
+<p>&nbsp;</p>
+
+<p>Note that a lone <span style="font-weight: bold;">/</span> at the start of
+ a line already means an <i>inactive</i> pass, so
+ <span style="font-weight: bold;">/*</span> is recognized as a comment opener
+ and never as an inactive pass.</p>
 
 <p>&nbsp;</p>
 

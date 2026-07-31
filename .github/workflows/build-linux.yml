@@ -167,6 +167,68 @@ jobs:
           grep -q '_APAREN' "$TREE" || { echo "FAIL(#698): escaped '\\(' literal regressed"; exit 1; }
           echo "[#698 regression] digit/underscore function names compile and run"
 
+      - name: Block comment regression (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # NLP++ knew only "#" line comments, so a C-style "/* ... */" in a
+          # pass file lexed as ordinary tokens and died with "[Syntax error.]".
+          # The fixture checks that comments are skipped everywhere (@DECL,
+          # @CODE, around and inside @RULES), that "/*" and "*/" inside a
+          # string or a "#" comment stay text, that "/" and "*" still parse as
+          # operators, and that a rule can still match a literal "/" "*" in
+          # the INPUT text (_SLASHSTAR / _STARSLASH).
+          FIX=.github/workflows/tests/block-comments
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
+          OUT="$FIX/input/text.txt_log/out.txt"
+          TREE="$FIX/input/text.txt_log/final.tree"
+          # nlp exits 0 even when the analyzer fails to build, so assert the
+          # output, not the exit code.
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(block comments): no out.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want='a string with /* and */ inside|/*/|7|12|43|esc: * /'
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(block comments): out.txt was '$got'"; exit 1
+          fi
+          grep -q '_SLASHSTAR' "$TREE" || { echo "FAIL(block comments): rule matching a literal '/' '*' in input regressed"; exit 1; }
+          grep -q '_STARSLASH' "$TREE" || { echo "FAIL(block comments): rule matching a literal '*' '/' in input regressed"; exit 1; }
+          echo "[block comments] /* */ is skipped in pass files"
+
+      - name: Block comment regression, data files (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # The line-oriented data files have their own hand-written C lexers,
+          # so they get block comments from the shared stripper in
+          # cs/libconsh/blockcom.cpp rather than from the RFB grammar. The
+          # fixture puts comments in all four -- .seq (where a leading "/"
+          # already means "inactive pass"), .kb, .dict and .kbb -- and probes
+          # the loaded KB to prove the entries around them survived intact.
+          FIX=.github/workflows/tests/block-comments-data
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
+          OUT="$FIX/input/text.txt_log/out.txt"
+          TREE="$FIX/input/text.txt_log/final.tree"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(data block comments): no out.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want='zzTrailing|kbliteral|kbstarslash|kept|starred'
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(data block comments): out.txt was '$got'"; exit 1
+          fi
+          # .dict string values must keep their delimiters byte-for-byte.
+          grep -qF '("note" "a /* b */ c")' "$TREE" || { echo "FAIL(data block comments): dict string lost its /* */"; exit 1; }
+          grep -qF '("note" "lone * and / here")' "$TREE" || { echo "FAIL(data block comments): dict string lost its * or /"; exit 1; }
+          echo "[block comments] /* */ is skipped in .seq, .kb, .dict and .kbb"
+
       - name: Copy nlp.exe to nlpl.exe (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         run: cp bin/nlp bin/nlpl.exe

@@ -1,0 +1,31 @@
+###############################################
+# FILE:     blockrules.nlp
+# SUBJ:     /* */ block comments around and inside @RULES, and proof that a
+#           rule can still match a literal "/" "*" in the INPUT text.
+# NOTE:     "\/" and "\*" are taken by the backslash rules in retok.nlp
+#           before the comment-delimiter glom sees them, so an escaped
+#           delimiter in a rule element is unaffected.  The input text is
+#           tokenized by the analyzer's own tokenize pass, so "/*" there is
+#           still two tokens and _SLASHSTAR/_STARSLASH must still fire.
+###############################################
+
+@NODES _ROOT   /* block comment after the region marker */
+
+/* block comment between the region marker and @POST */
+
+@POST
+	single();   /* mid-line comment in a post action */
+
+@RULES
+_SLASHSTAR <-
+	/* block comment inside a rule */
+	\/          ### (1)
+	\*          ### (2)
+	@@
+
+_STARSLASH <-
+	\*          ### (1)
+	\/          ### (2)
+	@@
+
+_ALPHA <- alpha @@   /* trailing comment after a one-line rule */

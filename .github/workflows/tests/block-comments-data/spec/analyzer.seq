@@ -1,0 +1,6 @@
+/* Block comments in a sequence file, multi-line.
+   A leading "/" already means "inactive pass" here, so "/*" would otherwise
+   parse as an inactive pass named "*". */
+dicttokz	nil	# tokenize against the dictionary
+/* one-liner */
+nlp	probe	/* trailing */	# dump what the KB actually loaded

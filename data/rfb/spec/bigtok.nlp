@@ -19,6 +19,29 @@ _xNIL <- \# _xWILD \n @@
 @RULES
 _xNIL <- \# _xWILD _xEOF @@
 
+# C-STYLE BLOCK COMMENTS.  /* ... */						# 07/31/26 DD.
+# _BEGCOM ("/*") and _ENDCOM ("*/") are glommed in RETOK.  Non-nesting, like
+# C: the first "*/" closes the comment.  This lives in the same pass as the
+# "#" and string rules because collection is positional -- whichever opener
+# comes first in the text wins.  So "/*" inside a string or inside a "#"
+# comment stays text, and a quote or "#" inside a block comment is skipped.
+# An unterminated "/*" is deliberately NOT swallowed to EOF (unlike "#"):
+# it is always a mistake, so it is left to fail as a syntax error on its
+# own line instead of silently eating the rest of the file.
+@POST
+	excise(1, 3)
+@RULES
+_xNIL <- _BEGCOM _xWILD _ENDCOM @@
+
+# An unterminated "/*", or a stray "*/", is always a mistake.  Report it on
+# its own line instead of letting it fall through as unrecognized crud, which
+# otherwise surfaces as a syntax error on some unrelated line.
+@POST
+	rfberror(1)
+@RULES
+_xNIL <- _BEGCOM @@
+_xNIL <- _ENDCOM @@
+
 @POST
 	rfastr(2)
 	single()

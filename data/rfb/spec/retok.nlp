@@ -69,6 +69,19 @@ _cTILDE [base layer=(_LIT )] <- \\ \~ @@
 # But if it's "abc\\ndef", that shouldn't get retokenized!
 _cBSLASH [base layer=(_LIT )] <- \\ \\ @@
 
+# C-STYLE BLOCK COMMENT DELIMITERS.							# 07/31/26 DD.
+# Glom "/*" and "*/" into single tokens so BIGTOK can collect a block comment
+# with a single wildcard (_xNIL <- _BEGCOM _xWILD _ENDCOM @@).  Writing that
+# rule as "\/ \* _xWILD \* \/" does NOT work: the wildcard stops at the FIRST
+# "*" it sees and never backs up, so "/* a * b */" would never close.
+# These are glommed here rather than in BIGTOK because a pass is one
+# left-to-right scan -- the glom has to already be done when BIGTOK runs.
+# Escaped "\*" and "\/" are taken by the rules above (leftmost match wins),
+# so a backslashed asterisk or slash never glomps into a comment delimiter.
+@RULES
+_BEGCOM [base] <- \/ \* @@
+_ENDCOM [base] <- \* \/ @@
+
 @POST
 	excise(1,1)
 @RULES
