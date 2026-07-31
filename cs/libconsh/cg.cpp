@@ -50,6 +50,7 @@ All rights reserved.
 #include "consh/cg.h"
 #include "consh/bind.h"			// 05/02/99 AM.
 #include "consh/consh_kb.h"	// 05/04/99 AM.
+#include "consh/blockcom.h"	// 07/31/26 DD.
 
 #include "io.h"
 #include "cmd.h"
@@ -3678,6 +3679,7 @@ bool CG::readDicts(std::vector<std::filesystem::path> files, std::vector<std::fi
 bool CG::readDict(std::string file, std::vector<std::filesystem::path> kbfiles) {
 	_TCHAR buf[MAXMSG];
 	int lineCount = 0;
+	bool inBlock = false;					// Open "/*" carried between lines.
 
 	CONCEPT *ambigKB = matchDictKB(file, kbfiles);
 
@@ -3702,6 +3704,9 @@ bool CG::readDict(std::string file, std::vector<std::filesystem::path> kbfiles) 
 			*cgerr << errout_ << std::endl;
 			continue;
 		}
+		// Blank out /* ... */ before the line lexer sees it. A comment-only
+		// line becomes all white and is dropped by the check below.	// 07/31/26 DD.
+		strip_block_comments(buf, inBlock, '#');
 		if (unicu::isStrWhiteSpace(buf))
 			continue;
 		if (!parseDictLine(buf, ambigKB, file, lineCount))
@@ -3709,6 +3714,17 @@ bool CG::readDict(std::string file, std::vector<std::filesystem::path> kbfiles) 
 	}
 
 	allDictStream_.close();
+
+	if (inBlock) {
+		// Every entry after the "/*" was blanked out. Silently loading a
+		// half-empty dictionary is far worse than refusing it.
+		sprintf(errout_, "%d 1 [unterminated /* block comment - %s]",
+				lineCount, file.c_str());
+		*cgerr << errout_ << std::endl;
+		std::_t_cerr << _T("[Unterminated /* block comment in ") << file
+					 << _T("]") << std::endl;
+		return false;
+	}
 	return true;
 }
 
@@ -4049,14 +4065,30 @@ bool CG::readKBB(std::string file) {
 
 	std::vector<CONCEPT *> cons;
 	int32_t index = 0;					// Indentation state, carried between lines.
+	bool inBlock = false;				// Open "/*" carried between lines.
 
 	while (streamer.peek() != EOF) {
 		streamer.getline(buf,MAXMSG);
+		// Blank out /* ... */ before the line lexer sees it.	// 07/31/26 DD.
+		// Only a line the stripper actually touched is dropped when it comes
+		// back all white: parseKBBLine reads leading spaces as indentation and
+		// resets the concept stack at indent 0, so feeding it a blanked-out
+		// comment would break the nesting of the entries around it. Lines the
+		// stripper left alone still go through unchanged, blank or not.
+		if (strip_block_comments(buf, inBlock, '#') && unicu::isStrWhiteSpace(buf))
+			continue;
 		parseKBBLine(buf, cons, index, findRoot());
 	}
 
 	allDictStream_.close();
 
+	if (inBlock) {
+		// Every entry after the "/*" was blanked out -- report rather than
+		// quietly loading a truncated kbb.
+		std::_t_cerr << _T("[Unterminated /* block comment in ") << file
+					 << _T("]") << std::endl;
+		return false;
+	}
 	return true;
 }
 
@@ -4367,7 +4399,7 @@ void CG::setMissingLogDir(const _TCHAR *dir)
 // Read forward from the current position to the next "word:" line (indent 2) in
 // the open *full.kbb. Returns its word, the byte offset of the line, and the
 // byte offset just after it. false at end of file.
-bool CG::nextKBBKey(FullFile &f, std::streamoff &keyStart, std::string &key, std::streamoff &afterKey)
+bool CG::nextKBBKey(FullFile &f, std::streamoff &keyStart, std::string &key, std::streamoff &afterKey, bool *multiLine)
 {
 	_TCHAR line[MAXMSG];
 	while (true) {
@@ -4378,6 +4410,16 @@ bool CG::nextKBBKey(FullFile &f, std::streamoff &keyStart, std::string &key, std
 		if (f.stream.fail())
 			return false;
 		chompCRLF(line);
+		// Single-line "/* ... */" only: this file is binary-searched, so a
+		// comment that runs past its own line cannot be recognized from an
+		// arbitrary seek. Report it and let the caller reject the file.
+		bool inBlock = false;
+		if (strip_block_comments(line, inBlock, '#')) {
+			if (inBlock && multiLine)
+				*multiLine = true;
+			if (unicu::isStrWhiteSpace(line))
+				continue;					// Comment-only line.
+		}
 		int sp = 0;
 		while (line[sp] == ' ')
 			sp++;
@@ -4402,7 +4444,7 @@ bool CG::nextKBBKey(FullFile &f, std::streamoff &keyStart, std::string &key, std
 
 // Read forward from the current position to the next non-comment line in the
 // open *full.dict and return its first token (the word).
-bool CG::nextDictKey(FullFile &f, std::streamoff &keyStart, std::string &key, std::streamoff &afterKey)
+bool CG::nextDictKey(FullFile &f, std::streamoff &keyStart, std::string &key, std::streamoff &afterKey, bool *multiLine)
 {
 	_TCHAR line[MAXMSG];
 	while (true) {
@@ -4413,6 +4455,10 @@ bool CG::nextDictKey(FullFile &f, std::streamoff &keyStart, std::string &key, st
 		if (f.stream.fail())
 			return false;
 		chompCRLF(line);
+		// Single-line "/* ... */" only -- see nextKBBKey.
+		bool inBlock = false;
+		if (strip_block_comments(line, inBlock, '#') && inBlock && multiLine)
+			*multiLine = true;
 		int i = 0;
 		while (line[i] == ' ' || line[i] == '\t')
 			i++;
@@ -4443,11 +4489,22 @@ bool CG::kbbFileSorted(FullFile &f)
 	std::streamoff keyStart, afterKey;
 	std::string key, prev;
 	bool first = true;
-	while (nextKBBKey(f, keyStart, key, afterKey)) {
+	bool multiLine = false;
+	while (nextKBBKey(f, keyStart, key, afterKey, &multiLine)) {
+		if (multiLine) {
+			std::_t_cerr << _T("[kbbFileSorted: multi-line /* */ comment is not")
+						 << _T(" supported in a lazily-searched *full.kbb.]") << std::endl;
+			return false;
+		}
 		if (!first && strcmp(key.c_str(), prev.c_str()) < 0)
 			return false;
 		prev = key;
 		first = false;
+	}
+	if (multiLine) {
+		std::_t_cerr << _T("[kbbFileSorted: multi-line /* */ comment is not")
+					 << _T(" supported in a lazily-searched *full.kbb.]") << std::endl;
+		return false;
 	}
 	f.stream.clear();
 	f.stream.seekg(0);
@@ -4462,11 +4519,22 @@ bool CG::dictFileSorted(FullFile &f)
 	std::streamoff keyStart, afterKey;
 	std::string key, prev;
 	bool first = true;
-	while (nextDictKey(f, keyStart, key, afterKey)) {
+	bool multiLine = false;
+	while (nextDictKey(f, keyStart, key, afterKey, &multiLine)) {
+		if (multiLine) {
+			std::_t_cerr << _T("[dictFileSorted: multi-line /* */ comment is not")
+						 << _T(" supported in a lazily-searched *full.dict.]") << std::endl;
+			return false;
+		}
 		if (!first && strcmp(key.c_str(), prev.c_str()) < 0)
 			return false;
 		prev = key;
 		first = false;
+	}
+	if (multiLine) {
+		std::_t_cerr << _T("[dictFileSorted: multi-line /* */ comment is not")
+					 << _T(" supported in a lazily-searched *full.dict.]") << std::endl;
+		return false;
 	}
 	f.stream.clear();
 	f.stream.seekg(0);
@@ -4510,6 +4578,8 @@ bool CG::openFullKBB(const std::string &file)
 		_TCHAR line[MAXMSG];
 		while (f.stream.getline(line, MAXMSG)) {
 			chompCRLF(line);
+			bool inBlock = false;			// Single-line "/* */" only.
+			strip_block_comments(line, inBlock, '#');
 			if (line[0] == '#' || line[0] == '\0' || line[0] == ' ')
 				continue;					// comment, blank, or indented line
 			int i = 0;
@@ -4649,8 +4719,10 @@ CONCEPT *CG::searchKBBFile(FullFile &f, _TCHAR *str)
 	cons.push_back(f.root);						// cons[0] = parent for the word.
 	int32_t index = 0;
 
+	bool inBlock = false;						// Single-line "/* */" only.
 	f.stream.getline(line, MAXMSG);				// The word line.
 	chompCRLF(line);
+	strip_block_comments(line, inBlock, '#');
 	parseKBBLine(line, cons, index, f.root);
 	CONCEPT *word = cons.size() > 1 ? cons[1] : 0;
 
@@ -4661,6 +4733,12 @@ CONCEPT *CG::searchKBBFile(FullFile &f, _TCHAR *str)
 		if (f.stream.fail())
 			break;
 		chompCRLF(line);
+		// A comment line inside the word's block must not look like the blank
+		// line that ends it, so skip it rather than falling into the test
+		// below. Lines the stripper left alone keep their old meaning.
+		inBlock = false;
+		if (strip_block_comments(line, inBlock, '#') && unicu::isStrWhiteSpace(line))
+			continue;
 		int sp = 0;
 		while (line[sp] == ' ')
 			sp++;
@@ -4734,6 +4812,8 @@ CONCEPT *CG::searchDictFile(FullFile &f, _TCHAR *str)
 		if (f.stream.fail())
 			break;
 		chompCRLF(line);
+		bool inBlock = false;					// Single-line "/* */" only.
+		strip_block_comments(line, inBlock, '#');
 		int i = 0;
 		while (line[i] == ' ' || line[i] == '\t')
 			i++;

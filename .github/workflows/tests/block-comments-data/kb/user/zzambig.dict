@@ -1,0 +1,7 @@
+/* Block comments in a .dict file.
+   Multi-line, holding a * star, a / slash, a # hash and a "quote.
+*/
+# a "#" comment holding /* an opener that must stay plain text
+/* a comment-only line */
+zzkeep pos=noun note="a /* b */ c"   /* comment after an entry */
+zzstar pos=verb note="lone * and / here"

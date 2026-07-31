@@ -1,0 +1,52 @@
+###############################################
+# FILE:     blockcom.nlp
+# SUBJ:     Regression for C-style /* */ block comments in NLP++ code.
+# NOTE:     Before the fix the engine knew only "#" line comments, so every
+#           "/*" below was lexed as ordinary tokens and the analyzer died
+#           with "[Syntax error.]".  The delimiters are glommed in
+#           data/rfb/spec/retok.nlp and the comment is excised in bigtok.nlp.
+#           Expected out.txt:
+#           a string with /* and */ inside|/*/|7|12|43|esc: * /
+###############################################
+
+/* A block comment before the first region marker.
+   It spans several lines and contains a lone * star, a lone / slash,
+   a "quote, a # hash and an @@ that must all be ignored.
+*/
+
+@DECL
+
+/* doc comment for BlockCom */
+BlockCom(L("x")) {
+	/* comment as the first thing in a function body */
+	L("y") = L("x") + 42;   /* mid-line comment */
+	return L("y");
+}
+
+@@DECL
+
+@CODE
+
+/**/
+/* */
+/* one */ /* two */
+
+# A "#" line comment containing /* an opener that must stay plain text.
+# A "#" line comment containing */ a closer that must stay plain text.
+
+# Strings must survive: the delimiters inside them are text, not comments.
+L("s1") = "a string with /* and */ inside";
+L("s2") = "/*/";
+
+# Division and multiplication must still parse.
+L("n1") = 7 / 1;
+L("n2") = 3 * 4;
+
+"out.txt" << L("s1") << "|";
+"out.txt" << L("s2") << "|";
+"out.txt" << str(L("n1")) << "|";
+"out.txt" << str(L("n2")) << "|";
+"out.txt" << str(BlockCom(1)) << "|";
+"out.txt" << "esc: \* \/" << "\n";
+
+@@CODE

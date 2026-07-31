@@ -154,6 +154,36 @@ for (;;)						/* While getting args.		*/
 			cc = fp->get();
             ok = arg_get_comment(fp, &cc);
          break;
+      case '/':					/* Maybe a block comment.	*/	// 07/31/26 DD.
+			if (fp->peek() != '*')
+				{
+				// A lone '/' starts an ordinary arg (eg an unquoted path).
+				ok = arg_get(fp, alist, &cc, &buf, args, &end, len);
+				break;
+				}
+			{
+			bool crossedEol = false;
+			fp->get();				// Consume the '*'.
+			cc = fp->get();
+			ok = arg_get_block_comment(fp, &cc, crossedEol);
+			if (ok && crossedEol)
+				{
+				// A .kb command file is line-oriented: one command per line.
+				// A comment that spanned a newline has to end the command it
+				// was written after, or the next line's words would be read
+				// as extra args of this one.
+				// Push the lookahead back first: returning here drops cc, and
+				// the next args_read starts with its own get(). Without the
+				// unget, "*/add hier ..." would lose the 'a' and try to run
+				// "dd hier ...".
+				if (!fp->eof())
+					fp->unget();
+				if (!silent_f)
+					args_pp(*args, out, buf);
+				return(true);
+				}
+			}
+         break;
       case '"':					/* Get string arg.			*/
          ci = fp->get();
          ok = arg_get_str(fp, alist, out,								// 06/21/03 AM.
@@ -316,6 +346,64 @@ for (;;)			/* While getting arg */
    }
 std::_t_cerr << _T("[arg_get_comment: Program error.]") << std::endl;
 return(false);
+}
+
+
+/**************************************************
+*					ARG_GET_BLOCK_COMMENT
+* FUN:	arg_get_block_comment
+* SUBJ:	Skip over a C-style block comment in an input command file.
+* ASS:	Both chars of the opening "/*" are already consumed; cup holds the
+*		first char inside the comment.
+* CR:	07/31/26 DD.
+* RET:	True if ok read from stream. False on EOF inside the comment -- an
+*		unterminated "/*" is always a mistake, so it is reported rather than
+*		silently swallowing the rest of the file.
+*		(up) Lookahead char, one past the closing "* /".
+*		(up) crossedEol - true if the comment spanned a newline.
+* NOTE:	Comments do not nest, as in C: the first "* /" closes.
+*
+**************************************************/
+
+LIBCONSH_API bool
+arg_get_block_comment(
+	std::_t_istream *fp,			/* Stream to read from.				*/
+	/*DU*/
+	_TCHAR *cup,			/* Lookahead char.					*/
+	bool &crossedEol		/* True if the comment spanned a newline.	*/
+	)
+{
+_TCHAR cc;			/* Lookahead char.					*/
+
+crossedEol = false;
+cc = *cup;
+if (fp->eof())
+	cc = '\0';
+
+for (;;)
+   {
+   if (!cc)			/* EOF inside the comment. */
+      {
+      std::_t_cerr << _T("[arg_get_block_comment: Unterminated block comment.]")
+                   << std::endl;
+      *cup = cc;
+      return(false);
+      }
+   if (cc == '\n')
+      crossedEol = true;
+   if (cc == '*' && fp->peek() == '/')
+      {
+      fp->get();			/* Consume the '/'. */
+      cc = fp->get();		/* Lookahead, one past the comment. */
+      if (fp->eof())
+         cc = '\0';
+      *cup = cc;
+      return(true);
+      }
+   cc = fp->get();
+   if (fp->eof())
+      cc = '\0';
+   }
 }
 
 

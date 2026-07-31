@@ -32,6 +32,13 @@ arg_get_comment(
 	_TCHAR *cup			/* Lookahead char.					*/
 	);
 extern LIBCONSH_API bool
+arg_get_block_comment(
+	std::_t_istream *fp,			/* Stream to read from.				*/
+	/*DU*/
+	_TCHAR *cup,			/* Lookahead char.					*/
+	bool &crossedEol		/* True if the comment spanned a newline.	*/
+	);
+extern LIBCONSH_API bool
 arg_get_str(
 	std::_t_istream *fp,			/* Stream to read from.			*/
 	ALIST *alist,		// List manager.									// 08/14/02 AM.

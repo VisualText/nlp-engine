@@ -52,6 +52,7 @@ All rights reserved.
 
 #include "consh/libconsh.h"	// 11/11/00 AM.
 #include "consh/cg.h"			// 11/11/00 AM.
+#include "consh/blockcom.h"	// 07/31/26 DD.
 
 #include "kb.h"			// 02/12/07 AM.
 
@@ -258,6 +259,25 @@ if (len <= 0)
 
 	//exit(1);			// 06/15/99 AM.
 	return false;		// 06/15/99 AM.
+	}
+
+// Blank out /* ... */ block comments before parseSeq sees the buffer.	// 07/31/26 DD.
+// Doing it here rather than in next_token also sidesteps a collision: a
+// leading '/' on a sequence line already means "inactive pass", so parseSeq
+// would read "/*" as an inactive pass named "*". Blanking the comment first
+// leaves an all-white line, which parseSeq already ignores.
+bool inBlock = false;
+strip_block_comments(buf, inBlock, '#');
+if (inBlock)
+	{
+	// Everything after the "/*" was blanked, which would leave an analyzer
+	// with no passes and no explanation. Say so instead.
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Unterminated /* block comment in analyzer sequence file=")
+			  << seqfile_ << _T("]") << std::ends;
+	errOut(&gerrStr,false);
+	Chars::destroy(buf);
+	return false;
 	}
 
 setSeqbuflen(len);

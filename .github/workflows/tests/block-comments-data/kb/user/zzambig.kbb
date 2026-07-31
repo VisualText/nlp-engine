@@ -1,0 +1,8 @@
+/* Block comments in a .kbb file.
+   line two */
+dictionary
+  zzkeep   /* comment after a word line -- must not swallow the word */
+    /* comment inside a word block */
+    m01: pos=noun, zznote=kept
+  zzstar
+    m02: pos=verb, zznote=starred

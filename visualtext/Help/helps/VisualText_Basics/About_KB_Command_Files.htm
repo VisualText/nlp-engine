@@ -376,6 +376,40 @@
 
 <p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
 
+<p style="margin-top: 0pt; margin-bottom: 0pt;">C-style block comments,
+ <span style="font-weight: bold;">/* ... */</span>, may also be used, and
+ unlike the semicolon they can span several lines:</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><span style="font-family: Courier New;">/*
+ Company hierarchy.<br />
+ &nbsp;&nbsp;&nbsp;Loaded by main.kb before the word entries. */<br />
+ add hier &quot;concept&quot; &quot;company&quot;&nbsp;&nbsp;&nbsp;/* one branch per client */</span></p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">Block comments work the same
+ way in the other knowledge base files -- <span style="font-weight: bold;">.dict</span>
+ and <span style="font-weight: bold;">.kbb</span> -- and in the analyzer
+ sequence file, <span style="font-weight: bold;">analyzer.seq</span>. As in
+ C they do not nest: the first <span style="font-weight: bold;">*/</span>
+ closes the comment. A delimiter written inside a double-quoted argument, or
+ after a semicolon (or <span style="font-weight: bold;">#</span>) comment
+ marker, is ordinary text and is left alone. An unterminated
+ <span style="font-weight: bold;">/*</span> is reported as an error rather
+ than silently swallowing the rest of the file.</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">One restriction: in a
+ lazily-loaded <span style="font-weight: bold;">*full.dict</span> or
+ <span style="font-weight: bold;">*full.kbb</span>, which the engine
+ binary-searches instead of reading end to end, a block comment must begin
+ and end on the same line.</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
 <p style="margin-top: 0pt; margin-bottom: 0pt;">Note that command files 
  can be executed from an analyzer pass file, using the NLP++ <span style="font-weight: bold;">take</span> 
  function (also available as an API function in include/API/consh/cg.h). 
