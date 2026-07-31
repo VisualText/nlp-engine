@@ -199,6 +199,32 @@ jobs:
           grep -q '_STARSLASH' "$TREE" || { echo "FAIL(block comments): rule matching a literal '*' '/' in input regressed"; exit 1; }
           echo "[block comments] /* */ is skipped in pass files"
 
+      # TEMPORARY: bisect the Linux-only data-fixture failure. cgerr.log is
+      # never created on Linux, so readKB's own diagnostics are invisible;
+      # run the fixture three ways and print what each produces. Never fails.
+      - name: DIAGNOSE block-comment data fixture (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set +e
+          SRC=.github/workflows/tests/block-comments-data
+          for variant in asis nokbhdr nokbb nodict plaintok; do
+            D=/tmp/bc-$variant
+            rm -rf "$D"; cp -r "$SRC" "$D"; rm -rf "$D/logs" "$D/input/text.txt_log"
+            case $variant in
+              nokbhdr)  sed -i '1,8d' "$D/kb/user/hier.kb" ;;
+              nokbb)    rm -f "$D/kb/user/zzambig.kbb" ;;
+              nodict)   rm -f "$D/kb/user/zzambig.dict" ;;
+              plaintok) sed -i '1,8d' "$D/kb/user/hier.kb"; rm -f "$D/kb/user/zzambig.kbb" "$D/kb/user/zzambig.dict" ;;
+            esac
+            echo "================ variant=$variant"
+            ./bin/nlp -ANA "$D" -WORK ./ "$D/input/text.txt" 2>&1 | grep -vE "^\[command arg|^Concept Table|^-------------"
+            echo "--- out.txt:   $(cat "$D/input/text.txt_log/out.txt" 2>/dev/null || echo MISSING)"
+            echo "--- tree lines: $(wc -l < "$D/input/text.txt_log/final.tree" 2>/dev/null || echo MISSING)"
+            ls -la "$D/logs" 2>/dev/null || echo "--- no logs dir"
+          done
+          echo "DIAGNOSE done"
+
       - name: Block comment regression, data files (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash
