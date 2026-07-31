@@ -199,39 +199,6 @@ jobs:
           grep -q '_STARSLASH' "$TREE" || { echo "FAIL(block comments): rule matching a literal '*' '/' in input regressed"; exit 1; }
           echo "[block comments] /* */ is skipped in pass files"
 
-      # TEMPORARY: pin down which construct in the .kb block-comment header
-      # breaks the Linux .kb reader. Each variant prepends ONE construct to a
-      # pristine hier.kb (its first 8 lines are the header under suspicion).
-      # Never fails the build.
-      - name: DIAGNOSE kb header lines (Non-20.04)
-        if: matrix.id != 'docker-ubuntu-20.04'
-        shell: bash
-        run: |
-          set +e
-          SRC=.github/workflows/tests/block-comments-data
-          for v in multiline oneliner semi trailing strlit strclose; do
-            D=/tmp/kb-$v
-            rm -rf "$D"; cp -r "$SRC" "$D"; rm -rf "$D/logs" "$D/input/text.txt_log"
-            sed -i "1,8d" "$D/kb/user/hier.kb"
-            : > /tmp/hdr.txt
-            case $v in
-              multiline)
-                echo "/* one" >> /tmp/hdr.txt
-                echo "   two" >> /tmp/hdr.txt
-                echo "*/"     >> /tmp/hdr.txt ;;
-              oneliner)  echo "/* one-liner */" >> /tmp/hdr.txt ;;
-              semi)      echo "; semi comment holding /* an opener" >> /tmp/hdr.txt ;;
-              trailing)  echo "add hier 'concept' 'zzT'   /* after a command */" | tr "'" '"' >> /tmp/hdr.txt ;;
-              strlit)    echo "add hier 'concept' '/* literal */'" | tr "'" '"' >> /tmp/hdr.txt ;;
-              strclose)  echo "add hier 'concept' 'zzstar*/slash'" | tr "'" '"' >> /tmp/hdr.txt ;;
-            esac
-            cat /tmp/hdr.txt "$D/kb/user/hier.kb" > /tmp/h2.txt && mv /tmp/h2.txt "$D/kb/user/hier.kb"
-            ./bin/nlp -ANA "$D" -WORK ./ "$D/input/text.txt" > /tmp/run.log 2>&1
-            if grep -q "bind_sys: Enter" /tmp/run.log; then kb=KB_OK; else kb=KB_FAILED; fi
-            echo "VARIANT $v $kb out=$(cat "$D/input/text.txt_log/out.txt" 2>/dev/null || echo MISSING)"
-          done
-          echo "DIAGNOSE done"
-
       - name: Block comment regression, data files (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash

@@ -3,9 +3,6 @@
 */
 /* one-liner */
 ; a ";" comment holding /* an opener that must stay plain text
-add hier "concept" "zzTrailing"   /* comment after a command */
-add hier "concept" "/* literal in a quoted arg */"
-add hier "concept" "zzstar*/slash"
 add empty
 add root
 add hier "concept" "gram"
@@ -760,5 +757,12 @@ add hier "concept" "sys" "dict" "ctrl"
 add hier "concept" "sys" "dict" "emoji"
 add hier "concept" "sys" "dict" "unknown"
 
+; The commands below have to come after "add empty"/"add root" above have
+; created the hierarchy -- they were originally written at the top of this
+; file, which Windows tolerated but Linux rejected, taking the whole KB
+; load down with it.  The block comments themselves are fine anywhere.
+add hier "concept" "zzTrailing"   /* comment after a command */
+add hier "concept" "/* literal in a quoted arg */"
+add hier "concept" "zzstar*/slash"
 quit
 
