@@ -172,6 +172,12 @@ for (;;)						/* While getting args.		*/
 				// A comment that spanned a newline has to end the command it
 				// was written after, or the next line's words would be read
 				// as extra args of this one.
+				// Push the lookahead back first: returning here drops cc, and
+				// the next args_read starts with its own get(). Without the
+				// unget, "*/add hier ..." would lose the 'a' and try to run
+				// "dd hier ...".
+				if (!fp->eof())
+					fp->unget();
 				if (!silent_f)
 					args_pp(*args, out, buf);
 				return(true);

@@ -213,7 +213,13 @@ jobs:
           FIX=.github/workflows/tests/block-comments-data
           rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
           ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
-          if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
+          # Dump every log the run produced. A KB-load failure (eg a bad .kb
+          # command) only ever reaches cgerr.log, so without this a failure
+          # here surfaces as "no out.txt" with no reason attached.
+          for f in "$FIX"/logs/*.log; do
+            [ -f "$f" ] || continue
+            echo "----- $f"; cat "$f"
+          done
           OUT="$FIX/input/text.txt_log/out.txt"
           TREE="$FIX/input/text.txt_log/final.tree"
           if [ ! -f "$OUT" ]; then
