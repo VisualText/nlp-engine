@@ -793,6 +793,68 @@ return buf;
 
 
 /********************************************
+* FN:		STR_TO_LOWER_SAFE
+* CR:		08/03/26 AM.
+* SUBJ:	Lowercase into a caller buffer, or onto the heap if it will not fit.
+* RET:	Pointer to the lowercased string.  UP alloced - true if the result
+*			is a fresh heap allocation the CALLER MUST FREE with
+*			Chars::destroy; false if the result is 'buf'.
+* NOTE:	DEFENSE IN DEPTH, not a fix for a known live bug.
+*			str_to_lower(str,buf) cannot know how big buf is, and several
+*			callers (tHtab::hfind_lc, Htab::hsym_kb, hadd_lc, hget_lc) hand
+*			it a fixed MAXSTR buffer.  Today nothing overruns them: the
+*			tokenizer clamps token length to MAXSTR-1 before a node name is
+*			ever interned (see the 08/06/06 "Intern Token: Too long --
+*			truncating" guards in dicttok.cpp and cmltok.cpp), and a
+*			2000-character single token was verified to arrive as a
+*			511-character node name.  But that safety lives in a different
+*			subsystem, and a future caller reaching these hash entry points
+*			with a longer string has no local guard to stop it.  Bound the
+*			write where the write happens.
+*			Truncating instead would be wrong here: these buffers feed hash
+*			lookups, and a truncated key can collide with a real entry.  So
+*			fall back to the heap and keep the result exact.
+*			Case mapping can also LENGTHEN a UTF-8 string (eg Turkish
+*			dotless i), so a plain strlen check against the buffer size is
+*			not sufficient on its own -- leave room for expansion when the
+*			input is not pure ASCII.
+********************************************/
+
+_TCHAR *str_to_lower_safe(
+	_TCHAR *str,			// String to lowercase.
+	_TCHAR *buf,			// Caller's buffer, used when the result fits.
+	long bufsize,			// Capacity of buf, in _TCHARs, including terminator.
+	/*UP*/
+	bool &alloced			// True if a heap buffer was returned instead.
+	)
+{
+alloced = false;
+if (!str)
+	{
+	if (buf && bufsize > 0)
+		*buf = '\0';
+	return buf;
+	}
+
+long len = (long) _tcsclen(str);
+
+// Pure ASCII cannot change length; anything else may expand.
+long need = ascii_only(str) ? (len + 1) : ((3 * len) + 4);
+
+if (buf && need <= bufsize)
+	{
+	str_to_lower(str, buf);
+	return buf;
+	}
+
+_TCHAR *big = Chars::create(need);
+str_to_lower(str, big);
+alloced = true;
+return big;
+}
+
+
+/********************************************
 * FN:		STR_TO_UPPER
 * CR:		11/04/99 AM.
 * SUBJ:	Convert a string to uppercase
@@ -1891,50 +1953,43 @@ if (!str || !*str)
 icu::StringPiece sp(str);
 const char *spd = sp.data();
 int32_t length = sp.length();
-int32_t unilen = u_strlen(str);
+int32_t unilen = (int32_t) u_strlen(str);
+
+// OPT: 08/03/26 AM. The old inner loop rebuilt an icu::StringPiece over the
+// output buffer, called u_strlen() on it (itself a full codepoint walk) and
+// then re-decoded it with U8_NEXT -- once per input character.  That turned
+// an inherently O(n^2) job into roughly O(n^3).  Track the codepoints seen
+// so far in a flat array and scan that instead.  A string cannot have more
+// unique codepoints than it has codepoints, so one allocation suffices.
+UChar32 *seen = new UChar32[(unilen > 0) ? unilen : 1];
+int32_t nseen = 0;
 
 UChar32 c = 1;
 int32_t s = 0;
-int32_t start = 0;
-int32_t i = 0;
 int32_t len = 0;
-int32_t strStart = 0;
-bool found = false;
 
-while (c && i<unilen) {
-	start = s;
+while (c && s < length) {
+	int32_t start = s;
 	U8_NEXT(spd, s, length, c);
 
-	found = false;
-	if (len) {
-		UChar32 cb = 1;
-		int32_t sb = 0;
-		icu::StringPiece spb(buf);
-		const char *spdb = spb.data();
-		int32_t lengthb = spb.length();
-		int32_t unilenb = u_strlen(buf);
-
-		for (int j=0; j<unilenb; j++) {
-			U8_NEXT(spdb, sb, lengthb, cb);
-			if (cb == c) {
-				found = true;
-				break;
-			}
-		}		
+	bool found = false;
+	for (int32_t j = 0; j < nseen; j++) {
+		if (seen[j] == c) {
+			found = true;
+			break;
+		}
 	}
 
 	if (!found) {
-		int32_t letlen = s-start;
-
-		for (int k=0; k<letlen; k++) {
-			buf[len++] = str[strStart++];
-		}
-		buf[len] = '\0';
+		if (nseen < unilen)
+			seen[nseen++] = c;
+		// Copy this character's bytes through verbatim.
+		for (int32_t k = start; k < s; k++)
+			buf[len++] = str[k];
 	}
-	strStart = s;
-	i++;
 }
 buf[len] = '\0';
+delete [] seen;
 return true;
 }
 

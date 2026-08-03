@@ -5,6 +5,18 @@ set(CMAKE_CXX_STANDARD 17)
 include(CTest)
 enable_testing()
 
+# Default to an optimized build for single-config generators (Makefiles,
+# Ninja). Without this, a plain `cmake -B build -S .` on Linux/macOS leaves
+# CMAKE_BUILD_TYPE empty, which means NO optimization flags at all -- local
+# developer builds ran unoptimized while CI (which passes
+# -DCMAKE_BUILD_TYPE=Release explicitly) did not. Multi-config generators
+# such as Visual Studio ignore this and pick the config at build time.
+get_property(_isMultiConfig GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+if(NOT _isMultiConfig AND NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
+    message(STATUS "CMAKE_BUILD_TYPE not set; defaulting to Release")
+endif()
+
 find_package(ICU REQUIRED COMPONENTS i18n uc data io)
 find_library(DL_LIBRARY dl)  # Ensure dl library is found
 

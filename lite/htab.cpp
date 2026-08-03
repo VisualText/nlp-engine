@@ -23,6 +23,7 @@ All rights reserved.
 #include "io.h"
 #include "lite/iarg.h"	// 05/14/03 AM.
 #include "str.h"
+#include "chars.h"	// 08/03/26 AM.
 #include "node.h"	// 07/07/03 AM.
 #include "tree.h"	// 07/07/03 AM.
 #include "nlppp.h"	// 07/07/03 AM.
@@ -409,9 +410,14 @@ if (empty(str))
 	return 0;
 	}
 
-// Convert to lower case.
-str_to_lower(str, lcbuf);
-return hfind(lcbuf);
+// Convert to lower case.  Overlong strings go to the heap rather than
+// overrunning the shared static buffer.	// 08/03/26 AM.
+bool alloced;
+_TCHAR *lc = str_to_lower_safe(str, lcbuf, MAXSTR, /*UP*/ alloced);
+Selt<Sym> *selt = hfind(lc);
+if (alloced)
+	Chars::destroy(lc);
+return selt;
 }
 
 
@@ -466,17 +472,45 @@ return 0;						// Not found in list.
 * FN:		HGET
 * CR:		11/18/98 AM.
 * SUBJ:	Find string in hash table, else add it.
-* OPT:	Unoptimized.  The two calls do redundant work.
+* NOTE:	08/03/26 AM. Was hfind() then hadd(), which hashed the string
+*			twice and walked to the bucket twice.  Hash once and reuse the
+*			bucket for both the search and the insert.  Behavior is
+*			unchanged, including the empty-string diagnostic and the
+*			crash guard on a sym with no string.
 *
 ********************************************/
 
 Selt<Sym> *Htab::hget(_TCHAR *str)
 {
-// The calls check for empty string.
+if (empty(str))
+	{
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hget: Given null string.]") << std::ends;
+	errOut(&gerrStr,false);
+	return 0;
+	}
+
+long val = hash(str);
+Slist<Sym> *list = &(parr_[val]);		// Hash array loc for string.
+
+// Search the chain.
 Selt<Sym> *ptr;
-if ((ptr = hfind(str)))
-	return ptr;
-return hadd(str);
+for (ptr = list->getFirst(); ptr; ptr = ptr->Right())
+	{
+	if (!_tcscmp(str, ptr->getData()->getStr()))
+		return ptr;				// Found it in chain.
+	}
+
+// Not present -- add it, reusing the bucket we already located.
+Sym *sym = new Sym(str, stab_);
+if (empty(sym->getStr()))							// CRASH GUARD.
+	{
+	delete sym;
+	return 0;
+	}
+Selt<Sym> *selt = new Selt<Sym>(sym);
+list->push(selt);				// Place at FRONT of hash chain.
+return selt;
 }
 
 
@@ -556,15 +590,20 @@ sym = selt->getData();
 if (sym->getLcsym())			// Already has a lowercase version.
 	return sym;
 
-// Install lowercase variant.
-str_to_lower(str, buf);
-if (!_tcscmp(str, buf))		// String is already lowercase.
+// Install lowercase variant.  Overlong strings go to the heap.	// 08/03/26 AM.
+bool alloced;
+_TCHAR *lc = str_to_lower_safe(str, buf, MAXSTR, /*UP*/ alloced);
+if (!_tcscmp(str, lc))		// String is already lowercase.
 	{
 	sym->setLcsym(sym);		// Make it point to itself!
+	if (alloced)
+		Chars::destroy(lc);
 	return sym;
 	}
 
-lcsym = hsym(buf);			// Get or make lowercase sym.
+lcsym = hsym(lc);			// Get or make lowercase sym.
+if (alloced)
+	Chars::destroy(lc);
 lcsym->setLcsym(lcsym);		// Lc points to itself (whether set or not).
 sym->setLcsym(lcsym);		// Non-lc points to its lc variant.
 return sym;
@@ -597,16 +636,21 @@ if ((lcsym = sym->getLcsym()))			// Already has a lowercase version.
 
 str = sym->getStr();			// Get terminated string.
 
-// Install lowercase variant.
-str_to_lower(str, buf);
-if (!_tcscmp(str, buf))		// String is already lowercase.
+// Install lowercase variant.  Overlong strings go to the heap.	// 08/03/26 AM.
+bool alloced;
+_TCHAR *lc = str_to_lower_safe(str, buf, MAXSTR, /*UP*/ alloced);
+if (!_tcscmp(str, lc))		// String is already lowercase.
 	{
 	sym->setLcsym(sym);		// Make it point to itself!
 	lcstr = str;	// 08/01/11 AM.
+	if (alloced)
+		Chars::destroy(lc);
 	return sym;
 	}
 
-lcsym = hsym(buf);			// Get or make lowercase sym.
+lcsym = hsym(lc);			// Get or make lowercase sym.
+if (alloced)
+	Chars::destroy(lc);
 lcsym->setLcsym(lcsym);		// Lc points to itself (whether set or not).
 sym->setLcsym(lcsym);		// Non-lc points to its lc variant.
 lcstr = lcsym->getStr();	// 08/01/11 AM.

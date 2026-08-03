@@ -1,0 +1,28 @@
+###############################################
+# FILE:     unichars.nlp
+# SUBJ:     Regression for struniquechars().
+# NOTE:     str_unique_chars() used to rebuild an icu::StringPiece over the
+#           output buffer, call u_strlen() on it and re-decode it with
+#           U8_NEXT once per INPUT character -- turning an O(n^2) job into
+#           roughly O(n^3).  This pins the observable behavior, including
+#           multi-byte UTF-8 characters, so the rewrite cannot drift.
+#           Expected out.txt:
+#           abc|abc|a|abcdefg|helo wrd|3|ab<U+00E9><U+00FC>|<CJK 3 chars>
+###############################################
+
+@CODE
+
+"out.txt" << struniquechars("abc") << "|";
+"out.txt" << struniquechars("aaabbbccc") << "|";
+"out.txt" << struniquechars("aaaaaa") << "|";
+"out.txt" << struniquechars("abcdefg") << "|";
+"out.txt" << struniquechars("hello world") << "|";
+"out.txt" << struniquechars("333") << "|";
+
+# Multi-byte UTF-8: accented Latin, repeated. Bytes must not be split.
+"out.txt" << struniquechars("aabbééüü") << "|";
+
+# CJK, each character 3 bytes, with repeats.
+"out.txt" << struniquechars("日日本本語語") << "\n";
+
+@@CODE
