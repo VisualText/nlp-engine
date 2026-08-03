@@ -1,0 +1,2 @@
+tokenize	nil	# tokenize only -- fixture needs no dictionary
+nlp	strarr	# strjoin/strindexof + array sort/unique/reverse/slice/push

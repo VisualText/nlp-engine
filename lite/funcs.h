@@ -371,4 +371,13 @@ _T("dirlist"),
 _T("rematch"),
 _T("refind"),
 _T("resubst"),
+// String and array functions.	// 08/03/26 DD.
+_T("strjoin"),
+_T("strindexof"),
+_T("strlastindexof"),
+_T("arraysort"),
+_T("arrayunique"),
+_T("arrayreverse"),
+_T("arrayslice"),
+_T("push"),
 0 };

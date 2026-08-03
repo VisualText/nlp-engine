@@ -969,6 +969,14 @@ static bool fnStruniquechars(
 	static bool fnRematch(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/03/26 DD.
 	static bool fnRefind(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/03/26 DD.
 	static bool fnResubst(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/03/26 DD.
+	static bool fnStrjoin(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/03/26 DD.
+	static bool fnStrindexof(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/03/26 DD.
+	static bool fnStrlastindexof(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/03/26 DD.
+	static bool fnArraysort(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/03/26 DD.
+	static bool fnArrayunique(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/03/26 DD.
+	static bool fnArrayreverse(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/03/26 DD.
+	static bool fnArrayslice(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/03/26 DD.
+	static bool fnPush(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/03/26 DD.
 	static bool fnStriscaps(Delt<Iarg>*,Nlppp*,RFASem*&);
 	static bool fnStrisupper(Delt<Iarg>*,Nlppp*,RFASem*&);			// 11/20/01 AM.
 	static bool fnStrislower(Delt<Iarg>*,Nlppp*,RFASem*&);			// 11/20/01 AM.

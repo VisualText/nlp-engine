@@ -1,0 +1,1 @@
+The fixture builds its own arrays, not from this text.

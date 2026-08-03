@@ -1,0 +1,90 @@
+###############################################
+# FILE:     strarr.nlp
+# SUBJ:     Regression for the string and array utility builtins.
+# NOTE:     split() had no inverse, so building a delimited string meant a
+#           loop and a "first time through" flag. strchr took only a single
+#           character and returned the tail rather than a position, and
+#           strcontains only answered yes or no, so there was no way to get
+#           the index of a substring. The existing sorts were all knowledge
+#           base or parse tree oriented, leaving plain arrays with none.
+#           push() had been documented as UNIMPLEMENTED.
+#           Expected out.txt:
+#           join:a-b-c
+#           join1:solo
+#           joinnum:1,2,3
+#           idx:6/-1/0
+#           lastidx:8/2
+#           neg:-1/-1/-12345/42
+#           sort:Banana,apple,cherry
+#           sortdesc:cherry,apple,Banana
+#           sortnum:2,10,100
+#           sortnumdesc:100,10,2
+#           unique:a,b,c
+#           reverse:c,b,a
+#           slice:b,c
+#           sliceopen:c,d
+#           sliceclamp:d
+#           slicenone:
+#           push:z,a,b,c
+#           chain:A,B,C
+###############################################
+
+@CODE
+
+L("abc")  = split("a b c"," ");
+L("nums") = split("10 2 100"," ");
+L("dups") = split("a b a c b"," ");
+L("word") = split("apple Banana cherry"," ");
+L("abcd") = split("a b c d"," ");
+
+# --- strjoin: the inverse of split.
+"out.txt" << "join:"    << strjoin(L("abc"),"-")            << "\n";
+"out.txt" << "join1:"   << strjoin(split("solo"," "),"-")   << "\n";
+"out.txt" << "joinnum:" << strjoin(split("1 2 3"," "),",")  << "\n";
+
+# --- strindexof / strlastindexof: zero based, -1 when absent.
+"out.txt" << "idx:"
+	<< str(strindexof("hello world","world")) << "/"
+	<< str(strindexof("hello world","zzz"))   << "/"
+	<< str(strindexof("hello world","hello")) << "\n";
+"out.txt" << "lastidx:"
+	<< str(strlastindexof("one two one two","one")) << "/"
+	<< str(strlastindexof("aXbXc","b"))             << "\n";
+
+# --- str() used to render every negative as an unsigned 64-bit value, so a
+# "not found" -1 came back as 18446744073709551615. That also made the
+# documented -1 of filesize unreadable.
+L("neg") = 0 - 12345;
+"out.txt" << "neg:"
+	<< str(strindexof("abc","zzz"))              << "/"
+	<< str(filesize("no/such/file.txt"))         << "/"
+	<< str(L("neg"))                             << "/"
+	<< str(42)                                   << "\n";
+
+# --- arraysort: lexical by default, numeric and descending on request.
+"out.txt" << "sort:"        << strjoin(arraysort(L("word")),",")       << "\n";
+"out.txt" << "sortdesc:"    << strjoin(arraysort(L("word"),0,1),",")   << "\n";
+"out.txt" << "sortnum:"     << strjoin(arraysort(L("nums"),1),",")     << "\n";
+"out.txt" << "sortnumdesc:" << strjoin(arraysort(L("nums"),1,1),",")   << "\n";
+
+# --- arrayunique: keeps the first of each, original order, no sort needed.
+"out.txt" << "unique:" << strjoin(arrayunique(L("dups")),",") << "\n";
+
+# --- arrayreverse.
+"out.txt" << "reverse:" << strjoin(arrayreverse(L("abc")),",") << "\n";
+
+# --- arrayslice: zero based, end exclusive, out of range clamps.
+"out.txt" << "slice:"      << strjoin(arrayslice(L("abcd"),1,3),",")   << "\n";
+"out.txt" << "sliceopen:"  << strjoin(arrayslice(L("abcd"),2),",")     << "\n";
+"out.txt" << "sliceclamp:" << strjoin(arrayslice(L("abcd"),3,99),",")  << "\n";
+"out.txt" << "slicenone:"  << strjoin(arrayslice(L("abcd"),2,2),",")   << "\n";
+
+# --- push: value FIRST then array, matching the hand-written push in
+# visualText/spec/UtilFuncs.nlp. Value lands at element 0.
+"out.txt" << "push:" << strjoin(push("z",L("abc")),",") << "\n";
+
+# --- the source array must be untouched by all of the above, and the
+# functions must compose.
+"out.txt" << "chain:" << strjoin(arraysort(arrayunique(split("C A B A"," "))),",") << "\n";
+
+@@CODE

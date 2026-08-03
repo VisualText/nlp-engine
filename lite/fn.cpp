@@ -20,6 +20,7 @@ All rights reserved.
 #include <iterator>		// For istreambuf_iterator.					// 08/03/26 DD.
 #include <regex>			// For rematch, refind, resubst.				// 08/03/26 DD.
 #include <map>			// For the compiled-regex cache.				// 08/03/26 DD.
+#include <set>			// For arrayunique.								// 08/03/26 DD.
 #include <vector>		// For dirlist.									// 08/03/26 DD.
 #include <algorithm>		// For sorting dirlist entries.				// 08/03/26 DD.
 //#include <process.h>				// 06/20/00 AM.
@@ -432,6 +433,22 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnRefind(args,nlppp,/*UP*/sem);						// 08/03/26 DD.
 	case FNresubst:
 		return fnResubst(args,nlppp,/*UP*/sem);						// 08/03/26 DD.
+	case FNstrjoin:
+		return fnStrjoin(args,nlppp,/*UP*/sem);						// 08/03/26 DD.
+	case FNstrindexof:
+		return fnStrindexof(args,nlppp,/*UP*/sem);						// 08/03/26 DD.
+	case FNstrlastindexof:
+		return fnStrlastindexof(args,nlppp,/*UP*/sem);						// 08/03/26 DD.
+	case FNarraysort:
+		return fnArraysort(args,nlppp,/*UP*/sem);						// 08/03/26 DD.
+	case FNarrayunique:
+		return fnArrayunique(args,nlppp,/*UP*/sem);						// 08/03/26 DD.
+	case FNarrayreverse:
+		return fnArrayreverse(args,nlppp,/*UP*/sem);						// 08/03/26 DD.
+	case FNarrayslice:
+		return fnArrayslice(args,nlppp,/*UP*/sem);						// 08/03/26 DD.
+	case FNpush:
+		return fnPush(args,nlppp,/*UP*/sem);						// 08/03/26 DD.
 	case FNlogten:
 		return fnLogten(args,nlppp,/*UP*/sem);							// 04/29/04 AM.
 	case FNrandomint:
@@ -11867,6 +11884,564 @@ parse->internStr(&out[0], (long) out.size(), /*UP*/ istr);
 
 // Return as str type.
 sem = new RFASem(istr, RSSTR);
+return true;
+}
+
+
+/********************************************
+* FN:		ARRAY_ARG_UTIL
+* CR:		08/03/26 DD.
+* SUBJ:	Unpack an array argument.
+* RET:	True if the sem really holds an array, else false.
+* NOTE:	Utility function for the array functions.
+********************************************/
+
+static bool array_arg_util(
+	_TCHAR *fname,
+	RFASem *array_sem,
+	Parse *parse,
+	/*UP*/
+	Dlist<Iarg>* &arr
+	)
+{
+arr = 0;
+if (!array_sem)
+	{
+	_stprintf(Errbuf,_T("[%s: Given no array.]"),fname);
+	parse->errOut(false); // UNFIXED
+	return false;
+	}
+if (array_sem->getType() != RSARGS)
+	{
+	_stprintf(Errbuf,_T("[%s: Given a non-array value.]"),fname);
+	parse->errOut(false); // UNFIXED
+	return false;
+	}
+arr = array_sem->getArgs();
+return true;
+}
+
+
+/********************************************
+* FN:		IARG_TEXT_UTIL
+* CR:		08/03/26 DD.
+* SUBJ:	The text of one array element, whatever type it holds.
+* NOTE:	Utility function for strjoin, arraysort and arrayunique, which all
+*			need to see an element as a string.  Numbers are rendered, so a
+*			mixed array still joins and sorts sensibly.
+********************************************/
+
+static void iarg_text_util(
+	Iarg *arg,
+	/*UP*/
+	std::string &out
+	)
+{
+out.clear();
+if (!arg)
+	return;
+
+_TCHAR buf[64];
+_TCHAR *s = 0;
+
+switch (arg->getType())
+	{
+	case IASTR:
+		if ((s = arg->getStr()) != 0)
+			out = s;
+		break;
+	case IANUM:
+		_stprintf(buf,_T("%lld"),arg->getNum());
+		out = buf;
+		break;
+	case IAFLOAT:
+		_stprintf(buf,_T("%g"),(double)arg->getFloat());
+		out = buf;
+		break;
+	case IASEM:
+	case IAREF:
+		{
+		RFASem *sem = arg->getSem();
+		if (!sem)
+			break;
+		switch (sem->getType())
+			{
+			case RSSTR:
+			case RSNUM:
+			case RSNAME:
+				if ((s = sem->getName()) != 0)
+					out = s;
+				break;
+			case RSLONG:
+				_stprintf(buf,_T("%lld"),sem->getLong());
+				out = buf;
+				break;
+			case RSFLOAT:
+				_stprintf(buf,_T("%g"),(double)sem->getFloat());
+				out = buf;
+				break;
+			default:
+				break;	// No sensible text for concepts, nodes, streams.
+			}
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+
+/********************************************
+* FN:		FNSTRJOIN
+* CR:		08/03/26 DD.
+* SUBJ:	Join the elements of an array into one string.
+* RET:	True (executed ok); sem = the joined string.
+* FORMS:	strjoin(array, separator_str)
+* NOTE:	The inverse of split.  Without it, building a delimited string
+*			meant a loop and a "first time through" flag.
+*			Numeric elements are rendered, so a mixed array still joins.
+********************************************/
+
+bool Fn::fnStrjoin(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+RFASem *array_sem=0;
+_TCHAR *sep=0;
+
+if (!Arg::sem1(_T("strjoin"),nlppp,(DELTS*&)args, array_sem))
+	return false;
+if (!Arg::str1(_T("strjoin"), /*UP*/ (DELTS*&)args, sep))
+	return false;
+if (!Arg::done((DELTS*)args, _T("strjoin"),parse))
+	return false;
+
+Dlist<Iarg> *arr=0;
+if (!array_arg_util(_T("strjoin"), array_sem, parse, /*UP*/ arr))
+	return true;
+
+std::string out;
+std::string piece;
+bool first = true;
+for (Delt<Iarg> *delt = (arr ? arr->getFirst() : 0); delt; delt = delt->Right())
+	{
+	if (!first && sep)
+		out += sep;
+	first = false;
+	iarg_text_util(delt->getData(), /*UP*/ piece);
+	out += piece;
+	}
+
+if (out.empty())
+	return true;			// Nothing to hand back.
+
+_TCHAR *str;
+parse->internStr(&out[0], (long) out.size(), /*UP*/ str);
+
+// Return as str type.
+sem = new RFASem(str, RSSTR);
+return true;
+}
+
+
+/********************************************
+* FN:		FNSTRINDEXOF
+* CR:		08/03/26 DD.
+* SUBJ:	Position of the first occurrence of a substring.
+* RET:	True (executed ok); sem = zero-based index, or -1 if absent.
+* FORMS:	strindexof(str, substr)
+* NOTE:	strchr takes only a single character and returns the tail of the
+*			string rather than a position, so getting an index used to mean
+*			subtracting two strlengths.  strcontains only answers yes or no.
+********************************************/
+
+bool Fn::fnStrindexof(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+_TCHAR *str=0;
+_TCHAR *sub=0;
+
+if (!Arg::str1(_T("strindexof"), /*UP*/ (DELTS*&)args, str))
+	return false;
+if (!Arg::str1(_T("strindexof"), /*UP*/ (DELTS*&)args, sub))
+	return false;
+if (!Arg::done((DELTS*)args, _T("strindexof"),parse))
+	return false;
+
+long long at = -1LL;
+if (str && *str && sub && *sub)
+	{
+	_TCHAR *hit = _tcsstr(str, sub);
+	if (hit)
+		at = (long long)(hit - str);
+	}
+sem = new RFASem(at);
+return true;
+}
+
+
+/********************************************
+* FN:		FNSTRLASTINDEXOF
+* CR:		08/03/26 DD.
+* SUBJ:	Position of the last occurrence of a substring.
+* RET:	True (executed ok); sem = zero-based index, or -1 if absent.
+* FORMS:	strlastindexof(str, substr)
+********************************************/
+
+bool Fn::fnStrlastindexof(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+_TCHAR *str=0;
+_TCHAR *sub=0;
+
+if (!Arg::str1(_T("strlastindexof"), /*UP*/ (DELTS*&)args, str))
+	return false;
+if (!Arg::str1(_T("strlastindexof"), /*UP*/ (DELTS*&)args, sub))
+	return false;
+if (!Arg::done((DELTS*)args, _T("strlastindexof"),parse))
+	return false;
+
+long long at = -1LL;
+if (str && *str && sub && *sub)
+	{
+	_TCHAR *hit = _tcsstr(str, sub);
+	while (hit)
+		{
+		at = (long long)(hit - str);
+		hit = _tcsstr(hit + 1, sub);
+		}
+	}
+sem = new RFASem(at);
+return true;
+}
+
+
+/********************************************
+* FN:		FNARRAYSORT
+* CR:		08/03/26 DD.
+* SUBJ:	Sort the elements of an array.
+* RET:	True (executed ok); sem = a new sorted array.
+* FORMS:	arraysort(array)
+*			arraysort(array, numeric_bool)
+*			arraysort(array, numeric_bool, descending_bool)
+* NOTE:	The existing sorts (sortvals, sortchilds, sorthier, sortphrase,
+*			sortconsbyattr) are all knowledge-base or parse-tree oriented.
+*			This one sorts a plain array, eg what split or readlines gave.
+*			Argument order follows sortconsbyattr.
+*			Sorting is stable, so equal elements keep their original order.
+*			The source array is left alone; a new array comes back.
+********************************************/
+
+// Sort key for one element.	// 08/03/26 DD.
+struct ArrSortKey
+	{
+	Iarg *arg;
+	std::string text;
+	double num;
+	long order;		// Original position, to keep the sort stable.
+	};
+
+static bool arr_sort_str_asc(const ArrSortKey &a, const ArrSortKey &b)
+	{ int c = a.text.compare(b.text); return c ? (c < 0) : (a.order < b.order); }
+static bool arr_sort_str_desc(const ArrSortKey &a, const ArrSortKey &b)
+	{ int c = a.text.compare(b.text); return c ? (c > 0) : (a.order < b.order); }
+static bool arr_sort_num_asc(const ArrSortKey &a, const ArrSortKey &b)
+	{ return (a.num != b.num) ? (a.num < b.num) : (a.order < b.order); }
+static bool arr_sort_num_desc(const ArrSortKey &a, const ArrSortKey &b)
+	{ return (a.num != b.num) ? (a.num > b.num) : (a.order < b.order); }
+
+bool Fn::fnArraysort(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+RFASem *array_sem=0;
+long long numeric=0, descending=0;
+
+if (!Arg::sem1(_T("arraysort"),nlppp,(DELTS*&)args, array_sem))
+	return false;
+if (Arg::num1(_T("arraysort"), (DELTS*&)args, numeric))	// Optional args.
+	Arg::num1(_T("arraysort"), (DELTS*&)args, descending);
+if (!Arg::done((DELTS*)args, _T("arraysort"),parse))
+	return false;
+
+Dlist<Iarg> *arr=0;
+if (!array_arg_util(_T("arraysort"), array_sem, parse, /*UP*/ arr))
+	{
+	empty_array_util(/*UP*/ sem);
+	return true;
+	}
+
+std::vector<ArrSortKey> keys;
+long n = 0;
+for (Delt<Iarg> *delt = (arr ? arr->getFirst() : 0); delt; delt = delt->Right())
+	{
+	ArrSortKey k;
+	k.arg = delt->getData();
+	iarg_text_util(k.arg, /*UP*/ k.text);
+	k.num = numeric ? atof(k.text.c_str()) : 0.0;
+	k.order = n++;
+	keys.push_back(k);
+	}
+
+if (numeric)
+	std::sort(keys.begin(), keys.end(),
+				 descending ? arr_sort_num_desc : arr_sort_num_asc);
+else
+	std::sort(keys.begin(), keys.end(),
+				 descending ? arr_sort_str_desc : arr_sort_str_asc);
+
+Dlist<Iarg> *list = new Dlist<Iarg>();		// Make empty list of args.
+for (size_t i = 0; i < keys.size(); ++i)
+	list->rpush(Iarg::copy_arg(keys[i].arg));
+
+sem = new RFASem(list);
+return true;
+}
+
+
+/********************************************
+* FN:		FNARRAYUNIQUE
+* CR:		08/03/26 DD.
+* SUBJ:	Drop duplicate elements from an array.
+* RET:	True (executed ok); sem = a new array.
+* FORMS:	arrayunique(array)
+* NOTE:	Keeps the FIRST of each run of equal elements and preserves the
+*			original order, so the array does not have to be sorted first.
+*			Elements are compared by their text.
+*			The source array is left alone; a new array comes back.
+********************************************/
+
+bool Fn::fnArrayunique(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+RFASem *array_sem=0;
+
+if (!Arg::sem1(_T("arrayunique"),nlppp,(DELTS*&)args, array_sem))
+	return false;
+if (!Arg::done((DELTS*)args, _T("arrayunique"),parse))
+	return false;
+
+Dlist<Iarg> *arr=0;
+if (!array_arg_util(_T("arrayunique"), array_sem, parse, /*UP*/ arr))
+	{
+	empty_array_util(/*UP*/ sem);
+	return true;
+	}
+
+std::set<std::string> seen;
+std::string text;
+Dlist<Iarg> *list = new Dlist<Iarg>();		// Make empty list of args.
+
+for (Delt<Iarg> *delt = (arr ? arr->getFirst() : 0); delt; delt = delt->Right())
+	{
+	Iarg *arg = delt->getData();
+	iarg_text_util(arg, /*UP*/ text);
+	if (seen.find(text) != seen.end())
+		continue;
+	seen.insert(text);
+	list->rpush(Iarg::copy_arg(arg));
+	}
+
+sem = new RFASem(list);
+return true;
+}
+
+
+/********************************************
+* FN:		FNARRAYREVERSE
+* CR:		08/03/26 DD.
+* SUBJ:	Reverse the order of an array's elements.
+* RET:	True (executed ok); sem = a new array.
+* FORMS:	arrayreverse(array)
+* NOTE:	The source array is left alone; a new array comes back.
+********************************************/
+
+bool Fn::fnArrayreverse(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+RFASem *array_sem=0;
+
+if (!Arg::sem1(_T("arrayreverse"),nlppp,(DELTS*&)args, array_sem))
+	return false;
+if (!Arg::done((DELTS*)args, _T("arrayreverse"),parse))
+	return false;
+
+Dlist<Iarg> *arr=0;
+if (!array_arg_util(_T("arrayreverse"), array_sem, parse, /*UP*/ arr))
+	{
+	empty_array_util(/*UP*/ sem);
+	return true;
+	}
+
+std::vector<Iarg*> elts;
+for (Delt<Iarg> *delt = (arr ? arr->getFirst() : 0); delt; delt = delt->Right())
+	elts.push_back(delt->getData());
+
+Dlist<Iarg> *list = new Dlist<Iarg>();		// Make empty list of args.
+for (size_t i = elts.size(); i > 0; --i)
+	list->rpush(Iarg::copy_arg(elts[i-1]));
+
+sem = new RFASem(list);
+return true;
+}
+
+
+/********************************************
+* FN:		FNARRAYSLICE
+* CR:		08/03/26 DD.
+* SUBJ:	Take a run of elements out of an array.
+* RET:	True (executed ok); sem = a new array.
+* FORMS:	arrayslice(array, start_num)
+*			arrayslice(array, start_num, end_num)
+* NOTE:	Zero based.  start is included, end is NOT, so the count taken is
+*			end - start, matching how strpiece-style ranges read elsewhere.
+*			Omit end to run to the end of the array.
+*			Out-of-range values are clamped rather than treated as errors,
+*			so slicing past the end just gives fewer elements.
+*			The source array is left alone; a new array comes back.
+********************************************/
+
+bool Fn::fnArrayslice(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+RFASem *array_sem=0;
+long long start=0, end=-1;
+bool has_end = false;
+
+if (!Arg::sem1(_T("arrayslice"),nlppp,(DELTS*&)args, array_sem))
+	return false;
+if (!Arg::num1(_T("arrayslice"), (DELTS*&)args, start))
+	return false;
+if (Arg::num1(_T("arrayslice"), (DELTS*&)args, end))	// Optional arg.
+	has_end = true;
+if (!Arg::done((DELTS*)args, _T("arrayslice"),parse))
+	return false;
+
+Dlist<Iarg> *arr=0;
+if (!array_arg_util(_T("arrayslice"), array_sem, parse, /*UP*/ arr))
+	{
+	empty_array_util(/*UP*/ sem);
+	return true;
+	}
+
+std::vector<Iarg*> elts;
+for (Delt<Iarg> *delt = (arr ? arr->getFirst() : 0); delt; delt = delt->Right())
+	elts.push_back(delt->getData());
+
+long long len = (long long) elts.size();
+if (!has_end || end > len)
+	end = len;
+if (start < 0)
+	start = 0;
+if (end < 0)
+	end = 0;
+
+Dlist<Iarg> *list = new Dlist<Iarg>();		// Make empty list of args.
+for (long long i = start; i < end; ++i)
+	list->rpush(Iarg::copy_arg(elts[(size_t)i]));
+
+sem = new RFASem(list);
+return true;
+}
+
+
+/********************************************
+* FN:		FNPUSH
+* CR:		08/03/26 DD.
+* SUBJ:	Add a value to the front of an array.
+* RET:	True (executed ok); sem = a new array.
+* FORMS:	push(value, array)
+* NOTE:	Value FIRST, then the array.  That is the order the hand-written
+*			push in visualText/spec/UtilFuncs.nlp already uses, so the builtin
+*			is a drop-in replacement for it.	// 08/03/26 DD.
+*			The value keeps its own type, so strings, numbers, floats and
+*			concepts can all be pushed.
+*			The pushed value becomes element 0 and every existing element
+*			shifts up one, so this changes the array's indexing.
+*			The source array is left alone; a new array comes back.
+********************************************/
+
+bool Fn::fnPush(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+RFASem *array_sem=0;
+Iarg *val=0;
+
+if (!Arg::arg1(_T("push"), (DELTS*&)args, val))
+	return false;
+if (!Arg::sem1(_T("push"),nlppp,(DELTS*&)args, array_sem))
+	return false;
+if (!Arg::done((DELTS*)args, _T("push"),parse))
+	return false;
+
+Dlist<Iarg> *arr=0;
+if (!array_arg_util(_T("push"), array_sem, parse, /*UP*/ arr))
+	{
+	empty_array_util(/*UP*/ sem);
+	return true;
+	}
+
+Dlist<Iarg> *list = new Dlist<Iarg>();		// Make empty list of args.
+if (val)
+	list->rpush(Iarg::copy_arg(val));
+for (Delt<Iarg> *delt = (arr ? arr->getFirst() : 0); delt; delt = delt->Right())
+	list->rpush(Iarg::copy_arg(delt->getData()));
+
+sem = new RFASem(list);
 return true;
 }
 
