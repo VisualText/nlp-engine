@@ -1,0 +1,15 @@
+###############################################
+# FILE:     g6.nlp
+# SUBJ:     A pattern must match the WHOLE token: must NOT match cat.
+# NOTE:     One pattern per pass on purpose. Rule matching is first-match-
+#           wins at a given position, so several rules in one pass would
+#           consume each other's tokens and later patterns would never see
+#           them.
+###############################################
+
+@PRE
+<1,1> regexp("at");
+@POST
+G("whole") = G("whole") + N("$text",1) + "|";
+@RULES
+_xNIL <- _xALPHA @@

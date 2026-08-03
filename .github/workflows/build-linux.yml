@@ -260,6 +260,42 @@ jobs:
           fi
           echo "[struniquechars] unique-character extraction is UTF-8 correct"
 
+      - name: regexp/regexpi glob matching (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # regexp() and regexpi() returned false for EVERY input: the "no
+          # literal yet" marker in Regexp::init was an empty string rather
+          # than a null pointer, so every "has a literal" test read true, the
+          # literal never bound and the pattern degenerated. regexpi() also
+          # recursed into the case-SENSITIVE match(), losing case folding
+          # after the first pattern element -- hence the i-multi line.
+          FIX=.github/workflows/tests/regexp-glob
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
+          OUT="$FIX/input/text.txt_log/out.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(regexp glob): no out.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' \
+            'star-tail:cat|' \
+            'star-head:Walking|JumPing|' \
+            'star-both:Walking|cat|' \
+            'literal:cat|' \
+            'qmark:cat|' \
+            'whole:0' \
+            'i-multi:RUNNING|' \
+            'i-head:RUNNING|Walking|JumPing|' \
+            'nomatch:0')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(regexp glob): out.txt was:"; echo "$got"
+            echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[regexp glob] regexp/regexpi match, and regexpi folds case throughout"
+
       - name: Copy nlp.exe to nlpl.exe (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         run: cp bin/nlp bin/nlpl.exe

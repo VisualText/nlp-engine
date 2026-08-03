@@ -77,8 +77,11 @@ _tcscpy(xbuf_, xstr);					// Copy to buffer.
 
 // Init first element of pattern array to zeros.
 elts_ = 0;
-// elt_[0].alpha = '\0';
-elt_[0].alpha = "";	// 09/26/19 AM.
+// A NULL alpha is the "no literal seen yet" marker, and every test below
+// keys off that.  An empty string is a valid pointer, so using one made
+// every "has a literal" test read true and the literal never got bound:
+// the pattern degenerated and matched nothing at all.	// 08/03/26 DD.
+elt_[0].alpha = 0;
 elt_[0].qms = 0;
 elt_[0].stars = 0;
 
@@ -95,9 +98,10 @@ while (*x)
 			if (elt_[elts_].alpha)
 				{
 				// New elt.
+				if (elts_ + 1 >= MAX_RX)
+					return false;	// Pattern too complex.	// 08/03/26 DD.
 				++elts_;
-				// elt_[elts_].alpha = '\0';
-				elt_[elts_].alpha = "";	// 09/26/19 AM.
+				elt_[elts_].alpha = 0;	// 08/03/26 DD.
 				elt_[elts_].qms = 0;
 				elt_[elts_].stars = 1;
 				}
@@ -109,9 +113,10 @@ while (*x)
 			if (elt_[elts_].alpha)
 				{
 				// New elt.
+				if (elts_ + 1 >= MAX_RX)
+					return false;	// Pattern too complex.	// 08/03/26 DD.
 				++elts_;
-				// elt_[elts_].alpha = '\0';
-				elt_[elts_].alpha = "";	// 09/26/19 AM.
+				elt_[elts_].alpha = 0;	// 08/03/26 DD.
 				elt_[elts_].qms = 1;
 				elt_[elts_].stars = 0;
 				}
@@ -309,7 +314,10 @@ if (!wild)
 		return false;
 	// ALPHA MATCH.
 	// Set up to match the rest of the elements.
-	return match(1+count,str+xlen);
+	// Recurse into matchi, NOT match: the latter compares case-sensitively,
+	// so going through it dropped case-insensitivity for every element
+	// after the first.	// 08/03/26 DD.
+	return matchi(1+count,str+xlen);
 	}
 
 // Wild.
@@ -319,7 +327,7 @@ if (slen < xlen)
 	return false;	// String not long enough.
 if (!strcmp_ni(str,elt_[count].alpha,xlen))	// Match.
 	{
-	ok = match(1+count,str+xlen);
+	ok = matchi(1+count,str+xlen);	// 08/03/26 DD.
 	if (ok)
 		return true;
 	// Since we are a wildcard, we get to move right...
@@ -333,7 +341,7 @@ while (*++str)
 		return false;
 	if (!strcmp_ni(str,elt_[count].alpha,xlen))	// Match.
 		{
-		ok = match(1+count,str+xlen);
+		ok = matchi(1+count,str+xlen);	// 08/03/26 DD.
 		if (ok)
 			return true;
 		// Since we are a wildcard, we get to move right...

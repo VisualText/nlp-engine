@@ -1,0 +1,15 @@
+###############################################
+# FILE:     g4.nlp
+# SUBJ:     Bare literal, no wildcard.
+# NOTE:     One pattern per pass on purpose. Rule matching is first-match-
+#           wins at a given position, so several rules in one pass would
+#           consume each other's tokens and later patterns would never see
+#           them.
+###############################################
+
+@PRE
+<1,1> regexp("cat");
+@POST
+G("lit") = G("lit") + N("$text",1) + "|";
+@RULES
+_xNIL <- _xALPHA @@

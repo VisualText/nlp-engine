@@ -1,0 +1,34 @@
+###############################################
+# FILE:     globout.nlp
+# SUBJ:     Write what the g1..g9 passes matched.
+# NOTE:     Separate pass because a @CODE region may not follow @RULES in
+#           one pass file.
+#           A global that was never assigned prints as 0, so a pattern that
+#           matched nothing shows up as 0 rather than as an empty string.
+#           That is the point of the "whole" and "nomatch" lines.
+#           Input: RUNNING Walking cat JumPing dog
+#           Expected out.txt:
+#           star-tail:cat|
+#           star-head:Walking|JumPing|      <- case sensitive, so not RUNNING
+#           star-both:Walking|cat|
+#           literal:cat|
+#           qmark:cat|
+#           whole:0                         <- "at" must not match "cat"
+#           i-multi:RUNNING|                <- case folds on BOTH elements
+#           i-head:RUNNING|Walking|JumPing|
+#           nomatch:0
+###############################################
+
+@CODE
+
+"out.txt" << "star-tail:" << G("tail")   << "\n";
+"out.txt" << "star-head:" << G("head")   << "\n";
+"out.txt" << "star-both:" << G("both")   << "\n";
+"out.txt" << "literal:"   << G("lit")    << "\n";
+"out.txt" << "qmark:"     << G("qm")     << "\n";
+"out.txt" << "whole:"     << G("whole")  << "\n";
+"out.txt" << "i-multi:"   << G("imulti") << "\n";
+"out.txt" << "i-head:"    << G("ihead")  << "\n";
+"out.txt" << "nomatch:"   << G("none")   << "\n";
+
+@@CODE
