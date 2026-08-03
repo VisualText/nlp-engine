@@ -1853,7 +1853,8 @@ switch (arg->getType())														// 11/03/99 AM.
 		num = arg->getNum();													// 11/03/99 AM.
 		// Convert to string.
 		// _stprintf(buf, _T("%d"), num);	// 11/03/99 AM.
-		_stprintf(buf, _T("%llu"), num);	// 11/03/99 AM.	// 09/26/19 AM.
+		// %lld, not %llu: num is SIGNED.	// 08/03/26 DD.
+		_stprintf(buf, _T("%lld"), num);	// 11/03/99 AM.	// 08/03/26 DD.
 		break;
 	case IAFLOAT:																// 08/17/01 AM.
 		_stprintf(buf, _T("%f"), arg->getFloat());							// 08/17/01 AM.

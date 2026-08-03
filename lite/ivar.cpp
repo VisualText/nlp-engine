@@ -1923,7 +1923,9 @@ _TCHAR *name = getName();
 long long num = getNum();
 _TCHAR s_num[64];																// 05/04/01 AM.
 if (num)																			// 05/04/01 AM.
-	_stprintf(s_num, _T("%llu"), num);											// 05/04/01 AM.
+	// %lld, not %llu: num is SIGNED, and this literal is emitted straight
+	// into generated C++, so a negative index compiled to ~1.8e19.	// 08/03/26 DD.
+	_stprintf(s_num, _T("%lld"), num);											// 08/03/26 DD.
 else																				// 05/04/01 AM.
 	_stprintf(s_num, _T("0LL"));												// 05/04/01 AM.
 *fcode << _T("Arun::");

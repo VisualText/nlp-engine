@@ -7828,8 +7828,10 @@ _TCHAR *Arun::str(
 _TCHAR *st=0;
 
 // Convert num, then intern string.
+// %lld, not %llu: num is SIGNED. This is the compiled-analyzer twin of
+// Fn::fnStr, so it has to render negatives the same way.	// 08/03/26 DD.
 _TCHAR buf[MAXSTR+1];
-_stprintf(buf, _T("%llu"), num);
+_stprintf(buf, _T("%lld"), num);
 Parse *parse = nlppp->getParse();
 parse->internStr(buf, /*UP*/ st);
 return st;
