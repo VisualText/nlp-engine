@@ -107,7 +107,7 @@ chosen[0] = '\0';
 _TCHAR *env = _tgetenv(_T("NLPPP_PYTHON"));
 if (env && *env)
 	{
-	_tcsncpy(chosen, env, PYCMD_MAX-1);
+	_tcsnccpy(chosen, env, PYCMD_MAX-1);
 	chosen[PYCMD_MAX-1] = '\0';
 	return chosen;
 	}
