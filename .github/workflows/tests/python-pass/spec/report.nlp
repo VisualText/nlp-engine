@@ -1,0 +1,27 @@
+###############################################
+# FILE:     report.nlp
+# SUBJ:     Report whether the python pass before the tokenizer ran.
+# NOTE:     The engine shells out to run a python pass. It used to hardcode
+#           the command "python", which does not exist on macOS 12.3+ or on
+#           most Linux distributions (python3 only), and it only reported a
+#           failure when system() returned <0 -- which never happens for
+#           "command not found" (the shell returns 127). So a python pass
+#           could silently do nothing and the analyzer would run on with no
+#           warning at all.
+#           Expected out.txt when the interpreter resolves:
+#           python:PYTHON-RAN-pre
+#           and when it cannot:
+#           python:absent
+###############################################
+
+@CODE
+
+L("marker") = G("$apppath") + "/marker.txt";
+
+if (fileexists(L("marker"))) {
+	"out.txt" << "python:" << strtrim(readfile(L("marker"))) << "\n";
+} else {
+	"out.txt" << "python:absent" << "\n";
+}
+
+@@CODE
