@@ -363,4 +363,12 @@ _T("pow"),
 _T("round"),
 _T("sqrt"),
 _T("truncate"),
+// File-reading functions.	// 08/03/26 DD.
+_T("readfile"),
+_T("readlines"),
+_T("dirlist"),
+// Regular-expression functions.	// 08/03/26 DD.
+_T("rematch"),
+_T("refind"),
+_T("resubst"),
 0 };

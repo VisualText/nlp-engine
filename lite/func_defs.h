@@ -372,6 +372,17 @@ enum funcDef
 	FNsqrt,
 	FNtruncate,
 
+
+	// File-reading functions.	// 08/03/26 DD.
+	FNreadfile,
+	FNreadlines,
+	FNdirlist,
+
+	// Regular-expression functions.	// 08/03/26 DD.
+	FNrematch,
+	FNrefind,
+	FNresubst,
+
 	FNXXYYZZ };
 
 #endif

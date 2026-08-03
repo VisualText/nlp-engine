@@ -1,0 +1,76 @@
+###############################################
+# FILE:     filefuncs.nlp
+# SUBJ:     Regression for the file-reading and regular-expression builtins.
+# NOTE:     Before these were added, NLP++ could write files but never read
+#           one, could not list a directory, and regexp() was a "?"/"*" glob
+#           with no classes, anchors, quantifiers or capture groups.
+#           Expected out.txt:
+#           dirlist:3:alpha.dict:beta.dict:config.txt
+#           glob:2
+#           readlines:2:name = widget:count = 42
+#           readfile:name = widget|count = 42|
+#           rematch:1010
+#           refind:3:count:42
+#           resubst:1a 2b 3c
+#           empty:0
+###############################################
+
+@CODE
+
+L("data") = G("$apppath") + "/data";
+
+# --- dirlist: full paths, sorted, forward slashes on every platform.
+# refind pulls the basename back off, which exercises both at once.
+L("all") = dirlist(L("data"));
+"out.txt" << "dirlist:" << str(arraylength(L("all")));
+L("i") = 0;
+while (L("i") < arraylength(L("all"))) {
+	L("base") = refind(L("all")[L("i")],"[^/]+$");
+	"out.txt" << ":" << L("base")[0];
+	L("i")++;
+}
+"out.txt" << "\n";
+
+# --- dirlist with a glob pattern, matched against the name only.
+L("dicts") = dirlist(L("data"),"*.dict");
+"out.txt" << "glob:" << str(arraylength(L("dicts"))) << "\n";
+
+# --- readlines: terminators stripped, no trailing empty element.
+L("lines") = readlines(L("data") + "/config.txt");
+"out.txt" << "readlines:" << str(arraylength(L("lines")))
+	<< ":" << L("lines")[0] << ":" << L("lines")[1] << "\n";
+
+# --- readfile: whole file. Newlines are normalized through resubst so the
+# expected output is the same whether the fixture is checked out LF or CRLF.
+L("raw") = readfile(L("data") + "/config.txt");
+"out.txt" << "readfile:" << resubst(L("raw"),"\r?\n","|") << "\n";
+
+# --- rematch: anchors, classes and quantifiers, none of which glob can do.
+# Third call adds the "i" flag, so the capitalized subject matches.
+"out.txt" << "rematch:"
+	<< str(rematch("widget-42","^[a-z]+-[0-9]+$"))
+	<< str(rematch("Widget-42","^[a-z]+-[0-9]+$"))
+	<< str(rematch("Widget-42","^[a-z]+-[0-9]+$","i"))
+	<< str(rematch("nope","^[a-z]+-[0-9]+$"))
+	<< "\n";
+
+# --- refind: element 0 is the whole match, 1..n are the capture groups.
+L("g") = refind("count = 42","([a-z]+) *= *([0-9]+)");
+"out.txt" << "refind:" << str(arraylength(L("g")))
+	<< ":" << L("g")[1] << ":" << L("g")[2] << "\n";
+
+# --- resubst: every match, with $1/$2 backreferences in the replacement.
+"out.txt" << "resubst:" << resubst("a1 b2 c3","([a-z])([0-9])","$2$1") << "\n";
+
+# --- finding nothing gives an EMPTY array, so arraylength on the call is 0
+# and a loop guarded on the first element never runs. Assigning an empty
+# array collapses it to "no value", which is why the guard tests element 0
+# rather than the count -- arraylength of a value-less variable reads 1.
+L("none") = dirlist(L("data"),"*.nomatch");
+"out.txt" << "empty:" << str(arraylength(dirlist(L("data"),"*.nomatch")));
+if (strlength(L("none")[0])) {
+	"out.txt" << ":PHANTOM";
+}
+"out.txt" << "\n";
+
+@@CODE

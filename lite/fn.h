@@ -963,6 +963,12 @@ static bool fnStruniquechars(
 	static bool fnDirexists(Delt<Iarg>*,Nlppp*,RFASem*&);			// 07/03/26 DD.
 	static bool fnFilesize(Delt<Iarg>*,Nlppp*,RFASem*&);			// 07/03/26 DD.
 	static bool fnDeletefile(Delt<Iarg>*,Nlppp*,RFASem*&);			// 07/03/26 DD.
+	static bool fnReadfile(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/03/26 DD.
+	static bool fnReadlines(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/03/26 DD.
+	static bool fnDirlist(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/03/26 DD.
+	static bool fnRematch(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/03/26 DD.
+	static bool fnRefind(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/03/26 DD.
+	static bool fnResubst(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/03/26 DD.
 	static bool fnStriscaps(Delt<Iarg>*,Nlppp*,RFASem*&);
 	static bool fnStrisupper(Delt<Iarg>*,Nlppp*,RFASem*&);			// 11/20/01 AM.
 	static bool fnStrislower(Delt<Iarg>*,Nlppp*,RFASem*&);			// 11/20/01 AM.
