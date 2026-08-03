@@ -1,0 +1,15 @@
+###############################################
+# FILE:     g9.nlp
+# SUBJ:     Matching nothing must stay matching nothing.
+# NOTE:     One pattern per pass on purpose. Rule matching is first-match-
+#           wins at a given position, so several rules in one pass would
+#           consume each other's tokens and later patterns would never see
+#           them.
+###############################################
+
+@PRE
+<1,1> regexp("zzz*");
+@POST
+G("none") = G("none") + N("$text",1) + "|";
+@RULES
+_xNIL <- _xALPHA @@

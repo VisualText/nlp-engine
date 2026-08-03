@@ -1,0 +1,15 @@
+###############################################
+# FILE:     g1.nlp
+# SUBJ:     Trailing star.
+# NOTE:     One pattern per pass on purpose. Rule matching is first-match-
+#           wins at a given position, so several rules in one pass would
+#           consume each other's tokens and later patterns would never see
+#           them.
+###############################################
+
+@PRE
+<1,1> regexp("c*");
+@POST
+G("tail") = G("tail") + N("$text",1) + "|";
+@RULES
+_xNIL <- _xALPHA @@

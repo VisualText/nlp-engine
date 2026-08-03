@@ -1,0 +1,15 @@
+###############################################
+# FILE:     g7.nlp
+# SUBJ:     Case must fold on EVERY element, not just the first.
+# NOTE:     One pattern per pass on purpose. Rule matching is first-match-
+#           wins at a given position, so several rules in one pass would
+#           consume each other's tokens and later patterns would never see
+#           them.
+###############################################
+
+@PRE
+<1,1> regexpi("r*ing");
+@POST
+G("imulti") = G("imulti") + N("$text",1) + "|";
+@RULES
+_xNIL <- _xALPHA @@

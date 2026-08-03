@@ -1,0 +1,11 @@
+tokenize	nil	# tokenize only -- fixture needs no dictionary
+nlp	g1	# regexp("c*")
+nlp	g2	# regexp("*ing")
+nlp	g3	# regexp("*a*")
+nlp	g4	# regexp("cat")
+nlp	g5	# regexp("?at")
+nlp	g6	# regexp("at")
+nlp	g7	# regexpi("r*ing")
+nlp	g8	# regexpi("*ING")
+nlp	g9	# regexp("zzz*")
+nlp	globout	# write the results
