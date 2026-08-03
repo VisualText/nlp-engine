@@ -383,6 +383,16 @@ enum funcDef
 	FNrefind,
 	FNresubst,
 
+	// String and array functions.	// 08/03/26 DD.
+	FNstrjoin,
+	FNstrindexof,
+	FNstrlastindexof,
+	FNarraysort,
+	FNarrayunique,
+	FNarrayreverse,
+	FNarrayslice,
+	FNpush,
+
 	FNXXYYZZ };
 
 #endif

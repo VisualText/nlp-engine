@@ -78,6 +78,9 @@ All rights reserved.
 #define _tcscat		strcat
 #define _tcschr		strchr
 #define _tcsrchr	strrchr
+// strstr had never been mapped here, so _tcsstr resolved only via the real
+// <tchar.h> on Windows and failed to compile on Linux and macOS.	// 08/03/26 DD.
+#define _tcsstr		strstr
 #define _tcscmp		strcmp
 #define _tcscpy		strcpy
 #define _tcslen		strlen
