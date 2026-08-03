@@ -722,6 +722,25 @@ return false;
 
 _TCHAR *str_to_lower(_TCHAR *str, _TCHAR *buf)
 {
+// OPT: ASCII fast path.	// 08/03/26 AM.
+// tHtab::hfind_lc calls this for every node at every match position, and
+// the ICU round trip below (UTF-8 -> UTF-16 -> toLower -> std::string ->
+// strcpy) was showing up as pure overhead on plain English text.
+// NOTE: the fast path folds A-Z only, independent of locale.  ICU's
+// toLower() honors the default locale, which differs from this for exactly
+// one case: under a Turkish/Azeri locale 'I' lowercases to dotless U+0131.
+// Lowercased forms are used here as dictionary/hash keys, where
+// locale-dependent folding would be a bug rather than a feature.
+if (str && ascii_only(str))
+	{
+	const unsigned char *p = (const unsigned char *) str;
+	_TCHAR *out = buf;
+	while (*p)
+		*out++ = (_TCHAR) ascii_lower(*p++);
+	*out = '\0';
+	return buf;
+	}
+
 icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
 ustr.toLower();
 std::string converted;
@@ -744,6 +763,18 @@ _TCHAR *str_to_lower(_TCHAR *str)
 {
 if (empty(str))
 	return 0;
+
+// OPT: ASCII fast path.  See str_to_lower(str,buf) above.	// 08/03/26 AM.
+if (ascii_only(str))
+	{
+	unsigned char *p = (unsigned char *) str;
+	while (*p)
+		{
+		*p = ascii_lower(*p);
+		++p;
+		}
+	return str;
+	}
 
 icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
 ustr.toLower();
@@ -771,6 +802,17 @@ return buf;
 
 _TCHAR *str_to_upper(_TCHAR *str, _TCHAR *buf)
 {
+// OPT: ASCII fast path.  See str_to_lower above for the locale note.	// 08/03/26 AM.
+if (str && ascii_only(str))
+	{
+	const unsigned char *p = (const unsigned char *) str;
+	_TCHAR *out = buf;
+	while (*p)
+		*out++ = (_TCHAR) ascii_upper(*p++);
+	*out = '\0';
+	return buf;
+	}
+
 icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
 ustr.toUpper();
 std::string converted;
@@ -792,6 +834,18 @@ _TCHAR *str_to_upper(_TCHAR *str)
 {
 if (empty(str))
 	return 0;
+
+// OPT: ASCII fast path.  See str_to_lower above for the locale note.	// 08/03/26 AM.
+if (ascii_only(str))
+	{
+	unsigned char *p = (unsigned char *) str;
+	while (*p)
+		{
+		*p = ascii_upper(*p);
+		++p;
+		}
+	return str;
+	}
 
 icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
 ustr.toUpper();
@@ -1055,6 +1109,27 @@ return false;
 * NOTE:	Case insensitive.  For use by compiled runtime match fns, etc.
 ********************************************/
 
+// OPT: the collator used to be built -- and leaked -- on every call.	// 08/03/26 AM.
+// Collator::createInstance loads locale data; doing that per call was both
+// expensive and an unbounded leak.  Build it once and keep it.  ICU collators
+// are documented thread-safe for const operations such as compare().
+static icu::Collator *nocase_collator()
+{
+static icu::Collator *collator = 0;
+if (!collator)
+	{
+	UErrorCode success = U_ZERO_ERROR;
+	collator = icu::Collator::createInstance("UTF-8", success);
+	if (U_FAILURE(success) || !collator)
+		{
+		collator = 0;
+		return 0;
+		}
+	collator->setStrength(icu::Collator::PRIMARY);  // This is for case insensitive
+	}
+return collator;
+}
+
 bool find_str_nocase(
 	_TCHAR *str,				// String to find.
 	const _TCHAR **arr			// Array to look in.
@@ -1063,13 +1138,11 @@ bool find_str_nocase(
 if (!str || !*str || !arr || !*arr)
 	return false;
 
-icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
-const UChar *strBuf = reinterpret_cast<const UChar *>(ustr.getTerminatedBuffer());
-icu::UCharCharacterIterator iter(strBuf, unicu::strLen(strBuf));
+icu::Collator *collator = nocase_collator();
+if (!collator)								// Collator unavailable.
+	return false;
 
-UErrorCode success = U_ZERO_ERROR;
-icu::Collator *collator = icu::Collator::createInstance("UTF-8", success);
-collator->setStrength(icu::Collator::PRIMARY);  // This is for case insensitive
+icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
 
 while (*arr)
 	{
