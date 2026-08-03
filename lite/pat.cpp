@@ -710,18 +710,28 @@ while (node)
 		Irule::mergeRules(rules, tmp);	// Merge rule lists.
 	
 	// Get deaccented version's rules.				// 01/29/05 AM.
-	// Opt: A deaccent that counted accents would be good here...
-	len = _tcsclen(nname);								// 01/29/05 AM.
-	deacc = Chars::create(len + 2);					// 01/29/05 AM.
-	Xml::de_accent(nname,/*DU*/deacc);				// 01/29/05 AM.
-	if (_tcscmp(nname,deacc))	// If accented.	// 09/20/06 AM.
+	// OPT: 08/03/26 AM. This is the answer to the old
+	// "Opt: A deaccent that counted accents would be good here..." note.
+	// Xml::de_accent copies any codepoint below 0x80 through verbatim, so
+	// for a pure-ASCII name the buffer below is always byte-identical to
+	// nname and the _tcscmp can only ever come out equal -- the allocate,
+	// transform, compare and free were pure waste.  This runs for EVERY
+	// node at EVERY match position, so it was the hottest allocation site
+	// in the matcher.  One cheap high-bit scan skips the whole thing.
+	if (!ascii_only(nname))
 		{
-		tmp = 0;								// Caution.	// 07/25/09 AM.
-		htab->hfind_lc(deacc, /*DU*/ tmp);			// 01/29/05 AM.
-		if (tmp)								// Caution.	// 07/25/09 AM.
-			Irule::mergeRules(rules, tmp);			// 01/29/05 AM.
+		len = _tcsclen(nname);							// 01/29/05 AM.
+		deacc = Chars::create(len + 2);				// 01/29/05 AM.
+		Xml::de_accent(nname,/*DU*/deacc);			// 01/29/05 AM.
+		if (_tcscmp(nname,deacc))	// If accented.	// 09/20/06 AM.
+			{
+			tmp = 0;							// Caution.	// 07/25/09 AM.
+			htab->hfind_lc(deacc, /*DU*/ tmp);		// 01/29/05 AM.
+			if (tmp)							// Caution.	// 07/25/09 AM.
+				Irule::mergeRules(rules, tmp);		// 01/29/05 AM.
+			}
+		Chars::destroy(deacc);							// 01/29/05 AM.
 		}
-	Chars::destroy(deacc);								// 01/29/05 AM.
 
 #ifdef _DEJUNK_
 	// Get dejunk version's rules.					// 09/09/11 AM.
@@ -2470,6 +2480,60 @@ return preMatch(ielt, node);	// 10/05/99 AM.				// 06/16/05 AM.
 
 
 /********************************************
+* FN:		XELTTYPE
+* CR:		08/03/26 AM.
+* SUBJ:	Resolve a special "_xNAME" rule element to an Xelt tag.
+* RET:	The tag, or XELT_NONE if the name is not a known special.
+* NOTE:	Every special is "_x" followed by an uppercase letter, so switch
+*			on that letter and compare only the handful of names that start
+*			with it.  Replaces a 12-deep if/else-if chain of _tcscmp calls
+*			in modeMatch and modeMatch1, in which _xWILD -- one of the most
+*			common elements in real grammars -- was tested last.
+********************************************/
+
+enum Xelt Pat::xeltType(_TCHAR *name)
+{
+if (!name || name[0] != '_' || name[1] != 'x')
+	return XELT_NONE;
+
+switch (name[2])
+	{
+	case 'A':
+		if (!_tcscmp(name, _T("_xALPHA")))	return XELT_ALPHA;
+		if (!_tcscmp(name, _T("_xANY")))		return XELT_ANY;
+		break;
+	case 'B':
+		if (!_tcscmp(name, _T("_xBLANK")))	return XELT_BLANK;
+		break;
+	case 'C':
+		if (!_tcscmp(name, _T("_xCAP")))		return XELT_CAP;
+		if (!_tcscmp(name, _T("_xCAPLET")))	return XELT_CAPLET;
+		if (!_tcscmp(name, _T("_xCTRL")))	return XELT_CTRL;
+		break;
+	case 'E':
+		if (!_tcscmp(name, _T("_xEMOJI")))	return XELT_EMOJI;
+		break;
+	case 'L':
+		if (!_tcscmp(name, _T("_xLET")))		return XELT_LET;
+		break;
+	case 'N':
+		if (!_tcscmp(name, _T("_xNUM")))		return XELT_NUM;
+		break;
+	case 'P':
+		if (!_tcscmp(name, _T("_xPUNCT")))	return XELT_PUNCT;
+		break;
+	case 'W':
+		if (!_tcscmp(name, _T("_xWHITE")))	return XELT_WHITE;
+		if (!_tcscmp(name, _T("_xWILD")))	return XELT_WILD;
+		break;
+	default:
+		break;
+	}
+return XELT_NONE;
+}
+
+
+/********************************************
 * FN:		MODEMATCH
 * CR:		11/03/98 AM.
 * SUBJ:	Match rule element to parse tree node, according to match mode.
@@ -2514,45 +2578,47 @@ if (*name != '_'										// 10/12/99 AM.
 	return deaccentMatch(name,pn->getName());							// 01/28/05 AM.
 	}
 
-if (!_tcscmp(name, _T("_xALPHA")))	// Alpha token.
+switch (xeltType(name))												// 08/03/26 AM.
+	{
+	case XELT_ALPHA:					// Alpha token.
 	return ((pn->getType() == PNALPHA) ? true : false);			// 07/20/04 AM.
 	// To handle retokenized alphabetics.								// 07/20/04 AM.
 	// return alphabetic(*pn->getName());									// 07/20/04 AM.
-else if (!_tcscmp(name, _T("_xNUM")))						// Numeric token.
+	case XELT_NUM:												// Numeric token.
 	return ((pn->getType() == PNNUM) ? true : false);
-else if (!_tcscmp(name, _T("_xWHITE")))						// White token.
+	case XELT_WHITE:											// White token.
 	return ((pn->getType() == PNWHITE) ? true : false);
-else if (!_tcscmp(name, _T("_xBLANK")))	// Non-newline whitespace.	// 03/22/99 AM.
+	case XELT_BLANK:			// Non-newline whitespace.	// 03/22/99 AM.
 	{
 	_TCHAR ch;
 	if ((ch = *(pn->getName())) == ' ' || ch == '\t')
 		return true;
 	return false;
 	}
-else if (!_tcscmp(name, _T("_xPUNCT")))			// Punctuation token.// 12/04/98 AM.
+	case XELT_PUNCT:								// Punctuation token.// 12/04/98 AM.
 	return ((pn->getType() == PNPUNCT) ? true : false);
-else if (!_tcscmp(name, _T("_xEMOJI")))
+	case XELT_EMOJI:
 	return ((pn->getType() == PNEMOJI) ? true : false);
-else if (!_tcscmp(name, _T("_xANY")))	// Match any node.	// 12/08/98 AM.
+	case XELT_ANY:							// Match any node.	// 12/08/98 AM.
 	return true;	// Always matches.
-else if (!_tcscmp(name, _T("_xCAP")))		// Match capitalized word. // 01/20/99 AM.
+	case XELT_CAP:								// Match capitalized word. // 01/20/99 AM.
 	return ((pn->getType() == PNALPHA)									// 07/20/04 AM.
 	// return (alphabetic(*pn->getName())									// 07/20/04 AM.
 				&& is_upper((_TUCHAR)*(pn->getName())) );		// 12/16/01 AM.
-else if (!_tcscmp(name, _T("_xCAPLET")))	// Match cap letter.	// 07/10/09 AM.
+	case XELT_CAPLET:				// Match cap letter.	// 07/10/09 AM.
 	{
 	_TCHAR *x = pn->getName();											// 07/10/09 AM.
 	return (*x && !(*(x+1)) && alphabetic(*x)						// 07/10/09 AM.
 		&& is_upper((_TUCHAR)*x));										// 07/10/09 AM.
 	}
-else if (!_tcscmp(name, _T("_xLET")))	// Match letter.			// 07/10/09 AM.
+	case XELT_LET:							// Match letter.			// 07/10/09 AM.
 	{
 	_TCHAR *x = pn->getName();											// 07/10/09 AM.
 	return (*x && !(*(x+1)) && alphabetic(*x));					// 07/10/09 AM.
 	}
-else if (!_tcscmp(name, _T("_xCTRL")))			// Control char tok.	// 07/24/00 AM.
+	case XELT_CTRL:									// Control char tok.	// 07/24/00 AM.
 	return ((pn->getType() == PNCTRL) ? true : false);
-else if (!_tcscmp(name, _T("_xWILD")))						// Restricted wildcard.
+	case XELT_WILD:												// Restricted wildcard.
 	{
 //	if (Debug())
 //		*gout << "  [Restricted wildcard.]" << std::endl;
@@ -2623,7 +2689,12 @@ else if (!_tcscmp(name, _T("_xWILD")))						// Restricted wildcard.
 	}
 
 	return false;
-	}
+	}	// End XELT_WILD.
+
+	case XELT_NONE:
+	default:
+		break;					// Unknown "_xNAME": falls through to false.
+	}	// End switch.
 //else			// LITERAL MATCH.		// OPT		// 10/12/99 AM.
 //	return literalMatch(name, pn->getName());		// 10/12/99 AM.
 return false;
@@ -2653,38 +2724,49 @@ if (!nname || !ename)
 if (!_tcsncmp(ename, _T("_xVAR("), 6))
 	return xvarMatch(ename, pn);
 
-if (!_tcscmp(ename, _T("_xALPHA")))	// Alpha token.
+switch (xeltType(ename))											// 08/03/26 AM.
+	{
+	case XELT_ALPHA:					// Alpha token.
 	return (ntype == PNALPHA) ? true : false;							// 07/20/04 AM.
 	// return (alphabetic(*nname));											// 07/20/04 AM.
-else if (!_tcscmp(ename, _T("_xNUM")))	// Numeric token.
+	case XELT_NUM:						// Numeric token.
 	return (ntype == PNNUM) ? true : false;
-else if (!_tcscmp(ename, _T("_xWHITE")))	// White token.
+	case XELT_WHITE:					// White token.
 	return (ntype == PNWHITE) ? true : false;
-else if (!_tcscmp(ename, _T("_xBLANK")))	// Non-newline whitespace.	// 03/22/99 AM.
+	case XELT_BLANK:					// Non-newline whitespace.	// 03/22/99 AM.
+	// WARN: kept verbatim, precedence bug and all.  "ch = *nname == ' '"
+	// assigns the COMPARISON result, so ch is 0 or 1 and the '\t' test can
+	// never fire -- a tab does not match _xBLANK here, though it does in
+	// Pat::modeMatch's copy of the same test.  Fixing it would change
+	// matching behavior, so it is reported separately rather than changed
+	// inside a no-behavior-change cleanup.	// 08/03/26 AM.
 	{
 	_TCHAR ch;
 	if ((ch = *nname == ' ') || ch == '\t')
 		return true;
 	return false;
 	}
-else if (!_tcscmp(ename, _T("_xPUNCT")))	// Punctuation token.
+	case XELT_PUNCT:					// Punctuation token.
 	return (ntype == PNPUNCT) ? true : false;
-else if (!_tcscmp(ename, _T("_xEMOJI")))
+	case XELT_EMOJI:
 	return (ntype == PNEMOJI) ? true : false;
-else if (!_tcscmp(ename, _T("_xANY")))				// 12/08/98 AM.
+	case XELT_ANY:									// 12/08/98 AM.
 	return true;					// User is being silly, but do it anyway.
-else if (!_tcscmp(ename, _T("_xCAP")))	// Match capitalized word. // 01/20/99 AM.
+	case XELT_CAP:						// Match capitalized word. // 01/20/99 AM.
 	return ((ntype == PNALPHA)												// 07/20/04 AM.
 	// return (alphabetic(*nname)												// 07/20/04 AM.
 			  && is_upper((_TUCHAR)*nname) );					// 12/16/10 AM.
-else if (!_tcscmp(ename, _T("_xCAPLET")))	// Match cap letter.	// 07/10/09 AM.
+	case XELT_CAPLET:					// Match cap letter.	// 07/10/09 AM.
 	return (*nname && !(*(nname+1)) && isupper((_TUCHAR)*nname)	// 07/10/09 AM.
 		&& alphabetic(*nname));												// 07/10/09 AM.
-else if (!_tcscmp(ename, _T("_xLET")))	// Match letter.			// 07/10/09 AM.
+	case XELT_LET:						// Match letter.			// 07/10/09 AM.
 	return (alphabetic(*nname) && !(*(nname+1)));					// 07/10/09 AM.
-else if (!_tcscmp(ename, _T("_xCTRL")))	// Control char token.
+	case XELT_CTRL:					// Control char token.
 	return (ntype == PNCTRL) ? true : false;
-else			// LITERAL MATCH.
+
+	case XELT_WILD:		// Not handled here; falls to literal match, as before.
+	case XELT_NONE:
+	default:			// LITERAL MATCH.
 	{
 	if (!deaccent && !dejunk)												// 01/28/05 AM.
 		return literalMatch(ename, nname);
@@ -2692,6 +2774,7 @@ else			// LITERAL MATCH.
 		return dejunkMatch(ename,nname);									// 09/09/11 AM.
 	else
 		return deaccentMatch(ename,nname);								// 01/28/05 AM.
+	}
 	}
 }
 
