@@ -1,0 +1,2 @@
+tokenize	nil	# tokenize only -- fixture needs no dictionary
+nlp	signed	# str() must render negative numbers as negative

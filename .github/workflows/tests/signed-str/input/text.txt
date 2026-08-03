@@ -1,0 +1,1 @@
+The fixture only does arithmetic, not text.

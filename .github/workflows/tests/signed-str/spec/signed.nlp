@@ -1,0 +1,30 @@
+###############################################
+# FILE:     signed.nlp
+# SUBJ:     str() must render a negative number as negative.
+# NOTE:     str() converted a signed long long with the UNSIGNED "%llu", so
+#           every negative value printed as roughly 1.8e19: str(-1) gave
+#           "18446744073709551615". That also made the documented -1 return
+#           of filesize() unreadable, and the same fault sat in the
+#           compiled-analyzer path (Arun::str) and in the code generator
+#           (Ivar), so compiled analyzers emitted wrong numeric literals.
+#           Expected out.txt:
+#           expr:-1
+#           big:-12345
+#           filesize:-1
+#           pos:42
+#           zero:0
+###############################################
+
+@CODE
+
+L("neg")  = 0 - 1;
+L("big")  = 0 - 12345;
+L("size") = filesize("no/such/file/anywhere.txt");
+
+"out.txt" << "expr:"     << str(L("neg"))  << "\n";
+"out.txt" << "big:"      << str(L("big"))  << "\n";
+"out.txt" << "filesize:" << str(L("size")) << "\n";
+"out.txt" << "pos:"      << str(42)        << "\n";
+"out.txt" << "zero:"     << str(0)         << "\n";
+
+@@CODE

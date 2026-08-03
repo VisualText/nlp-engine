@@ -6897,8 +6897,12 @@ switch (typ)																	// 05/29/02 AM.
 	case IANUM:																	// 05/29/02 AM.
 		{
 		// Convert num, then intern string.
+		// %lld, not %llu: num is SIGNED, so an unsigned conversion printed
+		// every negative value as ~1.8e19.  str(-1) gave
+		// "18446744073709551615", which also made the documented -1 return
+		// of filesize unreadable.	// 08/03/26 DD.
 		_TCHAR buf[MAXSTR+1];
-		_stprintf(buf, _T("%llu"), num);
+		_stprintf(buf, _T("%lld"), num);
 		parse->internStr(buf, /*UP*/ str);
 		}
 		break;
