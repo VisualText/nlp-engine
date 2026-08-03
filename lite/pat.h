@@ -43,6 +43,36 @@ class Ipre;				// 02/26/01 AM.
 class Htab;				// 02/26/01 AM.
 
 /********************************************
+* ENUM:	XELT
+* CR:		08/03/26 AM.
+* SUBJ:	The special "_xNAME" rule elements, resolved to a tag.
+* NOTE:	Pat::modeMatch and Pat::modeMatch1 used to identify these by
+*			walking a chain of up to twelve _tcscmp calls, with _xWILD --
+*			one of the most common elements in real grammars -- dead last.
+*			Pat::xeltType() dispatches on the letter after "_x" instead, so
+*			a lookup costs one switch and at most three compares, and the
+*			match functions become a switch on a tag rather than an
+*			if/else-if ladder over string literals.
+********************************************/
+
+enum Xelt
+	{
+	XELT_NONE = 0,		// Not a recognized special element.
+	XELT_ALPHA,
+	XELT_NUM,
+	XELT_WHITE,
+	XELT_BLANK,
+	XELT_PUNCT,
+	XELT_EMOJI,
+	XELT_ANY,
+	XELT_CAP,
+	XELT_CAPLET,
+	XELT_LET,
+	XELT_CTRL,
+	XELT_WILD
+	};
+
+/********************************************
 * CLASS:	PAT
 * CR:		10/18/98 AM.
 * SUBJ:	Class for the main pattern-based pass type.
@@ -299,6 +329,9 @@ public:
 		Node<Pn> *node
 		);
 
+	static enum Xelt xeltType(	// Classify a "_xNAME" element.	// 08/03/26 AM.
+		_TCHAR *name
+		);
 	static bool modeMatch(
 		Ielt *ielt,				// OPT	// 10/05/99 AM.
 		Pn *pn,					// OPT	// 10/05/99 AM.
