@@ -21,6 +21,7 @@ All rights reserved.
 #include <regex>			// For rematch, refind, resubst.				// 08/03/26 DD.
 #include <map>			// For the compiled-regex cache.				// 08/03/26 DD.
 #include <set>			// For arrayunique.								// 08/03/26 DD.
+#include <cstdlib>		// For std::atof in arraysort.					// 08/03/26 DD.
 #include <vector>		// For dirlist.									// 08/03/26 DD.
 #include <algorithm>		// For sorting dirlist entries.				// 08/03/26 DD.
 //#include <process.h>				// 06/20/00 AM.
@@ -12204,7 +12205,7 @@ for (Delt<Iarg> *delt = (arr ? arr->getFirst() : 0); delt; delt = delt->Right())
 	ArrSortKey k;
 	k.arg = delt->getData();
 	iarg_text_util(k.arg, /*UP*/ k.text);
-	k.num = numeric ? atof(k.text.c_str()) : 0.0;
+	k.num = numeric ? std::atof(k.text.c_str()) : 0.0;
 	k.order = n++;
 	keys.push_back(k);
 	}
