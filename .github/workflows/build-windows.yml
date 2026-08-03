@@ -194,6 +194,7 @@ jobs:
           # after the first pattern element -- hence the i-multi line.
           FIX=.github/workflows/tests/regexp-glob
           rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
           ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
           if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
           OUT="$FIX/input/text.txt_log/out.txt"
@@ -228,6 +229,7 @@ jobs:
           # compiled-analyzer path (Arun::str) and in the code generator.
           FIX=.github/workflows/tests/signed-str
           rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
           ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
           if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
           OUT="$FIX/input/text.txt_log/out.txt"
@@ -241,6 +243,38 @@ jobs:
             echo "wanted:"; echo "$want"; exit 1
           fi
           echo "[signed str] negative numbers render as negative"
+
+      - name: User functions shadow builtins
+        shell: bash
+        run: |
+          set -eo pipefail
+          # Defining a function whose name is also a builtin used to be a hard
+          # error, so adding any builtin broke every analyzer that had already
+          # defined that name -- which is what happened to arrayreverse and
+          # push, hand-written in visualText/spec/UtilFuncs.nlp long before
+          # they became builtins. The user definition now wins, with a warning.
+          FIX=.github/workflows/tests/shadowing
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
+          OUT="$FIX/input/text.txt_log/out.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(shadowing): no out.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' 'shadowed:USER-WON' 'unshadowed:HELLO' 'stilldispatches:5')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(shadowing): out.txt was:"; echo "$got"
+            echo "wanted:"; echo "$want"; exit 1
+          fi
+          # make_analyzer only writes make_ana.log when logs/ already exists,
+          # which is why the step recreates it above. Without that, Linux left
+          # no log to grep while Windows created the directory on the way.
+          if ! grep -q "shadows built-in" "$FIX/logs/make_ana.log"; then
+            echo "FAIL(shadowing): the shadowing warning was never emitted"; exit 1
+          fi
+          echo "[shadowing] a user function overrides a builtin of the same name"
 
       - name: Copy nlp.exe to nlpw.exe
         run: cp bin/Release/nlp.exe bin/Release/nlpw.exe

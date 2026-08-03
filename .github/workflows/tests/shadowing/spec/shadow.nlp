@@ -1,0 +1,38 @@
+###############################################
+# FILE:     shadow.nlp
+# SUBJ:     A user function must shadow a builtin of the same name.
+# NOTE:     Defining a function whose name is also a builtin used to be a
+#           hard error, so adding any builtin broke every analyzer that had
+#           already defined that name -- which is exactly what happened to
+#           arrayreverse and push, hand-written in visualText/spec/
+#           UtilFuncs.nlp long before they became builtins.
+#           Now the user's definition wins and a warning is logged.
+#           Fn::fnCall must therefore search the analyzer's own functions
+#           BEFORE the builtin table.
+#           Only long-standing builtins are used here, so the fixture stands
+#           on its own without any newly added function.
+#           Expected out.txt:
+#           shadowed:USER-WON
+#           unshadowed:HELLO
+#           stilldispatches:5
+###############################################
+
+@DECL
+
+# Deliberately collide with the strtolower builtin.
+strtolower(L("str")) {
+	return "USER-WON";
+}
+
+@@DECL
+
+@CODE
+
+# The user definition must win over the builtin.
+"out.txt" << "shadowed:" << strtolower("ABC") << "\n";
+
+# Builtins that are NOT shadowed must still dispatch normally.
+"out.txt" << "unshadowed:" << strtoupper("hello") << "\n";
+"out.txt" << "stilldispatches:" << str(strlength("hello")) << "\n";
+
+@@CODE
