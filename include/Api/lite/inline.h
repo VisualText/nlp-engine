@@ -39,12 +39,62 @@ return (!empty(str)
 
 
 /********************************************
+* FN:		ASCII_LOWER
+* CR:		08/03/26 AM.
+* SUBJ:	Locale-independent lowercase for a 7-bit char.
+* NOTE:	Helper for the ASCII fast paths below.  Deliberately NOT
+*			locale-aware: it is only ever applied to bytes < 0x80.
+********************************************/
+
+inline unsigned char ascii_lower(unsigned char ch)
+{
+return (ch >= 'A' && ch <= 'Z') ? (unsigned char)(ch + ('a' - 'A')) : ch;
+}
+
+inline unsigned char ascii_upper(unsigned char ch)
+{
+return (ch >= 'a' && ch <= 'z') ? (unsigned char)(ch - ('a' - 'A')) : ch;
+}
+
+
+/********************************************
+* FN:		ASCII_ONLY
+* CR:		08/03/26 AM.
+* SUBJ:	True if the string is entirely 7-bit.
+* NOTE:	Helper for the ASCII fast paths.  One cheap pass lets callers skip
+*			the ICU round trip entirely for the common case.
+********************************************/
+
+inline bool ascii_only(const _TCHAR *str)
+{
+const unsigned char *p = (const unsigned char *) str;
+while (*p)
+	{
+	if (*p & 0x80)
+		return false;
+	++p;
+	}
+return true;
+}
+
+
+/********************************************
 * FN:		STRCMP_I
 * CR:		09/26/01 AM.
 * SUBJ:	String compare, case insensitive.
 * RET:	0 if equal, +1 or -1 according to lex order.
 * NOTE:	No error checking, for max speed.
 *			Assumes string has at least a null char.
+* OPT:	08/03/26 AM. ASCII fast path.  This is the innermost function of
+*			the rule matcher (see Pat::literalMatch), and building two ICU
+*			UnicodeStrings per comparison -- transcoding UTF-8 to UTF-16 both
+*			ways -- dominated the cost of a pass.  Compare bytewise while both
+*			strings stay 7-bit and only fall through to ICU when a byte >= 0x80
+*			actually shows up.
+*			The fast path is exact, not an approximation: u_strcasecmp with
+*			U_COMPARE_IGNORE_CASE does Unicode *case folding*, which is
+*			locale-independent and which maps A-Z to a-z and nothing else
+*			within the 7-bit range.
 ********************************************/
 
 inline int strcmp_i(
@@ -52,6 +102,34 @@ inline int strcmp_i(
 	const _TCHAR *str2
 	)
 {
+// icu::StringPiece treats a null pointer as the empty string; preserve that
+// rather than dereferencing it below.
+if (!str1)
+	str1 = _T("");
+if (!str2)
+	str2 = _T("");
+
+const unsigned char *p1 = (const unsigned char *) str1;
+const unsigned char *p2 = (const unsigned char *) str2;
+for (;;)
+	{
+	unsigned char c1 = *p1;
+	unsigned char c2 = *p2;
+	if ((c1 | c2) & 0x80)
+		break;					// Non-ASCII in play.  Hand off to ICU.
+	if (c1 != c2)
+		{
+		c1 = ascii_lower(c1);
+		c2 = ascii_lower(c2);
+		if (c1 != c2)
+			return (c1 < c2) ? -1 : 1;
+		}
+	else if (!c1)
+		return 0;				// Both ended together.  Equal.
+	++p1;
+	++p2;
+	}
+
 icu::UnicodeString ustr1 = icu::UnicodeString::fromUTF8(icu::StringPiece(str1 ));
 const UChar *strBuff1 = reinterpret_cast<const UChar *>(ustr1.getTerminatedBuffer());
 icu::UnicodeString ustr2 = icu::UnicodeString::fromUTF8(icu::StringPiece(str2));
