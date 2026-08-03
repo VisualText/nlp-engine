@@ -16,6 +16,12 @@ All rights reserved.
 #include <locale.h>	// For char handling.							// 01/06/03 AM.
 #include <math.h>		// For math, log10.								// 04/29/04 AM.
 #include <float.h>	// For FLT_MAX.									// 07/26/26 DD.
+#include <fstream>		// For readfile, readlines.					// 08/03/26 DD.
+#include <iterator>		// For istreambuf_iterator.					// 08/03/26 DD.
+#include <regex>			// For rematch, refind, resubst.				// 08/03/26 DD.
+#include <map>			// For the compiled-regex cache.				// 08/03/26 DD.
+#include <vector>		// For dirlist.									// 08/03/26 DD.
+#include <algorithm>		// For sorting dirlist entries.				// 08/03/26 DD.
 //#include <process.h>				// 06/20/00 AM.
 //#include <atlstr.h>	// 05/19/14 DDH.
 
@@ -414,6 +420,18 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnFilesize(args,nlppp,/*UP*/sem);						// 07/03/26 DD.
 	case FNdeletefile:
 		return fnDeletefile(args,nlppp,/*UP*/sem);					// 07/03/26 DD.
+	case FNreadfile:
+		return fnReadfile(args,nlppp,/*UP*/sem);						// 08/03/26 DD.
+	case FNreadlines:
+		return fnReadlines(args,nlppp,/*UP*/sem);						// 08/03/26 DD.
+	case FNdirlist:
+		return fnDirlist(args,nlppp,/*UP*/sem);						// 08/03/26 DD.
+	case FNrematch:
+		return fnRematch(args,nlppp,/*UP*/sem);						// 08/03/26 DD.
+	case FNrefind:
+		return fnRefind(args,nlppp,/*UP*/sem);						// 08/03/26 DD.
+	case FNresubst:
+		return fnResubst(args,nlppp,/*UP*/sem);						// 08/03/26 DD.
 	case FNlogten:
 		return fnLogten(args,nlppp,/*UP*/sem);							// 04/29/04 AM.
 	case FNrandomint:
@@ -11145,6 +11163,710 @@ if (str && *str)
 		done = std::filesystem::remove(p, ec) && !ec;
 	}
 sem = new RFASem(done ? 1LL : 0LL);
+return true;
+}
+
+
+/********************************************
+* FN:		READ_FILE_UTIL
+* CR:		08/03/26 DD.
+* SUBJ:	Slurp a regular file into a string.
+* RET:	True if read ok, else false with err set.
+* NOTE:	Utility function for readfile.
+*			Strips a leading UTF-8 BOM, so a config file saved by a Windows
+*			editor doesn't poison its own first token.
+*			Refuses embedded NULs: the contents get interned as a C string,
+*			so a NUL would silently truncate the rest of the file.
+********************************************/
+
+#define READFILE_MAX (16*1024*1024)		// 16MB.	// 08/03/26 DD.
+
+static bool read_file_util(
+	const _TCHAR *path,
+	/*UP*/
+	std::string &out,
+	std::string &err
+	)
+{
+out.clear();
+err.clear();
+
+std::error_code ec;
+std::filesystem::path p(path);
+if (!std::filesystem::is_regular_file(p, ec) || ec)
+	{
+	err = "Not a readable file.";
+	return false;
+	}
+
+std::uintmax_t sz = std::filesystem::file_size(p, ec);
+if (ec)
+	{
+	err = "Couldn't get file size.";
+	return false;
+	}
+if (sz > (std::uintmax_t) READFILE_MAX)
+	{
+	err = "File larger than 16MB limit; use readlines.";
+	return false;
+	}
+
+std::ifstream in(p, std::ios::binary);
+if (!in)
+	{
+	err = "Couldn't open file.";
+	return false;
+	}
+
+out.assign(std::istreambuf_iterator<char>(in),
+			  std::istreambuf_iterator<char>());
+
+// Strip a UTF-8 BOM, if present.
+if (out.size() >= 3 && out.compare(0,3,"\xEF\xBB\xBF") == 0)
+	out.erase(0,3);
+
+if (out.find('\0') != std::string::npos)
+	{
+	out.clear();
+	err = "File contains NUL bytes; not a text file.";
+	return false;
+	}
+
+return true;
+}
+
+
+/********************************************
+* FN:		EMPTY_ARRAY_UTIL
+* CR:		08/03/26 DD.
+* SUBJ:	Hand back an empty array.
+* NOTE:	Utility function for readlines, dirlist and refind.
+*			These always return an ARRAY, even when they find nothing and
+*			even on error, so that arraylength() on the call itself reads 0
+*			rather than the 1 it reports for a value-less result.
+*			CAVEAT: assigning an empty array to a variable collapses it back
+*			to "no value", so arraylength(L("x")) is 1 again afterwards.
+*			That is how variable assignment already behaves and is not
+*			something these functions can fix.  The guard that works on a
+*			stored result is on the first element:
+*				if (strlength(L("x")[0])) ...
+********************************************/
+
+static void empty_array_util(
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = new RFASem(new Dlist<Iarg>());
+}
+
+
+/********************************************
+* FN:		GLOB_MATCH_UTIL
+* CR:		08/03/26 DD.
+* SUBJ:	Match a name against a "*"/"?" glob, ignoring case.
+* RET:	True if the whole name matches the whole pattern.
+* NOTE:	Utility function for dirlist.
+*			Iterative, backtracking on the last "*" seen, so a pattern may
+*			hold any number of wildcards.
+*			NOT using Regexp::regexp_match: that one keeps an empty string
+*			rather than a null as its "no literal yet" marker, so its
+*			"has a literal" tests always read true and a pattern with a
+*			LEADING "*" never binds its literal.  "*.dict" matches nothing
+*			there.  Fixing it would change regexp() for every analyzer that
+*			calls it, so that is left as its own change.
+********************************************/
+
+static bool glob_match_util(
+	const _TCHAR *pat,
+	const _TCHAR *str
+	)
+{
+const _TCHAR *p = pat;
+const _TCHAR *s = str;
+const _TCHAR *star = 0;		// Last "*" seen in the pattern.
+const _TCHAR *retry = 0;		// Where to resume the string on backtrack.
+
+while (*s)
+	{
+	if (*p == '?'
+	 || (*p && _totlower((_TUCHAR)*p) == _totlower((_TUCHAR)*s)))
+		{
+		++p;
+		++s;
+		}
+	else if (*p == '*')
+		{
+		star = p++;			// Remember it, match zero chars for now.
+		retry = s;
+		}
+	else if (star)
+		{
+		// Mismatch, but a "*" is open: let it swallow one more char.
+		p = star + 1;
+		s = ++retry;
+		}
+	else
+		return false;
+	}
+
+// String used up.  Any trailing "*"s may match nothing.
+while (*p == '*')
+	++p;
+return !*p;
+}
+
+
+/********************************************
+* FN:		RE_COMPILE_UTIL
+* CR:		08/03/26 DD.
+* SUBJ:	Compile an ECMAScript regex, caching the compiled object.
+* RET:	True if the pattern compiled, else false with err set.
+* NOTE:	Utility function for rematch, refind and resubst.
+*			Compiling a regex costs far more than running one, and these get
+*			called from inside rule loops, so hold onto the compiled objects.
+*			The cache is bounded: a loop that builds patterns on the fly would
+*			otherwise grow it without limit.
+********************************************/
+
+#define RE_CACHE_MAX 256		// 08/03/26 DD.
+
+static bool re_compile_util(
+	const _TCHAR *pat,
+	bool nocase,
+	/*UP*/
+	const std::regex* &re,
+	std::string &err
+	)
+{
+re = 0;
+err.clear();
+
+// std::map gives stable references, so returning a pointer into it is safe.
+static std::map<std::string,std::regex> cache;
+
+std::string key(nocase ? "i:" : "-:");
+key += pat;
+
+std::map<std::string,std::regex>::iterator it = cache.find(key);
+if (it != cache.end())
+	{
+	re = &it->second;
+	return true;
+	}
+
+std::regex::flag_type flags = std::regex::ECMAScript;
+if (nocase)
+	flags |= std::regex::icase;
+
+try
+	{
+	std::regex compiled(pat, flags);
+	if (cache.size() >= RE_CACHE_MAX)
+		cache.clear();
+	it = cache.insert(std::make_pair(key,compiled)).first;
+	re = &it->second;
+	}
+catch (const std::regex_error &e)
+	{
+	err = e.what();
+	return false;
+	}
+return true;
+}
+
+
+/********************************************
+* FN:		RE_FLAGS_UTIL
+* CR:		08/03/26 DD.
+* SUBJ:	Fetch the optional trailing flags arg of a regex function.
+* RET:	True if ok, else false.
+* NOTE:	Utility function.  Only "i" (ignore case) is defined so far.
+********************************************/
+
+static bool re_flags_util(
+	_TCHAR *fname,
+	Parse *parse,
+	/*DU*/
+	Delt<Iarg>* &args,
+	/*UP*/
+	bool &nocase
+	)
+{
+nocase = false;
+if (!args)
+	return true;			// Flags arg is optional.
+
+_TCHAR *flags=0;
+if (!Arg::str1(fname, /*UP*/ (DELTS*&)args, flags))
+	return false;
+
+if (!flags || !*flags)
+	return true;			// Empty flags string is ok.
+
+for (_TCHAR *p = flags; *p; ++p)
+	{
+	if (*p == 'i' || *p == 'I')
+		nocase = true;
+	else
+		{
+		_stprintf(Errbuf,_T("[%s: Unknown flag '%c'. Only \"i\" is supported.]"),
+					 fname,*p);
+		return parse->errOut(false); // UNFIXED
+		}
+	}
+return true;
+}
+
+
+/********************************************
+* FN:		FNREADFILE
+* CR:		08/03/26 DD.
+* SUBJ:	Read a whole text file into a string.
+* RET:	True (executed ok); sem = contents, or no value if unreadable/empty.
+* FORMS:	readfile(path_str)
+* NOTE:	The contents are interned, so they stay allocated for the rest of
+*			the parse.  For large files prefer readlines, which interns one
+*			line at a time.
+********************************************/
+
+bool Fn::fnReadfile(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+_TCHAR *path=0;
+if (!Arg::str1(_T("readfile"), /*UP*/ (DELTS*&)args, path))
+	return false;
+if (!Arg::done((DELTS*)args, _T("readfile"),parse))
+	return false;
+
+if (!path || !*path)
+	{
+	_stprintf(Errbuf,_T("[readfile: Warning. Given no path.]"));
+	return parse->errOut(true); // UNFIXED
+	}
+
+std::string contents;
+std::string err;
+if (!read_file_util(path, /*UP*/ contents, err))
+	{
+	_stprintf(Errbuf,_T("[readfile: %s path=%s]"),err.c_str(),path);
+	return parse->errOut(true); // UNFIXED
+	}
+
+if (contents.empty())
+	return true;			// Empty file, nothing to hand back.
+
+_TCHAR *str;
+parse->internStr(&contents[0], (long) contents.size(), /*UP*/ str);
+
+// Return as str type.
+sem = new RFASem(str, RSSTR);
+return true;
+}
+
+
+/********************************************
+* FN:		FNREADLINES
+* CR:		08/03/26 DD.
+* SUBJ:	Read a text file as an array of lines.
+* RET:	True (executed ok); sem = array of lines, or no value if empty.
+* FORMS:	readlines(path_str)
+* NOTE:	Line terminators are stripped, and CRLF is handled the same as LF,
+*			so a file written on Windows reads the same on Linux.
+*			A trailing newline does NOT yield a final empty element.
+*			Streams the file, so unlike readfile there is no size limit.
+********************************************/
+
+bool Fn::fnReadlines(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+_TCHAR *path=0;
+if (!Arg::str1(_T("readlines"), /*UP*/ (DELTS*&)args, path))
+	return false;
+if (!Arg::done((DELTS*)args, _T("readlines"),parse))
+	return false;
+
+if (!path || !*path)
+	{
+	empty_array_util(/*UP*/ sem);
+	_stprintf(Errbuf,_T("[readlines: Warning. Given no path.]"));
+	return parse->errOut(true); // UNFIXED
+	}
+
+std::error_code ec;
+std::filesystem::path p(path);
+if (!std::filesystem::is_regular_file(p, ec) || ec)
+	{
+	empty_array_util(/*UP*/ sem);
+	_stprintf(Errbuf,_T("[readlines: Not a readable file. path=%s]"),path);
+	return parse->errOut(true); // UNFIXED
+	}
+
+std::ifstream in(p, std::ios::binary);
+if (!in)
+	{
+	empty_array_util(/*UP*/ sem);
+	_stprintf(Errbuf,_T("[readlines: Couldn't open file. path=%s]"),path);
+	return parse->errOut(true); // UNFIXED
+	}
+
+Dlist<Iarg> *list = new Dlist<Iarg>();		// Make empty list of args.
+std::string line;
+bool first = true;
+long count = 0;
+while (std::getline(in, line))
+	{
+	if (first)
+		{
+		first = false;
+		// Strip a UTF-8 BOM off the head of the file.
+		if (line.size() >= 3 && line.compare(0,3,"\xEF\xBB\xBF") == 0)
+			line.erase(0,3);
+		}
+	// Strip the CR of a CRLF pair.
+	if (!line.empty() && line[line.size()-1] == '\r')
+		line.erase(line.size()-1);
+
+	_TCHAR *str;
+	if (line.empty())
+		str = 0;			// Empty line, same convention as split.
+	else
+		parse->internStr(&line[0], (long) line.size(), /*UP*/ str);
+	list->rpush(new Iarg(str));
+	++count;
+	}
+
+// An empty file gives an empty array, not "no value".
+sem = new RFASem(list);
+return true;
+}
+
+
+/********************************************
+* FN:		FNDIRLIST
+* CR:		08/03/26 DD.
+* SUBJ:	List the entries of a directory.
+* RET:	True (executed ok); sem = array of paths, or no value if none.
+* FORMS:	dirlist(dir_str)
+*			dirlist(dir_str, pattern_str)
+* NOTE:	Returns FULL paths, so results feed straight into readfile and
+*			friends with no path-joining by the analyzer.  Paths always use
+*			forward slashes, on every platform, so analyzer code stays
+*			portable.
+*			Not recursive.  Lists files and subdirectories alike; use
+*			fileexists/direxists on a result to tell them apart.
+*			The optional pattern is a "*"/"?" glob matched case-insensitively
+*			against the entry NAME only, the same syntax as regexp().
+*			Results are sorted, so a run is reproducible.
+********************************************/
+
+bool Fn::fnDirlist(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+_TCHAR *dir=0;
+_TCHAR *pat=0;
+
+if (!Arg::str1(_T("dirlist"), /*UP*/ (DELTS*&)args, dir))
+	return false;
+if (args)					// Pattern arg is optional.
+	{
+	if (!Arg::str1(_T("dirlist"), /*UP*/ (DELTS*&)args, pat))
+		return false;
+	}
+if (!Arg::done((DELTS*)args, _T("dirlist"),parse))
+	return false;
+
+if (!dir || !*dir)
+	{
+	empty_array_util(/*UP*/ sem);
+	_stprintf(Errbuf,_T("[dirlist: Warning. Given no directory.]"));
+	return parse->errOut(true); // UNFIXED
+	}
+
+std::error_code ec;
+std::filesystem::path d(dir);
+if (!std::filesystem::is_directory(d, ec) || ec)
+	{
+	empty_array_util(/*UP*/ sem);
+	_stprintf(Errbuf,_T("[dirlist: Not a directory. path=%s]"),dir);
+	return parse->errOut(true); // UNFIXED
+	}
+
+std::vector<std::string> paths;
+std::filesystem::directory_iterator it(d, ec), end;
+if (ec)
+	{
+	empty_array_util(/*UP*/ sem);
+	_stprintf(Errbuf,_T("[dirlist: Couldn't read directory. path=%s]"),dir);
+	return parse->errOut(true); // UNFIXED
+	}
+
+for (; it != end; it.increment(ec))
+	{
+	if (ec)
+		break;
+	std::string name = it->path().filename().generic_string();
+	if (pat && *pat
+	 && !glob_match_util(pat, name.c_str()))
+		continue;
+	paths.push_back(it->path().generic_string());
+	}
+
+// Directory order is unspecified; sort so runs are reproducible.
+// An empty directory gives an empty array, not "no value".
+std::sort(paths.begin(), paths.end());
+
+Dlist<Iarg> *list = new Dlist<Iarg>();		// Make empty list of args.
+for (size_t i = 0; i < paths.size(); ++i)
+	{
+	_TCHAR *str;
+	parse->internStr(&paths[i][0], (long) paths[i].size(), /*UP*/ str);
+	list->rpush(new Iarg(str));
+	}
+
+sem = new RFASem(list);
+return true;
+}
+
+
+/********************************************
+* FN:		FNREMATCH
+* CR:		08/03/26 DD.
+* SUBJ:	Test a string against a real regular expression.
+* RET:	True (executed ok); sem = 1 if the pattern matched, else 0.
+* FORMS:	rematch(str, pattern_str)
+*			rematch(str, pattern_str, flags_str)
+* NOTE:	ECMAScript syntax, so classes, anchors, quantifiers, alternation
+*			and groups all work, unlike the older glob-style regexp().
+*			SEARCHES the string; anchor with ^ and $ to require a full match.
+*			Pass "i" as flags to ignore case.
+********************************************/
+
+bool Fn::fnRematch(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+_TCHAR *str=0;
+_TCHAR *pat=0;
+
+if (!Arg::str1(_T("rematch"), /*UP*/ (DELTS*&)args, str))
+	return false;
+if (!Arg::str1(_T("rematch"), /*UP*/ (DELTS*&)args, pat))
+	return false;
+bool nocase=false;
+if (!re_flags_util(_T("rematch"), parse, /*DU*/ args, /*UP*/ nocase))
+	return false;
+if (!Arg::done((DELTS*)args, _T("rematch"),parse))
+	return false;
+
+if (!pat || !*pat)
+	{
+	_stprintf(Errbuf,_T("[rematch: Empty pattern.]"));
+	return parse->errOut(true); // UNFIXED
+	}
+
+const std::regex *re=0;
+std::string err;
+if (!re_compile_util(pat, nocase, /*UP*/ re, err))
+	{
+	_stprintf(Errbuf,_T("[rematch: Bad pattern=%s]"),pat);
+	return parse->errOut(true); // UNFIXED
+	}
+
+bool yes = false;
+if (str && *str)
+	yes = std::regex_search(std::string(str), *re);
+
+sem = new RFASem(yes ? 1LL : 0LL);
+return true;
+}
+
+
+/********************************************
+* FN:		FNREFIND
+* CR:		08/03/26 DD.
+* SUBJ:	Find a regular expression match and its capture groups.
+* RET:	True (executed ok); sem = array, or no value if there was no match.
+* FORMS:	refind(str, pattern_str)
+*			refind(str, pattern_str, flags_str)
+* NOTE:	Element 0 is the whole match, elements 1..n are the capture groups.
+*			A group that took part in no match comes back empty.
+*			Returns the FIRST match only.
+********************************************/
+
+bool Fn::fnRefind(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+_TCHAR *str=0;
+_TCHAR *pat=0;
+
+if (!Arg::str1(_T("refind"), /*UP*/ (DELTS*&)args, str))
+	return false;
+if (!Arg::str1(_T("refind"), /*UP*/ (DELTS*&)args, pat))
+	return false;
+bool nocase=false;
+if (!re_flags_util(_T("refind"), parse, /*DU*/ args, /*UP*/ nocase))
+	return false;
+if (!Arg::done((DELTS*)args, _T("refind"),parse))
+	return false;
+
+if (!pat || !*pat)
+	{
+	empty_array_util(/*UP*/ sem);
+	_stprintf(Errbuf,_T("[refind: Empty pattern.]"));
+	return parse->errOut(true); // UNFIXED
+	}
+
+const std::regex *re=0;
+std::string err;
+if (!re_compile_util(pat, nocase, /*UP*/ re, err))
+	{
+	empty_array_util(/*UP*/ sem);
+	_stprintf(Errbuf,_T("[refind: Bad pattern=%s]"),pat);
+	return parse->errOut(true); // UNFIXED
+	}
+
+if (!str || !*str)
+	{
+	empty_array_util(/*UP*/ sem);
+	return true;			// Nothing to match against.
+	}
+
+std::string subj(str);
+std::smatch m;
+if (!std::regex_search(subj, m, *re))
+	{
+	// No match.  Empty array, so "if (arraylength(x))" is a valid guard.
+	empty_array_util(/*UP*/ sem);
+	return true;
+	}
+
+Dlist<Iarg> *list = new Dlist<Iarg>();		// Make empty list of args.
+for (size_t i = 0; i < m.size(); ++i)
+	{
+	std::string piece = m[i].matched ? m[i].str() : std::string();
+	_TCHAR *istr;
+	if (piece.empty())
+		istr = 0;			// Empty group, same convention as split.
+	else
+		parse->internStr(&piece[0], (long) piece.size(), /*UP*/ istr);
+	list->rpush(new Iarg(istr));
+	}
+
+sem = new RFASem(list);
+return true;
+}
+
+
+/********************************************
+* FN:		FNRESUBST
+* CR:		08/03/26 DD.
+* SUBJ:	Replace regular expression matches in a string.
+* RET:	True (executed ok); sem = the rewritten string.
+* FORMS:	resubst(str, pattern_str, replacement_str)
+*			resubst(str, pattern_str, replacement_str, flags_str)
+* NOTE:	Replaces EVERY match, unlike strsubst.
+*			The replacement may refer to capture groups as $1, $2 ... and to
+*			the whole match as $&.  Write $$ for a literal dollar sign.
+********************************************/
+
+bool Fn::fnResubst(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+_TCHAR *str=0;
+_TCHAR *pat=0;
+_TCHAR *rep=0;
+
+if (!Arg::str1(_T("resubst"), /*UP*/ (DELTS*&)args, str))
+	return false;
+if (!Arg::str1(_T("resubst"), /*UP*/ (DELTS*&)args, pat))
+	return false;
+if (!Arg::str1(_T("resubst"), /*UP*/ (DELTS*&)args, rep))
+	return false;
+bool nocase=false;
+if (!re_flags_util(_T("resubst"), parse, /*DU*/ args, /*UP*/ nocase))
+	return false;
+if (!Arg::done((DELTS*)args, _T("resubst"),parse))
+	return false;
+
+if (!pat || !*pat)
+	{
+	_stprintf(Errbuf,_T("[resubst: Empty pattern.]"));
+	return parse->errOut(true); // UNFIXED
+	}
+
+const std::regex *re=0;
+std::string err;
+if (!re_compile_util(pat, nocase, /*UP*/ re, err))
+	{
+	_stprintf(Errbuf,_T("[resubst: Bad pattern=%s]"),pat);
+	return parse->errOut(true); // UNFIXED
+	}
+
+if (!str || !*str)
+	return true;			// Nothing to rewrite.
+
+std::string out;
+try
+	{
+	out = std::regex_replace(std::string(str), *re,
+									 std::string(rep ? rep : _T("")));
+	}
+catch (const std::regex_error &e)
+	{
+	_stprintf(Errbuf,_T("[resubst: Bad replacement. %s]"),e.what());
+	return parse->errOut(true); // UNFIXED
+	}
+
+if (out.empty())
+	return true;			// Everything got replaced away.
+
+_TCHAR *istr;
+parse->internStr(&out[0], (long) out.size(), /*UP*/ istr);
+
+// Return as str type.
+sem = new RFASem(istr, RSSTR);
 return true;
 }
 

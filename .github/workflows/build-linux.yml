@@ -357,6 +357,43 @@ jobs:
           fi
           echo "[shadowing] a user function overrides a builtin of the same name"
 
+      - name: File-reading and regex builtins (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # NLP++ could write files but never read one, could not list a
+          # directory, and regexp() was a "?"/"*" glob with no classes,
+          # anchors, quantifiers or capture groups. This pins readfile,
+          # readlines, dirlist, rematch, refind and resubst.
+          # readfile's line is run through resubst so the expected output is
+          # the same whether the fixture is checked out LF or CRLF, and the
+          # dirlist line proves paths come back sorted with forward slashes
+          # on every platform.
+          FIX=.github/workflows/tests/file-regex
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
+          OUT="$FIX/input/text.txt_log/out.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(file/regex): no out.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' \
+            'dirlist:3:alpha.dict:beta.dict:config.txt' \
+            'glob:2' \
+            'readlines:2:name = widget:count = 42' \
+            'readfile:name = widget|count = 42|' \
+            'rematch:1010' \
+            'refind:3:count:42' \
+            'resubst:1a 2b 3c' \
+            'empty:0')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(file/regex): out.txt was:"; echo "$got"
+            echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[file/regex] readfile, readlines, dirlist, rematch, refind, resubst"
+
       - name: Copy nlp.exe to nlpl.exe (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         run: cp bin/nlp bin/nlpl.exe

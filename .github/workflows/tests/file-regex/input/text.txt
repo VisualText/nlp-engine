@@ -1,0 +1,1 @@
+The fixture reads its data files, not this text.
