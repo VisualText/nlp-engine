@@ -158,30 +158,33 @@ if (ifunc)	// Optimized check.
 	}
 else																				// 12/26/01 AM.
 	{
-	// LOOK UP FUNCTION ID IN BUILTINS HASH TABLE.					// 12/21/01 AM.
 	Ana *ana = parse->getAna();											// 12/21/01 AM.
 	NLP *nlp = ana->getNLP();												// 12/21/01 AM.
 	VTRun *vtrun = nlp->getVTRun();	// [DEGLOB]	// 10/15/20 AM.
+
+	// LOOK IT UP IN USER-DEFINED NLP++ FUNCTIONS FIRST.
+	// A user's own definition SHADOWS a builtin of the same name, so that
+	// adding a builtin can never change what an existing analyzer does.
+	// Ifunc::load warns about the shadowing at analyzer build time.
+	// This used to search the builtins first, which meant a user function
+	// could never win -- and the builtin table was only reachable at all
+	// because defining such a name was a hard error.	// 08/03/26 DD.
+	void *htab = ana->getHtfunc();										// 12/21/01 AM.
+	Ifunc *ifunc = Ifunc::htLookup(func,htab);						// 12/21/01 AM.
+	if (ifunc && ifunc->getBody())
+		{
+//		action->setFunc(ifunc);								// BAD.	// 12/27/01 AM.
+		return ifunc->eval(args,nlppp,sem);								// 12/21/01 AM.
+		}
+
+	// LOOK UP FUNCTION ID IN BUILTINS HASH TABLE.					// 12/21/01 AM.
 //	void *htab = nlp->getHtfunc();										// 12/21/01 AM.
 //	void *htab = VTRun_Ptr->htfunc_;				// 08/28/02 AM.
-	void *htab = vtrun->htfunc_;	// [DEGLOB]	// 10/15/20 AM.
-	Ifunc *ifunc = Ifunc::htLookup(func,htab);						// 12/27/01 AM.
-	if (ifunc)																	// 12/26/01 AM.
+	htab = vtrun->htfunc_;	// [DEGLOB]	// 10/15/20 AM.
+	if ((ifunc = Ifunc::htLookup(func,htab)) != 0)					// 12/27/01 AM.
 		{
 		fnid = ifunc->getId();												// 12/26/01 AM.
 //		action->setFunc(ifunc);									// BAD	// 12/27/01 AM.
-		}
-
-	// LOOK IT UP IN USER-DEFINED NLP++ FUNCTIONS.					// 12/21/01 AM.
-	// If found, EXECUTE user-define function.						// 12/21/01 AM.
-	else																			// 12/26/01 AM.
-		{
-		htab = ana->getHtfunc();											// 12/21/01 AM.
-		if ((ifunc = Ifunc::htLookup(func,htab)))						// 12/21/01 AM.
-			{
-//			action->setFunc(ifunc);								// BAD.	// 12/27/01 AM.
-			return ifunc->eval(args,nlppp,sem);							// 12/21/01 AM.
-			}
 		}
 	}
 

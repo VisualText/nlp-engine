@@ -450,15 +450,21 @@ for (delt = list->getFirst(); delt; delt = delt->Right())
 	line = deffunc->line_;													// 12/21/01 AM.
 	pass = deffunc->pass_;													// 12/21/01 AM.
 
-	// Check that function name is not already in builtin table.
+	// Warn if the function name is also a builtin.
+	// This used to be a hard error, which meant that adding a builtin broke
+	// every existing analyzer that had defined a function of that name --
+	// eg arrayreverse and push, both hand-written in
+	// visualText/spec/UtilFuncs.nlp long before they became builtins.
+	// The user's definition now SHADOWS the builtin (see Fn::fnCall, which
+	// searches the analyzer's own functions first), so old analyzers keep
+	// their own behavior and no future builtin can break them.	// 08/03/26 DD.
 	if (htbuilt->hfind(name))
 		{
 		std::_t_strstream gerrStr;
-		gerrStr << _T("[Can't use built-in NLP++ function name='")
-				<< name << _T("']") << std::ends;
-		errOut(&gerrStr,false,currseqpass,line);
-		ok = false;
-		continue;
+		gerrStr << _T("[Warning: user function shadows built-in NLP++ function name='")
+				<< name << _T("'. The user function will be used.]") << std::ends;
+		errOut(&gerrStr,true,currseqpass,line);
+		// Fall through and load it: shadowing is allowed.
 		}
 
 	// Check that function name is not already in user-defined table.
