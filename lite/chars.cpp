@@ -10,6 +10,7 @@ All rights reserved.
 *******************************************************************************/
 
 #include "StdAfx.h"
+#include <new>			// std::nothrow	// 08/03/26 AM.
 #include "machine.h"	// 10/25/06 AM.
 #include "u_out.h"		// 01/19/06 AM.
 #include "lite/global.h"
@@ -61,7 +62,10 @@ Chars::~Chars()
 _TCHAR *Chars::create(long size)
 {
 _TCHAR *tmp;
-if (!(tmp = new _TCHAR[size]))
+// Plain new THROWS on failure and never returns null, so the guard below
+// was unreachable and the diagnostic could never fire.  Use the nothrow
+// form so the existing error path actually works.	// 08/03/26 AM.
+if (!(tmp = new (std::nothrow) _TCHAR[size]))
 	{
 	std::_t_strstream gerrStr;
 	gerrStr << _T("[Couldn't allocate a char array.]") << std::ends;

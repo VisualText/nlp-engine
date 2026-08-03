@@ -158,6 +158,30 @@ jobs:
           grep -qF '("note" "lone * and / here")' "$TREE" || { echo "FAIL(data block comments): dict string lost its * or /"; exit 1; }
           echo "[block comments] /* */ is skipped in .seq, .kb, .dict and .kbb"
 
+      - name: struniquechars regression
+        shell: bash
+        run: |
+          set -eo pipefail
+          # str_unique_chars() used to rebuild an icu::StringPiece over its
+          # OUTPUT buffer, call u_strlen() on it and re-decode it with
+          # U8_NEXT -- once per input character. This pins the observable
+          # behavior of struniquechars(), including multi-byte UTF-8, so the
+          # rewrite (and any future one) cannot drift.
+          FIX=.github/workflows/tests/struniquechars
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
+          OUT="$FIX/input/text.txt_log/out.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(struniquechars): no out.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%b' 'abc|abc|a|abcdefg|helo wrd|3|ab\xc3\xa9\xc3\xbc|\xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(struniquechars): out.txt was '$got' (wanted '$want')"; exit 1
+          fi
+          echo "[struniquechars] unique-character extraction is UTF-8 correct"
+
       - name: Copy nlp.exe to nlpw.exe
         run: cp bin/Release/nlp.exe bin/Release/nlpw.exe
         shell: bash

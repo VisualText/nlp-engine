@@ -39,6 +39,8 @@ _TCHAR *str_to_lower(_TCHAR *str, _TCHAR *buf);
 _TCHAR *str_to_lower(_TCHAR *str);                   // 12/15/14 AM.
 _TCHAR *str_to_upper(_TCHAR *str, _TCHAR *buf);							// 11/04/99 AM.
 _TCHAR *str_to_upper(_TCHAR *str);                   // 12/15/14 AM.
+_TCHAR *str_to_lower_safe(_TCHAR *str, _TCHAR *buf,				// 08/03/26 AM.
+			long bufsize, /*UP*/ bool &alloced);
 bool zap_final_white(_TCHAR *str);										// 02/12/99 AM.
 
 bool str_equal(_TCHAR *str1, _TCHAR *str2);							// 06/07/99 AM.

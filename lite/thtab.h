@@ -27,6 +27,7 @@ All rights reserved.
 #include "lite/global.h"
 //#include "inline.h"		// 05/19/99 AM.
 #include "str.h"
+#include "chars.h"	// 08/03/26 AM.
 #include "slist.h"
 #include "selt.h"
 #ifdef LINUX
@@ -511,9 +512,14 @@ if (!str || !*str)
 	return 0;
 	}
 
-// Convert to lower case.
-str_to_lower(str, lc_buf);
-return hfind(lc_buf);
+// Convert to lower case.  Overlong strings go to the heap rather than
+// overrunning the shared static buffer.	// 08/03/26 AM.
+bool alloced;
+_TCHAR *lc = str_to_lower_safe(str, lc_buf, MAXSTR, /*UP*/ alloced);
+Selt<tSym<TYPE> > *selt = hfind(lc);
+if (alloced)
+	Chars::destroy(lc);
+return selt;
 }
 
 /********************************************
@@ -543,10 +549,13 @@ if (!str || !*str)
 	return 0;
 	}
 
-// Convert to lower case.
-str_to_lower(str, lc_buf);
+// Convert to lower case.  Overlong strings go to the heap.	// 08/03/26 AM.
+bool alloced;
+_TCHAR *lc = str_to_lower_safe(str, lc_buf, MAXSTR, /*UP*/ alloced);
 Selt<tSym<TYPE> > *selt;
-selt = hfind(lc_buf);
+selt = hfind(lc);
+if (alloced)
+	Chars::destroy(lc);
 if (!selt)
 	return 0;
 dat = selt->getData()->getPtr();
@@ -570,19 +579,22 @@ if (!str || !*str)
 	}
 long val;
 
-// Convert to lower case.
-str_to_lower(str, lc_buf);
+// Convert to lower case.  Overlong strings go to the heap.	// 08/03/26 AM.
+bool alloced;
+_TCHAR *lc = str_to_lower_safe(str, lc_buf, MAXSTR, /*UP*/ alloced);
 
-val = hash(lc_buf);
+val = hash(lc);
 Slist<tSym<TYPE> > *list;
 list = &(parr_[val]);			// Hash array location for string.	// 12/12/98 AM
 //list = &(arr_[val]);			// Hash array location for string.	// 12/12/98 AM
 
 tSym<TYPE>  *sym;
-sym = new tSym<TYPE> (lc_buf, stab_);	// Create sym for string.
+sym = new tSym<TYPE> (lc, stab_);	// Create sym for string.
 Selt<tSym<TYPE> > *selt;
 selt = new Selt<tSym<TYPE> >(sym);	// Create hash table entry for string.
 
+if (alloced)
+	Chars::destroy(lc);
 list->push(selt);			// Place at FRONT of hash chain.
 return selt;
 }
@@ -599,14 +611,17 @@ return selt;
 template<class TYPE>
 Selt<tSym<TYPE> > *tHtab<TYPE>::hget_lc(_TCHAR *str)
 {
-// Convert to lower case.
-str_to_lower(str, lc_buf);
+// Convert to lower case.  Overlong strings go to the heap.	// 08/03/26 AM.
+bool alloced;
+_TCHAR *lc = str_to_lower_safe(str, lc_buf, MAXSTR, /*UP*/ alloced);
 
 // The calls check for empty string.
 Selt<tSym<TYPE> > *ptr;
-if ((ptr = hfind(lc_buf)))
-	return ptr;
-return hadd(lc_buf);
+if (!(ptr = hfind(lc)))
+	ptr = hadd(lc);
+if (alloced)
+	Chars::destroy(lc);
+return ptr;
 }
 
 /********************************************
@@ -660,18 +675,43 @@ return 0;						// Not found in list.
 * FN:		HGET
 * CR:		11/18/98 AM.
 * SUBJ:	Find string in hash table, else add it.
-* OPT:	Unoptimized.  The two calls do redundant work.
+* NOTE:	08/03/26 AM. Was hfind() then hadd(), hashing the string twice.
+*			Hash once and reuse the bucket for search and insert.
 *
 ********************************************/
 
 template<class TYPE>
 Selt<tSym<TYPE> > *tHtab<TYPE>::hget(_TCHAR *str)
 {
-// The calls check for empty string.
+if (!str || !*str)
+	{
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[hget: Given null string.]") << std::ends;
+	errOut(&gerrStr,false);
+	return 0;
+	}
+
+long val = hash(str);
+Slist<tSym<TYPE> > *list = &(parr_[val]);
+
+// Search the chain.
 Selt<tSym<TYPE> > *ptr;
-if ((ptr = hfind(str)) != NULL)
-	return ptr;
-return hadd(str);
+for (ptr = list->getFirst(); ptr; ptr = ptr->Right())
+	{
+	if (!_tcscmp(str, ptr->getData()->getStr()))
+		return ptr;				// Found it in chain.
+	}
+
+// Not present -- add it, reusing the bucket we already located.
+tSym<TYPE> *sym = new tSym<TYPE> (str, stab_);
+if (empty(sym->getStr()))							// CRASH GUARD.
+	{
+	delete sym;
+	return 0;
+	}
+Selt<tSym<TYPE> > *selt = new Selt<tSym<TYPE> >(sym);
+list->push(selt);				// Place at FRONT of hash chain.
+return selt;
 }
 
 /*******************************************/
