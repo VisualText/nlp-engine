@@ -380,4 +380,7 @@ _T("arrayunique"),
 _T("arrayreverse"),
 _T("arrayslice"),
 _T("push"),
+// JSON functions.	// 08/04/26 DD.
+_T("jsonwrite"),
+_T("jsonparse"),
 0 };

@@ -480,6 +480,46 @@ jobs:
           fi
           echo "[python pass] interpreter is resolved, and failures are reported"
 
+      - name: JSON builtins (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # jsonwrite replaces the JsonKB family in KBFuncs.nlp, which is
+          # interpreted NLP++ and dominates a knowledge-base analyzer's
+          # runtime (43.9% of date-time was the 13-line output pass calling
+          # JsonKB and SaveKB). Its output must stay byte-identical.
+          # jsonparse is the inverse and removes the need for a python pass
+          # to load JSON, which the npm and pypi distributions cannot run.
+          # The round trip is the real assertion: it caught jsonparse storing
+          # jsonwrite's synthesized "id" as a real attribute, which made the
+          # second write emit it twice.
+          FIX=.github/workflows/tests/json-builtins
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
+          OUT="$FIX/input/text.txt_log/out.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(json): no out.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' 'parsed:1' 'roundtrip:same' 'badjson:0' 'notobject:0')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(json): out.txt was:"; echo "$got"
+            echo "wanted:"; echo "$want"; exit 1
+          fi
+          # The serialized document must have the exact shape JsonKB produces.
+          J="$FIX/input/text.txt_log/rt1.json"
+          grep -q '"id": "1"' "$J" || { echo "FAIL(json): counted concepts lost their id"; exit 1; }
+          grep -q '"item": \[' "$J" || { echo "FAIL(json): counted siblings did not become an array"; exit 1; }
+          grep -qF 'He said \"hi\"' "$J" || { echo "FAIL(json): quote escaping regressed"; exit 1; }
+          # And the round trip must not duplicate the synthesized id.
+          if [ "$(grep -c '"id":' "$FIX/input/text.txt_log/rt2.json")" != "2" ]; then
+            echo "FAIL(json): round trip duplicated the synthesized id"; exit 1
+          fi
+          echo "[json] jsonwrite serializes and jsonparse round-trips"
+
       - name: Copy nlp.exe to nlpl.exe (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         run: cp bin/nlp bin/nlpl.exe

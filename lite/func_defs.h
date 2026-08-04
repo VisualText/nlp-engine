@@ -393,6 +393,10 @@ enum funcDef
 	FNarrayslice,
 	FNpush,
 
+	// JSON functions.	// 08/04/26 DD.
+	FNjsonwrite,
+	FNjsonparse,
+
 	FNXXYYZZ };
 
 #endif

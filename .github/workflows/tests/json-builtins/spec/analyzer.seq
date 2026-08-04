@@ -1,0 +1,2 @@
+tokenize	nil	# tokenize only -- fixture builds its own KB
+nlp	jsonrt	# jsonwrite / jsonparse round trip

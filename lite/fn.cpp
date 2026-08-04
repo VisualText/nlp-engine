@@ -47,6 +47,7 @@ All rights reserved.
 #include "u_out.h"		// 01/19/06 AM.
 #include "consh/libconsh.h"		// 02/14/01 AM.
 #include "consh/cg.h"				// 02/14/01 AM.
+#include "json.h"				// For jsonwrite.  AFTER cg.h.		// 08/04/26 DD.
 
 #include "htab.h"					// 02/12/07 AM.
 #include "kb.h"					// 02/12/07 AM.
@@ -450,6 +451,10 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnArrayslice(args,nlppp,/*UP*/sem);						// 08/03/26 DD.
 	case FNpush:
 		return fnPush(args,nlppp,/*UP*/sem);						// 08/03/26 DD.
+	case FNjsonwrite:
+		return fnJsonwrite(args,nlppp,/*UP*/sem);					// 08/04/26 DD.
+	case FNjsonparse:
+		return fnJsonparse(args,nlppp,/*UP*/sem);					// 08/04/26 DD.
 	case FNlogten:
 		return fnLogten(args,nlppp,/*UP*/sem);							// 04/29/04 AM.
 	case FNrandomint:
@@ -12443,6 +12448,154 @@ for (Delt<Iarg> *delt = (arr ? arr->getFirst() : 0); delt; delt = delt->Right())
 	list->rpush(Iarg::copy_arg(delt->getData()));
 
 sem = new RFASem(list);
+return true;
+}
+
+
+/********************************************
+* FN:		FNJSONWRITE
+* CR:		08/04/26 DD.
+* SUBJ:	Write a knowledge base concept tree to a file as JSON.
+* RET:	True (executed ok); sem = 1 if the file was written, else 0.
+* FORMS:	jsonwrite(filename_str, concept)
+* NOTE:	Argument order matches JsonKB(file,con) in KBFuncs.nlp, which this
+*			replaces, so that function becomes a one-line wrapper and every
+*			analyzer picks up the speedup without touching its output pass.
+*			Output is byte-identical to the NLP++ version -- see json.cpp.
+*			A bare filename resolves into the current input's log directory,
+*			the same place the NLP++ << operator writes.
+********************************************/
+
+bool Fn::fnJsonwrite(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+_TCHAR *fname=0;
+RFASem *con_sem=0;
+
+if (!Arg::str1(_T("jsonwrite"), /*UP*/ (DELTS*&)args, fname))
+	return false;
+if (!Arg::sem1(_T("jsonwrite"),nlppp,(DELTS*&)args, con_sem))
+	return false;
+if (!Arg::done((DELTS*)args, _T("jsonwrite"),parse))
+	return false;
+
+if (!fname || !*fname)
+	{
+	_stprintf(Errbuf,_T("[jsonwrite: Given no filename.]"));
+	sem = new RFASem(0LL);
+	return parse->errOut(true); // UNFIXED
+	}
+if (!con_sem || con_sem->getType() != RS_KBCONCEPT)
+	{
+	_stprintf(Errbuf,_T("[jsonwrite: Given no concept.]"));
+	sem = new RFASem(0LL);
+	return parse->errOut(true); // UNFIXED
+	}
+CONCEPT *con = con_sem->getKBconcept();
+if (!con)
+	{
+	_stprintf(Errbuf,_T("[jsonwrite: Empty concept.]"));
+	sem = new RFASem(0LL);
+	return parse->errOut(true); // UNFIXED
+	}
+
+// A relative name goes to the input's log directory, matching where the
+// NLP++ << operator puts it.  An absolute path is used as given.
+_TCHAR path[MAXSTR];
+_TCHAR *outdir = parse->getOutdir();
+bool absolute = (fname[0] == '/' || fname[0] == DIR_CH
+				|| (fname[0] && fname[1] == ':'));
+if (outdir && *outdir && !absolute)
+	_stprintf(path, _T("%s%c%s"), outdir, DIR_CH, fname);
+else
+	_tcscpy(path, fname);
+
+CG *cg = parse->getAna()->getCG();
+bool ok = json_write_kb(cg, path, con);
+if (!ok)
+	{
+	_stprintf(Errbuf,_T("[jsonwrite: Couldn't write file=%s]"),path);
+	sem = new RFASem(0LL);
+	return parse->errOut(true); // UNFIXED
+	}
+
+sem = new RFASem(1LL);
+return true;
+}
+
+
+/********************************************
+* FN:		FNJSONPARSE
+* CR:		08/04/26 DD.
+* SUBJ:	Parse a JSON document into knowledge base concepts.
+* RET:	True (executed ok); sem = 1 if the document parsed, else 0.
+* FORMS:	jsonparse(json_str, parent_concept)
+* NOTE:	The inverse of jsonwrite.  Pair it with readfile to load a file:
+*			  jsonparse(readfile(G("$apppath") + "/data/x.json"), G("kb"))
+*			This is what python/json2kbb.py does as a pre-tokenizer python
+*			pass; doing it in the engine removes the Python dependency, which
+*			the npm and pypi distributions do not satisfy, and removes the
+*			stale intermediate .kbb that pass leaves behind.
+********************************************/
+
+bool Fn::fnJsonparse(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+_TCHAR *text=0;
+RFASem *con_sem=0;
+
+if (!Arg::str1(_T("jsonparse"), /*UP*/ (DELTS*&)args, text))
+	return false;
+if (!Arg::sem1(_T("jsonparse"),nlppp,(DELTS*&)args, con_sem))
+	return false;
+if (!Arg::done((DELTS*)args, _T("jsonparse"),parse))
+	return false;
+
+if (!con_sem || con_sem->getType() != RS_KBCONCEPT)
+	{
+	_stprintf(Errbuf,_T("[jsonparse: Given no parent concept.]"));
+	sem = new RFASem(0LL);
+	return parse->errOut(true); // UNFIXED
+	}
+CONCEPT *parent = con_sem->getKBconcept();
+if (!parent)
+	{
+	_stprintf(Errbuf,_T("[jsonparse: Empty parent concept.]"));
+	sem = new RFASem(0LL);
+	return parse->errOut(true); // UNFIXED
+	}
+if (!text || !*text)
+	{
+	// Nothing to parse is not an error; the caller may have read an
+	// empty file.  Report false so the analyzer can tell.
+	sem = new RFASem(0LL);
+	return true;
+	}
+
+CG *cg = parse->getAna()->getCG();
+bool ok = json_read_kb(cg, text, parent);
+if (!ok)
+	{
+	_stprintf(Errbuf,_T("[jsonparse: Malformed JSON.]"));
+	sem = new RFASem(0LL);
+	return parse->errOut(true); // UNFIXED
+	}
+
+sem = new RFASem(1LL);
 return true;
 }
 
