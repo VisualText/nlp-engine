@@ -87,6 +87,15 @@ intern_ = true;																// 05/26/01 AM.
 currpass_ = 0;			// 07/24/01 AM.
 rulepass_ = 0;			// 02/03/05 AM.
 inputpass_ = 0;		// 08/23/02 AM.
+
+// Per-pass timing table for the ranked summary.	// 08/04/26 AM.
+passmax_ = 0;
+for (long pi = 0; pi < PASSTIMES_MAX; ++pi)
+	{
+	passsecs_[pi]  = 0.0;
+	passruns_[pi]  = 0;
+	passnames_[pi] = 0;
+	}
 seq_ = 0;				// 07/24/01 AM.
 line_	= 0;				// 08/24/02 AM.
 inputline_ = 0;		// 08/24/02 AM.
@@ -573,6 +582,74 @@ void Parse::finExecute(
 if (eana_->getFlogfinal())									// 10/13/99 AM.
 	finalTree();												// 10/11/99 AM.
 
+// RANKED SLOWEST-PASS SUMMARY.	// 08/04/26 AM.
+// The per-pass "[Pass N time: ...]" lines above are emitted in pass order
+// and land in dbg.log, so on a 137-pass analyzer you cannot see which pass
+// actually costs you anything without post-processing the log.  Rank them.
+if (eana_->getFtimepass() && passmax_ > 0)
+	{
+	double gtot = 0.0;
+	long pi;
+	for (pi = 1; pi <= passmax_; ++pi)
+		gtot += passsecs_[pi];
+
+	if (gtot > 0.0)
+		{
+		{
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Slowest passes (total ") << gtot << _T(" sec in ")
+				  << passmax_ << _T(" passes):]") << std::ends;
+		nlp_->logOut(&gerrStr,false);
+		}
+
+		// Report the top ten by simple selection; passmax_ is small and this
+		// runs once per input, so an in-place sort of the table is not worth
+		// the extra state.
+		bool taken[PASSTIMES_MAX];
+		for (pi = 0; pi < PASSTIMES_MAX; ++pi)
+			taken[pi] = false;
+
+		long shown;
+		for (shown = 0; shown < 10; ++shown)
+			{
+			long best = 0;
+			for (pi = 1; pi <= passmax_; ++pi)
+				{
+				if (taken[pi] || passsecs_[pi] <= 0.0)
+					continue;
+				if (!best || passsecs_[pi] > passsecs_[best])
+					best = pi;
+				}
+			if (!best)
+				break;				// Ran out of passes with measurable time.
+			taken[best] = true;
+
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[  ") << passsecs_[best] << _T(" sec  ")
+					  << (long)((passsecs_[best] * 100.0 / gtot) + 0.5) << _T("%  pass ")
+					  << best;
+			if (passruns_[best] > 1)
+				gerrStr << _T(" x") << passruns_[best];
+			gerrStr << _T("  ")
+					  << (passnames_[best] ? passnames_[best] : _T("?"))
+					  << _T("]") << std::ends;
+			nlp_->logOut(&gerrStr,false);
+			}
+
+		// These numbers include whatever the pass wrote.  Under -DEV that is
+		// a full parse-tree dump per pass, which on a 9K input was measured
+		// at 137 files / 44MB and roughly 3.6x total runtime -- so -DEV
+		// timings say little about how fast the matching itself is.
+		if (eana_->getFlogfiles())
+			{
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[  NOTE: -DEV dumps a parse tree per pass; these times include that I/O.]")
+					  << std::ends;
+			nlp_->logOut(&gerrStr,false);
+			}
+		}
+	}
+
 if (eana_->getFtimesum())									// 10/13/99 AM.
 	{
 	double tot;
@@ -811,6 +888,19 @@ if (flogfiles)																	// 03/08/00 AM.
 if (ftimepass)																	// 10/13/99 AM.
 	{
 	clock_t e_time = clock();												// 12/28/98 AM.
+
+	// Accumulate for the ranked summary in finExecute.	// 08/04/26 AM.
+	// A rec pass runs many times per input, so this sums rather than
+	// overwrites.  pretname points into the Seqn, which outlives the parse.
+	if (num > 0 && num < PASSTIMES_MAX)
+		{
+		passsecs_[num] += (double)(e_time - s_time)/CLOCKS_PER_SEC;
+		++passruns_[num];
+		if (!passnames_[num])
+			passnames_[num] = pretname;
+		if (num > passmax_)
+			passmax_ = num;
+		}
 
 // DEBUGGING memleak // 06/19/05 AM.
 
