@@ -356,6 +356,46 @@ jobs:
           fi
           echo "[str/array] strjoin, strindexof, arraysort/unique/reverse/slice, push"
 
+      - name: Python pass interpreter and error reporting
+        shell: bash
+        run: |
+          set -eo pipefail
+          # The python pass hardcoded the command "python". macOS 12.3+ has no
+          # /usr/bin/python and most Linux distros ship only python3, so on many
+          # machines the pass silently did nothing: system() returns the shell's
+          # exit status (127 for command-not-found), never <0, so the old rc<0
+          # test never fired. For json2kbb that meant no .kbb was built and the
+          # analyzer ran against an empty KB with no warning at all.
+          FIX=.github/workflows/tests/python-pass
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log" "$FIX/marker.txt"
+          mkdir -p "$FIX/logs"
+          ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          OUT="$FIX/input/text.txt_log/out.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(python pass): no out.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          if [ "$got" != "python:PYTHON-RAN-pre" ]; then
+            echo "FAIL(python pass): the pass did not run. out.txt was '$got'"; exit 1
+          fi
+          # Now prove a missing interpreter is REPORTED rather than swallowed.
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log" "$FIX/marker.txt"
+          mkdir -p "$FIX/logs"
+          NLPPP_PYTHON=definitely-not-a-real-interpreter \
+            ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" > pyfail.out 2>&1 || true
+          cat pyfail.out
+          got=$(tr -d '\r' < "$OUT")
+          if [ "$got" != "python:absent" ]; then
+            echo "FAIL(python pass): expected the pass to be skipped, got '$got'"; exit 1
+          fi
+          if ! grep -q "python pass FAILED" pyfail.out; then
+            echo "FAIL(python pass): a failing pass was not reported"; exit 1
+          fi
+          if ! grep -q "python pass" "$FIX/input/text.txt_log/err.log"; then
+            echo "FAIL(python pass): the failure never reached err.log"; exit 1
+          fi
+          echo "[python pass] interpreter is resolved, and failures are reported"
+
       - name: Copy nlp.exe to nlpw.exe
         run: cp bin/Release/nlp.exe bin/Release/nlpw.exe
         shell: bash
