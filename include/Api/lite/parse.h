@@ -24,6 +24,10 @@ All rights reserved.
 typedef void TREE;	// 07/07/03 AM.
 typedef void LTREE;	// 07/07/03 AM.
 
+// Capacity of the per-pass timing table.  An analyzer.seq with more passes
+// than this still runs; the passes beyond it just miss the ranked summary.
+#define PASSTIMES_MAX 1024		// 08/04/26 AM.
+
 //#include "global.h"				// 05/19/99 AM.
 //#include "ana.h"
 //#include "lite/dlist.h"			// 07/07/03 AM.
@@ -612,6 +616,17 @@ private:
 	// Support API for stepping through a parse.						// 07/23/01 AM.
 	long currpass_;	// Current pass number.			// RENAMED.	// 08/22/02 AM.
 	Delt<Seqn> *seq_;	// Current pass.									// 07/23/01 AM.
+
+	// Per-pass time accumulation, for the ranked summary that finExecute
+	// prints.  The engine already logged one "[Pass N time: ...]" line per
+	// pass execution, but in pass order and buried in dbg.log, so nobody
+	// could see WHICH pass dominated without post-processing the log.
+	// Indexed by pass number; a pass that runs many times (eg a rec pass)
+	// accumulates.	// 08/04/26 AM.
+	double passsecs_[PASSTIMES_MAX];		// Total seconds, per pass number.
+	long passruns_[PASSTIMES_MAX];		// Times that pass executed.
+	_TCHAR *passnames_[PASSTIMES_MAX];	// Points into the Seqn; stable.
+	long passmax_;								// Highest pass number recorded.
 
 	// Debugging info about input file.									// 08/23/02 AM.
 	long inputpass_;	// If INTERNING, pass number of infile.	// 08/23/02 AM.
