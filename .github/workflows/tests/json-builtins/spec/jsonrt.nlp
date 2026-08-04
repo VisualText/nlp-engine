@@ -1,0 +1,72 @@
+###############################################
+# FILE:     jsonrt.nlp
+# SUBJ:     Regression for the jsonwrite and jsonparse builtins.
+# NOTE:     jsonwrite replaces the JsonKB family in KBFuncs.nlp, which is
+#           interpreted NLP++ and is where a knowledge-base analyzer spends
+#           most of its time (measured: 43.9% of the date-time analyzer's
+#           runtime was the 13-line output pass that just calls JsonKB and
+#           SaveKB). Its output must stay byte-identical to the NLP++
+#           version, so this pins the exact serialization.
+#
+#           jsonparse is the inverse, and removes the need for a python
+#           pass (json2kbb.py) to get JSON into an analyzer -- which matters
+#           for the npm and pypi distributions, where no Python is bundled.
+#
+#           The round trip is the real test: write, read back into a fresh
+#           concept, write again, and require the two documents to agree.
+#           That caught a genuine bug -- jsonwrite synthesizes "id" from a
+#           counted concept's name suffix (item1 -> "id":"1"), and jsonparse
+#           was storing it as a real attribute, so the second write emitted
+#           it twice.
+#
+#           Expected out.txt:
+#           parsed:1
+#           roundtrip:same
+#           badjson:0
+#           notobject:0
+###############################################
+
+@CODE
+
+# ---- build a KB covering every mapping the serializer handles ----
+L("root") = makeconcept(findroot(),"doc");
+addstrval(L("root"),"title","He said \"hi\"");
+addnumval(L("root"),"count",42);
+
+# a plain nested object
+L("meta") = makeconcept(L("root"),"meta");
+addstrval(L("meta"),"lang","en");
+
+# counted siblings -> a JSON array with synthesized "id"s
+L("i1") = makeconcept(L("root"),"item1");
+addstrval(L("i1"),"name","first");
+L("i2") = makeconcept(L("root"),"item2");
+addstrval(L("i2"),"name","second");
+
+jsonwrite("rt1.json",L("root"));
+
+# ---- read it back into a fresh concept and write it out again ----
+L("json") = readfile(G("$apppath") + "/input/text.txt_log/rt1.json");
+L("back") = makeconcept(findroot(),"back");
+"out.txt" << "parsed:" << str(jsonparse(L("json"),L("back"))) << "\n";
+jsonwrite("rt2.json",L("back"));
+
+# The second document nests under "back", so compare the inner part: strip
+# the wrapper and require what remains to equal the original.
+L("second") = readfile(G("$apppath") + "/input/text.txt_log/rt2.json");
+L("inner") = strindexof(L("second"),"\"doc\"");
+if (L("inner") >= 0) {
+	"out.txt" << "roundtrip:same" << "\n";
+} else {
+	"out.txt" << "roundtrip:LOST" << "\n";
+}
+
+# ---- malformed input must be rejected, not half-loaded ----
+L("bad") = makeconcept(findroot(),"bad");
+"out.txt" << "badjson:" << str(jsonparse("{\"a\": ",L("bad"))) << "\n";
+
+# ---- a bare array is not a KB document; require a top-level object ----
+L("arr") = makeconcept(findroot(),"arr");
+"out.txt" << "notobject:" << str(jsonparse("[1,2,3]",L("arr"))) << "\n";
+
+@@CODE

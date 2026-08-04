@@ -977,6 +977,8 @@ static bool fnStruniquechars(
 	static bool fnArrayreverse(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/03/26 DD.
 	static bool fnArrayslice(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/03/26 DD.
 	static bool fnPush(Delt<Iarg>*,Nlppp*,RFASem*&);			// 08/03/26 DD.
+	static bool fnJsonwrite(Delt<Iarg>*,Nlppp*,RFASem*&);		// 08/04/26 DD.
+	static bool fnJsonparse(Delt<Iarg>*,Nlppp*,RFASem*&);		// 08/04/26 DD.
 	static bool fnStriscaps(Delt<Iarg>*,Nlppp*,RFASem*&);
 	static bool fnStrisupper(Delt<Iarg>*,Nlppp*,RFASem*&);			// 11/20/01 AM.
 	static bool fnStrislower(Delt<Iarg>*,Nlppp*,RFASem*&);			// 11/20/01 AM.
