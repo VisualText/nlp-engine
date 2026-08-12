@@ -19,6 +19,11 @@ jobs:
     runs-on: windows-latest
     env:
       VCPKG_DEFAULT_TRIPLET: x64-windows
+      # Belt and braces: windows-latest presets VCPKG_ROOT=C:\vcpkg for its
+      # own preinstalled copy. Pin it to our submodule so nothing can pair
+      # that root with this repo. (Not the bug fixed below -- the steps were
+      # running C:\vcpkg's SCRIPTS, not merely honoring its root.)
+      VCPKG_ROOT: ${{ github.workspace }}/vcpkg
 
     steps:
       - uses: actions/checkout@v4
@@ -26,11 +31,30 @@ jobs:
           submodules: true
 
       - name: Vcpkg bootstrap Windows
-        run: bootstrap-vcpkg.bat
+        # PowerShell does NOT resolve executables from the current directory,
+        # so the bare name resolved on PATH to C:\vcpkg\bootstrap-vcpkg.bat --
+        # the runner's own preinstalled copy. working-directory never
+        # mattered: it bootstrapped C:\vcpkg from C:\vcpkg's metadata,
+        # pulling the 2026-07-27 tool, which then rejected THIS repo's
+        # submodule for declaring tool-data schema version 1.
+        # Our submodule pins VCPKG_TOOL_RELEASE_TAG=2026-04-08, which handles
+        # schema 1 fine -- the wrong bootstrap script was simply being run.
+        # Linux and macOS have always used ./bootstrap-vcpkg.sh; Windows was
+        # the only platform missing the relative-path prefix.
+        run: .\bootstrap-vcpkg.bat
         working-directory: vcpkg
 
       - name: Install 3rd Party
-        run: vcpkg install
+        # Invoke the vcpkg the step above just bootstrapped, NOT whatever
+        # "vcpkg" resolves to on PATH. The windows-latest runner ships a
+        # preinstalled vcpkg at C:\vcpkg which is on PATH and wins, so the
+        # bare command ran the SYSTEM binary against THIS repo's submodule
+        # root. Once that system tool auto-updated to the 2026-07-27
+        # release it started rejecting the pinned submodule outright:
+        #   vcpkg\scripts\vcpkg-tools.json: error: $ (a tool data file):
+        #     document schema version 1 is not supported by this version
+        # ...which fails the job before anything is compiled.
+        run: .\vcpkg.exe install
         working-directory: vcpkg
 
       - name: List $RUNNER_WORKSPACE before build
