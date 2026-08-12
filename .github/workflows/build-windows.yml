@@ -19,15 +19,10 @@ jobs:
     runs-on: windows-latest
     env:
       VCPKG_DEFAULT_TRIPLET: x64-windows
-      # windows-latest presets VCPKG_ROOT=C:\vcpkg (its own preinstalled
-      # copy). bootstrap-vcpkg.bat honors that, so running it from our
-      # submodule still downloaded the tool into C:\vcpkg and read C:\vcpkg's
-      # scripts/vcpkg-tool-metadata.txt -- pulling the 2026-07-27 tool, which
-      # then rejected OUR submodule for declaring schema version 1.
-      # Point VCPKG_ROOT at the submodule so bootstrap uses the tool version
-      # the submodule itself pins (VCPKG_TOOL_RELEASE_TAG=2026-04-08) and
-      # lands it where the next step looks. The cmake toolchain file already
-      # points here, so this makes all three steps agree on one root.
+      # Belt and braces: windows-latest presets VCPKG_ROOT=C:\vcpkg for its
+      # own preinstalled copy. Pin it to our submodule so nothing can pair
+      # that root with this repo. (Not the bug fixed below -- the steps were
+      # running C:\vcpkg's SCRIPTS, not merely honoring its root.)
       VCPKG_ROOT: ${{ github.workspace }}/vcpkg
 
     steps:
@@ -36,7 +31,17 @@ jobs:
           submodules: true
 
       - name: Vcpkg bootstrap Windows
-        run: bootstrap-vcpkg.bat
+        # PowerShell does NOT resolve executables from the current directory,
+        # so the bare name resolved on PATH to C:\vcpkg\bootstrap-vcpkg.bat --
+        # the runner's own preinstalled copy. working-directory never
+        # mattered: it bootstrapped C:\vcpkg from C:\vcpkg's metadata,
+        # pulling the 2026-07-27 tool, which then rejected THIS repo's
+        # submodule for declaring tool-data schema version 1.
+        # Our submodule pins VCPKG_TOOL_RELEASE_TAG=2026-04-08, which handles
+        # schema 1 fine -- the wrong bootstrap script was simply being run.
+        # Linux and macOS have always used ./bootstrap-vcpkg.sh; Windows was
+        # the only platform missing the relative-path prefix.
+        run: .\bootstrap-vcpkg.bat
         working-directory: vcpkg
 
       - name: Install 3rd Party
