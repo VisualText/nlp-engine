@@ -99,7 +99,11 @@ jobs:
 
       - name: Install 3rd Party (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
-        run: vcpkg install
+        # Same latent mismatch as the Windows job: use the vcpkg the
+        # bootstrap step just produced rather than whatever is on PATH, so a
+        # system vcpkg can never be paired with this repo's submodule root.
+        # Linux has not broken on this yet; this keeps it from doing so.
+        run: ./vcpkg install
         working-directory: vcpkg
 
       - name: Create Build Directory (Non-20.04)

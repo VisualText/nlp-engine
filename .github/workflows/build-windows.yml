@@ -30,7 +30,16 @@ jobs:
         working-directory: vcpkg
 
       - name: Install 3rd Party
-        run: vcpkg install
+        # Invoke the vcpkg the step above just bootstrapped, NOT whatever
+        # "vcpkg" resolves to on PATH. The windows-latest runner ships a
+        # preinstalled vcpkg at C:\vcpkg which is on PATH and wins, so the
+        # bare command ran the SYSTEM binary against THIS repo's submodule
+        # root. Once that system tool auto-updated to the 2026-07-27
+        # release it started rejecting the pinned submodule outright:
+        #   vcpkg\scripts\vcpkg-tools.json: error: $ (a tool data file):
+        #     document schema version 1 is not supported by this version
+        # ...which fails the job before anything is compiled.
+        run: .\vcpkg.exe install
         working-directory: vcpkg
 
       - name: List $RUNNER_WORKSPACE before build
