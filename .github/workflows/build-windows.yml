@@ -19,6 +19,16 @@ jobs:
     runs-on: windows-latest
     env:
       VCPKG_DEFAULT_TRIPLET: x64-windows
+      # windows-latest presets VCPKG_ROOT=C:\vcpkg (its own preinstalled
+      # copy). bootstrap-vcpkg.bat honors that, so running it from our
+      # submodule still downloaded the tool into C:\vcpkg and read C:\vcpkg's
+      # scripts/vcpkg-tool-metadata.txt -- pulling the 2026-07-27 tool, which
+      # then rejected OUR submodule for declaring schema version 1.
+      # Point VCPKG_ROOT at the submodule so bootstrap uses the tool version
+      # the submodule itself pins (VCPKG_TOOL_RELEASE_TAG=2026-04-08) and
+      # lands it where the next step looks. The cmake toolchain file already
+      # points here, so this makes all three steps agree on one root.
+      VCPKG_ROOT: ${{ github.workspace }}/vcpkg
 
     steps:
       - uses: actions/checkout@v4
