@@ -1,0 +1,25 @@
+###############################################
+# FILE:     modes.nlp
+# SUBJ:     Regression for the $dev and $silent run-mode globals.
+# NOTE:     NLP++ had no way to ask which mode the engine was run in, so
+#           analyzers hardcoded their diagnostic flags (parse-en-us has
+#           G("verbose") = 1 in ini.nlp) and no engine switch could reach
+#           them. $dev lets an analyzer gate its own debug output on what
+#           the caller actually asked for:
+#               G("verbose") = G("$dev");
+#
+#           Only the default and -DEV cases are asserted here. -SILENT
+#           selects conf_ZILCH, which sets foutfiles_ = false and so
+#           suppresses the analyzer's OWN output files as well -- there is
+#           no out.txt to assert against under -SILENT, by design.
+#
+#           Expected out.txt:
+#               default : dev=0 silent=0
+#               -DEV    : dev=1 silent=0
+###############################################
+
+@CODE
+
+"out.txt" << "dev=" << str(G("$dev")) << " silent=" << str(G("$silent")) << "\n";
+
+@@CODE
