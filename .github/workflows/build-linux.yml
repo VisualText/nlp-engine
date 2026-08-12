@@ -239,6 +239,34 @@ jobs:
           grep -qF '("note" "lone * and / here")' "$TREE" || { echo "FAIL(data block comments): dict string lost its * or /"; exit 1; }
           echo "[block comments] /* */ is skipped in .seq, .kb, .dict and .kbb"
 
+      - name: Run-mode globals ($dev / $silent, Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # NLP++ had no way to ask which mode the engine was run in, so
+          # analyzers hardcoded their debug flags and no engine switch could
+          # reach them. $dev lets a grammar gate its own diagnostic passes on
+          # the caller's intent: G("verbose") = G("$dev");
+          # -SILENT is NOT asserted here: it selects conf_ZILCH, which
+          # suppresses the analyzer's own output files too, so there is no
+          # out.txt to check under it.
+          FIX=.github/workflows/tests/runmode-globals
+          for mode in "" "-DEV"; do
+            rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+            ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" $mode
+            OUT="$FIX/input/text.txt_log/out.txt"
+            if [ ! -f "$OUT" ]; then
+              echo "FAIL(run-mode): no out.txt for mode '${mode:-default}'"; exit 1
+            fi
+            got=$(tr -d '\r' < "$OUT")
+            if [ -z "$mode" ]; then want="dev=0 silent=0"; else want="dev=1 silent=0"; fi
+            if [ "$got" != "$want" ]; then
+              echo "FAIL(run-mode ${mode:-default}): got '$got' wanted '$want'"; exit 1
+            fi
+          done
+          echo "[run-mode] \$dev and \$silent report the engine's run mode"
+
       - name: struniquechars regression (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash

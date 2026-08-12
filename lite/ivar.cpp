@@ -47,6 +47,7 @@ All rights reserved.
 #include "irule.h"			// 09/12/06 AM.
 #include "ivar.h"
 #include "nlp.h"
+#include "Eana.h"		// $dev / $silent run-mode globals.	// 08/04/26 AM.
 
 // WARN:	Ivartype and s_Vartype must be kept in sync.
 _TCHAR *s_Ivartype[] =
@@ -905,6 +906,26 @@ switch (vtype)
 			NLP *nlp = nlppp->getParse()->getNLP();
 			long processingDir = nlp->getIsFirstFile();
 			sem = new RFASem((long long)processingDir);
+			return true;
+			}
+		if (!strcmp_i(name, _T("dev")))			// $DEV			// 08/04/26 AM.
+			{
+			// True when the engine was run with -DEV.  Lets an analyzer
+			// gate its own diagnostic passes on the caller's intent
+			// instead of a hardcoded flag: G("verbose") = G("$dev");
+			// -DEV is the only mode that turns flogfiles_ on (conf_DEV /
+			// conf_DEBUG / conf_ALL), so it is the honest test.
+			Eana *eana = nlppp->getParse()->getEana();
+			sem = new RFASem((long long)(eana && eana->getFlogfiles() ? 1 : 0));
+			return true;
+			}
+		if (!strcmp_i(name, _T("silent")))		// $SILENT		// 08/04/26 AM.
+			{
+			// True when the engine was run with -SILENT.  Counterpart to
+			// $dev, for analyzers that want the strictest "produce only
+			// what was asked for" behavior.
+			Eana *eana = nlppp->getParse()->getEana();
+			sem = new RFASem((long long)(eana && eana->getFsilent() ? 1 : 0));
 			return true;
 			}
 		if (!strcmp_i(name, _T("passnum")))		// $PASSNUM		// 10/11/06 AM.
