@@ -495,6 +495,7 @@ public:
 	bool deleteostr(std::_t_ostream *);											// 05/23/01 AM.
 	Delt<Iarg> *findostr(std::_t_ostream*);										// 05/23/01 AM.
 	bool deleteostrs();														// 05/24/01 AM.
+	bool flushostrs();													// Flush all open NLP++ output files.
 
 	Delt<Iarg> *newblob(long);												// 02/27/03 AM.
 	bool deleteblobs();														// 02/27/03 AM.
