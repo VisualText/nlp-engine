@@ -6,6 +6,16 @@ on:
     types: [opened, synchronize, reopened]
   # Build the tagged commit so the release binary carries the right version.
   push:
+    # Also build on merges to master. Without a run on the default branch,
+    # the vcpkg binary cache added alongside this is useless across PRs:
+    # GitHub Actions lets a run read caches from its own ref and from the
+    # DEFAULT branch only, and nothing ever ran on master -- so every PR
+    # missed, rebuilt ICU (~10 min on Windows, ~4 min on Linux), and saved a
+    # private copy no other PR could see. A master run seeds the shared entry
+    # that PR runs then hit. It also means something finally verifies the
+    # merge result, which nothing did before.
+    branches:
+      - master
     tags:
       - '*'
 
@@ -105,11 +115,13 @@ jobs:
       # each package's ABI hash itself, so a partial restore-keys hit is safe:
       # anything that does not match is simply rebuilt.
       - name: Resolve vcpkg commit for cache key
+        if: matrix.id != 'docker-ubuntu-20.04'
         id: vcpkgkey
         shell: bash
         run: echo "sha=$(git -C vcpkg rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Cache vcpkg binary packages
+        if: matrix.id != 'docker-ubuntu-20.04'
         uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/vcpkg-bincache
@@ -120,6 +132,7 @@ jobs:
 
       # vcpkg errors out if the binary-cache directory does not exist yet.
       - name: Create vcpkg binary cache dir
+        if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash
         run: mkdir -p "${{ github.workspace }}/vcpkg-bincache"
 
