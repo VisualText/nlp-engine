@@ -891,13 +891,13 @@ for (darg = darg->Right(); darg; darg = darg->Right())
 		{
 		if (trunc)																// 06/05/00 AM.
 			{
-			ofile << _T("...") << std::flush;
+			ofile << _T("...");
 			return;
 			}
 		ofile << std::endl;
 		count = 0;
 		}
-	ofile << sep << std::flush;
+	ofile << sep;
 	genArg(darg->getData(), ofile);
 	}
 }
@@ -930,42 +930,38 @@ _TCHAR cbuf[MAXLINE];	// For converting to C string. // FIX.	// 02/19/08 AM.
 switch (arg->getType())
 	{
 	case IASTR:
-//		ofile << arg->getStr() << std::flush;		// 07/11/99 AM.
+//		ofile << arg->getStr();		// 07/11/99 AM.
 		// This may not be sufficient....
 		cbuf[0] = '\0';																// 05/10/07 AM.
 		clean_str(arg->getStr(), /*UP*/ cbuf);								// 05/10/07 AM.
 		ofile << _T("\"");								// 02/17/00 AM.
 		Iarg::genName(cbuf, ofile);
-		ofile << _T("\"") << std::flush;					// 02/17/00 AM.
+		ofile << _T("\"");					// 02/17/00 AM.
 		break;
 	case IANUM:
 		if (cast)																// 10/01/01 AM.
 			ofile <<_T("((long long)")												// 10/01/01 AM.
 			<< arg->getNum()
-			<< _T(")")																// 09/09/01 AM.
-			<< std::flush;
+			<< _T(")");																// 09/09/01 AM.
 		else																		// 10/01/01 AM.
 		ofile
-			<< arg->getNum()
-			<< std::flush;
+			<< arg->getNum();
 		break;
 	case IAFLOAT:																// 08/17/01 AM.
 		if (cast)																// 10/01/01 AM.
 			ofile <<_T("((float)")												// 10/01/01 AM.
 				<< arg->getFloat()											// 08/17/01 AM.
-				<< _T(")")															// 09/09/01 AM.
-				<< std::flush;
+				<< _T(")");															// 09/09/01 AM.
 		else																		// 10/01/01 AM.
 		ofile
-				<< arg->getFloat()											// 08/17/01 AM.
-				<< std::flush;
+				<< arg->getFloat();											// 08/17/01 AM.
 		break;																	// 08/17/01 AM.
 	case IAOSTREAM:
-		ofile << _T("<ostream>") << std::flush;
+		ofile << _T("<ostream>");
 		break;
 	case IASEM:
 	case IAREF:																	// 05/26/02 AM.
-//		ofile << "<sem>" << std::flush;											// 05/21/01 AM.
+//		ofile << "<sem>";											// 05/21/01 AM.
 		if (!(sem = arg->getSem()))										// 05/21/01 AM.
 			return;																// 05/21/01 AM.
 		switch (sem->getType())												// 05/21/01 AM.
@@ -977,30 +973,27 @@ switch (arg->getType())
 				clean_str(sem->getName(), /*UP*/ cbuf);				// 05/10/07 AM.
 				ofile << _T("\"");													// 05/21/01 AM.
 				Iarg::genName(cbuf, ofile);								// 05/21/01 AM.
-				ofile << _T("\"") << std::flush;										// 05/21/01 AM.
+				ofile << _T("\"");										// 05/21/01 AM.
 				break;															// 05/21/01 AM.
 			case RSLONG:														// 05/21/01 AM.
 				if (cast)														// 10/01/01 AM.
 					ofile <<_T("((long long)")										// 10/01/01 AM.
 						<< sem->getLong()										// 05/21/01 AM.
-						<< _T(")")													// 09/09/01 AM.
-						<< std::flush;
+						<< _T(")");													// 09/09/01 AM.
 				else																// 10/01/01 AM.
 				ofile
-						<< sem->getLong()										// 05/21/01 AM.
-						<< std::flush;
+						<< sem->getLong();										// 05/21/01 AM.
 				break;															// 05/21/01 AM.
 			case RSFLOAT:														// 09/09/01 AM.
 				if (cast)														// 10/01/01 AM.
 					ofile <<_T("((float)")										// 10/01/01 AM.
 						<< sem->getFloat()									// 09/09/01 AM.
-						<< _T(")") << std::flush;										// 09/09/01 AM.
+						<< _T(")");										// 09/09/01 AM.
 				else																// 10/01/01 AM.
 				ofile 
-						<< sem->getFloat()									// 09/09/01 AM.
-						<< std::flush;												// 09/09/01 AM.
+						<< sem->getFloat();									// 09/09/01 AM.
 			case RSOSTREAM:													// 05/21/01 AM.
-				ofile << _T("<ostream>") << std::flush;							// 05/21/01 AM.
+				ofile << _T("<ostream>");							// 05/21/01 AM.
 				break;															// 05/21/01 AM.
 			case RSNODE:														// 05/21/01 AM.
 				if (!(node = sem->getNode()))								// 05/21/01 AM.
@@ -1009,8 +1002,7 @@ switch (arg->getType())
 					return;														// 05/21/01 AM.
 				ofile << _T("pnode:\"")											// 05/21/01 AM.
 						<< str(pn->getName())								// 05/21/01 AM.
-						<< _T("\"")													// 05/21/01 AM.
-						<< std::flush;												// 05/21/01 AM.
+						<< _T("\"");													// 05/21/01 AM.
 				break;															// 05/21/01 AM.
 			case RS_KBCONCEPT:												// 05/21/01 AM.
 				// TODO: NEED CG OBJECT TO GET KB CONCEPTS.			// 05/21/01 AM.
@@ -1021,16 +1013,14 @@ switch (arg->getType())
 				cg->conceptName(conc, buf);
 				ofile << _T("concept:\"")										// 05/21/01 AM.
 						<< buf
-						<< _T("\"")													// 05/21/01 AM.
-						<< std::flush;												// 05/21/01 AM.
+						<< _T("\"");													// 05/21/01 AM.
 				break;															// 05/21/01 AM.
 			case RS_KBPHRASE:													// 05/21/01 AM.
 			case RS_KBATTR:													// 05/21/01 AM.
 			case RS_KBVAL:														// 05/21/01 AM.
 				ofile << _T("kbobject:\"")										// 05/21/01 AM.
 						<< _T("<name>")										// 05/21/01 AM.
-						<< _T("\"")													// 05/21/01 AM.
-						<< std::flush;												// 05/21/01 AM.
+						<< _T("\"");													// 05/21/01 AM.
 				break;															// 05/21/01 AM.
 			case RSARGS:														// 08/08/02 AM.
 				break;
@@ -1078,14 +1068,14 @@ if (!name || !*name)
 	return;
 if (*(name+1))			// Length greater than one.
 	{
-	ofile << name << std::flush;
+	ofile << name;
 	return;
 	}
 
 // Handle special single char names.
   if (alphabetic(*name))		// 09/22/99 AM.
 	{
-	ofile << name << std::flush;
+	ofile << name;
 	return;
 	}
 else if (_istpunct((_TUCHAR)*name))
@@ -1108,7 +1098,7 @@ switch(*name)
 	case ' ':  ofile << _T("\\ ");		break;
 	default:	  ofile << name;		break;
 	}
-ofile << std::flush;
+ofile;
 }
 
 
