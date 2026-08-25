@@ -24,6 +24,11 @@ jobs:
       # that root with this repo. (Not the bug fixed below -- the steps were
       # running C:\vcpkg's SCRIPTS, not merely honoring its root.)
       VCPKG_ROOT: ${{ github.workspace }}/vcpkg
+      # Re-use compiled vcpkg packages between runs. Without this, every run
+      # rebuilds ICU from source: measured at 10m04s of a 15m43s job, which was
+      # about two thirds of CI. "clear;" drops the default sources so only our
+      # cache dir is consulted.
+      VCPKG_BINARY_SOURCES: "clear;files,${{ github.workspace }}/vcpkg-bincache,readwrite"
 
     steps:
       - uses: actions/checkout@v4
@@ -44,6 +49,29 @@ jobs:
         run: .\bootstrap-vcpkg.bat
         working-directory: vcpkg
 
+      # The submodule commit pins the ports, so it decides what the built
+      # packages are; vcpkg.json decides which ones. Key on both. vcpkg checks
+      # each package's ABI hash itself, so a partial restore-keys hit is safe:
+      # anything that does not match is simply rebuilt.
+      - name: Resolve vcpkg commit for cache key
+        id: vcpkgkey
+        shell: bash
+        run: echo "sha=$(git -C vcpkg rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache vcpkg binary packages
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/vcpkg-bincache
+          key: vcpkg-${{ runner.os }}-${{ runner.arch }}-${{ steps.vcpkgkey.outputs.sha }}-${{ hashFiles('vcpkg.json') }}
+          restore-keys: |
+            vcpkg-${{ runner.os }}-${{ runner.arch }}-${{ steps.vcpkgkey.outputs.sha }}-
+            vcpkg-${{ runner.os }}-${{ runner.arch }}-
+
+      # vcpkg errors out if the binary-cache directory does not exist yet.
+      - name: Create vcpkg binary cache dir
+        shell: bash
+        run: mkdir -p "${{ github.workspace }}/vcpkg-bincache"
+
       - name: Install 3rd Party
         # Invoke the vcpkg the step above just bootstrapped, NOT whatever
         # "vcpkg" resolves to on PATH. The windows-latest runner ships a
@@ -56,10 +84,6 @@ jobs:
         # ...which fails the job before anything is compiled.
         run: .\vcpkg.exe install
         working-directory: vcpkg
-
-      - name: List $RUNNER_WORKSPACE before build
-        shell: pwsh
-        run: Get-ChildItem -Path $env:RUNNER_WORKSPACE -Recurse -Force | Select-Object FullName
 
       - name: Make build directory
         run: mkdir build
