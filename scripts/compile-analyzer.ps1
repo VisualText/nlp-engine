@@ -142,6 +142,44 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+# Build speed. The generated KB is one .cpp per table segment -- parse-en-us
+# emits 520 of them, 57 MB, and each expands to ~4.5 MB of identical engine
+# headers. Compiling them one at a time took ~15 minutes; batching them into
+# unity translation units and letting cl.exe use every core takes ~30 seconds.
+#
+# /MP matters on its own: `cmake --build --parallel N` with the Visual Studio
+# generator becomes msbuild /m:N, which parallelises PROJECTS. There is one
+# project here, so without /MP the whole thing compiles serially no matter
+# what --parallel says.
+#
+# Set -DNLP_UNITY_BUILD=OFF to fall back to one TU per file.
+option(NLP_UNITY_BUILD "Batch generated sources into unity translation units" ON)
+
+cmake_host_system_information(RESULT NLP_NPROC QUERY NUMBER_OF_LOGICAL_CORES)
+if(NOT NLP_NPROC OR NLP_NPROC LESS 1)
+    set(NLP_NPROC 4)
+endif()
+
+# Aim for ~2 batches per core so the pool stays fed, clamped so tiny analyzers
+# still spread across cores and huge ones do not build one enormous TU.
+function(nlp_set_unity target)
+    if(NOT NLP_UNITY_BUILD)
+        return()
+    endif()
+    get_target_property(_srcs `${target} SOURCES)
+    list(LENGTH _srcs _n)
+    math(EXPR _batch "`${_n} / (`${NLP_NPROC} * 2)")
+    if(_batch LESS 8)
+        set(_batch 8)
+    elseif(_batch GREATER 64)
+        set(_batch 64)
+    endif()
+    set_target_properties(`${target} PROPERTIES
+        UNITY_BUILD ON
+        UNITY_BUILD_BATCH_SIZE `${_batch})
+    message(STATUS "`${target}: `${_n} generated sources, unity batch `${_batch}")
+endfunction()
+
 # ICU comes via the vcpkg toolchain (passed on the cmake command line).
 # find_package picks the Debug or Release variant to match the active config,
 # which keeps the on-disk DLL deps in lockstep with the deployed icu*d?78.dll.
@@ -193,7 +231,7 @@ target_compile_definitions(nlp_kb PRIVATE
     # redefines INFINITY, triggering C4005 against ucrt's corecrt_math.h.
     MSVC_VERSION=`${MSVC_VERSION}
 )
-target_compile_options(nlp_kb PRIVATE /FI"StdAfx.h" /Zc:wchar_t)
+target_compile_options(nlp_kb PRIVATE /FI"StdAfx.h" /Zc:wchar_t /MP)
 
 target_link_directories(nlp_kb PRIVATE
     "$EngineLibDirCmake"
@@ -204,6 +242,8 @@ target_link_libraries(nlp_kb PRIVATE
     prim kbm consh words lite
     ICU::i18n ICU::uc ICU::data ICU::io
 )
+
+nlp_set_unity(nlp_kb)
 
 # --- Compiled analyzer (run.dll / rund.dll) -----------------------------
 # Engine looks for <appdir>/bin/rund.dll (Debug) or run.dll (Release) at
@@ -235,12 +275,14 @@ if(RUN_CPP)
         _WINDOWS
         MSVC_VERSION=`${MSVC_VERSION}
     )
-    target_compile_options(nlp_run PRIVATE /FI"StdAfx.h" /Zc:wchar_t)
+    target_compile_options(nlp_run PRIVATE /FI"StdAfx.h" /Zc:wchar_t /MP)
     target_link_directories(nlp_run PRIVATE "$EngineLibDirCmake")
     target_link_libraries(nlp_run PRIVATE
         prim kbm consh words lite
         ICU::i18n ICU::uc ICU::data ICU::io
     )
+
+    nlp_set_unity(nlp_run)
 endif()
 "@
 

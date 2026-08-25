@@ -1,3 +1,6 @@
+#ifndef KBM_CON_S_H
+#define KBM_CON_S_H
+
 /*******************************************************************************
 Copyright © 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
@@ -92,3 +95,5 @@ typedef struct con
    struct con *next;		/* if kind != PROXY, next hierarchy sibling.		*/
 								/* if kind == PROXY, then next elt of phrase.	*/
    } CON;
+
+#endif // KBM_CON_S_H
