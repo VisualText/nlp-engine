@@ -1,3 +1,6 @@
+#ifndef KBM_PTR_S_H
+#define KBM_PTR_S_H
+
 /*******************************************************************************
 Copyright � 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
@@ -80,3 +83,5 @@ typedef struct ptr
    PVAL v;
    struct ptr *next;
    }PTR;
+
+#endif // KBM_PTR_S_H

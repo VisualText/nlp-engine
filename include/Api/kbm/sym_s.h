@@ -1,3 +1,6 @@
+#ifndef KBM_SYM_S_H
+#define KBM_SYM_S_H
+
 /*******************************************************************************
 Copyright © 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
@@ -30,3 +33,5 @@ typedef struct sym
    struct sym *chain;		/* Ptr to next sym in conflict chain.	*/
    struct con *con;			/* Concept representing this word.		*/
    } SYM;
+
+#endif // KBM_SYM_S_H
