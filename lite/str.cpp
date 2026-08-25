@@ -18,6 +18,8 @@ All rights reserved.
 #include "lite/global.h"
 #include "dlist.h"					// 07/07/03 AM.
 #include "lite/iarg.h"	// 05/14/03 AM.
+#include <map>
+#include <vector>
 #include "std.h"			// 07/18/00 AM.
 #include "inline.h"		// 05/19/99 AM.
 #include "chars.h"		// 07/18/00 AM.
@@ -1204,14 +1206,43 @@ icu::Collator *collator = nocase_collator();
 if (!collator)								// Collator unavailable.
 	return false;
 
+// OPT: every caller (Arun.cpp: elt->match.reg / fail.reg / except.reg, and
+// elist.reg) passes one of the static const string tables emitted into the
+// generated analyzer code, so the same array was transcoded to UTF-16 again
+// for every candidate node, for every rule element. Profiling a compiled
+// parse-en-us run put ~18% of total runtime in here, nearly all of it in
+// UnicodeString::fromUTF8 rebuilding tables that never change.
+//
+// Cache the UTF-16 form in a small direct-mapped table keyed on the array
+// address. A std::map here is NOT cheap enough -- the tree lookup showed up
+// as 13% self time on its own -- so the slot is found with a shift+mask and
+// confirmed by comparing both the array pointer and its first element.
+struct Cached
+	{
+	const _TCHAR **arr;
+	const _TCHAR *first;
+	std::vector<icu::UnicodeString> vals;
+	Cached() : arr(0), first(0) {}
+	};
+static const unsigned CACHE_SLOTS = 512;			// power of two
+static Cached cache[CACHE_SLOTS];
+
+Cached &ent = cache[((size_t)arr >> 4) & (CACHE_SLOTS - 1)];
+if (ent.arr != arr || ent.first != *arr)
+	{
+	ent.arr = arr;
+	ent.first = *arr;
+	ent.vals.clear();
+	for (const _TCHAR **p = arr; *p; ++p)
+		ent.vals.push_back(icu::UnicodeString::fromUTF8(icu::StringPiece(*p)));
+	}
+
 icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(str));
 
-while (*arr)
+for (size_t i = 0; i < ent.vals.size(); ++i)
 	{
-	icu::UnicodeString astr = icu::UnicodeString::fromUTF8(icu::StringPiece(*arr));
-	if (collator->compare(astr,ustr) == icu::Collator::EComparisonResult::EQUAL)
+	if (collator->compare(ent.vals[i],ustr) == icu::Collator::EComparisonResult::EQUAL)
 		return true;
-	++arr;
 	}
 return false;
 }

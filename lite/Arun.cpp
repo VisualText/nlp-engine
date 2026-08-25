@@ -16,6 +16,7 @@ All rights reserved.
 #include <float.h>					// 08/17/01 AM.
 //#include <tchar.h>					// 09/26/01 AM.
 #include <locale.h>					// 01/06/03 AM.
+#include <stdlib.h>					// getenv, for the flush policy.
 #include "consh/libconsh.h"		// 02/14/01 AM.
 #include "consh/cg.h"				// 02/14/01 AM.
 #include "lite/global.h"			// 01/24/01 AM.
@@ -8679,6 +8680,28 @@ return sem;	// "no-op"
 * SUBJ:	NLP++ output operator, compiled runtime.
 ********************************************/
 
+
+// NLP-ENGINE-499/505 flushed on every `<<` so that print-debugging survived
+// a crash. Profiling a compiled parse-en-us run showed the cost: the analyzer
+// writes ~6 MB across 19 files, and flushing per write turned that into a
+// WriteFile plus a file-position query per token -- ~40% of total runtime.
+//
+// Durability is now provided by Parse::flushostrs(), called at the end of
+// every pass, so the output of all completed passes is on disk if the process
+// dies. Set NLP_FLUSH_EVERY_WRITE=1 to restore per-write flushing when you
+// need to bisect a crash *within* one pass.
+static void arun_flush(std::_t_ostream *ostr)
+{
+static int every = -1;
+if (every < 0)
+	{
+	const char *e = getenv("NLP_FLUSH_EVERY_WRITE");
+	every = (e && *e && *e != '0') ? 1 : 0;
+	}
+if (every)
+	ostr->flush();
+}
+
 std::_t_ostream *Arun::out(_TCHAR *fname, RFASem *sem, Nlppp *nlppp)
 {
 Ipair *pair;
@@ -8696,17 +8719,14 @@ if (!Var::filevar(fname,nlppp->getParse(),
 	delete sem;												// MEM LEAK.	// 06/12/00 AM.
 	return 0;
 	}
-// NLP-ENGINE-499: flush after each write so user-facing diagnostic output
-// (e.g. `"dbg.txt" << "marker N";` from NLP++ source) is visible in the
-// file as it's produced, not only at clean shutdown. Without flushing,
-// buffered writes are lost if the process crashes mid-pass, making it
-// impossible to bisect a SIGSEGV by sprinkling print statements in the
-// .nlp source. Performance impact is negligible for typical diagnostic
-// volumes; the streams aren't being hammered.
+// NLP-ENGINE-499: user-facing diagnostic output (e.g. `"dbg.txt" << "marker
+// N";` from NLP++ source) must survive a crash, not only a clean shutdown.
+// This used to flush on every write. It no longer does -- see arun_flush()
+// above; durability comes from the end-of-pass Parse::flushostrs().
 if (ostr)																		// 08/04/02 AM.
 	{
 	sem->out(ostr);
-	ostr->flush();
+	arun_flush(ostr);
 	}
 delete sem;				// No one using sem past this point.		// 05/27/00 AM.
 return ostr;
@@ -8730,7 +8750,7 @@ if (str && *str																// 04/30/01 AM.
 	&& ostr)																		// 08/04/02 AM.
 	{
 	*ostr << str;
-	ostr->flush();					// NLP-ENGINE-499
+	arun_flush(ostr);					// NLP-ENGINE-499
 	}
 return ostr;
 }
@@ -8752,7 +8772,7 @@ if (!Var::filevar(fname,nlppp->getParse(),
 if (ostr)								// NLP-ENGINE-499
 	{
 	*ostr << num;
-	ostr->flush();
+	arun_flush(ostr);
 	}
 return ostr;
 }
@@ -8775,7 +8795,7 @@ if (!Var::filevar(fname,nlppp->getParse(),
 if (ostr)								// NLP-ENGINE-499
 	{
 	*ostr << (flag ? 1 : 0);
-	ostr->flush();
+	arun_flush(ostr);
 	}
 return ostr;
 }
@@ -8799,7 +8819,7 @@ if (!Var::filevar(fname,nlppp->getParse(),
 if (ostr)																		// 08/04/02 AM.
 	{
 	*ostr << num;
-	ostr->flush();					// NLP-ENGINE-499
+	arun_flush(ostr);					// NLP-ENGINE-499
 	}
 return ostr;
 }
@@ -8892,7 +8912,7 @@ if (!sem)																		// 08/19/01 AM.
 if (ostr)																		// 08/04/02 AM.
 	{
 	sem->out(ostr);	// PRINT IT.										// 08/19/01 AM.
-	ostr->flush();			// NLP-ENGINE-505 (var-LHS counterpart to 499).
+	arun_flush(ostr);			// NLP-ENGINE-505 (var-LHS counterpart to 499).
 	}
 
 delete ostrsem;																// 08/19/01 AM.
@@ -8976,7 +8996,7 @@ if (!str || !*str)															// 08/19/01 AM.
 if (ostr)																		// 08/04/02 AM.
 	{
 	*ostr << str;	// PRINT IT.											// 08/19/01 AM.
-	ostr->flush();			// NLP-ENGINE-505 (var-LHS counterpart to 499).
+	arun_flush(ostr);			// NLP-ENGINE-505 (var-LHS counterpart to 499).
 	}
 
 delete ostrsem;																// 08/19/01 AM.
@@ -9053,7 +9073,7 @@ switch(ostrsem->getType())													// 08/07/02 AM.
 if (ostr)																		// 08/04/02 AM.
 	{
 	*ostr << num;	// PRINT IT.											// 08/19/01 AM.
-	ostr->flush();			// NLP-ENGINE-505 (var-LHS counterpart to 499).
+	arun_flush(ostr);			// NLP-ENGINE-505 (var-LHS counterpart to 499).
 	}
 
 delete ostrsem;																// 08/19/01 AM.
@@ -9132,7 +9152,7 @@ switch(ostrsem->getType())
 if (ostr)
 	{
 	*ostr << (flag ? 1 : 0);	// PRINT IT.
-	ostr->flush();			// NLP-ENGINE-505 (var-LHS counterpart to 499).
+	arun_flush(ostr);			// NLP-ENGINE-505 (var-LHS counterpart to 499).
 	}
 
 delete ostrsem;
@@ -9210,7 +9230,7 @@ switch(ostrsem->getType())													// 08/07/02 AM.
 if (ostr)																		// 08/04/02 AM.
 	{
 	*ostr << num;	// PRINT IT.											// 08/19/01 AM.
-	ostr->flush();			// NLP-ENGINE-505 (var-LHS counterpart to 499).
+	arun_flush(ostr);			// NLP-ENGINE-505 (var-LHS counterpart to 499).
 	}
 
 delete ostrsem;																// 08/19/01 AM.
@@ -9226,7 +9246,7 @@ if (!sem)
 if (ostr)																		// 08/04/02 AM.
 	{
 	sem->out(ostr);	// PRINT IT.
-	ostr->flush();			// NLP-ENGINE-505 (chained-write counterpart to 499).
+	arun_flush(ostr);			// NLP-ENGINE-505 (chained-write counterpart to 499).
 	}
 delete sem;
 return ostr;
@@ -9238,7 +9258,7 @@ if (str && *str																// 04/30/01 AM.
 		  && ostr)																// 08/04/02 AM.
 	{
 	*ostr << str;
-	ostr->flush();			// NLP-ENGINE-505 (chained-write counterpart to 499).
+	arun_flush(ostr);			// NLP-ENGINE-505 (chained-write counterpart to 499).
 	}
 return ostr;
 }
@@ -9248,7 +9268,7 @@ std::_t_ostream *Arun::out(std::_t_ostream *ostr, long long num, Nlppp *nlppp)
 if (ostr)																		// 08/04/02 AM.
 	{
 	*ostr << num;
-	ostr->flush();			// NLP-ENGINE-505 (chained-write counterpart to 499).
+	arun_flush(ostr);			// NLP-ENGINE-505 (chained-write counterpart to 499).
 	}
 return ostr;
 }
@@ -9258,7 +9278,7 @@ std::_t_ostream *Arun::out(std::_t_ostream *ostr, bool flag, Nlppp *nlppp)		// 0
 if (ostr)
 	{
 	*ostr << (flag ? 1 : 0);
-	ostr->flush();			// NLP-ENGINE-505 (chained-write counterpart to 499).
+	arun_flush(ostr);			// NLP-ENGINE-505 (chained-write counterpart to 499).
 	}
 return ostr;
 }
@@ -9268,7 +9288,7 @@ std::_t_ostream *Arun::out(std::_t_ostream *ostr, float num, Nlppp *nlppp)		// 0
 if (ostr)																		// 08/04/02 AM.
 	{
 	*ostr << num;
-	ostr->flush();			// NLP-ENGINE-505 (chained-write counterpart to 499).
+	arun_flush(ostr);			// NLP-ENGINE-505 (chained-write counterpart to 499).
 	}
 return ostr;
 }

@@ -883,6 +883,8 @@ sprintf_s(fname, _T("%s%c%s%s%d%s"),
 	bool ftimepass,
 	clock_t &s_time)
 {
+// Make completed passes' output durable without flushing on every write.
+flushostrs();
 if (flogfiles)																	// 03/08/00 AM.
 	resetOut(fout, sout);
 if (ftimepass)																	// 10/13/99 AM.
@@ -1368,6 +1370,38 @@ for (delt = ostrs_->getFirst(); delt; delt = delt->Right())
 		return delt;				// Found it.
 	}
 return 0;
+}
+
+
+/********************************************
+* FN:		FLUSHOSTRS
+* SUBJ:	Flush every open NLP++ output file.
+* NOTE:	Called at the end of each pass (Parse::finPass), so a crash leaves
+*			the output of all completed passes on disk. This replaces the
+*			per-write ostr->flush() that NLP-ENGINE-499/505 added in Arun::out.
+*			That flushed once per `<<`: on an analyzer writing a few MB
+*			(parse-en-us emits ~6 MB across 19 files) it cost a WriteFile plus a
+*			file-position query per token, measured at ~40% of total runtime for
+*			a compiled run. Flushing per pass is O(passes), not O(writes).
+*			Set NLP_FLUSH_EVERY_WRITE=1 to restore the old behaviour when
+*			bisecting a crash *within* a single pass.
+********************************************/
+
+bool Parse::flushostrs()
+{
+if (!ostrs_)
+	return false;
+
+Delt<Iarg> *delt;
+Iarg *arg;
+std::_t_ostream *ostr;
+for (delt = ostrs_->getFirst(); delt; delt = delt->Right())
+	{
+	arg = delt->getData();
+	if (arg && (ostr = arg->getOstream()))
+		ostr->flush();
+	}
+return true;
 }
 
 
