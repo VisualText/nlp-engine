@@ -10,6 +10,16 @@ on:
   # version. (A `tags:` filter under `pull_request` is ignored by GitHub --
   # it must live under `push:`.)
   push:
+    # Also build on merges to master. Without a run on the default branch,
+    # the vcpkg binary cache added alongside this is useless across PRs:
+    # GitHub Actions lets a run read caches from its own ref and from the
+    # DEFAULT branch only, and nothing ever ran on master -- so every PR
+    # missed, rebuilt ICU (~10 min on Windows, ~4 min on Linux), and saved a
+    # private copy no other PR could see. A master run seeds the shared entry
+    # that PR runs then hit. It also means something finally verifies the
+    # merge result, which nothing did before.
+    branches:
+      - master
     tags:
       - '*'
 
