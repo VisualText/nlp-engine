@@ -491,6 +491,20 @@ _TCHAR *algo = parse->getAlgo();											// 05/31/00 AM.
 // Point to the corresponding header file.					// 04/04/09 AM.
 *fcode << _T("#include \"pass") << id << ".h\"" << std::endl;	// 04/04/09 AM.
 
+// Rule bodies are emitted as one function per rule (Irule::genRule) so each
+// stack frame holds only what that rule needs. Every one of them has exactly
+// one call site, so the compiler happily inlines them all back into the
+// dispatcher and rebuilds the single huge frame -- measured on parse-en-us,
+// matchRule75 asked for 89,404 bytes of stack. Mark them noinline.
+// Guarded so unity/jumbo builds can concatenate pass files safely.
+*fcode << _T("#ifndef NLP_NOINLINE") << std::endl;
+*fcode << _T("#if defined(_MSC_VER)") << std::endl;
+*fcode << _T("#define NLP_NOINLINE __declspec(noinline)") << std::endl;
+*fcode << _T("#else") << std::endl;
+*fcode << _T("#define NLP_NOINLINE __attribute__((noinline))") << std::endl;
+*fcode << _T("#endif") << std::endl;
+*fcode << _T("#endif") << std::endl;
+
 *fcode << _T("// CODE GENERATION FOR PASS ") << id << _T(".") << std::endl << std::endl;
 
 _TCHAR codebuf[MAXSTR];

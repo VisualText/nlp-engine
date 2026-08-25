@@ -2244,25 +2244,33 @@ bool Irule::genRule(Dlist<Irule> *rules, _TCHAR *rulebuf, Gen *gen)
 {
 std::_t_ofstream *fcode = gen->passc_;	// 04/03/09 AM.
 
-*fcode << _T("bool ") << rulebuf;
-Gen::nl(fcode);																// 04/04/03 AM.
-*fcode << _T("{");
-Gen::nl(fcode);																// 04/04/03 AM.
+// OPT: this used to emit every rule in the pass as a `case` of one big
+// `switch (ruleno)` inside a single matchRule<id>() function. MSVC lays out
+// the union of all the cases' locals in one frame, so the frame grew with the
+// pass: in parse-en-us, matchRule75 asked for 89,404 bytes and matchRule48 for
+// 46,472. Every single rule attempt then paid _chkstk touching ~22 stack pages
+// before doing any matching -- profiling a compiled run put matchRule75 plus
+// _chkstk at ~12% of total runtime.
+//
+// Emit one function per rule instead, so each frame holds only what that rule
+// needs, and leave matchRule<id>() as a thin dispatcher. Safe because the
+// generated rule bodies use no goto/continue, never touch `done` (only the
+// default arm does), and never use pcoll.
 
-*fcode << _T("NODE *pcoll=0;");
-Gen::nl(fcode);																// 04/04/03 AM.
+// Base name for the per-rule functions: rulebuf is a full signature,
+// "matchRule<id>(int ruleno,bool &done,Nlppp *nlppp)".
+_TCHAR base[MAXSTR];
+_tcscpy(base, rulebuf);
+_TCHAR *paren = _tcschr(base, '(');
+if (paren)
+	*paren = 0;
 
-*fcode << _T("switch (ruleno)");
-Gen::nl(fcode);																// 04/04/03 AM.
-
+int ii;
 _TCHAR *saveindent = gen->indent_;
 _TCHAR indent[64];
-_stprintf(indent, _T("%s\t"), saveindent);
-gen->indent_ = indent;
+_stprintf(indent, _T("%s	"), saveindent);
 
-*fcode << indent << _T("{");
-Gen::nl(fcode);																// 04/04/03 AM.
-
+// ONE FUNCTION PER RULE.
 Delt<Irule> *drule;
 Irule *rule;
 int ruleno=0;	// Rule has its count, but this is faster.
@@ -2271,45 +2279,66 @@ for (drule = rules->getFirst(); drule; drule = drule->Right())
 	rule = drule->getData();
 	gen->setRuleid(++ruleno);
 
-	// Gen code for rule.
-	*fcode << indent << _T("case ")
-			 //<< rule->getNum()	// Bug. Not set in recurse rule. // 05/31/00 AM.
-			 << ruleno					// Fix.								// 05/31/00 AM.
-			 << _T(":");
-	Gen::nl(fcode);															// 04/04/03 AM.
+	*fcode << _T("NLP_NOINLINE static bool ") << base << _T("_") << ruleno
+			 << _T("(Nlppp *nlppp)");
+	Gen::nl(fcode);
+	*fcode << _T("{");
+	Gen::nl(fcode);
+	*fcode << _T("NODE *pcoll=0;(void)pcoll;");
+	Gen::nl(fcode);
 
 	// Pretty-printing the rule also.									// 05/19/00 AM.
-	*fcode << indent << _T("\t") << _T("/* ");									// 04/04/03 AM.
-	rule->genRule(_T(" "), *fcode,												// 05/19/00 AM.
-						true);	// TRUNCATE LONG LISTS.					// 06/05/00 AM.
-	*fcode << _T(" */");															// 04/04/03 AM.
-	Gen::eol(fcode);															// 04/04/03 AM.
+	*fcode << _T("/* ");
+	rule->genRule(_T(" "), *fcode,											// 05/19/00 AM.
+					true);	// TRUNCATE LONG LISTS.					// 06/05/00 AM.
+	*fcode << _T(" */");
+	Gen::eol(fcode);
 
 	// Match trigger.
 	// Move left.
 	// Move right.
 	// If succeeded, perform check and post actions.
+	gen->indent_ = indent;
 	rule->gen(gen);
-	*fcode << indent << _T("\t") << _T("break;");
-	Gen::eol(fcode);															// 04/04/03 AM.
+	gen->indent_ = saveindent;
+
+	*fcode << _T("return false;");
+	Gen::nl(fcode);
+	*fcode << _T("}");
+	Gen::nl(fcode);
+	Gen::eol(fcode);
 	}
 
+// DISPATCHER.
+// Dispatch through a table of function pointers rather than a switch whose
+// arms call the per-rule functions directly. Each per-rule function has
+// exactly one call site, so MSVC inlines them straight back into the
+// dispatcher and rebuilds the very frame we are trying to split up (measured:
+// zero per-rule functions survived in run.dll, matchRule75 still asked for
+// 89,404 bytes). Taking their addresses forces them to be emitted as real
+// functions and makes the call indirect.
+*fcode << _T("static bool (* const ") << base << _T("_fns[])(Nlppp *) = {0,");
+for (ii = 1; ii <= ruleno; ++ii)
+	{
+	*fcode << base << _T("_") << ii;
+	if (ii < ruleno)
+		*fcode << _T(",");
+	}
+*fcode << _T("};");
+Gen::eol(fcode);
 
-*fcode << indent << _T("default:");
-Gen::nl(fcode);																// 04/04/03 AM.
-*fcode << gen->indent_ << _T("done = true;");
-Gen::nl(fcode);																// 04/04/03 AM.
-*fcode << gen->indent_ << _T("return false;");
-Gen::nl(fcode);																// 04/04/03 AM.
-*fcode << indent << _T("}");
-Gen::nl(fcode);																// 04/04/03 AM.
-
-//*fcode << "nlppp->node_ = node;" << std::endl;
-*fcode << _T("return false;");
-Gen::nl(fcode);																// 04/04/03 AM.
+*fcode << _T("bool ") << rulebuf;
+Gen::nl(fcode);
+*fcode << _T("{");
+Gen::nl(fcode);
+*fcode << _T("if (ruleno < 1 || ruleno > ") << ruleno
+		 << _T("){done = true;return false;}");
+Gen::nl(fcode);
+*fcode << _T("return ") << base << _T("_fns[ruleno](nlppp);");
+Gen::nl(fcode);
 *fcode << _T("}");
-Gen::nl(fcode);																// 04/04/03 AM.
-Gen::eol(fcode);																// 04/04/03 AM.
+Gen::nl(fcode);
+Gen::eol(fcode);
 gen->indent_ = saveindent;
 return true;
 }
