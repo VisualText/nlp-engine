@@ -294,6 +294,8 @@ file_to_buffer(fname, buf,		// Suck in the file.
 *			buf is at lookahead char.  eol tells if end of current line seen.
 *			buf returned null only at end of buffer.
 *			Should also skip # signs!
+*			08/26/26 DD.  "//" starts a line comment too, same as "#".  The
+*			comment text is stored either way.
 *			A SPECIALIZED FUNCTION.
 * WARN:	MODIFIES GIVEN BUFFER.  Places NULLS for token delimiters.
 ********************************************/
@@ -324,8 +326,11 @@ if (*buf == '\n')		// At end of current line.
 	++buf;
 	return 0;
 	}
-else if (*buf == '#')	// Comment
+else if (*buf == '#'		// Comment
+	 || (*buf == '/' && *(buf+1) == '/'))	// C++ style.	// 08/26/26 DD.
 	{
+	if (*buf == '/')	// Step onto the 2nd slash; loop starts past it. // 08/26/26 DD.
+		++buf;																	// 08/26/26 DD.
 	found = false;			// Haven't found nonwhite yet.	// 09/02/99 AM.
 	while (*++buf && *buf != '\n'			// Find end of line.
 				&& *buf != '\r')					// 02/12/99 AM.

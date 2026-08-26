@@ -50,12 +50,16 @@ All rights reserved.
 //						';' for .kb command files -- or 0 for none. Text from it to
 //						end of line is left exactly as-is, since the caller's own
 //						lexer already handles it.
+//	cppLineComment	True if the file also takes "//" to end of line -- the .seq
+//						file does. Treated exactly like lineComment: left as-is for
+//						the caller's lexer, and a "/*" inside one stays text.
 //
 // Returns true if anything was blanked.
 LIBCONSH_API bool strip_block_comments(
 	_TCHAR *buf,
 	bool &inBlock,
-	_TCHAR lineComment
+	_TCHAR lineComment,
+	bool cppLineComment = false
 	);
 
 #endif	// BLOCKCOM_H_

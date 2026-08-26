@@ -253,6 +253,8 @@ jobs:
           # fixture puts comments in all four -- .seq (where a leading "/"
           # already means "inactive pass"), .kb, .dict and .kbb -- and probes
           # the loaded KB to prove the entries around them survived intact.
+          # The .seq also takes "//" line comments, which collide with the same
+          # leading "/", so the fixture covers those too.
           FIX=.github/workflows/tests/block-comments-data
           rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
           ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
@@ -276,7 +278,7 @@ jobs:
           # .dict string values must keep their delimiters byte-for-byte.
           grep -qF '("note" "a /* b */ c")' "$TREE" || { echo "FAIL(data block comments): dict string lost its /* */"; exit 1; }
           grep -qF '("note" "lone * and / here")' "$TREE" || { echo "FAIL(data block comments): dict string lost its * or /"; exit 1; }
-          echo "[block comments] /* */ is skipped in .seq, .kb, .dict and .kbb"
+          echo "[block comments] /* */ and .seq // are skipped in .seq, .kb, .dict and .kbb"
 
       - name: Run-mode globals ($dev / $silent, Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'

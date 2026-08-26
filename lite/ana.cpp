@@ -266,8 +266,9 @@ if (len <= 0)
 // leading '/' on a sequence line already means "inactive pass", so parseSeq
 // would read "/*" as an inactive pass named "*". Blanking the comment first
 // leaves an all-white line, which parseSeq already ignores.
+// "//" is a line comment here too, so a "/*" written inside one is text.
 bool inBlock = false;
-strip_block_comments(buf, inBlock, '#');
+strip_block_comments(buf, inBlock, '#', true);					// 08/26/26 DD.
 if (inBlock)
 	{
 	// Everything after the "/*" was blanked, which would leave an analyzer
@@ -347,7 +348,9 @@ npasses_ = 0;				// COUNTING PASSES.							// 06/13/00 AM.
 while (*buf)	// For each line of file.
 	{
 	// Slash signifies an inactive pass.								// 01/07/99 AM.
-	if (*buf == '/')
+	// TWO slashes are a "//" line comment, not an inactive pass	// 08/26/26 DD.
+	// named "/...".  Leave those for next_token.					// 08/26/26 DD.
+	if (*buf == '/' && *(buf+1) != '/')								// 08/26/26 DD.
 		{
 		++buf;			// Skip the slash.					// OPT.	// 11/29/00 AM.
 		active = false;
