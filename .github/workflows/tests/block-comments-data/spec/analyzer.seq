@@ -4,3 +4,8 @@
 dicttokz	nil	# tokenize against the dictionary
 /* one-liner */
 nlp	probe	/* trailing */	# dump what the KB actually loaded
+// "//" is a line comment here too, and a "/*" inside one stays text.
+   // Indented, and the engine must not read the leading "/" as an
+   // inactive pass named "/...".
+/nlp	probe	// a single leading slash still means INACTIVE -- probe must
+		// not run twice.

@@ -29,7 +29,8 @@ All rights reserved.
 LIBCONSH_API bool strip_block_comments(
 	_TCHAR *buf,
 	bool &inBlock,
-	_TCHAR lineComment
+	_TCHAR lineComment,
+	bool cppLineComment
 	)
 {
 if (!buf)
@@ -83,6 +84,13 @@ while (*p)
 		{
 		// Leave the line comment alone -- the caller's lexer owns it. Skipping
 		// past it is what keeps a "/*" written inside one from opening a block.
+		while (*p && *p != '\n')
+			++p;
+		}
+	else if (cppLineComment && p[0] == '/' && p[1] == '/')
+		{
+		// Same deal as lineComment, for the files that take "//" as well.
+		// Checked before "/*" so that "//*" is a line comment, not a block.
 		while (*p && *p != '\n')
 			++p;
 		}
