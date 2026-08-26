@@ -1,3 +1,6 @@
+#ifndef NLP_CS_INCLUDE_QCONSH_BIND_H
+#define NLP_CS_INCLUDE_QCONSH_BIND_H
+
 /****************************************
 Copyright © 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
@@ -28,3 +31,5 @@ extern LIBQCONSH_API bool
 bind_sys(CG*);
 extern LIBQCONSH_API bool
 unbind_all(CG*);
+
+#endif // NLP_CS_INCLUDE_QCONSH_BIND_H

@@ -1,3 +1,6 @@
+#ifndef NLP_CS_INCLUDE_CONAN_ZONE_H
+#define NLP_CS_INCLUDE_CONAN_ZONE_H
+
 /****************************************
 Copyright © 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
@@ -18,3 +21,5 @@ extern PN		 *zone_line_tree();
 extern void		  zone_line_tree_rec();
 extern PN		 *zone_lines();
 extern void		  zone_lines_rec();
+
+#endif // NLP_CS_INCLUDE_CONAN_ZONE_H

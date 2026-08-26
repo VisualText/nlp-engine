@@ -1,3 +1,6 @@
+#ifndef NLP_INCLUDE_API_WEB_TEAR_H
+#define NLP_INCLUDE_API_WEB_TEAR_H
+
 /*******************************************************************************
 Copyright (c) 1999-2009 by Text Analysis International, Inc.
 All rights reserved.
@@ -38,3 +41,5 @@ public:
 
 
 WEB_API int tear_url(LPCTSTR url, _TCHAR *outfile);	// 02/11/99 AM.
+
+#endif // NLP_INCLUDE_API_WEB_TEAR_H

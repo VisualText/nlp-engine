@@ -1,3 +1,6 @@
+#ifndef NLP_LITE_FUNCS_H
+#define NLP_LITE_FUNCS_H
+
 /********************************************nlpFuncs***********************************
 Copyright (c) 2001-2010 by Text Analysis International, Inc.
 All rights reserved.
@@ -384,3 +387,5 @@ _T("push"),
 _T("jsonwrite"),
 _T("jsonparse"),
 0 };
+
+#endif // NLP_LITE_FUNCS_H

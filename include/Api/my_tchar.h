@@ -1,3 +1,6 @@
+#ifndef NLP_INCLUDE_API_MY_TCHAR_H
+#define NLP_INCLUDE_API_MY_TCHAR_H
+
 /*******************************************************************************
 Copyright (c) 2006-2009 by Text Analysis International, Inc.
 All rights reserved.
@@ -113,3 +116,5 @@ All rights reserved.
 #endif
 
 #endif
+
+#endif // NLP_INCLUDE_API_MY_TCHAR_H

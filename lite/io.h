@@ -1,3 +1,6 @@
+#ifndef NLP_LITE_IO_H
+#define NLP_LITE_IO_H
+
 /*******************************************************************************
 Copyright (c) 2001-2010 by Text Analysis International, Inc.
 All rights reserved.
@@ -92,3 +95,5 @@ bool file_tail(															// 12/24/99 AM.
 	/*UP*/
 	_TCHAR* &ftail			// Pointer to tail in buffer.
 	);
+
+#endif // NLP_LITE_IO_H

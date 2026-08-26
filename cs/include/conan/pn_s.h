@@ -1,3 +1,6 @@
+#ifndef NLP_CS_INCLUDE_CONAN_PN_S_H
+#define NLP_CS_INCLUDE_CONAN_PN_S_H
+
 /****************************************
 Copyright © 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
@@ -59,3 +62,5 @@ typedef struct pn
    							points to the parent node. */
    CON *mean;			/* Dynamic info for node.		*/
    } PN;
+
+#endif // NLP_CS_INCLUDE_CONAN_PN_S_H

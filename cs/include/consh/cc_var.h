@@ -1,3 +1,6 @@
+#ifndef NLP_CS_INCLUDE_CONSH_CC_VAR_H
+#define NLP_CS_INCLUDE_CONSH_CC_VAR_H
+
 /****************************************
 Copyright © 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
@@ -69,3 +72,5 @@ extern LIBCONSH_API ID
 	;
 #endif
 
+
+#endif // NLP_CS_INCLUDE_CONSH_CC_VAR_H

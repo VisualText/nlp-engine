@@ -1,3 +1,6 @@
+#ifndef NLP_CS_INCLUDE_KBM_DICT_H
+#define NLP_CS_INCLUDE_KBM_DICT_H
+
 /****************************************
 Copyright © 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
@@ -23,3 +26,5 @@ All rights reserved.
 //extern LIBKBM_API CON		*dict_find_index(char *name);			// 05/31/00 AM.
 //extern LIBKBM_API CON		*dict_find_word(char *name);
 //extern LIBKBM_API CON		*dict_find_word_lc(char *name);
+
+#endif // NLP_CS_INCLUDE_KBM_DICT_H

@@ -1,3 +1,6 @@
+#ifndef NLP_LITE_WNFUNCTIONS_H
+#define NLP_LITE_WNFUNCTIONS_H
+
 /*******************************************************************************
 Copyright (c) 1998-2010 by Text Analysis International, Inc.
 All rights reserved.
@@ -23,3 +26,5 @@ void WNLexicalCategory(_TCHAR *lexCatStr, SynsetPtr synptr);
 int WNDepthCheck(int depth, SynsetPtr synptr);
 
 #endif
+
+#endif // NLP_LITE_WNFUNCTIONS_H

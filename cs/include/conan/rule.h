@@ -1,3 +1,6 @@
+#ifndef NLP_CS_INCLUDE_CONAN_RULE_H
+#define NLP_CS_INCLUDE_CONAN_RULE_H
+
 /****************************************
 Copyright © 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
@@ -14,3 +17,5 @@ All rights reserved.
 *******************************************************************************/
 
 extern long		 next_rule();
+
+#endif // NLP_CS_INCLUDE_CONAN_RULE_H

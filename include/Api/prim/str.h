@@ -1,3 +1,6 @@
+#ifndef NLP_INCLUDE_API_PRIM_STR_H
+#define NLP_INCLUDE_API_PRIM_STR_H
+
 /*******************************************************************************
 Copyright © 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
@@ -55,3 +58,5 @@ extern LIBPRIM_API _TCHAR *num_to_hex(long, /*UP*/ _TCHAR *);
 #define Str_empty(str)	(!(str) || !*(str))
 //#define str_empty(str)	(!(str) || !*(str))
 
+
+#endif // NLP_INCLUDE_API_PRIM_STR_H

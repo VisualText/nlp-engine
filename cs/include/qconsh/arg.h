@@ -1,3 +1,6 @@
+#ifndef NLP_CS_INCLUDE_QCONSH_ARG_H
+#define NLP_CS_INCLUDE_QCONSH_ARG_H
+
 /****************************************
 Copyright � 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
@@ -57,3 +60,5 @@ args_read(
 	/*DU*/
 	LIST **args						/* List of ptrs to args.	*/
 	);
+
+#endif // NLP_CS_INCLUDE_QCONSH_ARG_H

@@ -1,3 +1,6 @@
+#ifndef NLP_CS_INCLUDE_CONSH_CONSH_KB_H
+#define NLP_CS_INCLUDE_CONSH_CONSH_KB_H
+
 /****************************************
 Copyright © 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
@@ -60,3 +63,5 @@ attach_phrase(CON *con, CON *node, CG *cg);
 LIBCONSH_API CON *
 detach_phrase(CON *con, CG *cg);
 
+
+#endif // NLP_CS_INCLUDE_CONSH_CONSH_KB_H

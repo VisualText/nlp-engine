@@ -1,3 +1,6 @@
+#ifndef NLP_CS_INCLUDE_KBM_PRET_H
+#define NLP_CS_INCLUDE_KBM_PRET_H
+
 /****************************************
 Copyright © 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
@@ -17,3 +20,5 @@ con_nth_proxy(
 	CON *con,
 	long nth
 	);
+
+#endif // NLP_CS_INCLUDE_KBM_PRET_H

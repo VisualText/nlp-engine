@@ -1,3 +1,6 @@
+#ifndef NLP_INCLUDE_API_LITE_MACH_H
+#define NLP_INCLUDE_API_LITE_MACH_H
+
 /*******************************************************************************
 Copyright © 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
@@ -34,3 +37,5 @@ date_str(
 	_TCHAR str[],		/* Buffer to fill with date-time. */
 	int siz		/* Max size of buffer. */
 	);
+
+#endif // NLP_INCLUDE_API_LITE_MACH_H

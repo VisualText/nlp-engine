@@ -1,3 +1,6 @@
+#ifndef NLP_CS_INCLUDE_KBM_FIND_H
+#define NLP_CS_INCLUDE_KBM_FIND_H
+
 /****************************************
 Copyright © 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
@@ -31,3 +34,5 @@ find_name_rec(
 	LIST **end
 	);
 #endif
+
+#endif // NLP_CS_INCLUDE_KBM_FIND_H

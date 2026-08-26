@@ -1,3 +1,6 @@
+#ifndef NLP_CS_INCLUDE_CONAN_SEG_H
+#define NLP_CS_INCLUDE_CONAN_SEG_H
+
 /****************************************
 Copyright © 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
@@ -40,3 +43,5 @@ segs_multi(
 	long rule_e,		/* Start and end rule numbers for current pass.		*/
 	PTR *untrig			/* List of untriggered rule numbers for curr pass.	*/
 	);
+
+#endif // NLP_CS_INCLUDE_CONAN_SEG_H

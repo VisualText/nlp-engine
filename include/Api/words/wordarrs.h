@@ -1,3 +1,6 @@
+#ifndef NLP_INCLUDE_API_WORDS_WORDARRS_H
+#define NLP_INCLUDE_API_WORDS_WORDARRS_H
+
 /*******************************************************************************
 Copyright © 1999-2009 by Text Analysis International, Inc.
 All rights reserved.
@@ -37,3 +40,5 @@ extern _TCHAR *word27[];
 extern _TCHAR *word28[];
 extern _TCHAR *word29[];
 extern _TCHAR *word30[];
+
+#endif // NLP_INCLUDE_API_WORDS_WORDARRS_H

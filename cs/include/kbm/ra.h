@@ -1,3 +1,6 @@
+#ifndef NLP_CS_INCLUDE_KBM_RA_H
+#define NLP_CS_INCLUDE_KBM_RA_H
+
 /****************************************
 Copyright © 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
@@ -52,3 +55,5 @@ ra_get_action(
 	long *from,
 	long *to
 	);
+
+#endif // NLP_CS_INCLUDE_KBM_RA_H
