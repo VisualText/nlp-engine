@@ -1,3 +1,6 @@
+#ifndef NLP_CS_INCLUDE_CONAN_TOK_H
+#define NLP_CS_INCLUDE_CONAN_TOK_H
+
 /****************************************
 Copyright © 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
@@ -32,3 +35,5 @@ tok_get(
 	bool *cap,			/* If token is capitalized.			*/
 	bool *allcap		/* If token is all-caps.				*/
 	);
+
+#endif // NLP_CS_INCLUDE_CONAN_TOK_H

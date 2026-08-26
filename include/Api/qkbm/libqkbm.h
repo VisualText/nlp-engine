@@ -1,3 +1,6 @@
+#ifndef NLP_INCLUDE_API_QKBM_LIBQKBM_H
+#define NLP_INCLUDE_API_QKBM_LIBQKBM_H
+
 /*******************************************************************************
 Copyright (c) 2007-2009 by Text Analysis International, Inc.
 All rights reserved.
@@ -25,3 +28,5 @@ All rights reserved.
 //extern LIBQKBM_API int nlibqkbm;
 
 //LIBQKBM_API int fnlibqkbm(void);
+
+#endif // NLP_INCLUDE_API_QKBM_LIBQKBM_H

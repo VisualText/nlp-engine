@@ -1,3 +1,6 @@
+#ifndef NLP_CS_INCLUDE_KBM_KBM_ALLOC_H
+#define NLP_CS_INCLUDE_KBM_KBM_ALLOC_H
+
 /*******************************************************************************
 Copyright (c) 1999 by Text Analysis International, Inc.
 All rights reserved.  No part of this document may be copied, used, or
@@ -17,3 +20,5 @@ extern LIBKBM_API void *kbm_alloc(
 	long num,
 	long size
 	);
+
+#endif // NLP_CS_INCLUDE_KBM_KBM_ALLOC_H

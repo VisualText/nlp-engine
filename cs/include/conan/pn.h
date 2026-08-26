@@ -1,3 +1,6 @@
+#ifndef NLP_CS_INCLUDE_CONAN_PN_H
+#define NLP_CS_INCLUDE_CONAN_PN_H
+
 /****************************************
 Copyright © 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
@@ -38,3 +41,5 @@ extern void		 pn_free_list(PN *pns);
 extern void		 pn_pret_bounds();
 extern bool		 pn_same_phrase();
 extern void		 pn_tree_pret();
+
+#endif // NLP_CS_INCLUDE_CONAN_PN_H

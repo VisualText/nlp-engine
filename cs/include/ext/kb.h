@@ -1,3 +1,6 @@
+#ifndef NLP_CS_INCLUDE_EXT_KB_H
+#define NLP_CS_INCLUDE_EXT_KB_H
+
 
 /****************************************
 Copyright © 1995 by Conceptual Systems.
@@ -17,3 +20,5 @@ All rights reserved.
 
 extern CON		*con_phrase();
 extern CON		*kb_punct_hier();
+
+#endif // NLP_CS_INCLUDE_EXT_KB_H

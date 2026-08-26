@@ -1,3 +1,6 @@
+#ifndef NLP_INCLUDE_API_WEB_AWEB_H
+#define NLP_INCLUDE_API_WEB_AWEB_H
+
 /*******************************************************************************
 Copyright © 1999-2009 by Text Analysis International, Inc.
 All rights reserved.
@@ -11,3 +14,5 @@ WEB_API BOOL ParseOptions(int argc, _TCHAR* argv[],
 
 WEB_API bool init_MFC();				// 02/28/99 AM.
 
+
+#endif // NLP_INCLUDE_API_WEB_AWEB_H

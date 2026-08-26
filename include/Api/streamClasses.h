@@ -1,3 +1,6 @@
+#ifndef NLP_INCLUDE_API_STREAMCLASSES_H
+#define NLP_INCLUDE_API_STREAMCLASSES_H
+
 /*******************************************************************************
 Copyright (c) 2006-2009 by Text Analysis International, Inc.
 All rights reserved.
@@ -18,3 +21,5 @@ extern LIBSTREAM_API LPCSTR TCHAR2CA(LPTSTR lpszBuffer);
 #define TCHAR2CA(x) x
 #endif
 
+
+#endif // NLP_INCLUDE_API_STREAMCLASSES_H

@@ -1,3 +1,6 @@
+#ifndef NLP_INCLUDE_API_PRIM_UNICU_H
+#define NLP_INCLUDE_API_PRIM_UNICU_H
+
 #include "unicode/unistr.h"
 #include "unicode/schriter.h"
 #include "unicode/uchriter.h"
@@ -47,3 +50,5 @@ namespace unicu
     int charToDigit(UChar ch);
 }
 
+
+#endif // NLP_INCLUDE_API_PRIM_UNICU_H

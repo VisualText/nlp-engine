@@ -1,3 +1,6 @@
+#ifndef NLP_CS_INCLUDE_KBM_ATTR_H
+#define NLP_CS_INCLUDE_KBM_ATTR_H
+
 /****************************************
 Copyright � 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
@@ -157,3 +160,5 @@ attr_rename(					// 07/12/99 AM.
 LIBKBM_API PTR *
 attr_get_h(CON *con, _TCHAR *name);				// 05/03/99 AM.
 #endif
+
+#endif // NLP_CS_INCLUDE_KBM_ATTR_H

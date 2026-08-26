@@ -1,3 +1,6 @@
+#ifndef NLP_INCLUDE_API_QCONSH_LIBQCONSH_H
+#define NLP_INCLUDE_API_QCONSH_LIBQCONSH_H
+
 /*******************************************************************************
 Copyright (c) 1998-2009 by Text Analysis International, Inc.
 All rights reserved.
@@ -25,3 +28,5 @@ All rights reserved.
 //extern LIBQCONSH_API int nlibqconsh;
 
 //LIBQCONSH_API int fnlibqconsh(void);
+
+#endif // NLP_INCLUDE_API_QCONSH_LIBQCONSH_H

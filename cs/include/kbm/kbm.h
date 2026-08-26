@@ -1,3 +1,6 @@
+#ifndef NLP_CS_INCLUDE_KBM_KBM_H
+#define NLP_CS_INCLUDE_KBM_KBM_H
+
 /****************************************
 Copyright © 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
@@ -32,3 +35,5 @@ kbm_vars(
 	CON *nlp_wht
 	);
 #endif
+
+#endif // NLP_CS_INCLUDE_KBM_KBM_H
