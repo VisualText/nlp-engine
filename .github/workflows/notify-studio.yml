@@ -1,0 +1,57 @@
+# Install at: VisualText/nlp-engine -> .github/workflows/notify-studio.yml
+#            (on the default branch, `master` -- workflow_run only fires for
+#             workflow files that exist there)
+#
+# Tells nlp-studio to rebuild studio.visualtext.org once this repo's release
+# assets are in place.
+#
+# Hooked to "Move Assets to Release" completing rather than to the release event
+# itself, because that is the workflow that attaches ubuntu-*.zip, nlpengine.zip
+# and nlpengine-compile-libs.zip.
+# A `release: published` trigger would fire while the assets are still being
+# uploaded, and the studio build would fetch a release that has nothing on it.
+#
+# "Move Assets to Release" is the right hook of the several workflows here: it
+# is the aggregator that waits for the Linux/Windows/macOS builds to finish
+# before moving their artifacts onto the release. Hanging this off "Linux"
+# instead would fire while nlpengine.zip was still missing.
+#
+# Firing more often than necessary is harmless: nlp-studio compares upstream
+# release tags against the labels on its running image and exits in about a
+# second when they already match. It does not rebuild on a ping alone.
+#
+# Requires the shared `CLASSIC_PAT` secret (the same one the other cross-repo
+# dispatches in this org already use).
+
+name: Notify NLP-Studio
+
+on:
+  workflow_run:
+    workflows: ["Move Assets to Release"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  notify:
+    # Only on success. A failed asset run means the release is incomplete, and
+    # rebuilding the site against it would either fail or ship half a release.
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping nlp-studio
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.CLASSIC_PAT }}
+          repository: VisualText/nlp-studio
+          event-type: upstream-release
+          client-payload: |
+            {
+              "source": "nlp-engine",
+              "tag": "${{ github.event.workflow_run.head_branch }}",
+              "run_url": "${{ github.event.workflow_run.html_url }}"
+            }
+        # A deploy that cannot be pinged is not a reason to mark the release
+        # red. nlp-studio's weekly scheduled run picks up anything missed here.
+        continue-on-error: true
