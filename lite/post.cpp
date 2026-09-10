@@ -5612,6 +5612,12 @@ if (!collect || ord <= 0)
 Node<Pn> *colls;
 Node<Pn> *coll1;
 colls = collect->getRoot();
+// An empty collect list has no nth element. Without this, ord == 1 skips the
+// loop below -- whose test is what guards every LATER hop -- and falls straight
+// into coll1->Down() on a null pointer. Callers inside a match never saw it
+// because something has always been collected by then.
+if (!colls)
+	return false;
 while (--ord > 0)
 	{
 	if (!(colls = colls->Right()))
