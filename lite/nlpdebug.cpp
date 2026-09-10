@@ -29,7 +29,12 @@ All rights reserved.
 //   {"seq":8,"command":"tree","depth":3}            parse tree from the root
 //   {"seq":9,"command":"node"}                      current node, its children and attributes
 //   {"seq":10,"command":"rule"}                     the rule being tried, element by element
-//   {"seq":11,"command":"detach"}                   let the run finish unhooked
+//   {"seq":11,"command":"globals"}                  G("x")
+//   {"seq":12,"command":"locals"}                   L("x")
+//   {"seq":13,"command":"suggested"}                S("x") -- vars on the suggested node
+//   {"seq":14,"command":"context"}                  X("x") -- vars on the select node
+//   {"seq":15,"command":"collect"}                  matched elements, what N(n,"x") indexes
+//   {"seq":16,"command":"detach"}                   let the run finish unhooked
 //
 // Replies are {"seq":N,"ok":true,...} or {"seq":N,"ok":false,"error":"..."}.
 //
@@ -64,6 +69,9 @@ All rights reserved.
 #include "ielt.h"
 #include "isugg.h"
 #include "ielement.h"
+#include "ipair.h"
+#include "iarg.h"
+#include "pat.h"   // Pat::collectNthnew, for N(n,"x")
 #include "pn.h"
 #include "lite/nlpdebug.h"
 
@@ -328,6 +336,55 @@ std::set<long> fieldNumArray(const std::string &msg, const std::string &key)
 
 // ---- state serialisation ----------------------------------------------------
 
+// One Dlist<Ipair> as a JSON array of {"name","value"}.
+//
+// This one shape covers EVERY kind of NLP++ variable, because the engine stores
+// them all the same way (see Ivar::getVar):
+//
+//   G("x")     parse->getVars()
+//   L("x")     nlppp->getLocals()
+//   S("x")     nlppp->getDsem()
+//   N(n,"x")   the nth collect element's node -> pn->getDsem()
+//   X("x")     the select node -> pn->getDsem()
+//
+// ...and a node's own attributes are the same list again. Values are rendered
+// with Iarg::genArg, the same call Pn::print uses for the ("name" value) pairs
+// in the .tree dumps, so a value reads identically in the debugger and in a dump.
+std::string varsJson(Dlist<Ipair> *dlist)
+{
+	std::ostringstream o;
+	o << "[";
+	bool first = true;
+	if (dlist)
+	{
+		for (Delt<Ipair> *delt = dlist->getFirst(); delt; delt = delt->Right())
+		{
+			Ipair *pair = delt->getData();
+			if (!pair) continue;
+			if (!first) o << ",";
+			first = false;
+
+			// A variable can hold several values; genArg writes one at a time.
+			std::_t_ostringstream vals;
+			Dlist<Iarg> *list = pair->getVals();
+			bool firstVal = true;
+			if (list)
+			{
+				for (Delt<Iarg> *d = list->getFirst(); d; d = d->Right())
+				{
+					if (!firstVal) vals << _T(" ");
+					firstVal = false;
+					Iarg::genArg(d->getData(), vals, false);
+				}
+			}
+			o << "{\"name\":" << jstr(narrow(pair->getKey()))
+			  << ",\"value\":" << jstr(narrow(vals.str().c_str())) << "}";
+		}
+	}
+	o << "]";
+	return o.str();
+}
+
 // One node as a JSON object. Children are included only while depth remains --
 // a full parse tree can be tens of thousands of nodes and the client asks for
 // what it can display.
@@ -347,7 +404,12 @@ std::string nodeJson(Node<Pn> *node, int depth)
 	  << ",\"passNum\":" << jnum(pn->getPassnum())
 	  << ",\"ruleLine\":" << jnum(pn->getRuleline())
 	  << ",\"fired\":" << (pn->getFired() ? "true" : "false")
-	  << ",\"built\":" << (pn->getBuilt() ? "true" : "false");
+	  << ",\"built\":" << (pn->getBuilt() ? "true" : "false")
+	  // The node's own attributes -- what N("x") and X("x") read, and what the
+	  // .tree dumps print as ("name" value). Sent at every depth: they are the
+	  // reason to look at a node in the first place, and there are only ever a
+	  // handful per node.
+	  << ",\"attributes\":" << varsJson(pn->getDsem());
 
 	if (depth > 0)
 	{
@@ -540,6 +602,82 @@ void stopAndServe(NlpDebugStop reason)
 			reply(seq, "\"tree\":" + nodeJson(root, depth));
 			continue;
 		}
+		// ---- variables --------------------------------------------------
+		//
+		// Each of these is one Dlist<Ipair>; see varsJson for where the engine
+		// keeps each kind. They are separate commands rather than one bundle so
+		// a client can expand a single scope without paying for the rest --
+		// globals in particular can be numerous in a long-running analyzer.
+		if (cmd == "globals")
+		{
+			reply(seq, "\"globals\":" + varsJson(g_parse ? g_parse->getVars() : 0));
+			continue;
+		}
+		if (cmd == "locals")
+		{
+			reply(seq, "\"locals\":" + varsJson(g_nlppp ? g_nlppp->getLocals() : 0));
+			continue;
+		}
+		if (cmd == "suggested")
+		{
+			// S("x"): the variables being built for the node this rule suggests.
+			reply(seq, "\"suggested\":" + varsJson(g_nlppp ? g_nlppp->getDsem() : 0));
+			continue;
+		}
+		if (cmd == "context")
+		{
+			// X("x"): the variables on the pass's select node.
+			Node<Pn> *select = g_nlppp ? g_nlppp->getSelect() : 0;
+			Pn *pn = select ? select->getData() : 0;
+			reply(seq, "\"context\":" + varsJson(pn ? pn->getDsem() : 0));
+			continue;
+		}
+		if (cmd == "collect")
+		{
+			// The rule elements matched so far, in order -- what N(n,"x") indexes.
+			//
+			// The collect list is a chain of WRAPPER nodes, not the matched tree
+			// nodes: a wrapper's Down() points into the parse tree mid-chain, so
+			// walking it as if it were a child list runs off across the whole
+			// document. Pat::collectNthnew is the engine's own answer to "which
+			// node is element n", and Ivar::getVar uses exactly this call to
+			// resolve N(n,"x") -- including its rule that an element matching a
+			// RANGE of nodes has no addressable N().
+			std::ostringstream o;
+			o << "\"collect\":[";
+			bool first = true;
+			Tree<Pn> *collect = g_nlppp ? g_nlppp->getCollect() : 0;
+			// Nothing collected yet is the normal state at a rule ATTEMPT, and
+			// asking for element 1 of an empty list is not a question the engine
+			// expects; check here as well as in collectNth so the debugger does
+			// not depend on that fix being present.
+			if (collect && collect->getRoot())
+			{
+				for (long ord = 1; ; ++ord)
+				{
+					Node<Pn> *nstart = 0, *nend = 0;
+					if (!Pat::collectNthnew(collect, ord, /*UP*/ nstart, nend)
+						 || !nstart || !nend)
+						break;
+					if (!first) o << ",";
+					first = false;
+					o << "{\"ord\":" << jnum(ord)
+					  << ",\"single\":" << (nstart == nend ? "true" : "false")
+					  << ",\"node\":" << nodeJson(nstart, 0);
+					if (nstart != nend)
+					{
+						// Say how far the element reached, since N() cannot name it.
+						Pn *pe = nend->getData();
+						if (pe) o << ",\"spanEnd\":" << jnum(pe->getEnd());
+					}
+					o << "}";
+				}
+			}
+			o << "]";
+			reply(seq, o.str());
+			continue;
+		}
+
 		if (cmd == "detach")
 		{
 			reply(seq, "");

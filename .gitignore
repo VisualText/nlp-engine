@@ -2,3 +2,7 @@ build/
 bin/
 lib/
 .vscode/
+
+# Python bytecode from the debug-server test driver
+__pycache__/
+*.pyc

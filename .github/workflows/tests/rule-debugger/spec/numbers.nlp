@@ -6,10 +6,12 @@
 #           line numbers stable: drive.py refers to them by number, which is
 #           the point -- a rule's line is what a breakpoint is set on.
 #
-#           line 18  _pair   matches _xNUM then FAILS (the next node is
+#           line 20  _pair   matches _xNUM then FAILS (the next node is
 #                            whitespace, not a number) -> eltsMatched == 1
-#           line 24  _zzz    never matches anything    -> eltsMatched == 0
-#           line 29  _num    MATCHES the "42" in the input
+#           line 26  _zzz    trigger appears nowhere, so it is never attempted
+#           line 35  _num    MATCHES the "42" in the input, and its @POST sets
+#                            G("runs") and S("kind") for the variable commands
+#                            to read back
 ###############################################
 
 @NODES _ROOT
@@ -25,6 +27,10 @@ _zzz <-
 	zzz [s]	### (1)
 	@@
 
+@POST
+	G("runs") = 1;
+	S("kind") = "number";
+	single();
 @RULES
 _num <-
 	_xNUM [s]	### (1)

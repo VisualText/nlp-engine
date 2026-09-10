@@ -142,9 +142,9 @@ def main():
               "passName was %r" % stop.get("passName"))
 
         # ---- a breakpoint on the rule that fires ----------------------------
-        # Line 29 is the head of `_num <- _xNUM`, the only rule in the fixture
+        # Line 35 is the head of `_num <- _xNUM`, the only rule in the fixture
         # that matches the input.
-        r = dbg.request("setBreakpoints", **{"pass": 2, "lines": [29]})
+        r = dbg.request("setBreakpoints", **{"pass": 2, "lines": [35]})
         check("setBreakpoints is accepted", r.get("ok") is True)
         dbg.request("continue")
         stop = dbg.next_stop()
@@ -152,12 +152,12 @@ def main():
         if stop is None:
             return 1
         eq("stopped for the breakpoint", stop.get("reason"), "breakpoint")
-        eq("stopped on the breakpoint's line", stop.get("line"), 29)
+        eq("stopped on the breakpoint's line", stop.get("line"), 35)
 
         # ---- the rule the engine reports is the one in the file -------------
         r = dbg.request("rule")
         rule = r.get("rule") or {}
-        eq("rule line", rule.get("line"), 29)
+        eq("rule line", rule.get("line"), 35)
         eq("rule builds _num", rule.get("builds"), "_num")
         eq("rule element count", len(rule.get("elements") or []), 1)
         eq("rule element name", (rule.get("elements") or [{}])[0].get("name"), "_xNUM")
@@ -173,49 +173,103 @@ def main():
         check("current node is reported", bool(node.get("name")),
               "node was %r" % node)
 
-        # ---- failures report how far the rule got ---------------------------
-        # _pair (line 18) matches _xNUM and then fails, because the node after
-        # "42" is whitespace. That is the case worth pinning: the count comes
-        # off the collect list, which is a sibling chain, and reading it as a
-        # child list instead returns whatever the first matched node spans --
-        # for a wildcard, most of the document.
+        # ---- variables -------------------------------------------------------
+        # Every NLP++ variable kind is one Dlist<Ipair> in the engine, so one
+        # serializer covers them all -- which also means one broken field name
+        # silently returns an empty list. These assert the plumbing per kind.
         #
-        # _zzz (line 24) is never reported at all. Its trigger is the literal
-        # "zzz", and the engine's rule hashing only tries a rule at nodes its
-        # trigger could match, so a rule that cannot fire is never attempted.
-        # Worth asserting: "my rule never appears in the debugger" is a thing
-        # an author will hit, and this is the reason.
+        # We are stopped at the _num rule ATTEMPT, before its @POST has run, so
+        # G("runs") is not set yet. Stepping to the match and on lets the actions
+        # execute; the values are then readable and the built node keeps "kind"
+        # as an attribute.
+        r = dbg.request("collect")
+        coll = r.get("collect")
+        check("collect is a list", isinstance(coll, list), "got %r" % (coll,))
+
+        r = dbg.request("globals")
+        check("globals is a list", isinstance(r.get("globals"), list))
+        r = dbg.request("locals")
+        check("locals is a list", isinstance(r.get("locals"), list))
+        r = dbg.request("suggested")
+        check("suggested is a list", isinstance(r.get("suggested"), list))
+        r = dbg.request("context")
+        check("context is a list", isinstance(r.get("context"), list))
+
+        # One traversal gathers both what the rules SET and how they FAILED.
+        # They cannot be two passes over the pass: each stepRule consumes part of
+        # the traversal, so a second loop would start after the nodes the first
+        # one walked past -- and _pair only gets an element in at the number.
+        #
+        # _pair (line 20) matches _xNUM at "42" and then fails, because the node
+        # after it is whitespace. That count comes off the collect list, which is
+        # a sibling chain; reading it as a child list returns whatever the first
+        # matched node spans -- for a wildcard, most of the document.
+        #
+        # _zzz (line 26) is never reported at all. Its trigger is the literal
+        # "zzz", and the engine only tries a rule at nodes its trigger could
+        # match, so a rule that cannot fire is never attempted. Worth pinning:
+        # "my rule never appears in the debugger" is a thing an author will hit.
         dbg.request("setBreakpoints", **{"pass": 2, "lines": []})
         dbg.request("stopOnFailure", value=True)
-        partial = 0
+
+        partial = 0          # best eltsMatched seen for _pair
+        worst = 0            # largest eltsMatched seen for ANY failure
         zzz_seen = False
-        worst = 0
+        names = {}
+        attrs_found = []
         ended = False
+
         for _ in range(400):
             dbg.request("stepRule")
             stop = dbg.next_stop()
             if stop is None:
                 ended = True
                 break
-            if stop.get("reason") != "failed":
-                continue
-            worst = max(worst, stop.get("eltsMatched", 0))
-            if stop.get("line") == 24:
-                zzz_seen = True
-            if stop.get("line") == 18:
-                # _pair is tried at every node its trigger could match. At the
-                # number it gets one element in before the whitespace after it
-                # fails; everywhere else it collects nothing. The best it ever
-                # does is the interesting number.
-                partial = max(partial, stop.get("eltsMatched", 0))
 
+            if stop.get("reason") == "failed":
+                worst = max(worst, stop.get("eltsMatched", 0))
+                if stop.get("line") == 20:
+                    partial = max(partial, stop.get("eltsMatched", 0))
+                if stop.get("line") == 26:
+                    zzz_seen = True
+
+            # Once _num's @POST has run, G("runs") is set and the node it built
+            # carries S("kind") as an attribute.
+            if not names.get("runs"):
+                globs = dbg.request("globals").get("globals") or []
+                names = dict((g.get("name"), g.get("value")) for g in globs)
+                if "runs" in names:
+                    tree = dbg.request("tree", depth=3).get("tree") or {}
+
+                    def walk(n):
+                        for a in n.get("attributes") or []:
+                            attrs_found.append((n.get("name"), a.get("name"), a.get("value")))
+                        for c in n.get("children") or []:
+                            walk(c)
+
+                    walk(tree)
+
+            if partial and names.get("runs") and attrs_found:
+                break
+
+        check("a global set by a rule is readable", "runs" in names,
+              "globals were %r (run ended: %s)" % (names, ended))
+        eq("the global has the value the rule set", names.get("runs"), "1")
+        check("a node carries the attribute its rule set",
+              any(nm == "_num" and k == "kind" for nm, k, _v in attrs_found),
+              "attributes found: %r" % (attrs_found,))
+        check("the attribute keeps its value",
+              any(k == "kind" and v == '"number"' for _nm, k, v in attrs_found),
+              "attributes found: %r" % (attrs_found,))
         check("a partly-matched rule reports its element count", partial == 1,
-              "best eltsMatched for line 18 was %r" % partial)
+              "best eltsMatched for line 20 was %r" % partial)
         check("a rule whose trigger cannot match is never attempted", not zzz_seen)
         # The bug this guards: counting the collect list as children of a root
         # rather than as siblings reported 526 for a two-element rule.
         check("no failure reports more elements than a rule can have", worst <= 4,
               "largest eltsMatched seen was %d" % worst)
+
+        dbg.request("stopOnFailure", value=False)
 
         # ---- the run finishes ------------------------------------------------
         if not ended:
