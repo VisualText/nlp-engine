@@ -101,6 +101,31 @@ jobs:
       - name: Test executable --version
         run: ./bin/nlp --version || true
 
+      - name: Rule-level debug server
+        shell: bash
+        run: |
+          set -eo pipefail
+          # The engine can stop between rule attempts when started with
+          # -DEBUG <port> (3.9.0). The hooks sit in Pat::matchRules, the hottest
+          # loop in the engine, so they are exactly the kind of thing a later
+          # change removes or reorders without anyone noticing until an author
+          # finds the debugger silently never stops.
+          FIX=.github/workflows/tests/rule-debugger
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          python3 "$FIX/drive.py" ./bin/nlp "$FIX" ./
+          # Debugging must not change the analysis. Run the same fixture with no
+          # debugger and require the parse tree to come out byte for byte the
+          # same as the one the debugged run produced.
+          cp "$FIX/input/text.txt_log/final.tree" /tmp/debugged.tree
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          if ! diff -q /tmp/debugged.tree "$FIX/input/text.txt_log/final.tree" >/dev/null; then
+            echo "FAIL(debug): the debugged run produced a different parse tree"
+            diff /tmp/debugged.tree "$FIX/input/text.txt_log/final.tree" | head -20
+            exit 1
+          fi
+          echo "[rule debugger] pause points fire and leave the analysis unchanged"
+
       - name: Copy nlp.exe to nlpm.exe
         run: cp bin/nlp bin/nlpm.exe
         shell: bash
