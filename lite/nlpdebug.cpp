@@ -27,7 +27,8 @@ All rights reserved.
 //   {"seq":6,"command":"stopOnFailure","value":true}  also stop when a rule fails
 //   {"seq":7,"command":"state"}                     current pass/rule/node
 //   {"seq":8,"command":"tree","depth":3}            parse tree from the root
-//   {"seq":9,"command":"node"}                      current node, its children and attributes
+//   {"seq":9,"command":"node","depth":3,"after":8}  current node, its children and
+//                                                  attributes, plus the next `after` siblings
 //   {"seq":10,"command":"rule"}                     the rule being tried, element by element
 //   {"seq":11,"command":"globals"}                  G("x")
 //   {"seq":12,"command":"locals"}                   L("x")
@@ -442,6 +443,30 @@ std::string varsJson(Dlist<Ipair> *dlist)
 	return o.str();
 }
 
+// The characters a node covers, read straight from the parse buffer.
+// Non-allocating: getTextStartEnd hands back the pointer and the span, so this
+// copies exactly End-Start+1 characters and no more.
+std::string nodeText(Pn *pn)
+{
+	if (!pn) return std::string();
+	_TCHAR *text = 0;
+	long start = 0, end = 0;
+	pn->getTextStartEnd(text, start, end);
+	if (!text || end < start) return std::string();
+	long len = end - start + 1;
+	// A node covering an implausible span means the buffer has moved on; better
+	// to say nothing than to read past it.
+	if (len <= 0 || len > 100000) return std::string();
+	// The buffer is not NUL-terminated at the node's end, so the length has to
+	// carry the span; narrow() takes a C string, hence the copy.
+#ifdef UNICODE
+	std::wstring span(text, (size_t)len);
+	return narrow(span.c_str());
+#else
+	return std::string(text, (size_t)len);
+#endif
+}
+
 // One node as a JSON object. Children are included only while depth remains --
 // a full parse tree can be tens of thousands of nodes and the client asks for
 // what it can display.
@@ -466,7 +491,17 @@ std::string nodeJson(Node<Pn> *node, int depth)
 	  // .tree dumps print as ("name" value). Sent at every depth: they are the
 	  // reason to look at a node in the first place, and there are only ever a
 	  // handful per node.
-	  << ",\"attributes\":" << varsJson(pn->getDsem());
+	  << ",\"attributes\":" << varsJson(pn->getDsem())
+	  // The text this node covers, taken from the engine's own buffer.
+	  //
+	  // The client used to slice it out of the input file using start/end. That
+	  // works only until the offsets stop agreeing with the file on disk, and
+	  // they do: the engine's buffer has line endings normalised, so on a CRLF
+	  // file every node after the first line was rendered with text shifted by
+	  // one character per preceding line -- a "(" showing "g", a ")" showing "R".
+	  // The engine knows exactly which characters a node spans; nothing else has
+	  // to guess.
+	  << ",\"text\":" << jstr(nodeText(pn));
 
 	if (depth > 0)
 	{
@@ -641,8 +676,34 @@ void stopAndServe(NlpDebugStop reason)
 		}
 		if (cmd == "node")
 		{
+			// depth: how far down to walk this node's children. A handle handed
+			// to a client carries the subtree it arrived with, so a depth of 1
+			// made every child expand to a dead end.
+			//
+			// after: how many FOLLOWING siblings to send with it. A rule matches
+			// a SEQUENCE of nodes, so the nodes after the current one are the
+			// ones it is about to be tried against -- reaching them was
+			// impossible without walking the whole tree from the root.
+			int depth = (int)fieldNum(line, "depth", 3);
+			int after = (int)fieldNum(line, "after", 0);
 			Node<Pn> *node = g_nlppp ? g_nlppp->getNode() : 0;
-			reply(seq, "\"node\":" + nodeJson(node, 1));
+
+			std::ostringstream o;
+			o << "\"node\":" << nodeJson(node, depth);
+			o << ",\"following\":[";
+			if (node && after > 0)
+			{
+				bool first = true;
+				Node<Pn> *sib = node->Right();
+				for (int i = 0; i < after && sib; ++i, sib = sib->Right())
+				{
+					if (!first) o << ",";
+					first = false;
+					o << nodeJson(sib, depth);
+				}
+			}
+			o << "]";
+			reply(seq, o.str());
 			continue;
 		}
 		if (cmd == "tree")
