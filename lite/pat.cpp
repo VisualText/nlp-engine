@@ -36,7 +36,8 @@ All rights reserved.
 #include "lite/nlppp.h"			// 11/19/99 AM.
 #include "gen.h"	// Linux.	// 04/26/07 AM.
 #include "irule.h"
-#include "ielt.h"				// 12/17/98 AM.
+#include "ielt.h"
+#include "lite/nlpdebug.h"				// 12/17/98 AM.
 #include "ifile.h"			// 12/17/98 AM.
 #include "lite/Arun.h"		// 06/08/00 AM.
 #include "var.h"				// 08/31/00 AM.
@@ -814,8 +815,10 @@ Node<Pn> *node = nlppp->node_;	// SAVE NODE.		// 11/20/99 AM.
 
 
 Delt<Irule> *rule;
+long dbg_ord = 0;		// Position of the rule in this node's candidate list.
 for (rule = rules; rule; rule = rule->Right())
 	{
+	++dbg_ord;
 	nlppp->node_ = node;		// RESTORE NODE.	// 11/20/99 AM.
 	nlppp->rmost_ = 0;		// Reset.		// RECOPT2.	// 07/23/06 AM.
 	updateRestart(nlppp,node);	// Reset.	// RECOPT2.	// 07/24/06 AM.
@@ -830,12 +833,16 @@ for (rule = rules; rule; rule = rule->Right())
 	nlppp->first_ = nlppp->last_ = 0;			// 11/19/99 AM.
 	nlppp->succeed_ = nlppp->fail_ = false;							// 06/10/00 AM.
 
+	// Rule-level debugger. No-op unless a client is attached (see nlpdebug.h).
+	NlpDebug::ruleAttempt(nlppp,dbg_ord);
+
 	if (matchRule(nlppp)								// 11/19/99 AM.
 		 && nlppp->first_	// Requiring rule to match one node. // 11/23/98 AM.
 		 && checkActions(nlppp))					// 11/19/99 AM.
 		{
 //		if (Debug())
 //			*gout << "\n  [Matched rule.]\n" << std::endl;
+		NlpDebug::ruleMatched(nlppp);
 		rules = rule;		// UP: Return the matched rule to caller. 11/1/98 AM.
 		nlppp->node_ = node;		// RESTORE NODE.	// 11/20/99 AM.
 		return true;
@@ -844,6 +851,9 @@ for (rule = rules; rule; rule = rule->Right())
 		{
 //		if (nlppp->span_ > nlppp->maxspan_)								// 02/04/05 AM.
 //			nlppp->maxspan_ = nlppp->span_;								// 02/04/05 AM.
+		// Must run before matchCleanup(), which empties the collect tree the
+		// debugger reads to report how far the rule got.
+		NlpDebug::ruleFailed(nlppp);
 		// Clean up for next rule.
 		endRestart(nlppp);	// RECOPT2.	// 07/17/06 AM.
 		matchCleanup(nlppp->collect_);								// 11/11/98 AM.
@@ -876,8 +886,10 @@ bool Pat::matchRules(
 Node<Pn> *node = nlppp->node_;				// SAVE NODE.		// 11/20/99 AM.
 
 Selt<Irule> *rule;
+long dbg_ord = 0;		// Position of the rule in this node's candidate list.
 for (rule = rules; rule; rule = rule->Right())
 	{
+	++dbg_ord;
 	nlppp->node_ = node;							// RESTORE NODE.	// 11/20/99 AM.
 	nlppp->rmost_ = 0;		// Reset.		// RECOPT2.	// 07/23/06 AM.
 	updateRestart(nlppp,node);	// Reset.	// RECOPT2.	// 07/24/06 AM.
@@ -895,12 +907,16 @@ for (rule = rules; rule; rule = rule->Right())
 	nlppp->noop_ = false;													// 08/12/02 AM.
 //	nlppp->span_ = 0;															// 02/04/05 AM.
 
+	// Rule-level debugger. No-op unless a client is attached (see nlpdebug.h).
+	NlpDebug::ruleAttempt(nlppp,dbg_ord);
+
 	if (matchRule(nlppp)													// 11/19/99 AM.
 		 && nlppp->first_	// Requiring rule to match 1 node.	// 11/23/98 AM.
 		 && checkActions(nlppp))								// 11/19/99 AM.
 		{
 //		if (Debug())
 //			*gout << "\n  [Matched rule.]\n" << std::endl;
+		NlpDebug::ruleMatched(nlppp);
 		rules = rule;	// UP: Return matched rule to caller.	// 11/01/98 AM.
 		nlppp->node_ = node;						// RESTORE NODE.	// 11/20/99 AM.
 		return true;
@@ -909,6 +925,9 @@ for (rule = rules; rule; rule = rule->Right())
 		{
 //		if (nlppp->span_ > nlppp->maxspan_)								// 02/04/05 AM.
 //			nlppp->maxspan_ = nlppp->span_;								// 02/04/05 AM.
+		// Must run before matchCleanup(), which empties the collect tree the
+		// debugger reads to report how far the rule got.
+		NlpDebug::ruleFailed(nlppp);
 		// Clean up for next rule.
 		endRestart(nlppp);	// RECOPT2.	// 07/17/06 AM.
 		matchCleanup(nlppp->collect_);								// 11/11/98 AM.

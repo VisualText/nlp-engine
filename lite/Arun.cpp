@@ -44,6 +44,7 @@ All rights reserved.
 #include "lite/code.h"				// 06/04/00 AM.
 #include "inline.h"					// 06/06/00 AM.
 #include "lite/nlppp.h"
+#include "lite/nlpdebug.h"
 #include "chars.h"					// 06/02/00 AM.
 #include "xml.h"						// 03/28/05 AM.
 #include "pat.h"
@@ -338,6 +339,9 @@ bool ftimepass = parse->eana_->getFtimepass();
 parse->iniPass(num,prefix,flogfiles,ftimepass,true,sfile,salgo,		// 05/20/00 AM.
 			/*DU*/fout,sout,s_time,pretname);
 
+// Rule-level debugger. No-op unless a client is attached (see nlpdebug.h).
+NlpDebug::passStart(parse,num,sfile);
+
 // if (pass->getActive())	// Need to get active flag.
 if (pass->htab)																// 06/20/00 AM.
 //	Pat::Execute(parse,code,arr_select,seltype,must,htab,rules);// 06/20/00 AM.
@@ -347,8 +351,13 @@ else
 //	Pat::Execute(parse,code,arr_select,seltype,rules);
 	if (!																			// 01/26/02 AM.
 	Pat::Execute(parse, pass))												// 06/21/00 AM.
+		{
+		NlpDebug::passEnd(parse,num);										// Debugger.
 		return false;															// 01/26/02 AM.
+		}
 	}
+
+NlpDebug::passEnd(parse,num);												// Debugger.
 
 parse->finPass(num,flogfiles,fout,sout,
 										pretname,ftimepass,s_time);		// 05/20/00 AM.

@@ -55,6 +55,7 @@ LIBPRIM_API DWORD run_silent(_TCHAR* strCMD);	// 09/15/08 AM.
 
 #include "ana.h"
 #include "parse.h"
+#include "lite/nlpdebug.h"
 #include "tok.h"
 #include "line.h"
 #include "pat.h"					// 12/03/98 AM.
@@ -1905,7 +1906,11 @@ parse->setDatum(datum);														// 03/13/03 AM.
 
 if (parse->getText())
 	{
+	// Rule-level debugger: only the analysis proper is debuggable, not the
+	// engine's own parse of the grammar files (see NlpDebug::arm).
+	NlpDebug::arm();
 	parse->execute();					// PERFORM TEXT ANALYSIS.
+	NlpDebug::disarm();
 	}
 
 cleanAnalyze(parse);
@@ -2026,7 +2031,11 @@ parse->setDatum(datum);														// 03/13/03 AM.
 
 if (parse->getText())
 	{
+	// Rule-level debugger: only the analysis proper is debuggable, not the
+	// engine's own parse of the grammar files (see NlpDebug::arm).
+	NlpDebug::arm();
 	parse->execute();					// PERFORM TEXT ANALYSIS.
+	NlpDebug::disarm();
 	}
 
 cleanAnalyze(parse);
