@@ -258,6 +258,15 @@ def main():
               "tokenize" in (stop.get("passName") or ""),
               "passName was %r" % stop.get("passName"))
 
+        # ---- what this build says it can do ---------------------------------
+        # A client pairs with whatever engine the user has installed, so it asks
+        # rather than reading a version string. Dropping a name from this list
+        # silently turns a feature off in the extension.
+        caps = dbg.request("capabilities").get("capabilities") or []
+        for want in ("statements", "variables", "nodeText"):
+            check("capabilities include %s" % want, want in caps,
+                  "capabilities were %r" % (caps,))
+
         # ---- stepping to the rule pass --------------------------------------
         dbg.request("stepPass")
         stop = dbg.next_stop()

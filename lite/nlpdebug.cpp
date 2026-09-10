@@ -12,9 +12,11 @@ All rights reserved.
 // Both directions are newline-delimited JSON objects, UTF-8, one per line.
 //
 // Engine -> client (unsolicited events):
-//   {"event":"stopped","reason":"entry|step|breakpoint|matched|failed|passStart|pause",
+//   {"event":"stopped","reason":"entry|step|breakpoint|matched|failed|passStart|statement|pause",
 //    "pass":15,"passName":"moneyAttributes","line":17,"ruleOrd":3,
 //    "node":"_money","nodeStart":163,"nodeEnd":166,"eltsMatched":2}
+//   {"event":"stopped","reason":"statement","pass":15,"line":31,"statement":true,
+//    "depth":0}
 //   {"event":"output","text":"..."}
 //   {"event":"terminated"}
 //
@@ -38,7 +40,8 @@ All rights reserved.
 //   {"seq":16,"command":"stepStatement"}            next statement, entering calls
 //   {"seq":17,"command":"stepOverStatement"}        next statement, running calls whole
 //   {"seq":18,"command":"stepOutStatement"}         run until this function returns
-//   {"seq":19,"command":"detach"}                   let the run finish unhooked
+//   {"seq":19,"command":"capabilities"}             what this build supports
+//   {"seq":20,"command":"detach"}                   let the run finish unhooked
 //
 // Replies are {"seq":N,"ok":true,...} or {"seq":N,"ok":false,"error":"..."}.
 //
@@ -695,6 +698,20 @@ void stopAndServe(NlpDebugStop reason)
 		{
 			g_stopOnFailure = fieldBool(line, "value", false);
 			reply(seq, "");
+			continue;
+		}
+		if (cmd == "capabilities")
+		{
+			// What this build of the debug server can do, asked rather than
+			// inferred from a version string. A client pairs with whatever
+			// engine the user happens to have installed, and a version is a
+			// second thing to keep in step -- getting it wrong shows an empty
+			// pane instead of an explanation.
+			//
+			// Only features a client must know about BEFORE using them belong
+			// here. Everything else it can just try: an unknown command replies
+			// with an error rather than closing the connection.
+			reply(seq, "\"capabilities\":[\"statements\",\"variables\",\"nodeText\"]");
 			continue;
 		}
 		if (cmd == "state")
