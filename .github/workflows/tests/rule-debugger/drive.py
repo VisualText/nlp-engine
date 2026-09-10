@@ -173,6 +173,29 @@ def main():
         check("current node is reported", bool(node.get("name")),
               "node was %r" % node)
 
+        # The node carries the text it covers, sent from the engine's own buffer.
+        # The client used to slice it out of the input file with start/end, which
+        # drifts the moment those offsets stop agreeing with the file on disk --
+        # and they do, because the buffer has line endings normalised. On a CRLF
+        # file every node past the first line came out shifted by one character
+        # per preceding line.
+        check("the node carries its own text", isinstance(node.get("text"), str),
+              "text was %r" % node.get("text"))
+
+        # depth reaches past the immediate children, and `after` brings the nodes
+        # a rule will be tried against next -- a rule matches a SEQUENCE.
+        r = dbg.request("node", depth=3, after=4)
+        following = r.get("following")
+        check("following siblings are returned as a list",
+              isinstance(following, list), "got %r" % (following,))
+        if isinstance(following, list) and following:
+            check("a following node carries a name and text",
+                  bool(following[0].get("name")) and isinstance(following[0].get("text"), str),
+                  "first following was %r" % (following[0],))
+            starts = [n.get("start") for n in following]
+            check("following nodes come back in document order",
+                  starts == sorted(starts), "starts were %r" % (starts,))
+
         # ---- variables -------------------------------------------------------
         # Every NLP++ variable kind is one Dlist<Ipair> in the engine, so one
         # serializer covers them all -- which also means one broken field name
