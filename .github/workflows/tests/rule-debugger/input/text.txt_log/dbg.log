@@ -1,0 +1,12 @@
+[Pass 1 time: 0 sec     tokenize]
+[Pass 2 time: 0.001 sec     numbers]
+[Slowest passes (total 0.001 sec in 2 passes):]
+[  0.001 sec  100%  pass 2  numbers]
+[Input file: .github/workflows/tests/rule-debugger\input\text.txt]
+[Total passes: 2]
+[Total time: 0.002 sec]
+[Time per 1000 chars (0.002/14): 0.142857 sec]
+[Time per pass per 1000 chars: 0.0714286]
+infile  passes tottime length tot/1000 tot/pass/1000
+.github/workflows/tests/rule-debugger\input\text.txt	2	0.002	14	0.142857	0.0714286
+[Clean time: 0.001 sec]

@@ -35,7 +35,10 @@ All rights reserved.
 //   {"seq":13,"command":"suggested"}                S("x") -- vars on the suggested node
 //   {"seq":14,"command":"context"}                  X("x") -- vars on the select node
 //   {"seq":15,"command":"collect"}                  matched elements, what N(n,"x") indexes
-//   {"seq":16,"command":"detach"}                   let the run finish unhooked
+//   {"seq":16,"command":"stepStatement"}            next statement, entering calls
+//   {"seq":17,"command":"stepOverStatement"}        next statement, running calls whole
+//   {"seq":18,"command":"stepOutStatement"}         run until this function returns
+//   {"seq":19,"command":"detach"}                   let the run finish unhooked
 //
 // Replies are {"seq":N,"ok":true,...} or {"seq":N,"ok":false,"error":"..."}.
 //
@@ -122,7 +125,14 @@ enum RunMode
 	MODE_RUN,        // only breakpoints stop us
 	MODE_STEP_RULE,  // stop at the next rule attempt
 	MODE_STEP_MATCH, // stop at the next rule that matches
-	MODE_STEP_PASS   // stop at the start of the next pass
+	MODE_STEP_PASS,  // stop at the start of the next pass
+	// Statement stepping, in @CODE, @POST and @DECL bodies. The three differ
+	// only in how they treat a call: INTO descends, OVER runs a call to
+	// completion, OUT runs until the current function returns. Depth comes from
+	// nlppp->getDepth(), which Ifunc::eval pushes and pops around every call.
+	MODE_STEP_STMT_INTO,
+	MODE_STEP_STMT_OVER,
+	MODE_STEP_STMT_OUT
 };
 
 RunMode g_mode = MODE_STEP_PASS; // so arming stops at the first pass
@@ -153,6 +163,16 @@ long g_pass = 0;
 std::string g_passName;
 long g_ruleOrd = 0;
 long g_eltsMatched = -1;
+
+// Where the last statement stop was. g_stmtLine is -1 when the current stop is
+// not a statement, which is what tells currentStateJson whether "line" means a
+// rule's line or a statement's.
+long g_stmtLine = -1;
+long g_stmtDepth = 0;
+// The call depth the current step command was issued at. OVER and OUT compare
+// against this, which is why it is captured when the command arrives rather
+// than when the next statement does.
+long g_stepDepth = 0;
 
 // ---- narrow-string helpers --------------------------------------------------
 
@@ -567,7 +587,11 @@ std::string currentStateJson()
 	  << ",\"ruleOrd\":" << jnum(g_ruleOrd);
 
 	Irule *rule = g_nlppp ? g_nlppp->getRule() : 0;
-	o << ",\"line\":" << jnum(rule ? rule->getLine() : 0);
+	// At a statement the line is the statement's own; the rule's line would
+	// point at whichever rule happens to be in flight, which for @CODE is none.
+	o << ",\"line\":" << jnum(g_stmtLine >= 0 ? g_stmtLine : (rule ? rule->getLine() : 0));
+	if (g_stmtLine >= 0)
+		o << ",\"statement\":true,\"depth\":" << jnum(g_stmtDepth);
 
 	Node<Pn> *node = g_nlppp ? g_nlppp->getNode() : 0;
 	Pn *pn = node ? node->getData() : 0;
@@ -593,6 +617,7 @@ const char *reasonName(NlpDebugStop reason)
 	case NLPDEBUG_RULE_FAILED:  return "failed";
 	case NLPDEBUG_PASS_START:   return "passStart";
 	case NLPDEBUG_PAUSE:        return "pause";
+	case NLPDEBUG_STATEMENT:    return "statement";
 	}
 	return "step";
 }
@@ -650,6 +675,14 @@ void stopAndServe(NlpDebugStop reason)
 		if (cmd == "stepRule")      { g_mode = MODE_STEP_RULE;  reply(seq, ""); return; }
 		if (cmd == "stepMatch")     { g_mode = MODE_STEP_MATCH; reply(seq, ""); return; }
 		if (cmd == "stepPass")      { g_mode = MODE_STEP_PASS;  reply(seq, ""); return; }
+		// Statement stepping. The depth to compare against is the one we stopped
+		// at, captured here rather than when the next statement arrives.
+		if (cmd == "stepStatement")
+			{ g_mode = MODE_STEP_STMT_INTO; g_stepDepth = g_stmtDepth; reply(seq, ""); return; }
+		if (cmd == "stepOverStatement")
+			{ g_mode = MODE_STEP_STMT_OVER; g_stepDepth = g_stmtDepth; reply(seq, ""); return; }
+		if (cmd == "stepOutStatement")
+			{ g_mode = MODE_STEP_STMT_OUT;  g_stepDepth = g_stmtDepth; reply(seq, ""); return; }
 
 		if (cmd == "setBreakpoints")
 		{
@@ -936,6 +969,7 @@ void NlpDebug::shutdown()
 void NlpDebug::passStart_(Parse *parse, long passNum, const _TCHAR *passFile)
 {
 	if (!g_armed) return;
+	g_stmtLine = -1;
 	g_parse = parse;
 	g_nlppp = 0;
 	g_pass = passNum;
@@ -961,6 +995,7 @@ void NlpDebug::passEnd_(Parse *parse, long passNum)
 void NlpDebug::ruleAttempt_(Nlppp *nlppp, long ord)
 {
 	if (!g_armed) return;
+	g_stmtLine = -1;
 	g_nlppp = nlppp;
 	g_ruleOrd = ord;
 	g_eltsMatched = -1;
@@ -981,6 +1016,7 @@ void NlpDebug::ruleAttempt_(Nlppp *nlppp, long ord)
 void NlpDebug::ruleMatched_(Nlppp *nlppp)
 {
 	if (!g_armed) return;
+	g_stmtLine = -1;
 	g_nlppp = nlppp;
 	g_eltsMatched = -1;
 	if (g_mode == MODE_STEP_MATCH)
@@ -990,6 +1026,7 @@ void NlpDebug::ruleMatched_(Nlppp *nlppp)
 void NlpDebug::ruleFailed_(Nlppp *nlppp)
 {
 	if (!g_armed) return;
+	g_stmtLine = -1;
 	g_nlppp = nlppp;
 	// How many rule elements matched before the rule gave up.
 	//
@@ -1023,6 +1060,54 @@ void NlpDebug::arm()
 void NlpDebug::disarm()
 {
 	g_armed = false;
+}
+
+void NlpDebug::statement_(Nlppp *nlppp, long line)
+{
+	if (!g_armed) return;
+	g_nlppp = nlppp;
+	Parse *parse = nlppp ? nlppp->getParse() : 0;
+	if (parse) g_parse = parse;
+
+	// The pass is read HERE rather than taken from the cached one. A @DECL
+	// function defined in one pass and called from another runs with
+	// parse->currpass_ swapped to the defining pass (Ifunc::eval), so this is
+	// what makes a breakpoint inside a function land in the file it was written
+	// in rather than the file that happened to call it.
+	long pass = parse ? parse->getCurrpass() : g_pass;
+	long depth = nlppp ? nlppp->getDepth() : 0;
+
+	g_stmtLine = line;
+	g_stmtDepth = depth;
+	g_pass = pass;
+	g_eltsMatched = -1;
+
+	if (breakpointHere(pass, line))
+	{
+		stopAndServe(NLPDEBUG_STATEMENT);
+		return;
+	}
+
+	switch (g_mode)
+	{
+	case MODE_STEP_STMT_INTO:
+		// Anywhere, including inside a call.
+		stopAndServe(NLPDEBUG_STATEMENT);
+		return;
+	case MODE_STEP_STMT_OVER:
+		// Not deeper than where we were: a call runs to completion and we stop
+		// on the statement after it.
+		if (depth <= g_stepDepth) stopAndServe(NLPDEBUG_STATEMENT);
+		return;
+	case MODE_STEP_STMT_OUT:
+		// Shallower than where we were: run until this function returns.
+		if (depth < g_stepDepth) stopAndServe(NLPDEBUG_STATEMENT);
+		return;
+	default:
+		// Running, or stepping by rule or pass. A statement is not a stop.
+		g_stmtLine = -1;
+		return;
+	}
 }
 
 void NlpDebug::runEnd_()

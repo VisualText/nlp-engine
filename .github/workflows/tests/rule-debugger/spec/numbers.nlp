@@ -14,6 +14,18 @@
 #                            to read back
 ###############################################
 
+@DECL
+
+# Called from the @POST below, so the test can step INTO a call and check that
+# the stop lands in the file the function was WRITTEN in -- Ifunc::eval swaps
+# parse->currpass_ to the defining pass while a body runs.
+bumpRuns(L("by")) {
+	G("runs") = G("runs") + L("by");
+	return G("runs");
+}
+
+@@DECL
+
 @NODES _ROOT
 
 @RULES
@@ -30,6 +42,7 @@ _zzz <-
 @POST
 	G("runs") = 1;
 	S("kind") = "number";
+	bumpRuns(10);
 	single();
 @RULES
 _num <-

@@ -1,0 +1,6 @@
+[CG: Trying to load compiled KB.]
+[Error. No compiled kb for kb.dll .]
+[Loading interpreted kb.]
+[readKB:]
+[readKB: path=.github/workflows/tests/rule-debugger\kb\user]
+[readFile: File not found=.github/workflows/tests/rule-debugger\kb\user\hier.kb]

@@ -89,34 +89,159 @@ class Debugger(object):
                 raise EOFError("the engine ended while awaiting %s" % command)
 
 
+def attach(nlp, fixture, workdir):
+    """Start the engine under -DEBUG and connect. Returns (proc, sock) or None.
+
+    Two sessions need this. Every step consumes part of the analysis, so a
+    section that walks the pass to its end cannot share a run with one that
+    needs to stop partway -- each would be looking at whatever the other left
+    behind. A second engine costs a second and keeps them independent.
+    """
+    text = os.path.join(fixture, "input", "text.txt")
+    port = free_port()
+    proc = subprocess.Popen(
+        [nlp, "-ANA", fixture, "-IN", text, "-WORK", workdir, "-DEBUG", str(port)],
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+    deadline = time.time() + 60
+    while time.time() < deadline:
+        try:
+            return proc, socket.create_connection(("127.0.0.1", port), timeout=5)
+        except OSError:
+            if proc.poll() is not None:
+                out = proc.stdout.read().decode("utf-8", "replace")
+                print("FAIL: the engine exited before listening on %d" % port)
+                print(out[-2000:])
+                return None
+            time.sleep(0.25)
+    proc.kill()
+    print("FAIL: could not reach the debug port -- does this build have -DEBUG?")
+    return None
+
+
+def fixtureLines(fixture):
+    """The fixture's own line numbers, read rather than hardcoded.
+
+    The fixture gains a block now and then; every literal line number would
+    have to be chased when it does.
+    """
+    spec = os.path.join(fixture, "spec", "numbers.nlp")
+    lines = {}
+    with open(spec, encoding="utf-8") as fh:
+        for i, text in enumerate(fh, start=1):
+            stripped = text.strip()
+            for rule in ("_pair", "_zzz", "_num"):
+                if stripped.startswith(rule + " <-"):
+                    lines[rule] = i
+            if stripped.startswith("bumpRuns(10)"):
+                lines["call"] = i
+            if stripped.startswith('G("runs") = G("runs")'):
+                lines["fnbody"] = i
+    return lines
+
+
+def statements(nlp, fixture, workdir, LINES):
+    """Second session: @POST/@CODE/@DECL statements, and stepping into a call.
+
+    Its own engine because it walks the pass past the point the failure
+    traversal needs to stop at.
+    """
+    started = attach(nlp, fixture, workdir)
+    if started is None:
+        return 1
+    proc, sock = started
+    dbg = Debugger(sock)
+    try:
+        # ---- statements, and stepping into a function ------------------------
+        # @CODE, @POST and @DECL bodies all run through Istmt::eval, so one hook
+        # covers all three. Line 45 is the call `bumpRuns(10);` in @POST; lines
+        # 23-24 are inside the function it calls.
+        #
+        # Depth is what makes the three step commands mean anything: INTO
+        # descends into a call, OUT runs until the function returns. It comes
+        # from nlppp->getDepth(), which Ifunc::eval pushes and pops.
+        dbg.request("setBreakpoints", **{"pass": 2, "lines": [LINES["call"]]})
+        dbg.request("continue")
+        stop = dbg.next_stop()
+        check("a breakpoint inside @POST stops", stop is not None)
+        if stop is not None:
+            eq("stopped for a statement", stop.get("reason"), "statement")
+            eq("on the line the breakpoint was set", stop.get("line"), LINES["call"])
+            eq("statements are flagged as such", stop.get("statement"), True)
+            eq("at the outermost depth", stop.get("depth"), 0)
+
+            # Step INTO the call.
+            dbg.request("stepStatement")
+            inside = dbg.next_stop()
+            check("stepping enters the function body", inside is not None)
+            if inside is not None:
+                # A stop is BEFORE the statement on that line runs, which is
+                # what makes stepping worth anything -- the state you read is
+                # the state the statement is about to act on.
+                eq("the stop is on the function's first statement",
+                   inside.get("line"), LINES["fnbody"])
+                eq("depth records the call", inside.get("depth"), 1)
+
+                # The function's own parameter is a local, and the global it is
+                # about to update reads with the value the caller left.
+                locs = dict((v.get("name"), v.get("value"))
+                            for v in (dbg.request("locals").get("locals") or []))
+                check("a function parameter reads as a local", locs.get("by") == "10",
+                      "locals were %r" % (locs,))
+                globs = dict((v.get("name"), v.get("value"))
+                             for v in (dbg.request("globals").get("globals") or []))
+                check("a global reads its pre-statement value", globs.get("runs") == "1",
+                      "globals were %r" % (globs,))
+
+                # One more statement, and the assignment has happened.
+                dbg.request("stepStatement")
+                after = dbg.next_stop()
+                check("stepping stays inside the function", after is not None)
+                if after is not None:
+                    eq("on the function's next line", after.get("line"),
+                       LINES["fnbody"] + 1)
+                    eq("still one call deep", after.get("depth"), 1)
+                    globs = dict((v.get("name"), v.get("value"))
+                                 for v in (dbg.request("globals").get("globals") or []))
+                    check("the function's write to a global is visible",
+                          globs.get("runs") == "11", "globals were %r" % (globs,))
+
+                # Step OUT returns to the caller, past the call.
+                dbg.request("stepOutStatement")
+                back = dbg.next_stop()
+                check("stepping out returns to the caller", back is not None)
+                if back is not None:
+                    eq("back at the outermost depth", back.get("depth"), 0)
+                    check("on a line after the call",
+                          (back.get("line") or 0) > LINES["call"],
+                          "line was %r" % back.get("line"))
+    finally:
+        try:
+            sock.close()
+        except OSError:
+            pass
+        try:
+            proc.wait(timeout=30)
+        except Exception:
+            proc.kill()
+    return 0
+
+
 def main():
     if len(sys.argv) != 4:
         print(__doc__)
         return 2
     nlp, fixture, workdir = sys.argv[1], sys.argv[2], sys.argv[3]
-    text = os.path.join(fixture, "input", "text.txt")
-    port = free_port()
-
-    proc = subprocess.Popen(
-        [nlp, "-ANA", fixture, "-IN", text, "-WORK", workdir, "-DEBUG", str(port)],
-        stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-
-    sock = None
-    deadline = time.time() + 60
-    while time.time() < deadline:
-        try:
-            sock = socket.create_connection(("127.0.0.1", port), timeout=5)
-            break
-        except OSError:
-            if proc.poll() is not None:
-                out = proc.stdout.read().decode("utf-8", "replace")
-                print("FAIL: the engine exited before listening on %d\n%s" % (port, out[-2000:]))
-                return 1
-            time.sleep(0.25)
-    if sock is None:
-        proc.kill()
-        print("FAIL: could not reach the debug port -- does this build have -DEBUG?")
+    started = attach(nlp, fixture, workdir)
+    if started is None:
         return 1
+    proc, sock = started
+
+    LINES = fixtureLines(fixture)
+    for want in ("_pair", "_zzz", "_num", "call", "fnbody"):
+        if want not in LINES:
+            print("FAIL: could not find %s in the fixture" % want)
+            return 1
 
     dbg = Debugger(sock)
     try:
@@ -142,9 +267,9 @@ def main():
               "passName was %r" % stop.get("passName"))
 
         # ---- a breakpoint on the rule that fires ----------------------------
-        # Line 35 is the head of `_num <- _xNUM`, the only rule in the fixture
+        # The head of `_num <- _xNUM`, the only rule in the fixture
         # that matches the input.
-        r = dbg.request("setBreakpoints", **{"pass": 2, "lines": [35]})
+        r = dbg.request("setBreakpoints", **{"pass": 2, "lines": [LINES["_num"]]})
         check("setBreakpoints is accepted", r.get("ok") is True)
         dbg.request("continue")
         stop = dbg.next_stop()
@@ -152,12 +277,12 @@ def main():
         if stop is None:
             return 1
         eq("stopped for the breakpoint", stop.get("reason"), "breakpoint")
-        eq("stopped on the breakpoint's line", stop.get("line"), 35)
+        eq("stopped on the breakpoint's line", stop.get("line"), LINES["_num"])
 
         # ---- the rule the engine reports is the one in the file -------------
         r = dbg.request("rule")
         rule = r.get("rule") or {}
-        eq("rule line", rule.get("line"), 35)
+        eq("rule line", rule.get("line"), LINES["_num"])
         eq("rule builds _num", rule.get("builds"), "_num")
         eq("rule element count", len(rule.get("elements") or []), 1)
         eq("rule element name", (rule.get("elements") or [{}])[0].get("name"), "_xNUM")
@@ -251,9 +376,9 @@ def main():
 
             if stop.get("reason") == "failed":
                 worst = max(worst, stop.get("eltsMatched", 0))
-                if stop.get("line") == 20:
+                if stop.get("line") == LINES["_pair"]:
                     partial = max(partial, stop.get("eltsMatched", 0))
-                if stop.get("line") == 26:
+                if stop.get("line") == LINES["_zzz"]:
                     zzz_seen = True
 
             # Once _num's @POST has run, G("runs") is set and the node it built
@@ -277,7 +402,9 @@ def main():
 
         check("a global set by a rule is readable", "runs" in names,
               "globals were %r (run ended: %s)" % (names, ended))
-        eq("the global has the value the rule set", names.get("runs"), "1")
+        # 1 from the assignment, +10 from bumpRuns(): the function's effect on a
+        # global outlives the call, which is what makes stepping through one useful.
+        eq("the global carries the function's effect too", names.get("runs"), "11")
         check("a node carries the attribute its rule set",
               any(nm == "_num" and k == "kind" for nm, k, _v in attrs_found),
               "attributes found: %r" % (attrs_found,))
@@ -285,14 +412,15 @@ def main():
               any(k == "kind" and v == '"number"' for _nm, k, v in attrs_found),
               "attributes found: %r" % (attrs_found,))
         check("a partly-matched rule reports its element count", partial == 1,
-              "best eltsMatched for line 20 was %r" % partial)
+              "best eltsMatched for _pair was %r" % partial)
         check("a rule whose trigger cannot match is never attempted", not zzz_seen)
         # The bug this guards: counting the collect list as children of a root
         # rather than as siblings reported 526 for a two-element rule.
         check("no failure reports more elements than a rule can have", worst <= 4,
               "largest eltsMatched seen was %d" % worst)
 
-        dbg.request("stopOnFailure", value=False)
+        if not ended:
+            dbg.request("stopOnFailure", value=False)
 
         # ---- the run finishes ------------------------------------------------
         if not ended:
@@ -320,6 +448,9 @@ def main():
             proc.wait(timeout=30)
         except Exception:
             proc.kill()
+
+    if statements(nlp, fixture, workdir, LINES):
+        return 1
 
     if FAILURES:
         print("\n%d assertion(s) failed: %s" % (len(FAILURES), ", ".join(FAILURES)))
