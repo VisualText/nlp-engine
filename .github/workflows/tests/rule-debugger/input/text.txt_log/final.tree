@@ -1,0 +1,11 @@
+
+FINAL OUTPUT TREE:
+
+_ROOT [0,13,0,13,0,0,node,un]
+   alpha [0,4,0,4,0,0,alpha]
+   \_ [5,5,5,5,0,0,white]
+   _num [6,7,6,7,2,48,node,fired,blt, ("kind" "number")]
+      42 [6,7,6,7,0,0,num]
+   \_ [8,8,8,8,0,0,white]
+   beta [9,12,9,12,0,0,alpha]
+   \n [13,13,13,13,0,0,white]

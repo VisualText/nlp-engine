@@ -1,0 +1,2 @@
+NOHASH rule: _pair [] [] <- _xNUM [1,1 singlet] [] _xNUM [1,1 singlet] [] @@
+NOHASH rule: _num [] [] <- _xNUM [1,1 singlet] [] @@

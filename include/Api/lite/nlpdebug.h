@@ -49,7 +49,8 @@ enum NlpDebugStop
 	NLPDEBUG_RULE_MATCHED, // a rule matched (step-to-match, or a match breakpoint)
 	NLPDEBUG_RULE_FAILED,  // a rule failed (only when the client asked to see failures)
 	NLPDEBUG_PASS_START,   // a new pass began
-	NLPDEBUG_PAUSE         // the client asked to pause
+	NLPDEBUG_PAUSE,        // the client asked to pause
+	NLPDEBUG_STATEMENT     // about to run a statement in @CODE, @POST or @DECL
 };
 
 class LITE_API NlpDebug
@@ -111,6 +112,20 @@ public:
 	static void ruleFailed(Nlppp *nlppp)
 		{ if (active_) ruleFailed_(nlppp); }
 
+	// About to run one statement of @CODE, @POST or a @DECL function body.
+	//
+	// `line` is the statement's line in the file it was WRITTEN in, which is not
+	// always the pass being executed: a @DECL function defined in one pass and
+	// called from another runs with parse->currpass_ swapped to the defining
+	// pass (Ifunc::eval does this for error reporting), so reading the pass at
+	// the hook rather than caching it is what makes a breakpoint inside a
+	// function land in the right file.
+	//
+	// This fires far more often than a rule attempt -- once per statement -- so
+	// the guard doing nothing quickly matters even more here than elsewhere.
+	static void statement(Nlppp *nlppp, long line)
+		{ if (active_) statement_(nlppp, line); }
+
 	// The analyzer finished. Tells the client the run is over and closes.
 	static void runEnd()
 		{ if (active_) runEnd_(); }
@@ -122,6 +137,7 @@ private:
 	static void ruleAttempt_(Nlppp *nlppp, long ord);
 	static void ruleMatched_(Nlppp *nlppp);
 	static void ruleFailed_(Nlppp *nlppp);
+	static void statement_(Nlppp *nlppp, long line);
 	static void runEnd_();
 };
 

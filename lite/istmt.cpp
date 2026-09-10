@@ -25,6 +25,7 @@ All rights reserved.
 #include "node.h"	// 07/07/03 AM.
 #include "tree.h"	// 07/07/03 AM.
 #include "lite/nlppp.h"
+#include "lite/nlpdebug.h"
 #include "rfasem.h"
 #include "gen.h"																// 05/27/00 AM.
 #include "parse.h"															// 08/24/02 AM.
@@ -308,6 +309,10 @@ for (selt = stmts->getFirst(); selt; selt = selt->Right())
 	{
 	stmt = selt->getData();
 	nlppp->parse_->line_ = stmt->line_;									// 03/13/03 AM.
+	// Statement-level debugger. This is the pause point for @CODE, @POST and
+	// @DECL bodies -- all three run through here. No-op unless a client is
+	// attached and armed (see nlpdebug.h).
+	NlpDebug::statement(nlppp,stmt->line_);
 	if (!stmt->eval(nlppp, /*UP*/ sval))	// USE DERIVED CLASS.
 		{
 		std::_t_strstream gerrStr;
