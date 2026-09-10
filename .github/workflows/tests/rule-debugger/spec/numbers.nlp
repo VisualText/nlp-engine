@@ -1,0 +1,31 @@
+###############################################
+# FILE:     numbers.nlp
+# SUBJ:     Fixture for the rule-level debug server (-DEBUG <port>).
+# NOTE:     The three rules below are chosen so the debugger has one of each
+#           thing to report, at line numbers the driver asserts on. Keep the
+#           line numbers stable: drive.py refers to them by number, which is
+#           the point -- a rule's line is what a breakpoint is set on.
+#
+#           line 18  _pair   matches _xNUM then FAILS (the next node is
+#                            whitespace, not a number) -> eltsMatched == 1
+#           line 24  _zzz    never matches anything    -> eltsMatched == 0
+#           line 29  _num    MATCHES the "42" in the input
+###############################################
+
+@NODES _ROOT
+
+@RULES
+_pair <-
+	_xNUM [s]	### (1)
+	_xNUM [s]	### (2)
+	@@
+
+@RULES
+_zzz <-
+	zzz [s]	### (1)
+	@@
+
+@RULES
+_num <-
+	_xNUM [s]	### (1)
+	@@
