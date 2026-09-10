@@ -49,6 +49,7 @@ All rights reserved.
 #include "consh/cg.h"
 //#include "iarg.h"				// 05/23/01 AM.
 #include "parse.h"
+#include "lite/nlpdebug.h"
 #include "lite/nlp.h"		// FOR DEBUGGING!!!	// 10/10/99 AM.
 #include "var.h"											// 09/26/00 AM.
 #include "lite/nlppp.h"										// 05/17/00 AM.
@@ -759,10 +760,26 @@ bool ftimepass = eana_->getFtimepass();								// 10/13/99 AM.
 iniPass(num,prefix,flogfiles,ftimepass,pass->getActive(),sfile,salgo,				// 05/20/00 AM.
 			/*DU*/fout,sout,s_time,pretname);
 
+// Rule-level debugger. Named the same way the .tree header names a pass, so a
+// stop and a dump agree; pretname cannot be reused because it is only filled in
+// when logging or timing is on. No-op unless a client is attached and armed.
+if (pass->getActive())
+	{
+	_TCHAR *dbgname = sfile;
+	if (salgo && *salgo
+		 && strcmp_i(salgo, _T("nlp"))
+		 && strcmp_i(salgo, _T("rec")))
+		dbgname = salgo;
+	NlpDebug::passStart(this,num,dbgname);
+	}
+
 if (pass->getActive() && algo)	// Execute active pass.			// 01/08/99 AM.
 	{
 	if (!algo->Execute(this, pass)) // Algorithm, do your thing.// 01/26/02 AM.
+		{
+		NlpDebug::passEnd(this,num);										// Debugger.
 		return false;															// 01/26/02 AM.
+		}
 	}
 else if (!strcmp_i(str(salgo),_T("folder")))							// 02/03/05 DD.
 	;																				// 02/03/05 DD.
@@ -776,7 +793,10 @@ else if (!algo && pass->getActive())									// 01/15/99 AM.
 	}
 
 if (pass->getActive())
+	{
+	NlpDebug::passEnd(this,num);											// Debugger.
 	finPass(num,flogfiles,fout,sout,pretname,ftimepass,s_time);		// 05/20/00 AM.
+	}
 return true;
 }
 

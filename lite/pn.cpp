@@ -322,6 +322,17 @@ long			Pn::getEnd()		{return End;    }
 long			Pn::getUstart()		{return Ustart; }	// [UNICODE]
 long			Pn::getUend()		{return Uend; }	// [UNICODE]
 enum Pntype Pn::getType()		{return Type;   }
+
+// Spelling of a node type, from the same table Pn::print uses. Bounds-checked
+// because enum Pntype and Pntype_s are kept in step by hand (see the WARNING on
+// both), and a debugger is exactly where an out-of-range read would surface.
+const _TCHAR *Pn::typeName(enum Pntype t)
+{
+const int n = (int) (sizeof(Pntype_s) / sizeof(Pntype_s[0]));
+if ((int) t < 0 || (int) t >= n)
+	return _T("?");
+return Pntype_s[t];
+}
 _TCHAR		  *Pn::getText()		{return Text;   }
 _TCHAR		  *Pn::getName()		{return name_;  }
 int         Pn::getFlags()		{return flags_; }

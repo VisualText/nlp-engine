@@ -294,6 +294,7 @@ Irule		*Nlppp::getRule()	{return rule_;}
 Tree<Pn> *Nlppp::getCollect()	{return collect_;}
 Parse		*Nlppp::getParse()	{return parse_;  }
 Node<Pn>	*Nlppp::getSelect()	{return select_; }
+Node<Pn>	*Nlppp::getNode()	{return node_;   }
 Node<Pn>	*Nlppp::getFirst()	{return first_;  }
 Node<Pn>	*Nlppp::getLast()		{return last_;		}
 Node<Pn>	*Nlppp::getStart()	{return start_;	}

@@ -78,6 +78,11 @@ public:
 	long getUstart();	// [UNICODE]	// 06/15/22 AM.
 	long getUend();		// [UNICODE]	// 06/15/22 AM.
 	enum Pntype getType();
+	// Spelling of a node type ("node", "alpha", "punct", ...), the same table
+	// Pn::print writes into the .tree dumps. Exposed so the debug server names
+	// types identically to those dumps rather than keeping a second copy that
+	// could drift from enum Pntype.
+	static const _TCHAR *typeName(enum Pntype);
 	_TCHAR *getText();					// START OF NODE'S TEXT IN INPUT BUFFER.
 	_TCHAR *getName();					// GET NAME OF NODE.
 	int getFlags();					// 11/03/98 AM.

@@ -15,10 +15,12 @@ All rights reserved.
 #include "lite/nlp_engine.h"
 #include "version.h"
 
-#define NLP_ENGINE_VERSION "3.8.12"
+#define NLP_ENGINE_VERSION "3.9.0"
 
-bool cmdReadArgs(int, _TCHAR *argv[], _TCHAR *&, _TCHAR *&, _TCHAR *&, _TCHAR *&, bool &, bool &, bool &, bool &, bool &, bool &);
+bool cmdReadArgs(int, _TCHAR *argv[], _TCHAR *&, _TCHAR *&, _TCHAR *&, _TCHAR *&, bool &, bool &, bool &, bool &, bool &, bool &, int &);
 void cmdHelpargs(_TCHAR *);
+
+#include "lite/nlpdebug.h"
 
 #ifdef LINUX
 int main(
@@ -42,14 +44,21 @@ int _tmain(
 	bool silent = false;    // No log/debug output files.
 	bool compileKB = false; // Compile only the KB to C++.
 	bool compileAna = false; // Compile only the analyzer to C++.
+	int debugPort = 0;       // -debug <port>: rule-level debug server. 0 = off.
 
 	/////////////////////////////////////////////////
 	// GET APP INFORMATION
 	/////////////////////////////////////////////////
 
 	// Get analyzer name, input and output filenames from command line.
-	if (!cmdReadArgs(argc, argv, analyzerpath, input, output, workdir, develop, compile, compiled, silent, compileKB, compileAna))
+	if (!cmdReadArgs(argc, argv, analyzerpath, input, output, workdir, develop, compile, compiled, silent, compileKB, compileAna, debugPort))
 		exit(1);
+
+	// Rule-level debugger. Blocks until a client attaches, so it is only started
+	// for an actual analysis run -- attaching to a compile would wait forever on
+	// a process that never reaches a rule.
+	if (debugPort > 0 && !compile && !compileKB && !compileAna)
+		NlpDebug::listen(debugPort);
 
 	NLP_ENGINE *nlpEngine = new NLP_ENGINE(workdir);
 	if (compile)
@@ -81,6 +90,8 @@ int _tmain(
 	{
 		nlpEngine->analyze(analyzerpath, input, output, develop, silent, compile, compiled, compileKB, compileAna);
 	}
+	NlpDebug::runEnd();
+	NlpDebug::shutdown();
 	delete nlpEngine;
 }
 
@@ -104,7 +115,8 @@ bool cmdReadArgs(
 	bool &compiled,	   // true - compiled ana. false=interp(DEFAULT).
 	bool &silent,	   // true == only output files specified by analyzer.
 	bool &compileKB,   // true - compile only the KB to C++.
-	bool &compileAna   // true - compile only the analyzer to C++.
+	bool &compileAna,  // true - compile only the analyzer to C++.
+	int &debugPort	   // -debug <port>: rule-level debug server. 0 = off.
 )
 {
 	_TCHAR *ptr;
@@ -114,6 +126,7 @@ bool cmdReadArgs(
 	bool f_in = false;
 	bool f_out = false;
 	bool f_work = false;
+	bool f_debug = false;
 	bool flag = false;
 	bool compiledck = false; // If compiled/interp arg seen.
 	bool doubledash = false;
@@ -125,6 +138,7 @@ bool cmdReadArgs(
 	silent = false;	   // Produce debug files, etc. by default.		// 06/16/02 AM.
 	compileKB = false; // Don't compile KB-only by default.
 	compileAna = false; // Don't compile analyzer-only by default.
+	debugPort = 0;	  // No debug server unless -debug <port> is given.
 
 	for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 	{
@@ -181,6 +195,8 @@ bool cmdReadArgs(
 				f_out = flag = true; // Expecting output file.
 			else if (!strcmp_i(ptr, _T("work")))
 				f_work = flag = true;			// Expecting output file.
+			else if (!strcmp_i(ptr, _T("debug")))
+				f_debug = flag = true;			// Expecting a TCP port.
 			else if (!strcmp_i(ptr, _T("dev"))) // 12/25/98 AM.
 			{
 				if (silent)
@@ -284,6 +300,18 @@ bool cmdReadArgs(
 				workdir = ptr;
 				f_work = flag = false;
 			}
+			else if (f_debug)
+			{
+				debugPort = _ttoi(ptr);
+				if (debugPort <= 0 || debugPort > 65535)
+				{
+					std::_t_cerr << _T("[") << argv[0]
+								 << _T(": -debug needs a TCP port between 1 and 65535.]") << std::endl;
+					cmdHelpargs(argv[0]);
+					return false;
+				}
+				f_debug = flag = false;
+			}
 		}
 		else // Got a "floating" value.
 		{
@@ -324,6 +352,7 @@ void cmdHelpargs(_TCHAR *name)
 				 << _T("           [-OUT outdir] output directory") << std::endl
 				 << _T("           [-WORK workdir] working directory") << std::endl
 				 << _T("           [-DEV][-SILENT] -DEV generates logs, -SILENT suppresses logs/output files (off by default)") << std::endl
+				 << _T("           [-DEBUG port] wait for a rule debugger on 127.0.0.1:port, then run under it") << std::endl
 				 << _T("           [infile [outfile]] when no -IN or -OUT specified") << std::endl
 				 << std::endl
 				 << _T("Directories in the nlp.exe files:") << std::endl
