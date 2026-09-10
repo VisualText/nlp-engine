@@ -128,6 +128,15 @@ RunMode g_mode = MODE_STEP_PASS; // so arming stops at the first pass
 bool g_stopOnFailure = false;
 bool g_detached = false;
 
+// How long a blocking socket call waits before checking whether it should keep
+// waiting, and how many of those waits add up to "this client is not coming
+// back". Being stopped at a breakpoint is a normal state that lasts as long as
+// the user is thinking, so the total has to be generous: 30 minutes.
+const int NLPDEBUG_RECV_TIMEOUT_SECS = 30;
+const int NLPDEBUG_IDLE_LIMIT = 60;
+const int NLPDEBUG_ACCEPT_TIMEOUT_SECS = 120;
+int g_idleTicks = 0;
+
 // Set only while the analyzer is running over the input text. The hooks are
 // inert outside that window -- see NlpDebug::arm().
 bool g_armed = false;
@@ -201,6 +210,41 @@ std::string jnum(long n)
 
 // ---- socket plumbing --------------------------------------------------------
 
+// Put a receive timeout on a socket.
+//
+// Every blocking call in here needs one. A debugger client that dies WITHOUT
+// closing its socket leaves the connection Established as far as TCP is
+// concerned -- no data flows, so nothing errors, and recv() blocks forever. The
+// engine then sits paused for the life of the machine, holding the port, with
+// the editor still believing a session is live. That is worse than the thing
+// the design was trying to avoid: losing the debugger is supposed to let the
+// analysis carry on, not freeze it.
+//
+// Windows takes a DWORD of milliseconds; POSIX takes a struct timeval.
+void setRecvTimeout(nlp_socket_t sock, int seconds)
+{
+#ifdef _WIN32
+	DWORD ms = (DWORD)(seconds * 1000);
+	setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, (const char *)&ms, sizeof(ms));
+#else
+	struct timeval tv;
+	tv.tv_sec = seconds;
+	tv.tv_usec = 0;
+	setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, (const void *)&tv, sizeof(tv));
+#endif
+}
+
+// Did the last recv/accept fail merely because it timed out?
+bool timedOut()
+{
+#ifdef _WIN32
+	int e = WSAGetLastError();
+	return e == WSAETIMEDOUT;
+#else
+	return errno == EAGAIN || errno == EWOULDBLOCK;
+#endif
+}
+
 bool sendLine(const std::string &line)
 {
 	if (g_client == NLP_INVALID_SOCKET) return false;
@@ -233,7 +277,20 @@ bool readLine(std::string &out)
 		}
 		char buf[4096];
 		int n = (int)recv(g_client, buf, sizeof(buf), 0);
-		if (n <= 0) return false;
+		if (n == 0) return false;            // clean close
+		if (n < 0)
+		{
+			if (!timedOut()) return false;    // a real error
+			// A timeout on its own means nothing -- the user is reading the
+			// screen and has not pressed anything yet. Only a client that says
+			// nothing for a very long time is treated as gone.
+			if (++g_idleTicks < NLPDEBUG_IDLE_LIMIT) continue;
+			*gerr << _T("[debug: no word from the debugger in ")
+					<< (NLPDEBUG_RECV_TIMEOUT_SECS * NLPDEBUG_IDLE_LIMIT / 60)
+					<< _T(" minutes; carrying on without it.]") << std::endl;
+			return false;
+		}
+		g_idleTicks = 0;
 		g_inbuf.append(buf, (size_t)n);
 	}
 }
@@ -742,6 +799,38 @@ bool NlpDebug::listen(int port)
 
 	*gout << _T("[debug: waiting for a client on 127.0.0.1:") << port << _T("]") << std::endl;
 
+	// Bounded, for the same reason readLine's recv is: a -DEBUG run whose client
+	// never arrives (a cancelled launch, a crashed editor) would otherwise sit
+	// here for the life of the machine holding the port, and the next run cannot
+	// have it. Two minutes is far longer than an editor takes to connect.
+	//
+	// select() rather than SO_RCVTIMEO: that option bounds recv on a CONNECTED
+	// socket, and on Windows it does not apply to accept() at all -- the first
+	// version of this waited out a two-minute timeout that never fired.
+	{
+		fd_set readable;
+		FD_ZERO(&readable);
+		FD_SET(g_listen, &readable);
+		struct timeval tv;
+		tv.tv_sec = NLPDEBUG_ACCEPT_TIMEOUT_SECS;
+		tv.tv_usec = 0;
+		// The first argument is ignored on Windows and must be max fd + 1 on POSIX.
+		int ready = select((int)g_listen + 1, &readable, 0, 0, &tv);
+		if (ready <= 0)
+		{
+			if (ready == 0)
+				*gerr << _T("[debug: no debugger connected within ")
+						<< NLPDEBUG_ACCEPT_TIMEOUT_SECS
+						<< _T(" seconds; running without it.]") << std::endl;
+			else
+				*gerr << _T("[debug: waiting for a debugger failed; running without it.]")
+						<< std::endl;
+			nlp_closesocket(g_listen);
+			g_listen = NLP_INVALID_SOCKET;
+			return false;
+		}
+	}
+
 	g_client = accept(g_listen, 0, 0);
 	if (g_client == NLP_INVALID_SOCKET)
 	{
@@ -750,6 +839,11 @@ bool NlpDebug::listen(int port)
 		g_listen = NLP_INVALID_SOCKET;
 		return false;
 	}
+
+	// The same guard on the connection itself, so a client that dies without
+	// closing cannot leave the engine blocked in recv for ever.
+	setRecvTimeout(g_client, NLPDEBUG_RECV_TIMEOUT_SECS);
+	g_idleTicks = 0;
 
 	active_ = true;
 	g_detached = false;
