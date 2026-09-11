@@ -137,6 +137,9 @@ def fixtureLines(fixture):
                 lines["call"] = i
             if stripped.startswith('G("runs") = G("runs")'):
                 lines["fnbody"] = i
+            marker = text.split("### shape:")
+            if len(marker) == 2:
+                lines["shape:" + marker[1].strip()] = i
     return lines
 
 
@@ -241,6 +244,64 @@ def statements(nlp, fixture, workdir, LINES):
     return 0
 
 
+def blockShapes(nlp, fixture, workdir, LINES):
+    """Third session: which lines a walk through every block shape stops on.
+
+    A block holding exactly ONE statement is kept as a bare statement rather
+    than a one-element list, and only the list path carries the pause point.
+    So a single-statement `if` body -- much the commonest shape there is -- was
+    stepped straight over as though it were not there, and so was a
+    single-statement `while` body and a single-statement `else`. Every shape is
+    walked here because they differ in the engine, not just on the page.
+    """
+    started = attach(nlp, fixture, workdir)
+    if started is None:
+        return 1
+    proc, sock = started
+    dbg = Debugger(sock)
+    try:
+        dbg.request("setBreakpoints", **{"pass": 2, "lines": [LINES["shape:call"]]})
+        dbg.request("continue")
+        stop = dbg.next_stop()
+        check("the call into blockShapes is reached", stop is not None)
+        if stop is None:
+            return 1
+        dbg.request("setBreakpoints", **{"pass": 2, "lines": []})
+
+        seen = []
+        for _ in range(60):
+            dbg.request("stepStatement")
+            s = dbg.next_stop()
+            if s is None or not s.get("statement") or s.get("depth") == 0:
+                break
+            seen.append(s.get("line"))
+
+        eq("a single-statement `if` body stops", seen.count(LINES["shape:one"]), 1)
+        eq("a two-statement body still stops on both",
+           (seen.count(LINES["shape:twoA"]), seen.count(LINES["shape:twoB"])), (1, 1))
+        eq("a single-statement `else` body stops", seen.count(LINES["shape:elsed"]), 1)
+        # Once per iteration: the body is reached through the same path each
+        # time round, so a loop is also the check that the hook is not somehow
+        # one-shot.
+        eq("a single-statement `while` body stops once per iteration",
+           seen.count(LINES["shape:loop"]), 2)
+        # The counterpart: a body whose condition is false must stay silent.
+        # Stopping on every branch whether taken or not would look like
+        # stepping working while telling the author the wrong story.
+        eq("a body whose condition is false does not stop",
+           seen.count(LINES["shape:never"]), 0)
+    finally:
+        try:
+            sock.close()
+        except OSError:
+            pass
+        try:
+            proc.wait(timeout=30)
+        except Exception:
+            proc.kill()
+    return 0
+
+
 def main():
     if len(sys.argv) != 4:
         print(__doc__)
@@ -252,7 +313,9 @@ def main():
     proc, sock = started
 
     LINES = fixtureLines(fixture)
-    for want in ("_pair", "_zzz", "_num", "call", "fnbody"):
+    for want in ("_pair", "_zzz", "_num", "call", "fnbody",
+                 "shape:call", "shape:one", "shape:never", "shape:twoA",
+                 "shape:twoB", "shape:elsed", "shape:loop"):
         if want not in LINES:
             print("FAIL: could not find %s in the fixture" % want)
             return 1
@@ -473,6 +536,9 @@ def main():
             proc.kill()
 
     if statements(nlp, fixture, workdir, LINES):
+        return 1
+
+    if blockShapes(nlp, fixture, workdir, LINES):
         return 1
 
     if FAILURES:
