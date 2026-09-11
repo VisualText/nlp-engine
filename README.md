@@ -18,6 +18,26 @@ The NLP engine is the engine that runs text analyzers writtein in [NLP++](http:/
 1. Calling the nlp.exe command line executable (this is what the VSCode NLP++ Language Extension does)
 1. Calling from within C++ or another language that can call c++ functions
 
+## What's New in Version 4
+
+Version 4 is the release line in which **NLP++ became debuggable**. Version 3 was about how you build, deploy and install an analyzer; Version 4 is about watching one run.
+
+The debugging *experience* lives in the [NLP++ Language Extension for VS Code](https://marketplace.visualstudio.com/items?itemName=dehilster.nlp) — breakpoints, stepping, variables and a call stack, in the editor. What the engine contributes is the machinery underneath it: a small debug server that the extension (or any other client) drives.
+
+### The debug server (`-DEBUG <port>`)
+
+Start the engine with `-DEBUG <port>` and it listens on a loopback socket, speaking newline-delimited JSON — one object per line, both directions. It runs until it reaches a pause point, sends an unsolicited `stopped` event, and blocks reading commands until one of them resumes it.
+
+- **Pause points:** a pass boundary; a rule about to be tried, one that matched, one that failed; and a statement about to run in an `@CODE`, `@POST` or `@DECL` body.
+- **Inspection:** the parse tree, the current node and the nodes after it, the rule being tried element by element, the matched elements behind `N(n)`, all five NLP++ variable kinds (`G()`, `L()`, `S()`, `X()`, `N()`), and the calls that led to where execution is.
+- **Stepping:** by rule, by match, by pass, and by statement — into a call, over one, or out of the current function.
+- **Capability handshake.** A client asks what a build supports (`capabilities`) rather than inferring it from this version string.
+- **It costs nothing when off.** Every hook is an inline test of one static `bool`, and the hooks are armed only while the analyzer runs over the input — never while the engine parses its own grammar.
+
+The message catalogue at the top of `lite/nlpdebug.cpp` is the authority on the protocol; the regression driver in `.github/workflows/tests/rule-debugger/` exercises it end to end.
+
+For a fuller narrative of the Version 4 work, see `docs/version-4/VERSION-4-OVERVIEW.md`.
+
 ## What's New in Version 3
 
 Version 3 is the release line in which NLP++ became **compilable, cloud-buildable, and installable from package managers**, while hardening the engine across all supported platforms. NLP++ is *glass-box*, **deterministic** NLP — the same input always produces the same output from rules you can read — and Version 3 makes that engine faster, easier to build, and easier to adopt.
@@ -83,6 +103,7 @@ Switch | Function
 -OUT | Output directory
 -WORK | Working director where the library and executable files are
 -DEV / -SILENT | -DEV generates logs, -SILENT suppresses logs/output files (off by default)
+-DEBUG | Port to serve the debug protocol on. The engine waits for a client, then stops at pass boundaries, rule attempts and statements so the client can step and inspect. Used by the VS Code extension's debugger; see "What's New in Version 4".
 [infile [outfile]] | when no -IN or -OUT specified
 
 # Calling NLP++ Analyzers from C++
