@@ -24,6 +24,15 @@ bumpRuns(L("by")) {
 	return G("runs");
 }
 
+# Two more levels, so the debugger's call stack has something to be wrong about.
+inner2(L("x")) {
+	G("deep") = L("x");			### shape: deepBody
+}
+
+outer2(L("x")) {
+	inner2(L("x"));				### shape: innerCall
+}
+
 # Every block shape, for the statement debugger to walk. A block holding
 # exactly ONE statement is kept as a bare statement rather than a one-element
 # list, and only the list path used to carry the pause point -- so a
@@ -49,6 +58,7 @@ blockShapes(L("n")) {
 	# the BODY's line as its own, so stepping never showed the test.
 	if (L("n") >= 1)				### shape: bareIf
 		G("bare") = 1;				### shape: bareBody
+	outer2(7);						### shape: outerCall
 	L("i") = 0;
 	while (L("i") < 2) {		### shape: while
 		L("i") = L("i") + 1;	### shape: loop

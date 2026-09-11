@@ -126,6 +126,21 @@ public:
 	static void statement(Nlppp *nlppp, long line)
 		{ if (active_) statement_(nlppp, line); }
 
+	/**
+	 * A user-defined function is about to run its body.
+	 *
+	 * `pass` and `line` are the CALLER's, captured before Ifunc::eval swaps the
+	 * current pass to the one the function was defined in -- so they say where
+	 * the call was written, which is what a call stack is made of.
+	 *
+	 * There is deliberately no matching hook on the way out. The record is kept
+	 * indexed by call depth and rewritten by the next call at that depth, so a
+	 * body that returns early, errors, or exits the pass cannot leave the stack
+	 * drifted -- and Ifunc::eval has several ways out.
+	 */
+	static void callEnter(Nlppp *nlppp, const _TCHAR *name, long pass, long line)
+		{ if (active_) callEnter_(nlppp, name, pass, line); }
+
 	// The analyzer finished. Tells the client the run is over and closes.
 	static void runEnd()
 		{ if (active_) runEnd_(); }
@@ -138,6 +153,7 @@ private:
 	static void ruleMatched_(Nlppp *nlppp);
 	static void ruleFailed_(Nlppp *nlppp);
 	static void statement_(Nlppp *nlppp, long line);
+	static void callEnter_(Nlppp *nlppp, const _TCHAR *name, long pass, long line);
 	static void runEnd_();
 };
 

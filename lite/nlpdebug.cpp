@@ -41,7 +41,8 @@ All rights reserved.
 //   {"seq":17,"command":"stepOverStatement"}        next statement, running calls whole
 //   {"seq":18,"command":"stepOutStatement"}         run until this function returns
 //   {"seq":19,"command":"capabilities"}             what this build supports
-//   {"seq":20,"command":"detach"}                   let the run finish unhooked
+//   {"seq":20,"command":"stack"}                    the calls that led here
+//   {"seq":21,"command":"detach"}                   let the run finish unhooked
 //
 // Replies are {"seq":N,"ok":true,...} or {"seq":N,"ok":false,"error":"..."}.
 //
@@ -85,6 +86,7 @@ All rights reserved.
 #include <string>
 #include <vector>
 #include <map>
+#include <vector>
 #include <set>
 #include <sstream>
 #include <cctype>   // isspace, isdigit
@@ -172,6 +174,24 @@ long g_eltsMatched = -1;
 // rule's line or a statement's.
 long g_stmtLine = -1;
 long g_stmtDepth = 0;
+// One entry per live call, indexed by depth: g_calls[0] is the outermost call,
+// made at depth 1. Each says what was called and WHERE FROM -- the caller's pass
+// and line, captured before Ifunc::eval swaps the pass to the defining one.
+//
+// Nothing pops it. Ifunc::eval has several ways out (an early return, an error,
+// exitpass) and a pop placed on one of them would be missed by the others,
+// leaving a stack that drifts deeper the longer a run goes on. Instead a call at
+// depth d truncates to d-1 and appends, so the list is corrected by the next
+// call at that depth, and a reader only ever looks at the first `depth` entries
+// -- which are the ones that got there on the way to here.
+struct CallFrame
+{
+	std::string name;
+	long pass;
+	long line;
+};
+std::vector<CallFrame> g_calls;
+
 // The call depth the current step command was issued at. OVER and OUT compare
 // against this, which is why it is captured when the command arrives rather
 // than when the next statement does.
@@ -721,7 +741,32 @@ void stopAndServe(NlpDebugStop reason)
 			// Only features a client must know about BEFORE using them belong
 			// here. Everything else it can just try: an unknown command replies
 			// with an error rather than closing the connection.
-			reply(seq, "\"capabilities\":[\"statements\",\"variables\",\"nodeText\"]");
+			reply(seq, "\"capabilities\":[\"statements\",\"variables\",\"nodeText\",\"callStack\"]");
+			continue;
+		}
+		if (cmd == "stack")
+		{
+			// The calls that led here, outermost first. Only the first `depth`
+			// entries count: anything past that is a record of a call that has
+			// already returned, kept because nothing pops (see g_calls).
+			//
+			// Each entry names the function entered and the pass and line it was
+			// called FROM, which is what a client turns into a frame the user
+			// can click. The innermost frame -- where execution actually is --
+			// the client already has, from the stop itself.
+			std::ostringstream o;
+			o << "\"calls\":[";
+			long depth = g_stmtDepth;
+			if (depth > (long)g_calls.size()) depth = (long)g_calls.size();
+			for (long i = 0; i < depth; ++i)
+			{
+				if (i) o << ",";
+				o << "{\"name\":" << jstr(g_calls[(size_t)i].name)
+				  << ",\"pass\":" << jnum(g_calls[(size_t)i].pass)
+				  << ",\"line\":" << jnum(g_calls[(size_t)i].line) << "}";
+			}
+			o << "]";
+			reply(seq, o.str());
 			continue;
 		}
 		if (cmd == "state")
@@ -1135,6 +1180,20 @@ void NlpDebug::statement_(Nlppp *nlppp, long line)
 		g_stmtLine = -1;
 		return;
 	}
+}
+
+void NlpDebug::callEnter_(Nlppp *nlppp, const _TCHAR *name, long pass, long line)
+{
+	if (!g_armed) return;
+	long depth = nlppp ? nlppp->getDepth() : 0;   // already pushed by Ifunc::eval
+	if (depth < 1) return;
+	if ((long)g_calls.size() >= depth)
+		g_calls.resize((size_t)(depth - 1));
+	CallFrame frame;
+	frame.name = narrow(name);
+	frame.pass = pass;
+	frame.line = line;
+	g_calls.push_back(frame);
 }
 
 void NlpDebug::runEnd_()
