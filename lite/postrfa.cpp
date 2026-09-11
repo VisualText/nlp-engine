@@ -4889,8 +4889,16 @@ else
 
 
 // Build if statement object.
+//
+// The line is the _IFPART's -- `if (cond)` -- and NOT pnif's, which is the
+// BODY. Those are the same line whenever the body opens with a brace on the
+// `if` line, which is why this went unnoticed; write the body on the next line
+// without braces and the statement recorded that next line as its own. Stepping
+// then went from the statement before the `if` straight to the body, never
+// showing the test, and an error in the condition was reported a line late.
+// Iwhilestmt is built from pncond for exactly this reason.
 Iifstmt *ifstmt = new Iifstmt(semcond, semif,
-										0, pnif->getLine());					// 03/12/02 AM.
+										0, pncond->getLine());				// 03/12/02 AM.
 RFASem *rfasem;
 rfasem = new RFASem(ifstmt);
 
