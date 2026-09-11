@@ -269,12 +269,15 @@ def blockShapes(nlp, fixture, workdir, LINES):
         dbg.request("setBreakpoints", **{"pass": 2, "lines": []})
 
         seen = []
-        for _ in range(60):
+        deep = None          # (depth, stack) at the innermost call
+        for _ in range(90):
             dbg.request("stepStatement")
             s = dbg.next_stop()
             if s is None or not s.get("statement") or s.get("depth") == 0:
                 break
             seen.append(s.get("line"))
+            if s.get("line") == LINES["shape:deepBody"] and deep is None:
+                deep = (s.get("depth"), dbg.request("stack").get("calls"))
 
         eq("a single-statement `if` body stops", seen.count(LINES["shape:one"]), 1)
         eq("a two-statement body still stops on both",
@@ -304,6 +307,29 @@ def blockShapes(nlp, fixture, workdir, LINES):
               LINES["shape:bareIf"] < LINES["shape:bareBody"]
               and seen.index(LINES["shape:bareIf"]) < seen.index(LINES["shape:bareBody"]),
               "stops were %r" % (seen,))
+
+        # ---- the calls that led here ------------------------------------
+        # A depth number alone says "you are somewhere three calls down" and
+        # leaves the user to work out where from. Each entry names what was
+        # called and the line it was called FROM, which is the half that makes
+        # a frame clickable.
+        #
+        # Nothing pops this list -- Ifunc::eval has several ways out and a pop
+        # on one would be missed by the others -- so it is indexed by depth and
+        # only the first `depth` entries are reported. Reading it three deep
+        # after shallower calls have already come and gone is what checks that.
+        check("the innermost call was reached", deep is not None)
+        if deep is not None:
+            depth, calls = deep
+            eq("three calls deep", depth, 3)
+            eq("one stack entry per call", len(calls or []), 3)
+            if calls and len(calls) == 3:
+                eq("outermost is the one the @POST made", calls[0].get("name"), "blockShapes")
+                eq("called from the @POST's line", calls[0].get("line"), LINES["shape:call"])
+                eq("then the call it made", calls[1].get("name"), "outer2")
+                eq("from the line that made it", calls[1].get("line"), LINES["shape:outerCall"])
+                eq("innermost is where we are", calls[2].get("name"), "inner2")
+                eq("from inside outer2", calls[2].get("line"), LINES["shape:innerCall"])
 
         # The counterpart: a body whose condition is false must stay silent.
         # Stopping on every branch whether taken or not would look like
@@ -336,7 +362,8 @@ def main():
     for want in ("_pair", "_zzz", "_num", "call", "fnbody",
                  "shape:call", "shape:one", "shape:never", "shape:twoA",
                  "shape:twoB", "shape:elsed", "shape:loop", "shape:while",
-                 "shape:bareIf", "shape:bareBody"):
+                 "shape:bareIf", "shape:bareBody",
+                 "shape:outerCall", "shape:innerCall", "shape:deepBody"):
         if want not in LINES:
             print("FAIL: could not find %s in the fixture" % want)
             return 1

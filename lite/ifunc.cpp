@@ -38,6 +38,7 @@ All rights reserved.
 #include "parse.h"			// 08/22/02 AM.
 #include "chars.h"			// For deleting local strings. // 01/08/07 AM.
 #include "ifunc.h"
+#include "lite/nlpdebug.h"	// Statement-level debugger.
 #include "rfasem.h"
 
 #ifdef LINUX
@@ -610,6 +611,13 @@ long savepass = parse->currpass_;										// 08/22/02 AM.
 parse->currpass_ = pass_;													// 08/22/02 AM.
 long saveline = parse->line_;												// 02/02/05 AM.
 parse->line_ = line_;														// 02/02/05 AM.
+// Record the call for the debugger's stack. savepass/saveline are the CALLER's
+// -- taken before the swap above -- which is what a client needs to show the
+// line the call was made from. There is no matching hook on the way out: the
+// record is indexed by depth and rewritten on the next call at that depth, so a
+// body that returns early, throws, or exits the pass cannot leave the stack
+// drifted. See NlpDebug::callEnter.
+NlpDebug::callEnter(nlppp,name_,savepass,saveline);
 if (!body_->eval(nlppp, /*UP*/ sem))
 	{
 	std::_t_strstream gerrStr;
