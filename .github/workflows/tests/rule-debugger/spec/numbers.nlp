@@ -24,6 +24,33 @@ bumpRuns(L("by")) {
 	return G("runs");
 }
 
+# Every block shape, for the statement debugger to walk. A block holding
+# exactly ONE statement is kept as a bare statement rather than a one-element
+# list, and only the list path used to carry the pause point -- so a
+# single-statement `if` body, much the commonest shape in NLP++, was stepped
+# straight over as though it were not there.
+blockShapes(L("n")) {
+	if (L("n") >= 1) {
+		G("one") = 1;			### shape: one
+	}
+	if (L("n") >= 99) {
+		G("never") = 1;			### shape: never
+	}
+	if (L("n") >= 1) {
+		G("twoA") = 1;			### shape: twoA
+		G("twoB") = 2;			### shape: twoB
+	}
+	if (L("n") >= 99) {
+		G("never") = 2;
+	} else {
+		G("elsed") = 1;			### shape: elsed
+	}
+	L("i") = 0;
+	while (L("i") < 2) {
+		L("i") = L("i") + 1;	### shape: loop
+	}
+}
+
 @@DECL
 
 @NODES _ROOT
@@ -43,6 +70,7 @@ _zzz <-
 	G("runs") = 1;
 	S("kind") = "number";
 	bumpRuns(10);
+	blockShapes(5);				### shape: call
 	single();
 @RULES
 _num <-

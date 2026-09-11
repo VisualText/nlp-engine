@@ -33,6 +33,7 @@ All rights reserved.
 #include "istmt.h"						// 11/11/99 AM.
 #include "parse.h"	// For interning strings.	// 01/09/07 AM.
 #include "rfasem.h"
+#include "lite/nlpdebug.h"	// Statement-level debugger.
 
 /********************************************
 * FN:		Special Functions for Sem class.
@@ -590,7 +591,19 @@ switch (type_)
 		break;
 	case RSSTMT:
 		if (val_.stmt_)
+			{
+			// A block holding exactly ONE statement is kept as a bare RSSTMT and
+			// evaluated straight through, rather than as a one-element RSSTMTS
+			// list. Istmt::eval's loop over a list is where the current line is
+			// recorded and where the statement debugger pauses -- so without
+			// these two lines a single-statement `if` body, much the commonest
+			// shape there is, was stepped straight over as though the body were
+			// not there, and an error raised inside one was reported against
+			// whatever line happened to run last.
+			nlppp->getParse()->setLine(val_.stmt_->getLine());
+			NlpDebug::statement(nlppp, val_.stmt_->getLine());
 			return val_.stmt_->eval(nlppp, /*UP*/ val);
+			}
 		break;
 	case RSEXPR:
 		if (val_.expr_)
