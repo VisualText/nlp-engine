@@ -215,6 +215,20 @@ def statements(nlp, fixture, workdir, LINES):
                     check("on a line after the call",
                           (back.get("line") or 0) > LINES["call"],
                           "line was %r" % back.get("line"))
+
+                    # Step OUT again, now at depth 0. There is no function to
+                    # leave: what encloses an @POST is the rule stream, so this
+                    # has to land on a rule. Asking for a depth shallower than 0
+                    # is asking for something that never arrives, and the whole
+                    # analysis ran to the end -- Step Out behaving as Continue.
+                    dbg.request("stepOutStatement")
+                    out = dbg.next_stop()
+                    check("stepping out of a top-level statement does not run away",
+                          out is not None)
+                    if out is not None:
+                        check("it lands back among the rules",
+                              not out.get("statement"),
+                              "stopped at %r" % (out,))
     finally:
         try:
             sock.close()

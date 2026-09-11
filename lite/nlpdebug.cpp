@@ -685,7 +685,17 @@ void stopAndServe(NlpDebugStop reason)
 		if (cmd == "stepOverStatement")
 			{ g_mode = MODE_STEP_STMT_OVER; g_stepDepth = g_stmtDepth; reply(seq, ""); return; }
 		if (cmd == "stepOutStatement")
-			{ g_mode = MODE_STEP_STMT_OUT;  g_stepDepth = g_stmtDepth; reply(seq, ""); return; }
+		{
+			// At depth 0 there is no function to step out OF: the body being
+			// stepped is an @CODE, @POST or @DECL region, and what encloses it
+			// is the rule stream. Asking for a shallower depth than 0 would be
+			// asking for something that never arrives, so the analysis would
+			// run to the end -- Step Out looking like Continue.
+			g_mode = g_stmtDepth > 0 ? MODE_STEP_STMT_OUT : MODE_STEP_RULE;
+			g_stepDepth = g_stmtDepth;
+			reply(seq, "");
+			return;
+		}
 
 		if (cmd == "setBreakpoints")
 		{
