@@ -46,7 +46,7 @@ blockShapes(L("n")) {
 		G("elsed") = 1;			### shape: elsed
 	}
 	L("i") = 0;
-	while (L("i") < 2) {
+	while (L("i") < 2) {		### shape: while
 		L("i") = L("i") + 1;	### shape: loop
 	}
 }

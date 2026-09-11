@@ -285,6 +285,14 @@ def blockShapes(nlp, fixture, workdir, LINES):
         # one-shot.
         eq("a single-statement `while` body stops once per iteration",
            seen.count(LINES["shape:loop"]), 2)
+        # Once on the way in, and once after each pass through the body. The
+        # last of those is the test that ends the loop, so it is reported
+        # before control leaves -- the condition is a line of the program and
+        # stepping should land on it. Without this the body's last statement
+        # steps straight back to the body's first, which reads as a loop with
+        # no test in it.
+        eq("the loop's test is reported before every attempt",
+           seen.count(LINES["shape:while"]), 3)
         # The counterpart: a body whose condition is false must stay silent.
         # Stopping on every branch whether taken or not would look like
         # stepping working while telling the author the wrong story.
@@ -315,7 +323,7 @@ def main():
     LINES = fixtureLines(fixture)
     for want in ("_pair", "_zzz", "_num", "call", "fnbody",
                  "shape:call", "shape:one", "shape:never", "shape:twoA",
-                 "shape:twoB", "shape:elsed", "shape:loop"):
+                 "shape:twoB", "shape:elsed", "shape:loop", "shape:while"):
         if want not in LINES:
             print("FAIL: could not find %s in the fixture" % want)
             return 1
