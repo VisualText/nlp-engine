@@ -31,6 +31,7 @@ All rights reserved.
 #include "ivar.h"
 #include "lite/parse.h"														// 08/24/02 AM.
 #include "iwhilestmt.h"
+#include "lite/nlpdebug.h"	// Statement-level debugger.
 
 int Iwhilestmt::count_ = 0;
 
@@ -423,6 +424,20 @@ for (;;)				// EXECUTE THE WHILE-LOOP.
 	if (gui_.IsMessage(GUI_MESSAGE_ABORT))								// 12/08/00 DD.
 		break;																	// 12/08/00 DD.
 #endif
+	// Back to the top. The condition is about to be tested again, and that test
+	// IS the `while` line, so a client stepping through the body arrives back at
+	// the loop header rather than jumping from the last statement of the body
+	// straight to the first -- which reads as the loop having no test in it.
+	//
+	// Deliberately here and not before the condition at the top of the loop: the
+	// while statement is itself a statement in the enclosing list, which already
+	// reported it on the way in. Putting it here reports every test but the
+	// first, and the first has already been shown.
+	//
+	// Setting the line as well as reporting it also puts an error raised inside
+	// the condition on the `while` rather than on whatever the body ran last.
+	nlppp->parse_->line_ = line_;
+	NlpDebug::statement(nlppp,line_);
 	}											// END OF LOOP.
 	
 done:
