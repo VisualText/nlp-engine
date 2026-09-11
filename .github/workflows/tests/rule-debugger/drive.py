@@ -293,6 +293,18 @@ def blockShapes(nlp, fixture, workdir, LINES):
         # no test in it.
         eq("the loop's test is reported before every attempt",
            seen.count(LINES["shape:while"]), 3)
+        # An `if` with no braces and its body on the next line. The statement
+        # took its line from the BODY, so the two collided: stepping went from
+        # the statement before the `if` straight to the body, the test never
+        # appeared, and an error in the condition was reported a line late.
+        # Both lines have to show up, and separately.
+        eq("an unbraced `if` reports its own line", seen.count(LINES["shape:bareIf"]), 1)
+        eq("and its body reports the body's", seen.count(LINES["shape:bareBody"]), 1)
+        check("the test is reported before the body it guards",
+              LINES["shape:bareIf"] < LINES["shape:bareBody"]
+              and seen.index(LINES["shape:bareIf"]) < seen.index(LINES["shape:bareBody"]),
+              "stops were %r" % (seen,))
+
         # The counterpart: a body whose condition is false must stay silent.
         # Stopping on every branch whether taken or not would look like
         # stepping working while telling the author the wrong story.
@@ -323,7 +335,8 @@ def main():
     LINES = fixtureLines(fixture)
     for want in ("_pair", "_zzz", "_num", "call", "fnbody",
                  "shape:call", "shape:one", "shape:never", "shape:twoA",
-                 "shape:twoB", "shape:elsed", "shape:loop", "shape:while"):
+                 "shape:twoB", "shape:elsed", "shape:loop", "shape:while",
+                 "shape:bareIf", "shape:bareBody"):
         if want not in LINES:
             print("FAIL: could not find %s in the fixture" % want)
             return 1
