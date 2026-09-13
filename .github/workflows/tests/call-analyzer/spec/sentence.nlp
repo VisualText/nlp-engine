@@ -1,0 +1,7 @@
+###############################################
+# FILE:     sentence.nlp
+# SUBJ:     Group each sentence, so the next pass has a node to hand over.
+###############################################
+
+@RULES
+_sent <- _xALPHA _xWILD [star fails=(\.)] \. @@

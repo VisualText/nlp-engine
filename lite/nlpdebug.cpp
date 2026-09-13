@@ -1124,14 +1124,32 @@ void NlpDebug::ruleFailed_(Nlppp *nlppp)
 		stopAndServe(NLPDEBUG_RULE_FAILED);
 }
 
+// How many suspend() calls are in effect. arm() does nothing while nonzero.
+static int g_suspended = 0;
+
 void NlpDebug::arm()
 {
+	if (g_suspended) return;
 	g_armed = true;
 }
 
 void NlpDebug::disarm()
 {
 	g_armed = false;
+}
+
+bool NlpDebug::suspend()
+{
+	bool wasArmed = g_armed;
+	++g_suspended;
+	g_armed = false;
+	return wasArmed;
+}
+
+void NlpDebug::resume(bool wasArmed)
+{
+	if (g_suspended > 0 && --g_suspended == 0)
+		g_armed = wasArmed;
 }
 
 void NlpDebug::statement_(Nlppp *nlppp, long line)

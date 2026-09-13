@@ -76,6 +76,14 @@ public:
 	static void arm();
 	static void disarm();
 
+	// Hold the pause points off while the engine runs something other than the
+	// analyzer being debugged, including across the arm() of a nested analysis.
+	// callanalyzer() needs this: the called analyzer's pass numbers and lines
+	// would otherwise be reported against the caller's files. Calls nest.
+	// suspend() returns whether the points were armed, for the matching resume().
+	static bool suspend();
+	static void resume(bool wasArmed);
+
 	// True once a client is attached. Read directly by the inline hooks below;
 	// public so they can stay inline.
 	static bool active_;

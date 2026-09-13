@@ -4597,6 +4597,10 @@ bool CG::openFullKBB(const std::string &file)
 
 	std::_t_cerr << _T("[Lazy-loading words from ") << file
 				 << _T(" under \"") << rootName << _T("\"]") << std::endl;
+
+	// A word missed before this file was open may be in it. Only matters when
+	// files are added mid-run, as callanalyzer() does.	// 09/13/26 DD.
+	fullMissCache_.clear();
 	return true;
 }
 
@@ -4625,6 +4629,9 @@ bool CG::openFullDict(const std::string &file)
 	}
 
 	std::_t_cerr << _T("[Lazy-loading words from ") << file << _T("]") << std::endl;
+
+	// See openFullKBB.	// 09/13/26 DD.
+	fullMissCache_.clear();
 	return true;
 }
 

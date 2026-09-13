@@ -1,0 +1,3 @@
+dicttok	nil	# when called: look up the given node's words, lazy files included
+nlp	colors	# turn color words into _color nodes and record them
+nlp	mark	# mark every other word it was given

@@ -455,6 +455,10 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnJsonwrite(args,nlppp,/*UP*/sem);					// 08/04/26 DD.
 	case FNjsonparse:
 		return fnJsonparse(args,nlppp,/*UP*/sem);					// 08/04/26 DD.
+	case FNcallanalyzer:	// In callana.cpp.
+		return fnCallanalyzer(args,nlppp,/*UP*/sem);				// 09/13/26 DD.
+	case FNcallconcept:		// In callana.cpp.
+		return fnCallconcept(args,nlppp,/*UP*/sem);				// 09/13/26 DD.
 	case FNlogten:
 		return fnLogten(args,nlppp,/*UP*/sem);							// 04/29/04 AM.
 	case FNrandomint:

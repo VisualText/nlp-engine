@@ -336,6 +336,60 @@ bool DICTTok::ApplyDictFiles() {
 	return true;
 }
 
+/********************************************
+* FN:		APPLYTOSUBTREE
+* CR:		09/13/26 DD.
+* SUBJ:	Run this pass's dictionary step on part of an existing tree.
+* NOTE:	For an analyzer run by callanalyzer(), which works on a node of
+*			its caller's tree and must not rebuild it. Every token under top
+*			is looked up -- lazily loaded *full dictionaries included -- and
+*			given its dictionary attributes, then multi-word dictionary
+*			phrases are matched among top's children.
+********************************************/
+
+bool DICTTok::applyToSubtree(Parse *parse, Node<Pn> *top)
+{
+if (!parse || !top)
+	return false;
+
+parse_ = parse;
+cg_ = parse->getAna()->getCG();
+htab_ = parse->htab_;
+Tree<Pn> subtree(top);		// Does not own the nodes.
+tree_ = &subtree;
+root_ = top;
+
+lookupTokens(top->Down());
+ApplyDictFiles();
+
+tree_ = 0;
+root_ = 0;
+return true;
+}
+
+// Give every token in a list of nodes, and beneath them, its dictionary
+// attributes.
+void DICTTok::lookupTokens(Node<Pn> *node)
+{
+_TCHAR buf[PATHSIZ];
+for (; node; node = node->Right())
+	{
+	Pn *pn = node->getData();
+	if (pn->getType() == PNNODE)
+		{
+		lookupTokens(node->Down());
+		continue;
+		}
+	_TCHAR *name = pn->getName();
+	if (pn->getType() == PNWHITE || !name || !*name)
+		continue;
+	CONCEPT *con = cg_->findWordConcept(name);
+	if (!con)
+		con = cg_->findWordConcept(str_to_lower(name, buf));
+	findAttrs(node, con, name, false);
+	}
+}
+
 Node<Pn>* DICTTok::MatchLongest(CONCEPT *con, Node<Pn> *parentN, CONCEPT **end, int &length, int level) {
 	_TCHAR conName[MAXSTR];
 	CONCEPT *next = con;

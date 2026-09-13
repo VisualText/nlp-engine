@@ -51,6 +51,8 @@ public:
 	bool Execute(Parse *, Seqn *);	// Perform the tokenization.
 	bool Tokenize(Parse *);	// Perform the tokenization.
 	bool ApplyDictFiles();
+	bool applyToSubtree(Parse *, Node<Pn> *);	// For callanalyzer().	// 09/13/26 DD.
+	void lookupTokens(Node<Pn> *);				// 09/13/26 DD.
 	Node<Pn>* MatchLongest(CONCEPT *con, Node<Pn> *parentN, CONCEPT **end, int &length, int level);
 	bool copyAttrsToSuggested(Pn *pn, Node<Pn> *suggestedPn, Node<Pn> *endNode);
 	bool checkCase(_TCHAR *name, Node<Pn> *node, bool &lower, bool &cap, bool &upper);

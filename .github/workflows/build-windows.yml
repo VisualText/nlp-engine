@@ -522,6 +522,49 @@ jobs:
           fi
           echo "[json] jsonwrite serializes and jsonparse round-trips"
 
+      - name: callanalyzer runs another analyzer, loaded once
+        shell: bash
+        run: |
+          set -eo pipefail
+          # callanalyzer (4.1.0) runs another analyzer's passes on one node of
+          # this analyzer's parse tree, with this analyzer's KB. The callee
+          # sits beside the caller, in tests/call-analyzer-callee, and is found
+          # by name. The tree lines prove it changed only the nodes it was
+          # given; crimson proves its lazy *full.dict was run on the passed
+          # text; the load count proves it was built once for two calls.
+          FIX=.github/workflows/tests/call-analyzer
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log" .github/workflows/tests/call-analyzer-callee/logs
+          mkdir -p "$FIX/logs"
+          ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" 2>&1 | tee "$FIX/logs/run.log"
+          if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
+          OUT="$FIX/input/text.txt_log/out.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(callanalyzer): no out.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' \
+            'loaded-before:0' \
+            'call:1' \
+            'call:1' \
+            'loaded-after:1' \
+            'mine:caller' \
+            'tree:_sent _color apples* .' \
+            'tree:_sent _color sky* and* _color grass* .' \
+            'tree:Blue' \
+            'concept:sent root:_sent sawcallerG:0 backcall:0 colors:red;' \
+            'concept:sent root:_sent sawcallerG:0 backcall:0 colors:crimson;green;' \
+            'self:0' \
+            'missing:0')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(callanalyzer): out.txt was:"; echo "$got"
+            echo "wanted:"; echo "$want"; exit 1
+          fi
+          loads=$(grep -c 'callanalyzer: loaded call-analyzer-callee' "$FIX/logs/run.log" || true)
+          if [ "$loads" != "1" ]; then
+            echo "FAIL(callanalyzer): the called analyzer was loaded $loads times for two calls"; exit 1
+          fi
+          echo "[callanalyzer] called analyzer ran on the given nodes, loaded once"
+
       - name: Rule-level debug server
         shell: bash
         run: |

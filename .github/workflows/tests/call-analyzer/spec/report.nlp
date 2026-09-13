@@ -1,0 +1,72 @@
+###############################################
+# FILE:     report.nlp
+# SUBJ:     Print what callanalyzer did to the shared tree and KB.
+# NOTE:     What each line proves:
+#           loaded-*   the called analyzer was loaded by the first call
+#           mine       its G() variables are its own
+#           tree       it changed only the sentence nodes it was given:
+#                      colors became _color nodes and * marks each word
+#                      it visited; the top-level "Blue" is untouched
+#           _color     red/green come from its regular dictionary, loaded
+#                      into the shared KB; crimson only from its lazy
+#                      shades-full.dict, looked up on the passed text
+#           concept    it wrote into this KB's concept directly, saw the
+#                      given node as its root, and could not call back
+#           self       an analyzer cannot call itself
+#           missing    an unknown analyzer is an error, not a crash
+#
+#           Expected out.txt:
+#           loaded-before:0
+#           call:1
+#           call:1
+#           loaded-after:1
+#           mine:caller
+#           tree:_sent _color apples* .
+#           tree:_sent _color sky* and* _color grass* .
+#           tree:Blue
+#           concept:sent root:_sent sawcallerG:0 backcall:0 colors:red;
+#           concept:sent root:_sent sawcallerG:0 backcall:0 colors:crimson;green;
+#           self:0
+#           missing:0
+###############################################
+
+@CODE
+"out.txt" << "loaded-after:" << str(findana("call-analyzer-callee")) << "\n";
+"out.txt" << "mine:" << G("mine") << "\n";
+
+L("n") = pndown(pnroot());
+while (L("n")) {
+	"out.txt" << "tree:" << pnname(L("n"));
+	if (pnvar(L("n"),"callee"))
+		"out.txt" << "*";
+	L("c") = pndown(L("n"));
+	while (L("c")) {
+		"out.txt" << " " << pnname(L("c"));
+		if (pnvar(L("c"),"callee"))
+			"out.txt" << "*";
+		L("c") = pnnext(L("c"));
+	}
+	"out.txt" << "\n";
+	L("n") = pnnext(L("n"));
+}
+
+L("s") = down(G("results"));
+while (L("s")) {
+	"out.txt"
+		<< "concept:" << conceptname(L("s"))
+		<< " root:" << strval(L("s"),"root")
+		<< " sawcallerG:" << str(numval(L("s"),"sawcallerG"))
+		<< " backcall:" << str(numval(L("s"),"backcall"))
+		<< " colors:";
+	L("v") = attrvals(findattr(L("s"),"color"));
+	while (L("v")) {
+		"out.txt" << getstrval(L("v")) << ";";
+		L("v") = nextval(L("v"));
+	}
+	"out.txt" << "\n";
+	L("s") = next(L("s"));
+}
+
+"out.txt" << "self:" << str(callanalyzer(pnroot(),G("results"),"call-analyzer")) << "\n";
+"out.txt" << "missing:" << str(callanalyzer(pnroot(),G("results"),"no-such-analyzer")) << "\n";
+@@CODE
