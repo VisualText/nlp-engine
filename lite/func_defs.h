@@ -397,6 +397,10 @@ enum funcDef
 	FNjsonwrite,
 	FNjsonparse,
 
+	// Analyzer functions.	// 09/13/26 DD.
+	FNcallanalyzer,
+	FNcallconcept,
+
 	FNXXYYZZ };
 
 #endif

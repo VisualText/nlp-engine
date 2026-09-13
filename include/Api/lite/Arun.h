@@ -1737,6 +1737,13 @@ public:
 	static bool findana(Nlppp*,RFASem*);								// 05/29/03 AM.
 	static bool findana(Nlppp*,long long);                           // 07/11/03 AM.
 
+	// In callana.cpp.	// 09/13/26 DD.
+	static long long callanalyzer(Nlppp*,NODE*,RFASem*,_TCHAR*);
+	static long long callanalyzer(Nlppp*,NODE*,RFASem*,RFASem*);
+	static long long callanalyzer(Nlppp*,RFASem*,RFASem*,_TCHAR*);
+	static long long callanalyzer(Nlppp*,RFASem*,RFASem*,RFASem*);
+	static RFASem *callconcept(Nlppp*);
+
 	static bool inputrangetofile(Nlppp*,long long,long long,std::_t_ostream*);		// 05/29/03 AM.
 	static bool inputrangetofile(Nlppp*,long long,long long,RFASem*);
 	static bool inputrangetofile(Nlppp*,long long,RFASem*,std::_t_ostream*);

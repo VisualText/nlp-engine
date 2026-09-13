@@ -1,0 +1,11 @@
+###############################################
+# FILE:     mark.nlp
+# SUBJ:     Mark every word left, so the caller can see which nodes this
+#           analyzer reached.
+###############################################
+
+@POST
+N("callee",1) = 1;
+
+@RULES
+_xNIL <- _xALPHA @@

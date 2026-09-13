@@ -1,0 +1,32 @@
+###############################################
+# FILE:     colors.nlp
+# SUBJ:     The analyzer tests/call-analyzer calls. Works on the node it is
+#           given and records the colors it finds in callconcept().
+# NOTE:     Not run on its own by CI.
+###############################################
+
+@CODE
+L("out") = callconcept();
+addstrval(L("out"),"root",pnname(pnroot()));
+
+# The caller's G() variables are not visible here.
+if (G("mine"))
+	addnumval(L("out"),"sawcallerG",1);
+else
+	addnumval(L("out"),"sawcallerG",0);
+G("mine") = "callee";
+
+# The analyzer that called this one is still running, so this is refused.
+addnumval(L("out"),"backcall",callanalyzer(pnroot(),L("out"),"call-analyzer"));
+@@CODE
+
+@CHECK
+if (!N("color",1))
+	fail();
+
+@POST
+addstrval(callconcept(),"color",strtolower(N("$text",1)));
+single();
+
+@RULES
+_color <- _xALPHA @@

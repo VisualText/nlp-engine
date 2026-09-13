@@ -1,0 +1,21 @@
+###############################################
+# FILE:     call.nlp
+# SUBJ:     Regression for callanalyzer: hand each sentence node to
+#           another analyzer, which works on that part of this tree and
+#           puts what it finds in the given concept of this KB.
+# NOTE:     The called analyzer lives beside this one, in
+#           tests/call-analyzer-callee, and is found by name.
+###############################################
+
+@CODE
+G("results") = makeconcept(findroot(),"results");
+G("mine") = "caller";
+"out.txt" << "loaded-before:" << str(findana("call-analyzer-callee")) << "\n";
+@@CODE
+
+@POST
+L("s") = makeconcept(G("results"),"sent");
+"out.txt" << "call:" << str(callanalyzer(N(1),L("s"),"call-analyzer-callee")) << "\n";
+
+@RULES
+_xNIL <- _sent @@

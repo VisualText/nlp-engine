@@ -1,0 +1,4 @@
+dicttokz	nil	# tokenize; this analyzer has no dictionary of its own
+nlp	sentence	# group each sentence
+nlp	call	# hand each sentence node to call-analyzer-callee
+nlp	report	# print the shared tree and KB afterward

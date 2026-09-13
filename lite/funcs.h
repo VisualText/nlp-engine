@@ -386,6 +386,9 @@ _T("push"),
 // JSON functions.	// 08/04/26 DD.
 _T("jsonwrite"),
 _T("jsonparse"),
+// Analyzer functions.	// 09/13/26 DD.
+_T("callanalyzer"),
+_T("callconcept"),
 0 };
 
 #endif // NLP_LITE_FUNCS_H
