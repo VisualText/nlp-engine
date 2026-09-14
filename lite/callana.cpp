@@ -23,6 +23,9 @@ All rights reserved.
 //
 // WHAT RUNS ON EACH CALL. The passes, in order, on the subtree, with these
 // differences from running on a text of its own:
+//   - the root they get is a stand-in named _ROOT that holds pnode's
+//     children for the length of the call (see borrowChildren), so they
+//     select and traverse exactly as on a text of their own;
 //   - tokenizer passes are skipped, because the tree already exists;
 //   - a dicttok or dicttokz pass looks up the subtree's words instead,
 //     including in the lazy *full files, which only load a word once it is
@@ -286,6 +289,42 @@ for (const auto &file : dicts)
 	}
 }
 
+// Give the called analyzer a root of its own, as it has running on a text:
+// named _ROOT, unsealed, with no parent or siblings, spanning node's text and
+// holding node's children. @NODES, @PATH and @MULTI select by name and only
+// descend into unsealed nodes, and they walk a root's siblings; node itself is
+// named for what the caller built, usually sealed, and has siblings in the
+// caller's tree. So without this, @NODES _ROOT selects nothing, deeper selects
+// never reach inside, and passes can run on the caller's nodes next to node.
+static Node<Pn> *borrowChildren(Parse *parse, Node<Pn> *node)
+{
+Pn *pn = node->getData();
+Sym *sym = ((Htab *) parse->getNLP()->getHtab())->hsym(_T("_ROOT"));
+Node<Pn> *root = Pn::makeTnode(pn->getStart(), pn->getEnd(),
+	pn->getUstart(), pn->getUend(), PNNODE, pn->getText(),
+	sym->getStr(), sym, pn->getLine());
+root->getData()->setUnsealed(true);
+
+Node<Pn> *children = node->Down();
+root->setDown(children);
+if (children)
+	children->setUp(root);		// Only a first child points up.
+node->setDown(0);
+return root;
+}
+
+// Put the children back under node, as the called analyzer left them, and
+// free the borrowed root. Variables set on the root go with it.
+static void returnChildren(Node<Pn> *root, Node<Pn> *node)
+{
+Node<Pn> *children = root->Down();
+node->setDown(children);
+if (children)
+	children->setUp(node);
+root->setDown(0);
+Node<Pn>::DeleteNodeAndData(root);
+}
+
 // Run a loaded analyzer's passes on the subtree under node.
 static bool runCallee(Parse *parse, NLP *callee, Node<Pn> *node, CONCEPT *con)
 {
@@ -309,7 +348,8 @@ long rulepass = parse->getRulepass();
 Dlist<Ipair> *vars = parse->getVars();
 std::string appdir = parse->getAppdir();
 
-Tree<Pn> subtree(node);		// Does not own the nodes.
+Node<Pn> *root = borrowChildren(parse, node);
+Tree<Pn> subtree(root);		// Does not own the nodes.
 parse->setTree(&subtree);
 parse->setAna(ana);
 parse->setVars(0);
@@ -334,12 +374,13 @@ for (Delt<Seqn> *step = ana->getSeq(); step && ok; step = step->Right())
 	parse->setCurrpass(num);
 	parse->setRulepass(num);
 	if (isDictTok(algoname))
-		((DICTTok *) algo)->applyToSubtree(parse, node);
+		((DICTTok *) algo)->applyToSubtree(parse, root);
 	else
 		ok = algo->Execute(parse, pass);
 	}
 
 calls.pop_back();
+returnChildren(root, node);
 
 if (parse->getVars())
 	Dlist<Ipair>::DeleteDlistAndData(parse->getVars());

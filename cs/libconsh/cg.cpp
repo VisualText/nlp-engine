@@ -3512,27 +3512,41 @@ return true;
 
 CONCEPT *CG::findWordConcept(_TCHAR *str)
 {
-CONCEPT *word;
-if (!(word = kbm_->dict_find_word(str)) )
+CONCEPT *word = kbm_->dict_find_word(str);
+if (fullKBBs_.empty() && fullDicts_.empty())
+	return word;
+if (word && findAttrs(word))
+	return word;		// A dictionary entry already in memory.
+
+// Not in memory, or in memory with no attributes of its own: try a
+// lazily-loaded "*full" dictionary.	// 06/10/26.
+if (fullMissCache_.count(str))
+	{
+	if (!word)
+		logMissingWord(str);		// Known absent: skip the search but
+	return word;					// still record it for this file's log.
+	}
+
+CONCEPT *full = findFullWord(str);
+if (!word)
+	{
+	if (!full)
 		{
-		// Not in memory: try a lazily-loaded "*full" dictionary.	// 06/10/26.
-		if (!fullKBBs_.empty() || !fullDicts_.empty())
-			{
-			if (fullMissCache_.count(str))
-				{
-				logMissingWord(str);		// Known absent: skip the search but
-				return 0;					// still record it for this file's log.
-				}
-			word = findFullWord(str);
-			if (!word)
-				{
-				fullMissCache_.insert(str);	// Negative cache (run-wide).
-				logMissingWord(str);		// Record for later KB curation.
-				}
-			return word;
-			}
-        return 0;
+		fullMissCache_.insert(str);	// Negative cache (run-wide).
+		logMissingWord(str);		// Record for later KB curation.
 		}
+	return full;
+	}
+
+// A bare word says nothing about what the dictionaries hold for it: every
+// attribute name is a dictionary word, so any KB work that names one leaves
+// it bare -- and under callanalyzer() the KB is shared with other analyzers.
+// A dict hit has been added to word itself; a kbb-only hit is linked to it.
+// Searched once either way.	// 09/13/26 DD.
+fullMissCache_.insert(str);
+CONCEPT *meaning = 0;
+if (full && full != word && !findVal(word, _T("meaning"), meaning))
+	addVal(word, _T("meaning"), full);
 return word;
 }
 

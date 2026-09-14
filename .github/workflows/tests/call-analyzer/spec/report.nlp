@@ -4,14 +4,15 @@
 # NOTE:     What each line proves:
 #           loaded-*   the called analyzer was loaded by the first call
 #           mine       its G() variables are its own
-#           tree       it changed only the sentence nodes it was given:
+#           tree       it changed only the sentence nodes it was given,
+#                      though its passes select @NODES _ROOT and @PATH _ROOT:
 #                      colors became _color nodes and * marks each word
 #                      it visited; the top-level "Blue" is untouched
 #           _color     red/green come from its regular dictionary, loaded
 #                      into the shared KB; crimson only from its lazy
 #                      shades-full.dict, looked up on the passed text
 #           concept    it wrote into this KB's concept directly, saw the
-#                      given node as its root, and could not call back
+#                      root it was given (_ROOT), and could not call back
 #           self       an analyzer cannot call itself
 #           missing    an unknown analyzer is an error, not a crash
 #
@@ -24,8 +25,8 @@
 #           tree:_sent _color apples* .
 #           tree:_sent _color sky* and* _color grass* .
 #           tree:Blue
-#           concept:sent root:_sent sawcallerG:0 backcall:0 colors:red;
-#           concept:sent root:_sent sawcallerG:0 backcall:0 colors:crimson;green;
+#           concept:sent root:_ROOT sawcallerG:0 backcall:0 colors:red;
+#           concept:sent root:_ROOT sawcallerG:0 backcall:0 colors:crimson;green;
 #           self:0
 #           missing:0
 ###############################################
