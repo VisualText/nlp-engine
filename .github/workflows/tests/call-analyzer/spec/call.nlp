@@ -10,6 +10,12 @@
 @CODE
 G("results") = makeconcept(findroot(),"results");
 G("mine") = "caller";
+
+# Every attribute name becomes a dictionary word with no attributes, so this
+# puts "crimson" in the KB bare -- the way an earlier call or the caller's own
+# KB work leaves common words. The called analyzer must still find crimson's
+# entry in its lazy shades-full.dict.
+addstrval(G("results"),"crimson","bare");
 "out.txt" << "loaded-before:" << str(findana("call-analyzer-callee")) << "\n";
 @@CODE
 

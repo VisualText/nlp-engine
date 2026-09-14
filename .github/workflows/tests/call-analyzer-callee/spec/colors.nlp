@@ -20,6 +20,10 @@ G("mine") = "callee";
 addnumval(L("out"),"backcall",callanalyzer(pnroot(),L("out"),"call-analyzer"));
 @@CODE
 
+# As in any analyzer written to run on its own. When called, _ROOT is the
+# root the called analyzer is given, not the node's own name.
+@NODES _ROOT
+
 @CHECK
 if (!N("color",1))
 	fail();

@@ -4,6 +4,8 @@
 #           analyzer reached.
 ###############################################
 
+@PATH _ROOT
+
 @POST
 N("callee",1) = 1;
 

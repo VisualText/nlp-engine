@@ -623,8 +623,8 @@ jobs:
             'tree:_sent _color apples* .' \
             'tree:_sent _color sky* and* _color grass* .' \
             'tree:Blue' \
-            'concept:sent root:_sent sawcallerG:0 backcall:0 colors:red;' \
-            'concept:sent root:_sent sawcallerG:0 backcall:0 colors:crimson;green;' \
+            'concept:sent root:_ROOT sawcallerG:0 backcall:0 colors:red;' \
+            'concept:sent root:_ROOT sawcallerG:0 backcall:0 colors:crimson;green;' \
             'self:0' \
             'missing:0')
           if [ "$got" != "$want" ]; then
