@@ -8,11 +8,13 @@
 #                      though its passes select @NODES _ROOT and @PATH _ROOT:
 #                      colors became _color nodes and * marks each word
 #                      it visited; the top-level "Blue" is untouched
-#           _color     red/green come from its regular dictionary, loaded
-#                      into the shared KB; crimson only from its lazy
+#           _color     green comes from its regular dictionary, loaded
+#                      into the shared KB; red and crimson only from its lazy
 #                      shades-full.dict, looked up on the passed text
 #           concept    it wrote into this KB's concept directly, saw the
 #                      root it was given (_ROOT), and could not call back
+#           red        its lazy entry was added to a word this analyzer's
+#                      own dictionary already defines (mood=angry)
 #           self       an analyzer cannot call itself
 #           missing    an unknown analyzer is an error, not a crash
 #
@@ -27,6 +29,7 @@
 #           tree:Blue
 #           concept:sent root:_ROOT sawcallerG:0 backcall:0 colors:red;
 #           concept:sent root:_ROOT sawcallerG:0 backcall:0 colors:crimson;green;
+#           red:angry yes
 #           self:0
 #           missing:0
 ###############################################
@@ -67,6 +70,9 @@ while (L("s")) {
 	"out.txt" << "\n";
 	L("s") = next(L("s"));
 }
+
+L("red") = dictfindword("red");
+"out.txt" << "red:" << strval(L("red"),"mood") << " " << strval(L("red"),"color") << "\n";
 
 "out.txt" << "self:" << str(callanalyzer(pnroot(),G("results"),"call-analyzer")) << "\n";
 "out.txt" << "missing:" << str(callanalyzer(pnroot(),G("results"),"no-such-analyzer")) << "\n";
