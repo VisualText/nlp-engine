@@ -3516,7 +3516,7 @@ CONCEPT *word = kbm_->dict_find_word(str);
 if (fullKBBs_.empty() && fullDicts_.empty())
 	return word;
 if (word && findAttrs(word))
-	return word;		// A dictionary entry already in memory.
+	return mergeFullWord(str, word);	// A dictionary entry already in memory.
 
 // Not in memory, or in memory with no attributes of its own: try a
 // lazily-loaded "*full" dictionary.	// 06/10/26.
@@ -3527,7 +3527,7 @@ if (fullMissCache_.count(str))
 	return word;					// still record it for this file's log.
 	}
 
-CONCEPT *full = findFullWord(str);
+CONCEPT *full = mergeFullWord(str, findFullWord(str));
 if (!word)
 	{
 	if (!full)
@@ -3547,6 +3547,42 @@ fullMissCache_.insert(str);
 CONCEPT *meaning = 0;
 if (full && full != word && !findVal(word, _T("meaning"), meaning))
 	addVal(word, _T("meaning"), full);
+return word;
+}
+
+/********************************************
+* FN:		MERGEFULLWORD
+* CR:		09/14/26 DD.
+* SUBJ:	Add what lazy files opened to merge hold for a word.
+* RET:	word, or what a merge file found if word is 0.
+* NOTE:	A file is opened to merge for an analyzer run by callanalyzer(),
+*			whose KB is its caller's. The caller's dictionaries have usually
+*			defined many of the same words, with attributes of their own, so
+*			unlike an analyzer's own lazy files these are searched for words
+*			already in memory too -- once per word, per file.
+********************************************/
+
+CONCEPT *CG::mergeFullWord(_TCHAR *str, CONCEPT *word)
+{
+for (FullFile &f : fullDicts_)
+	{
+	if (!f.merge || !f.merged.insert(str).second)
+		continue;
+	CONCEPT *found = searchDictFile(f, str);	// Adds to word if it exists.
+	if (!word)
+		word = found;
+	}
+for (FullFile &f : fullKBBs_)
+	{
+	if (!f.merge || !f.merged.insert(str).second)
+		continue;
+	CONCEPT *found = searchKBBFile(f, str);
+	CONCEPT *meaning = 0;
+	if (!word)
+		word = found;
+	else if (found && found != word && !findVal(word, _T("meaning"), meaning))
+		addVal(word, _T("meaning"), found);
+	}
 return word;
 }
 
@@ -4557,11 +4593,12 @@ bool CG::dictFileSorted(FullFile &f)
 
 // Open a "*full.kbb" for lazy lookup. Returns false (caller loads it normally)
 // if it can't be opened or is not sorted.
-bool CG::openFullKBB(const std::string &file)
+bool CG::openFullKBB(const std::string &file, bool merge)
 {
 	fullKBBs_.emplace_back();					// In-place: ifstream is not movable.
 	FullFile &f = fullKBBs_.back();
 	f.file = file;
+	f.merge = merge;
 	f.stream.open(file, std::ios::in | std::ios::binary);
 	if (!f.stream) {
 		std::_t_cerr << _T("[openFullKBB: couldn't open ") << file << _T("]") << std::endl;
@@ -4620,11 +4657,12 @@ bool CG::openFullKBB(const std::string &file)
 
 // Open a "*full.dict" for lazy lookup. Returns false (caller loads it normally)
 // if it can't be opened or is not sorted.
-bool CG::openFullDict(const std::string &file)
+bool CG::openFullDict(const std::string &file, bool merge)
 {
 	fullDicts_.emplace_back();					// In-place: ifstream is not movable.
 	FullFile &f = fullDicts_.back();
 	f.file = file;
+	f.merge = merge;
 	f.stream.open(file, std::ios::in | std::ios::binary);
 	if (!f.stream) {
 		std::_t_cerr << _T("[openFullDict: couldn't open ") << file << _T("]") << std::endl;
@@ -4685,6 +4723,8 @@ CONCEPT *CG::findFullKBBWord(_TCHAR *str)
 {
 	CONCEPT *first = 0;
 	for (FullFile &f : fullKBBs_) {
+		if (f.merge)
+			continue;					// Searched by mergeFullWord.
 		CONCEPT *word = searchKBBFile(f, str);
 		if (word && !first)
 			first = word;
@@ -4776,6 +4816,8 @@ CONCEPT *CG::searchKBBFile(FullFile &f, _TCHAR *str)
 CONCEPT *CG::findFullDictWord(_TCHAR *str)
 {
 	for (FullFile &f : fullDicts_) {
+		if (f.merge)
+			continue;					// Searched by mergeFullWord.
 		CONCEPT *word = searchDictFile(f, str);
 		if (word)
 			return word;

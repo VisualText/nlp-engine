@@ -258,10 +258,14 @@ public:
 		std::streamoff   size = 0;	// Byte length (binary-search upper bound).
 		std::string      file;		// Path (parseDictLine messages / diagnostics).
 		CONCEPT         *root = 0;	// kbb only: "dictionary" concept words hang off.
+		// Opened for an analyzer run by callanalyzer(): also searched for words
+		// already in memory, once each, and merged into them.	// 09/14/26 DD.
+		bool             merge = false;
+		std::set<std::string> merged;	// merge only: words already searched.
 	};
 	bool stemEndsWithFull(const std::string &stem);
-	bool openFullKBB(const std::string &file);
-	bool openFullDict(const std::string &file);
+	bool openFullKBB(const std::string &file, bool merge = false);
+	bool openFullDict(const std::string &file, bool merge = false);
 	bool kbbFileSorted(FullFile &f);
 	bool dictFileSorted(FullFile &f);
 	bool parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, int lineCount);
@@ -274,6 +278,7 @@ public:
 	CONCEPT *findFullWord(_TCHAR *str);
 	CONCEPT *findFullKBBWord(_TCHAR *str);
 	CONCEPT *findFullDictWord(_TCHAR *str);
+	CONCEPT *mergeFullWord(_TCHAR *str, CONCEPT *word);	// 09/14/26 DD.
 	CONCEPT *searchKBBFile(FullFile &f, _TCHAR *str);
 	CONCEPT *searchDictFile(FullFile &f, _TCHAR *str);
 	void cacheWordCon(_TCHAR *name, CONCEPT *con);

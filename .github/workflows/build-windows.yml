@@ -553,6 +553,7 @@ jobs:
             'tree:Blue' \
             'concept:sent root:_ROOT sawcallerG:0 backcall:0 colors:red;' \
             'concept:sent root:_ROOT sawcallerG:0 backcall:0 colors:crimson;green;' \
+            'red:angry yes' \
             'self:0' \
             'missing:0')
           if [ "$got" != "$want" ]; then

@@ -273,17 +273,20 @@ if (!std::filesystem::is_directory(kbdir, ec))
 // kbb files first, as CG::readKB reads them, so dictionaries can pair with them.
 std::vector<std::filesystem::path> kbbs = kbFiles(kbdir, ".kbb");
 std::vector<std::filesystem::path> dicts = kbFiles(kbdir, ".dict");
+// Lazy files are opened to merge: the caller's dictionaries have usually put
+// many of the same words in memory already, with attributes of their own, and a
+// word in memory is otherwise never looked up in a lazy file.
 for (const auto &file : kbbs)
 	{
 	if (cg->stemEndsWithFull(file.stem().string()))
-		cg->openFullKBB(file.string());
+		cg->openFullKBB(file.string(), true);
 	else
 		cg->readKBB(file.string());
 	}
 for (const auto &file : dicts)
 	{
 	if (cg->stemEndsWithFull(file.stem().string()))
-		cg->openFullDict(file.string());
+		cg->openFullDict(file.string(), true);
 	else
 		cg->readDict(file.string(), kbbs);
 	}
