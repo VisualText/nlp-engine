@@ -269,6 +269,32 @@ jobs:
           fi
           echo "[struniquechars] unique-character extraction is UTF-8 correct"
 
+      - name: openfile creates the file it names
+        shell: bash
+        run: |
+          set -eo pipefail
+          # The bug was Linux-only (fnOpenfile started its open mode from
+          # std::ios::in there), but the fixture pins the behavior everywhere:
+          # openfile("name") and openfile("name", "app") must both write.
+          FIX=.github/workflows/tests/openfile-create
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
+          DIR="$FIX/input/text.txt_log"
+          if [ ! -f "$DIR/out.txt" ]; then
+            echo "FAIL(openfile): no out.txt -- the analyzer did not build"; exit 1
+          fi
+          for f in made appended; do
+            if [ ! -f "$DIR/$f.txt" ]; then
+              echo "FAIL(openfile): $f.txt was not created"; ls -la "$DIR"; exit 1
+            fi
+            got=$(tr -d '\r' < "$DIR/$f.txt")
+            if [ "$got" != "$f" ]; then
+              echo "FAIL(openfile): $f.txt was '$got'"; exit 1
+            fi
+          done
+          echo "[openfile] openfile creates the file it names, with and without \"app\""
+
       - name: regexp/regexpi glob matching
         shell: bash
         run: |

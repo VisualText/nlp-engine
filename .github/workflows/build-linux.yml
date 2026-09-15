@@ -333,6 +333,34 @@ jobs:
           fi
           echo "[struniquechars] unique-character extraction is UTF-8 correct"
 
+      - name: openfile creates the file it names (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # On Linux fnOpenfile started its open mode from std::ios::in, so the
+          # stream opened read-write -- which cannot create a file -- and every
+          # openfile("name") without a mode wrote nothing and reported nothing.
+          # "app" worked, because in|app creates. Both must write.
+          FIX=.github/workflows/tests/openfile-create
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
+          DIR="$FIX/input/text.txt_log"
+          if [ ! -f "$DIR/out.txt" ]; then
+            echo "FAIL(openfile): no out.txt -- the analyzer did not build"; exit 1
+          fi
+          for f in made appended; do
+            if [ ! -f "$DIR/$f.txt" ]; then
+              echo "FAIL(openfile): $f.txt was not created"; ls -la "$DIR"; exit 1
+            fi
+            got=$(tr -d '\r' < "$DIR/$f.txt")
+            if [ "$got" != "$f" ]; then
+              echo "FAIL(openfile): $f.txt was '$got'"; exit 1
+            fi
+          done
+          echo "[openfile] openfile creates the file it names, with and without \"app\""
+
       - name: regexp/regexpi glob matching (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash

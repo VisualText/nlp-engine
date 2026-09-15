@@ -7385,7 +7385,10 @@ if (!fname || !*fname)
 
 // Build up a bit-flag vector for the modes.
 #ifdef __linux__
-std::_Ios_Openmode modes = std::ios::in;
+// Start from out, as the ofstream does with the 0 below. Starting from in opened
+// the file read-write, which cannot create it, so openfile("name") wrote nothing
+// and said nothing on Linux unless given "app" (in|app does create).
+std::_Ios_Openmode modes = std::ios::out;
 #else
 int modes = 0;
 #endif

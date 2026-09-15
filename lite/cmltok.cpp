@@ -356,7 +356,8 @@ if (!nlp->getFinteractive())
 // Mimic inputrangetofile!
 
 #ifdef __linux__
-std::_Ios_Openmode modes;
+// Initialized: it was not, and only |= was ever applied to it.
+std::_Ios_Openmode modes = std::ios::out;
 #else
 int modes = 0;
 #endif
