@@ -1,0 +1,24 @@
+###############################################
+# FILE:     openfile.nlp
+# SUBJ:     Regression -- openfile() must create the file it names.
+# NOTE:     On Linux, fnOpenfile started its open mode from std::ios::in, so
+#           the stream opened read-write, which cannot create a file: every
+#           openfile("name") without a mode wrote nothing and said nothing.
+#           "app" worked, because in|app does create.  Expected, beside
+#           out.txt: made.txt = "made", appended.txt = "appended".
+###############################################
+
+@CODE
+
+L("made") = openfile("made.txt");
+L("made") << "made";
+closefile(L("made"));
+
+L("appended") = openfile("appended.txt", "app");
+L("appended") << "appended";
+closefile(L("appended"));
+
+# Proof the analyzer built and ran, the way the other fixtures prove it.
+"out.txt" << "ran\n";
+
+@@CODE
