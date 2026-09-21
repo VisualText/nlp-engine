@@ -234,6 +234,7 @@ public:
 	Sym *getSym(_TCHAR *str, long len);		// 03/05/99 AM.
 	_TCHAR *internStr(_TCHAR *str, /*DU*/ _TCHAR* &tstr);
 	_TCHAR *internStr(_TCHAR *str, long len, /*DU*/ _TCHAR* &tstr);
+	static _TCHAR *emptyStr();			// 09/21/26 DD.
 												// 03/05/99 AM.
 	// For single-stepping through the Parse.		// 05/13/99 AM.
 	// Execute next pass of parse.

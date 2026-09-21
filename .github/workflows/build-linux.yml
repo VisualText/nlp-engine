@@ -425,6 +425,46 @@ jobs:
           fi
           echo "[signed str] negative numbers render as negative"
 
+      - name: Empty string literal (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # An empty string literal was a hard syntax error for 28 years:
+          # PostRFA::postRFAstr bailed with "Unhandled null case" because the
+          # _STR rule's content wild legitimately collects nothing between the
+          # quotes. Amnon's own 11/26/98 note there asked for this fix. So
+          # L("x") = "" would not build, and neither would the natural emptiness
+          # test x != "" -- which read to users as "!= is broken on strings".
+          # Behind it: the hash table refuses to intern "" so any builtin
+          # RETURNING empty logged "[hget: Given null string.]" and returned 0,
+          # and strtrim/strclean/struniquechars warned instead of returning "".
+          # This pins all three layers, including a clean err.log.
+          FIX=.github/workflows/tests/empty-string
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
+          OUT="$FIX/input/text.txt_log/out.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(empty string): no out.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' 'assign:[]' 'lit:[]' 'ne_nonempty:1' 'eq_nonempty:0' 'ne_empty:0' 'eq_empty:1' 'lit_eq_lit:1' 'if_nonempty:taken' 'if_empty:NOT' 'len:0' 'subst_del:[hello ]' 'subst_all:[]' 'concat:[ab]' 'trim:[]' 'clean:[]' 'uniq:[]' 'roundtrip:1')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(empty string): out.txt was:"; echo "$got"
+            echo "wanted:"; echo "$want"; exit 1
+          fi
+          # An empty string must not log errors on the way through.
+          ERR="$FIX/input/text.txt_log/err.log"
+          if [ -f "$ERR" ]; then
+            noise=$(grep -v '^0 0 \[Date' "$ERR" | tr -d '\r' | sed '/^$/d' || true)
+            if [ -n "$noise" ]; then
+              echo "FAIL(empty string): err.log not clean:"; echo "$noise"; exit 1
+            fi
+          fi
+          echo "[empty string] \"\" is a first-class empty string"
+
       - name: User functions shadow builtins (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash
