@@ -9270,10 +9270,10 @@ if (!Arg::str1(_T("strclean"), /*UP*/ (DELTS*&)args, name1))
 if (!Arg::done((DELTS*)args, _T("strclean"),parse))
 	return false;
 
-if (!name1 || !*name1)
+if (empty(name1))		// "" in, "" out -- not a warning.	// 09/21/26 DD.
 	{
-	_stprintf(Errbuf,_T("[strclean: Warning. Given no str.]"));
-	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
+	sem = new RFASem(Parse::emptyStr(), RSSTR);
+	return true;
 	}
 
 _TCHAR buf[100000];
@@ -9316,10 +9316,10 @@ if (!Arg::str1(_T("strtrim"), /*UP*/ (DELTS*&)args, name1))
 if (!Arg::done((DELTS*)args, _T("strtrim"),parse))
 	return false;
 
-if (!name1 || !*name1)
+if (empty(name1))		// "" in, "" out -- not a warning.	// 09/21/26 DD.
 	{
-	_stprintf(Errbuf,_T("[strtrim: Warning. Given no str.]"));
-	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
+	sem = new RFASem(Parse::emptyStr(), RSSTR);
+	return true;
 	}
 
 _TCHAR buf[100000];
@@ -9362,10 +9362,10 @@ if (!Arg::str1(_T("struniquechars"), /*UP*/ (DELTS*&)args, name1))
 if (!Arg::done((DELTS*)args, _T("struniquechars"),parse))
 	return false;
 
-if (!name1 || !*name1)
+if (empty(name1))		// "" in, "" out -- not a warning.	// 09/21/26 DD.
 	{
-	_stprintf(Errbuf,_T("[struniquechars: Warning. Given no str.]"));
-	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
+	sem = new RFASem(Parse::emptyStr(), RSSTR);
+	return true;
 	}
 
 _TCHAR buf[100000];

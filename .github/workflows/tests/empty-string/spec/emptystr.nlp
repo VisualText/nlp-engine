@@ -1,0 +1,59 @@
+###############################################
+# FILE:     emptystr.nlp
+# SUBJ:     "" must work as an empty string literal.
+# NOTE:     For 28 years an empty string literal was a hard syntax error:
+#           PostRFA::postRFAstr bailed out with "[RFA str action: Unhandled
+#           null case.]" because the _STR rule's content wild legitimately
+#           collects nothing between the quotes.  Amnon's own 11/26/98 note
+#           at that spot said "Should probably handle empty string here."
+#           So L("x") = "" and the natural emptiness test x != "" would not
+#           even build, which read to users as "!= does not work on strings".
+#
+#           Two more layers sat behind it.  The hash table refuses to intern
+#           "" (Htab::hget), so any builtin RETURNING an empty string logged
+#           "[hget: Given null string.]" and handed back 0; and strtrim,
+#           strclean and struniquechars warned "Given no str" instead of
+#           returning "".  All three now route through Parse::emptyStr().
+#
+#           Expected out.txt is checked by the workflow.
+###############################################
+
+@CODE
+
+L("e") = "";
+L("s") = "hello world";
+
+# The literal itself, and both comparison directions.
+"out.txt" << "assign:["      << L("e")                         << "]\n";
+"out.txt" << "lit:["         << ""                             << "]\n";
+"out.txt" << "ne_nonempty:"  << str(L("s") != "")              << "\n";
+"out.txt" << "eq_nonempty:"  << str(L("s") == "")              << "\n";
+"out.txt" << "ne_empty:"     << str(L("e") != "")              << "\n";
+"out.txt" << "eq_empty:"     << str(L("e") == "")              << "\n";
+"out.txt" << "lit_eq_lit:"   << str("" == "")                  << "\n";
+
+# The emptiness test people actually want to write.
+if (L("s") != "")
+	"out.txt" << "if_nonempty:taken\n";
+else
+	"out.txt" << "if_nonempty:NOT\n";
+if (L("e") != "")
+	"out.txt" << "if_empty:taken\n";
+else
+	"out.txt" << "if_empty:NOT\n";
+
+# "" as an argument, and as a result.
+"out.txt" << "len:"          << str(strlength(""))             << "\n";
+"out.txt" << "subst_del:["   << strsubst(L("s"), "world", "")  << "]\n";
+"out.txt" << "subst_all:["   << strsubst(L("s"), L("s"), "")   << "]\n";
+"out.txt" << "concat:["      << ("a" + "" + "b")               << "]\n";
+
+# Builtins that used to warn instead of returning "".
+"out.txt" << "trim:["        << strtrim("")                    << "]\n";
+"out.txt" << "clean:["       << strclean("")                   << "]\n";
+"out.txt" << "uniq:["        << struniquechars("")             << "]\n";
+
+# A builtin result must round-trip back through == "".
+"out.txt" << "roundtrip:"    << str(strtoupper("") == "")      << "\n";
+
+@@CODE

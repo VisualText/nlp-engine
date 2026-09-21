@@ -875,14 +875,16 @@ Node<Pn> *nelts, *nend;
 nelts = coll1->Down();
 nend  = coll1->eDown();
 
-// 11/26/98 AM. Should probably handle empty string here.
-// Also, case where nend == 0.
+// An empty string literal ("") still matches the _STR rule in bigtok.nlp,
+// whose content wild happily collects nothing between the two quotes.
+// So there are simply no element nodes to
+// walk here.  That is not an error -- hand back "" and skip the build
+// loop below.  This is the case Amnon's 11/26/98 note asked for.
+// 09/21/26 DD.
 if (!nelts || !nend)
 	{
-	std::_t_strstream gerrStr;
-	gerrStr << _T("[RFA str action: Unhandled null case.]") << std::ends;
-	nlppp->parse_->errOut(&gerrStr,false,true);
-	return false;
+	nlppp->sem_ = new RFASem(Parse::emptyStr(), RSSTR);
+	return true;
 	}
 
 
@@ -993,7 +995,7 @@ if (!empty(cbuf))																// 08/19/00 AM.
 	str = sym->getStr();
 	}
 else
-	return false;
+	str = Parse::emptyStr();	// "" can't be interned.	// 09/21/26 DD.
 
 // Create semantic object for the STR.
 RFASem *rfasem;

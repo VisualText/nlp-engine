@@ -1192,6 +1192,14 @@ return htab_->hsym(str,len);						// FIX.	// 02/01/08 AM.
 _TCHAR *Parse::internStr(_TCHAR *str, /*DU*/ _TCHAR* &tstr)
 {
 tstr = 0;
+// An empty result is a legitimate value, not a failure.  The hash table
+// refuses to intern "" (Htab::hget reports "Given null string."), so
+// route it to the canonical empty string instead of erroring and
+// handing back 0.  Every caller already treats 0 and "" alike -- the one
+// site that inspects the result, in Arun.cpp, tests (!str || !*str).
+// 09/21/26 DD.
+if (empty(str))
+	return (tstr = emptyStr());
 Sym *sym = 0;
 if ((sym = getSym(str)))
 	return (tstr = sym->getStr());
@@ -1202,10 +1210,41 @@ return 0;
 _TCHAR *Parse::internStr(_TCHAR *str, long len, /*DU*/ _TCHAR* &tstr)
 {
 tstr = 0;
+// An empty result is a legitimate value, not a failure.  The hash table
+// refuses to intern "" (Htab::hget reports "Given null string."), so
+// route it to the canonical empty string instead of erroring and
+// handing back 0.  Every caller already treats 0 and "" alike -- the one
+// site that inspects the result, in Arun.cpp, tests (!str || !*str).
+// 09/21/26 DD.
+if (empty(str) || len <= 0)
+	return (tstr = emptyStr());
 Sym *sym = 0;
 if ((sym = getSym(str, len)))
 	return (tstr = sym->getStr());
 return 0;
+}
+
+/********************************************
+* FN:		EMPTYSTR
+* CR:		09/21/26 DD.
+* SUBJ:	The canonical empty string.
+* RET:		A permanent, never-freed "".
+* NOTE:	The hash table refuses to intern the empty string (Htab::hget
+*			rejects it, and it guards against an empty Sym), so "" cannot live
+*			in the string table the way every other string does.  Empty string
+*			literals therefore share this one static buffer.  That is safe
+*			because strings taken from the string table are never freed by
+*			their holders either -- see the RSNAME/RSSTR case in
+*			RFASem::~RFASem ("Name should be in string table, not deletable
+*			here.") and Iarg, which stores the pointer without copying it.
+*			Returning "" rather than 0 matters: callers such as
+*			PostRFA::postRFAarg reject a null name outright.
+********************************************/
+
+_TCHAR *Parse::emptyStr()
+{
+static _TCHAR empty[1] = { 0 };			// Escape-free: one NUL terminator.
+return empty;
 }
 
 /********************************************
