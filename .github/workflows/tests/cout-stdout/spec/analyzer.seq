@@ -1,0 +1,2 @@
+tokenize	nil	# split the text into tokens
+nlp	cout	# write to the cout() stream
