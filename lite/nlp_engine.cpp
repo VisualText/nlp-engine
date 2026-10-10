@@ -445,6 +445,13 @@ int NLP_ENGINE::analyze(
         if (!silent && create) {
             _stprintf(m_outdir, _T("%s_log"),file.c_str());
             NLP_ENGINE::createDir(m_outdir);
+            // Start each run with an empty <file>_log. The engine rewrites its own
+            // logs and trees, but an analyzer's "file" << ... output opens for
+            // append, so a second run left two copies in out.txt, two JSON
+            // documents in one .json file, and so on. Only files go, and only in
+            // the folder the engine made itself: a caller-supplied outdir is
+            // never touched, nor are subfolders an analyzer may keep there.
+            NLP_ENGINE::clearDirFiles(m_outdir);
         }
         std::_t_cout << _T("[outdir path: ") << m_outdir << _T("]") << std::endl;
 
@@ -675,7 +682,19 @@ int NLP_ENGINE::createDir(_TCHAR *dirPath) {
     return 0;
 }
 
-int NLP_ENGINE::readFiles(_TCHAR *dir) 
+int NLP_ENGINE::clearDirFiles(_TCHAR *dirPath) {
+    int removed = 0;
+    std::error_code ec;
+    std::filesystem::directory_iterator it(dirPath, ec), end;
+    for (; !ec && it != end; it.increment(ec)) {
+        std::error_code fec;
+        if (it->is_regular_file(fec) && std::filesystem::remove(it->path(), fec))
+            ++removed;
+    }
+    return removed;
+}
+
+int NLP_ENGINE::readFiles(_TCHAR *dir)
 {
     m_files.clear();
 
