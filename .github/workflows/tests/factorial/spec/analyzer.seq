@@ -1,0 +1,3 @@
+tokenize	nil	# split the text into tokens
+nlp	factorial	# factorial() limits
+nlp	overflow	# 21! must still report an overflow

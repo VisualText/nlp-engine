@@ -449,6 +449,31 @@ jobs:
           fi
           echo "[cout] cout() writes to standard output"
 
+      - name: factorial() up to 20!
+        shell: bash
+        run: |
+          set -eo pipefail
+          # factorial() checked its result against LONG_MAX, which is 32 bits
+          # on Windows, so 13! and up reported an overflow there.
+          FIX=.github/workflows/tests/factorial
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
+          OUT="$FIX/input/text.txt_log/out.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(factorial): no out.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(head -1 "$OUT" | tr -d '\r')
+          want='1 1 479001600 6227020800 2432902008176640000'
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(factorial): got '$got', wanted '$want'"; exit 1
+          fi
+          # 21! does not fit in 64 bits and must still be reported.
+          grep -q 'factorial: Overflow' "$FIX/input/text.txt_log/err.log" \
+            || { echo "FAIL(factorial): 21! did not report an overflow"; exit 1; }
+          echo "[factorial] 13! to 20! compute; 21! reports an overflow"
+
       - name: User functions shadow builtins
         shell: bash
         run: |

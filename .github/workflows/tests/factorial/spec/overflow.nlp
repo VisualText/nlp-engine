@@ -1,0 +1,4 @@
+# 21! does not fit in 64 bits: the engine must log an overflow, not wrap.
+@CODE
+"out.txt" << "21! = " << factorial(21) << "\n";
+@@CODE

@@ -1,0 +1,7 @@
+# factorial() checked its result against LONG_MAX, which is 32 bits on
+# Windows, so 13! and up reported an overflow there. 20! is the largest
+# factorial that fits in 64 bits.
+@CODE
+"out.txt" << factorial(0) << " " << factorial(1) << " " << factorial(12)
+          << " " << factorial(13) << " " << factorial(20) << "\n";
+@@CODE

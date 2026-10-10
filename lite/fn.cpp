@@ -1019,7 +1019,9 @@ else
 	fact = 1;	// Value is good for the 0 and 1 cases.
 	while (num1 > 1)
 		{
-		if ((double)fact > ((double)LONG_MAX / (double)num1))
+		// LLONG_MAX, not LONG_MAX: long is 32 bits on Windows, which made
+		// 13! report an overflow there.
+		if (fact > LLONG_MAX / num1)
 			{
 			// Overflow.
 			_stprintf(Errbuf, _T("[factorial: Overflow.]"));				// 05/18/01 AM.
