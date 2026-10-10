@@ -27,6 +27,7 @@ for other editors.
 |---|---|---|---|
 | [VisualText for VS Code](https://marketplace.visualstudio.com/items?itemName=dehilster.nlp) | VS Code | all formats | Released |
 | [nlpplus-tmbundle](https://github.com/VisualText/nlpplus-tmbundle) (TextMate grammars) | VS Code, Sublime Text, `bat`, any TextMate-grammar editor | all formats | Released |
+| [tree-sitter-nlpplus](https://github.com/VisualText/tree-sitter-nlpplus) (tree-sitter grammars) | Neovim, Helix, Zed, Emacs | pass files, `.dict`, `.kbb`, `analyzer.seq`, `.tree` | Released [![CI](https://github.com/VisualText/tree-sitter-nlpplus/actions/workflows/ci.yml/badge.svg)](https://github.com/VisualText/tree-sitter-nlpplus/actions/workflows/ci.yml); editor listings next |
 | [Pygments](https://pygments.org) | Sphinx, Read the Docs, Jupyter, MkDocs, Hugo | pass files, `.dict`, `.kbb`, `analyzer.seq`, `.tree` | [![PR](https://img.shields.io/github/pulls/detail/state/pygments/pygments/3238)](https://github.com/pygments/pygments/pull/3238) |
 | [highlight.js](https://highlightjs.org): [highlightjs-nlpplus](https://github.com/VisualText/highlightjs-nlpplus) | Discourse, many documentation sites and blogs | pass files, `.dict`, `.kbb`, `analyzer.seq`, `.tree` | Released; listing [![PR](https://img.shields.io/github/pulls/detail/state/highlightjs/highlight.js/4557)](https://github.com/highlightjs/highlight.js/pull/4557) |
 | [Prism](https://prismjs.com) | Docusaurus, many documentation sites | pass files, `.dict`, `.kbb`, `analyzer.seq`, `.tree` | [![PR](https://img.shields.io/github/pulls/detail/state/PrismJS/prism/4163)](https://github.com/PrismJS/prism/pull/4163) |
@@ -38,6 +39,7 @@ for other editors.
 |---|---|---|
 | [Vim](https://github.com/vim/vim) (and Neovim, which follows Vim) | Recognize `.nlp` files as NLP++ | [![PR](https://img.shields.io/github/pulls/detail/state/vim/vim/21480)](https://github.com/vim/vim/pull/21480) |
 | Neovim | Language server | See nvim-lspconfig and Mason above |
+| Neovim, Helix | Highlighting from tree-sitter-nlpplus | Setup in the [tree-sitter-nlpplus README](https://github.com/VisualText/tree-sitter-nlpplus#using-it) |
 
 ## Language directories
 
