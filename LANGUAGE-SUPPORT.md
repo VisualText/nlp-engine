@@ -77,7 +77,7 @@ for other editors.
 | Where | Status |
 |---|---|
 | [PLDB](https://pldb.io/concepts/nlp-plus-plus.html) | Live. Entry [![PR](https://img.shields.io/github/pulls/detail/state/breck7/pldb/658)](https://github.com/breck7/pldb/pull/658), creators [![PR](https://img.shields.io/github/pulls/detail/state/breck7/pldb/659)](https://github.com/breck7/pldb/pull/659) |
-| [Rosetta Code](https://rosettacode.org/wiki/Category:NLP%2B%2B) | Live |
+| [Rosetta Code](https://rosettacode.org/wiki/Category:NLP%2B%2B) | Live: 15 tasks, each run with engine 4.2.2, including Letter frequency and Word frequency |
 | [Learn X in Y Minutes](https://learnxinyminutes.com) | NLP++ tour [![PR](https://img.shields.io/github/pulls/detail/state/adambard/learnxinyminutes-docs/5628)](https://github.com/adambard/learnxinyminutes-docs/pull/5628) |
 | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=dehilster.nlp) | Live |
 | Wikidata | Not yet: the entry is drafted and needs to be submitted from a Wikimedia account |
