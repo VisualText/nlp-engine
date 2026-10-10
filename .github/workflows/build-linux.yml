@@ -510,15 +510,16 @@ jobs:
           mkdir -p "$FIX/logs"
           out=$(./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" | tr -d '\r')
           if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
-          for want in "cout-stdout: hello" "cout-stdout: via a variable"; do
-            if ! printf '%s\n' "$out" | grep -qxF "$want"; then
-              echo "FAIL(cout): '$want' not on stdout. Got:"; echo "$out"; exit 1
-            fi
-          done
+          # Engine status lines go to stderr, so stdout is the analyzer's
+          # output and nothing else.
+          want=$(printf '%s\n' "cout-stdout: hello" "cout-stdout: via a variable")
+          if [ "$out" != "$want" ]; then
+            echo "FAIL(cout): stdout was:"; echo "$out"; echo "wanted:"; echo "$want"; exit 1
+          fi
           if [ -f dummy.txt ]; then
             echo "FAIL(cout): cout() still writes to dummy.txt"; exit 1
           fi
-          echo "[cout] cout() writes to standard output"
+          echo "[cout] stdout holds only the analyzer's cout() output"
 
       - name: factorial() up to 20! (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
