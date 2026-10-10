@@ -459,14 +459,7 @@ int NLP_ENGINE::analyze(
         if (m_cg)
             m_cg->setMissingLogDir(m_outdir);
 
-        // Analyzer can output to a stream.
-        _TCHAR ofstr[MAXSTR];
-        #ifdef LINUX
-        _stprintf(ofstr,_T("./dummy.txt"));
-        #else
-        _stprintf(ofstr,_T("e:\\dummy.txt"));
-        #endif
-        std::_t_ofstream os(TCHAR2CA(ofstr), std::ios::out);						// 08/07/02 AM.
+        // The analyzer's cout() writes to standard output.
 
         // Testing output to buffer.
         _TCHAR obuf[MAXSTR];
@@ -477,7 +470,7 @@ int NLP_ENGINE::analyze(
             0,           // Input buffer.
             0,        // Length of input buffer, or 0.
             m_compiled,      // If running compiled analyzer.
-            &os,	   // Rebind cout output stream in analyzer    // 08/07/02 AM.
+            &std::_t_cout,	   // Stream for cout() in NLP++
             obuf,       // 05/11/02 AM.
             MAXSTR	   // 05/11/02 AM.
             );
@@ -515,14 +508,7 @@ int NLP_ENGINE::analyze(
     if (!m_nlp)  // defensive: never analyze without a live analyzer object.
         return -1;
 
-    // Analyzer can output to a stream.
-    _TCHAR ofstr[MAXSTR];
-    #ifdef LINUX
-    _stprintf(ofstr,_T("./dummy.txt"));
-    #else
-    _stprintf(ofstr,_T("e:\\dummy.txt"));
-    #endif
-    std::_t_ofstream os(TCHAR2CA(ofstr), std::ios::out);
+    // The analyzer's cout() writes to standard output.
     
     std::_t_cout << _T("[infile path: ") << m_infile << _T("]") << std::endl;
     std::_t_cout << _T("[outfile path: ") << m_outfile << _T("]") << std::endl;
@@ -536,7 +522,7 @@ int NLP_ENGINE::analyze(
         inbuf,           // Input buffer.
         len,        // Length of input buffer, or 0.
         m_compiled,      // If running compiled analyzer.
-        &os,	   // Rebind cout output stream in analyzer    // 08/07/02 AM.
+        &std::_t_cout,	   // Stream for cout() in NLP++
         outbuf,       // 05/11/02 AM.
         outlen	   // 05/11/02 AM.
         );
@@ -571,14 +557,7 @@ int NLP_ENGINE::analyze(
     if (!m_nlp)  // defensive: never analyze without a live analyzer object.
         return -1;
 
-    // Analyzer can output to a stream.
-    _TCHAR ofstr[MAXSTR];
-    #ifdef LINUX
-    _stprintf(ofstr,_T("./dummy.txt"));
-    #else
-    _stprintf(ofstr,_T("e:\\dummy.txt"));
-    #endif
-    std::_t_ofstream os(TCHAR2CA(ofstr), std::ios::out);
+    // The analyzer's cout() writes to standard output.
 
 //std::_t_cout << _T("BEFORE ANALYSIS: ") << std::endl; // 09/27/20 AM.
 //object_counts();    // TESTING analysis cleanup.    // 09/27/20 AM.
@@ -591,7 +570,7 @@ int NLP_ENGINE::analyze(
         m_silent,
         m_outdir,
         m_compiled,      // If running compiled analyzer.
-        &os,	   // Rebind cout output stream in analyzer    // 08/07/02 AM.
+        &std::_t_cout,	   // Stream for cout() in NLP++
         NULL   // datum
         );
 

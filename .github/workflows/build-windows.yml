@@ -427,6 +427,28 @@ jobs:
           fi
           echo "[empty string] \"\" is a first-class empty string"
 
+      - name: cout() writes to standard output
+        shell: bash
+        run: |
+          set -eo pipefail
+          # The command-line engine bound the analyzer's cout() stream to a
+          # leftover test file (e:\dummy.txt on Windows, ./dummy.txt on
+          # Linux), so cout() output never reached the terminal.
+          FIX=.github/workflows/tests/cout-stdout
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log" dummy.txt
+          mkdir -p "$FIX/logs"
+          out=$(./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" | tr -d '\r')
+          if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
+          for want in "cout-stdout: hello" "cout-stdout: via a variable"; do
+            if ! printf '%s\n' "$out" | grep -qxF "$want"; then
+              echo "FAIL(cout): '$want' not on stdout. Got:"; echo "$out"; exit 1
+            fi
+          done
+          if [ -f dummy.txt ]; then
+            echo "FAIL(cout): cout() still writes to dummy.txt"; exit 1
+          fi
+          echo "[cout] cout() writes to standard output"
+
       - name: User functions shadow builtins
         shell: bash
         run: |

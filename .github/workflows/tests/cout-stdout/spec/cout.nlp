@@ -1,0 +1,8 @@
+# cout() is the analyzer's standard output stream. The command-line engine
+# used to bind it to a leftover test file (e:\dummy.txt, or ./dummy.txt on
+# Linux), so this output was lost.
+@CODE
+cout() << "cout-stdout: hello" << "\n";
+G("out") = cout();
+G("out") << "cout-stdout: via a variable" << "\n";
+@@CODE
