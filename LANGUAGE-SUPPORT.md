@@ -42,6 +42,7 @@ for other editors.
 | [Helix](https://github.com/helix-editor/helix) | NLP++ and its four data formats, with the language server | [![PR](https://img.shields.io/github/pulls/detail/state/helix-editor/helix/16372)](https://github.com/helix-editor/helix/pull/16372) |
 | [Zed](https://zed.dev): [zed-nlpplus](https://github.com/VisualText/zed-nlpplus) | NLP++ and its four data formats, with the language server | Extension built [![CI](https://github.com/VisualText/zed-nlpplus/actions/workflows/ci.yml/badge.svg)](https://github.com/VisualText/zed-nlpplus/actions/workflows/ci.yml); Zed's registry needs a hands-on test in Zed before submission |
 | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Highlighting in Neovim with `:TSInstall nlpplus` | Not yet: waits for the Vim PR above, since nvim-treesitter only adds languages Neovim already detects. Until then, setup is in the [tree-sitter-nlpplus README](https://github.com/VisualText/tree-sitter-nlpplus#using-it) |
+| Emacs: [nlpplus-ts-mode](https://github.com/VisualText/nlpplus-ts-mode) | Modes for NLP++ and its four data formats, with indentation, imenu and the language server through Eglot | Released [![CI](https://github.com/VisualText/nlpplus-ts-mode/actions/workflows/ci.yml/badge.svg)](https://github.com/VisualText/nlpplus-ts-mode/actions/workflows/ci.yml); MELPA listing after 2026-11-10 (MELPA wants a repository to be public for a month first) |
 
 ## Language directories
 
@@ -49,6 +50,7 @@ for other editors.
 |---|---|
 | [PLDB](https://pldb.io/concepts/nlp-plus-plus.html) | Live. Entry [![PR](https://img.shields.io/github/pulls/detail/state/breck7/pldb/658)](https://github.com/breck7/pldb/pull/658), creators [![PR](https://img.shields.io/github/pulls/detail/state/breck7/pldb/659)](https://github.com/breck7/pldb/pull/659) |
 | [Rosetta Code](https://rosettacode.org/wiki/Category:NLP%2B%2B) | Live |
+| [Learn X in Y Minutes](https://learnxinyminutes.com) | NLP++ tour [![PR](https://img.shields.io/github/pulls/detail/state/adambard/learnxinyminutes-docs/5628)](https://github.com/adambard/learnxinyminutes-docs/pull/5628) |
 | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=dehilster.nlp) | Live |
 | Wikidata | Not yet: the entry is drafted and needs to be submitted from a Wikimedia account |
 | [Open VSX](https://open-vsx.org) (VSCodium, Cursor, Windsurf) | Not yet: needs a publishing token |
@@ -57,7 +59,7 @@ for other editors.
 
 ## Fixes made along the way
 
-Work on the listings above turned up these, all merged in VisualText repos:
+Work on the listings above turned up these fixes:
 
 | Pull request | What |
 |---|---|
@@ -66,6 +68,7 @@ Work on the listings above turned up these, all merged in VisualText repos:
 | [nlpplus-tmbundle#2](https://github.com/VisualText/nlpplus-tmbundle/pull/2), [vscode-nlp#1222](https://github.com/VisualText/vscode-nlp/pull/1222) | Highlighting for `base`, all 17 `_x` node constants, and the closing paren of a `match=( )` list |
 | [vscode-nlp#1223](https://github.com/VisualText/vscode-nlp/pull/1223) | Each release publishes the language server to npm |
 | [nlp-engine#745](https://github.com/VisualText/nlp-engine/pull/745) | Each run starts with an empty `<file>_log` folder (engine 4.2.1) |
+| [tree-sitter/workflows#75](https://github.com/tree-sitter/workflows/pull/75) | Fix for tree-sitter's shared release and packaging workflows, which dropped a repository's main grammar when its other grammars live in subfolders (found when tree-sitter-nlpplus v0.1.0 shipped without its main WASM build) [![PR](https://img.shields.io/github/pulls/detail/state/tree-sitter/workflows/75)](https://github.com/tree-sitter/workflows/pull/75) |
 | [visualtext-files#227](https://github.com/VisualText/visualtext-files/pull/227) | The `group()` help page shows rule element numbers, not nodes |
 
 Still open: [nlp-engine#408](https://github.com/VisualText/nlp-engine/issues/408) ![issue](https://img.shields.io/github/issues/detail/state/VisualText/nlp-engine/408): `$text` is cut short on nodes that start with a multi-word dictionary entry.
