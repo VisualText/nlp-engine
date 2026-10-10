@@ -11,6 +11,8 @@ Many of you have been asking for tutorial videos on NLP++ and here is the first 
 
 Join the discussion at [https://nlp.discourse.group](https://nlp.discourse.group)
 
+NLP++ highlighting and the language server in other editors and tools: see [LANGUAGE-SUPPORT.md](LANGUAGE-SUPPORT.md).
+
 ## About
 
 The NLP engine is the engine that runs text analyzers writtein in [NLP++](http://visualtext.org). The nlp-engine runs on Linux, Windows, and MacOS. It can be called in two different ways:
