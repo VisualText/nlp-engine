@@ -147,6 +147,7 @@ public:
 
 private:
     int createDir(_TCHAR *dirPath);
+    int clearDirFiles(_TCHAR *dirPath);
     int readFiles(_TCHAR *directoryPath);
     // Canonical registry name for an analyzer (its path basename). init() and
     // close() must key the VTRun analyzer registry on this so the same analyzer

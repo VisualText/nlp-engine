@@ -295,6 +295,37 @@ jobs:
           done
           echo "[openfile] openfile creates the file it names, with and without \"app\""
 
+      - name: A rerun replaces the last run's output
+        shell: bash
+        run: |
+          set -eo pipefail
+          # A second run added to the first run's output. "file" << ... opens
+          # for append and the engine reused <file>_log without emptying it, so
+          # out.txt grew a line per run and a JSON export became several
+          # documents in one file. The engine now empties the files in the
+          # <file>_log folder it creates, and leaves subfolders alone.
+          FIX=.github/workflows/tests/log-rerun
+          LOG="$FIX/input/text.txt_log"
+          rm -rf "$FIX/logs" "$LOG"
+          mkdir -p "$FIX/logs"
+          ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" > /dev/null
+          # Leave a stale file and a subfolder, then run again.
+          echo stale > "$LOG/stale.txt"
+          mkdir -p "$LOG/keep" && echo kept > "$LOG/keep/marker.txt"
+          ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" > /dev/null
+          if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
+          got=$(tr -d '\r' < "$LOG/out.txt")
+          if [ "$got" != "ran" ]; then
+            echo "FAIL(log rerun): out.txt after two runs was:"; echo "$got"; exit 1
+          fi
+          if [ -f "$LOG/stale.txt" ]; then
+            echo "FAIL(log rerun): a file from the previous run survived"; exit 1
+          fi
+          if [ ! -f "$LOG/keep/marker.txt" ]; then
+            echo "FAIL(log rerun): a subfolder of the log folder was removed"; exit 1
+          fi
+          echo "[log rerun] each run starts with an empty <file>_log"
+
       - name: regexp/regexpi glob matching
         shell: bash
         run: |

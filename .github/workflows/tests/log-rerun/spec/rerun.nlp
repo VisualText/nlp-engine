@@ -1,0 +1,14 @@
+###############################################
+# FILE:     rerun.nlp
+# SUBJ:     Regression -- a second run must not add to the first run's output.
+# NOTE:     "file" << ... opens for append, and the engine reused <file>_log
+#           without emptying it, so every rerun added another copy: out.txt
+#           grew a line per run and a JSON export became several documents
+#           in one file. Expected after any number of runs: out.txt = "ran".
+###############################################
+
+@CODE
+
+"out.txt" << "ran\n";
+
+@@CODE
