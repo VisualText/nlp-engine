@@ -7,6 +7,34 @@ update live.
 Highlighting covers NLP++ pass files (`.nlp`, `.pat`) and the analyzer's other files: dictionaries
 (`.dict`), knowledge bases (`.kbb`), the pass sequence (`analyzer.seq`) and parse trees (`.tree`).
 
+## Pull requests in other repositories
+
+Every pull request opened in another project for NLP++, in one place. The badges show each one's
+current state, and the sections below give the details.
+
+| Repository | Pull request | What it adds | Status |
+|---|---|---|---|
+| Pygments | [pygments#3238](https://github.com/pygments/pygments/pull/3238) | Highlighting for pass files and the four data formats | [![PR](https://img.shields.io/github/pulls/detail/state/pygments/pygments/3238)](https://github.com/pygments/pygments/pull/3238) |
+| highlight.js | [highlight.js#4557](https://github.com/highlightjs/highlight.js/pull/4557) | Listing for highlightjs-nlpplus | [![PR](https://img.shields.io/github/pulls/detail/state/highlightjs/highlight.js/4557)](https://github.com/highlightjs/highlight.js/pull/4557) |
+| Prism | [prism#4163](https://github.com/PrismJS/prism/pull/4163) | Highlighting for pass files and the four data formats | [![PR](https://img.shields.io/github/pulls/detail/state/PrismJS/prism/4163)](https://github.com/PrismJS/prism/pull/4163) |
+| Helix | [helix#16372](https://github.com/helix-editor/helix/pull/16372) | NLP++ and its four data formats, with the language server | [![PR](https://img.shields.io/github/pulls/detail/state/helix-editor/helix/16372)](https://github.com/helix-editor/helix/pull/16372) |
+| Vim | [vim#21480](https://github.com/vim/vim/pull/21480) | Recognize `.nlp` files (Neovim follows Vim) | [![PR](https://img.shields.io/github/pulls/detail/state/vim/vim/21480)](https://github.com/vim/vim/pull/21480) |
+| Microsoft LSP site | [language-server-protocol#2331](https://github.com/microsoft/language-server-protocol/pull/2331) | Listing for the language server | [![PR](https://img.shields.io/github/pulls/detail/state/microsoft/language-server-protocol/2331)](https://github.com/microsoft/language-server-protocol/pull/2331) |
+| nvim-lspconfig | [nvim-lspconfig#4548](https://github.com/neovim/nvim-lspconfig/pull/4548) | Neovim language server setup | [![PR](https://img.shields.io/github/pulls/detail/state/neovim/nvim-lspconfig/4548)](https://github.com/neovim/nvim-lspconfig/pull/4548) |
+| Mason | [mason-registry#17377](https://github.com/mason-org/mason-registry/pull/17377) | Neovim language server install | [![PR](https://img.shields.io/github/pulls/detail/state/mason-org/mason-registry/17377)](https://github.com/mason-org/mason-registry/pull/17377) |
+| Learn X in Y Minutes | [learnxinyminutes-docs#5628](https://github.com/adambard/learnxinyminutes-docs/pull/5628) | NLP++ tour | [![PR](https://img.shields.io/github/pulls/detail/state/adambard/learnxinyminutes-docs/5628)](https://github.com/adambard/learnxinyminutes-docs/pull/5628) |
+| tree-sitter workflows | [workflows#75](https://github.com/tree-sitter/workflows/pull/75) | Fix found while releasing tree-sitter-nlpplus | [![PR](https://img.shields.io/github/pulls/detail/state/tree-sitter/workflows/75)](https://github.com/tree-sitter/workflows/pull/75) |
+| PLDB | [pldb#658](https://github.com/breck7/pldb/pull/658), [pldb#659](https://github.com/breck7/pldb/pull/659) | Language entry and its creators | [![PR](https://img.shields.io/github/pulls/detail/state/breck7/pldb/658)](https://github.com/breck7/pldb/pull/658) [![PR](https://img.shields.io/github/pulls/detail/state/breck7/pldb/659)](https://github.com/breck7/pldb/pull/659) |
+
+Ready but not yet submitted:
+
+| Where | Waiting on |
+|---|---|
+| [Rouge](https://github.com/rouge-ruby/rouge) | Open the pull request from [the compare page](https://github.com/rouge-ruby/rouge/compare/main...ddehilster:rouge:add-nlpplus-lexer); GitHub blocked opening it from the command line |
+| [Zed extensions](https://github.com/zed-industries/extensions) | A hands-on test of [zed-nlpplus](https://github.com/VisualText/zed-nlpplus) in Zed, which Zed requires before submission |
+| [MELPA](https://github.com/melpa/melpa) | 2026-11-10: MELPA accepts a package once its repository has been public for a month ([nlpplus-ts-mode](https://github.com/VisualText/nlpplus-ts-mode)) |
+| [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | The Vim pull request above, then Neovim picking up the filetype |
+
 ## Language server
 
 The NLP++ language server (outline, hover, go-to-definition, references, rename, completion,
