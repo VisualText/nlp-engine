@@ -27,6 +27,7 @@ for other editors.
 |---|---|---|---|
 | [VisualText for VS Code](https://marketplace.visualstudio.com/items?itemName=dehilster.nlp) | VS Code | all formats | Released |
 | [nlpplus-tmbundle](https://github.com/VisualText/nlpplus-tmbundle) (TextMate grammars) | VS Code, Sublime Text, `bat`, any TextMate-grammar editor | all formats | Released |
+| [tree-sitter-nlpplus](https://github.com/VisualText/tree-sitter-nlpplus) (tree-sitter grammars) | Neovim, Helix, Zed, Emacs | pass files, `.dict`, `.kbb`, `analyzer.seq`, `.tree` | [![release](https://img.shields.io/github/v/release/VisualText/tree-sitter-nlpplus)](https://github.com/VisualText/tree-sitter-nlpplus/releases) [![CI](https://github.com/VisualText/tree-sitter-nlpplus/actions/workflows/ci.yml/badge.svg)](https://github.com/VisualText/tree-sitter-nlpplus/actions/workflows/ci.yml) |
 | [Pygments](https://pygments.org) | Sphinx, Read the Docs, Jupyter, MkDocs, Hugo | pass files, `.dict`, `.kbb`, `analyzer.seq`, `.tree` | [![PR](https://img.shields.io/github/pulls/detail/state/pygments/pygments/3238)](https://github.com/pygments/pygments/pull/3238) |
 | [highlight.js](https://highlightjs.org): [highlightjs-nlpplus](https://github.com/VisualText/highlightjs-nlpplus) | Discourse, many documentation sites and blogs | pass files, `.dict`, `.kbb`, `analyzer.seq`, `.tree` | Released; listing [![PR](https://img.shields.io/github/pulls/detail/state/highlightjs/highlight.js/4557)](https://github.com/highlightjs/highlight.js/pull/4557) |
 | [Prism](https://prismjs.com) | Docusaurus, many documentation sites | pass files, `.dict`, `.kbb`, `analyzer.seq`, `.tree` | [![PR](https://img.shields.io/github/pulls/detail/state/PrismJS/prism/4163)](https://github.com/PrismJS/prism/pull/4163) |
@@ -38,6 +39,9 @@ for other editors.
 |---|---|---|
 | [Vim](https://github.com/vim/vim) (and Neovim, which follows Vim) | Recognize `.nlp` files as NLP++ | [![PR](https://img.shields.io/github/pulls/detail/state/vim/vim/21480)](https://github.com/vim/vim/pull/21480) |
 | Neovim | Language server | See nvim-lspconfig and Mason above |
+| [Helix](https://github.com/helix-editor/helix) | NLP++ and its four data formats, with the language server | [![PR](https://img.shields.io/github/pulls/detail/state/helix-editor/helix/16372)](https://github.com/helix-editor/helix/pull/16372) |
+| [Zed](https://zed.dev): [zed-nlpplus](https://github.com/VisualText/zed-nlpplus) | NLP++ and its four data formats, with the language server | Extension built [![CI](https://github.com/VisualText/zed-nlpplus/actions/workflows/ci.yml/badge.svg)](https://github.com/VisualText/zed-nlpplus/actions/workflows/ci.yml); Zed's registry needs a hands-on test in Zed before submission |
+| [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Highlighting in Neovim with `:TSInstall nlpplus` | Not yet: waits for the Vim PR above, since nvim-treesitter only adds languages Neovim already detects. Until then, setup is in the [tree-sitter-nlpplus README](https://github.com/VisualText/tree-sitter-nlpplus#using-it) |
 
 ## Language directories
 
