@@ -713,7 +713,7 @@ if (!kbLoaded) {
 		if (!readFile(infile))
 			return false;
 			
-		outputTime(_T("Original KB files"),s_time);
+		outputTime(_T("[READ original KB files time="),s_time);
 	}
 }
 
