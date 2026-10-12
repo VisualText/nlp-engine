@@ -96,17 +96,7 @@ All rights reserved.
 #define _tsystem	system
 #define _stprintf	sprintf
 #define _ftprintf	fprintf
-#define _totlower	tolower
-#define _totupper	toupper
-
-#define _istalpha	isalpha
-#define _istalnum	isalnum
-#define _istcntrl	iscntrl
-#define _istdigit	isdigit
-#define _istlower	islower
-#define _istpunct	ispunct
-#define _istspace	isspace
-#define _istupper	isupper
+// _istspace, _totupper etc. are defined, ASCII-only, at the end of this file.
 
 #else
 #define _t_strstream		strstream
@@ -114,6 +104,58 @@ All rights reserved.
 #define _t_istrstream       istringstream  // 11/17/20 AM.
 
 #endif
+
+#endif
+
+// ASCII-only character tests.	// 10/12/26 DD.
+// The engine works on UTF-8 bytes, so these tests must never depend on the
+// C locale. isspace() and friends do: under a single-byte code page such as
+// Windows-1252, isspace(0xA0) is true, and clean_str() then split "Voilà"
+// (C3 A0) and "오전" (... EC A0 84) mid-character. That happened whenever a
+// host process (e.g. Python) had called setlocale(LC_CTYPE, ""). Bytes 0x80
+// and above are never letters, spaces or case-mapped here, which matches what
+// nlp.exe has always done in the default "C" locale.
+// On Windows, <tchar.h> is pulled in first so its own _istspace etc. are
+// replaced, and a later #include <tchar.h> is a no-op.
+#ifndef _UNICODE
+
+#ifndef LINUX
+#include <tchar.h>
+#endif
+
+inline int nlp_isupper(int c) { return c >= 'A' && c <= 'Z'; }
+inline int nlp_islower(int c) { return c >= 'a' && c <= 'z'; }
+inline int nlp_isalpha(int c) { return nlp_isupper(c) || nlp_islower(c); }
+inline int nlp_isdigit(int c) { return c >= '0' && c <= '9'; }
+inline int nlp_isalnum(int c) { return nlp_isalpha(c) || nlp_isdigit(c); }
+inline int nlp_iscntrl(int c) { return (c >= 0 && c < 0x20) || c == 0x7F; }
+inline int nlp_isspace(int c) { return c == ' ' || (c >= '\t' && c <= '\r'); }
+inline int nlp_ispunct(int c)
+	{ return c > 0x20 && c < 0x7F && !nlp_isalnum(c); }
+inline int nlp_toupper(int c) { return nlp_islower(c) ? c - 'a' + 'A' : c; }
+inline int nlp_tolower(int c) { return nlp_isupper(c) ? c - 'A' + 'a' : c; }
+
+#undef _istalpha
+#undef _istalnum
+#undef _istcntrl
+#undef _istdigit
+#undef _istlower
+#undef _istpunct
+#undef _istspace
+#undef _istupper
+#undef _totlower
+#undef _totupper
+
+#define _istalpha	nlp_isalpha
+#define _istalnum	nlp_isalnum
+#define _istcntrl	nlp_iscntrl
+#define _istdigit	nlp_isdigit
+#define _istlower	nlp_islower
+#define _istpunct	nlp_ispunct
+#define _istspace	nlp_isspace
+#define _istupper	nlp_isupper
+#define _totlower	nlp_tolower
+#define _totupper	nlp_toupper
 
 #endif
 

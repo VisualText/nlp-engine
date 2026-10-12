@@ -2776,7 +2776,7 @@ switch (xeltType(ename))											// 08/03/26 AM.
 	// return (alphabetic(*nname)												// 07/20/04 AM.
 			  && is_upper((_TUCHAR)*nname) );					// 12/16/10 AM.
 	case XELT_CAPLET:					// Match cap letter.	// 07/10/09 AM.
-	return (*nname && !(*(nname+1)) && isupper((_TUCHAR)*nname)	// 07/10/09 AM.
+	return (*nname && !(*(nname+1)) && _istupper((_TUCHAR)*nname)	// 07/10/09 AM.
 		&& alphabetic(*nname));												// 07/10/09 AM.
 	case XELT_LET:						// Match letter.			// 07/10/09 AM.
 	return (alphabetic(*nname) && !(*(nname+1)));					// 07/10/09 AM.

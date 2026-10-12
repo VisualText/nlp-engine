@@ -355,7 +355,7 @@ std::string fieldRaw(const std::string &msg, const std::string &key)
 	size_t colon = msg.find(':', k + needle.size());
 	if (colon == std::string::npos) return std::string();
 	size_t i = colon + 1;
-	while (i < msg.size() && isspace((unsigned char)msg[i])) ++i;
+	while (i < msg.size() && _istspace((unsigned char)msg[i])) ++i;
 	if (i >= msg.size()) return std::string();
 
 	if (msg[i] == '"')
@@ -393,7 +393,7 @@ std::string fieldRaw(const std::string &msg, const std::string &key)
 		++i;
 	}
 	std::string out = msg.substr(start, i - start);
-	while (!out.empty() && isspace((unsigned char)out[out.size() - 1])) out.erase(out.size() - 1);
+	while (!out.empty() && _istspace((unsigned char)out[out.size() - 1])) out.erase(out.size() - 1);
 	return out;
 }
 
