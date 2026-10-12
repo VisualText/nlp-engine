@@ -422,64 +422,150 @@ int NLP_ENGINE::analyze(
         if (std::next(it) == m_files.end()) {
             m_nlp->setIsLastFile(true);
         }
-        std::string s = file;
-        std::string filepath = s.substr(s.find("input")+6,s.length()-1);
-        *fp << _T("File=") << filepath << std::endl;
-
-        if (std::filesystem::exists(file))
-            _stprintf(m_infile, _T("%s"),file.c_str());
-        else
-            _stprintf(m_infile, _T("%s%sinput%s%s"),m_anadir,DIR_STR,DIR_STR,file.c_str());
-        std::_t_cerr << _T("[infile path: ") << m_infile << _T("]") << std::endl;
-
-        _stprintf(m_outfile, _T("%s%soutfile.txt"),m_anadir,DIR_STR);
-        std::_t_cerr << _T("[outfile path: ") << m_outfile << _T("]") << std::endl;
-
-        bool create = true;
-        if (outdir) {
-            if (std::filesystem::is_directory(outdir)) {
-                _stprintf(m_outdir, _T("%s"), outdir);
-                create = false;
-            }
-        }
-        if (!silent && create) {
-            _stprintf(m_outdir, _T("%s_log"),file.c_str());
-            NLP_ENGINE::createDir(m_outdir);
-            // Start each run with an empty <file>_log. The engine rewrites its own
-            // logs and trees, but an analyzer's "file" << ... output opens for
-            // append, so a second run left two copies in out.txt, two JSON
-            // documents in one .json file, and so on. Only files go, and only in
-            // the folder the engine made itself: a caller-supplied outdir is
-            // never touched, nor are subfolders an analyzer may keep there.
-            NLP_ENGINE::clearDirFiles(m_outdir);
-        }
-        std::_t_cerr << _T("[outdir path: ") << m_outdir << _T("]") << std::endl;
-
-        // Write missing-words.log into this file's output "*_log" folder.
-        if (m_cg)
-            m_cg->setMissingLogDir(m_outdir);
-
-        // The analyzer's cout() writes to standard output.
-
-        // Testing output to buffer.
-        _TCHAR obuf[MAXSTR];
-
-        m_nlp->analyze(m_infile, m_outfile, m_anadir, m_develop,
-            m_silent,        // Debug/log output files.                  // 06/16/02 AM.
-            m_outdir,             // Outdir.
-            0,           // Input buffer.
-            0,        // Length of input buffer, or 0.
-            m_compiled,      // If running compiled analyzer.
-            &std::_t_cout,	   // Stream for cout() in NLP++
-            obuf,       // 05/11/02 AM.
-            MAXSTR	   // 05/11/02 AM.
-            );
-
-        m_nlp->setIsFirstFile(false);
+        analyzeFile(file, outdir, fp);
     }
 
+    delete fp;  // Closes file.log; it was never flushed before.
 //    NLP_ENGINE::close();  // NO.  // 09/27/20 AM.
     return 0;
+}
+
+// Long-running batch (#548): load the analyzer and KB once, then analyze one
+// input file per line of `in` until a blank line or EOF. Input arrives one
+// file at a time, but otherwise this is a folder run: $isdirrun is true and
+// the KB and its changes carry over from one input to the next, so an
+// analyzer resets on $isfirstfile and wraps up on $islastfile as it would for
+// a folder.
+//
+// $islastfile has to be set before the last input runs, but only the line
+// after it (blank or EOF) says it was last. So the stream holds one input
+// back: each is analyzed once the following line has been read.
+int NLP_ENGINE::analyzeStream(
+    _TCHAR *analyzer,
+    std::istream &in,
+    _TCHAR *outdir,
+	bool develop,
+	bool silent,
+    bool compiled
+	)
+{
+    if (NLP_ENGINE::init(analyzer,develop,silent,false,compiled,false,false) < 0)
+        return -1;
+
+    if (!m_nlp)  // defensive: never analyze without a live analyzer object.
+        return -1;
+
+    std::filesystem::path fname(analyzer);
+    fname /= _T("logs");
+    fname /= _T("file.log");
+    std::_t_ofstream *fp = new std::_t_ofstream(fname.string(), std::ios::out);
+    m_nlp->setIsDirRun(true);
+    m_nlp->setIsLastFile(false);
+    m_nlp->setIsFirstFile(true);
+    m_nlp->setFinteractive(true);
+
+    const char *space = " \t\r\n";
+    std::string line, held;
+    long count = 0;
+    while (std::getline(in, line)) {
+        size_t beg = line.find_first_not_of(space);
+        if (beg == std::string::npos)
+            break;  // A blank line ends the stream, like EOF.
+        line = line.substr(beg, line.find_last_not_of(space) - beg + 1);
+
+        // Resolve the same way analyzeFile() will, but here, so a bad path is
+        // reported and skipped instead of taking the $islastfile slot.
+        std::filesystem::path p(line);
+        if (!std::filesystem::is_regular_file(p))
+            p = std::filesystem::path(m_anadir) / _T("input") / line;
+        if (!std::filesystem::is_regular_file(p)) {
+            std::_t_cerr << _T("[stream: no such input file: ") << line << _T("]") << std::endl;
+            continue;
+        }
+
+        if (!held.empty()) {
+            analyzeFile(held, outdir, fp);
+            ++count;
+        }
+        held = p.string();  // Resolved, so <file>_log lands beside the input.
+    }
+    if (!held.empty()) {
+        m_nlp->setIsLastFile(true);
+        analyzeFile(held, outdir, fp);
+        ++count;
+    }
+
+    delete fp;
+    std::_t_cerr << _T("[stream: analyzed ") << count << _T(" input(s)]") << std::endl;
+    return 0;
+}
+
+// Analyze one input file of a folder run or stream with the analyzer that
+// init() loaded. The caller sets $isfirstfile/$islastfile beforehand.
+void NLP_ENGINE::analyzeFile(
+    const std::string &file,
+    _TCHAR *outdir,
+    std::_t_ofstream *fp
+	)
+{
+    std::string s = file;
+    std::string filepath = s.substr(s.find("input")+6,s.length()-1);
+    *fp << _T("File=") << filepath << std::endl;
+
+    if (std::filesystem::exists(file))
+        _stprintf(m_infile, _T("%s"),file.c_str());
+    else
+        _stprintf(m_infile, _T("%s%sinput%s%s"),m_anadir,DIR_STR,DIR_STR,file.c_str());
+    std::_t_cerr << _T("[infile path: ") << m_infile << _T("]") << std::endl;
+
+    _stprintf(m_outfile, _T("%s%soutfile.txt"),m_anadir,DIR_STR);
+    std::_t_cerr << _T("[outfile path: ") << m_outfile << _T("]") << std::endl;
+
+    bool create = true;
+    if (outdir) {
+        if (std::filesystem::is_directory(outdir)) {
+            _stprintf(m_outdir, _T("%s"), outdir);
+            create = false;
+        }
+    }
+    if (!m_silent && create) {
+        _stprintf(m_outdir, _T("%s_log"),file.c_str());
+        NLP_ENGINE::createDir(m_outdir);
+        // Start each run with an empty <file>_log. The engine rewrites its own
+        // logs and trees, but an analyzer's "file" << ... output opens for
+        // append, so a second run left two copies in out.txt, two JSON
+        // documents in one .json file, and so on. Only files go, and only in
+        // the folder the engine made itself: a caller-supplied outdir is
+        // never touched, nor are subfolders an analyzer may keep there.
+        NLP_ENGINE::clearDirFiles(m_outdir);
+    }
+    std::_t_cerr << _T("[outdir path: ") << m_outdir << _T("]") << std::endl;
+
+    // Write missing-words.log into this file's output "*_log" folder.
+    if (m_cg)
+        m_cg->setMissingLogDir(m_outdir);
+
+    // The analyzer's cout() writes to standard output.
+
+    // Testing output to buffer.
+    _TCHAR obuf[MAXSTR];
+
+    m_nlp->analyze(m_infile, m_outfile, m_anadir, m_develop,
+        m_silent,        // Debug/log output files.                  // 06/16/02 AM.
+        m_outdir,             // Outdir.
+        0,           // Input buffer.
+        0,        // Length of input buffer, or 0.
+        m_compiled,      // If running compiled analyzer.
+        &std::_t_cout,	   // Stream for cout() in NLP++
+        obuf,       // 05/11/02 AM.
+        MAXSTR	   // 05/11/02 AM.
+        );
+
+    // A caller reading a stream's cout() output needs each input's share now,
+    // not when the process exits.
+    std::_t_cout.flush();
+
+    m_nlp->setIsFirstFile(false);
 }
 
 int NLP_ENGINE::analyze(

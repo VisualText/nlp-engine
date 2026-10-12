@@ -142,10 +142,22 @@ public:
         bool compileAna=false
     );
 
+    // Load once, then analyze one input file per line of `in` until a blank
+    // line or EOF. KB state carries over between inputs as in a folder run.
+    int analyzeStream(
+        _TCHAR *analyzer,
+        std::istream &in,
+        _TCHAR *outdir=NULL,
+        bool develop=false,
+        bool silent=false,
+        bool compiled=false
+    );
+
     int close();
     int close(_TCHAR *analyzer);
 
 private:
+    void analyzeFile(const std::string &file, _TCHAR *outdir, std::_t_ofstream *fp);
     int createDir(_TCHAR *dirPath);
     int clearDirFiles(_TCHAR *dirPath);
     int readFiles(_TCHAR *directoryPath);
