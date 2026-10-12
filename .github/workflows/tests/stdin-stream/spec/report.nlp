@@ -1,0 +1,30 @@
+###############################################
+# FILE:     report.nlp
+# SUBJ:     Regression for nlp -STDIN (#548): load once, then analyze one
+#           input file per stdin line.
+# NOTE:     A stream is a folder run whose files arrive one at a time, so the
+#           KB carries over between inputs. The counter lives in the KB to
+#           prove it: it climbs 1,2,3 only if the analyzer was loaded once and
+#           its KB kept. $islastfile must be true on the last input even
+#           though it is only known once the blank line or EOF after it is read.
+#
+#           Expected stdout for "a.txt b.txt c.txt":
+#               first=1 last=0 dir=1 n=1
+#               first=0 last=0 dir=1 n=2
+#               first=0 last=1 dir=1 n=3
+###############################################
+
+@CODE
+
+L("con") = getconcept(findroot(),"streamcount");
+if (G("$isfirstfile"))
+    replaceval(L("con"),"n",0);
+L("n") = numval(L("con"),"n") + 1;
+replaceval(L("con"),"n",L("n"));
+
+cout() << "first=" << str(G("$isfirstfile"))
+    << " last=" << str(G("$islastfile"))
+    << " dir=" << str(G("$isdirrun"))
+    << " n=" << str(L("n")) << "\n";
+
+@@CODE

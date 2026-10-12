@@ -15,9 +15,9 @@ All rights reserved.
 #include "lite/nlp_engine.h"
 #include "version.h"
 
-#define NLP_ENGINE_VERSION "4.2.5"
+#define NLP_ENGINE_VERSION "4.2.6"
 
-bool cmdReadArgs(int, _TCHAR *argv[], _TCHAR *&, _TCHAR *&, _TCHAR *&, _TCHAR *&, bool &, bool &, bool &, bool &, bool &, bool &, int &);
+bool cmdReadArgs(int, _TCHAR *argv[], _TCHAR *&, _TCHAR *&, _TCHAR *&, _TCHAR *&, bool &, bool &, bool &, bool &, bool &, bool &, int &, bool &);
 void cmdHelpargs(_TCHAR *);
 
 #include "lite/nlpdebug.h"
@@ -45,13 +45,14 @@ int _tmain(
 	bool compileKB = false; // Compile only the KB to C++.
 	bool compileAna = false; // Compile only the analyzer to C++.
 	int debugPort = 0;       // -debug <port>: rule-level debug server. 0 = off.
+	bool stream = false;     // -STDIN: read input file paths from stdin.
 
 	/////////////////////////////////////////////////
 	// GET APP INFORMATION
 	/////////////////////////////////////////////////
 
 	// Get analyzer name, input and output filenames from command line.
-	if (!cmdReadArgs(argc, argv, analyzerpath, input, output, workdir, develop, compile, compiled, silent, compileKB, compileAna, debugPort))
+	if (!cmdReadArgs(argc, argv, analyzerpath, input, output, workdir, develop, compile, compiled, silent, compileKB, compileAna, debugPort, stream))
 		exit(1);
 
 	// Rule-level debugger. Blocks until a client attaches, so it is only started
@@ -86,6 +87,11 @@ int _tmain(
 		nlpEngine->init(analyzerpath, develop, silent, compile, compiled, compileKB, compileAna);
 		std::_t_cout << _T("[Analyzer compile complete.]") << std::endl;
 	}
+	else if (stream)
+	{
+		// Load once, then analyze each input file path read from stdin (#548).
+		nlpEngine->analyzeStream(analyzerpath, std::cin, output, develop, silent, compiled);
+	}
 	else
 	{
 		nlpEngine->analyze(analyzerpath, input, output, develop, silent, compile, compiled, compileKB, compileAna);
@@ -116,7 +122,8 @@ bool cmdReadArgs(
 	bool &silent,	   // true == only output files specified by analyzer.
 	bool &compileKB,   // true - compile only the KB to C++.
 	bool &compileAna,  // true - compile only the analyzer to C++.
-	int &debugPort	   // -debug <port>: rule-level debug server. 0 = off.
+	int &debugPort,	   // -debug <port>: rule-level debug server. 0 = off.
+	bool &stream	   // -STDIN: read input file paths from stdin.
 )
 {
 	_TCHAR *ptr;
@@ -139,6 +146,7 @@ bool cmdReadArgs(
 	compileKB = false; // Don't compile KB-only by default.
 	compileAna = false; // Don't compile analyzer-only by default.
 	debugPort = 0;	  // No debug server unless -debug <port> is given.
+	stream = false;	  // Inputs come from the command line by default.
 
 	for (--argc, parg = &(argv[1]); argc > 0; --argc, ++parg)
 	{
@@ -248,6 +256,10 @@ bool cmdReadArgs(
 			{
 				compileAna = true;
 			}
+			else if (!strcmp_i(ptr, _T("stdin"))) // Read input file paths from stdin.
+			{
+				stream = true;
+			}
 		}
 		else if (flag) // Expected an argument value.
 		{
@@ -328,6 +340,12 @@ bool cmdReadArgs(
 		}
 		ptrPrev = ptr;
 	}
+	if (stream && input)
+	{
+		std::_t_cerr << _T("[") << argv[0]
+					 << _T(": -STDIN reads its inputs from stdin; drop the input file argument.]") << std::endl;
+		return false;
+	}
 	return true;
 }
 
@@ -354,6 +372,9 @@ void cmdHelpargs(_TCHAR *name)
 				 << _T("           [-DEV][-SILENT] -DEV generates logs, -SILENT suppresses logs/output files (off by default)") << std::endl
 				 << _T("           [-DEBUG port] wait for a rule debugger on 127.0.0.1:port, then run under it") << std::endl
 				 << _T("           [infile [outfile]] when no -IN or -OUT specified") << std::endl
+				 << _T("           [-STDIN] load once, then analyze one input file path per stdin line;") << std::endl
+				 << _T("                    a blank line or EOF ends the run. Each input is analyzed") << std::endl
+				 << _T("                    when the next line arrives, so $islastfile can be set.") << std::endl
 				 << std::endl
 				 << _T("Directories in the nlp.exe files:") << std::endl
 				 << _T("   data        nlp engine bootstrap grammar") << std::endl

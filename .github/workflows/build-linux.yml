@@ -521,6 +521,37 @@ jobs:
           fi
           echo "[cout] stdout holds only the analyzer's cout() output"
 
+      - name: -STDIN loads once and streams inputs (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # #548: a long-running nlp reads one input file path per stdin
+          # line and analyzes each with the analyzer and KB it loaded once.
+          # It behaves as a folder run whose files arrive one at a time: the
+          # fixture's KB counter climbs 1,2,3 only if the KB carried over,
+          # and $islastfile is set on the last input once EOF is read.
+          FIX=.github/workflows/tests/stdin-stream
+          rm -rf "$FIX/logs" "$FIX"/input/*_log
+          out=$(printf '%s\n' a.txt b.txt c.txt | ./bin/nlp -ANA "$FIX" -WORK ./ -STDIN | tr -d '\r')
+          if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
+          want=$(printf '%s\n' "first=1 last=0 dir=1 n=1" "first=0 last=0 dir=1 n=2" "first=0 last=1 dir=1 n=3")
+          if [ "$out" != "$want" ]; then
+            echo "FAIL(stdin): stdout was:"; echo "$out"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          for f in a b c; do
+            if [ ! -d "$FIX/input/$f.txt_log" ]; then
+              echo "FAIL(stdin): no $f.txt_log beside the input"; exit 1
+            fi
+          done
+          # A blank line ends the stream like EOF; the input before it is last.
+          out=$(printf '%s\n' a.txt b.txt "" c.txt | ./bin/nlp -ANA "$FIX" -WORK ./ -STDIN | tr -d '\r')
+          want=$(printf '%s\n' "first=1 last=0 dir=1 n=1" "first=0 last=1 dir=1 n=2")
+          if [ "$out" != "$want" ]; then
+            echo "FAIL(stdin blank line): stdout was:"; echo "$out"; exit 1
+          fi
+          echo "[stdin] one load, KB carried across inputs, last-file flag set at end of stream"
+
       - name: factorial() up to 20! (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash
