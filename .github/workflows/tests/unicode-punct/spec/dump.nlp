@@ -1,0 +1,15 @@
+###############################################
+# FILE:     dump.nlp
+# SUBJ:     Print the nodes the quotes pass built, one per line.
+###############################################
+
+@CODE
+
+L("n") = pndown(pnroot());
+while (L("n")) {
+    if (strpiece(pnname(L("n")),0,0) == "_")
+        cout() << pnname(L("n")) << "|" << pnvar(L("n"),"$text") << "\n";
+    L("n") = pnnext(L("n"));
+}
+
+@@CODE

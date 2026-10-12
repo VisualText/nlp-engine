@@ -1,0 +1,22 @@
+###############################################
+# FILE:     quotes.nlp
+# SUBJ:     Regression for #467: non-ASCII punctuation in rules.
+# NOTE:     Curly quotes, guillemets and inverted marks are punctuation, but
+#           unlike ASCII punctuation they have no role in rule syntax. The
+#           rule-file grammar never turned them into literals, so every rule
+#           below was a "Syntax error" and the analyzer did not load.
+#           Each form is covered: unescaped, escaped, inside fail=() and
+#           inside match=().
+#
+#           Expected stdout:
+#               _curly|“hi there”
+#               _guil|«oui»
+#               _inv|¿
+###############################################
+
+@NODES _ROOT
+
+@RULES
+_curly <- “ _xWILD [fail=(”)] ” @@
+_guil <- \« _xWILD [fail=(\»)] \» @@
+_inv <- _xWILD [one match=(¿ ¡)] @@

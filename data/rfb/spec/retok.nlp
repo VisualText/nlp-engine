@@ -63,6 +63,14 @@ _cRBRACE [base layer=(_LIT )] <- \\ \} @@
 _cVBAR [base layer=(_LIT )] <- \\ \| @@
 _cTILDE [base layer=(_LIT )] <- \\ \~ @@
 
+# Escaped non-ASCII punctuation, eg a backslash before a curly quote or a
+# guillemet. It needs no escape (BIGTOK
+# makes it a literal anyway), but writing one must not be an error.	# 10/12/26 DD.
+_cUNIPUNCT [base layer=(_LIT )] <- \\ _xPUNCT [except=(
+	\! \" \# \$ \% \& \' \( \) \* \+ \, \- \. \/ \: \; \< \= \> \? \@
+	\[ \\ \] \^ \_ \` \{ \| \} \~
+	)] @@
+
 # Problem is that single backslash and double backslash get reduced to the
 # same thing -- a single backslash.		# 09/23/00 AM.
 # But things like "abc\ndef" need to get retokenized later, to capture \n.

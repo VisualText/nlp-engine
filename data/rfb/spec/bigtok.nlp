@@ -162,6 +162,20 @@ _LIT [base] <- _xALPHA @@
 _LIT [base] <- _xEMOJI @@
 _LIT [base] <- _xCTRL @@    # 10/14/13 AM.
 
+# NON-ASCII PUNCTUATION IS A LITERAL.							# 10/12/26 DD.
+# Unescaped ASCII punctuation is rule syntax (<- @@ [ ] ( ) = , and the rest),
+# so it reaches a literal only through the escapes in RETOK. Non-ASCII
+# punctuation -- curly quotes, guillemets, inverted marks, dashes -- has no
+# syntax role, but nothing turned it into a literal either, so a rule like
+# _q <- (curly open quote) _xWILD (curly close quote) @@ died with
+# "Syntax error" (#467). Accented letters
+# already work unescaped because they are _xALPHA; this makes punctuation
+# behave the same. The except list is all 32 ASCII punctuation characters.
+_LIT [base] <- _xPUNCT [except=(
+	\! \" \# \$ \% \& \' \( \) \* \+ \, \- \. \/ \: \; \< \= \> \? \@
+	\[ \\ \] \^ \_ \` \{ \| \} \~
+	)] @@
+
 # ADDING FLOAT TO GRAMMAR.  # 08/19/01 AM.
 @POST
     rfafloat(1,3)

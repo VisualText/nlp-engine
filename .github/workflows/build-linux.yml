@@ -552,6 +552,25 @@ jobs:
           fi
           echo "[stdin] one load, KB carried across inputs, last-file flag set at end of stream"
 
+      - name: Non-ASCII punctuation in rules (#467) (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # Curly quotes, guillemets and inverted marks have no role in rule
+          # syntax, but the rule-file grammar never made them literals, so a
+          # rule using one was a "Syntax error" and the analyzer did not load.
+          FIX=.github/workflows/tests/unicode-punct
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          out=$(./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" | tr -d '\r')
+          if grep -q "rror" "$FIX/logs/make_ana.log"; then cat "$FIX/logs/make_ana.log"; exit 1; fi
+          want=$(printf '%s\n' "_curly|“hi there”" "_guil|«oui»" "_inv|¿")
+          if [ "$out" != "$want" ]; then
+            echo "FAIL(unicode-punct): stdout was:"; echo "$out"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[unicode-punct] non-ASCII punctuation works as rule literals"
+
       - name: factorial() up to 20! (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash
