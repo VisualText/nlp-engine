@@ -20,6 +20,8 @@ All rights reserved.
 #include "lite/iarg.h"	// 05/14/03 AM.
 #include <map>
 #include <vector>
+#include "unicode/uchar.h"	// u_charType, u_charDigitValue (#209).
+#include "unicode/utf8.h"
 #include "std.h"			// 07/18/00 AM.
 #include "inline.h"		// 05/19/99 AM.
 #include "chars.h"		// 07/18/00 AM.
@@ -508,6 +510,34 @@ return true;
 * NOTE:	atoi doesn't error check.
 *			All strings are unsigned.
 ********************************************/
+
+/********************************************
+* FN:		DIGITS_TO_ASCII
+* SUBJ:	Copy a UTF-8 string with every Unicode decimal digit (general
+*			category Nd: full-width, Arabic-Indic, Devanagari, ...) replaced by
+*			its ASCII digit, so num() reads "１２" as 12 (#209). Everything
+*			else is copied unchanged.					// 10/13/26 DD.
+********************************************/
+
+std::string digits_to_ascii(const _TCHAR *str)
+{
+std::string out;
+if (!str)
+	return out;
+int32_t length = (int32_t)_tcslen(str);
+int32_t i = 0;
+while (i < length)
+	{
+	int32_t start = i;
+	UChar32 c;
+	U8_NEXT(str, i, length, c);
+	if (c >= 0 && u_charType(c) == U_DECIMAL_DIGIT_NUMBER)
+		out += (char)('0' + u_charDigitValue(c));
+	else
+		out.append(str + start, i - start);
+	}
+return out;
+}
 
 bool str_to_long(_TCHAR *str, /*UP*/ long &num)
 {
@@ -2006,6 +2036,24 @@ if (!str || !*str)
 icu::StringPiece sp(str);
 const char *spd = sp.data();
 int32_t length = sp.length();
+
+// Negative positions count from the end, in characters: -1 is the last
+// character, so strpiece(s,1,-1) drops the first one (#264).	// 10/13/26 DD.
+if (start < 0 || end < 0)
+	{
+	long nchars = 0;
+	int32_t k = 0;
+	UChar32 ch;
+	while (k < length)
+		{
+		U8_NEXT(spd, k, length, ch);
+		++nchars;
+		}
+	if (start < 0)
+		start += nchars;
+	if (end < 0)
+		end += nchars;
+	}
 long len = end-start+1;
 
 if (end < start

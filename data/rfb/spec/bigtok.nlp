@@ -119,7 +119,10 @@ _soRULES [base layer=(_startMark)] <- \@ RULES [t] @@
 	rfanonlit(2)
 	single()
 @RULES
-_NONLIT [base] <- \_ _xWILD [s plus match=(_xALPHA _xEMOJI _xNUM)] @@	# 06/11/26 DD. plus + _xNUM: allow digits in names (_B2, _34, _C25g).
+_NONLIT [base] <- \_ _xWILD [s plus match=(_xALPHA _xEMOJI _xNUM \_)] @@	# 06/11/26 DD. plus + _xNUM: allow digits in names (_B2, _34, _C25g).
+# 10/13/26 DD. \_ too: underscores inside a name (_my_node, _phone_num) were
+# a syntax error (#396). An escaped \_ is already a literal (RETOK), so it
+# never joins a name.
 
 @RULES
 _ARROW [base] <- \< \- @@

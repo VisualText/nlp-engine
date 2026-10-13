@@ -249,6 +249,7 @@ _T("rightjustifynum"),
 _T("rmattr"),
 _T("rmattrs"),
 _T("rmattrval"),
+_T("rmchars"),	// 10/13/26 DD.
 _T("rmchild"),
 _T("rmchildren"),
 _T("rmconcept"),

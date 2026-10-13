@@ -1053,6 +1053,9 @@ static bool fnStruniquechars(
 	// Utility function.
 	static Dlist<Iarg> *unpackdirs(_TCHAR *, Parse *);				// 10/20/00 AM.
 	static Dlist<Iarg> *split_util(_TCHAR*,_TCHAR*,Parse*);			// 03/14/03 AM.
+	static Dlist<Iarg> *explode_util(_TCHAR*,Parse*);					// 10/13/26 DD.
+	static bool fnRmchars(Delt<Iarg>*, Nlppp*, /*UP*/ RFASem*&);		// 10/13/26 DD.
+	static std::string rmchars_util(const _TCHAR*, const _TCHAR*);	// 10/13/26 DD.
 
 #ifdef _ODBC
 	static SQLSMALLINT SeqlTypeFromString(_TCHAR *typeStr);			// 05/29/02 DD.

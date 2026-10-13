@@ -32,6 +32,8 @@ All rights reserved.
 #include "tree.h"				// 07/07/03 AM.
 #include "lite/iarg.h"		// 05/14/03 AM.
 #include "str.h"				// 02/26/01 AM.
+#include "unicode/uchar.h"	// u_toupper (#386).
+#include "unicode/utf8.h"
 #include "io.h"
 #include "node.h"	// 07/07/03 AM.
 #include "parse.h"
@@ -60,6 +62,33 @@ All rights reserved.
 
 // For pretty printing the algorithm name.
 static _TCHAR algo_name[] = _T("dicttok");
+
+// Look up the Capitalized form of a lowercase word ("jumps" -> "Jumps").
+// Single-word lookups try the token as written, then lowercase; a .dict
+// entry written "Jumps" was found only by the exact token "Jumps", never by
+// "JUMPS" or "jumps" (#386). Trying the Capitalized form as a last resort
+// finds it without merging entries that differ only by case.	// 10/13/26 DD.
+static CONCEPT *findCapitalized(CG *cg, const _TCHAR *lc)
+{
+	if (!lc || !*lc)
+		return NULL;
+	int32_t length = (int32_t)_tcslen(lc);
+	int32_t i = 0;
+	UChar32 c;
+	U8_NEXT(lc, i, length, c);
+	if (c < 0 || u_toupper(c) == c)
+		return NULL;					// Nothing to capitalize.
+	_TCHAR buf[MAXSTR];
+	int32_t o = 0;
+	UBool err = false;
+	U8_APPEND((uint8_t *)buf, o, (int32_t)(MAXSTR - 1), u_toupper(c), err);
+	if (err || o + (length - i) >= MAXSTR)
+		return NULL;
+	_tcscpy(&buf[o], &lc[i]);
+	// In memory only: a miss here must not search the *full files or land in
+	// missing-words.log -- this runs for every word the dictionary lacks.
+	return cg->findWordInMemory(buf);
+}
 
 /********************************************
 * FN:		Special Functions for DICTTok class.
@@ -387,6 +416,8 @@ for (; node; node = node->Right())
 	CONCEPT *con = cg_->findWordConcept(name);
 	if (!con)
 		con = cg_->findWordConcept(str_to_lower(name, buf));
+	if (!con)
+		con = findCapitalized(cg_, buf);	// #386.
 	findAttrs(node, con, name, false);
 	}
 }
@@ -865,6 +896,8 @@ void DICTTok::findTokAttrs(Node<Pn> *node, 	Node<Pn> *last, CONCEPT *con, _TCHAR
 	if (!con && lcstr && *lcstr) {
 		con = cg_->findWordConcept(lcstr);
 	}
+	if (!con)
+		con = findCapitalized(cg_, lcstr);	// #386.
 	findAttrs(node, con, str, false);
 }
 

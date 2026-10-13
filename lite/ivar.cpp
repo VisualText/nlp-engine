@@ -928,6 +928,23 @@ switch (vtype)
 			sem = new RFASem((long long)(eana && eana->getFsilent() ? 1 : 0));
 			return true;
 			}
+		if (!strcmp_i(name, _T("os")))			// $OS			// 10/13/26 DD.
+			{
+			// The operating system the engine was built for: "windows",
+			// "linux" or "macos". Lets an analyzer build paths or pick
+			// commands for system() per platform (#168).
+#if defined(_WIN32)
+			_TCHAR *os = _T("windows");
+#elif defined(__APPLE__)
+			_TCHAR *os = _T("macos");
+#else
+			_TCHAR *os = _T("linux");
+#endif
+			_TCHAR *str = 0;
+			nlppp->getParse()->internStr(os, /*UP*/ str);
+			sem = new RFASem(str, RSSTR);
+			return true;
+			}
 		if (!strcmp_i(name, _T("passnum")))		// $PASSNUM		// 10/11/06 AM.
 			{
 			// Pass that current rule is in, if in a rule.

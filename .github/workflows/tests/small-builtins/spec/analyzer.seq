@@ -1,0 +1,4 @@
+dicttok	nil	# dictionary tokenizer: tags words from words.dict
+nlp	builtins
+nlp	names
+nlp	show
