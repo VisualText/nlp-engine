@@ -126,6 +126,68 @@ jobs:
           fi
           echo "[rule debugger] pause points fire and leave the analysis unchanged"
 
+      # INTEL MACS (#231). The steps above built and tested arm64 (Apple
+      # Silicon). Build the same tree for x86_64 too and merge the two with
+      # lipo, so nlpm.exe and the compile libraries are universal binaries:
+      # one asset that runs natively on both, with the same name as before, so
+      # nothing that downloads it has to change.
+      - name: Keep the arm64 build aside
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p universal/arm64
+          cp bin/nlp universal/arm64/nlp
+          cp lib/*.a universal/arm64/
+
+      - name: Install 3rd Party (x86_64)
+        run: ./vcpkg install --triplet x64-osx
+        working-directory: vcpkg
+
+      - name: Build for Intel (x86_64)
+        shell: bash
+        run: |
+          set -euo pipefail
+          cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_BUILD_TYPE=release -B build-x64 -S . \
+            -DCMAKE_TOOLCHAIN_FILE='${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake' \
+            -DVCPKG_TARGET_TRIPLET=x64-osx -DCMAKE_OSX_ARCHITECTURES=x86_64
+          cmake --build build-x64/ --target all
+          mkdir -p universal/x86_64
+          cp bin/nlp universal/x86_64/nlp
+          cp lib/*.a universal/x86_64/
+
+      - name: Test the Intel build under Rosetta
+        shell: bash
+        run: |
+          set -euo pipefail
+          lipo -info universal/x86_64/nlp
+          arch -x86_64 universal/x86_64/nlp --version
+          # Same analyzer, same input, both architectures: output must match.
+          FIX=.github/workflows/tests/dict-kbb
+          for a in arm64 x86_64; do
+            rm -rf "$FIX/logs" "$FIX/input/text.txt_log"; mkdir -p "$FIX/logs"
+            arch -$a universal/$a/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+            cp "$FIX/input/text.txt_log/out.txt" "/tmp/out-$a.txt"
+          done
+          diff /tmp/out-arm64.txt /tmp/out-x86_64.txt
+          echo "[intel] x86_64 build runs and matches arm64"
+
+      - name: Make universal binaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          lipo -create universal/arm64/nlp universal/x86_64/nlp -output bin/nlp
+          for a in universal/arm64/*.a; do
+            n=$(basename "$a")
+            lipo -create "$a" "universal/x86_64/$n" -output "lib/$n"
+          done
+          mkdir -p universal/icu
+          for icu_lib in libicudata.a libicuuc.a libicui18n.a libicutu.a; do
+            lipo -create "vcpkg_installed/arm64-osx/lib/$icu_lib" "vcpkg_installed/x64-osx/lib/$icu_lib" \
+              -output "universal/icu/$icu_lib"
+          done
+          lipo -info bin/nlp
+          lipo -info universal/icu/libicuuc.a
+
       - name: Copy nlp.exe to nlpm.exe
         run: cp bin/nlp bin/nlpm.exe
         shell: bash
@@ -138,24 +200,24 @@ jobs:
           path: bin/nlpm.exe
 
       - name: Copy libicutu.a to libicutum.a
-        run: cp vcpkg_installed/arm64-osx/lib/libicutu.a vcpkg_installed/arm64-osx/lib/libicutum.a
+        run: cp universal/icu/libicutu.a universal/icu/libicutum.a
         shell: bash
 
       - name: Upload libicutum.a
         uses: actions/upload-artifact@v4
         with:
           name: libicutum.a
-          path: vcpkg_installed/arm64-osx/lib/libicutum.a
+          path: universal/icu/libicutum.a
 
       - name: Copy libicuuc.a to libicuucm.a
-        run: cp vcpkg_installed/arm64-osx/lib/libicuuc.a vcpkg_installed/arm64-osx/lib/libicuucm.a
+        run: cp universal/icu/libicuuc.a universal/icu/libicuucm.a
         shell: bash
 
       - name: Upload libicuucm.a
         uses: actions/upload-artifact@v4
         with:
           name: libicuucm.a
-          path: vcpkg_installed/arm64-osx/lib/libicuucm.a
+          path: universal/icu/libicuucm.a
 
       - name: Package compile libraries (prim/kbm/consh/words/lite)
         shell: bash
@@ -169,7 +231,7 @@ jobs:
           for name in prim kbm consh words lite; do
             lib=$(find "$GITHUB_WORKSPACE" -type f -name "lib${name}.a" \
               -not -path "*/vcpkg/*" -not -path "*/vcpkg_installed/*" \
-              -not -path "*/compile-libs/*" | head -n1)
+              -not -path "*/compile-libs/*" -not -path "*/universal/*" | head -n1)
             if [ -z "$lib" ]; then
               echo "Missing required static library: lib${name}.a" >&2
               exit 1
@@ -181,7 +243,7 @@ jobs:
           # data/uc/i18n). Downstream analyzer/KB linking against lite needs
           # i18n for Collator (find_str_nocase).
           for icu_lib in libicudata.a libicuuc.a libicui18n.a; do
-            cp "vcpkg_installed/arm64-osx/lib/$icu_lib" "compile-libs/lib/$icu_lib"
+            cp "universal/icu/$icu_lib" "compile-libs/lib/$icu_lib"
           done
 
           (cd compile-libs && zip -r "$GITHUB_WORKSPACE/nlpengine-compile-libs-macos.zip" .)
