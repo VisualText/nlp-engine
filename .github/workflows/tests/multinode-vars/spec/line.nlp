@@ -1,0 +1,30 @@
+###############################################
+# FILE:     line.nlp
+# SUBJ:     Regression for #435: special variables on a multi-node element.
+# NOTE:     Element 2 is a wildcard that matches several nodes. Only $text
+#           and $length handled such a range, so N("$ostart",2) logged
+#           "Multi-node case not handled", aborted the rule's actions and
+#           stopped the pass -- including the documented workaround
+#           inputrange(N("$ostart",2),N("$oend",2)).
+#
+#           Offsets are byte offsets; the input is a single line so CRLF
+#           checkouts give the same numbers.
+#
+#           Expected stdout:
+#               ostart=5 oend=25 start=0 end=0 exists=1
+#               range=[ CAFÉ AU LAIT — OK]
+#               text=[CAFÉ AU LAIT — OK]
+###############################################
+
+@NODES _ROOT
+
+@POST
+  cout() << "ostart=" << str(N("$ostart",2)) << " oend=" << str(N("$oend",2))
+      << " start=" << str(N("$start",2)) << " end=" << str(N("$end",2))
+      << " exists=" << str(N("$exists",2)) << "\n";
+  cout() << "range=[" << inputrange(N("$ostart",2),N("$oend",2)) << "]\n";
+  cout() << "text=[" << N("$text",2) << "]\n";
+  single();
+
+@RULES
+_line <- _xNUM _xWILD [plus fail=(\n \r)] @@
