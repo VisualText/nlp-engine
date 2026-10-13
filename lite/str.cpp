@@ -2346,6 +2346,7 @@ _TCHAR *spell_candidates(
 	long maxbuf				// Maximum length of buffer.
 	)
 {
+words_load();	// Word list is read on first use (#697).	// 10/13/26 DD.
 *buf = '\0';
 _TCHAR *start = buf;
 long siz = maxbuf;
@@ -2997,6 +2998,7 @@ bool strsuffix(
 	_TCHAR *suffix
 	)
 {
+words_load();	// Word list is read on first use (#697).	// 10/13/26 DD.
 
 if (!word || !*word || !suffix || !*suffix)
 	return false;
@@ -3081,6 +3083,7 @@ _TCHAR *strstem(
 	_TCHAR *word
 	)
 {
+words_load();	// Word list is read on first use (#697).	// 10/13/26 DD.
 if (!word || !*word)
 	return NULL;	// 09/26/19 AM.
 
