@@ -131,6 +131,13 @@ To compile the nlp-engine for Linux:
 * Select a "GCC kit" using the bottom status bar
 * Click on "Build" in the status bar
 
+### Debugging on Linux
+
+* Install gdb: `sudo apt-get install gdb`
+* Build a debug engine: select the **Debug** build variant in the CMake Tools status bar, then **Build**. The executable is `bin/nlp`.
+* Open the **Run and Debug** view and pick **Parse EN-US (linux)** from `.vscode/launch.json`. It runs `bin/nlp` under gdb (`"miDebuggerPath": "/usr/bin/gdb"`) on `analyzers/parse-en-us/input/doj.txt`; change `args` to debug another analyzer or input.
+* To debug from a terminal instead: `gdb --args ./bin/nlp -ANA analyzers/parse-en-us -WORK . analyzers/parse-en-us/input/doj.txt`
+
 ## Windows 10
 
 To compile the nlp-engine for Windows 10:
