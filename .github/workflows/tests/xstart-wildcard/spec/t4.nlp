@@ -1,0 +1,15 @@
+###############################################
+# FILE:     t4.nlp
+# SUBJ:     _xSTART rule: _xSTART one
+# NOTE:     Part of the xstart-wildcard regression (#430, #431). See
+#           analyzer.seq for the list and the CI step for the expected output.
+###############################################
+
+@NODES _ROOT
+
+@POST
+  cout() << "t4 [" << phrasetext() << "]\n";
+  noop();
+
+@RULES
+_xNIL <- _xSTART one @@
