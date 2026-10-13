@@ -1,5 +1,10 @@
 #ifndef NLP_INCLUDE_API_WORDS_WORDARRS_H
 #define NLP_INCLUDE_API_WORDS_WORDARRS_H
+
+// Self-contained: _TCHAR comes from my_tchar.h on Linux and macOS, and
+// WORDS_API from words.h, whatever the including file has seen so far.
+#include "my_tchar.h"
+#include "words/words.h"
 /*******************************************************************************
 All rights reserved.
 ********************************************************************************
