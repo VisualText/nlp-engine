@@ -6,7 +6,6 @@
 #include <fstream>
 #include <iostream>
 #include <iterator>
-#include <mutex>
 #include <string>
 #include <vector>
 
@@ -17,7 +16,6 @@ WORDS_API long word_lengths[MAXWORDLENGTH + 2] = {0};
 WORDS_API _TCHAR **word_arrays[MAXWORDLENGTH + 2] = {0};
 
 static std::string s_path;
-static std::once_flag s_once;
 static bool s_loaded = false;
 static std::vector<char> s_text;					// The file, NUL-separated.
 static std::vector<_TCHAR *> s_slots[MAXWORDLENGTH + 2];	// Backing for word_arrays.
@@ -74,6 +72,10 @@ static void load()
 
 WORDS_API bool words_load()
 {
-	std::call_once(s_once, load);
+	// A function-local static is initialized once and thread-safely. Not
+	// std::call_once: on glibc before 2.34 (Ubuntu 20.04, the manylinux wheel
+	// images) it can throw at run time unless the program links -pthread.
+	static const bool once = (load(), true);
+	(void)once;
 	return s_loaded;
 }
