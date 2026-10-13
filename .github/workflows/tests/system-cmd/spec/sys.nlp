@@ -1,0 +1,23 @@
+###############################################
+# FILE:     sys.nlp
+# SUBJ:     Regression for system() (#546).
+# NOTE:     On Linux and macOS, system() did nothing: run_silent() was a
+#           stub that returned 0 without running the command. It also
+#           returned no value anywhere, so a failing command looked fine.
+#           system() now runs the command and returns 1 if it exited 0,
+#           else 0. Both commands work in cmd.exe and in sh; the CI step
+#           checks for the file the first one writes.
+#
+#           Expected stdout:
+#               system returned 1
+#               failing command returned 0
+###############################################
+
+@CODE
+
+L("rc") = system("echo system-ok> system-cmd.txt");
+cout() << "system returned " << str(L("rc")) << "\n";
+L("rc") = system("exit 3");
+cout() << "failing command returned " << str(L("rc")) << "\n";
+
+@@CODE

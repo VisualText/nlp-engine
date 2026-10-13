@@ -137,8 +137,8 @@ jobs:
           if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
           OUT="$FIX/input/text.txt_log/out.txt"
           TREE="$FIX/input/text.txt_log/final.tree"
-          # nlp exits 0 even when the analyzer fails to build, so assert the
-          # output, not the exit code.
+          # Assert the output too: an analyzer can load with rule errors and still
+          # exit 0, so the exit code alone does not prove the rules worked.
           if [ ! -f "$OUT" ]; then
             echo "FAIL(#698): no out.txt -- the analyzer did not build"; exit 1
           fi
@@ -167,8 +167,8 @@ jobs:
           if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
           OUT="$FIX/input/text.txt_log/out.txt"
           TREE="$FIX/input/text.txt_log/final.tree"
-          # nlp exits 0 even when the analyzer fails to build, so assert the
-          # output, not the exit code.
+          # Assert the output too: an analyzer can load with rule errors and still
+          # exit 0, so the exit code alone does not prove the rules worked.
           if [ ! -f "$OUT" ]; then
             echo "FAIL(block comments): no out.txt -- the analyzer did not build"; exit 1
           fi
@@ -551,6 +551,60 @@ jobs:
             echo "FAIL(pntype): stdout was:"; echo "$out"; echo "wanted:"; echo "$want"; exit 1
           fi
           echo "[pntype] alpha/num/punct/white/emoji tokens and nonleaf nodes"
+
+      - name: Reading .dict and .kbb files (#483)
+        shell: bash
+        run: |
+          set -eo pipefail
+          # Value typing (bare all-digit = number, quoted = string), quoted
+          # values with spaces and commas, unquoted hyphenated values, KBB
+          # hierarchy, and dictionary phrases with their real input $text.
+          FIX=.github/workflows/tests/dict-kbb
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          OUT="$FIX/input/text.txt_log/out.txt"
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' \
+            "zip code=007 type=0 n=42 type=1 note=two words, one comma" \
+            "12011 description=SUSPENSION code=12011 type=0 count=42 type=1" \
+            "11100 description=REG VIOL, GENERALLY sub level=2" \
+            "token walks tag=W" \
+            "phrase New York state=NY kind=city" \
+            "token well-known tag=re-entry")
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(dict-kbb): out.txt was:"; echo "$got"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[dict-kbb] .dict/.kbb values, hierarchy and phrases read as written"
+
+      - name: nlp exits non-zero when the analyzer or input is missing (#484)
+        shell: bash
+        run: |
+          # A missing analyzer used to exit 0, so scripts and CI could not
+          # tell the run had failed.
+          FIX=.github/workflows/tests/stdin-stream
+          if ./bin/Release/nlp.exe -ANA no-such-analyzer -WORK ./ "$FIX/input/a.txt"; then
+            echo "FAIL: missing analyzer exited 0"; exit 1
+          fi
+          if ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./; then
+            echo "FAIL: missing input exited 0"; exit 1
+          fi
+          ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/a.txt" > /dev/null
+          echo "[exit-codes] failures exit 1, a good run exits 0"
+
+      - name: system() runs a shell command (#546)
+        shell: bash
+        run: |
+          set -eo pipefail
+          FIX=.github/workflows/tests/system-cmd
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log" system-cmd.txt
+          out=$(./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" | tr -d '\r')
+          want=$(printf '%s\n' "system returned 1" "failing command returned 0")
+          if [ "$out" != "$want" ]; then echo "FAIL(system): stdout was: $out"; exit 1; fi
+          if [ ! -f system-cmd.txt ] || [ "$(tr -d '\r' < system-cmd.txt)" != "system-ok" ]; then
+            echo "FAIL(system): command did not write system-cmd.txt"; exit 1
+          fi
+          rm -f system-cmd.txt
+          echo "[system] system() ran the command and returned its status"
 
       - name: factorial() up to 20!
         shell: bash

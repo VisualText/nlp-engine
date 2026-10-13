@@ -1,0 +1,49 @@
+###############################################
+# FILE:     check.nlp
+# SUBJ:     Regression for reading .dict and .kbb files (#483).
+# NOTE:     Pins the value-typing rules of kb/user/words.dict and codes.kbb:
+#           a bare all-digit value is a number, a quoted one stays a string
+#           (#385, #439), quoted values keep spaces and commas, a hyphenated
+#           value needs no quotes (#481), KBB indentation builds the concept
+#           hierarchy, and a multi-word .dict entry is a phrase the dicttok
+#           tokenizer finds in the text. Types: 0=string, 1=number.
+#           A phrase node's $text is the input it spans: "New York" and
+#           "well-known", not the rebuilt dictionary entry "new york" or
+#           "well - kno" (fixed with this test).
+#
+#           Expected out.txt:
+#               zip code=007 type=0 n=42 type=1 note=two words, one comma
+#               12011 description=SUSPENSION code=12011 type=0 count=42 type=1
+#               11100 description=REG VIOL, GENERALLY sub level=2
+#               token walks tag=W
+#               phrase New York state=NY kind=city
+#               token well-known tag=re-entry
+###############################################
+
+@CODE
+
+L("w") = dictfindword("zip");
+"out.txt" << "zip code=" << strval(L("w"),"code") << " type=" << str(attrtype(L("w"),"code"))
+    << " n=" << str(numval(L("w"),"n")) << " type=" << str(attrtype(L("w"),"n"))
+    << " note=" << strval(L("w"),"note") << "\n";
+
+L("codes") = findconcept(findroot(),"codes");
+L("c") = findconcept(L("codes"),"12011");
+"out.txt" << "12011 description=" << strval(L("c"),"description")
+    << " code=" << strval(L("c"),"code") << " type=" << str(attrtype(L("c"),"code"))
+    << " count=" << str(numval(L("c"),"count")) << " type=" << str(attrtype(L("c"),"count")) << "\n";
+L("c") = findconcept(L("codes"),"11100");
+"out.txt" << "11100 description=" << strval(L("c"),"description")
+    << " sub level=" << str(numval(findconcept(L("c"),"sub"),"level")) << "\n";
+
+L("n") = pndown(pnroot());
+while (L("n")) {
+    if (pnvar(L("n"),"tag"))
+        "out.txt" << "token " << pnvar(L("n"),"$text") << " tag=" << pnvar(L("n"),"tag") << "\n";
+    if (pnvar(L("n"),"state"))
+        "out.txt" << "phrase " << pnvar(L("n"),"$text") << " state=" << pnvar(L("n"),"state")
+            << " kind=" << pnvar(L("n"),"kind") << "\n";
+    L("n") = pnnext(L("n"));
+}
+
+@@CODE

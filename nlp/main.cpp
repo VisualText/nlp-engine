@@ -15,7 +15,7 @@ All rights reserved.
 #include "lite/nlp_engine.h"
 #include "version.h"
 
-#define NLP_ENGINE_VERSION "4.2.10"
+#define NLP_ENGINE_VERSION "4.2.11"
 
 bool cmdReadArgs(int, _TCHAR *argv[], _TCHAR *&, _TCHAR *&, _TCHAR *&, _TCHAR *&, bool &, bool &, bool &, bool &, bool &, bool &, int &, bool &);
 void cmdHelpargs(_TCHAR *);
@@ -61,6 +61,9 @@ int _tmain(
 	if (debugPort > 0 && !compile && !compileKB && !compileAna)
 		NlpDebug::listen(debugPort);
 
+	// Each mode's result decides the exit status: a missing analyzer or input
+	// used to exit 0, so scripts and CI could not tell it had failed (#484).
+	int rc = 0;
 	NLP_ENGINE *nlpEngine = new NLP_ENGINE(workdir);
 	if (compile)
 	{
@@ -68,37 +71,38 @@ int _tmain(
 		// Analysis is not run; the generated C++ must be compiled externally
 		// (e.g. via the NLP++ language extension) before running with -COMPILED.
 		std::_t_cout << _T("[Compiling analyzer and KB: ") << analyzerpath << _T("]") << std::endl;
-		nlpEngine->init(analyzerpath, develop, silent, compile, compiled, compileKB, compileAna);
-		std::_t_cout << _T("[Compile complete.]") << std::endl;
+		rc = nlpEngine->init(analyzerpath, develop, silent, compile, compiled, compileKB, compileAna);
+		std::_t_cout << (rc < 0 ? _T("[Compile failed.]") : _T("[Compile complete.]")) << std::endl;
 	}
 	else if (compileKB)
 	{
 		// KB-only compile: generate C++ code for the KB.
 		// The analyzer grammar is not loaded.
 		std::_t_cout << _T("[Compiling KB only: ") << analyzerpath << _T("]") << std::endl;
-		nlpEngine->init(analyzerpath, develop, silent, compile, compiled, compileKB, compileAna);
-		std::_t_cout << _T("[KB compile complete.]") << std::endl;
+		rc = nlpEngine->init(analyzerpath, develop, silent, compile, compiled, compileKB, compileAna);
+		std::_t_cout << (rc < 0 ? _T("[KB compile failed.]") : _T("[KB compile complete.]")) << std::endl;
 	}
 	else if (compileAna)
 	{
 		// Analyzer-only compile: generate C++ code for the analyzer rules.
 		// The KB is loaded but not regenerated/recompiled.
 		std::_t_cout << _T("[Compiling analyzer only: ") << analyzerpath << _T("]") << std::endl;
-		nlpEngine->init(analyzerpath, develop, silent, compile, compiled, compileKB, compileAna);
-		std::_t_cout << _T("[Analyzer compile complete.]") << std::endl;
+		rc = nlpEngine->init(analyzerpath, develop, silent, compile, compiled, compileKB, compileAna);
+		std::_t_cout << (rc < 0 ? _T("[Analyzer compile failed.]") : _T("[Analyzer compile complete.]")) << std::endl;
 	}
 	else if (stream)
 	{
 		// Load once, then analyze each input file path read from stdin (#548).
-		nlpEngine->analyzeStream(analyzerpath, std::cin, output, develop, silent, compiled);
+		rc = nlpEngine->analyzeStream(analyzerpath, std::cin, output, develop, silent, compiled);
 	}
 	else
 	{
-		nlpEngine->analyze(analyzerpath, input, output, develop, silent, compile, compiled, compileKB, compileAna);
+		rc = nlpEngine->analyze(analyzerpath, input, output, develop, silent, compile, compiled, compileKB, compileAna);
 	}
 	NlpDebug::runEnd();
 	NlpDebug::shutdown();
 	delete nlpEngine;
+	return rc < 0 ? 1 : 0;
 }
 
 /********************************************

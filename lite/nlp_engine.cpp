@@ -14,11 +14,28 @@ MIT License
 
 #include <filesystem>
 #include <ctime>
+#include <cstdarg>
+#include <cstdio>
 
 #ifdef LINUX
 #include <unistd.h>
 #include <dirent.h>
 #endif
+
+// Bounded formatting into a fixed-size member or static buffer (#486). The
+// paths built here come from caller strings of any length; _stprintf had no
+// bound and could overrun MAXPATH buffers. Returns false if the result did not
+// fit -- the buffer then holds a truncated, terminated string, which callers
+// that build a path treat as an error rather than open the wrong file.
+template <size_t N>
+static bool bprintf(_TCHAR (&buf)[N], const _TCHAR *fmt, ...)
+{
+    va_list ap;
+    va_start(ap, fmt);
+    int n = vsnprintf(buf, N, fmt, ap);
+    va_end(ap);
+    return n >= 0 && (size_t)n < N;
+}
 
 ////////// NLP_INIT /////////////
 // CR:  09/23/20 AM.
@@ -55,11 +72,11 @@ NLP_ENGINE::NLP_ENGINE(
         // deeply-nested project layouts). Bound the copy.
         _stprintf(m_workingFolder, _T("%.*s"), (int)(MAXPATH - 1),
                   workingFolder.c_str());
-        _stprintf(logfile,"%s%s%s",workingFolder.c_str(),DIR_STR,_T("vtrun_logfile.out"));
-        _stprintf(rfbdir,"%s%sdata%srfb%sspec",workingFolder.c_str(),DIR_STR,DIR_STR,DIR_STR);
+        bprintf(logfile,_T("%s%s%s"),workingFolder.c_str(),DIR_STR,_T("vtrun_logfile.out"));
+        bprintf(rfbdir,_T("%s%sdata%srfb%sspec"),workingFolder.c_str(),DIR_STR,DIR_STR,DIR_STR);
     } else {
-        _stprintf(logfile,"%s",_T("vtrun_logfile.out"));
-        _stprintf(rfbdir,"data/rfb/spec");
+        bprintf(logfile,_T("%s"),_T("vtrun_logfile.out"));
+        bprintf(rfbdir,_T("data/rfb/spec"));
     }
     std::_t_cerr << _T("[logfile: ") << logfile << _T("]") << std::endl;
  
@@ -78,6 +95,25 @@ NLP_ENGINE::NLP_ENGINE(
 NLP_ENGINE::~NLP_ENGINE()
 {
     close();    // 09/27/20 AM.
+}
+
+// Folder that holds analyzers/ and data/rfb/spec; init() resolves a bare
+// analyzer name as <folder>/analyzers/<name>. Declared since 2020 but never
+// defined, so calling it failed to link (#485). The runtime manager made by
+// the constructor keeps the rfb folder it was built with; this changes only
+// where later init() calls look for analyzers.			// 10/13/26 DD.
+void NLP_ENGINE::setWorkingFolder(_TCHAR *workingFolder)
+{
+    _TCHAR folder[MAXPATH];
+    if (!bprintf(folder, _T("%s"), workingFolder ? workingFolder : _T("")))
+        {
+        // Keep the old folder: a truncated one would resolve analyzers
+        // somewhere else without saying so.
+        std::_t_cerr << _T("[setWorkingFolder: path too long, not changed: ")
+                     << workingFolder << _T("]") << std::endl;
+        return;
+        }
+    _tcscpy(m_workingFolder, folder);
 }
 
 // Onetime init of NLP_ENGINE and VTRun environment.    // [DEGLOB]	// 10/15/20 AM.
@@ -178,6 +214,8 @@ int NLP_ENGINE::init(
     // Convenience ptr.
     //m_vtrun = VTRun_Ptr;    // [DEGLOB]	// 10/15/20 AM.
 
+    // The analyzer string is borrowed, not owned: it is read during this call
+    // only and m_analyzer is cleared below, so the caller may free it after.
     m_analyzer = analyzer;
     m_develop = develop;
     m_silent = silent;
@@ -186,25 +224,38 @@ int NLP_ENGINE::init(
     m_compileKB = compileKB;
     m_compileAna = compileAna;
 
+    if (!analyzer || !*analyzer) {
+        std::_t_cerr << _T("[Error: no analyzer given.]") << std::endl;
+        return -1;
+    }
+
     struct stat st;
-    char str[MAXPATH] = _T("");
-    _stprintf(m_anadir,_T("%s"),analyzer);
+    if (!bprintf(m_anadir,_T("%s"),analyzer)) {
+        std::_t_cerr << _T("[Error: analyzer path too long: ") << analyzer << _T("]") << std::endl;
+        m_analyzer = 0;
+        return -1;
+    }
 
     if (m_workingFolder[0] != '\0') {
-        strcpy(str,m_analyzer);
-        if (stat(str,&st) != 0) {
-            _stprintf(m_anadir, _T("%s%sanalyzers%s%s"),m_workingFolder,DIR_STR,DIR_STR,m_analyzer);
-            // NLP-ENGINE-521: m_ananame is MAXPATH bytes; m_analyzer is an
+        if (stat(analyzer,&st) != 0) {
+            if (!bprintf(m_anadir, _T("%s%sanalyzers%s%s"),m_workingFolder,DIR_STR,DIR_STR,analyzer)) {
+                std::_t_cerr << _T("[Error: analyzer path too long: ") << analyzer << _T("]") << std::endl;
+                m_analyzer = 0;
+                return -1;
+            }
+            // NLP-ENGINE-521: m_ananame is MAXPATH bytes; the analyzer is an
             // unbounded caller-supplied _TCHAR*. Bound the copy so we can't
             // overflow the stack buffer on long analyzer paths.
-            _stprintf(m_ananame, _T("%.*s"), (int)(MAXPATH - 1), m_analyzer);
+            _stprintf(m_ananame, _T("%.*s"), (int)(MAXPATH - 1), analyzer);
         }
     }
-    
-    strcpy(str,m_anadir);
+    m_analyzer = 0;
+
     if (stat(m_anadir,&st) != 0) {
+        // A failure, not a success: returning 0 here let analyze() go on and
+        // a compile run of a missing analyzer report success (#484).
         std::_t_cerr << _T("[analyzer directory not found: ") << m_anadir << _T("]") << std::endl;
-        return 0;
+        return -1;
     }
     
     if (m_ananame[0] == '\0') {
@@ -218,7 +269,7 @@ int NLP_ENGINE::init(
 	std::_t_cerr << _T("[analyzer directory: ") << m_anadir << _T("]") << std::endl;
     std::_t_cerr << _T("[analyzer name: ") << m_ananame << _T("]") << std::endl; 
 
-    _stprintf(m_rfbdir, _T("%s%cdata%crfb%cspec"),m_workingFolder,DIR_CH,DIR_CH,DIR_CH);
+    bprintf(m_rfbdir, _T("%s%cdata%crfb%cspec"),m_workingFolder,DIR_CH,DIR_CH,DIR_CH);
     std::_t_cerr << _T("[rfb file: ") << m_rfbdir << _T("]") << std::endl;
 
 #ifdef LINUX
@@ -226,19 +277,20 @@ int NLP_ENGINE::init(
 #else
     _TCHAR* tmp = _T(".\\tmp");
 #endif
-    _stprintf(m_logfile, _T("%s%cvisualtext.log"),tmp,DIR_CH);
+    bprintf(m_logfile, _T("%s%cvisualtext.log"),tmp,DIR_CH);
     if (!silent) {
         NLP_ENGINE::createDir(tmp);
         std::_t_cerr << _T("[log file: ") << m_logfile << _T("]") << std::endl;
     }
 
-    _stprintf(m_specdir, _T("%s%sspec"), m_anadir, DIR_STR);
+    // m_anadir fit in MAXPATH*2, and these buffers are larger, so they fit.
+    bprintf(m_specdir, _T("%s%sspec"), m_anadir, DIR_STR);
     std::_t_cerr << _T("[spec directory: ") << m_specdir << _T("]") << std::endl;
 
-    _stprintf(m_seqfile, _T("%s%sanalyzer.seq"),m_specdir,DIR_STR);
+    bprintf(m_seqfile, _T("%s%sanalyzer.seq"),m_specdir,DIR_STR);
     std::_t_cerr << _T("[spec file: ") << m_seqfile << _T("]") << std::endl;
- 
-    _stprintf(m_outdir, _T("%s%s%s"), m_anadir,DIR_STR,_T("output"));
+
+    bprintf(m_outdir, _T("%s%s%s"), m_anadir,DIR_STR,_T("output"));
     if (!silent) {
         NLP_ENGINE::createDir(m_outdir);
         std::_t_cerr << _T("[output directory: ") << m_outdir << _T("]") << std::endl;
@@ -508,28 +560,42 @@ void NLP_ENGINE::analyzeFile(
     std::_t_ofstream *fp
 	)
 {
-    std::string s = file;
-    std::string filepath = s.substr(s.find("input")+6,s.length()-1);
+    // file.log names each file by its path after "input". A path without
+    // "input" used to compute npos+6 -- and substr() threw out_of_range,
+    // aborting the engine, for any path shorter than 5 characters.	// 10/13/26 DD.
+    size_t at = file.find("input");
+    std::string filepath = (at == std::string::npos) ? file : file.substr(at + 6);
     *fp << _T("File=") << filepath << std::endl;
 
+    bool fits;
     if (std::filesystem::exists(file))
-        _stprintf(m_infile, _T("%s"),file.c_str());
+        fits = bprintf(m_infile, _T("%s"),file.c_str());
     else
-        _stprintf(m_infile, _T("%s%sinput%s%s"),m_anadir,DIR_STR,DIR_STR,file.c_str());
+        fits = bprintf(m_infile, _T("%s%sinput%s%s"),m_anadir,DIR_STR,DIR_STR,file.c_str());
+    if (!fits) {
+        std::_t_cerr << _T("[Error: input path too long, skipped: ") << file << _T("]") << std::endl;
+        return;
+    }
     std::_t_cerr << _T("[infile path: ") << m_infile << _T("]") << std::endl;
 
-    _stprintf(m_outfile, _T("%s%soutfile.txt"),m_anadir,DIR_STR);
+    bprintf(m_outfile, _T("%s%soutfile.txt"),m_anadir,DIR_STR);
     std::_t_cerr << _T("[outfile path: ") << m_outfile << _T("]") << std::endl;
 
     bool create = true;
     if (outdir) {
         if (std::filesystem::is_directory(outdir)) {
-            _stprintf(m_outdir, _T("%s"), outdir);
+            if (!bprintf(m_outdir, _T("%s"), outdir)) {
+                std::_t_cerr << _T("[Error: output folder path too long: ") << outdir << _T("]") << std::endl;
+                return;
+            }
             create = false;
         }
     }
     if (!m_silent && create) {
-        _stprintf(m_outdir, _T("%s_log"),file.c_str());
+        if (!bprintf(m_outdir, _T("%s_log"),file.c_str())) {
+            std::_t_cerr << _T("[Error: input path too long, skipped: ") << file << _T("]") << std::endl;
+            return;
+        }
         NLP_ENGINE::createDir(m_outdir);
         // Start each run with an empty <file>_log. The engine rewrites its own
         // logs and trees, but an analyzer's "file" << ... output opens for

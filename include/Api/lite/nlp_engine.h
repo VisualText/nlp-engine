@@ -45,6 +45,11 @@
 * SUBJ:	  API Class for running the NLP engine
 ********************************************/
 
+// String arguments: every _TCHAR* passed to this API is borrowed for the
+// duration of the call. The engine copies what it needs into its own bounded
+// buffers and keeps no pointer to the caller's string, so the caller owns it
+// and may free or reuse it as soon as the call returns. A path too long for
+// those buffers makes the call fail (init() returns -1) rather than truncate.
 class LITE_API NLP_ENGINE
 {
 
@@ -90,6 +95,7 @@ public:
     bool m_compileKB;
     bool m_compileAna;
 
+    // Folder holding analyzers/ (a bare analyzer name resolves there).
     void setWorkingFolder(_TCHAR *workingFolder);
     void zeroInit();
     void zeroAna(); // [DEGLOB]	// 10/15/20 AM.
