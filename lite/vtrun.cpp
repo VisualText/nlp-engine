@@ -15,6 +15,9 @@ All rights reserved.
 
 #include "StdAfx.h"
 #include <time.h>
+#include <filesystem>
+#include "words/words.h"
+#include "words/wordarrs.h"
 #include "machine.h"
 #include "u_out.h"		// 01/19/06 AM.
 #include "lite/lite.h"
@@ -214,6 +217,18 @@ pnodefreelist_ = 0;	// 06/18/10 AM.
 void VTRun::init(_TCHAR *logfile, _TCHAR *rfbspecdir,bool silent)
 {
 logfile_ = logfile;	// 10/29/02 AM.
+
+// The spelling word list ships in the same data folder as the NLP++ grammar:
+// <data>/rfb/spec -> <data>/words/en-words.txt. It is read on first use (#697).
+// 10/13/26 DD.
+if (rfbspecdir && *rfbspecdir)
+	{
+	std::filesystem::path words(rfbspecdir);
+	if (!words.has_filename())
+		words = words.parent_path();		// Tolerate a trailing separator.
+	words = words.parent_path().parent_path() / _T("words") / _T("en-words.txt");
+	words_set_path(words.string().c_str());
+	}
 stab_ = new Stab();
 
 htab_ = (void *) new Htab((Stab *)stab_);

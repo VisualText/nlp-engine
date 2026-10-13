@@ -7697,6 +7697,7 @@ if (!str || !*str)
 	return true;
 
 // Convert to lowercase.													// 09/28/00 AM.
+words_load();	// Word list is read on first use (#697).	// 10/13/26 DD.
 long long len = _tcsclen(str);														// 10/16/00 AM.
 if (len > MAXWORDLENGTH)										// FIX	// 11/13/01 AM.
 	{
@@ -7754,6 +7755,7 @@ bool cap = (is_upper((_TUCHAR)*str) ? true : false);		// 12/16/01 AM.
 // Forget about mix cap!
 
 // Convert to lowercase.													// 09/28/00 AM.
+words_load();	// Word list is read on first use (#697).	// 10/13/26 DD.
 long long len = _tcsclen(str);														// 10/16/00 AM.
 if (len > MAXWORDLENGTH)				// Forget it		// FIX	// 11/13/01 AM.
 	return true;													// FIX	// 11/13/01 AM.

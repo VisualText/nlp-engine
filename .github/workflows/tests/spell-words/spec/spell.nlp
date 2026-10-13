@@ -1,0 +1,27 @@
+###############################################
+# FILE:     spell.nlp
+# SUBJ:     Regression for the spelling word list (#697).
+# NOTE:     spellword, spellcorrect and strspellcandidate used 172,325
+#           English words compiled into the engine (src/words, word1..30).
+#           The list now ships as data/words/en-words.txt and is read on
+#           first use. If the file is not found every word is "misspelled",
+#           so this checks words of several lengths, the longest group (28
+#           letters), a rare word, and a correction. Values match the old
+#           compiled arrays exactly.
+#
+#           Expected stdout:
+#               receive=1 recieve=0 ozocerite=1 long=1
+#               correct recieve=receive teh=teg
+#               candidate=receive
+###############################################
+
+@CODE
+
+cout() << "receive=" << str(spellword("receive"))
+    << " recieve=" << str(spellword("recieve"))
+    << " ozocerite=" << str(spellword("ozocerite"))
+    << " long=" << str(spellword("ethylenediaminetetraacetates")) << "\n";
+cout() << "correct recieve=" << spellcorrect("recieve") << " teh=" << spellcorrect("teh") << "\n";
+cout() << "candidate=" << strspellcandidate("recieve","receive relieve recipe") << "\n";
+
+@@CODE

@@ -692,6 +692,23 @@ jobs:
           rm -f system-cmd.txt
           echo "[system] system() ran the command and returned its status"
 
+      - name: Spelling word list loads from data/words (#697) (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # The 172,325-word list behind spellword/spellcorrect used to be
+          # compiled in; it is now data/words/en-words.txt, read on first use.
+          FIX=.github/workflows/tests/spell-words
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          out=$(./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" | tr -d '\r')
+          want=$(printf '%s\n' "receive=1 recieve=0 ozocerite=1 long=1" "correct recieve=receive teh=teg" "candidate=receive")
+          if [ "$out" != "$want" ]; then
+            echo "FAIL(spell-words): stdout was:"; echo "$out"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[spell-words] word list loaded from data/words"
+
       - name: factorial() up to 20! (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash
