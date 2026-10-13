@@ -1,0 +1,4 @@
+walks pos=verb tag=W
+zip code="007" n=42 note="two words, one comma"
+well-known pos=adj tag=re-entry
+new york state=NY kind=city

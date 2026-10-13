@@ -313,12 +313,13 @@ bool DICTTok::ApplyDictFiles() {
 				// Transfer NL and NOSP to the parent if there are there
 				copyAttrsToSuggested(pn, suggestedN, endNode);
 
-				// Set text to be the entire text of the phrase
-				_TCHAR txt[MAXPATH];
-				sprintf(txt,_T("%s"),text.c_str());
-				sym = internTok(txt, _tcslen(txt), htab_, lcstr);
-				str = sym->getStr();
-				suggestedN->getData()->setText(str);
+				// The phrase's text is the input text it spans: point into the
+				// input buffer at its first token, as every other node does.
+				// It used to point at the matched dictionary entry rebuilt with
+				// spaces between tokens, so $text was lowercased, spaced and cut
+				// to the span's length -- "well-known" read "well - kno" and
+				// "New York" read "new york".					// 10/13/26 DD.
+				suggestedN->getData()->setText(pn->getText());
 
 				findAttrs(suggestedN, con, name, true);
 				node = suggestedN;

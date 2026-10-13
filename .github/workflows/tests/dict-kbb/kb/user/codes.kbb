@@ -1,0 +1,4 @@
+codes
+  12011: description=SUSPENSION, code="12011", count=42
+  11100: description="REG VIOL, GENERALLY"
+    sub: level=2

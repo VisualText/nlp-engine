@@ -20,18 +20,24 @@ int _tmain( // 09/23/20 AM.
    _TCHAR *envp[]
    )
 {
+    // Analyzers from the analyzers/ submodule. "taiparse" was renamed
+    // parse-en-us and "noop" never shipped, so this program used to analyze
+    // two missing analyzers and still print "ok" (#484). The missing one is
+    // now deliberate: it must fail cleanly, not crash or report success.
     _TCHAR anaParse[1001];
-    _TCHAR anaNoop[1001];
+    _TCHAR anaMissing[1001];
     _TCHAR anaCorporate[1001];
     _TCHAR workingFolder[1001];
 
-    _stprintf(anaParse,"%s",_T("taiparse"));
+    _stprintf(anaParse,"%s",_T("parse-en-us"));
     _stprintf(anaCorporate,"%s",_T("corporate"));
-    _stprintf(anaNoop,"%s",_T("noop"));
+    _stprintf(anaMissing,"%s",_T("no-such-analyzer"));
     _stprintf(workingFolder,"%s",_T("./"));
- 
+    int failures = 0;
+
     std::_t_cout << _T("[Create runtime manager.]") << std::endl;
-    GetCurrentDir(workingFolder, FILENAME_MAX);
+    // Bound by the buffer, not FILENAME_MAX (4096 on Linux).
+    GetCurrentDir(workingFolder, sizeof(workingFolder));
     std::string current_working_dir(workingFolder);
     NLP_ENGINE *nlpEngine = new NLP_ENGINE(workingFolder);
 
@@ -78,7 +84,10 @@ int _tmain( // 09/23/20 AM.
     std::ostringstream sso1;
     std::_t_cout << _T("[analyzer: ") << anaParse << _T("]") << std::endl;
     std::_t_cout << _T("[input: ") << ssi1.str() << _T("]") << std::endl;
-    nlpEngine->analyze(anaParse,&ssi1,&sso1);
+    if (nlpEngine->analyze(anaParse,&ssi1,&sso1) < 0) {
+        std::_t_cout << _T("[FAIL: ") << anaParse << _T(" did not run]") << std::endl;
+        ++failures;
+    }
     std::_t_cout << _T("[output: ") << sso1.str() << _T("]") << std::endl;
     std::_t_cout << _T("[end: ") << anaParse << _T("]") << std::endl;
 
@@ -86,17 +95,22 @@ int _tmain( // 09/23/20 AM.
     std::ostringstream sso2;
     std::_t_cout << _T("[analyzer: ") << anaCorporate << _T("]") << std::endl;
     std::_t_cout << _T("[input: ") << ssi2.str() << _T("]") << std::endl;
-    nlpEngine->analyze(anaCorporate,&ssi2,&sso2);
+    if (nlpEngine->analyze(anaCorporate,&ssi2,&sso2) < 0) {
+        std::_t_cout << _T("[FAIL: ") << anaCorporate << _T(" did not run]") << std::endl;
+        ++failures;
+    }
     std::_t_cout << _T("[output: ") << sso2.str() << _T("]") << std::endl;
     std::_t_cout << _T("[end: ") << anaCorporate << _T("]") << std::endl;
 
     std::istringstream ssi3("Strstream test.");
     std::ostringstream sso3;
-    std::_t_cout << _T("[analyzer: ") << anaNoop << _T("]") << std::endl;
-    std::_t_cout << _T("[input: ") << ssi3.str() << _T("]") << std::endl;
-    nlpEngine->analyze(anaNoop,&ssi3,&sso3);
-    std::_t_cout << _T("[output: ") << sso3.str() << _T("]") << std::endl;
-    std::_t_cout << _T("ok") << std::endl;
+    std::_t_cout << _T("[analyzer: ") << anaMissing << _T(" (expected to fail)]") << std::endl;
+    if (nlpEngine->analyze(anaMissing,&ssi3,&sso3) >= 0) {
+        std::_t_cout << _T("[FAIL: a missing analyzer reported success]") << std::endl;
+        ++failures;
+    }
 
     delete nlpEngine;
+    std::_t_cout << (failures ? _T("FAILED") : _T("ok")) << std::endl;
+    return failures ? 1 : 0;
 }

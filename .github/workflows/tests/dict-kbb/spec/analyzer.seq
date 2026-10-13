@@ -1,0 +1,2 @@
+dicttok	nil	# dictionary tokenizer: tags words and phrases from words.dict
+nlp	check

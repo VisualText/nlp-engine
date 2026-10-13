@@ -1,0 +1,18 @@
+###############################################
+# FILE:     sys.nlp
+# SUBJ:     Regression for system() (#546).
+# NOTE:     #546 reported that system("ls > ls.txt") did nothing on Linux.
+#           The command below works in cmd.exe and in sh, so CI runs the same
+#           analyzer on Windows and Linux. The command runs in the engine's
+#           current directory; the CI step checks for the file it writes.
+#
+#           Expected stdout:
+#               system returned 0
+###############################################
+
+@CODE
+
+L("rc") = system("echo system-ok> system-cmd.txt");
+cout() << "system returned " << str(L("rc")) << "\n";
+
+@@CODE
