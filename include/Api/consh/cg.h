@@ -644,6 +644,9 @@ public:
 	// The internal function for the TAKE command or take().
 	bool readFile(_TCHAR *file);
 
+	// Read <path>/hier.kb, or build the base hierarchy when it is missing.
+	bool readHier(_TCHAR *path);
+
 	void prunePhrasesRec(CONCEPT *conc, bool root);					// 08/10/99 AM.
 
 	// Class-wide

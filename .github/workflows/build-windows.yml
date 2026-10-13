@@ -497,6 +497,33 @@ jobs:
           fi
           echo "[unicode-punct] non-ASCII punctuation works as rule literals"
 
+      - name: kb/user without hier.kb starts a new KB
+        shell: bash
+        run: |
+          set -eo pipefail
+          # With no hier.kb, readKB returned before binding the system
+          # concepts and the first attribute add segfaulted; with no kb
+          # folder the engine aborted on a filesystem exception. The fixture
+          # has only words.dict in kb/user; a copy with no kb folder at all
+          # covers the second case.
+          FIX=.github/workflows/tests/empty-kb-user
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          out=$(./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" | tr -d '\r')
+          want=$(printf '%s\n' "n=1" "runs=V über=P 42abc 🔥" "walks: tag=W verb=1")
+          if [ "$out" != "$want" ]; then
+            echo "FAIL(empty-kb-user): stdout was:"; echo "$out"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          NOKB=empty-kb-nofolder
+          rm -rf "$NOKB"; mkdir -p "$NOKB"; cp -r "$FIX/spec" "$FIX/input" "$NOKB/"
+          rm -rf "$NOKB/input/text.txt_log"
+          out=$(./bin/Release/nlp.exe -ANA "$NOKB" -WORK ./ "$NOKB/input/text.txt" | tr -d '\r')
+          out=${out%%$'\n'*}
+          rm -rf "$NOKB"
+          if [ "$out" != "n=1" ]; then
+            echo "FAIL(no kb folder): first line was '$out'"; exit 1
+          fi
+          echo "[empty-kb-user] a missing hier.kb or kb folder starts a new knowledge base"
+
       - name: factorial() up to 20!
         shell: bash
         run: |
