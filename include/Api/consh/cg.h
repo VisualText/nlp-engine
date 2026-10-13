@@ -221,6 +221,8 @@ public:
 
 	// Find dictionary concept for given string.						// 06/29/03 AM.
 	CONCEPT *findWordConcept(_TCHAR*);								// 06/29/03 AM.
+	// Loaded dictionary only: never searches *full files or logs a miss.
+	CONCEPT *findWordInMemory(_TCHAR*);								// 10/13/26 DD.
 
 	CONCEPT *matchDictKB(std::string dictFilename, std::vector<std::filesystem::path> kbfiles);
 	std::string removeExtension(const std::string& filename);

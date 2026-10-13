@@ -1,0 +1,17 @@
+###############################################
+# FILE:     show.nlp
+# SUBJ:     prints dictionary tags (#386) and the _my_node node (#396)
+# NOTE:     Part of the small-builtins regression; expected output is in
+#           the CI step.
+###############################################
+
+@CODE
+L("n") = pndown(pnroot());
+while (L("n")) {
+    if (pnvar(L("n"),"tag"))
+        cout() << "dict " << pnvar(L("n"),"$text") << "=" << pnvar(L("n"),"tag") << "\n";
+    if (pnname(L("n")) == "_my_node")
+        cout() << "name " << pnname(L("n")) << "\n";
+    L("n") = pnnext(L("n"));
+}
+@@CODE

@@ -1372,6 +1372,10 @@ public:
 	static _TCHAR *strwrap(Nlppp*,_TCHAR*,RFASem*);						// 05/07/01 AM.
 	static _TCHAR *strwrap(Nlppp*,RFASem*,RFASem*);					// 05/07/01 AM.
 
+	static _TCHAR *rmchars(Nlppp*,_TCHAR*,_TCHAR*);						// 10/13/26 DD.
+	static _TCHAR *rmchars(Nlppp*,RFASem*,_TCHAR*);						// 10/13/26 DD.
+	static _TCHAR *rmchars(Nlppp*,_TCHAR*,RFASem*);						// 10/13/26 DD.
+	static _TCHAR *rmchars(Nlppp*,RFASem*,RFASem*);						// 10/13/26 DD.
 	static _TCHAR *strsubst(Nlppp*,_TCHAR*,_TCHAR*,_TCHAR*);				// 01/09/01 AM.
 	static _TCHAR *strsubst(Nlppp*,RFASem*,_TCHAR*,_TCHAR*);				// 05/07/01 AM.
 	static _TCHAR *strsubst(Nlppp*,_TCHAR*,RFASem*,_TCHAR*);				// 05/07/01 AM.

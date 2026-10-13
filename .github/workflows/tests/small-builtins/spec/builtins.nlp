@@ -1,0 +1,34 @@
+###############################################
+# FILE:     builtins.nlp
+# SUBJ:     #264 #209 #168 #345 #428 and abs(-5)
+# NOTE:     Part of the small-builtins regression; expected output is in
+#           the CI step.
+###############################################
+
+@CODE
+
+# abs(-5): a negative literal as a function argument used to be a syntax error.
+cout() << "abs=" << str(abs(-5)) << "\n";
+
+# #264: negative strpiece positions count from the end; -1 is the last char.
+cout() << "strpiece=" << strpiece("hello",1,-1) << "," << strpiece("hello",0,-2)
+    << "," << strpiece("héllo",-3,-1) << "\n";
+
+# #209: num() reads Unicode decimal digits (full-width, Arabic-Indic).
+cout() << "num=" << str(num("42")) << "," << str(num("１２")) << "," << str(num("٣")) << "\n";
+
+# #168: G("$os") names the platform.
+L("os") = G("$os");
+if (L("os") == "windows" || L("os") == "linux" || L("os") == "macos")
+    cout() << "os=ok\n";
+else
+    cout() << "os=[" << L("os") << "]\n";
+
+# #345: split with an empty delimiter gives characters (whole code points).
+L("a") = split("hé!","");
+cout() << "split=" << str(arraylength(L("a"))) << ":" << L("a")[0] << L("a")[1] << L("a")[2] << "\n";
+
+# #428: rmchars removes every listed character.
+cout() << "rmchars=" << rmchars("a-b.c,d","-.,") << "," << rmchars("héllo","é") << "\n";
+
+@@CODE

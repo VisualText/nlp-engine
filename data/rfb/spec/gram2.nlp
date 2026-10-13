@@ -178,11 +178,15 @@ _EXPR <-
 		_opCONF	# 12/17/99 AM.
 		_opOUT	# 12/31/99 AM.
 		_RETURN \( \[ \{	# 08/15/08 AM.
+		_FNCALLLIST _VARLIST \,	# Start of, or next, function argument.	# 10/13/26 DD.
 		)]
 	_xWILD [s t one match=( \- \+ )]
 	_xWILD [s one match=( _EXPR _NUM _FLOAT )]
 	_xWILD [s one match=( _xANY _xEND _xEOF ) except=( _opINC _opDEC)]
 	@@
+# The opening paren of a call is already part of _FNCALLLIST or _VARLIST
+# here, and later arguments follow a comma, so "abs(-5)" and
+# "strpiece(s,1,-1)" were syntax errors until those were added above.
 
 ###################################
 # GENERALIZED FUNCTION CALL GRAMMAR.	# 02/16/00 AM.

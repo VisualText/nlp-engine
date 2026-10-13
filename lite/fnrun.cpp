@@ -7923,7 +7923,10 @@ long long Arun::num(
 long long num = 0;
 
 if (str && *str)			// String variant.
-	str_to_long(str, /*UP*/ num);
+	{
+	std::string digits = digits_to_ascii(str);	// Unicode digits too (#209).
+	str_to_long((_TCHAR *)digits.c_str(), /*UP*/ num);
+	}
 return num;
 }
 
@@ -9892,6 +9895,48 @@ return strwrap(nlppp,name,wrap);
 * FORMS:	strsubst(str, oldstr, newstr)
 * NOTE:
 ********************************************/
+
+/********************************************
+* FN:		RMCHARS
+* SUBJ:	Remove a set of characters from a string (#428).
+* FORMS:	rmchars(str, chars_str)		// 10/13/26 DD.
+********************************************/
+
+_TCHAR *Arun::rmchars(Nlppp *nlppp, _TCHAR *str, _TCHAR *chars)
+{
+if (!nlppp || !str || !*str)
+	return 0;
+std::string out = Fn::rmchars_util(str, chars);
+_TCHAR *res = 0;
+nlppp->getParse()->internStr((_TCHAR *)out.c_str(), /*UP*/ res);
+return res;
+}
+
+_TCHAR *Arun::rmchars(Nlppp *nlppp, RFASem *str_sem, _TCHAR *chars)
+{
+if (!str_sem)
+	return 0;
+_TCHAR *str = str_sem->sem_to_str();
+delete str_sem;
+return rmchars(nlppp, str, chars);
+}
+
+_TCHAR *Arun::rmchars(Nlppp *nlppp, _TCHAR *str, RFASem *chars_sem)
+{
+_TCHAR *chars = chars_sem ? chars_sem->sem_to_str() : 0;
+if (chars_sem)
+	delete chars_sem;
+return rmchars(nlppp, str, chars);
+}
+
+_TCHAR *Arun::rmchars(Nlppp *nlppp, RFASem *str_sem, RFASem *chars_sem)
+{
+_TCHAR *chars = chars_sem ? chars_sem->sem_to_str() : 0;
+if (chars_sem)
+	delete chars_sem;
+return rmchars(nlppp, str_sem, chars);
+}
+
 
 _TCHAR *Arun::strsubst(
 	Nlppp *nlppp,
@@ -17587,14 +17632,11 @@ Parse *parse = nlppp->parse_;
 
 if (!buf || !*buf)
 	return 0;	// Given empty buffer is ok.
-if (!chrs || !*chrs)
-	{
-	_stprintf(Errbuf,_T("[split: Empty delimiter string.]"));
-	parse->errOut(true); // UNFIXED
-	return 0;
-	}
 
-Dlist<Iarg> *parts = Fn::split_util(buf, chrs, nlppp->parse_);
+// An empty delimiter splits into single characters (#345).	// 10/13/26 DD.
+Dlist<Iarg> *parts = (!chrs || !*chrs)
+	? Fn::explode_util(buf, nlppp->parse_)
+	: Fn::split_util(buf, chrs, nlppp->parse_);
 
 if (parts)
 	sem = new RFASem(parts);

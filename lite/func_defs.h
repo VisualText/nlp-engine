@@ -252,6 +252,7 @@ enum funcDef
 	FNrmattr,
 	FNrmattrs,
 	FNrmattrval,
+	FNrmchars,		// 10/13/26 DD.
 	FNrmchild,
 	FNrmchildren,
 	FNrmconcept,

@@ -30,6 +30,8 @@ LITE_API _TCHAR to_lower(_TCHAR ch);											// 12/16/01 AM.
 bool str_to_int(_TCHAR *, /*UP*/ int &);
 bool str_to_long(_TCHAR *, /*UP*/ long long &);
 bool str_to_long(_TCHAR *, /*UP*/ long &);
+// Unicode decimal digits (eg full-width, Arabic-Indic) as ASCII digits (#209).
+std::string digits_to_ascii(const _TCHAR *);
 inline int char_to_digit(_TCHAR ch);
 bool all_uppercase(_TCHAR *str);
 bool all_lowercase(_TCHAR *str);										// 01/03/00 AM.

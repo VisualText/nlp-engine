@@ -684,6 +684,8 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnRmchild(args, nlppp, /*UP*/ sem);					// 03/03/00 AM.
 	case FNrmchildren:
 		return fnRmchildren(args, nlppp, /*UP*/ sem);				// 03/03/00 AM.
+	case FNrmchars:
+		return fnRmchars(args, nlppp, /*UP*/ sem);					// 10/13/26 DD.
 	case FNrmconcept:
 		return fnRmconcept(args, nlppp, /*UP*/ sem);					// 03/03/00 AM.
 	case FNrmcphrase:
@@ -7019,8 +7021,12 @@ if (str && *str)			// String variant.
 switch (typ)																	// 05/29/02 AM.
 	{
 	case IASTR:																	// 05/29/02 AM.
-		if (!str_to_long(str, /*UP*/ num))
+		{
+		// Read any Unicode decimal digits as ASCII ones (#209).	// 10/13/26 DD.
+		std::string digits = digits_to_ascii(str);
+		if (!str_to_long((_TCHAR *)digits.c_str(), /*UP*/ num))
 			return false;
+		}
 		break;
 	case IANUM:	// NO OP.													// 05/29/02 AM.
 		break;
@@ -9173,17 +9179,114 @@ if (!Arg::done((DELTS*)args, _T("split"),parse))
 
 if (!buf || !*buf)
 	return true;	// Given empty buffer is ok.
-if (!chrs || !*chrs)
-	{
-	_stprintf(Errbuf,_T("[split: Empty delimiter string.]"));
-	return parse->errOut(true); // UNFIXED
-	}
 
-Dlist<Iarg> *parts = split_util(buf, chrs, nlppp->parse_);
+// An empty delimiter splits into single characters: split("abc","") is
+// a, b, c (#345). It used to be an error.						// 10/13/26 DD.
+Dlist<Iarg> *parts = (!chrs || !*chrs)
+	? explode_util(buf, nlppp->parse_)
+	: split_util(buf, chrs, nlppp->parse_);
 
 if (parts)
 	sem = new RFASem(parts);
 return true;
+}
+
+
+/********************************************
+* FN:		FNRMCHARS
+* SUBJ:	Remove every occurrence of a set of characters from a string (#428).
+* FORMS:	str rmchars(str, chars_str)
+* NOTE:	Characters are whole UTF-8 code points, so "é" in chars_str removes
+*			"é" and nothing else.								// 10/13/26 DD.
+********************************************/
+
+bool Fn::fnRmchars(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+_TCHAR *str = 0;
+_TCHAR *chars = 0;
+if (!Arg::str1(_T("rmchars"), /*UP*/ (DELTS*&)args, str))
+	return false;
+if (!Arg::str1(_T("rmchars"), /*UP*/ (DELTS*&)args, chars))
+	return false;
+if (!Arg::done((DELTS*)args, _T("rmchars"), parse))
+	return false;
+if (!str || !*str)
+	return true;			// Nothing to remove from.
+std::string out = rmchars_util(str, chars);
+_TCHAR *res = 0;
+parse->internStr((_TCHAR *)out.c_str(), /*UP*/ res);
+sem = new RFASem(res, RSSTR);
+return true;
+}
+
+std::string Fn::rmchars_util(const _TCHAR *str, const _TCHAR *chars)
+{
+std::string out;
+if (!str)
+	return out;
+if (!chars || !*chars)
+	return std::string(str);
+int32_t clen = (int32_t)_tcslen(chars);
+int32_t length = (int32_t)_tcslen(str);
+int32_t i = 0;
+while (i < length)
+	{
+	int32_t start = i;
+	UChar32 c;
+	U8_NEXT(str, i, length, c);
+	// Is c one of the characters to remove?
+	bool drop = false;
+	int32_t k = 0;
+	while (k < clen && !drop)
+		{
+		UChar32 d;
+		U8_NEXT(chars, k, clen, d);
+		drop = (d == c);
+		}
+	if (!drop)
+		out.append(str + start, i - start);
+	}
+return out;
+}
+
+
+/********************************************
+* FN:		EXPLODE_UTIL
+* SUBJ:	Split a string into its characters (whole UTF-8 code points, so
+*			an accented letter or emoji stays one element). #345.
+* NOTE:	Same list shape as split_util: interned strings.	// 10/13/26 DD.
+********************************************/
+
+Dlist<Iarg> *Fn::explode_util(_TCHAR *fullstr, Parse *parse)
+{
+if (!fullstr || !*fullstr)
+	return 0;
+Dlist<Iarg> *list = new Dlist<Iarg>();
+int32_t length = (int32_t)_tcslen(fullstr);
+int32_t i = 0;
+_TCHAR one[8];
+while (i < length)
+	{
+	int32_t start = i;
+	UChar32 c;
+	U8_NEXT(fullstr, i, length, c);
+	int32_t n = i - start;
+	if (n <= 0 || n >= (int32_t)(sizeof(one)/sizeof(one[0])))
+		break;
+	memcpy(one, &fullstr[start], n);	// Bytes of one UTF-8 code point.
+	one[n] = '\0';
+	_TCHAR *str = 0;
+	parse->internStr(one, /*UP*/ str);
+	list->rpush(new Iarg(str));
+	}
+return list;
 }
 
 

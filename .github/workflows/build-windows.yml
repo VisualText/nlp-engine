@@ -612,6 +612,22 @@ jobs:
           expect 0 --help
           echo "[args] bad arguments exit 1, --version/--help exit 0, no crash"
 
+      - name: Small builtin and grammar fixes (#264 #209 #168 #396 #386 #345 #428)
+        shell: bash
+        run: |
+          set -eo pipefail
+          # abs(-5) and negative function arguments, negative strpiece
+          # positions, num() on Unicode digits, $os, split into characters,
+          # rmchars, underscores in node names, Capitalized dictionary entries.
+          FIX=.github/workflows/tests/small-builtins
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          out=$(./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" | tr -d '\r')
+          want=$(printf '%s\n' "abs=5" "strpiece=ello,hell,llo" "num=42,12,3" "os=ok" "split=3:hé!" "rmchars=abcd,hllo" "dict JUMPS=J" "dict jumps=J" "dict Jumps=J" "name _my_node")
+          if [ "$out" != "$want" ]; then
+            echo "FAIL(small-builtins): stdout was:"; echo "$out"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[small-builtins] all checks pass"
+
       - name: system() runs a shell command (#546)
         shell: bash
         run: |

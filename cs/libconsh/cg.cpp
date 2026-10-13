@@ -3581,6 +3581,11 @@ return true;
 * NOTE:	06/29/03 AM. Renamed this from getwordconcept.
 ********************************************/
 
+CONCEPT *CG::findWordInMemory(_TCHAR *str)
+{
+return kbm_->dict_find_word(str);
+}
+
 CONCEPT *CG::findWordConcept(_TCHAR *str)
 {
 CONCEPT *word = kbm_->dict_find_word(str);

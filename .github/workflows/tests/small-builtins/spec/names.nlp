@@ -1,0 +1,11 @@
+###############################################
+# FILE:     names.nlp
+# SUBJ:     #396 underscores inside nonliteral names
+# NOTE:     Part of the small-builtins regression; expected output is in
+#           the CI step.
+###############################################
+
+@NODES _ROOT
+
+@RULES
+_my_node <- node @@
