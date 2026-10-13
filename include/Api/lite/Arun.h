@@ -1285,6 +1285,8 @@ public:
 
 	static _TCHAR *pnname(Nlppp*,NODE*);									// 01/08/01 AM.
 	static _TCHAR *pnname(Nlppp*,RFASem*);								// 04/29/01 AM.
+	static _TCHAR *pntype(Nlppp*,NODE*);									// 10/12/26 DD.
+	static _TCHAR *pntype(Nlppp*,RFASem*);								// 10/12/26 DD.
 
 	static RFASem *pnroot(Nlppp*);										// 01/08/01 AM.
 

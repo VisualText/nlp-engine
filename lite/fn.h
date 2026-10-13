@@ -837,6 +837,7 @@ static bool fnStruniquechars(
 		/*UP*/
 		RFASem* &sem
 		);
+	static bool fnPntype(Delt<Iarg>*, Nlppp*, /*UP*/ RFASem*&);		// 10/12/26 DD.
 	static bool fnPnname(													// 10/18/00 AM.
 		Delt<Iarg> *args,
 		Nlppp *nlppp,

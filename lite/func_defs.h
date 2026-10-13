@@ -180,6 +180,7 @@ enum funcDef
 	FNpnrpushval,	// 12/12/14 AM.
 	FNpnsetfired,
 	FNpnsingletdown,
+	FNpntype,		// 10/12/26 DD.
 	FNpnup,
 	FNpnvar,
 	FNpnvarnames,	// 05/13/02 AM.
