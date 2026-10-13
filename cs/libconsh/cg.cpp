@@ -697,7 +697,7 @@ if (!kbLoaded) {
 
 		// WORD.KB, PHR.KB and ATTR.KB hold what was saved from an earlier
 		// KB; a new one has none, so a missing file is not an error.	// 10/12/26 DD.
-		_TCHAR *rest[] = {_T("word"), _T("phr"), _T("attr")};
+		const _TCHAR *rest[] = {_T("word"), _T("phr"), _T("attr")};
 		for (int i = 0; i < 3; ++i)
 			{
 			_stprintf(infile, _T("%s%c%s.%s"), path, DIR_CH, rest[i], suff);
@@ -3518,47 +3518,52 @@ if (f_exists(infile))
 
 *cgerr << _T("[readKB: No hier.kb in ") << path
 		 << _T(". Starting a new knowledge base.]") << std::endl;
-std::_t_istringstream base(
-	_T("add empty\n")
-	_T("add root\n")
-	_T("add hier \"concept\" \"gram\"\n")
-	_T("add hier \"concept\" \"sys\"\n")
-	_T("add hier \"concept\" \"sys\" \"attrs\"\n")
-	_T("add hier \"concept\" \"sys\" \"attrs\" \"proxy\"\n")
-	_T("add hier \"concept\" \"sys\" \"attrs\" \"proxy\" \"atom\"\n")
-	_T("add hier \"concept\" \"sys\" \"attrs\" \"pproxy\"\n")
-	_T("add hier \"concept\" \"sys\" \"attrs\" \"pproxy\" \"phrase\"\n")
-	_T("add hier \"concept\" \"sys\" \"attrs\" \"common\"\n")
-	_T("add hier \"concept\" \"sys\" \"attrs\" \"common\" \"var\"\n")
-	_T("add hier \"concept\" \"sys\" \"attrs\" \"rule_elt\"\n")
-	_T("add hier \"concept\" \"sys\" \"vals\"\n")
-	_T("add hier \"concept\" \"sys\" \"vals\" \"boolean\"\n")
-	_T("add hier \"concept\" \"sys\" \"vals\" \"boolean\" \"false\"\n")
-	_T("add hier \"concept\" \"sys\" \"vals\" \"boolean\" \"true\"\n")
-	_T("add hier \"concept\" \"sys\" \"nlp\"\n")
-	_T("add hier \"concept\" \"sys\" \"nlp\" \"wht\"\n")
-	_T("add hier \"concept\" \"sys\" \"nlp\" \"punct\"\n")
-	_T("add hier \"concept\" \"sys\" \"nlp\" \"ctrl\"\n")
-	_T("add hier \"concept\" \"sys\" \"nlp\" \"lex\"\n")
-	_T("add hier \"concept\" \"sys\" \"nlp\" \"lex\" \"slot\"\n")
-	_T("add hier \"concept\" \"sys\" \"nlp\" \"lex\" \"slot\" \"cases\"\n")
-	_T("add hier \"concept\" \"sys\" \"mean\"\n")
-	_T("add hier \"concept\" \"sys\" \"mean\" \"slot\"\n")
-	_T("add hier \"concept\" \"sys\" \"mean\" \"slot\" \"case\"\n")
-	_T("add hier \"concept\" \"sys\" \"mean\" \"slot\" \"case\" \"cap\"\n")
-	_T("add hier \"concept\" \"sys\" \"mean\" \"slot\" \"case\" \"allcap\"\n")
-	_T("add hier \"concept\" \"sys\" \"mean\" \"slot\" \"case\" \"mixed\"\n")
-	_T("add hier \"concept\" \"sys\" \"mean\" \"slot\" \"mixed\"\n")
-	_T("add hier \"concept\" \"sys\" \"dict\"\n")
-	_T("add hier \"concept\" \"sys\" \"dict\" \"a\"\n")
-	_T("add hier \"concept\" \"sys\" \"dict\" \"0\"\n")
-	_T("add hier \"concept\" \"sys\" \"dict\" \"emoji\"\n")
-	_T("add hier \"concept\" \"sys\" \"dict\" \"ctrl\"\n")
-	_T("add hier \"concept\" \"sys\" \"dict\" \"pnct\"\n")
-	_T("add hier \"concept\" \"sys\" \"dict\" \"unknown\"\n")
-	_T("add hier \"concept\" \"sys\" \"dict\" \"wht\"\n")
-	_T("quit\n")
-	);
+// One command per entry. Kept as separate literals: on Linux and macOS
+// _T(x) expands to (x), so adjacent _T("...") _T("...") is not a string.
+static const _TCHAR *baseHier[] = {
+	_T("add empty"),
+	_T("add root"),
+	_T("add hier \"concept\" \"gram\""),
+	_T("add hier \"concept\" \"sys\""),
+	_T("add hier \"concept\" \"sys\" \"attrs\""),
+	_T("add hier \"concept\" \"sys\" \"attrs\" \"proxy\""),
+	_T("add hier \"concept\" \"sys\" \"attrs\" \"proxy\" \"atom\""),
+	_T("add hier \"concept\" \"sys\" \"attrs\" \"pproxy\""),
+	_T("add hier \"concept\" \"sys\" \"attrs\" \"pproxy\" \"phrase\""),
+	_T("add hier \"concept\" \"sys\" \"attrs\" \"common\""),
+	_T("add hier \"concept\" \"sys\" \"attrs\" \"common\" \"var\""),
+	_T("add hier \"concept\" \"sys\" \"attrs\" \"rule_elt\""),
+	_T("add hier \"concept\" \"sys\" \"vals\""),
+	_T("add hier \"concept\" \"sys\" \"vals\" \"boolean\""),
+	_T("add hier \"concept\" \"sys\" \"vals\" \"boolean\" \"false\""),
+	_T("add hier \"concept\" \"sys\" \"vals\" \"boolean\" \"true\""),
+	_T("add hier \"concept\" \"sys\" \"nlp\""),
+	_T("add hier \"concept\" \"sys\" \"nlp\" \"wht\""),
+	_T("add hier \"concept\" \"sys\" \"nlp\" \"punct\""),
+	_T("add hier \"concept\" \"sys\" \"nlp\" \"ctrl\""),
+	_T("add hier \"concept\" \"sys\" \"nlp\" \"lex\""),
+	_T("add hier \"concept\" \"sys\" \"nlp\" \"lex\" \"slot\""),
+	_T("add hier \"concept\" \"sys\" \"nlp\" \"lex\" \"slot\" \"cases\""),
+	_T("add hier \"concept\" \"sys\" \"mean\""),
+	_T("add hier \"concept\" \"sys\" \"mean\" \"slot\""),
+	_T("add hier \"concept\" \"sys\" \"mean\" \"slot\" \"case\""),
+	_T("add hier \"concept\" \"sys\" \"mean\" \"slot\" \"case\" \"cap\""),
+	_T("add hier \"concept\" \"sys\" \"mean\" \"slot\" \"case\" \"allcap\""),
+	_T("add hier \"concept\" \"sys\" \"mean\" \"slot\" \"case\" \"mixed\""),
+	_T("add hier \"concept\" \"sys\" \"mean\" \"slot\" \"mixed\""),
+	_T("add hier \"concept\" \"sys\" \"dict\""),
+	_T("add hier \"concept\" \"sys\" \"dict\" \"a\""),
+	_T("add hier \"concept\" \"sys\" \"dict\" \"0\""),
+	_T("add hier \"concept\" \"sys\" \"dict\" \"emoji\""),
+	_T("add hier \"concept\" \"sys\" \"dict\" \"ctrl\""),
+	_T("add hier \"concept\" \"sys\" \"dict\" \"pnct\""),
+	_T("add hier \"concept\" \"sys\" \"dict\" \"unknown\""),
+	_T("add hier \"concept\" \"sys\" \"dict\" \"wht\""),
+	_T("quit")
+	};
+std::_t_stringstream base;
+for (size_t i = 0; i < sizeof(baseHier)/sizeof(baseHier[0]); ++i)
+	base << baseHier[i] << std::endl;
 if (!cmd_top(&base, cgerr, _T("> "), false,this,true))
 	{
 	*cgerr << _T("[readHier: Error building the base hierarchy.]") << std::endl;
