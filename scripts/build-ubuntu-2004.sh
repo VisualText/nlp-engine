@@ -75,7 +75,7 @@ mkdir -p icu-libs
 cp /usr/lib/x86_64-linux-gnu/libicu*.so.66* ./icu-libs/
 zip -r icu-libs.zip icu-libs
 ./bin/nlp --version || true
-./bin/nlp -ANA ./analyzers/parse-en-us -WORK ./ ./analyzers/parse-en-us/input/doj.txt -LOG rfb-logs -DEV || true
+./bin/nlp -ANA ./analyzers/parse-en-us -WORK ./ ./analyzers/parse-en-us/input/doj.txt -DEV || true
 
 echo "Packaging compile libraries..."
 rm -rf compile-libs

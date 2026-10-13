@@ -15,7 +15,7 @@ All rights reserved.
 #include "lite/nlp_engine.h"
 #include "version.h"
 
-#define NLP_ENGINE_VERSION "4.2.13"
+#define NLP_ENGINE_VERSION "4.2.14"
 
 bool cmdReadArgs(int, _TCHAR *argv[], _TCHAR *&, _TCHAR *&, _TCHAR *&, _TCHAR *&, bool &, bool &, bool &, bool &, bool &, bool &, int &, bool &);
 void cmdHelpargs(_TCHAR *);
@@ -64,7 +64,9 @@ int _tmain(
 	// Each mode's result decides the exit status: a missing analyzer or input
 	// used to exit 0, so scripts and CI could not tell it had failed (#484).
 	int rc = 0;
-	NLP_ENGINE *nlpEngine = new NLP_ENGINE(workdir);
+	// No -WORK means the current folder. Passing the null pointer on to the
+	// std::string parameter was undefined behavior and crashed (#347).	// 10/13/26 DD.
+	NLP_ENGINE *nlpEngine = new NLP_ENGINE(workdir ? workdir : _T(""));
 	if (compile)
 	{
 		// Compile mode: generate C++ code for the analyzer and KB.
@@ -158,7 +160,10 @@ bool cmdReadArgs(
 		//*gout << "command arg=" << *parg << std::endl;
 		ptr = *parg;
 
-		if ((ptr[0] == '"' && ptr[strlen(ptr) - 1] == '"') || (ptr[0] == '\'' && ptr[strlen(ptr) - 1] == '\''))
+		// Strip one pair of surrounding quotes. Needs two characters: an empty
+		// argument ("") used to read ptr[-1].					// 10/13/26 DD.
+		if (strlen(ptr) >= 2 &&
+			((ptr[0] == '"' && ptr[strlen(ptr) - 1] == '"') || (ptr[0] == '\'' && ptr[strlen(ptr) - 1] == '\'')))
 		{
 			ptr = &ptr[1];
 			ptr[strlen(ptr) - 1] = '\0';
@@ -183,10 +188,12 @@ bool cmdReadArgs(
 			}
 			if (doubledash)
 			{
+				// --help and --version are successful runs: exit 0, not the
+				// failure path (which exits 1).						// 10/13/26 DD.
 				if (!strcmp_i(ptr, _T("help")))
 				{
 					cmdHelpargs(argv[0]);
-					return false;
+					exit(0);
 				}
 				else if (!strcmp_i(ptr, _T("version")))
 				{
@@ -196,6 +203,12 @@ bool cmdReadArgs(
 #else
 					std::_t_cout << _T(NLP_ENGINE_VERSION) << std::endl;
 #endif
+					exit(0);
+				}
+				else
+				{
+					std::_t_cerr << _T("[") << argv[0] << _T(": unknown option --") << ptr << _T("]") << std::endl;
+					cmdHelpargs(argv[0]);
 					return false;
 				}
 			}
@@ -263,6 +276,14 @@ bool cmdReadArgs(
 			else if (!strcmp_i(ptr, _T("stdin"))) // Read input file paths from stdin.
 			{
 				stream = true;
+			}
+			else
+			{
+				// Used to be ignored silently, so a typo like -ANALYZER ran with
+				// no analyzer at all.							// 10/13/26 DD.
+				std::_t_cerr << _T("[") << argv[0] << _T(": unknown option -") << ptr << _T("]") << std::endl;
+				cmdHelpargs(argv[0]);
+				return false;
 			}
 		}
 		else if (flag) // Expected an argument value.
@@ -343,6 +364,23 @@ bool cmdReadArgs(
 				input = ptr;
 		}
 		ptrPrev = ptr;
+	}
+	if (flag)
+	{
+		// The last argument was an option that takes a value, eg "-ANA".
+		std::_t_cerr << _T("[") << argv[0] << _T(": ")
+					 << (f_ana ? _T("-ANA") : f_in ? _T("-IN") : f_out ? _T("-OUT") : f_work ? _T("-WORK") : _T("-DEBUG"))
+					 << _T(" needs a value.]") << std::endl;
+		cmdHelpargs(argv[0]);
+		return false;
+	}
+	if (!anapath)
+	{
+		// Without an analyzer there is nothing to run. This used to go on and
+		// crash (#347).												// 10/13/26 DD.
+		std::_t_cerr << _T("[") << argv[0] << _T(": no analyzer given. Use -ANA <analyzer>.]") << std::endl;
+		cmdHelpargs(argv[0]);
+		return false;
 	}
 	if (stream && input)
 	{
