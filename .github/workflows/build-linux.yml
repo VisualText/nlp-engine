@@ -675,6 +675,28 @@ jobs:
           ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/a.txt" > /dev/null
           echo "[exit-codes] failures exit 1, a good run exits 0"
 
+      - name: nlp rejects bad arguments instead of crashing (#347) (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          # No arguments, an unknown option, or an option missing its value
+          # used to segfault (exit 139). Each must now exit 1 with a message;
+          # --version and --help exit 0.
+          expect() {
+            want=$1; shift
+            set +e; ./bin/nlp "$@" > /dev/null 2>&1; got=$?; set -e
+            if [ "$got" != "$want" ]; then echo "FAIL(args): nlp $* exited $got, wanted $want"; exit 1; fi
+          }
+          set -e
+          expect 1
+          expect 1 -FOO
+          expect 1 --foo
+          expect 1 -ANA
+          expect 1 -ANA .github/workflows/tests/stdin-stream -IN
+          expect 0 --version
+          expect 0 --help
+          echo "[args] bad arguments exit 1, --version/--help exit 0, no crash"
+
       - name: system() runs a shell command (#546) (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash
