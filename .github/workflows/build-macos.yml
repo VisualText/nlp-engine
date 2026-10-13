@@ -181,9 +181,25 @@ jobs:
             lipo -create "$a" "universal/x86_64/$n" -output "lib/$n"
           done
           mkdir -p universal/icu
+          # The x86_64 ICU may land in the repo-level vcpkg_installed or in
+          # build-x64's (manifest mode). Show what it produced.
+          x64lib=""
+          for d in vcpkg_installed/x64-osx/lib build-x64/vcpkg_installed/x64-osx/lib; do
+            if [ -f "$d/libicuuc.a" ]; then x64lib="$d"; break; fi
+          done
+          if [ -z "$x64lib" ]; then echo "No x86_64 ICU found" >&2; exit 1; fi
+          echo "x86_64 ICU: $x64lib"; ls "$x64lib"
           for icu_lib in libicudata.a libicuuc.a libicui18n.a libicutu.a; do
-            lipo -create "vcpkg_installed/arm64-osx/lib/$icu_lib" "vcpkg_installed/x64-osx/lib/$icu_lib" \
-              -output "universal/icu/$icu_lib"
+            if [ -f "$x64lib/$icu_lib" ]; then
+              lipo -create "vcpkg_installed/arm64-osx/lib/$icu_lib" "$x64lib/$icu_lib" \
+                -output "universal/icu/$icu_lib"
+            else
+              # Cross-builds make ICU's tools library (icutu) for the host only.
+              # Nothing the engine or compiled analyzers link needs it; keep the
+              # arm64 copy for the libicutum.a asset.
+              echo "no x86_64 $icu_lib; keeping arm64 only"
+              cp "vcpkg_installed/arm64-osx/lib/$icu_lib" "universal/icu/$icu_lib"
+            fi
           done
           lipo -info bin/nlp
           lipo -info universal/icu/libicuuc.a
