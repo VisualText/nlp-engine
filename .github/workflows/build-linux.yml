@@ -684,7 +684,8 @@ jobs:
           rm -rf "$FIX/logs" "$FIX/input/text.txt_log" system-cmd.txt
           mkdir -p "$FIX/logs"
           out=$(./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" | tr -d '\r')
-          if [ "$out" != "system returned 0" ]; then echo "FAIL(system): stdout was: $out"; exit 1; fi
+          want=$(printf '%s\n' "system returned 1" "failing command returned 0")
+          if [ "$out" != "$want" ]; then echo "FAIL(system): stdout was: $out"; exit 1; fi
           if [ ! -f system-cmd.txt ] || [ "$(tr -d '\r' < system-cmd.txt)" != "system-ok" ]; then
             echo "FAIL(system): command did not write system-cmd.txt"; exit 1
           fi

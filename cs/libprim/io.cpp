@@ -24,6 +24,10 @@ All rights reserved.
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <string>
+#ifdef LINUX
+#include <sys/wait.h>	// WIFEXITED/WEXITSTATUS for run_silent.
+#endif
 #include "prim/libprim.h"
 #include "prim/prim.h"
 #include "prim/str.h"
@@ -211,6 +215,8 @@ return true;
 *	http://www.codeproject.com/win32/runsilent.asp?df=100&forumid=4227&exp=0&select=581591
 ********************************************/
 
+LIBPRIM_API DWORD run_silent(_TCHAR* strCMD);	// Defined below.
+
 LIBPRIM_API DWORD
 run_silent(_TCHAR* strFunct, _TCHAR* strstrParams)
 {
@@ -231,21 +237,12 @@ run_silent(_TCHAR* strFunct, _TCHAR* strstrParams)
 
 	pEnvCMD = _tgetenv(_T("COMSPEC"));	// FIX.	// 06/04/07 AM.
 
-	if(pEnvCMD){
-		
-		_tcscpy(Args, pEnvCMD);
-	}
-	else{
-		_tcscpy(Args, pDefaultCMD);
-	}
-
-	// "/c" option - Do the command then terminate the command window
-	_tcscat(Args, _T(" /c ")); 
-	//the application you would like to run from the command window
-	_tcscat(Args, strFunct);  
-	_tcscat(Args, _T(" ")); 
-	//the parameters passed to the application being run from the command window.
-	_tcscat(Args, strstrParams); 
+	// Bounded: an over-long command used to overrun Args.	// 10/13/26 DD.
+	int n = _sntprintf(Args, sizeof(Args)/sizeof(Args[0]), _T("%s /c %s %s"),
+		pEnvCMD ? pEnvCMD : pDefaultCMD,
+		strFunct ? strFunct : _T(""), strstrParams ? strstrParams : _T(""));
+	if (n < 0 || n >= (int)(sizeof(Args)/sizeof(Args[0])))
+		return (DWORD)-1;
 
 	if (!CreateProcess( NULL, Args, NULL, NULL, FALSE,
 		CREATE_NEW_CONSOLE, 
@@ -266,7 +263,8 @@ run_silent(_TCHAR* strFunct, _TCHAR* strstrParams)
 
 	return rc;
 #else
-	return 0;
+	std::string cmd = std::string(strFunct ? strFunct : "") + " " + (strstrParams ? strstrParams : "");
+	return run_silent((_TCHAR *)cmd.c_str());
 #endif
 }
 
@@ -291,18 +289,12 @@ run_silent(_TCHAR* strCMD)
 
 	pEnvCMD = _tgetenv(_T("COMSPEC"));	// FIX.	// 06/04/07 AM.
 
-	if(pEnvCMD){
-		
-		_tcscpy(Args, pEnvCMD);
-	}
-	else{
-		_tcscpy(Args, pDefaultCMD);
-	}
-
-	// "/c" option - Do the command then terminate the command window
-	_tcscat(Args, _T(" /c ")); 
-	//the application PLUS params you would like to run from the command window
-	_tcscat(Args, strCMD);  
+	// "/c" option - Do the command then terminate the command window.
+	// Bounded: an over-long command used to overrun Args.	// 10/13/26 DD.
+	int n = _sntprintf(Args, sizeof(Args)/sizeof(Args[0]), _T("%s /c %s"),
+		pEnvCMD ? pEnvCMD : pDefaultCMD, strCMD ? strCMD : _T(""));
+	if (n < 0 || n >= (int)(sizeof(Args)/sizeof(Args[0])))
+		return (DWORD)-1;
 
 	if (!CreateProcess( NULL, Args, NULL, NULL, FALSE,
 		CREATE_NEW_CONSOLE, 
@@ -323,7 +315,15 @@ run_silent(_TCHAR* strCMD)
 
 	return rc;
 #else
-	return 0;
+	// Linux and macOS have no console window to hide, so this is the shell.
+	// It used to be "return 0": the command never ran, yet reported success,
+	// so system() and mkdir() did nothing outside Windows (#546).	// 10/13/26 DD.
+	if (!strCMD || !*strCMD)
+		return (DWORD)-1;
+	int status = system(strCMD);
+	if (status == -1)
+		return (DWORD)-1;
+	return (DWORD)(WIFEXITED(status) ? WEXITSTATUS(status) : -1);
 #endif
 }
 

@@ -7740,8 +7740,8 @@ bool Arun::vtsystem(
 if (!str || !*str || !nlppp)
 	return 0;
 
-run_silent(str);			// system() w/o DOC CMD PROMPT POPUP.	// 09/28/08 AM.
-return true;	// 09/28/08 AM.
+// True only if the command ran and exited 0 (#546).	// 10/13/26 DD.
+return run_silent(str) == 0;	// system() w/o DOC CMD PROMPT POPUP.	// 09/28/08 AM.
 
 // Returns -1 if problems, I believe.									// 05/07/01 AM.
 #ifdef _OLDWAY_

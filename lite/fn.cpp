@@ -6906,7 +6906,11 @@ if (!str)																		// 10/30/00 AM.
 	}
 
 //_tsystem(str);	// 09/28/08 AM.
-run_silent(str);			// system() w/o DOC CMD PROMPT POPUP.	// 09/28/08 AM.
+// Returns 1 if the command ran and exited 0, else 0, as the help documents
+// ("True if successful execution of command"). It used to return nothing,
+// so code could not tell a failed command from a good one.	// 10/13/26 DD.
+DWORD rc = run_silent(str);	// system() w/o DOC CMD PROMPT POPUP.	// 09/28/08 AM.
+sem = new RFASem(rc == 0 ? 1LL : 0LL);
 return true;
 }
 
