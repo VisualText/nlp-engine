@@ -1,0 +1,32 @@
+###############################################
+# FILE:     passeé.nlp
+# SUBJ:     Regression for non-ASCII file names on Windows (#197, #260).
+# NOTE:     This pass file, the input file (café-日本.txt), the dictionary
+#           (mots-é.dict) and the file written below (sortie-é.txt) all have
+#           non-ASCII names. On Windows the engine used the ANSI code page
+#           for file names, so each of them failed. nlp.exe now declares
+#           UTF-8 as its code page in its manifest.
+#
+#           Expected stdout, plus input/café-日本.txt_log/sortie-é.txt
+#           containing "ok":
+#               input=café-日本.txt
+#               tag=E
+###############################################
+
+@CODE
+
+cout() << "input=" << G("$inputname") << "\n";
+
+L("n") = pndown(pnroot());
+while (L("n")) {
+    if (pnvar(L("n"),"tag"))
+        cout() << "tag=" << pnvar(L("n"),"tag") << "\n";
+    L("n") = pnnext(L("n"));
+}
+
+# Written into this input's _log folder; the CI step checks it exists.
+L("f") = openfile("sortie-é.txt");
+L("f") << "ok";
+closefile(L("f"));
+
+@@CODE

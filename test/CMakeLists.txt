@@ -15,6 +15,10 @@ endif()
 if(WIN32)
     add_executable(test-nlp main.cpp)
     target_link_libraries(test-nlp prim kbm consh words lite)
+    if(MSVC)
+        # UTF-8 as the process code page, like nlp.exe (#197, #260).
+        target_sources(test-nlp PRIVATE ${CMAKE_SOURCE_DIR}/nlp/utf8.manifest)
+    endif()
     # NLP-ENGINE-522: use a generator expression for the source path so
     # this works under both single-config (Makefiles / Ninja, where
     # CMAKE_BUILD_TYPE is set at configure time) AND multi-config

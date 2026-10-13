@@ -22,6 +22,15 @@ All rights reserved.
 #include "chars.h"
 #include "io.h"
 
+// A path separator. On Windows "/" is one too: forward-slash paths are legal there
+// and are what bash and the VS Code extension pass. The file_* helpers below used
+// to split only on DIR_CH, so $inputname of "dir/x.txt" was the whole path.	// 10/13/26 DD.
+#ifdef LINUX
+#define IS_DIR_SEP(c) ((c) == DIR_CH)
+#else
+#define IS_DIR_SEP(c) ((c) == '\\' || (c) == '/')
+#endif
+
 
 /********************************************
 *
@@ -601,10 +610,14 @@ ptr--;				// Back to end of string.
 // Go backward, finding backslash if any.
 while (--ptr != file)
 	{
-	if (*ptr == DIR_CH)		// Found backslash.
+	if (IS_DIR_SEP(*ptr))		// Found backslash.
 		break;
 	}
-fname = ++ptr;		// Points to filename, if any, now.
+// With no separator the whole string is the name. It used to skip the first
+// character regardless, so ".github/x.txt" (unsplit on Windows) lost its dot.
+if (IS_DIR_SEP(*ptr))	// 10/13/26 DD.
+	++ptr;
+fname = ptr;		// Points to filename, if any, now.
 return true;
 }
 
@@ -637,7 +650,7 @@ ptr--;				// Back to end of string.
 // Go backward, finding backslash if any.
 while (--ptr != file)
 	{
-	if (*ptr == DIR_CH)		// Found backslash.
+	if (IS_DIR_SEP(*ptr))		// Found backslash.
 		{
 		*ptr = '\0';		// Terminate path.
 		fpath = file;		// Return pointer to path.
@@ -677,7 +690,7 @@ bool file_parent(
 	// Go backward, finding backslash if any.
 	int slashCount = 0;
 	while (--ptr != file) {
-		if (*ptr == DIR_CH) {
+		if (IS_DIR_SEP(*ptr)) {
 			slashCount++;
 			if (slashCount == 1) {
 				*ptr = '\0';
@@ -723,11 +736,11 @@ while (--ptr != file)
 	{
 	if (*ptr == '.')		// Found period.
 		break;
-	if (*ptr == DIR_CH)		// Found backslash first.
+	if (IS_DIR_SEP(*ptr))		// Found backslash first.
 		break;
 	}
 
-if (*ptr == DIR_CH)			// Found backslash first.
+if (IS_DIR_SEP(*ptr))			// Found backslash first.
 	{
 	fhead = ++ptr;			// No extension in file string.
 	return true;
@@ -756,7 +769,7 @@ if (*ptr != '.' || ptr == file)
 // Look for backslash of beginning of file.
 while (--ptr != file)
 	{
-	if (*ptr == DIR_CH)		// Found backslash.
+	if (IS_DIR_SEP(*ptr))		// Found backslash.
 		{
 		fhead = ++ptr;
 		return true;		// Got file head.
@@ -802,7 +815,7 @@ while (--ptr != file)
 		ftail = ++ptr;
 		return true;
 		}
-	if (*ptr == DIR_CH)		// Found backslash first.
+	if (IS_DIR_SEP(*ptr))		// Found backslash first.
 		{
 		// No file tail (ie, extension).
 		return false;

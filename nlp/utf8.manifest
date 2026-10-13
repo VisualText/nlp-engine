@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  Windows: run this program with UTF-8 as its ANSI code page (Windows 10 1903+).
+  The engine keeps strings in UTF-8, and opens files through the narrow APIs
+  (fopen, ifstream, CreateDirectoryA, std::filesystem::path from std::string),
+  which use the process code page. Without this, any file or folder name
+  outside the system code page (an accented input file name, a pass named in
+  Japanese) was not found: nlp-engine #197, #260. argv also arrives in UTF-8.
+  Note: XML comments may not contain two hyphens in a row.
+  Older Windows versions ignore this element.
+-->
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1">
+  <application xmlns="urn:schemas-microsoft-com:asm.v3">
+    <windowsSettings>
+      <activeCodePage xmlns="http://schemas.microsoft.com/SMI/2019/WindowsSettings">UTF-8</activeCodePage>
+    </windowsSettings>
+  </application>
+</assembly>
