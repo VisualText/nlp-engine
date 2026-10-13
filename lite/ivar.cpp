@@ -1128,14 +1128,45 @@ if (!strcmp_i(name, _T("text")))	// $TEXT $text							// 11/10/00 AM.
 	buf = Chars::create(len+1);							
 	clean_str(text,buf);
 	nlppp->getParse()->internStr(buf, /*UP*/ str);
-	sem = new RFASem(str, RSSTR);							
+	sem = new RFASem(str, RSSTR);
 	Chars::destroy(buf);			// Free up buffer.
 	Chars::destroy(text);
 	return true;
 	}
 
+// Offsets and position of a multi-node match: the span runs from the first
+// node's start to the last node's end. Only $text and $length handled a range
+// before, so N("$ostart",2) on a wildcard was an error that aborted the rule's
+// actions -- including the inputrange(N("$ostart",n),N("$oend",n)) idiom (#435).
+// 10/12/26 DD.
+if (!strcmp_i(name, _T("ostart")))	// $OSTART $ostart
+	{
+	sem = new RFASem((long long)pn->getStart());
+	return true;
+	}
+if (!strcmp_i(name, _T("oend")))	// $OEND $oend
+	{
+	sem = new RFASem((long long)nend->getData()->getEnd());
+	return true;
+	}
+if (!strcmp_i(name, _T("start")))	// $START: span starts its phrase.
+	{
+	sem = new RFASem((long long)(nstart->Left() ? 0 : 1));
+	return true;
+	}
+if (!strcmp_i(name, _T("end")))		// $END: span ends its phrase.
+	{
+	sem = new RFASem((long long)(nend->Right() ? 0 : 1));
+	return true;
+	}
+if (!strcmp_i(name, _T("exists")))	// $EXISTS
+	{
+	sem = new RFASem(1LL);
+	return true;
+	}
+
 std::_t_strstream gerrStr;
-gerrStr << _T("[nodevar: Multi-node case not handled.]") << std::ends;
+gerrStr << _T("[nodevar: Multi-node case not handled for $") << name << _T(".]") << std::ends;
 errOut(&gerrStr,false);
 return false;
 }

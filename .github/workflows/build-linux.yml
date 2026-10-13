@@ -600,6 +600,23 @@ jobs:
           fi
           echo "[empty-kb-user] a missing hier.kb or kb folder starts a new knowledge base"
 
+      - name: Special variables on a multi-node element (#435) (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # Only $text and $length handled an element that matched several
+          # nodes; N("$ostart",2) on a wildcard aborted the rule's actions.
+          FIX=.github/workflows/tests/multinode-vars
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          out=$(./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" | tr -d '\r')
+          want=$(printf '%s\n' "ostart=5 oend=25 start=0 end=0 exists=1" "range=[ CAFÉ AU LAIT — OK]" "text=[CAFÉ AU LAIT — OK]")
+          if [ "$out" != "$want" ]; then
+            echo "FAIL(multinode-vars): stdout was:"; echo "$out"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[multinode-vars] \$ostart/\$oend/\$start/\$end/\$exists work on a multi-node element"
+
       - name: factorial() up to 20! (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash
