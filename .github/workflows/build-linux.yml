@@ -617,6 +617,21 @@ jobs:
           fi
           echo "[multinode-vars] \$ostart/\$oend/\$start/\$end/\$exists work on a multi-node element"
 
+      - name: pntype() returns a node's token type (#511) (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          FIX=.github/workflows/tests/pntype
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          out=$(./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" | tr -d '\r')
+          want=$(printf '%s\n' "Hi alpha" "_ white" "_pair node" "_ white" "🔥 emoji" "! punct" "42 num")
+          if [ "$out" != "$want" ]; then
+            echo "FAIL(pntype): stdout was:"; echo "$out"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[pntype] alpha/num/punct/white/emoji tokens and nonleaf nodes"
+
       - name: factorial() up to 20! (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash

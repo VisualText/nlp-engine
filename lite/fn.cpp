@@ -555,6 +555,8 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnPnmove(args,nlppp,/*UP*/sem);							// 10/06/13 AM.
 	case FNpnname:
 		return fnPnname(args,nlppp,/*UP*/sem);							// 10/18/00 AM.
+	case FNpntype:
+		return fnPntype(args,nlppp,/*UP*/sem);							// 10/12/26 DD.
 	case FNpnnext:
 		return fnPnnext(args,nlppp,/*UP*/sem);							// 10/18/00 AM.
 	case FNpnprev:
@@ -8228,6 +8230,59 @@ Pn *pn = node->getData();
 _TCHAR *str = pn->getName();
 // Todo: Name should be interned, but may want to check to be sure.
 sem = new RFASem(str,RSSTR);	// FIX.	// 09/07/03 AM.
+return true;
+}
+
+
+/********************************************
+* FN:		FNPNTYPE
+* CR:		10/12/26 DD.
+* SUBJ:	Get PNODE's token type (#511).
+* RET:	True if ok, else false.
+* FORMS:	str pntype(pnode)
+* NOTE:	One of alpha, num, punct, white, ctrl, emoji for a token and node
+*			for a nonleaf -- the same names the parse-tree dump shows.
+********************************************/
+
+bool Fn::fnPntype(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+RFASem *sem1;
+
+if (!Arg::sem1(_T("pntype"),nlppp,(DELTS*&)args,sem1))
+	return false;
+if (!Arg::done((DELTS*)args, _T("pntype"),parse))
+	return false;
+
+if (!sem1)
+	{
+	_stprintf(Errbuf,_T("[pntype: Warning. Given no pnode.]"));
+	return parse->errOut(true); // UNFIXED
+	}
+
+if (sem1->getType() != RSNODE)
+	{
+	_stprintf(Errbuf,_T("[pntype: Bad semantic arg.]"));
+	return parse->errOut(false); // UNFIXED
+	}
+
+Node<Pn> *node = sem1->getNode();
+if (!node)
+	{
+	_stprintf(Errbuf,_T("[pntype: Couldn't fetch node.]"));
+	return parse->errOut(false); // UNFIXED
+	}
+
+_TCHAR *str = 0;
+parse->internStr((_TCHAR *)Pn::typeName(node->getData()->getType()), /*UP*/ str);
+sem = new RFASem(str,RSSTR);
 return true;
 }
 

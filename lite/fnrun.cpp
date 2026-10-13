@@ -8399,6 +8399,40 @@ return pnname(nlppp,node);
 
 
 /********************************************
+* FN:		PNTYPE
+* CR:		10/12/26 DD.
+* SUBJ:	Get PNODE's token type (#511).
+* FORMS:	str pntype(pnode)
+********************************************/
+
+_TCHAR *Arun::pntype(
+	Nlppp *nlppp,
+	NODE *node
+	)
+{
+if (!nlppp || !node)
+	return 0;
+_TCHAR *str = 0;
+nlppp->getParse()->internStr(
+	(_TCHAR *)Pn::typeName(((Node<Pn> *)node)->getData()->getType()), /*UP*/ str);
+return str;
+}
+
+// VARIANT
+_TCHAR *Arun::pntype(
+	Nlppp *nlppp,
+	RFASem *node_sem
+	)
+{
+if (!nlppp || !node_sem)
+	return 0;
+NODE *node = node_sem->sem_to_node();
+delete node_sem;
+return pntype(nlppp,node);
+}
+
+
+/********************************************
 * FN:		PNROOT
 * CR:		01/08/01 AM.
 * SUBJ:	Get root of parse tree.

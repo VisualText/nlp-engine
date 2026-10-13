@@ -177,6 +177,7 @@ _T("pnroot"),
 _T("pnrpushval"),	// 12/12/14 AM.
 _T("pnsetfired"),
 _T("pnsingletdown"),
+_T("pntype"),	// 10/12/26 DD.
 _T("pnup"),
 _T("pnvar"),
 _T("pnvarnames"),	// 05/13/02 AM.

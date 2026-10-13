@@ -1,0 +1,33 @@
+###############################################
+# FILE:     types.nlp
+# SUBJ:     Regression for pntype() (#511).
+# NOTE:     pntype(pnode) returns the node's token type -- the same name the
+#           parse-tree dump prints -- or "node" for a nonleaf. Before it,
+#           NLP++ could only infer the type from the text or a rule match.
+#
+#           Expected stdout:
+#               Hi alpha
+#               _ white
+#               _pair node
+#               _ white
+#               🔥 emoji
+#               ! punct
+#               42 num
+###############################################
+
+@CODE
+
+L("n") = pndown(pnroot());
+while (L("n")) {
+    L("name") = pnname(L("n"));
+    if (L("name") == " ")
+        L("name") = "_";
+    cout() << L("name") << " " << pntype(L("n")) << "\n";
+    L("n") = pnnext(L("n"));
+}
+
+# A token inside the nonleaf.
+L("pair") = pnnext(pnnext(pndown(pnroot())));
+cout() << pnname(pndown(L("pair"))) << " " << pntype(pndown(L("pair"))) << "\n";
+
+@@CODE

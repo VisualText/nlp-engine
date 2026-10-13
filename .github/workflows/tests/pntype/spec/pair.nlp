@@ -1,0 +1,9 @@
+###############################################
+# FILE:     pair.nlp
+# SUBJ:     Make one nonleaf node for the pntype fixture.
+###############################################
+
+@NODES _ROOT
+
+@RULES
+_pair <- _xNUM \, @@
