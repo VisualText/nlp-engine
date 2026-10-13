@@ -1,0 +1,8 @@
+tokenize	nil	# tokenize only -- fixture needs no dictionary
+nlp	t1
+nlp	t2
+nlp	t3
+nlp	t4
+nlp	t5
+nlp	t6
+nlp	t7

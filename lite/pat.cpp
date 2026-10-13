@@ -1123,6 +1123,12 @@ if (!_tcscmp(ee->getName(), _T("_xSTART")))			// If it's start of phrase elt.
 	if (!matchSTART(ee, nlppp->node_))						// 10/05/99 AM.
 		return false;
 	makeCollect(nlppp->collect_, elt1, 0, 0, LEFT);
+	// _xSTART covers no node, but the rule's span starts here: the elements
+	// after it match rightward from this node. Without this, a wildcard right
+	// after _xSTART was left out of the span -- "_xSTART _xWILD abc" reduced
+	// only "abc", stranding the wildcard's nodes outside the new node (#431).
+	// 10/13/26 DD.
+	nlppp->first_ = nlppp->node_;
 	if (!(elt = elt1->Right()))
 		{
 		Parse *parse = nlppp->parse_;	// 04/04/10 AM.
@@ -1339,6 +1345,56 @@ if (wildElt(ielt))
 			/*DU*/ elt,dir,wildone,wildmin,wildmax);
 
 // Current rule elt is not a wildcard.
+
+// _XSTART WITH NODES STILL TO THE LEFT.							// 10/13/26 DD.
+// _xSTART matches only at the start of the phrase. Below, it is handled
+// when matching has run off the left end (no node_). With nodes still to the
+// left it used to fall through to matchRealLeft and be matched like an
+// ordinary element: "_xSTART _xWILD abc" matched "abc" mid-phrase, and
+// "_xSTART _xWILD abc [trigger]" never matched (#430, #431). A restricted
+// wildcard (eg [fail=(_dummy)]) dodged this by consuming nodes one at a time.
+// Only for an element that IS _xSTART. An element with _xSTART in its match
+// list (eg the NLP++ grammar's _xWILD [one match=(_xSTART \< ...)]) may also
+// match a real node, so it keeps the general path below.
+if (nlppp->node_ && !_tcscmp(ielt->getName(), _T("_xSTART")))
+	{
+	if (!wildone)
+		return false;		// Unmatched nodes to the left: not the start.
+
+	// A pending wildcard must take every node from here to the phrase start.
+	Node<Pn> *leftmost = nlppp->node_;
+	long count = 1;
+	while (leftmost->Left() && leftmost != nlppp->start_)
+		{
+		leftmost = leftmost->Left();
+		++count;
+		}
+	if (leftmost->Left())
+		return false;		// Left bound reached before the phrase start.
+	if (count < wildmin || (wildmax && count > wildmax))
+		return false;		// The wildcard can't cover that many nodes.
+	if (curr->Left())
+		{
+		Parse *parse = nlppp->parse_;
+		parse->line_ = nlppp->rule_->getLine();
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[_xSTART must be first rule element.]") << std::ends;
+		parse->errOut(&gerrStr,false);
+		return false;
+		}
+
+	// Fill the pending wildcard as wildFillLeft does for one wildcard or an
+	// unlimited one: nearest node first, leftmost last.
+	wildone->seteDown(nlppp->node_);
+	wildone->setDown(leftmost);
+	makeCollect(nlppp->collect_, curr, 0, 0, LEFT);
+	if (!nlppp->last_)
+		nlppp->last_ = nlppp->node_;
+	nlppp->first_ = leftmost;
+	wildone = 0;
+	wildmin = wildmax = -1;
+	return switchRight(trig, nlppp, /*DU*/ elt, dir);
+	}
 
 if (!nlppp->node_)
 	{
