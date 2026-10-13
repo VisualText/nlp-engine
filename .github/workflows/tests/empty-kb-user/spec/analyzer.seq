@@ -1,0 +1,2 @@
+dicttok	nil	# dictionary tokenizer: looks words up in the new KB
+nlp	kbtest

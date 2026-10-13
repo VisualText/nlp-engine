@@ -149,7 +149,14 @@ read_files(_TCHAR *dir, _TCHAR *filter, std::vector<std::filesystem::path>& file
     files.clear();
 	const std::regex filt{filter};
 
-	for (const auto & entry : std::filesystem::directory_iterator(dir)) {
+	// A missing folder (eg an analyzer with no kb/user) is "no files", not an
+	// exception: the throwing form aborted the engine before any output.	// 10/12/26 DD.
+	std::error_code ec;
+	std::filesystem::directory_iterator it(dir, ec);
+	if (ec)
+		return false;
+
+	for (const auto & entry : it) {
         if (std::filesystem::is_regular_file(entry.path())) {
 			if (!filter[0] || std::regex_match(entry.path().string(),filt))
             	files.push_back(entry.path());

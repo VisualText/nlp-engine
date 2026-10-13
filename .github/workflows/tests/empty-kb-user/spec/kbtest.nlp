@@ -1,0 +1,40 @@
+###############################################
+# FILE:     kbtest.nlp
+# SUBJ:     Regression: kb/user with no hier.kb.
+# NOTE:     This fixture's kb/user holds only words.dict -- no hier.kb.
+#           readKB used to return before binding the system concepts when
+#           hier.kb was missing, and interpreted runs ignored that, so the
+#           first attribute add dereferenced a null and the engine
+#           segfaulted. An empty kb/user crashed the same way, and a missing
+#           kb folder aborted on an uncaught filesystem exception. A missing
+#           hier.kb now starts a new knowledge base.
+#
+#           Expected stdout:
+#               n=1
+#               runs=V über=P 42abc 🔥
+#               walks: tag=W verb=1
+###############################################
+
+@CODE
+
+L("con") = getconcept(findroot(),"things");
+replaceval(L("con"),"n",1);
+cout() << "n=" << str(numval(L("con"),"n")) << "\n";
+
+L("w") = addword("runs");  addstrval(L("w"),"tag","V");
+L("w") = addword("über");  addstrval(L("w"),"tag","P");
+cout() << "runs=" << strval(dictfindword("runs"),"tag")
+    << " über=" << strval(dictfindword("über"),"tag")
+    << " " << conceptname(addword("42abc"))
+    << " " << conceptname(addword("🔥")) << "\n";
+
+# The dictionary tokenizer found "walks" in words.dict and copied its
+# attributes onto the token.
+L("n") = pndown(pnroot());
+while (L("n")) {
+    if (pnvar(L("n"),"$text") == "walks")
+        cout() << "walks: tag=" << pnvar(L("n"),"tag") << " verb=" << str(pnvar(L("n"),"verb")) << "\n";
+    L("n") = pnnext(L("n"));
+}
+
+@@CODE

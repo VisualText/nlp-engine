@@ -652,8 +652,7 @@ openDict(dictfiles);
 
 if (kbfiles.size() > 0) {
 	if (!bound) {
-		_stprintf(infile, _T("%s%chier.%s"), path,DIR_CH, suff);
-		if (!readFile(infile))
+		if (!readHier(path))
 			return false;
 		bind_sys(this);
 		con_add_root(this);
@@ -665,8 +664,7 @@ if (kbfiles.size() > 0) {
 }
 
 if (dictfiles.size() > 0) {
-	_stprintf(infile, _T("%s%chier.%s"), path,DIR_CH, suff);
-	if (!readFile(infile))
+	if (!readHier(path))
 		return false;
 	con_add_root(this);
 	bind_sys(this);
@@ -690,28 +688,22 @@ if (!kbLoaded) {
 		{
 		// The old way.											// 07/01/03 AM.
 
-		// Read in the HIER.KB file.
-		_stprintf(infile, _T("%s%chier.%s"), path,DIR_CH, suff);
-		if (!readFile(infile))
+		// Read in the HIER.KB file, or start a new KB without one.
+		if (!readHier(path))
 			return false;
 
 		// BIND SYSTEM CONCEPTS TO CODE VARIABLES.
 		bind_sys(this);
 
-		// Read in the WORD.KB file.
-		_stprintf(infile, _T("%s%cword.%s"), path, DIR_CH, suff);
-		if (!readFile(infile))
-			return false;
-
-		// Read in the PHR.KB file.
-		_stprintf(infile, _T("%s%cphr.%s"), path, DIR_CH, suff);
-		if (!readFile(infile))
-			return false;
-
-		// Read in the ATTR.KB file.
-		_stprintf(infile, _T("%s%cattr.%s"), path, DIR_CH, suff);
-		if (!readFile(infile))
-			return false;
+		// WORD.KB, PHR.KB and ATTR.KB hold what was saved from an earlier
+		// KB; a new one has none, so a missing file is not an error.	// 10/12/26 DD.
+		const _TCHAR *rest[] = {_T("word"), _T("phr"), _T("attr")};
+		for (int i = 0; i < 3; ++i)
+			{
+			_stprintf(infile, _T("%s%c%s.%s"), path, DIR_CH, rest[i], suff);
+			if (f_exists(infile) && !readFile(infile))
+				return false;
+			}
 			
 		outputTime(_T("[READ original KB files time="),s_time);
 	}
@@ -3496,6 +3488,85 @@ if (!fin)
 if (!cmd_top(&fin, cgerr, _T("> "), false,this,true))					// 02/19/02 AM.
 	{
 	*cgerr << _T("[readFile: Error in reading file=") << infile << _T("]") << std::endl;
+	return false;
+	}
+return true;
+}
+
+
+/********************************************
+* FN:		READHIER
+* SUBJ:	Read <path>/hier.kb, or build the base hierarchy if it is missing.
+* NOTE:	An analyzer whose kb/user was empty, or held only .dict/.kbb files,
+*			had no hier.kb to read, so readKB returned before bind_sys() and the
+*			system concepts were never bound. Interpreted runs ignore that
+*			failure (Parse::execute reads kb/user late), so the first attribute
+*			add dereferenced a null and the engine segfaulted. A missing hier.kb
+*			now means a new, empty KB: the system concepts, with the dictionary
+*			index left flat (dict_find_index files words straight under "a" when
+*			it has no index children).						// 10/12/26 DD.
+********************************************/
+
+bool CG::readHier(
+	_TCHAR *path
+	)
+{
+_TCHAR infile[MAXPATH*2];
+_stprintf(infile, _T("%s%chier.kb"), path, DIR_CH);
+if (f_exists(infile))
+	return readFile(infile);
+
+*cgerr << _T("[readKB: No hier.kb in ") << path
+		 << _T(". Starting a new knowledge base.]") << std::endl;
+// One command per entry. Kept as separate literals: on Linux and macOS
+// _T(x) expands to (x), so adjacent _T("...") _T("...") is not a string.
+static const _TCHAR *baseHier[] = {
+	_T("add empty"),
+	_T("add root"),
+	_T("add hier \"concept\" \"gram\""),
+	_T("add hier \"concept\" \"sys\""),
+	_T("add hier \"concept\" \"sys\" \"attrs\""),
+	_T("add hier \"concept\" \"sys\" \"attrs\" \"proxy\""),
+	_T("add hier \"concept\" \"sys\" \"attrs\" \"proxy\" \"atom\""),
+	_T("add hier \"concept\" \"sys\" \"attrs\" \"pproxy\""),
+	_T("add hier \"concept\" \"sys\" \"attrs\" \"pproxy\" \"phrase\""),
+	_T("add hier \"concept\" \"sys\" \"attrs\" \"common\""),
+	_T("add hier \"concept\" \"sys\" \"attrs\" \"common\" \"var\""),
+	_T("add hier \"concept\" \"sys\" \"attrs\" \"rule_elt\""),
+	_T("add hier \"concept\" \"sys\" \"vals\""),
+	_T("add hier \"concept\" \"sys\" \"vals\" \"boolean\""),
+	_T("add hier \"concept\" \"sys\" \"vals\" \"boolean\" \"false\""),
+	_T("add hier \"concept\" \"sys\" \"vals\" \"boolean\" \"true\""),
+	_T("add hier \"concept\" \"sys\" \"nlp\""),
+	_T("add hier \"concept\" \"sys\" \"nlp\" \"wht\""),
+	_T("add hier \"concept\" \"sys\" \"nlp\" \"punct\""),
+	_T("add hier \"concept\" \"sys\" \"nlp\" \"ctrl\""),
+	_T("add hier \"concept\" \"sys\" \"nlp\" \"lex\""),
+	_T("add hier \"concept\" \"sys\" \"nlp\" \"lex\" \"slot\""),
+	_T("add hier \"concept\" \"sys\" \"nlp\" \"lex\" \"slot\" \"cases\""),
+	_T("add hier \"concept\" \"sys\" \"mean\""),
+	_T("add hier \"concept\" \"sys\" \"mean\" \"slot\""),
+	_T("add hier \"concept\" \"sys\" \"mean\" \"slot\" \"case\""),
+	_T("add hier \"concept\" \"sys\" \"mean\" \"slot\" \"case\" \"cap\""),
+	_T("add hier \"concept\" \"sys\" \"mean\" \"slot\" \"case\" \"allcap\""),
+	_T("add hier \"concept\" \"sys\" \"mean\" \"slot\" \"case\" \"mixed\""),
+	_T("add hier \"concept\" \"sys\" \"mean\" \"slot\" \"mixed\""),
+	_T("add hier \"concept\" \"sys\" \"dict\""),
+	_T("add hier \"concept\" \"sys\" \"dict\" \"a\""),
+	_T("add hier \"concept\" \"sys\" \"dict\" \"0\""),
+	_T("add hier \"concept\" \"sys\" \"dict\" \"emoji\""),
+	_T("add hier \"concept\" \"sys\" \"dict\" \"ctrl\""),
+	_T("add hier \"concept\" \"sys\" \"dict\" \"pnct\""),
+	_T("add hier \"concept\" \"sys\" \"dict\" \"unknown\""),
+	_T("add hier \"concept\" \"sys\" \"dict\" \"wht\""),
+	_T("quit")
+	};
+std::_t_stringstream base;
+for (size_t i = 0; i < sizeof(baseHier)/sizeof(baseHier[0]); ++i)
+	base << baseHier[i] << std::endl;
+if (!cmd_top(&base, cgerr, _T("> "), false,this,true))
+	{
+	*cgerr << _T("[readHier: Error building the base hierarchy.]") << std::endl;
 	return false;
 	}
 return true;
