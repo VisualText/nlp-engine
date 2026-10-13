@@ -22,6 +22,11 @@ endif()
 
 add_executable(nlp ${nlp_src})
 
+if(MSVC)
+    # UTF-8 as the process code page, so non-ASCII file names work (#197, #260).
+    target_sources(nlp PRIVATE ${CMAKE_SOURCE_DIR}/nlp/utf8.manifest)
+endif()
+
 if(WIN32)
     target_link_libraries(nlp PUBLIC prim kbm consh words lite ${ICU_LIBRARIES})
 else()

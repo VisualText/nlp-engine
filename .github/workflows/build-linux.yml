@@ -715,6 +715,29 @@ jobs:
           fi
           echo "[small-builtins] all checks pass"
 
+      - name: Non-ASCII file and folder names (#197, #260) (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # Input, pass, dictionary and output file all have non-ASCII names.
+          # On Windows the engine used the ANSI code page for file names and
+          # found none of them; nlp.exe now runs with UTF-8 as its code page.
+          # Bash passes forward slashes, which also checks $inputname splits on "/".
+          FIX=.github/workflows/tests/utf8-paths
+          IN="$FIX/input/café-日本.txt"
+          rm -rf "$FIX/logs" "${IN}_log"
+          mkdir -p "$FIX/logs"
+          out=$(./bin/nlp -ANA "$FIX" -WORK ./ "$IN" | tr -d '\r')
+          want=$(printf '%s\n' "input=café-日本.txt" "tag=E")
+          if [ "$out" != "$want" ]; then
+            echo "FAIL(utf8-paths): stdout was:"; echo "$out"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          if [ "$(tr -d '\r' < "${IN}_log/sortie-é.txt")" != "ok" ]; then
+            echo "FAIL(utf8-paths): sortie-é.txt was not written"; exit 1
+          fi
+          echo "[utf8-paths] non-ASCII input, pass, dictionary and output names work"
+
       - name: system() runs a shell command (#546) (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash
