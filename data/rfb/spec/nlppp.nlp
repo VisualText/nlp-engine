@@ -116,6 +116,19 @@ _CODE [base unsealed] <-
 	_xWILD [opt lookahead match=(_endMark _startMark)]
 	@@
 
+# @POSTCODE: NLP++ run after the pass's rules have matched.	# #392.
+@POST
+  oldgroup(2,2, "_NLPPP")	# An NLP++ region.
+  setbase(2,"true")
+  singler(1,3)
+@RULES
+_POSTCODE [base unsealed] <-
+	_soPOSTCODE [s]
+	_xWILD [fail=(_endMark _startMark)]
+	_eoPOSTCODE [s opt]
+	_xWILD [opt lookahead match=(_endMark _startMark)]
+	@@
+
 @POST
   oldgroup(2,2, "_NLPPP")	# An NLP++ region.
   setbase(2,"true")

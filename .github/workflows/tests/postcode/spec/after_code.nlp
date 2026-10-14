@@ -1,0 +1,30 @@
+###############################################
+# FILE:     after_code.nlp
+# SUBJ:     @POSTCODE right after @CODE (#392). @CODE runs before the
+#           rules and @POSTCODE after them, so the count goes 0 -> 5.
+# NOTE:     Part of the postcode regression; expected output is in the
+#           CI step.
+###############################################
+
+@DECL
+describe(L("n")) {
+    return "n=" + str(L("n"));
+}
+@@DECL
+
+@CODE
+G("n") = 0;
+cout() << "code " << describe(G("n")) << "\n";
+@@CODE
+
+@POSTCODE
+cout() << "postcode " << describe(G("n")) << " first=" << pnname(pndown(pnroot())) << "\n";
+@@POSTCODE
+
+@NODES _ROOT
+
+@POST
+    G("n") = G("n") + 1;
+    single();
+@RULES
+_letter <- _xALPHA @@

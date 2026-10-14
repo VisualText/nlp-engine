@@ -307,6 +307,25 @@ return true;
 
 
 /********************************************
+* FN:		RUNPOSTCODE
+* SUBJ:	Run a compiled pass's @POSTCODE region, after its rules (#392).
+*			Skipped when the @CODE region exited the pass.
+********************************************/
+
+void Arun::runPostcode(Parse *parse, const PASS *pass)
+{
+if (!pass->postcode || parse->getCodeexit())
+	return;
+Nlppp *nlppp = parse->getNlppp();
+nlppp->exitpass_ = false;
+nlppp->region_ = REGCODE;
+(pass->postcode)(nlppp);
+nlppp->region_ = REGNULL;
+nlppp->exitpass_ = false;
+}
+
+
+/********************************************
 * FN:		PATEXECUTE
 * CR:		05/11/00 AM.
 * SUBJ:	Runtime variant of pat pass.
@@ -356,6 +375,7 @@ else
 		return false;															// 01/26/02 AM.
 		}
 	}
+runPostcode(parse, pass);	// #392.
 
 NlpDebug::passEnd(parse,num);												// Debugger.
 
@@ -403,6 +423,7 @@ parse->iniPass(num,prefix,flogfiles,ftimepass,true,sfile,salgo,		// 05/20/00 AM.
 if (!																				// 01/26/02 AM.
 	Rec::Execute(parse,pass))
 	return false;																// 01/26/02 AM.
+runPostcode(parse, pass);	// #392.
 
 parse->finPass(num,flogfiles,fout,sout,
 										pretname,ftimepass,s_time);		// 05/20/00 AM.

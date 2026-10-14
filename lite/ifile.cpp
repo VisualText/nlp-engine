@@ -64,11 +64,13 @@ Ifile::Ifile(			// Default constructor.
 	Slist<Iregion>  *regions,
 	bool fmulti,							// 03/25/99 AM.
 	bool fpath,								// 10/19/99 AM.
-	bool fpremulti							// 10/25/99 AM.
+	bool fpremulti,							// 10/25/99 AM.
+	Dlist<Iaction>	 *postcodes			// #392.
 	)
 {
 decls_		= decls;			// 12/19/01 AM.
 codes_		= codes;			// 12/07/98 AM.
+postcodes_	= postcodes;	// #392.
 selects_		= selects;		// 11/30/98 AM.
 recurses_	= recurses;
 regions_		= regions;
@@ -98,6 +100,8 @@ if (decls_)																		// 12/19/01 AM.
 
 if (codes_)																		// 12/07/98 AM.
 	Dlist<Iaction>::DeleteDlistAndData(codes_);
+if (postcodes_)
+	Dlist<Iaction>::DeleteDlistAndData(postcodes_);
 
 if (selects_)
 	Dlist<Iarg>::DeleteDlistAndData(selects_);						// 11/30/98 AM.
@@ -164,6 +168,12 @@ if (ifile.codes_)							// 12/07/98 AM.
 	output << *(ifile.codes_);
 	output << _T("@@code") << std::endl;
 	}
+if (ifile.postcodes_)
+	{
+	output << _T("@postcode") << std::endl;
+	output << *(ifile.postcodes_);
+	output << _T("@@postcode") << std::endl;
+	}
 if (ifile.selects_)
 	{
 	output << _T("@select") << std::endl;
@@ -220,6 +230,7 @@ Dlist<Seqn>		 *Ifile::getSeqs()		{return seqs_;		}
 Dlist<Iarg>		 *Ifile::getSelects()	{return selects_;	}
 Dlist<Iarg>		 *Ifile::getDecls()		{return decls_;	}		// 12/19/01 AM.
 Dlist<Iaction>	 *Ifile::getCodes()		{return codes_;	}		// 12/07/98 AM
+Dlist<Iaction>	 *Ifile::getPostcodes()	{return postcodes_;}	// #392.
 Slist<Irule>	 *Ifile::getMusts()		{return musts_;	}		// 12/16/98 AM
 tHtab<Slist<Irule> >	 *Ifile::getHtab()	{return htab_;	}		// 12/16/98 AM
 bool				  Ifile::getFmulti()		{return fmulti_;	}		// 03/25/99 AM
@@ -239,6 +250,7 @@ void	Ifile::setSeqs(Dlist<Seqn>			  *x)	{seqs_	  = x;}
 void	Ifile::setSelects(Dlist<Iarg>		  *x)	{selects_  = x;}
 void	Ifile::setDecls(Dlist<Iarg>		  *x)	{decls_	  = x;}	// 12/19/01 AM.
 void	Ifile::setCodes(Dlist<Iaction>	  *x)	{codes_	  = x;}	// 12/07/98 AM
+void	Ifile::setPostcodes(Dlist<Iaction> *x)	{postcodes_ = x;}	// #392.
 void	Ifile::setMusts(Slist<Irule>		  *x)	{musts_	  = x;}	// 12/16/98 AM
 
 // WARN! DON'T REMOVE THE SPACE BETWEEN ANGLE BRACKETS! C++ FEATURE.
@@ -531,6 +543,14 @@ else
 	codebuf[1] = '\0';
 	}
 
+_TCHAR postcodebuf[MAXSTR];												// #392.
+if (postcodes_)
+	{
+	_stprintf(postcodebuf, _T("postcode%d(Nlppp *nlppp)"), id);
+	*fhead << _T("bool ") << postcodebuf << _T(";");	// Prototype.
+	Gen::nl(fhead);
+	}
+
 if (rules_)				// Handling pass with no rules.			// 01/23/01 AM.
 	{
 	_stprintf(rulebuf, _T("matchRule%d(int ruleno,bool &done,Nlppp *nlppp)"), id);
@@ -592,6 +612,32 @@ if (codes_)
 	*fcode << _T("}");
 	Gen::nl(fcode);															// 04/04/03 AM.
 	Gen::eol(fcode);															// 04/04/03 AM.
+	}
+
+
+if (postcodes_)																// #392.
+	{
+	// Generate code for the @POSTCODE region, like @CODE.
+	*fcode << _T("bool ") << postcodebuf;
+	Gen::nl(fcode);
+	*fcode << _T("{");
+	Gen::nl(fcode);
+	*fcode << _T("void *dummy = 0;");
+	Gen::nl(fcode);
+	*fcode << _T("Arun::fnstart(nlppp,dummy,dummy);");
+	Gen::nl(fcode);
+
+	gen->region_ = REGCODE;
+	Irule::genCodes(postcodes_, gen);
+	Iaction::gen(postcodes_, gen);
+
+	*fcode << _T("Arun::ret(nlppp,0,0,(RFASem*)0);");
+	Gen::nl(fcode);
+	*fcode << _T("return true;");
+	Gen::nl(fcode);
+	*fcode << _T("}");
+	Gen::nl(fcode);
+	Gen::eol(fcode);
 	}
 
 
@@ -725,6 +771,11 @@ if (htab_)
 	*fdata << htab_->getSize();
 else
 	*fdata << _T("0");
+
+if (postcodes_)																// #392.
+	*fdata << _T(",postcode") << id;
+else
+	*fdata << _T(",0");
 
 *fdata << _T("};");
 Gen::eol(fdata);																// 04/04/03 AM.

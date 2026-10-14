@@ -128,7 +128,6 @@ if (count_)
 
 void Code::execCode(Parse *parse, Seqn *seqn, bool &exitpass)
 {
-bool ok = true;																// 01/14/00 AM.
 exitpass = false;																// 02/06/01 AM.
 
 if (!parse || !seqn)
@@ -138,6 +137,7 @@ if (!parse || !seqn)
 	parse->errOut(&gerrStr,false);
 	return;
 	}
+parse->setCodeexit(false);
 
 // Get the rulesfile object.
 Ifile *rulesfile = 0;
@@ -155,6 +155,40 @@ if (!(codes = rulesfile->getCodes()))
 	//cout << "[No code actions.]" << std::endl;
 	return;
 	}
+
+execActions(parse, codes, exitpass);
+parse->setCodeexit(exitpass);	// If @CODE exits the pass, skip @POSTCODE.
+}
+
+
+/********************************************
+* FN:		EXECPOSTCODE
+* SUBJ:	Execute the @POSTCODE region, after the pass has matched its
+*			rules (#392).  Skipped when @CODE exited the pass.
+********************************************/
+
+void Code::execPostcode(Parse *parse, Seqn *seqn)
+{
+if (!parse || !seqn || parse->getCodeexit())
+	return;
+Ifile *rulesfile = seqn->getRulesfile();
+Dlist<Iaction> *codes = rulesfile ? rulesfile->getPostcodes() : 0;
+if (!codes)
+	return;
+bool exitpass = false;
+execActions(parse, codes, exitpass);
+}
+
+
+/********************************************
+* FN:		EXECACTIONS
+* SUBJ:	Execute the actions of a @CODE or @POSTCODE region.
+********************************************/
+
+void Code::execActions(Parse *parse, Dlist<Iaction> *codes, bool &exitpass)
+{
+bool ok = true;																// 01/14/00 AM.
+exitpass = false;
 
 // Set up for executing NLP++ code.									// 01/14/00 AM.
 // (Opt: Could move the nlppp object to an outer loop.)

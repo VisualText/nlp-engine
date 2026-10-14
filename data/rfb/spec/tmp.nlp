@@ -15,6 +15,7 @@
 
 _xNIL <- _RULES @@
 _xNIL <- _CODE @@
+_xNIL <- _POSTCODE @@	# #392.
 _xNIL <- _DECL @@	# 12/19/01 AM.
 _xNIL <- _PRES @@
 _xNIL <- _CHECKS @@

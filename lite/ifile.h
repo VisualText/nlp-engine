@@ -50,7 +50,8 @@ public:
 		Slist<Iregion>  * = 0,
 		bool = false,								// 03/25/99 AM. Fmulti.
 		bool = false,								// 10/19/99 AM. Fpath.
-		bool = false								// 10/25/99 AM. Fpremulti.
+		bool = false,								// 10/25/99 AM. Fpremulti.
+		Dlist<Iaction>  * = 0					// @POSTCODE region (#392).
 		);
 	~Ifile();									// Destructor.
 
@@ -62,6 +63,7 @@ public:
 	Dlist<Iarg>			*getSelects();			// 11/30/98 AM.
 	Dlist<Iarg>			*getDecls();			// 12/19/01 AM.
 	Dlist<Iaction>		*getCodes();			// 12/07/98 AM.
+	Dlist<Iaction>		*getPostcodes();		// #392.
 	tHtab<Slist<Irule> > *getHtab();			// 12/16/98 AM.
 	Slist<Irule>		*getMusts();			// 12/16/98 AM.
 	bool					 getFmulti();			// 03/25/99 AM.
@@ -78,6 +80,7 @@ public:
 	void setSelects(Dlist<Iarg> *);			// 11/30/98 AM.
 	void setDecls(Dlist<Iarg>*);				// 12/19/01 AM.
 	void setCodes(Dlist<Iaction> *);			// 12/07/98 AM.
+	void setPostcodes(Dlist<Iaction> *);		// #392.
 	void setHtab(tHtab<Slist<Irule> > *);	// 12/16/98 AM.
 	void setMusts(Slist<Irule> *);			// 12/16/98 AM.
 	void setFmulti(bool);						// 03/25/99 AM.
@@ -104,6 +107,7 @@ protected:
 
 	Dlist<Iarg>		 *decls_;		// Declarations.					// 12/19/01 AM.
 	Dlist<Iaction>	 *codes_;		// Code actions.					// 12/07/98 AM.
+	Dlist<Iaction>	 *postcodes_;	// @POSTCODE actions, run after the rules (#392).
 	Dlist<Iarg>		 *selects_;		// Select nodes.					// 11/30/98 AM.
 	Slist<Irecurse> *recurses_;			// Named recursively-called mini-passes.
 	Slist<Iregion>  *regions_;				// Normal rules regions of a rules file.

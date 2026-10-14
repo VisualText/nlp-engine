@@ -160,6 +160,7 @@ typedef struct s_pass														// 06/20/00 AM.
 	const RHASH *must;					// Must-try rule data.
 	const RHASH **htab;					// Rule hash table.
 	long long hsize;								// Rule hash table length.
+	bool (*postcode)(Nlppp *);			// Gen'd fn for @POSTCODE region (#392).
 	} PASS;
 
 // Exception numbers for NLP++ code.	// 09/15/08 AM.
@@ -198,6 +199,7 @@ public:
 	static bool dicttokz(Parse *, int);                         // 08/16/11 AM.
 	static bool python(Parse *, int, const _TCHAR *);           // 07/14/26. compiled python pass.
 	static bool lines(Parse *, int);
+	static void runPostcode(Parse *parse, const PASS *pass);	// #392.
 	static bool patExecute(
 		Parse *,
 		const PASS *,

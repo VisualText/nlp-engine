@@ -1,0 +1,21 @@
+###############################################
+# FILE:     exit_in_code.nlp
+# SUBJ:     exitpass() in @CODE skips the rules and @POSTCODE (#392).
+###############################################
+
+@CODE
+cout() << "exiting\n";
+exitpass();
+@@CODE
+
+@POSTCODE
+cout() << "WRONG: postcode ran after exitpass\n";
+@@POSTCODE
+
+@NODES _ROOT
+
+@POST
+    cout() << "WRONG: rules ran after exitpass\n";
+    single();
+@RULES
+_any <- _pair @@

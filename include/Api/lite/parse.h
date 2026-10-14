@@ -133,6 +133,7 @@ public:
 	_TCHAR *getOutdir();				// 03/10/99 AM.
 	COLL *getCollect();				// 05/17/00 AM.
 	Nlppp *getNlppp();				// 05/17/00 AM.
+	bool getCodeexit();				// @CODE exited the current pass (#392).
 	_TCHAR *getAlgo();					// 05/31/00 AM.
 	bool	getIntern();				// 05/26/01 AM.
 	long	getCurrpass();	// REN.	// 08/22/02 AM.
@@ -186,6 +187,7 @@ public:
 	void setOutdir(_TCHAR *);			// 03/10/99 AM.
 	void setCollect(COLL *);		// 05/17/00 AM.
 	void setNlppp(Nlppp *);			// 05/17/00 AM.
+	void setCodeexit(bool);
 	void setAlgo(_TCHAR *);			// 05/31/00 AM.
 	void setFbatchstart(bool);		// 10/19/00 AM.
 	void setIntern(bool);			// 05/26/01 AM.
@@ -608,6 +610,7 @@ private:
 	// if feasible.  Won't own these, but place them under control of the
 	// compiled version.
 	COLL *collect_;															// 05/17/00 AM.
+	bool codeexit_;		// @CODE exited the current pass; skip @POSTCODE.
 	Nlppp *nlppp_;																// 05/17/00 AM.
 
 	// BATCH START FLAG.  Handshake to say when the first of
