@@ -159,7 +159,7 @@ jobs:
 
       - name: Cmake Build all targets Linux (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
-        run: cmake --build build/ --target all
+        run: cmake --build build/ --target all --parallel
 
       - name: Test executable --version (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
