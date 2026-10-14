@@ -846,6 +846,36 @@ jobs:
           fi
           echo "[array-index] cached array indexing gives the same values"
 
+      - name: Postfix ++ and -- on an array element
+        shell: bash
+        run: |
+          set -eo pipefail
+          # Postfix ++ and -- ignored the index of an array element, saw several
+          # values, and stopped with the multi-valued variable error.
+          # Prefix ++x[i] worked. Now x[i]++ changes that element and returns
+          # its old value, in the interpreter and in compiled analyzers.
+          FIX=.github/workflows/tests/postfix-index
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          OUT="$FIX/input/text.txt_log/output.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(postfix-index): no output.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' \
+            'inc returns 20, now 10 21 30' \
+            'dec returns 30, now 10 21 29' \
+            'padded: 0 0 1 length 6' \
+            'string: 42' \
+            'local: 0 2' \
+            'scalar: 7 then 8' \
+            'node: 5 6')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(postfix-index): output.txt was:"; echo "$got"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[postfix-index] x[i]++ and x[i]-- change that element"
+
       - name: factorial() up to 20!
         shell: bash
         run: |

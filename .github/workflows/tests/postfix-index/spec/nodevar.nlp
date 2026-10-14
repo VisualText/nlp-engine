@@ -1,0 +1,15 @@
+###############################################
+# FILE:     nodevar.nlp
+# SUBJ:     Postfix ++ on an element of a node variable's array.
+###############################################
+
+@NODES _ROOT
+
+@POST
+  N("c")[0] = 5;
+  N("c")[1] = 5;
+  N("c")[1]++;
+  "output.txt" << "node: " << N("c")[0] << " " << N("c")[1] << "\n";
+  noop();
+@RULES
+_xNIL <- _xALPHA @@

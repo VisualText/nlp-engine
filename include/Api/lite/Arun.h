@@ -24,6 +24,7 @@ class Seqn;
 class Nlppp;
 class RFASem;
 class Iarg;	// 03/11/02 AM.
+class Ipair;	// x[i]++ helpers.
 class CG;	// 12/02/02 AM.
 
 // May want to determine this for each analyzer or pass.
@@ -771,6 +772,10 @@ public:
 	static RFASem *minus(RFASem *);
 
 	// Postunary.
+	static Iarg *index_arg(Ipair *pair, long long index);	// x[i], padded.
+	static bool bump_arg(Iarg *arg, long long delta, long long &old);
+	static long long postinc(int,_TCHAR*,int,RFASem*,Nlppp*);	// x[expr]++
+	static long long postdec(int,_TCHAR*,int,RFASem*,Nlppp*);	// x[expr]--
 	static long long postinc(RFASem *,Nlppp *);
 	static long long postinc(														// 06/02/00 AM.
 		int typ,

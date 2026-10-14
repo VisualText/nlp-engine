@@ -3242,6 +3242,21 @@ switch (type_)
 					ok = false;
 					goto done;
 					}
+				if (index >= 0)	// x[i]++ : the indexed element.
+					{
+					if (!Arun::bump_arg(Arun::index_arg(pair, index), 1, num))
+						{
+						ruleError(line_,nlppp);
+						nlppp->parse_->line_ = line_;
+						std::_t_strstream gerrStr;
+						gerrStr << _T("[inc: Error. Bad type.]") << std::ends;
+						nlppp->parse_->errOut(&gerrStr,false);
+						ok = false;
+						goto done;
+						}
+					val = new RFASem(num);	// The value before the change.
+					goto done;
+					}
 				Delt<Iarg> *darg;
 				Iarg *arg;
 				if (!vals || !(darg = vals->getFirst()))
@@ -3301,6 +3316,21 @@ switch (type_)
 				if (!unpackVar(rhs_, nlppp, /*UP*/ var, pair, vals,index))
 					{
 					ok = false;
+					goto done;
+					}
+				if (index >= 0)	// x[i]-- : the indexed element.
+					{
+					if (!Arun::bump_arg(Arun::index_arg(pair, index), -1, num))
+						{
+						ruleError(line_,nlppp);
+						nlppp->parse_->line_ = line_;
+						std::_t_strstream gerrStr;
+						gerrStr << _T("[dec: Error. Bad type.]") << std::ends;
+						nlppp->parse_->errOut(&gerrStr,false);
+						ok = false;
+						goto done;
+						}
+					val = new RFASem(num);	// The value before the change.
 					goto done;
 					}
 				if (!vals || !(darg = vals->getFirst()))
