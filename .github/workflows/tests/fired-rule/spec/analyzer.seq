@@ -1,0 +1,5 @@
+tokenize	nil	# 
+nlp	mark	# noop rule: stamps what it matched
+nlp	pair	# builds _pair: children keep their creator
+nlp	unpair	# splice: moved-up nodes are not stamped
+rec	samepass	# built then fired in one pass: keeps builder

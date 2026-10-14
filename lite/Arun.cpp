@@ -7400,6 +7400,8 @@ bool Arun::post_final(
 	Nlppp *nlppp
 	)
 {
+Pat::markFiredRule(nlppp, nlppp->sugg_ ? nlppp->sugg_->ruleline : 0);	// #73.
+
 // DEPENDS ON RECURSIVE vs PATTERN, etc.	// PARSESTATE.	// 06/03/13 AM.
 //nlppp->start_ = nlppp->node_ = nlppp->after_;	// Set up for next rule. // Comm // 06/03/13 AM.
 

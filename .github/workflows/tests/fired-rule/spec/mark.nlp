@@ -1,0 +1,13 @@
+###############################################
+# FILE:     mark.nlp
+# SUBJ:     A rule that fires but builds nothing (#73).
+# NOTE:     Part of the fired-rule regression; expected tree lines are in
+#           the CI step.
+###############################################
+
+@NODES _ROOT
+
+@POST
+  noop();
+@RULES
+_xNIL <- one @@

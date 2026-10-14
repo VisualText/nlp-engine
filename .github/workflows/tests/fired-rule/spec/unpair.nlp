@@ -1,0 +1,12 @@
+###############################################
+# FILE:     unpair.nlp
+# SUBJ:     splice() moves _pair's children up. The rule matched _pair, not
+#           them, so they are not stamped with this rule (#73).
+###############################################
+
+@NODES _ROOT
+
+@POST
+  splice(1,1);
+@RULES
+_xNIL <- _pair @@

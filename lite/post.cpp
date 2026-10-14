@@ -282,6 +282,44 @@ return ok;						// 11/10/99 AM.
 
 
 /********************************************
+* FN:		MARKFIREDRULE
+* SUBJ:	Record the firing rule on the nodes of a match that built nothing.
+* NOTE:	#73. A node a rule builds records the pass and rule line that
+*			built it. A rule that fires without building (noop(), an _xNIL
+*			suggestion, attributes only) left its matched nodes saying 0,0, so the
+*			logged tree couldn't tell which rule fired there and the debugger
+*			couldn't stop on it. Now they record the rule that last fired on them.
+*			A rule that built a node leaves its children alone: they keep their
+*			creator, and so do nodes the actions moved into the match without
+*			the rule matching them, e.g. by splice(): only nodes flagged FIRED
+*			(cleared before each logged pass) are stamped. A node built earlier
+*			in the same pass still shows BUILT and keeps its builder. Skipped after an
+*			excise, and when no logs are being written, like the FIRED flag
+*			itself. Shared by the compiled runtime.
+********************************************/
+
+void Pat::markFiredRule(Nlppp *nlppp, long ruleline)
+{
+if (!nlppp || nlppp->red_ || nlppp->excised_ || !nlppp->first_)
+	return;
+Parse *parse = nlppp->parse_;
+if (!parse || !parse->getEana()->getFlogfiles())
+	return;
+Node<Pn> *end = nlppp->last_ ? nlppp->last_->Right() : 0;
+for (Node<Pn> *node = nlppp->first_; node && node != end; node = node->Right())
+	{
+	Pn *pn = node->getData();
+	if (!pn->getFired())
+		continue;		// Not matched: e.g. moved up by splice().
+	if (pn->getBuilt())
+		continue;		// Built earlier in this pass: keeps its builder.
+	pn->setPassnum(parse->currpass_);
+	pn->setRuleline(ruleline);
+	}
+}
+
+
+/********************************************
 * FN:		POSTACTION
 * CR:		11/05/98 AM.
 * SUBJ:	Execute one post action for matched rule.
@@ -574,6 +612,8 @@ bool Pat::postFinal(
 //	Node<Pn>* &after		// Saved node for continued matching.	// 12/14/03 AM.
 	)
 {
+markFiredRule(nlppp, nlppp->rule_ ? nlppp->rule_->getLine() : 0);	// #73.
+
 // (Even if there was an error in prior actions, may as well proceed.)
 
 // GIVEN THAT RULE HAS MATCHED, RESET THE RIGHTMOST NODE TO WHERE WE ARE GOING NEXT.

@@ -772,6 +772,32 @@ jobs:
           fi
           echo "[kb-move-sort] moveconcept and sortattrs"
 
+      - name: Rule recorded on fired-but-not-built nodes (#73)
+        shell: bash
+        run: |
+          set -eo pipefail
+          # A rule that fires but builds nothing records its pass and rule line on
+          # the nodes it matched, so the -DEV tree logs and the debugger can tell
+          # which rule fired there (#73). Children of a built node, nodes moved up
+          # by splice(), and nodes built earlier in the same pass are not stamped.
+          FIX=.github/workflows/tests/fired-rule
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          ./bin/Release/nlp.exe -DEV -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          LOG="$FIX/input/text.txt_log"
+          check() {
+            if ! tr -d '\r' < "$LOG/$1" | grep -qxF -- "$2"; then
+              echo "FAIL(fired-rule): $3: no line '$2' in $1:"; tr -d '\r' < "$LOG/$1"; exit 1
+            fi
+          }
+          check ana002.tree '   one [0,2,0,2,2,13,alpha,fired]' 'noop rule stamps the node it matched'
+          check ana003.tree '   _pair [4,12,4,12,3,10,node,fired,blt]' 'built node records its builder'
+          check ana003.tree '      two [4,6,4,6,0,0,alpha]' 'children of a built node keep their creator'
+          check ana003.tree '   one [0,2,0,2,2,13,alpha]' 'the stamp carries into later passes'
+          check ana004.tree '   two [4,6,4,6,0,0,alpha]' 'nodes moved up by splice are not stamped'
+          check ana005.tree '   _one [0,2,0,2,5,10,node,fired,blt]' 'built then fired in one pass keeps its builder'
+          echo "[fired-rule] fired-but-not-built nodes record their rule"
+
       - name: factorial() up to 20!
         shell: bash
         run: |
