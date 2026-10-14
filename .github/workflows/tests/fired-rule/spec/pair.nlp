@@ -1,0 +1,10 @@
+###############################################
+# FILE:     pair.nlp
+# SUBJ:     A rule that builds: the new node records the rule, and the
+#           nodes it took in keep what they had (#73).
+###############################################
+
+@NODES _ROOT
+
+@RULES
+_pair <- two _xWHITE [s] three @@

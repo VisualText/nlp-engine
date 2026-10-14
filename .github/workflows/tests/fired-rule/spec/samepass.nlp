@@ -1,0 +1,15 @@
+###############################################
+# FILE:     samepass.nlp
+# SUBJ:     A rec pass builds _one, then a later rule fires on it without
+#           building. _one still shows blt, so it keeps its builder (#73).
+###############################################
+
+@NODES _ROOT
+
+@RULES
+_one <- one @@
+
+@POST
+  noop();
+@RULES
+_xNIL <- _one @@

@@ -288,6 +288,7 @@ public:
 		);
 
 	static Ielt *preWildStop(Ielt *ielt, Delt<Ielt> *next);	// #449.
+	static void markFiredRule(Nlppp *nlppp, long ruleline);	// #73.
 
 	static bool wildFillLeft(
 		Node<Pn> *s_coll,			// Collect for first pending wildcard.
