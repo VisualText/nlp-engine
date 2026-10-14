@@ -1,0 +1,10 @@
+###############################################
+# FILE:     readlines.nlp
+# SUBJ:     readlines() in interpreted and compiled analyzers. A compiled
+#           analyzer calls it through Arun::fnbridge.
+###############################################
+
+@CODE
+L("r") = str(arraylength(readlines("no-such-file.txt")));
+"output.txt" << "readlines: " << L("r") << "\n";
+@@CODE

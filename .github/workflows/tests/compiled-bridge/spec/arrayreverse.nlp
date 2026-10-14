@@ -1,0 +1,12 @@
+###############################################
+# FILE:     arrayreverse.nlp
+# SUBJ:     arrayreverse() in interpreted and compiled analyzers. A compiled
+#           analyzer calls it through Arun::fnbridge.
+###############################################
+
+@CODE
+L("a")[0] = 1; L("a")[1] = 2; L("a")[2] = 3;
+L("b") = arrayreverse(L("a"));
+L("r") = str(L("b")[0]) + str(L("b")[1]) + str(L("b")[2]);
+"output.txt" << "arrayreverse: " << L("r") << "\n";
+@@CODE

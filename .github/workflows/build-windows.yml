@@ -1243,6 +1243,36 @@ jobs:
 
           Compress-Archive -Path (Join-Path $outRoot '*') -DestinationPath (Join-Path $env:GITHUB_WORKSPACE 'nlpengine-compile-libs.zip') -Force
 
+      - name: Compiled analyzer calls interpreter-only builtins
+        shell: bash
+        run: |
+          set -eo pipefail
+          # A builtin added to the interpreter without a compiled Arun:: twin made
+          # every compiled analyzer that called it fail to build: 23 of them, among
+          # them jsonwrite, which the KB template calls. The generator now routes
+          # them through Arun::fnbridge. Build this fixture against the compile
+          # libraries just packaged, run it, and compare with the interpreted run.
+          FIX=.github/workflows/tests/compiled-bridge
+          LIBS="$(cygpath -m "$GITHUB_WORKSPACE")/compile-libs"
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log" "$FIX/output" "$FIX/run" "$FIX/build"
+          mkdir -p "$FIX/logs"
+          ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          tr -d '\r' < "$FIX/input/text.txt_log/output.txt" > bridge-interpreted.txt
+          n=$(wc -l < bridge-interpreted.txt)
+          if [ "$n" -ne 23 ]; then
+            echo "FAIL(compiled-bridge): interpreted run printed $n lines, wanted 23:"; cat bridge-interpreted.txt; exit 1
+          fi
+          rm -rf "$FIX/input/text.txt_log" "$FIX/output"
+          ./bin/Release/nlp.exe -COMPILEANA -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          cmake -S "$FIX" -B "$FIX/build" -A x64 -DENGINE_LIBS="$LIBS"
+          cmake --build "$FIX/build" --config Release
+          rm -rf "$FIX/input/text.txt_log" "$FIX/output"
+          ./bin/Release/nlp.exe -COMPILED -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          if ! diff bridge-interpreted.txt <(tr -d '\r' < "$FIX/input/text.txt_log/output.txt"); then
+            echo "FAIL(compiled-bridge): compiled output differs from interpreted"; exit 1
+          fi
+          echo "[compiled-bridge] interpreter-only builtins work in a compiled analyzer"
+
       - name: Upload nlpengine-compile-libs.zip
         uses: actions/upload-artifact@v4
         with:

@@ -1,0 +1,14 @@
+###############################################
+# FILE:     jsonwrite.nlp
+# SUBJ:     jsonwrite() in interpreted and compiled analyzers. A compiled
+#           analyzer calls it through Arun::fnbridge.
+###############################################
+
+@CODE
+L("c") = makeconcept(findroot(), "jw");
+addstrval(L("c"), "k", "v");
+L("f") = G("$apppath") + "/output/bridge.json";
+jsonwrite(L("f"), L("c"));
+L("r") = str(fileexists(L("f"))) + " " + str(strlength(readfile(L("f"))) > 10);
+"output.txt" << "jsonwrite: " << L("r") << "\n";
+@@CODE

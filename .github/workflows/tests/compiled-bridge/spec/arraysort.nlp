@@ -1,0 +1,12 @@
+###############################################
+# FILE:     arraysort.nlp
+# SUBJ:     arraysort() in interpreted and compiled analyzers. A compiled
+#           analyzer calls it through Arun::fnbridge.
+###############################################
+
+@CODE
+L("a")[0] = 30; L("a")[1] = 10; L("a")[2] = 20;
+L("b") = arraysort(L("a"), 1);
+L("r") = str(L("b")[0]) + "," + str(L("b")[1]) + "," + str(L("b")[2]);
+"output.txt" << "arraysort: " << L("r") << "\n";
+@@CODE

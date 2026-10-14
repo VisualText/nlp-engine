@@ -15,6 +15,7 @@ All rights reserved.
 
 #include <iostream>
 #include <assert.h>
+#include <initializer_list>
 #include "lite.h"
 
 typedef void DELTS;              // Doubly-linked list.  // 07/07/03 AM.
@@ -1269,6 +1270,8 @@ public:
 	static RFASem *sem(float);												// 03/07/02 AM.
 	static RFASem *sem(_TCHAR*);												// 03/07/02 AM.
 	static RFASem *sem(RFASem*);	// Noop.								// 03/07/02 AM.
+	// Builtins with no compiled twin run through the interpreter (arunbridge.cpp).
+	static RFASem *fnbridge(Nlppp *, _TCHAR *name, std::initializer_list<RFASem *> args);
 
 	static _TCHAR *strtotitle(Nlppp*,_TCHAR*);								// 08/22/00 AM.
 	static _TCHAR *strtotitle(Nlppp*,RFASem*);							// 08/22/00 AM.

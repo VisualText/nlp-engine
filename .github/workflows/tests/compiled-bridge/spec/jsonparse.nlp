@@ -1,0 +1,12 @@
+###############################################
+# FILE:     jsonparse.nlp
+# SUBJ:     jsonparse() in interpreted and compiled analyzers. A compiled
+#           analyzer calls it through Arun::fnbridge.
+###############################################
+
+@CODE
+L("c") = makeconcept(findroot(), "jp");
+L("ok") = jsonparse("{\"a\": 1}", L("c"));
+L("r") = str(L("ok")) + " " + str(numval(L("c"), "a"));
+"output.txt" << "jsonparse: " << L("r") << "\n";
+@@CODE

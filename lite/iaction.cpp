@@ -795,6 +795,47 @@ return true;
 }
 
 
+// Builtins that exist only in the interpreter (Fn::), with no compiled
+// Arun:: twin. A compiled analyzer calls them through Arun::fnbridge,
+// which runs the interpreter's implementation. Before, the generated
+// Arun::<name>(...) call didn't compile. A new builtin without an Arun::
+// function belongs here.
+static const _TCHAR *bridgedFns[] = {
+	_T("abs"),
+	_T("arrayreverse"),
+	_T("arrayslice"),
+	_T("arraysort"),
+	_T("arrayunique"),
+	_T("deletefile"),
+	_T("direxists"),
+	_T("dirlist"),
+	_T("fileexists"),
+	_T("filesize"),
+	_T("jsonparse"),
+	_T("jsonwrite"),
+	_T("push"),
+	_T("randomint"),
+	_T("readfile"),
+	_T("readlines"),
+	_T("refind"),
+	_T("rematch"),
+	_T("resubst"),
+	_T("strindexof"),
+	_T("striscaps"),
+	_T("strjoin"),
+	_T("strlastindexof"),
+	0
+	};
+
+static bool isBridged(const _TCHAR *name)
+{
+for (const _TCHAR **p = bridgedFns; *p; ++p)
+	if (!strcmp_i((_TCHAR *) *p, (_TCHAR *) name))
+		return true;
+return false;
+}
+
+
 /********************************************
 * FN:		GENEVAL
 * CR:		05/07/00 AM.
@@ -940,10 +981,13 @@ else
 _TCHAR callPrefix[MAXSTR + 64];
 callPrefix[0] = '\0';
 bool userdef = false;	// User-defined in NLP++					// 03/11/02 AM.
+bool bridged = false;	// Interpreter-only builtin, via Arun::fnbridge.
 if (!scope_ || !*scope_)													// 02/13/01 AM.
 	{
 //	if (VTRun_Ptr->isBuiltin(fnname))	// 08/28/02 AM.	// [DEGLOB]	// 10/15/20 AM.
-	if (vtrun->isBuiltin(fnname))						// [DEGLOB]	// 10/15/20 AM.
+	if (vtrun->isBuiltin(fnname) && isBridged(fnname))
+		bridged = true;		// No Arun:: twin: Arun::fnbridge.
+	else if (vtrun->isBuiltin(fnname))						// [DEGLOB]	// 10/15/20 AM.
 		_stprintf(callPrefix, _T("Arun::%s"), fnname);
 	else																			// 12/24/01 AM.
 		{
@@ -1056,24 +1100,39 @@ if (wrapLambda)
 	for (Delt<Iarg> *d = args_->getFirst(); d; d = d->Right(), ++idx)
 		{
 		*fcode << _T("auto _a") << idx << _T(" = ");
-		if (userdef) *fcode << _T("Arun::sem(");
+		if (userdef || bridged) *fcode << _T("Arun::sem(");
 		if (!emitArgExpr(d->getData())) return false;
-		if (userdef) *fcode << _T(")");
+		if (userdef || bridged) *fcode << _T(")");
 		*fcode << _T("; ");
 		}
+	if (bridged)
+		{
+		*fcode << _T("return Arun::fnbridge(") << firstArg
+				 << _T(", (_TCHAR*)_T(\"") << fnname << _T("\"), {");
+		for (int i = 0; i < argCount; ++i)
+			*fcode << (i ? _T(", _a") : _T("_a")) << i;
+		*fcode << _T("}); }())");
+		}
+	else
+		{
 	*fcode << _T("return ") << callPrefix << _T("(") << firstArg;
 	for (int i = 0; i < argCount; ++i)
 		*fcode << _T(", _a") << i;
 	*fcode << _T("); }())");
+		}
 	}
 else
 	{
 	// Legacy inline path: preserved for 0/1-arg calls and for calls that
 	// contain IAREF or IAOSTREAM args (the latter intentionally early-
 	// returns from Iaction::genEval — that quirk lives here).
+	if (bridged)
+		*fcode << _T("Arun::fnbridge(") << firstArg
+				 << _T(", (_TCHAR*)_T(\"") << fnname << _T("\"), {");
+	else
 	*fcode << callPrefix << _T("(") << firstArg;
 	Delt<Iarg> *darg = args_ ? args_->getFirst() : 0;
-	if (darg) *fcode << _T(", ");
+	if (darg && !bridged) *fcode << _T(", ");
 	for (; darg; darg = darg->Right())
 		{
 		Iarg *iarg = darg->getData();
@@ -1083,12 +1142,14 @@ else
 				return true;
 			return false;
 			}
-		if (userdef) *fcode << _T("Arun::sem(");
+		if (userdef || bridged) *fcode << _T("Arun::sem(");
 		if (!emitArgExpr(iarg)) return false;
-		if (userdef) *fcode << _T(")");
+		if (userdef || bridged) *fcode << _T(")");
 		if (darg->Right())
 			*fcode << _T(", ");
 		}
+	if (bridged)
+		*fcode << _T("}");
 	*fcode << _T(")");
 	}
 

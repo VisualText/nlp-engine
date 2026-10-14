@@ -1,0 +1,12 @@
+###############################################
+# FILE:     push.nlp
+# SUBJ:     push() in interpreted and compiled analyzers. A compiled
+#           analyzer calls it through Arun::fnbridge.
+###############################################
+
+@CODE
+L("a")[0] = 2; L("a")[1] = 3;
+L("b") = push(1, L("a"));
+L("r") = str(L("b")[0]) + str(L("b")[1]) + str(L("b")[2]);
+"output.txt" << "push: " << L("r") << "\n";
+@@CODE

@@ -1,0 +1,10 @@
+###############################################
+# FILE:     dirlist.nlp
+# SUBJ:     dirlist() in interpreted and compiled analyzers. A compiled
+#           analyzer calls it through Arun::fnbridge.
+###############################################
+
+@CODE
+L("r") = str(arraylength(dirlist("no-such-dir")));
+"output.txt" << "dirlist: " << L("r") << "\n";
+@@CODE
