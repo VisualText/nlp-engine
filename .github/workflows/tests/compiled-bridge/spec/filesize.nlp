@@ -1,0 +1,10 @@
+###############################################
+# FILE:     filesize.nlp
+# SUBJ:     filesize() in interpreted and compiled analyzers. A compiled
+#           analyzer calls it through Arun::fnbridge.
+###############################################
+
+@CODE
+L("r") = filesize("no-such-file.txt");
+"output.txt" << "filesize: " << L("r") << "\n";
+@@CODE

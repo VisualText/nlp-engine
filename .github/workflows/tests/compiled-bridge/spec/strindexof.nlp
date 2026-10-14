@@ -1,0 +1,10 @@
+###############################################
+# FILE:     strindexof.nlp
+# SUBJ:     strindexof() in interpreted and compiled analyzers. A compiled
+#           analyzer calls it through Arun::fnbridge.
+###############################################
+
+@CODE
+L("r") = strindexof("hello", "l");
+"output.txt" << "strindexof: " << L("r") << "\n";
+@@CODE

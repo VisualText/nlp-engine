@@ -1,0 +1,10 @@
+run/
+kb/
+build/
+logs/
+output/
+input/*_log/
+*.dll
+*.exp
+*.lib
+*.pdb

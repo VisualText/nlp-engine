@@ -1,0 +1,11 @@
+###############################################
+# FILE:     randomint.nlp
+# SUBJ:     randomint() in interpreted and compiled analyzers. A compiled
+#           analyzer calls it through Arun::fnbridge.
+###############################################
+
+@CODE
+L("n") = randomint(5, 5);
+L("r") = L("n");
+"output.txt" << "randomint: " << L("r") << "\n";
+@@CODE
