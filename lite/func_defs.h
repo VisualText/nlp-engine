@@ -141,6 +141,7 @@ enum funcDef
 	FNmkdir,		// 12/06/01 AM.
 	FNmod,
 	FNmovecleft,
+	FNmoveconcept,	// #133.
 	FNmovecright,
 	FNmovesem,
 	FNndump,
@@ -270,6 +271,7 @@ enum funcDef
 	FNsingler,
 	FNsinglex,
 	FNsinglezap,
+	FNsortattrs,		// #384.
 	FNsortconsbyattr,	// 12/02/02 AM.
 	FNsortchilds,     // 02/20/09 AM.
 	FNsorthier,       // 02/20/09 AM.

@@ -16,6 +16,8 @@ All rights reserved.
 #include <time.h>
 #include <filesystem>
 #include <limits>
+#include <vector>
+#include <algorithm>
 #include "machine-min.h"					// 03/08/00 AM.
 #include "prim/libprim.h"
 #include "lite/global.h"
@@ -2285,6 +2287,42 @@ else				// Insert into list of siblings.
 }
 
 
+// Move concept, with its subtree, attributes and phrase, to the end of
+// PARENT's children (#133). Refuses to move the root, to move a concept
+// under itself or its own subtree, or onto a parent that already has a
+// child of the same name. Moving within the same parent moves it last.
+bool CG::moveConcept(CONCEPT *conc, CONCEPT *parent)
+{
+CON *con = (CON *) conc;
+CON *par = (CON *) parent;
+if (!con || !par || con->kind != cBASIC || par->kind != cBASIC)
+	return false;
+ACON *acon = kbm_->acon_;
+CON *old = acon->con_parent(con);
+if (!old)
+	return false;		// Root, or not in the hierarchy.
+for (CON *p = par; p; p = acon->con_parent(p))
+	if (p == con)
+		return false;	// Would move it under itself.
+if (old != par && findConcept(parent, ACON::con_str(con)))
+	return false;		// Parent already has a child by that name.
+
+dirty_ = true;
+if (!acon->con_remove(con))
+	return false;
+if (!par->dn)
+	return acon->con_add_first(con, par);
+CON *last = par->dn;
+while (last->next)
+	last = last->next;
+last->next = con;
+con->prev = last;
+con->next = CNULL;
+con->up = CNULL;		// Only a first child points up.
+return true;
+}
+
+
 // "Bubble" concept right.
 bool CG::moveCright(CONCEPT *con)
 {
@@ -2394,6 +2432,35 @@ while (sibling) {
 		break;
 	sibling = next;
 }
+}
+
+// Sort concept's attributes alphabetically by name, as sortChilds orders
+// children (#384). Stable, so attributes of the same name keep their order;
+// each attribute's values are untouched.
+bool CG::sortAttrs(CONCEPT *conc)
+{
+CON *con = (CON *) conc;
+if (!con)
+	return false;
+PTR *attrs = con->attrs;
+if (!attrs || !attrs->next)
+	return true;		// Nothing to sort.
+std::vector<PTR *> arr;
+for (PTR *p = attrs; p; p = p->next)
+	arr.push_back(p);
+AKBM *kbm = kbm_;
+std::stable_sort(arr.begin(), arr.end(), [kbm](PTR *a, PTR *b) {
+	_TCHAR *na = kbm->attrs_name(a);
+	_TCHAR *nb = kbm->attrs_name(b);
+	return unicu::strCmp(na ? na : (_TCHAR *) _T(""),
+							  nb ? nb : (_TCHAR *) _T("")) < 0;
+	});
+for (size_t i = 0; i + 1 < arr.size(); ++i)
+	arr[i]->next = arr[i + 1];
+arr.back()->next = 0;
+con->attrs = arr.front();
+dirty_ = true;
+return true;
 }
 
 // Sort concept's children.	[NEW!]

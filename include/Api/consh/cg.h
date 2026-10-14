@@ -500,12 +500,14 @@ public:
 
 	// "Bubble" concept left or right.
 	bool moveCleft(CONCEPT *con);
+	bool moveConcept(CONCEPT *con, CONCEPT *parent);	// #133.
 	bool moveCright(CONCEPT *con);
 	CONCEPT *makeParentConcept(_TCHAR *name, CONCEPT *conStart, CONCEPT *conEnd);
 	void adoptConcepts(CONCEPT *conParent, CONCEPT *conStart, CONCEPT *conEnd);
 
 	// Sort concept's phrase.	[NEW!]
 	bool sortChilds(CONCEPT *conc);           // 02/20/09 AM.
+	bool sortAttrs(CONCEPT *conc);				// #384.
 
 	//////////////////////
 	// PHRASE MGMT

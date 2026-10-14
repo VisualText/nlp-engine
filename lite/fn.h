@@ -429,6 +429,10 @@ public:
 		/*UP*/
 		RFASem* &sem
 		);
+	static bool fnMoveconcept(Delt<Iarg> *args, Nlppp *nlppp,
+		/*UP*/ RFASem* &sem);									// #133.
+	static bool fnSortattrs(Delt<Iarg> *args, Nlppp *nlppp,
+		/*UP*/ RFASem* &sem);									// #384.
 	static bool fnSortchilds(                                // 02/20/09 AM.
 		Delt<Iarg> *args,
 		Nlppp *nlppp,

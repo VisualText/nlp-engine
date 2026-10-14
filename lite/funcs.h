@@ -138,6 +138,7 @@ _T("merger"),
 _T("mkdir"),		// 12/06/01 AM.
 _T("mod"),
 _T("movecleft"),
+_T("moveconcept"),	// #133.
 _T("movecright"),
 _T("movesem"),
 _T("ndump"),
@@ -267,6 +268,7 @@ _T("single"),
 _T("singler"),
 _T("singlex"),
 _T("singlezap"),
+_T("sortattrs"),		// #384.
 _T("sortconsbyattr"),	// 12/02/02 AM.
 _T("sortchilds"),       // 02/20/09 AM.
 _T("sorthier"),         // 02/20/09 AM.
