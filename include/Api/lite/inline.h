@@ -19,7 +19,7 @@ All rights reserved.
 // 09/26/01 AM.
 #include <tchar.h>
 #endif
-#include "../prim/unicu.h"
+#include "prim/unicu.h"
 
 // A wrapper to keep things from blowing up if string is empty.
 inline const _TCHAR *str(_TCHAR *x) { return (x ? x : STRNULL); }
