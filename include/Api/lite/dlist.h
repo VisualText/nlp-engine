@@ -65,6 +65,10 @@ public:
 	Delt<DELTTYPE> *rpop();		// Pop from end.
 
 	Delt<DELTTYPE> *getNth(long);
+	// 0-based element at INDEX, resuming from the last lookup when moving
+	// forward (#401). REACHED gets INDEX, or the length if INDEX is past the end.
+	Delt<DELTTYPE> *getNthCached(long index, long &reached);
+	void touch();		// Forget the cached position (after outside relinking).
 	long getLength();
 	int CmpNumDlist(long);		// Compare number to length. 1,0,-1.
 	long getOrd(Delt<DELTTYPE> *);	// 11/22/98 AM.
@@ -101,6 +105,12 @@ public:
 private:
 	Delt<DELTTYPE> *pFirst;	// Point to first element.
 	Delt<DELTTYPE> *pLast;	// Point to last element.
+
+	// Position cache for getNthCached (#401). Cleared by every mutator except
+	// rpush (appending moves no existing element). Kept last in the class so
+	// the offsets of the members above are unchanged.
+	Delt<DELTTYPE> *pCache;
+	long iCache;
 
 #ifndef STABLE_
 public:

@@ -128,6 +128,8 @@ private:
 template<class DELTTYPE>
 Dlist<DELTTYPE>::Dlist()
 {
+pCache = 0;		// #401.
+iCache = 0;
 pFirst = pLast = 0;
 
 #ifndef STABLE_
@@ -138,6 +140,8 @@ pFirst = pLast = 0;
 template<class DELTTYPE>
 Dlist<DELTTYPE>::Dlist(DELTTYPE *dd)
 {
+pCache = 0;		// #401.
+iCache = 0;
 Delt<DELTTYPE> *delt;
 
 //delt = new Delt<DELTTYPE>(*dd);			// 07/02/99 AM.
@@ -155,6 +159,8 @@ pFirst = pLast = delt;
 template<class DELTTYPE>
 Dlist<DELTTYPE>::Dlist(Delt<DELTTYPE> *delt)
 {
+pCache = 0;		// #401.
+iCache = 0;
 pFirst = pLast = delt;
 
 // While code being built, do this check.
@@ -189,6 +195,8 @@ template<class DELTTYPE>
 Dlist<DELTTYPE>::Dlist(const Dlist<DELTTYPE> &orig)	// 08/28/12 AM.
 // (The above is same form as LINUX version.)	// 03/20/19 AM.
 {
+pCache = 0;		// #401.
+iCache = 0;
 //*gerr << "[Dlist copy constructor]" << std::endl;
 pFirst = pLast = 0;
 // Copy the list.
@@ -237,12 +245,14 @@ return pLast;
 template<class DELTTYPE>
 void Dlist<DELTTYPE>::setFirst(Delt<DELTTYPE> *delt)
 {
+pCache = 0;		// Invalidate position cache (#401).
 pFirst = delt;
 }
 
 template<class DELTTYPE>
 void Dlist<DELTTYPE>::setLast(Delt<DELTTYPE> *delt)
 {
+pCache = 0;		// Invalidate position cache (#401).
 pLast = delt;
 }
 
@@ -295,6 +305,7 @@ if (count_)
 template<class DELTTYPE>
 void Dlist<DELTTYPE>::push(DELTTYPE *dd)
 {
+pCache = 0;		// Invalidate position cache (#401).
 Delt<DELTTYPE> *delt;
 // 07/02/99 AM. Caller responsible for copying as needed.
 delt = new Delt<DELTTYPE>(dd, 0, pFirst);	// Make elt for data.
@@ -311,6 +322,7 @@ pFirst = delt;
 template<class DELTTYPE>
 void Dlist<DELTTYPE>::push(Delt<DELTTYPE> *delt)
 {
+pCache = 0;		// Invalidate position cache (#401).
 #ifndef STABLE_
 if (delt->pLeft || delt->pRight)
 	{
@@ -397,6 +409,7 @@ else					// If list is empty.
 template<class DELTTYPE>
 Delt<DELTTYPE> *Dlist<DELTTYPE>::pop()
 {
+pCache = 0;		// Invalidate position cache (#401).
 if (!pFirst)
 	return 0;
 
@@ -423,6 +436,7 @@ return tmp;
 template<class DELTTYPE>
 Delt<DELTTYPE> *Dlist<DELTTYPE>::rpop()
 {
+pCache = 0;		// Invalidate position cache (#401).
 if (!pLast)
 	return 0;
 
@@ -454,6 +468,52 @@ Delt<DELTTYPE> *ptr;
 for (ptr = pFirst,--ord; ptr, ord > 0; ptr = ptr->pRight, --ord)
 	;
 return ptr;
+}
+
+
+/********************************************
+* FN:		GETNTHCACHED
+* SUBJ:	Element at 0-based INDEX, or 0 past the end (#401).
+* NOTE:	NLP++ array indexing walked from the head on every access, so a
+*			loop over x[0..n-1] cost O(n^2). Resuming from the last position
+*			makes it O(n). REACHED is INDEX, or the list length if INDEX is past
+*			the end, as the callers' own walks computed it.
+********************************************/
+
+template<class DELTTYPE>
+Delt<DELTTYPE> *Dlist<DELTTYPE>::getNthCached(long index, long &reached)
+{
+Delt<DELTTYPE> *ptr = pFirst;
+long ii = 0;
+if (pCache && iCache <= index)
+	{
+	ptr = pCache;
+	ii = iCache;
+	}
+Delt<DELTTYPE> *prev = 0;
+for (; ptr && ii < index; ++ii)
+	{
+	prev = ptr;
+	ptr = ptr->pRight;
+	}
+reached = ii;
+if (ptr)
+	{
+	pCache = ptr;
+	iCache = ii;
+	}
+else if (prev)		// Ran off the end: remember the last element, so
+	{					// appending at index = length stays O(1).
+	pCache = prev;
+	iCache = ii - 1;
+	}
+return ptr;
+}
+
+template<class DELTTYPE>
+void Dlist<DELTTYPE>::touch()
+{
+pCache = 0;
 }
 
 
@@ -539,6 +599,7 @@ void Dlist<DELTTYPE>::insertLeft(
 	Delt<DELTTYPE> *pos
 	)
 {
+pCache = 0;		// Invalidate position cache (#401).
 if (!delt || !pos)
 	{
 	std::_t_strstream gerrStr;
@@ -581,6 +642,7 @@ void Dlist<DELTTYPE>::insertRight(
 	Delt<DELTTYPE> *pos
 	)
 {
+pCache = 0;		// Invalidate position cache (#401).
 if (!delt || !pos)
 	{
 	std::_t_strstream gerrStr;
@@ -623,6 +685,7 @@ Delt<DELTTYPE> *Dlist<DELTTYPE>::insertAfter(
 	long ord
 	)
 {
+pCache = 0;		// Invalidate position cache (#401).
 if (!dat || ord < 0)
 	return 0;
 
@@ -669,6 +732,7 @@ Delt<DELTTYPE> *Dlist<DELTTYPE>::insertAfter(
 	long ord
 	)
 {
+pCache = 0;		// Invalidate position cache (#401).
 if (!delt || ord < 0)
 	return 0;
 
@@ -709,6 +773,7 @@ Delt<DELTTYPE> *Dlist<DELTTYPE>::exciseNth(
 	long ord
 	)
 {
+pCache = 0;		// Invalidate position cache (#401).
 if (ord <= 0)
 	return 0;
 
@@ -726,6 +791,7 @@ Delt<DELTTYPE> *Dlist<DELTTYPE>::exciseNth(
 	long ord
 	)
 {
+pCache = 0;		// Invalidate position cache (#401).
 if (ord <= 0)
 	return 0;
 else if (ord == 1)			// First elt of list.
@@ -764,6 +830,7 @@ Delt<DELTTYPE> *Dlist<DELTTYPE>::exciseElt(
 	Delt<DELTTYPE> *delt
 	)
 {
+pCache = 0;		// Invalidate position cache (#401).
 if (!delt)
 	return 0;
 if (!(delt->pLeft))
@@ -793,6 +860,7 @@ bool Dlist<DELTTYPE>::excise(
 	Delt<DELTTYPE> *end
 	)
 {
+pCache = 0;		// Invalidate position cache (#401).
 if (!start || !end)
 	return false;
 
@@ -839,6 +907,7 @@ bool Dlist<DELTTYPE>::spliceAfter(
 	long ord
 	)
 {
+pCache = 0;		// Invalidate position cache (#401).
 if (!start || !end || ord < 0)
 	return false;
 if (start->pLeft || end->pRight)	// Just makin' sure.
@@ -897,6 +966,7 @@ bool Dlist<DELTTYPE>::spliceAfter(
 	Delt<DELTTYPE> *end,
 	Delt<DELTTYPE> *pos)
 {
+pCache = 0;		// Invalidate position cache (#401).
 if (!start || !end)
 	return false;
 if (start->pLeft || end->pRight)	// Just makin' sure.

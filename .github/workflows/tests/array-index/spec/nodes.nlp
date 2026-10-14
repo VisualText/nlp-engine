@@ -1,0 +1,19 @@
+###############################################
+# FILE:     nodes.nlp
+# SUBJ:     Arrays held in parse-tree node variables (#401).
+###############################################
+
+@NODES _ROOT
+
+@POST
+  N("v")[0] = "x";
+  N("v")[1] = "y";
+  pnrpushval(N(1), "v", "z");
+  pnpushval(N(1), "v", "w");
+  "output.txt" << N("$text") << ": " << N("v")[0] << N("v")[1] << N("v")[2] << N("v")[3]
+               << " then " << N("v")[1] << "\n";
+  N("v")[2] = "Z";
+  "output.txt" << N("$text") << ": " << N("v")[3] << N("v")[2] << N("v")[1] << N("v")[0] << "\n";
+  noop();
+@RULES
+_xNIL <- _xALPHA @@

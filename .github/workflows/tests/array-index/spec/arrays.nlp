@@ -1,0 +1,92 @@
+###############################################
+# FILE:     arrays.nlp
+# SUBJ:     Array indexing after every kind of change to the array (#401).
+# NOTE:     Indexing now resumes from the last position. These checks mix
+#           cached reads with operations that reshape the values list, so
+#           a stale position would show up as a wrong value. Expected output
+#           is in the CI step; it matches engine 4.2.18 exactly.
+###############################################
+
+@DECL
+
+show(L("label"), L("arr"), L("n")) {
+    L("s") = L("label") + ":";
+    L("i") = 0;
+    while (L("i") < L("n")) {
+        L("s") = L("s") + " " + str(L("arr")[L("i")]);
+        L("i")++;
+    }
+    "output.txt" << L("s") << "\n";
+}
+
+@@DECL
+
+@CODE
+# Build by appending, read forward, then backward (cache restarts).
+L("i") = 0;
+while (L("i") < 6) {
+    G("a")[L("i")] = L("i") * 10;
+    L("i")++;
+}
+show("forward", G("a"), 6);
+L("s") = "backward:";
+L("i") = 5;
+while (L("i") >= 0) {
+    L("s") = L("s") + " " + str(G("a")[L("i")]);
+    L("i")--;
+}
+"output.txt" << L("s") << "\n";
+
+# Read past the end, then near the end again.
+"output.txt" << "past end: " << G("a")[9] << " then " << G("a")[4] << "\n";
+
+# Overwrite in the middle, read the neighbours.
+G("a")[3] = 333;
+show("overwrite", G("a"), 6);
+
+# Increment and decrement an element.
+++G("a")[2];
+--G("a")[5];
+show("incdec", G("a"), 6);
+
+# Assign past the end: pads with zeros.
+G("a")[8] = 88;
+show("padded", G("a"), 9);
+"output.txt" << "length " << arraylength(G("a")) << "\n";
+
+# Read deep, then replace the whole array with a shorter one.
+"output.txt" << "deep: " << G("a")[7] << "\n";
+G("a") = arrayslice(G("a"), 1, 3);
+show("sliced", G("a"), 4);
+
+# Truncate to a scalar, then index.
+"output.txt" << "before scalar: " << G("a")[2] << "\n";
+G("a") = 5;
+"output.txt" << "scalar: " << G("a")[0] << " " << G("a")[1] << "\n";
+
+# Rebuild, read the end, then sort, reverse and push.
+G("b")[0] = 30;
+G("b")[1] = 10;
+G("b")[2] = 20;
+"output.txt" << "b end: " << G("b")[2] << "\n";
+G("b") = arraysort(G("b"), 1);
+show("sorted", G("b"), 3);
+G("b") = arrayreverse(G("b"));
+show("reversed", G("b"), 3);
+G("b") = push(5, G("b"));
+show("pushed", G("b"), 4);
+
+# Copy one array to another, then change the copy.
+G("c") = G("b");
+G("c")[0] = 99;
+show("copy", G("c"), 4);
+show("original", G("b"), 4);
+
+# A local array.
+L("x")[0] = "p";
+L("x")[1] = "q";
+L("x")[2] = "r";
+show("local", L("x"), 3);
+L("x")[1] = "Q";
+show("local2", L("x"), 3);
+@@CODE
