@@ -62,9 +62,13 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/vcpkg-bincache
-          key: vcpkg-${{ runner.os }}-${{ runner.arch }}-${{ steps.vcpkgkey.outputs.sha }}-${{ hashFiles('vcpkg.json') }}
+          # The key names BOTH triplets this job installs. actions/cache never
+          # re-saves on a primary-key hit, so the old key -- first saved before
+          # the x64-osx cross build existed -- froze an arm64-only cache and
+          # ICU for x64-osx was rebuilt from source (~4 min) on every run.
+          key: vcpkg-${{ runner.os }}-${{ runner.arch }}-arm64+x64-${{ steps.vcpkgkey.outputs.sha }}-${{ hashFiles('vcpkg.json') }}
           restore-keys: |
-            vcpkg-${{ runner.os }}-${{ runner.arch }}-${{ steps.vcpkgkey.outputs.sha }}-
+            vcpkg-${{ runner.os }}-${{ runner.arch }}-arm64+x64-${{ steps.vcpkgkey.outputs.sha }}-
             vcpkg-${{ runner.os }}-${{ runner.arch }}-
 
       # vcpkg errors out if the binary-cache directory does not exist yet.
@@ -96,7 +100,7 @@ jobs:
         run: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_BUILD_TYPE=release -B build -S . -DCMAKE_TOOLCHAIN_FILE='${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake' -DCMAKE_OSX_ARCHITECTURES=arm64
 
       - name: Cmake Build all targets MaxOs
-        run: cmake --build build/ --target all
+        run: cmake --build build/ --target all --parallel
 
       - name: Test executable --version
         run: ./bin/nlp --version || true
@@ -150,7 +154,7 @@ jobs:
           cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_BUILD_TYPE=release -B build-x64 -S . \
             -DCMAKE_TOOLCHAIN_FILE='${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake' \
             -DVCPKG_TARGET_TRIPLET=x64-osx -DCMAKE_OSX_ARCHITECTURES=x86_64
-          cmake --build build-x64/ --target all
+          cmake --build build-x64/ --target all --parallel
           mkdir -p universal/x86_64
           cp bin/nlp universal/x86_64/nlp
           cp lib/*.a universal/x86_64/

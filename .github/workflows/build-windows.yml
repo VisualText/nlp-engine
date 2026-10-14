@@ -102,7 +102,7 @@ jobs:
         run: cmake -B build -A x64 -DCMAKE_TOOLCHAIN_FILE='${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake'
 
       - name: Cmake Build all targets Windows
-        run: cmake --build build --config Release --target nlp
+        run: cmake --build build --config Release --target nlp --parallel
 
       - name: Test executable --version
         run: ./bin/Release/nlp.exe --version || true
