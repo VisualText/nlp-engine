@@ -1,0 +1,16 @@
+###############################################
+# FILE:     range_all.nlp
+# SUBJ:     A range past the rule end, covering the wildcard.
+# NOTE:     Part of the pre-wildcard regression (#449); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@PRE
+<1,20> varz("nosuch");
+@POST
+  "output.txt" << "range var" << "\n";
+  noop();
+@RULES
+_xNIL <- one _xWILD [plus] three @@

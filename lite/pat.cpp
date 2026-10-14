@@ -1244,7 +1244,8 @@ long tcount = 0;														// 02/04/05 AM.
 //if (!matchRealRight(trig,end,0,0,0, /*DU*/ real,node))	// 10/06/99 AM.
 if (!matchRealRight(ielt,
 		nlppp->end_,0,0,0,nlppp, /*DU*/ real,nlppp->node_,	// 10/06/99 AM.
-													tcount))				// 02/04/05 AM.
+													tcount,				// 02/04/05 AM.
+		preWildStop(ielt, curr->Right())))						// #449.
 	{
 //	nlppp->span_ += tcount;											// 02/04/05 AM.
 
@@ -1446,7 +1447,8 @@ Node<Pn> *real = 0;	// First real node matched, moving left.
 // OPT // 10/06/99 AM.
 //if (!matchRealLeft(curr,start,wildone,wildmin,wildmax, /*DU*/ real,node))
 if (!matchRealLeft(ielt,nlppp->start_,wildone,wildmin,wildmax,
-				/*DU*/ real,nlppp->node_))
+				/*DU*/ real,nlppp->node_,
+				preWildStop(ielt, curr->Left())))						// #449.
 	{
 	if (optionalElt(ielt))		// If current rule elt is optional, succeed.
 		{
@@ -1597,7 +1599,8 @@ long tcount = 0;														// 02/04/05 AM.
 // OPT // 10/06/99 AM.
 //if (!matchRealRight(curr,end,wildone,wildmin,wildmax, /*DU*/ real,node))
 if (!matchRealRight(ielt,nlppp->end_,wildone,wildmin,wildmax,nlppp,
-			/*DU*/ real,nlppp->node_,tcount))
+			/*DU*/ real,nlppp->node_,tcount,
+			preWildStop(ielt, curr->Right())))						// #449.
 	{
 //	nlppp->span_ += tcount;										// 02/04/05 AM.
 	if (optionalElt(ielt))		// If current rule elt is optional, succeed.
@@ -1862,7 +1865,8 @@ bool Pat::matchRealLeft(
 	/*DU*/
 	Node<Pn>* &real,		// First real node matched (moving left).
 								// (Allows for repetition.)
-	Node<Pn>* &node		// DN: Current node.  UP: Last real node matched.
+	Node<Pn>* &node,		// DN: Current node.  UP: Last real node matched.
+	Ielt *stop				// Stop before a match of this elt (#449).
 	)
 {
 if (!node)		// This can happen now, to handle wildcard at start of rule.
@@ -1879,7 +1883,7 @@ for (;;)		// Look for real match till done.
 	++count;
 
 	// Actual match of rule elt to node(s).
-	if (trueMatchLeft(ielt, start, /*DU*/ test, real))
+	if (trueMatchLeft(ielt, start, /*DU*/ test, real, stop))
 		{
 		// FAIL if wildcards pending and we didn't cover the minimum. (DESIGN)
 		if (wildone && count <= wildmin)
@@ -1927,7 +1931,8 @@ bool Pat::matchRealRight(
 	Node<Pn>* &real,		// First real node matched (moving right).
 								// (Allows for repetition.)
 	Node<Pn>* &node,		// DN: Current node.  UP: Last real node matched.
-	long &tot															// 02/04/05 AM.
+	long &tot,															// 02/04/05 AM.
+	Ielt *stop				// Stop before a match of this elt (#449).
 	)
 {
 if (!node)		// This can happen now, to handle wildcard at end of rule.
@@ -1948,7 +1953,7 @@ for (;;)		// Look for real match till done.
 
 	// Actual match of rule elt to node(s).
 	if (trueMatchRight(ielt, end,nlppp, /*DU*/ test,real,	// OPT	// 10/06/99 AM.
-														tcount))				// 02/04/05 AM.
+														tcount, stop))		// 02/04/05 AM.
 		{
 		tot += tcount;														// 02/04/05 AM.
 
@@ -2015,7 +2020,8 @@ bool Pat::trueMatchLeft(
 	Node<Pn> *start,
 	/*DU*/
 	Node<Pn>* &node,			// DN: Current node.  UP: Last real matched node.
-	Node<Pn>* &real			// First real matched node, moving left.
+	Node<Pn>* &real,			// First real matched node, moving left.
+	Ielt *stop					// Stop before a match of this elt (#449).
 	)
 {
 // Get repetitions, conditions, features....
@@ -2056,7 +2062,12 @@ for (;;)				// While matching.
 	//		}
 	// NOTE:	May want the switch stmt and modes available to app developer.
 	// At least for adding new match types.
-	match = Match(ielt, test);
+	// A wildcard with @PRE stops, like any wildcard, before a node that
+	// matches the next rule element (#449).
+	if (stop && count >= min && Match(stop, test))
+		match = false;
+	else
+		match = Match(ielt, test);
 
 	if (!match)				// Failed to match.
 		{
@@ -2101,7 +2112,8 @@ bool Pat::trueMatchRight(
 	/*DU*/
 	Node<Pn>* &node,			// DN: Current node.  UP: Last real matched node.
 	Node<Pn>* &real,			// First real matched node, moving right.
-	int &count					// Count the number of matches.	// 02/04/05 AM.
+	int &count,					// Count the number of matches.	// 02/04/05 AM.
+	Ielt *stop					// Stop before a match of this elt (#449).
 	)
 {
 // Get repetitions, conditions, features....
@@ -2142,7 +2154,12 @@ for (;;)				// While matching.
 	//		}
 	// NOTE:	May want the switch stmt and modes available to app developer.
 	// At least for adding new match types.
-	match = Match(ielt, test);
+	// A wildcard with @PRE stops, like any wildcard, before a node that
+	// matches the next rule element (#449).
+	if (stop && count >= min && Match(stop, test))
+		match = false;
+	else
+		match = Match(ielt, test);
 
 	if (!match)				// Failed to match.
 		{
@@ -2451,6 +2468,34 @@ for (; s_coll != e_coll; s_coll = s_coll->Right())
 
 // Made it this far, successfully backfilled nodes to wildcards.
 return true;
+}
+
+
+/********************************************
+* FN:		PREWILDSTOP
+* SUBJ:	For a wildcard made a repeating element by its @PRE conditions,
+*			the neighboring element it must stop in front of (#449).
+* RET:	The next rule element in the matching direction, else 0.
+* NOTE:	Since 08/16/11 a _xWILD with @PRE is matched greedily and stops at
+*			the first node failing @PRE (LinesDictTokZ relies on this to end a
+*			line at a newline). But it ran past the next element too, so a rule
+*			like  one _xWILD [plus] three  with  <2,2> varz("x")  never matched.
+*			A bare _xWILD next to it is not a stopper: adjacent wildcards share.
+********************************************/
+
+Ielt *Pat::preWildStop(Ielt *ielt, Delt<Ielt> *next)
+{
+if (!ielt || !next || !ielt->getPres()
+	 || _tcscmp(ielt->getName(), _T("_xWILD"))
+	 || ielt->getMatches() || ielt->getFails()
+	 || ielt->getHmatches() || ielt->getHfails())
+	return 0;
+Ielt *nelt = next->getData();
+if (!nelt || (!_tcscmp(nelt->getName(), _T("_xWILD"))
+				 && !nelt->getMatches() && !nelt->getFails()
+				 && !nelt->getHmatches() && !nelt->getHfails()))
+	return 0;
+return nelt;
 }
 
 

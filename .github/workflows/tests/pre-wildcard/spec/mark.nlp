@@ -1,0 +1,15 @@
+###############################################
+# FILE:     mark.nlp
+# SUBJ:     Gives "one", "two" and the spaces a num attribute: every node
+#           the wildcard will cover, since @PRE must hold on each.
+# NOTE:     Part of the pre-wildcard regression (#449); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@POST
+  N("num",1) = 1;
+  noop();
+@RULES
+_xNIL <- _xWILD [one match=(one two _xWHITE)] @@

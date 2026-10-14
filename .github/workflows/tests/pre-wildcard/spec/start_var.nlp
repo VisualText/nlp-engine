@@ -1,0 +1,16 @@
+###############################################
+# FILE:     start_var.nlp
+# SUBJ:     _xSTART before the wildcard: var passes.
+# NOTE:     Part of the pre-wildcard regression (#449); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@PRE
+<2,2> var("num");
+@POST
+  "output.txt" << "start var" << "\n";
+  noop();
+@RULES
+_xNIL <- _xSTART _xWILD [plus] three @@

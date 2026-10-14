@@ -1,0 +1,16 @@
+###############################################
+# FILE:     start_varz.nlp
+# SUBJ:     _xSTART before the wildcard: varz fails.
+# NOTE:     Part of the pre-wildcard regression (#449); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@PRE
+<2,2> varz("num");
+@POST
+  "output.txt" << "WRONG start varz" << "\n";
+  noop();
+@RULES
+_xNIL <- _xSTART _xWILD [plus] three @@

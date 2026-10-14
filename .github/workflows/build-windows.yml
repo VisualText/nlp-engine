@@ -711,6 +711,30 @@ jobs:
           fi
           echo "[postcode] @POSTCODE runs after the rules in every placement"
 
+      - name: "@PRE on a wildcard (#449)"
+        shell: bash
+        run: |
+          set -eo pipefail
+          # A wildcard with @PRE is matched greedily and stops at the first node
+          # that fails @PRE (LinesDictTokZ ends a line at a newline this way).
+          # It must also stop before the next element, or a rule like
+          #   one _xWILD [plus] three   with   <2,2> varz("num")
+          # never matches (#449). Checked rightward, leftward and after _xSTART.
+          FIX=.github/workflows/tests/pre-wildcard
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          OUT="$FIX/input/text.txt_log/output.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(pre-wildcard): no output.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' "clean varz" "right var" "left var" "start var" "range var")
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(pre-wildcard): output.txt was:"; echo "$got"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[pre-wildcard] @PRE wildcards stop before the next element"
+
       - name: factorial() up to 20!
         shell: bash
         run: |

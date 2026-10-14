@@ -274,7 +274,8 @@ public:
 		/*DU*/
 		Node<Pn>* &real,		// First real node matched (moving left).
 									// (Allows for repetition.)
-		Node<Pn>* &node		// DN: Current node.  UP: Last real node matched.
+		Node<Pn>* &node,		// DN: Current node.  UP: Last real node matched.
+		Ielt *stop = 0			// Stop before a match of this elt (#449).
 		);
 
 	static bool trueMatchLeft(
@@ -282,8 +283,11 @@ public:
 		Node<Pn> *start,
 		/*DU*/
 		Node<Pn>* &node,			// DN: Current node.  UP: Last real matched node.
-		Node<Pn>* &real			// First real matched node, moving left.
+		Node<Pn>* &real,			// First real matched node, moving left.
+		Ielt *stop = 0				// Stop before a match of this elt (#449).
 		);
+
+	static Ielt *preWildStop(Ielt *ielt, Delt<Ielt> *next);	// #449.
 
 	static bool wildFillLeft(
 		Node<Pn> *s_coll,			// Collect for first pending wildcard.
@@ -304,7 +308,8 @@ public:
 		Node<Pn>* &real,		// First real node matched (moving left).
 									// (Allows for repetition.)
 		Node<Pn>* &node,		// DN: Current node.  UP: Last real node matched.
-		long & tot				// 02/04/05 AM.
+		long & tot,				// 02/04/05 AM.
+		Ielt *stop = 0			// Stop before a match of this elt (#449).
 		);
 
 	static bool trueMatchRight(
@@ -314,7 +319,8 @@ public:
 		/*DU*/
 		Node<Pn>* &node,			// DN: Current node.  UP: Last real matched node.
 		Node<Pn>* &real,			// First real matched node, moving left.
-		int &tot						// Count of nodes matched.
+		int &tot,						// Count of nodes matched.
+		Ielt *stop = 0				// Stop before a match of this elt (#449).
 		);
 
 	static bool wildFillRight(

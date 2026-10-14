@@ -1,0 +1,16 @@
+###############################################
+# FILE:     clean.nlp
+# SUBJ:     No node has "num" yet: varz on the wildcard passes.
+# NOTE:     Part of the pre-wildcard regression (#449); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@PRE
+<2,2> varz("num");
+@POST
+  "output.txt" << "clean varz" << "\n";
+  noop();
+@RULES
+_xNIL <- one _xWILD [plus] three @@
