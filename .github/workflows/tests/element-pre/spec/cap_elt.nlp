@@ -1,0 +1,14 @@
+###############################################
+# FILE:     cap_elt.nlp
+# SUBJ:     cap on an alphabetic element. (element-key form)
+# NOTE:     Part of the element-pre regression (#438); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@POST
+  "output.txt" << "cap elt : " << phrasetext() << "\n";
+  noop();
+@RULES
+_xNIL <- _xALPHA [cap] @@

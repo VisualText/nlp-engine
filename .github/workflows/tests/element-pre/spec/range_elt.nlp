@@ -1,0 +1,14 @@
+###############################################
+# FILE:     range_elt.nlp
+# SUBJ:     numrange on a number. (element-key form)
+# NOTE:     Part of the element-pre regression (#438); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@POST
+  "output.txt" << "range elt : " << phrasetext() << "\n";
+  noop();
+@RULES
+_xNIL <- _xNUM [numrange=(5 10)] @@

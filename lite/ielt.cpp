@@ -1343,6 +1343,37 @@ for (dpair = list->getFirst(); dpair; dpair = dpair->Right())
 			}
 		elt->setDeaccent(true);												// 01/28/05 AM.
 		}
+	else if (preActionKey(key))
+		{
+		// A @PRE condition written on the element itself (#438):
+		//   _xWILD [plus match=(_noun) vareq=("pos" "noun") varz="num"]
+		// is the same as  <n,n> vareq("pos","noun");  <n,n> varz("num");
+		// in a @PRE region, where n is this element's number.
+		_TCHAR *name = 0;
+		parse->internStr(key, /*UP*/ name);
+		Dlist<Iarg> *args = vals ? Iarg::copy_args(vals, parse, true) : 0;
+		// Element values are strings; the actions that take numbers get
+		// numbers, as they do from a @PRE region (the compiled form needs it).
+		if (args && (!strcmp_i(key, _T("numrange"))
+						 || !strcmp_i(key, _T("length"))
+						 || !strcmp_i(key, _T("lengthr"))))
+			{
+			for (Delt<Iarg> *darg = args->getFirst(); darg; darg = darg->Right())
+				{
+				Iarg *arg = darg->getData();
+				long long num = 0;
+				if (arg->getType() == IASTR && str_to_long(arg->getStr(), num))
+					{
+					Iarg *narg = new Iarg(num);
+					darg->setData(narg);
+					delete arg;
+					}
+				}
+			}
+		if (!elt->pres_)
+			elt->pres_ = new Dlist<Ipre>();
+		elt->pres_->rpush(new Ipre(name, args, ord, ord));
+		}
 	else
 		{
 		std::_t_strstream gerrStr;
@@ -1388,6 +1419,27 @@ else if (elt->max_ == -1)
 
 	min_ = 0;			// Recover. min is a "don't care".
 	}
+}
+
+
+/********************************************
+* FN:		PREACTIONKEY
+* SUBJ:	Whether an element key names a @PRE action (#438).
+* NOTE:	The actions Pat::preAction knows. None is also an element key.
+********************************************/
+
+bool Ielt::preActionKey(_TCHAR *key)
+{
+static const _TCHAR *names[] = {
+	_T("var"), _T("varz"), _T("vareq"), _T("varne"), _T("vargt"), _T("varlt"),
+	_T("regexp"), _T("regexpi"), _T("uppercase"), _T("lowercase"), _T("cap"),
+	_T("length"), _T("lengthr"), _T("numrange"), _T("unknown"), _T("debug"),
+	0
+	};
+for (const _TCHAR **p = names; *p; ++p)
+	if (key && !strcmp_i(key, (_TCHAR *) *p))
+		return true;
+return false;
 }
 
 

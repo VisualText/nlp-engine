@@ -1,0 +1,16 @@
+###############################################
+# FILE:     vareq_pre.nlp
+# SUBJ:     vareq on an alphabetic element. (@PRE form)
+# NOTE:     Part of the element-pre regression (#438); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@PRE
+<1,1> vareq("pos", "noun");
+@POST
+  "output.txt" << "vareq @PRE: " << phrasetext() << "\n";
+  noop();
+@RULES
+_xNIL <- _xALPHA @@

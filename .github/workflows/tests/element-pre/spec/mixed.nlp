@@ -1,0 +1,16 @@
+###############################################
+# FILE:     mixed.nlp
+# SUBJ:     Element keys and a @PRE region in one rule.
+# NOTE:     Part of the element-pre regression (#438); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@PRE
+<3,3> var("pos");
+@POST
+  "output.txt" << "mixed: " << phrasetext() << "\n";
+  noop();
+@RULES
+_xNIL <- _xALPHA [var="num"] _xWHITE [s] _xALPHA @@

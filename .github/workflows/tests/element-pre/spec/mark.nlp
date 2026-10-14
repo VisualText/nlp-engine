@@ -1,0 +1,20 @@
+###############################################
+# FILE:     mark.nlp
+# SUBJ:     Gives "two" pos=noun and "one" num=1.
+# NOTE:     Part of the element-pre regression (#438); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@POST
+  N("pos",1) = "noun";
+  noop();
+@RULES
+_xNIL <- two @@
+
+@POST
+  N("num",1) = 1;
+  noop();
+@RULES
+_xNIL <- one @@
