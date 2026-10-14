@@ -4295,9 +4295,10 @@ return true;
 * SUBJ:	Recognize a complete rules file.
 * RET:	True if ok, else false.
 * RULE:	_RULESFILE <- _DECL _CODE _SELECT [opt] _RECURSES [opt] _REGIONS @@
-* FORM:	rfarulesfile(1,2,3,4,5)
+* FORM:	rfarulesfile(1,2,3,4,5[,6])
 * NOTE:	11/30/98 AM. Adding optional SELECT elt to rule.
 *			12/19/01 AM. Adding @DECL region for function definitions.
+*			Optional 6th arg is the @POSTCODE region (#392).
 ********************************************/
 
 bool PostRFA::postRFArulesfile(
@@ -4306,14 +4307,55 @@ bool PostRFA::postRFArulesfile(
 	)
 {
 Node<Pn> *ndecl=0, *ncode=0, *nselect=0, *nrecs=0, *nregions=0;// 12/19/01 AM.
+Node<Pn> *npostcode=0;
 
-if (!args_0to5(_T("rulesfile"), args, nlppp->collect_, nlppp->sem_,
-										/*DU*/ ndecl,ncode, nselect, nrecs, nregions))
+// Optional 6th arg: the @POSTCODE region (#392).  Detach it so the
+// five-arg helper sees the list it expects.
+Delt<Iarg> *d5 = args;
+for (int i = 1; d5 && i < 5; ++i)
+	d5 = d5->Right();
+Delt<Iarg> *d6 = d5 ? d5->Right() : 0;
+if (d6)
+	{
+	if (d6->Right())
+		{
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA rulesfile action: More than six args given.]")
+				  << std::ends;
+		return nlppp->parse_->errOut(&gerrStr,false,true);
+		}
+	long long num6 = 0;
+	Iarg *arg6 = d6->getData();
+	if (arg6->getType() == IANUM)
+		num6 = arg6->getNum();
+	else if (arg6->getType() != IASTR
+				|| !str_to_long(arg6->getStr(), num6))
+		{
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[RFA rulesfile action: Arg6 must be numeric.]")
+				  << std::ends;
+		return nlppp->parse_->errOut(&gerrStr,false,true);
+		}
+	Node<Pn> *coll6 = 0;
+	if (num6 > 0 && nlppp->collect_
+		 && num6 <= nlppp->collect_->getRoot()->length())
+		coll6 = nlppp->collect_->getRoot()->nth(num6);
+	if (coll6)
+		npostcode = coll6->Down();
+	d5->setRight(0);
+	}
+
+bool ok = args_0to5(_T("rulesfile"), args, nlppp->collect_, nlppp->sem_,
+										/*DU*/ ndecl,ncode, nselect, nrecs, nregions);
+if (d6)
+	d5->setRight(d6);	// Restore the arg list.
+if (!ok)
 	return false;
 
 // ALLOWING EMPTY RULES IF THERE IS CODE.								// 08/31/00 AM.
 if (!nregions
 	 && !ncode																	// 08/31/00 AM.
+	 && !npostcode
 	 && !ndecl )																// 12/19/01 AM.
 	{
 	std::_t_strstream gerrStr;
@@ -4329,6 +4371,15 @@ if (!nregions
 // Get semantics from the kiddies.
 RFASem *semdecl, *semcode, *semselect, *semrecs, *semregions;
 semdecl = semcode = semselect = semrecs = semregions = 0;
+RFASem *sempostcode = 0;
+if (npostcode)
+	sempostcode = (RFASem *) npostcode->getData()->getSem();
+if (sempostcode && sempostcode->getType() != RSACTIONS)
+	{
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[RFA rulesfile action: Bad postcode semantic object.]") << std::ends;
+	return nlppp->parse_->errOut(&gerrStr,false,true);
+	}
 
 if (ndecl)
 	semdecl = (RFASem *) ndecl->getData()->getSem();
@@ -4400,6 +4451,15 @@ if (semcode)
 	ncode->getData()->setSem(0);
 	}
 
+Dlist<Iaction> *postcode=0;
+if (sempostcode)
+	{
+	postcode = sempostcode->getActions();
+	sempostcode->setActions(0);		// Zero them out.
+	delete sempostcode;
+	npostcode->getData()->setSem(0);
+	}
+
 bool fmulti = false;					// Flag if MULTI select.
 bool fpath = false;						// Flag if PATH select.
 if (semselect)
@@ -4433,7 +4493,7 @@ if (semregions)
 
 Ifile *ifile;					// Sem to build.
 ifile = new Ifile(decls, code, sels, recs, regions,				// 12/19/01 AM.
-	fmulti, fpath);															// 10/19/99 AM.
+	fmulti, fpath, false, postcode);															// 10/19/99 AM.
 //delete X;									// Keep for consistency.
 
 // Register if rulefile is legitimately empty of rules.			// 08/31/00 AM.

@@ -1,0 +1,8 @@
+###############################################
+# FILE:     only.nlp
+# SUBJ:     A pass file with nothing but @POSTCODE (#392).
+###############################################
+
+@POSTCODE
+cout() << "only\n";
+@@POSTCODE

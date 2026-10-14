@@ -53,6 +53,7 @@ All rights reserved.
 #include "lite/nlp.h"		// FOR DEBUGGING!!!	// 10/10/99 AM.
 #include "var.h"											// 09/26/00 AM.
 #include "lite/nlppp.h"										// 05/17/00 AM.
+#include "lite/code.h"	// Code::execPostcode (#392).
 
 #include <filesystem>
 
@@ -135,6 +136,7 @@ hdll_ = 0;					// 01/29/99 AM.
 
 collect_ = 0;				// 05/17/00 AM.
 nlppp_	= 0;				// 05/17/00 AM.
+codeexit_ = false;
 algo_		= 0;				// 05/31/00 AM.
 
 fbatchstart_ = false;	// 10/19/00 AM.
@@ -190,6 +192,7 @@ HINSTANCE	  Parse::getHdll()	{return hdll_;}					// 01/29/99 AM.
 _TCHAR *Parse::getOutdir()	{return outdir_;}							// 03/10/99 AM.
 COLL *Parse::getCollect()	{return collect_;}						// 05/17/00 AM.
 Nlppp *Parse::getNlppp()	{return nlppp_;}							// 05/17/00 AM.
+bool Parse::getCodeexit()	{return codeexit_;}
 _TCHAR *Parse::getAlgo()		{return algo_;}							// 05/31/00 AM.
 bool	Parse::getFbatchstart() {return fbatchstart_;}				// 10/19/00 AM.
 bool	Parse::getIntern()	{return intern_;}							// 05/26/01 AM.
@@ -262,6 +265,7 @@ void Parse::setHdll(HINSTANCE x)			{hdll_ = x;}				// 01/29/99 AM.
 void Parse::setOutdir(_TCHAR *x)	{_tcscpy(outdir_, x);}			// 03/10/99 AM.
 void Parse::setCollect(COLL *x)	{collect_	= x;}					// 05/17/00 AM.
 void Parse::setNlppp(Nlppp *x)	{nlppp_		= x;}					// 05/17/00 AM.
+void Parse::setCodeexit(bool x)	{codeexit_ = x;}
 void Parse::setAlgo(_TCHAR *x)		{algo_		= x;}
 void Parse::setFbatchstart(bool x) {fbatchstart_ = x;}			// 10/19/00 AM.
 void Parse::setIntern(bool x)				{intern_ = x;}				// 05/26/01 AM.
@@ -780,6 +784,7 @@ if (pass->getActive() && algo)	// Execute active pass.			// 01/08/99 AM.
 		NlpDebug::passEnd(this,num);										// Debugger.
 		return false;															// 01/26/02 AM.
 		}
+	Code::execPostcode(this, pass);	// @POSTCODE, after the rules (#392).
 	}
 else if (!strcmp_i(str(salgo),_T("folder")))							// 02/03/05 DD.
 	;																				// 02/03/05 DD.

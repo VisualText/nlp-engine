@@ -1,0 +1,7 @@
+tokenize	nil	# 
+nlp	after_code	# @POSTCODE right after @CODE
+nlp	at_end	# @POSTCODE at the end, no closing marker
+nlp	exit_in_code	# exitpass() in @CODE skips @POSTCODE
+rec	rec_pass	# rec pass with @POSTCODE
+nlp	select_first	# @NODES before @CODE and @POSTCODE
+nlp	only	# a file with nothing but @POSTCODE

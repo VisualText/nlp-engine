@@ -1,0 +1,22 @@
+###############################################
+# FILE:     rec_pass.nlp
+# SUBJ:     @POSTCODE in a rec pass (#392). The rule reapplies until the
+#           pairs and leftover letter collapse into one _list.
+###############################################
+
+@NODES _ROOT
+
+@POST
+    single();
+@RULES
+_list <- _xWILD [one match=(_pair _list)] _xWHITE [s] _xWILD [one match=(_pair _letter)] @@
+
+@POSTCODE
+L("kids") = 0;
+L("n") = pndown(pnroot());
+while (L("n")) {
+    L("kids") = L("kids") + 1;
+    L("n") = pnnext(L("n"));
+}
+cout() << "rec first=" << pnname(pndown(pnroot())) << " kids=" << L("kids") << "\n";
+@@POSTCODE

@@ -19,6 +19,7 @@ pat	rule	#
 pat	rules	# 
 pat	decl	# comment here
 pat	code	# 
+pat	postcode	# @POSTCODE region (#392)
 pat	pres	# 
 pat	checks	# comment here
 pat	posts	# comment here

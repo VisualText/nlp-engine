@@ -1,0 +1,20 @@
+###############################################
+# FILE:     select_first.nlp
+# SUBJ:     @NODES before @CODE, then @POSTCODE (#392).
+###############################################
+
+@NODES _ROOT
+
+@CODE
+G("seen") = 0;
+@@CODE
+
+@POSTCODE
+cout() << "select_first seen=" << G("seen") << "\n";
+@@POSTCODE
+
+@POST
+    G("seen") = G("seen") + 1;
+    noop();
+@RULES
+_xNIL <- _list @@

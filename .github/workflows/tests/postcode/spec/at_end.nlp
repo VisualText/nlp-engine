@@ -1,0 +1,22 @@
+###############################################
+# FILE:     at_end.nlp
+# SUBJ:     @POSTCODE at the end of the file, with no closing @@POSTCODE,
+#           using L() locals (#392). Sees the _pair nodes the rules built.
+###############################################
+
+@NODES _ROOT
+
+@POST
+    single();
+@RULES
+_pair <- _letter _xWHITE [s] _letter @@
+
+@POSTCODE
+L("k") = 0;
+L("n") = pndown(pnroot());
+while (L("n")) {
+    if (pnname(L("n")) == "_pair")
+        L("k") = L("k") + 1;
+    L("n") = pnnext(L("n"));
+}
+cout() << "pairs=" << L("k") << "\n";

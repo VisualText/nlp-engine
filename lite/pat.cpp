@@ -3796,6 +3796,7 @@ nlppp->region_ = REGCODE;	// Execute NLP++ in code region.		// 08/09/08 AM.
 
 if (pass->code)
 	(*(pass->code))(nlppp);													// 08/07/02 AM.
+parse->setCodeexit(nlppp->exitpass_);	// Skip @POSTCODE if exiting (#392).
 
 nlppp->region_ = REGNULL;	// Reset.									// 08/09/08 AM.
 
@@ -4166,6 +4167,7 @@ nlppp->region_ = REGCODE;	// Execute NLP++ in code region.		// 08/09/08 AM.
 
 if (pass->code)
 	(pass->code)(nlppp);														// 08/07/02 AM.
+parse->setCodeexit(nlppp->exitpass_);	// Skip @POSTCODE if exiting (#392).
 
 if (nlppp->exitpass_)		// Exiting current pass.				// 08/07/02 AM.
 	return true;																// 08/07/02 AM.

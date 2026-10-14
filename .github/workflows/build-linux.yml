@@ -789,6 +789,24 @@ jobs:
           fi
           echo "[xstart-wildcard] _xSTART with a wildcard matches and reduces the whole span"
 
+      - name: "@POSTCODE region (#392) (Non-20.04)"
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # @POSTCODE runs NLP++ after a pass has matched its rules: after @CODE,
+          # at the end of a file, in a rec pass, with @NODES first, and alone.
+          # exitpass() in @CODE skips the rules and @POSTCODE alike.
+          FIX=.github/workflows/tests/postcode
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          out=$(./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" | tr -d '\r')
+          want=$(printf '%s\n' "code n=0" "postcode n=5 first=_letter" "pairs=2" "exiting" "rec first=_list kids=2" "select_first seen=1" "only")
+          if [ "$out" != "$want" ]; then
+            echo "FAIL(postcode): stdout was:"; echo "$out"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[postcode] @POSTCODE runs after the rules in every placement"
+
       - name: factorial() up to 20! (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash

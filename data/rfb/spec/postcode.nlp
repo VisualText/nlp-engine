@@ -1,0 +1,30 @@
+###############################################
+# FILE:     POSTCODE.NLP
+# SUBJ:     Statements of a @POSTCODE region (#392). Mirrors code.nlp.
+###############################################
+
+@PATH _ROOT _POSTCODE _NLPPP
+
+@POST
+	rfaactions(1)			# 01/14/00 AM.
+	single()
+@RULES
+_POSTCODE [base] <- _STMTS [plus] @@	# 01/14/00 AM.
+
+# 09/17/03 AM.
+@POST
+  noop()
+@RULES
+_xNIL <- _xWILD [one match=(
+	_xPUNCT
+	_WHILECOND
+	)] @@
+
+@POST
+  rfberror(1)
+  single()
+@RULES
+_ERROR <- _xANY [plus] @@
+
+
+
