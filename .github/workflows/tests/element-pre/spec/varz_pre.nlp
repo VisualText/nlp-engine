@@ -1,0 +1,16 @@
+###############################################
+# FILE:     varz_pre.nlp
+# SUBJ:     varz on a wildcard between two words (#449 behaviour). (@PRE form)
+# NOTE:     Part of the element-pre regression (#438); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@PRE
+<2,2> varz("num");
+@POST
+  "output.txt" << "varz @PRE: " << phrasetext() << "\n";
+  noop();
+@RULES
+_xNIL <- two _xWILD [plus] 3 @@

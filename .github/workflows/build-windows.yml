@@ -876,6 +876,45 @@ jobs:
           fi
           echo "[postfix-index] x[i]++ and x[i]-- change that element"
 
+      - name: "@PRE conditions on rule elements (#438)"
+        shell: bash
+        run: |
+          set -eo pipefail
+          # A @PRE condition can be written on the rule element itself (#438):
+          #   _xWILD [plus varz="num"]  is  <n,n> varz("num");  in @PRE.
+          # Each case runs in both forms; their matches must agree.
+          FIX=.github/workflows/tests/element-pre
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          OUT="$FIX/input/text.txt_log/output.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(element-pre): no output.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' \
+            'vareq @PRE: two' \
+            'vareq elt : two' \
+            'varz @PRE: two Three ABC 3' \
+            'varz elt : two Three ABC 3' \
+            'two @PRE: one' \
+            'two elt : one' \
+            'flag @PRE: ABC' \
+            'flag elt : ABC' \
+            'cap @PRE: Three' \
+            'cap @PRE: ABC' \
+            'cap elt : Three' \
+            'cap elt : ABC' \
+            'range @PRE: 9' \
+            'range elt : 9' \
+            'regexp @PRE: two' \
+            'regexp elt : two' \
+            'mixed: one two')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(element-pre): output.txt was:"; echo "$got"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[element-pre] element-key conditions match like @PRE"
+
       - name: factorial() up to 20!
         shell: bash
         run: |

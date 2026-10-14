@@ -1,0 +1,14 @@
+###############################################
+# FILE:     regexp_elt.nlp
+# SUBJ:     regexp (a glob match) on an alphabetic element. (element-key form)
+# NOTE:     Part of the element-pre regression (#438); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@POST
+  "output.txt" << "regexp elt : " << phrasetext() << "\n";
+  noop();
+@RULES
+_xNIL <- _xALPHA [regexp="t*"] @@

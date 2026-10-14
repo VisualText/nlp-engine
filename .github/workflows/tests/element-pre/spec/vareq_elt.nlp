@@ -1,0 +1,14 @@
+###############################################
+# FILE:     vareq_elt.nlp
+# SUBJ:     vareq on an alphabetic element. (element-key form)
+# NOTE:     Part of the element-pre regression (#438); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@POST
+  "output.txt" << "vareq elt : " << phrasetext() << "\n";
+  noop();
+@RULES
+_xNIL <- _xALPHA [vareq=("pos" "noun")] @@

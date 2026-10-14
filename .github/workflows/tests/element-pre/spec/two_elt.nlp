@@ -1,0 +1,14 @@
+###############################################
+# FILE:     two_elt.nlp
+# SUBJ:     Two conditions on one element. (element-key form)
+# NOTE:     Part of the element-pre regression (#438); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@POST
+  "output.txt" << "two elt : " << phrasetext() << "\n";
+  noop();
+@RULES
+_xNIL <- _xALPHA [var="num" varne=("pos" "noun")] @@

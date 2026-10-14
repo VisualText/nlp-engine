@@ -1,0 +1,17 @@
+tokenize	nil	# 
+nlp	mark	# 
+nlp	vareq_pre	# 
+nlp	vareq_elt	# 
+nlp	varz_pre	# 
+nlp	varz_elt	# 
+nlp	two_pre	# 
+nlp	two_elt	# 
+nlp	flag_pre	# 
+nlp	flag_elt	# 
+nlp	cap_pre	# 
+nlp	cap_elt	# 
+nlp	range_pre	# 
+nlp	range_elt	# 
+nlp	regexp_pre	# 
+nlp	regexp_elt	# 
+nlp	mixed	# 
