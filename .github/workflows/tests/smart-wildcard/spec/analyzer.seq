@@ -1,0 +1,7 @@
+tokenize	nil	# 
+nlp	lines	# one _line per input line
+nlp	nowhite	# drop whitespace so the rules read like #427
+nlp	right	# optional element absent when a later one matches first
+nlp	present	# optional element present when it comes first
+nlp	tie	# same node: the optional element wins
+nlp	left	# the same, matching leftward from a trigger

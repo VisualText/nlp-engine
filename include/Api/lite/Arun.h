@@ -258,6 +258,7 @@ public:
 	static bool match_simple(NODE *,const ELT *,Nlppp *);			// 05/23/00 AM.
 	static int  stop_ord(Nlppp *, int dir);							// #449.
 	static bool stop_match(NODE *, int ord, Nlppp *);				// #449.
+	static bool later_matches(Nlppp *, int ord, int dir);			// #427.
 	static bool match_singlet(NODE *,const ELT *,Nlppp *);
 	static bool match_tree(NODE *,const ELT *,Nlppp *);
 	static bool match_list(NODE *,const ELT *,Nlppp *);

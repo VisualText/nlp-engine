@@ -1,0 +1,17 @@
+###############################################
+# FILE:     right.nlp
+# SUBJ:     #427: with a wildcard pending, an optional element is absent if a
+#           later element matches first. On "the big bears met three bears"
+#           the wildcard used to run past the first "bears" to reach "three".
+# NOTE:     Part of the smart-wildcard regression; expected output is in the
+#           CI step.
+###############################################
+
+@NODES _line
+
+@POST
+  "output.txt" << "right: [" << phrasetext() << "] wild=" << N("$text", 2)
+               << " three=" << N("$text", 3) << " bears=" << N("$text", 4) << "\n";
+  noop();
+@RULES
+_xNIL <- the _xWILD _xWILD [opt match=(three)] _xWILD [one match=(bears)] @@

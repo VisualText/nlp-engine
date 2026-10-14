@@ -1017,6 +1017,37 @@ jobs:
           fi
           echo "[element-pre] element-key conditions match like @PRE"
 
+      - name: Wildcards stop before later elements (#427) (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # With a wildcard pending, an optional element is absent if a later
+          # element (up to the next required one) matches first (#427), so
+          # the wildcard no longer runs past it. Both directions; ties keep
+          # the optional element.
+          FIX=.github/workflows/tests/smart-wildcard
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          OUT="$FIX/input/text.txt_log/output.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(smart-wildcard): no output.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' \
+            'right: [the big bears] wild=big three=0 bears=bears' \
+            'right: [the big three bears] wild=big three=three bears=bears' \
+            'present: [the big bears] three=0' \
+            'present: [the big three bears] three=three' \
+            'tie: [the big bears] opt=big' \
+            'left: [bears met]' \
+            'left: [bears met]')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(smart-wildcard): output.txt was:"; echo "$got"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[smart-wildcard] wildcards stop before later elements"
+
       - name: factorial() up to 20! (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash

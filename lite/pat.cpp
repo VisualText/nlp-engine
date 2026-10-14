@@ -1448,7 +1448,8 @@ Node<Pn> *real = 0;	// First real node matched, moving left.
 //if (!matchRealLeft(curr,start,wildone,wildmin,wildmax, /*DU*/ real,node))
 if (!matchRealLeft(ielt,nlppp->start_,wildone,wildmin,wildmax,
 				/*DU*/ real,nlppp->node_,
-				preWildStop(ielt, curr->Left())))						// #449.
+				preWildStop(ielt, curr->Left()),						// #449.
+				curr->Left()))											// #427.
 	{
 	if (optionalElt(ielt))		// If current rule elt is optional, succeed.
 		{
@@ -1600,7 +1601,8 @@ long tcount = 0;														// 02/04/05 AM.
 //if (!matchRealRight(curr,end,wildone,wildmin,wildmax, /*DU*/ real,node))
 if (!matchRealRight(ielt,nlppp->end_,wildone,wildmin,wildmax,nlppp,
 			/*DU*/ real,nlppp->node_,tcount,
-			preWildStop(ielt, curr->Right())))						// #449.
+			preWildStop(ielt, curr->Right()),						// #449.
+			curr->Right()))											// #427.
 	{
 //	nlppp->span_ += tcount;										// 02/04/05 AM.
 	if (optionalElt(ielt))		// If current rule elt is optional, succeed.
@@ -1866,7 +1868,8 @@ bool Pat::matchRealLeft(
 	Node<Pn>* &real,		// First real node matched (moving left).
 								// (Allows for repetition.)
 	Node<Pn>* &node,		// DN: Current node.  UP: Last real node matched.
-	Ielt *stop				// Stop before a match of this elt (#449).
+	Ielt *stop,				// Stop before a match of this elt (#449).
+	Delt<Ielt> *next		// Elements after an optional one (#427).
 	)
 {
 if (!node)		// This can happen now, to handle wildcard at start of rule.
@@ -1894,6 +1897,11 @@ for (;;)		// Look for real match till done.
 		node = test;
 		return true;
 		}
+
+	// While a wildcard is pending, an optional element is absent if a later
+	// element (up to the next required one) matches before it does (#427).
+	if (wildone && next && optionalElt(ielt) && laterMatches(next, test, false))
+		return false;
 
 	if (!wildone)
 		return false;		// No wildcards pending.  Fail.
@@ -1932,7 +1940,8 @@ bool Pat::matchRealRight(
 								// (Allows for repetition.)
 	Node<Pn>* &node,		// DN: Current node.  UP: Last real node matched.
 	long &tot,															// 02/04/05 AM.
-	Ielt *stop				// Stop before a match of this elt (#449).
+	Ielt *stop,				// Stop before a match of this elt (#449).
+	Delt<Ielt> *next		// Elements after an optional one (#427).
 	)
 {
 if (!node)		// This can happen now, to handle wildcard at end of rule.
@@ -1969,6 +1978,11 @@ for (;;)		// Look for real match till done.
 		}
 	else																		// 02/04/05 AM.
 		tot += tcount;														// 02/04/05 AM.
+
+	// While a wildcard is pending, an optional element is absent if a later
+	// element (up to the next required one) matches before it does (#427).
+	if (wildone && next && optionalElt(ielt) && laterMatches(next, test, true))
+		return false;
 
 	if (!wildone)
 		return false;		// No wildcards pending.  Fail.
@@ -2308,6 +2322,35 @@ if (!nlppp->first_)
 // Couldn't go right.
 dir = DONE;
 return true;																	// 07/31/02 AM.
+}
+
+
+/********************************************
+* FN:		LATERMATCHES
+* SUBJ:	Whether NODE matches one of the elements from D onward, in the
+*			matching direction, up to and including the first required one (#427).
+* NOTE:	With a wildcard pending, an optional element used to be searched for
+*			past the elements after it: in  _xWILD _xWILD [opt match=(three)]
+*			_xWILD [one match=(bears)]  the wildcard ran past "bears" to reach a
+*			later "three". A bare wildcard among them ends the look: what it
+*			covers isn't known yet.
+********************************************/
+
+bool Pat::laterMatches(Delt<Ielt> *d, Node<Pn> *node, bool right)
+{
+if (!node)
+	return false;
+for (; d; d = (right ? d->Right() : d->Left()))
+	{
+	Ielt *e = d->getData();
+	if (!e || wildElt(e))
+		return false;
+	if (Match(e, node))
+		return true;
+	if (!optionalElt(e))
+		return false;		// Elements past a required one don't count.
+	}
+return false;
 }
 
 
