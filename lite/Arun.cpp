@@ -1001,6 +1001,153 @@ return true;
 
 
 /********************************************
+* FN:		STOP_ORD
+* SUBJ:	For a wildcard made a repeating element by its @PRE conditions, the
+*			neighboring element it must stop in front of (#449).
+* RET:	That element's number (DIR > 0: the next one, else the previous
+*			one), or 0 if the current element is not such a wildcard.
+* NOTE:	Compiled twin of Pat::preWildStop. Such a wildcard is generated as
+*			a non-wild _xWILD with no match or fail list.
+********************************************/
+
+static bool bare_wild(const ELT *elt)
+{
+return elt->name && !_tcscmp(elt->name, _T("_xWILD"))
+	&& !elt->match.reg && !elt->match.htab && !elt->match.spec
+	&& !elt->fail.reg && !elt->fail.htab && !elt->fail.spec;
+}
+
+int Arun::stop_ord(Nlppp *nlppp, int dir)
+{
+if (!nlppp->prefn_)
+	return 0;
+int ord = nlppp->ord_;
+const ELT *elt = &(nlppp->elts_[ord]);
+if (elt->wild || !bare_wild(elt))
+	return 0;
+int next = (dir > 0) ? ord + 1 : ord - 1;
+if (next < 1 || next > nlppp->len_)
+	return 0;
+const ELT *nelt = &(nlppp->elts_[next]);
+if (nelt->wild || bare_wild(nelt))
+	return 0;		// Adjacent wildcards share; not a stopper.
+return next;
+}
+
+
+/********************************************
+* FN:		STOP_MATCH
+* SUBJ:	Whether NODE matches compiled rule element ORD, using the match
+*			function the code generator would pick for it (Ielt::matchFn,
+*			Ielt::matchSpecialfn) and the element's @PRE conditions (#449).
+********************************************/
+
+bool Arun::stop_match(NODE *node, int ord, Nlppp *nlppp)
+{
+if (!node)
+	return false;
+const ELT *elt = &(nlppp->elts_[ord]);
+_TCHAR *name = elt->name;
+if (!name)
+	return false;
+// Bits from ielt.cpp (octal).
+int f = elt->flags;
+bool singlet = (f & 01) != 0;
+bool tree = (f & 04) != 0;
+bool dejunk = (f & 0400) != 0;
+bool deaccent = !dejunk && (f & 0200);
+bool hasmatch = elt->match.reg || elt->match.htab || elt->match.spec;
+bool hasfail = elt->fail.reg || elt->fail.htab || elt->fail.spec;
+bool m = false;
+
+if (!hasmatch && !hasfail
+	 && name[0] == '_' && name[1] == 'x' && is_upper((_TUCHAR)name[2])
+	 && _tcscmp(name, _T("_xWILD")))
+	{
+	_TCHAR *x = name + 2;
+	MICROFN micro = 0;
+	if (!_tcscmp(x, _T("ANY")))			micro = micro_any;
+	else if (!_tcscmp(x, _T("ALPHA")))	micro = micro_alpha;
+	else if (!_tcscmp(x, _T("BLANK")))	micro = micro_blank;
+	else if (!_tcscmp(x, _T("CAP")))		micro = micro_cap;
+	else if (!_tcscmp(x, _T("NUM")))		micro = micro_num;
+	else if (!_tcscmp(x, _T("PUNCT")))	micro = micro_punct;
+	else if (!strcmp_i(x, _T("WHITE")))	micro = micro_white;
+	else if (!_tcscmp(x, _T("CTRL")))	micro = micro_ctrl;
+	else if (!_tcscmp(x, _T("CAPLET")))	micro = micro_caplet;
+	else if (!_tcscmp(x, _T("LET")))		micro = micro_let;
+	else if (!_tcscmp(x, _T("EMOJI")))	micro = micro_emoji;
+	if (!micro)
+		return false;		// _xSTART, _xEND, _xEOF, ...: not a stopper.
+	if (tree)
+		m = special_tree(node, elt, micro, nlppp);
+	else if (singlet)
+		m = dejunk ? special_singlet_dejunk(node, elt, micro, nlppp)
+		  : deaccent ? special_singlet_deaccent(node, elt, micro, nlppp)
+		  : special_singlet(node, elt, micro, nlppp);
+	else
+		m = dejunk ? special_simple_dejunk(node, elt, micro, nlppp)
+		  : deaccent ? special_simple_deaccent(node, elt, micro, nlppp)
+		  : special_simple(node, elt, micro, nlppp);
+	}
+else if (hasmatch)
+	{
+	if (tree)
+		m = dejunk ? match_list_tree_dejunk(node, elt, nlppp)
+		  : deaccent ? match_list_tree_deaccent(node, elt, nlppp)
+		  : match_list_tree(node, elt, nlppp);
+	else if (singlet)
+		m = dejunk ? match_list_singlet_dejunk(node, elt, nlppp)
+		  : deaccent ? match_list_singlet_deaccent(node, elt, nlppp)
+		  : match_list_singlet(node, elt, nlppp);
+	else
+		m = dejunk ? match_list_dejunk(node, elt, nlppp)
+		  : deaccent ? match_list_deaccent(node, elt, nlppp)
+		  : match_list(node, elt, nlppp);
+	}
+else if (hasfail)
+	{
+	if (tree)
+		m = dejunk ? match_fails_tree_dejunk(node, elt, nlppp)
+		  : deaccent ? match_fails_tree_deaccent(node, elt, nlppp)
+		  : match_fails_tree(node, elt, nlppp);
+	else if (singlet)
+		m = dejunk ? match_fails_singlet_dejunk(node, elt, nlppp)
+		  : deaccent ? match_fails_singlet_deaccent(node, elt, nlppp)
+		  : match_fails_singlet(node, elt, nlppp);
+	else
+		m = dejunk ? match_fails_dejunk(node, elt, nlppp)
+		  : deaccent ? match_fails_deaccent(node, elt, nlppp)
+		  : match_fails(node, elt, nlppp);
+	}
+else
+	{
+	if (tree)
+		m = dejunk ? match_tree_dejunk(node, elt, nlppp)
+		  : deaccent ? match_tree_deaccent(node, elt, nlppp)
+		  : match_tree(node, elt, nlppp);
+	else if (singlet)
+		m = dejunk ? match_singlet_dejunk(node, elt, nlppp)
+		  : deaccent ? match_singlet_deaccent(node, elt, nlppp)
+		  : match_singlet(node, elt, nlppp);
+	else
+		m = dejunk ? match_simple_dejunk(node, elt, nlppp)
+		  : deaccent ? match_simple_deaccent(node, elt, nlppp)
+		  : match_simple(node, elt, nlppp);
+	}
+
+if (m && nlppp->prefn_)		// The element's own @PRE conditions.
+	{
+	Node<Pn> *save = nlppp->node_;
+	nlppp->node_ = (Node<Pn> *)node;
+	m = (nlppp->prefn_)(ord, nlppp);
+	nlppp->node_ = save;
+	}
+return m;
+}
+
+
+/********************************************
 * FN:		MATCH_REAL_LEFT
 * CR:		05/30/00 AM.
 * SUBJ:	Runtime match of elt to a real node.
@@ -1033,11 +1180,14 @@ if (!max)					// Indefinite repetition.
 	max = INT_MAX;
 
 Node<Pn> *save = node;		// Save current position.
+int stop = stop_ord(nlppp, -1);	// Next elt, for a wildcard with @PRE (#449).
 while (count < max)
 	{
 	if (!(nlppp->node_ = Pat::nodeLeft(nlppp->node_, nlppp->start_)))
 		break;
 	pn = &(nlppp->node_->data);
+	if (stop && count >= min && stop_match(nlppp->node_, stop, nlppp))
+		break;				// Before the next element's match (#449).
 	if (!(match)(nlppp->node_, elt, nlppp))	// The MATCH FN.
 		break;				// Failed to match.
 	if (nlppp->prefn_ && !(nlppp->prefn_)(nlppp->ord_,nlppp))
@@ -1099,12 +1249,15 @@ if (!max)					// Indefinite repetition.
 	max = INT_MAX;
 
 Node<Pn> *save = node;		// Save current position.
+int stop = stop_ord(nlppp, 1);	// Next elt, for a wildcard with @PRE (#449).
 Node<Pn> *saverightmost = 0;	// RECOPT2.	// 07/25/06 AM.
 while (count < max)
 	{
 	if (!(nlppp->node_ = Pat::nodeRight(nlppp->node_, nlppp->end_)))
 		break;
 	pn = &(nlppp->node_->data);
+	if (stop && count >= min && stop_match(nlppp->node_, stop, nlppp))
+		break;				// Before the next element's match (#449).
 	Pat::updateRestart(nlppp,nlppp->node_);			// RECOPT2.	// 07/25/06 AM.
 	if (nlppp->rmost_)	// Curr rule updating rm.	// RECOPT2.	// 07/25/06 AM.
 		saverightmost = nlppp->node_;						// RECOPT2.	// 07/25/06 AM.
@@ -3268,11 +3421,14 @@ if (!max)					// Indefinite repetition.
 	max = INT_MAX;
 
 Node<Pn> *save = node;		// Save current position.
+int stop = stop_ord(nlppp, -1);	// Next elt, for a wildcard with @PRE (#449).
 while (count < max)
 	{
 	if (!(nlppp->node_ = Pat::nodeLeft(nlppp->node_, nlppp->start_)))
 		break;
 	pn = &(nlppp->node_->data);
+	if (stop && count >= min && stop_match(nlppp->node_, stop, nlppp))
+		break;				// Before the next element's match (#449).
 	if (!(match)(nlppp->node_, elt,micro, nlppp))	// The MATCH FN.
 		break;				// Failed to match.
 	if (nlppp->prefn_ && !(nlppp->prefn_)(nlppp->ord_,nlppp))
@@ -3335,11 +3491,14 @@ if (!max)					// Indefinite repetition.
 	max = INT_MAX;
 
 Node<Pn> *save = node;		// Save current position.
+int stop = stop_ord(nlppp, 1);	// Next elt, for a wildcard with @PRE (#449).
 while (count < max)
 	{
 	if (!(nlppp->node_ = Pat::nodeRight(nlppp->node_, nlppp->end_)))
 		break;
 	pn = &(nlppp->node_->data);
+	if (stop && count >= min && stop_match(nlppp->node_, stop, nlppp))
+		break;				// Before the next element's match (#449).
 	Pat::updateRestart(nlppp,nlppp->node_);	// RECOPT2	// 07/25/06 AM.
 	// Need to back up if failed repeat match.// RECOPT2.	// 07/25/06 AM.
 	if (nlppp->rmost_)	// Curr rule.			// RECOPT2.	// 07/25/06 AM.

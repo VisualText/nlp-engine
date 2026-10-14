@@ -1,0 +1,16 @@
+###############################################
+# FILE:     right_var.nlp
+# SUBJ:     Rightward match: var sees num on "two".
+# NOTE:     Part of the pre-wildcard regression (#449); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@PRE
+<2,2> var("num");
+@POST
+  "output.txt" << "right var" << "\n";
+  noop();
+@RULES
+_xNIL <- one _xWILD [plus] three @@
