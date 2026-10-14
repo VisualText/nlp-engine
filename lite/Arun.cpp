@@ -12879,9 +12879,11 @@ if (index >= 0)	// INDEXED ARRAY VALUE.								// 07/15/03 AM.
 	{
 	// See if indexed value exists.
 	long long ii;																		// 07/15/03 AM.
-	for (ii = 0; darg && ii < index;										// 07/15/03 AM.
-			++ii, darg = darg->Right())									// 07/15/03 AM.
-		;
+	{
+	long reached = 0;	// Cached walk (#401).
+	darg = vals->getNthCached((long) index, reached);
+	ii = reached;
+	}
 
 	if (!darg)	// Indexed value doesn't exist.						// 07/15/03 AM.
 		{
@@ -13026,9 +13028,11 @@ if (index >= 0)	// INDEXED ARRAY VALUE.								// 07/15/03 AM.
 	{
 	// See if indexed value exists.
 	long long ii;																		// 07/15/03 AM.
-	for (ii = 0; darg && ii < index;										// 07/15/03 AM.
-			++ii, darg = darg->Right())									// 07/15/03 AM.
-		;
+	{
+	long reached = 0;	// Cached walk (#401).
+	darg = vals->getNthCached((long) index, reached);
+	ii = reached;
+	}
 
 	if (!darg)	// Indexed value doesn't exist.						// 07/15/03 AM.
 		{

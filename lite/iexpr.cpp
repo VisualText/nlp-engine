@@ -2787,11 +2787,7 @@ switch (type_)
 
 			// See if indexed value exists.
 			long ii;																// 10/14/00 AM.
-			for (ii = 0; darg && ii < index;								// 10/14/00 AM.
-					++ii, darg = darg->Right())							// 10/14/00 AM.
-				{
-//				if (darg) last = darg;										// 03/11/02 AM.
-				}
+			darg = vals->getNthCached(index, ii);	// Cached walk (#401).
 
 			// If so, clear it out.
 			if (darg)		// Indexed value exists.					// 10/14/00 AM.
@@ -3895,9 +3891,7 @@ if (index >= 0)	// INDEXED ARRAY VALUE.								// 10/15/00 AM.
 	{
 	// See if indexed value exists.
 	long ii;																		// 10/15/00 AM.
-	for (ii = 0; darg && ii < index;										// 10/15/00 AM.
-			++ii, darg = darg->Right())									// 10/15/00 AM.
-		;
+	darg = vals->getNthCached(index, ii);	// Cached walk (#401).
 
 	if (!darg)	// Indexed value doesn't exist.						// 10/15/00 AM.
 		{
@@ -4008,9 +4002,7 @@ if (index >= 0)	// INDEXED ARRAY VALUE.								// 07/15/03 AM.
 	{
 	// See if indexed value exists.
 	long ii;																		// 07/15/03 AM.
-	for (ii = 0; darg && ii < index;										// 07/15/03 AM.
-			++ii, darg = darg->Right())									// 07/15/03 AM.
-		;
+	darg = vals->getNthCached(index, ii);	// Cached walk (#401).
 
 	if (!darg)	// Indexed value doesn't exist.						// 07/15/03 AM.
 		{
@@ -4188,8 +4180,7 @@ if (!darg)
 
 // See if indexed value exists.
 long ii;
-for (ii = 0; darg && ii < index; ++ii, darg = darg->Right())
-	;
+darg = vals->getNthCached(index, ii);	// Cached walk (#401).
 
 if (darg)	// If index value exists, clear it out.
 	{

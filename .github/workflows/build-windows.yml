@@ -798,6 +798,54 @@ jobs:
           check ana005.tree '   _one [0,2,0,2,5,10,node,fired,blt]' 'built then fired in one pass keeps its builder'
           echo "[fired-rule] fired-but-not-built nodes record their rule"
 
+      - name: Array indexing resumes from the last position (#401)
+        shell: bash
+        run: |
+          set -eo pipefail
+          # NLP++ array indexing walked the values list from the head on every
+          # access, so a loop over x[0..n-1] cost O(n^2) (#401). It now resumes
+          # from the last position. These checks interleave cached reads with
+          # every way an array changes; the output matches engine 4.2.18 exactly.
+          FIX=.github/workflows/tests/array-index
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          OUT="$FIX/input/text.txt_log/output.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(array-index): no output.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' \
+            'forward: 0 10 20 30 40 50' \
+            'backward: 50 40 30 20 10 0' \
+            'past end: 0 then 40' \
+            'overwrite: 0 10 20 333 40 50' \
+            'incdec: 0 10 21 333 40 49' \
+            'padded: 0 10 21 333 40 49 0 0 88' \
+            'length 9' \
+            'deep: 0' \
+            'sliced: 10 21 0 0' \
+            'before scalar: 0' \
+            'scalar: 5 0' \
+            'b end: 20' \
+            'sorted: 10 20 30' \
+            'reversed: 30 20 10' \
+            'pushed: 5 30 20 10' \
+            'copy: 99 30 20 10' \
+            'original: 5 30 20 10' \
+            'local: p q r' \
+            'local2: p Q r' \
+            'alpha: wxyz then x' \
+            'alpha: zZxw' \
+            'beta: wxyz then x' \
+            'beta: zZxw' \
+            'gamma: wxyz then x' \
+            'gamma: zZxw')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(array-index): output.txt was:"; echo "$got"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[array-index] cached array indexing gives the same values"
+
       - name: factorial() up to 20!
         shell: bash
         run: |

@@ -553,8 +553,8 @@ if (!darg)
 
 if (vindex >= 0)		// Index into variable's values (ARRAY!)	// 10/13/00 AM.
 	{
-	while (darg && vindex-- > 0)											// 10/13/00 AM.
-		darg = darg->Right();												// 10/13/00 AM.
+	long reached = 0;		// Cached walk (#401).
+	darg = vals->getNthCached(vindex, reached);
 	if (!darg)																	// 10/13/00 AM.
 		{
 		sem = new RFASem(0LL);										// 10/13/00 AM.
