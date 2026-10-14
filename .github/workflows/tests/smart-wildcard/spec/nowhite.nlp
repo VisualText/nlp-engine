@@ -1,0 +1,12 @@
+###############################################
+# FILE:     nowhite.nlp
+# SUBJ:     Drop the spaces inside each line, so the rules can be written
+#           word by word, as in #427.
+###############################################
+
+@NODES _line
+
+@POST
+  excise(1,1);
+@RULES
+_xNIL <- _xWHITE @@

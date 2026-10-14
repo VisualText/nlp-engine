@@ -583,6 +583,9 @@ if (nlppp->wildord_)				// If pending wildcards.
 		{
 		if ((matched = match_real_left(match,nlppp)))
 			break;
+		// An optional element is absent if a later element matches first (#427).
+		if (!elt->min && later_matches(nlppp, ord, -1))
+			break;
 		++count;
 		if (limit && count > limit)
 			break;
@@ -686,6 +689,9 @@ if (nlppp->wildord_)				// If pending wildcards.
 	for (;;)
 		{
 		if ((matched = match_real_right(match,nlppp)))					// 05/23/00 AM.
+			break;
+		// An optional element is absent if a later element matches first (#427).
+		if (!elt->min && later_matches(nlppp, ord, 1))
 			break;
 		++count;
 		if (limit && count > limit)
@@ -1032,6 +1038,34 @@ const ELT *nelt = &(nlppp->elts_[next]);
 if (nelt->wild || bare_wild(nelt))
 	return 0;		// Adjacent wildcards share; not a stopper.
 return next;
+}
+
+
+/********************************************
+* FN:		LATER_MATCHES
+* SUBJ:	Whether the current node matches one of the elements after ORD in
+*			direction DIR, up to and including the first required one (#427).
+* NOTE:	Compiled twin of Pat::laterMatches: with a wildcard pending, an
+*			optional element is absent if a later element matches first. A bare
+*			wildcard among them ends the look.
+********************************************/
+
+bool Arun::later_matches(Nlppp *nlppp, int ord, int dir)
+{
+NODE *node = (NODE *) nlppp->node_;
+if (!node)
+	return false;
+for (int k = ord + dir; k >= 1 && k <= nlppp->len_; k += dir)
+	{
+	const ELT *e = &(nlppp->elts_[k]);
+	if (e->wild)
+		return false;
+	if (stop_match(node, k, nlppp))
+		return true;
+	if (e->min)
+		return false;		// Elements past a required one don't count.
+	}
+return false;
 }
 
 
@@ -3211,6 +3245,9 @@ if (nlppp->wildord_)				// If pending wildcards.
 		{
 		if ((matched = special_real_left(match,micro,nlppp)))
 			break;
+		// An optional element is absent if a later element matches first (#427).
+		if (!elt->min && later_matches(nlppp, ord, -1))
+			break;
 		++count;
 		if (limit && count > limit)
 			break;
@@ -3310,6 +3347,9 @@ if (nlppp->wildord_)				// If pending wildcards.
 	for (;;)
 		{
 		if ((matched = special_real_right(match,micro,nlppp)))
+			break;
+		// An optional element is absent if a later element matches first (#427).
+		if (!elt->min && later_matches(nlppp, ord, 1))
 			break;
 		++count;
 		if (limit && count > limit)

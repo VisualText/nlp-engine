@@ -1,0 +1,14 @@
+###############################################
+# FILE:     left.nlp
+# SUBJ:     The same rule matching leftward from a trigger. On "bears big
+#           three bears met", leftward from "met", the optional "three" is
+#           absent because the required "bears" matches first.
+###############################################
+
+@NODES _line
+
+@POST
+  "output.txt" << "left: [" << phrasetext() << "]\n";
+  noop();
+@RULES
+_xNIL <- bears _xWILD [opt match=(three)] _xWILD met [trig] @@

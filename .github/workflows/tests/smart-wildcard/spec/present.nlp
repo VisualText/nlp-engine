@@ -1,0 +1,12 @@
+###############################################
+# FILE:     present.nlp
+# SUBJ:     The optional element still matches when it comes first.
+###############################################
+
+@NODES _line
+
+@POST
+  "output.txt" << "present: [" << phrasetext() << "] three=" << N("$text", 3) << "\n";
+  noop();
+@RULES
+_xNIL <- the _xWILD _xWILD [opt match=(three)] bears @@

@@ -1,0 +1,13 @@
+###############################################
+# FILE:     tie.nlp
+# SUBJ:     When the optional element and a later one both match the same
+#           node, the optional element wins, as before.
+###############################################
+
+@NODES _line
+
+@POST
+  "output.txt" << "tie: [" << phrasetext() << "] opt=" << N("$text", 3) << "\n";
+  noop();
+@RULES
+_xNIL <- the _xWILD _xALPHA [opt] bears @@

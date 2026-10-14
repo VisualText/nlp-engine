@@ -1,0 +1,9 @@
+###############################################
+# FILE:     lines.nlp
+# SUBJ:     One _line node per input line.
+###############################################
+
+@NODES _ROOT
+
+@RULES
+_line <- _xWILD [plus fail=(\n)] @@

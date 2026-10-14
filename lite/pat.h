@@ -275,7 +275,8 @@ public:
 		Node<Pn>* &real,		// First real node matched (moving left).
 									// (Allows for repetition.)
 		Node<Pn>* &node,		// DN: Current node.  UP: Last real node matched.
-		Ielt *stop = 0			// Stop before a match of this elt (#449).
+		Ielt *stop = 0,			// Stop before a match of this elt (#449).
+		Delt<Ielt> *next = 0	// Elements after an optional one (#427).
 		);
 
 	static bool trueMatchLeft(
@@ -288,6 +289,7 @@ public:
 		);
 
 	static Ielt *preWildStop(Ielt *ielt, Delt<Ielt> *next);	// #449.
+	static bool laterMatches(Delt<Ielt> *d, Node<Pn> *node, bool right);	// #427.
 	static void markFiredRule(Nlppp *nlppp, long ruleline);	// #73.
 
 	static bool wildFillLeft(
@@ -310,7 +312,8 @@ public:
 									// (Allows for repetition.)
 		Node<Pn>* &node,		// DN: Current node.  UP: Last real node matched.
 		long & tot,				// 02/04/05 AM.
-		Ielt *stop = 0			// Stop before a match of this elt (#449).
+		Ielt *stop = 0,			// Stop before a match of this elt (#449).
+		Delt<Ielt> *next = 0	// Elements after an optional one (#427).
 		);
 
 	static bool trueMatchRight(
