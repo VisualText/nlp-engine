@@ -1,0 +1,93 @@
+###############################################
+# FILE:     kbtest.nlp
+# SUBJ:     moveconcept() (#133) and sortattrs() (#384).
+# NOTE:     Part of the kb-move-sort regression; expected output is in
+#           the CI step.
+###############################################
+
+@DECL
+
+# Children of a concept, in order, as "name name ...".
+kids(L("con")) {
+    L("s") = "";
+    L("c") = down(L("con"));
+    while (L("c")) {
+        if (L("s") != "")
+            L("s") = L("s") + " ";
+        L("s") = L("s") + conceptname(L("c"));
+        L("c") = next(L("c"));
+    }
+    return L("s");
+}
+
+# Attributes of a concept, in order, as "name=v1,v2 name=v1 ...".
+attrs(L("con")) {
+    L("s") = "";
+    L("a") = findattrs(L("con"));
+    while (L("a")) {
+        if (L("s") != "")
+            L("s") = L("s") + " ";
+        L("s") = L("s") + attrname(L("a")) + "=";
+        L("v") = attrvals(L("a"));
+        L("first") = 1;
+        while (L("v")) {
+            if (!L("first"))
+                L("s") = L("s") + ",";
+            L("s") = L("s") + getstrval(L("v"));
+            L("first") = 0;
+            L("v") = nextval(L("v"));
+        }
+        L("a") = nextattr(L("a"));
+    }
+    return L("s");
+}
+
+@@DECL
+
+@CODE
+L("top") = makeconcept(findroot(), "movetest");
+L("a") = makeconcept(L("top"), "a");
+L("b") = makeconcept(L("a"), "b");
+L("b1") = makeconcept(L("b"), "b1");
+addstrval(L("b"), "color", "red");
+L("c") = makeconcept(L("top"), "c");
+L("x") = makeconcept(L("c"), "x");
+
+# Move b (with child b1 and an attribute) from a to c.
+L("m") = moveconcept(L("b"), L("c"));
+"output.txt" << "moved: " << conceptname(L("m")) << "\n";
+"output.txt" << "a: [" << kids(L("a")) << "]\n";
+"output.txt" << "c: [" << kids(L("c")) << "]\n";
+"output.txt" << "b keeps: [" << kids(L("b")) << "] color=" << strval(L("b"), "color") << "\n";
+"output.txt" << "path: " << conceptpath(L("b1")) << "\n";
+
+# Refusals return 0 and change nothing.
+if (!moveconcept(L("top"), L("b1")))
+    "output.txt" << "into own subtree: refused\n";
+L("x2") = makeconcept(L("a"), "x");
+if (!moveconcept(L("x2"), L("c")))
+    "output.txt" << "name taken: refused\n";
+if (!moveconcept(findroot(), L("c")))
+    "output.txt" << "root: refused\n";
+"output.txt" << "c still: [" << kids(L("c")) << "]\n";
+
+# Moving a first child within its parent puts it last, and the parent's
+# remaining first child is still reachable.
+L("p") = makeconcept(L("top"), "p");
+makeconcept(L("p"), "k1");
+makeconcept(L("p"), "k2");
+makeconcept(L("p"), "k3");
+moveconcept(findconcept(L("p"), "k1"), L("p"));
+"output.txt" << "p: [" << kids(L("p")) << "] down=" << conceptname(down(L("p"))) << "\n";
+
+# sortattrs: names sorted, each attribute's values keep their order.
+L("s") = makeconcept(L("top"), "sorted");
+addstrval(L("s"), "zeta", "z");
+addstrval(L("s"), "alpha", "2");
+addstrval(L("s"), "alpha", "1");
+addstrval(L("s"), "Mid", "m");
+"output.txt" << "before: " << attrs(L("s")) << "\n";
+"output.txt" << "sortattrs=" << sortattrs(L("s")) << "\n";
+"output.txt" << "after: " << attrs(L("s")) << "\n";
+"output.txt" << "lookup: " << strval(L("s"), "zeta") << "\n";
+@@CODE

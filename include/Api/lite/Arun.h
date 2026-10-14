@@ -1029,6 +1029,8 @@ public:
 
 	static bool sortphrase(Nlppp*, RFASem*);
 	static bool sortchilds(Nlppp*, RFASem*);                    // 02/20/09 AM.
+	static bool sortattrs(Nlppp*, RFASem*);						// #384.
+	static RFASem *moveconcept(Nlppp*, RFASem*, RFASem*);		// #133.
 	static bool sorthier(Nlppp*, RFASem*);                      // 02/20/09 AM.
 
 	static long long phraselength(Nlppp*, RFASem*);

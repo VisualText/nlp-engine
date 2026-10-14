@@ -499,6 +499,8 @@ switch (fnid)																	// 12/21/01 AM.
 		break;
 	case FNmkdir:																// 12/06/01 AM.
 		return fnMkdir(args, nlppp, /*UP*/ sem);						// 12/06/00 AM.
+	case FNmoveconcept:
+		return fnMoveconcept(args, nlppp, /*UP*/ sem);	// #133.
 	case FNmovecleft:
 		return fnMovecleft(args, nlppp, /*UP*/ sem);					// 03/03/00 AM.
 	case FNmovecright:
@@ -713,6 +715,8 @@ switch (fnid)																	// 12/21/01 AM.
 		break;
 	case FNsortconsbyattr:
 		return fnSortconsbyattr(args,nlppp,/*UP*/sem);				// 12/02/02 AM.
+	case FNsortattrs:
+		return fnSortattrs(args, nlppp, /*UP*/ sem);		// #384.
 	case FNsortchilds:
 		return fnSortchilds(args, nlppp, /*UP*/ sem);				// 02/20/09 AM.
 	case FNsorthier:
@@ -4626,6 +4630,89 @@ CONCEPT *conc1 = sem1->getKBconcept();
 bool ok = cg->sortChilds(conc1);
 long long num = (ok ? 1 : 0);		// "Convert" to boolnum.
 sem = new RFASem(num);			// Return 1/0 for boolean.
+return true;
+}
+
+
+/********************************************
+* FN:		FNMOVECONCEPT
+* SUBJ:	Move a concept and its subtree under another parent (#133).
+* RET:	The moved concept, or 0 if it couldn't be moved.
+* FORM:	moveconcept(concept, newParent)
+********************************************/
+
+bool Fn::fnMoveconcept(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem		// Function return value.
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+RFASem *sem1, *sem2;
+if (!Arg::sem1(_T("moveconcept"),nlppp,(DELTS*&)args,sem1))
+	return false;
+if (!Arg::sem1(_T("moveconcept"),nlppp,(DELTS*&)args,sem2))
+	return false;
+if (!Arg::done((DELTS*)args, _T("moveconcept"),parse))
+	return false;
+
+if (!sem1 || !sem2)
+	{
+	_stprintf(Errbuf,_T("[moveconcept: Warning. Given no concept.]"));
+	return parse->errOut(true); // UNFIXED
+	}
+if (sem1->getType() != RS_KBCONCEPT || sem2->getType() != RS_KBCONCEPT)
+	{
+	_stprintf(Errbuf,_T("[moveconcept: Bad semantic arg.]"));
+	return parse->errOut(false); // UNFIXED
+	}
+CG *cg = parse->getAna()->getCG();
+CONCEPT *conc = sem1->getKBconcept();
+if (cg->moveConcept(conc, sem2->getKBconcept()))
+	sem = new RFASem(conc, RS_KBCONCEPT, cg);
+return true;
+}
+
+
+/********************************************
+* FN:		FNSORTATTRS
+* SUBJ:	Sort a concept's attributes by name (#384).
+* RET:	1 if ok, else 0.
+* FORM:	sortattrs(concept)
+********************************************/
+
+bool Fn::fnSortattrs(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	/*UP*/
+	RFASem* &sem		// Function return value.
+	)
+{
+sem = 0;
+Parse *parse = nlppp->parse_;
+
+RFASem *sem1;
+if (!Arg::sem1(_T("sortattrs"),nlppp,(DELTS*&)args,sem1))
+	return false;
+if (!Arg::done((DELTS*)args, _T("sortattrs"),parse))
+	return false;
+
+if (!sem1)
+	{
+	_stprintf(Errbuf,_T("[sortattrs: Warning. Given no concept.]"));
+	return parse->errOut(true); // UNFIXED
+	}
+if (sem1->getType() != RS_KBCONCEPT)
+	{
+	_stprintf(Errbuf,_T("[sortattrs: Bad semantic arg.]"));
+	return parse->errOut(false); // UNFIXED
+	}
+CG *cg = parse->getAna()->getCG();
+bool ok = cg->sortAttrs(sem1->getKBconcept());
+sem = new RFASem((long long) (ok ? 1 : 0));
 return true;
 }
 

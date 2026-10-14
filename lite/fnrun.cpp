@@ -4397,6 +4397,74 @@ return cg->sortChilds(conc1);
 
 
 /********************************************
+* FN:		SORTATTRS
+* SUBJ:	Sort a concept's attributes by name (#384).
+* FORM:	sortattrs(concept)
+********************************************/
+
+bool Arun::sortattrs(
+	Nlppp *nlppp,
+	RFASem *sem1
+	)
+{
+if (!sem1 || !nlppp)
+	{
+	if (sem1)
+		delete sem1;
+	return false;
+	}
+if (sem1->getType() != RS_KBCONCEPT)
+	{
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[sortattrs: Bad semantic arg.]") << std::ends;
+	errOut(&gerrStr,false);
+	delete sem1;
+	return false;
+	}
+CG *cg = nlppp->getParse()->getAna()->getCG();
+CONCEPT *conc1 = sem1->getKBconcept();
+delete sem1;
+return cg->sortAttrs(conc1);
+}
+
+
+/********************************************
+* FN:		MOVECONCEPT
+* SUBJ:	Move a concept and its subtree under another parent (#133).
+* RET:	The moved concept, or 0.
+* FORM:	moveconcept(concept, newParent)
+********************************************/
+
+RFASem *Arun::moveconcept(
+	Nlppp *nlppp,
+	RFASem *sem1,
+	RFASem *sem2
+	)
+{
+RFASem *ret = 0;
+if (nlppp && sem1 && sem2
+	 && sem1->getType() == RS_KBCONCEPT && sem2->getType() == RS_KBCONCEPT)
+	{
+	CG *cg = nlppp->getParse()->getAna()->getCG();
+	CONCEPT *conc = sem1->getKBconcept();
+	if (cg->moveConcept(conc, sem2->getKBconcept()))
+		ret = new RFASem(conc, RS_KBCONCEPT, cg);
+	}
+else if (sem1 || sem2)
+	{
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[moveconcept: Bad semantic arg.]") << std::ends;
+	errOut(&gerrStr,false);
+	}
+if (sem1)
+	delete sem1;
+if (sem2)
+	delete sem2;
+return ret;
+}
+
+
+/********************************************
 * FN:		SORTHIER
 * CR:		02/20/09 AM.
 * SUBJ:	Sort concept's subhierarchy.

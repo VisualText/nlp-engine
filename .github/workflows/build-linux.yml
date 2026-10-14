@@ -832,6 +832,44 @@ jobs:
           fi
           echo "[pre-wildcard] @PRE wildcards stop before the next element"
 
+      - name: moveconcept and sortattrs (#133, #384) (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # moveconcept(concept, parent) moves a concept with its subtree,
+          # attributes and phrase (#133); it refuses the root, a move into its own
+          # subtree, and a parent that already has a child of that name.
+          # sortattrs(concept) orders attributes by name, values untouched (#384).
+          FIX=.github/workflows/tests/kb-move-sort
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          OUT="$FIX/input/text.txt_log/output.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(kb-move-sort): no output.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' \
+            'moved: b' \
+            'a: []' \
+            'c: [x b]' \
+            'b keeps: [b1] color=red' \
+            'path: "concept" "movetest" "c" "b" "b1"' \
+            'into own subtree: refused' \
+            'name taken: refused' \
+            'root: refused' \
+            'c still: [x b]' \
+            'p: [k2 k3 k1] down=k2' \
+            'before: zeta=z alpha=2,1 Mid=m' \
+            'sortattrs=1' \
+            'after: alpha=2,1 Mid=m zeta=z' \
+            'lookup: z')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(kb-move-sort): output.txt was:"; echo "$got"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[kb-move-sort] moveconcept and sortattrs"
+
       - name: factorial() up to 20! (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash
