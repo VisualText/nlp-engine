@@ -1,0 +1,43 @@
+###############################################
+# FILE:     postfix.nlp
+# SUBJ:     Postfix ++ and -- on an array element. They ignored the index,
+#           saw several values, and failed with "Can't increment
+#           multi-valued variable". Prefix ++x[i] already worked.
+# NOTE:     Part of the postfix-index regression; expected output is in
+#           the CI step.
+###############################################
+
+@CODE
+G("a")[0] = 10;
+G("a")[1] = 20;
+G("a")[2] = 30;
+
+L("r") = G("a")[1]++;
+"output.txt" << "inc returns " << L("r") << ", now " << G("a")[0] << " " << G("a")[1] << " " << G("a")[2] << "\n";
+
+L("r") = G("a")[2]--;
+"output.txt" << "dec returns " << L("r") << ", now " << G("a")[0] << " " << G("a")[1] << " " << G("a")[2] << "\n";
+
+# Past the end: pads with zeros, like assigning to x[i].
+G("a")[5]++;
+"output.txt" << "padded: " << G("a")[3] << " " << G("a")[4] << " " << G("a")[5] << " length " << arraylength(G("a")) << "\n";
+
+# A numeric string element.
+G("s")[0] = "x";
+G("s")[1] = "41";
+G("s")[1]++;
+"output.txt" << "string: " << G("s")[1] << "\n";
+
+# An index from an expression, on a local array.
+L("x")[0] = 1;
+L("x")[1] = 1;
+L("i") = 1;
+L("x")[L("i")]++;
+L("x")[L("i") - 1]--;
+"output.txt" << "local: " << L("x")[0] << " " << L("x")[1] << "\n";
+
+# Plain variables are unchanged.
+G("n") = 7;
+L("r") = G("n")++;
+"output.txt" << "scalar: " << L("r") << " then " << G("n") << "\n";
+@@CODE

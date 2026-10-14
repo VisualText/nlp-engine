@@ -13162,6 +13162,63 @@ return !flg;
 
 
 /********************************************
+* FN:		INDEX_ARG
+* SUBJ:	Element INDEX of a variable's values, padding with zeros up to it,
+*			as assigning to x[i] does. For postfix x[i]++ and x[i]--.
+********************************************/
+
+Iarg *Arun::index_arg(Ipair *pair, long long index)
+{
+if (!pair || index < 0)
+	return 0;
+Dlist<Iarg> *vals = pair->getVals();
+if (!vals)
+	{
+	vals = new Dlist<Iarg>();
+	pair->setVals(vals);
+	}
+long reached = 0;
+Delt<Iarg> *darg = vals->getNthCached((long) index, reached);
+if (!darg)
+	{
+	for (long long ii = reached; ii <= index; ++ii)
+		vals->rpush(new Iarg(0LL));
+	darg = vals->getLast();
+	}
+return darg->getData();
+}
+
+
+/********************************************
+* FN:		BUMP_ARG
+* SUBJ:	Add DELTA to a numeric (or numeric-string) value in place.
+* RET:	True if done; OLD gets the value before the change.
+********************************************/
+
+bool Arun::bump_arg(Iarg *arg, long long delta, long long &old)
+{
+old = 0;
+if (!arg)
+	return false;
+switch (arg->getType())
+	{
+	case IANUM:
+		old = arg->getNum();
+		arg->setNum(old + delta);
+		return true;
+	case IASTR:
+		if (!str_to_long(arg->getStr(), old))
+			return false;
+		arg->setType(IANUM);
+		arg->setNum(old + delta);
+		return true;
+	default:
+		return false;
+	}
+}
+
+
+/********************************************
 * FN:		POSTINC
 * CR:		06/02/00 AM.
 * SUBJ:	NLP++ '++' operator, compiled runtime.
@@ -13181,6 +13238,16 @@ Ipair *pair;
 Ivar::getVar((enum Ivartype)typ,varname,nelt,nlppp,/*UP*/pair);
 if (!pair)
 	return ret;																	// 06/05/00 AM.
+if (index >= 0)		// x[i]++ : the indexed element.
+	{
+	if (!bump_arg(index_arg(pair, index), 1, ret))
+		{
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[inc: Error. Bad type.]") << std::ends;
+		nlppp->parse_->errOut(&gerrStr,false);
+		}
+	return ret;
+	}
 Dlist<Iarg> *vals = pair->getVals();
 
 Delt<Iarg> *darg;
@@ -13240,6 +13307,16 @@ Ipair *pair;
 Ivar::getVar((enum Ivartype)typ,varname,nelt,nlppp,/*UP*/pair);
 if (!pair)
 	return ret;																	// 06/05/00 AM.
+if (index >= 0)		// x[i]-- : the indexed element.
+	{
+	if (!bump_arg(index_arg(pair, index), -1, ret))
+		{
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[dec: Error. Bad type.]") << std::ends;
+		nlppp->parse_->errOut(&gerrStr,false);
+		}
+	return ret;
+	}
 Dlist<Iarg> *vals = pair->getVals();
 
 Delt<Iarg> *darg;
@@ -13282,6 +13359,33 @@ return ret;
 // CODE ACTIONS
 /******************************************************************************/
 
+
+
+
+// x[expr]++ / x[expr]-- where the index is an expression.
+long long Arun::postinc(int typ, _TCHAR *varname, int nelt,
+	RFASem *index_sem, Nlppp *nlppp)
+{
+bool ok = false;
+long long index = index_sem ? index_sem->sem_to_long(ok) : FULLARRAY;
+if (index_sem)
+	delete index_sem;
+if (!ok)
+	index = FULLARRAY;
+return postinc(typ, varname, nelt, index, nlppp);
+}
+
+long long Arun::postdec(int typ, _TCHAR *varname, int nelt,
+	RFASem *index_sem, Nlppp *nlppp)
+{
+bool ok = false;
+long long index = index_sem ? index_sem->sem_to_long(ok) : FULLARRAY;
+if (index_sem)
+	delete index_sem;
+if (!ok)
+	index = FULLARRAY;
+return postdec(typ, varname, nelt, index, nlppp);
+}
 
 /********************************************
 * FN:		SORTVALS
