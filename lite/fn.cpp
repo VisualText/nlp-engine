@@ -460,6 +460,18 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnCallanalyzer(args,nlppp,/*UP*/sem);				// 09/13/26 DD.
 	case FNcallconcept:		// In callana.cpp.
 		return fnCallconcept(args,nlppp,/*UP*/sem);				// 09/13/26 DD.
+	case FNiscon:
+		return fnIstype(args,nlppp,/*UP*/sem,0);	// #447.
+	case FNisstr:
+		return fnIstype(args,nlppp,/*UP*/sem,1);	// #447.
+	case FNisnum:
+		return fnIstype(args,nlppp,/*UP*/sem,2);	// #447.
+	case FNisfloat:
+		return fnIstype(args,nlppp,/*UP*/sem,3);	// #447.
+	case FNispn:
+		return fnIstype(args,nlppp,/*UP*/sem,4);	// #447.
+	case FNisarray:
+		return fnIstype(args,nlppp,/*UP*/sem,5);	// #447.
 	case FNlogten:
 		return fnLogten(args,nlppp,/*UP*/sem);							// 04/29/04 AM.
 	case FNrandomint:
@@ -14939,6 +14951,71 @@ return true;
 * RET:		True if ok, else false.
 * FORMS:	abs(num)
 ********************************************/
+
+/********************************************
+* FN:		FNISTYPE
+* SUBJ:	Type tests on any value (#447).
+* RET:	1 or 0 in sem. Never warns, even for an empty value.
+* FORMS:	iscon(x) isstr(x) isnum(x) isfloat(x) ispn(x) isarray(x)
+* NOTE:	KIND is the name's index in that list. An array is a value with
+*			more than one element; a numeric string is a string, not a num.
+********************************************/
+
+bool Fn::fnIstype(
+	Delt<Iarg> *args,
+	Nlppp *nlppp,
+	RFASem* &sem,
+	int kind
+	)
+{
+static const _TCHAR *names[] = {
+	_T("iscon"), _T("isstr"), _T("isnum"), _T("isfloat"), _T("ispn"), _T("isarray") };
+sem = 0;
+Parse *parse = nlppp->parse_;
+if (args && args->Right())
+	{
+	_stprintf(Errbuf, _T("[%s: Takes one argument.]"), names[kind]);
+	return parse->errOut(false);
+	}
+
+bool yes = false;
+Iarg *arg = args ? args->getData() : 0;
+RFASem *val = 0;
+switch (arg ? arg->getType() : IANULL)
+	{
+	case IASTR:
+		yes = (kind == 1);
+		break;
+	case IANUM:
+		yes = (kind == 2);
+		break;
+	case IAFLOAT:
+		yes = (kind == 3);
+		break;
+	case IASEM:
+		val = arg->getSem();
+		if (!val)
+			break;
+		switch (val->getType())
+			{
+			case RS_KBCONCEPT:	yes = (kind == 0);	break;
+			case RSSTR:
+			case RSNAME:		yes = (kind == 1);	break;
+			case RSLONG:
+			case RSNUM:			yes = (kind == 2);	break;
+			case RSFLOAT:		yes = (kind == 3);	break;
+			case RSNODE:		yes = (kind == 4);	break;
+			case RSARGS:		yes = (kind == 5);	break;
+			default:			break;
+			}
+		break;
+	default:
+		break;
+	}
+sem = new RFASem(yes ? 1LL : 0LL);
+return true;
+}
+
 
 bool Fn::fnAbs(
 	Delt<Iarg> *args,

@@ -394,6 +394,13 @@ _T("jsonparse"),
 // Analyzer functions.	// 09/13/26 DD.
 _T("callanalyzer"),
 _T("callconcept"),
+// Type tests.	// #447.
+_T("iscon"),
+_T("isstr"),
+_T("isnum"),
+_T("isfloat"),
+_T("ispn"),
+_T("isarray"),
 0 };
 
 #endif // NLP_LITE_FUNCS_H

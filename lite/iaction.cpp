@@ -811,6 +811,12 @@ static const _TCHAR *bridgedFns[] = {
 	_T("dirlist"),
 	_T("fileexists"),
 	_T("filesize"),
+	_T("isarray"),		// #447.
+	_T("iscon"),
+	_T("isfloat"),
+	_T("isnum"),
+	_T("ispn"),
+	_T("isstr"),
 	_T("jsonparse"),
 	_T("jsonwrite"),
 	_T("push"),

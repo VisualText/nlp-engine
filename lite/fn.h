@@ -986,6 +986,7 @@ static bool fnStruniquechars(
 	static bool fnJsonparse(Delt<Iarg>*,Nlppp*,RFASem*&);		// 08/04/26 DD.
 	static bool fnCallanalyzer(Delt<Iarg>*,Nlppp*,RFASem*&);	// 09/13/26 DD.
 	static bool fnCallconcept(Delt<Iarg>*,Nlppp*,RFASem*&);		// 09/13/26 DD.
+	static bool fnIstype(Delt<Iarg>*,Nlppp*,RFASem*&,int);		// #447.
 	static bool fnStriscaps(Delt<Iarg>*,Nlppp*,RFASem*&);
 	static bool fnStrisupper(Delt<Iarg>*,Nlppp*,RFASem*&);			// 11/20/01 AM.
 	static bool fnStrislower(Delt<Iarg>*,Nlppp*,RFASem*&);			// 11/20/01 AM.

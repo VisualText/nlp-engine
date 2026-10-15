@@ -406,6 +406,14 @@ enum funcDef
 	FNcallanalyzer,
 	FNcallconcept,
 
+	// Type tests.	// #447.
+	FNiscon,
+	FNisstr,
+	FNisnum,
+	FNisfloat,
+	FNispn,
+	FNisarray,
+
 	FNXXYYZZ };
 
 #endif
