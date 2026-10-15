@@ -1122,6 +1122,37 @@ jobs:
           fi
           echo "[dict-source] -DICTSOURCE marks dictionary nodes with file and line"
 
+      - name: iscon, isstr, isnum, isfloat, ispn, isarray (#447)
+        shell: bash
+        run: |
+          set -eo pipefail
+          # Type tests on each kind of value (#447). Columns of 1/0 are
+          # con str num float pn array. An unset variable reads as 0.
+          FIX=.github/workflows/tests/type-tests
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log" "$FIX/output"
+          mkdir -p "$FIX/logs"
+          ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          OUT="$FIX/input/text.txt_log/output.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(type-tests): no output.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' \
+            'concept 100000' \
+            'string 010000' \
+            'digits 010000' \
+            'empty 010000' \
+            'number 001000' \
+            'float 000100' \
+            'node 000010' \
+            'array 000001' \
+            'unset 001000' \
+            'direct 1111')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(type-tests): output.txt was:"; echo "$got"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[type-tests] iscon, isstr, isnum, isfloat, ispn and isarray"
+
       - name: factorial() up to 20!
         shell: bash
         run: |

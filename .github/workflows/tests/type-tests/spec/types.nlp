@@ -1,0 +1,28 @@
+###############################################
+# FILE:     types.nlp
+# SUBJ:     iscon, isstr, isnum, isfloat, ispn, isarray on each kind of
+#           value (#447). Columns: con str num float pn array.
+# NOTE:     Expected output is in the CI step.
+###############################################
+
+@DECL
+show(L("label"), L("v")) {
+    "output.txt" << L("label") << " " << iscon(L("v")) << isstr(L("v")) << isnum(L("v"))
+                 << isfloat(L("v")) << ispn(L("v")) << isarray(L("v")) << "\n";
+}
+@@DECL
+
+@CODE
+show("concept", makeconcept(findroot(), "typeTest"));
+show("string", "abc");
+show("digits", "42");
+show("empty", "");
+show("number", 42);
+show("float", 4.5);
+show("node", pndown(pnroot()));
+L("arr")[0] = "a";
+L("arr")[1] = "b";
+show("array", L("arr"));
+show("unset", L("nothing"));
+"output.txt" << "direct " << iscon(findroot()) << isnum(3) << isstr("x") << ispn(pnroot()) << "\n";
+@@CODE
