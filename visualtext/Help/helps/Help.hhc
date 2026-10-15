@@ -39,10 +39,6 @@
       <param name="New" value="1">
     </object>
     <li><object type="text/sitemap">
-      <param name="Name" value="VisualText Quick Tour">
-      <param name="Local" value="Introduction/VisualText_Quick_Tour.htm">
-    </object>
-    <li><object type="text/sitemap">
       <param name="Name" value="System Requirements">
       <param name="Local" value="Introduction/System_Requirements.htm">
     </object>
@@ -2613,13 +2609,9 @@
     </ul>
   <li><object type="text/sitemap">
     <param name="Name" value="Sample Analyzers">
-    <param name="Local" value="Sample_Analyzers/Corporate_Analyzer.htm">
+    <param name="Local" value="Sample_Analyzers/Database1_Analyzer.htm">
   </object>
   <ul>
-    <li><object type="text/sitemap">
-      <param name="Name" value="Corporate Analyzer">
-      <param name="Local" value="Sample_Analyzers/Corporate_Analyzer.htm">
-    </object>
     <li><object type="text/sitemap">
       <param name="Name" value="Database1 Analyzer">
       <param name="Local" value="Sample_Analyzers/Database1_Analyzer.htm">

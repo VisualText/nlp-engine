@@ -2,12 +2,7 @@
 
 This is example code on how to use the NLP Engine's C++ library codes in a C++ program. There is a CMakeLists file and a mainl.cpp file which include and uses the NLP Engine library.
 
-It assumes there are three analyzers in the analyzers folder. The name of the analyzers folder needs to be “analyzers”.
-The analyzers that appear in this example are legacy and some no longer exist. It is expected that programmers test with their own set of analyzers.
-
-1. taiparse (it has since been renamed to the parse-en-us)
-2. corporate
-3. noop (no longer exists)
+It runs parse-en-us from the "analyzers" folder, checks that a missing analyzer fails cleanly, and checks that two engines can be open in one process (#791). It is expected that programmers test with their own set of analyzers.
 
 ## Real Usage
 

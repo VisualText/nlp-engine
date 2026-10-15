@@ -26,11 +26,9 @@ int _tmain( // 09/23/20 AM.
     // now deliberate: it must fail cleanly, not crash or report success.
     _TCHAR anaParse[1001];
     _TCHAR anaMissing[1001];
-    _TCHAR anaCorporate[1001];
     _TCHAR workingFolder[1001];
 
     _stprintf(anaParse,"%s",_T("parse-en-us"));
-    _stprintf(anaCorporate,"%s",_T("corporate"));
     _stprintf(anaMissing,"%s",_T("no-such-analyzer"));
     _stprintf(workingFolder,"%s",_T("./"));
     int failures = 0;
@@ -90,17 +88,6 @@ int _tmain( // 09/23/20 AM.
     }
     std::_t_cout << _T("[output: ") << sso1.str() << _T("]") << std::endl;
     std::_t_cout << _T("[end: ") << anaParse << _T("]") << std::endl;
-
-    std::istringstream ssi2(str);
-    std::ostringstream sso2;
-    std::_t_cout << _T("[analyzer: ") << anaCorporate << _T("]") << std::endl;
-    std::_t_cout << _T("[input: ") << ssi2.str() << _T("]") << std::endl;
-    if (nlpEngine->analyze(anaCorporate,&ssi2,&sso2) < 0) {
-        std::_t_cout << _T("[FAIL: ") << anaCorporate << _T(" did not run]") << std::endl;
-        ++failures;
-    }
-    std::_t_cout << _T("[output: ") << sso2.str() << _T("]") << std::endl;
-    std::_t_cout << _T("[end: ") << anaCorporate << _T("]") << std::endl;
 
     std::istringstream ssi3("Strstream test.");
     std::ostringstream sso3;
