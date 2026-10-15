@@ -975,6 +975,39 @@ jobs:
           fi
           echo "[literal] makeliteral() makes a token later passes match"
 
+      - name: attr="value" on rule elements (#438)
+        shell: bash
+        run: |
+          set -eo pipefail
+          # A key on a rule element that is not a modifier, with one value, is
+          # an attribute test (#438): _xALPHA [pos="noun"] is vareq=("pos" "noun").
+          # Digits compare as a number, as do the values of vareq=/vargt=/...
+          # written on an element. A key one edit from a modifier warns.
+          FIX=.github/workflows/tests/element-eq
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          OUT="$FIX/input/text.txt_log/output.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(element-eq): no output.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' \
+            'text attr=value: two' \
+            'text vareq=: two' \
+            'number attr=value: three' \
+            'number vareq=: three' \
+            'both attr=value: two' \
+            'both vareq=: two' \
+            'greater: three')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(element-eq): output.txt was:"; echo "$got"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          if ! grep -q "Element key=mtch is not a modifier.*Did you mean match" "$FIX/logs/make_ana.log"; then
+            echo "FAIL(element-eq): no typo warning for mtch= in make_ana.log"; cat "$FIX/logs/make_ana.log"; exit 1
+          fi
+          echo "[element-eq] attr=value on an element tests the attribute"
+
       - name: factorial() up to 20!
         shell: bash
         run: |

@@ -1,0 +1,14 @@
+###############################################
+# FILE:     typo.nlp
+# SUBJ:     mtch is one edit from match: warns, then tests an attribute "mtch".
+# NOTE:     Part of the element-eq regression (#438); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@POST
+  "output.txt" << "typo: " << phrasetext() << "\n";
+  noop();
+@RULES
+_xNIL <- _xALPHA [mtch=(two)] @@

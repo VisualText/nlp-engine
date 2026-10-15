@@ -1,0 +1,14 @@
+###############################################
+# FILE:     greater.nlp
+# SUBJ:     vargt= on an element compares with the number 2, not the text "2".
+# NOTE:     Part of the element-eq regression (#438); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@POST
+  "output.txt" << "greater: " << phrasetext() << "\n";
+  noop();
+@RULES
+_xNIL <- _xALPHA [vargt=("count" 2)] @@

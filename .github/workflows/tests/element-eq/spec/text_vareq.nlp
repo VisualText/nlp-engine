@@ -1,0 +1,14 @@
+###############################################
+# FILE:     text_vareq.nlp
+# SUBJ:     A text attribute. (vareq= form)
+# NOTE:     Part of the element-eq regression (#438); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@POST
+  "output.txt" << "text vareq=: " << phrasetext() << "\n";
+  noop();
+@RULES
+_xNIL <- _xALPHA [vareq=("pos" "noun")] @@

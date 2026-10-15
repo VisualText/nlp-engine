@@ -1,0 +1,14 @@
+###############################################
+# FILE:     both_eq.nlp
+# SUBJ:     An attribute test beside a match list and a repeat. (attr=value form)
+# NOTE:     Part of the element-eq regression (#438); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@POST
+  "output.txt" << "both attr=value: " << phrasetext() << "\n";
+  noop();
+@RULES
+_xNIL <- _xWILD [one match=(one two) pos="noun"] @@

@@ -1,0 +1,14 @@
+###############################################
+# FILE:     both_vareq.nlp
+# SUBJ:     An attribute test beside a match list and a repeat. (vareq= form)
+# NOTE:     Part of the element-eq regression (#438); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@POST
+  "output.txt" << "both vareq=: " << phrasetext() << "\n";
+  noop();
+@RULES
+_xNIL <- _xWILD [one match=(one two) vareq=("pos" "noun")] @@

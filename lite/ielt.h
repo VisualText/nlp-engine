@@ -131,6 +131,7 @@ public:
 							/*UP*/ bool &info, bool &f_look,
 							bool fhash = true);
 	static bool preActionKey(_TCHAR *key);	// #438.
+	static const _TCHAR *nearModifier(_TCHAR *key);	// #438.
 	void internPres(						// 07/13/99 AM.
 		Dlist<Ipre> *pres,		// For binding pre actions.
 		int ord						// Current element number in rule's phrase.
