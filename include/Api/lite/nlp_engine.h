@@ -166,6 +166,11 @@ public:
     int close();
     int close(_TCHAR *analyzer);
 
+    // A string every later analysis sees as G("$datum"), eg the output
+    // format the caller wants. Empty (the default) means none.
+    void setDatum(const _TCHAR *datum);
+    const _TCHAR *getDatum();
+
 private:
     void analyzeFile(const std::string &file, _TCHAR *outdir, std::_t_ofstream *fp);
     int createDir(_TCHAR *dirPath);
@@ -175,4 +180,8 @@ private:
     // close() must key the VTRun analyzer registry on this so the same analyzer
     // passed as different path-forms maps to one entry -- see #658 / #380.
     void anaRegName(const _TCHAR *path, _TCHAR *out);
+    _TCHAR *datumArg();
+
+    // At the end of the class, so its layout is unchanged before it.
+    std::basic_string<_TCHAR> m_datum;    // G("$datum") for analyses.
 };

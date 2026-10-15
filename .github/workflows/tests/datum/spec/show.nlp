@@ -1,0 +1,9 @@
+###############################################
+# FILE:     show.nlp
+# SUBJ:     Print G("$datum"), set by nlp -DATUM or NLP_ENGINE::setDatum.
+# NOTE:     Part of the datum regression; expected output is in the CI step.
+###############################################
+
+@CODE
+"output.txt" << "datum=[" << G("$datum") << "]\n";
+@@CODE
