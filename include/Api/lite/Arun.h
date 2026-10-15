@@ -425,6 +425,8 @@ public:
 	// POST ACTIONS
 	static bool single(Nlppp *);
 	static bool singler(Nlppp *,long long,long long);							// 06/02/00 AM.
+	static bool makeliteral(Nlppp *,long long,long long,_TCHAR *);			// #450.
+	static bool makeliteral(Nlppp *,long long,long long,_TCHAR *,_TCHAR *);	// #450.
 	static bool singlex(Nlppp *,long long,long long);							// 06/02/00 AM.
 	static bool	singlezap(Nlppp *);										// 01/04/01 AM.
 	static bool merge(Nlppp *);											// 06/02/00 AM.

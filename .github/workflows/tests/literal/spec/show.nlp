@@ -1,0 +1,14 @@
+###############################################
+# FILE:     show.nlp
+# SUBJ:     Name, token type, $text and original offsets of each top node.
+###############################################
+
+@CODE
+L("n") = pndown(pnroot());
+while (L("n")) {
+    if (pntype(L("n")) != "white")
+        "output.txt" << pnname(L("n")) << " " << pntype(L("n")) << " text=" << pnvar(L("n"), "$text")
+                     << " at " << pnvar(L("n"), "$ostart") << "-" << pnvar(L("n"), "$oend") << "\n";
+    L("n") = pnnext(L("n"));
+}
+@@CODE

@@ -122,6 +122,7 @@ _T("lextagger"),	// 12/11/03 AM.
 _T("listadd"),
 _T("listnode"),
 _T("LJ"),
+_T("makeliteral"),	// Post action (#450).
 _T("lj"),
 _T("loaddict"),	// 06/11/26 DD.
 _T("loadkbb"),		// 06/11/26 DD.

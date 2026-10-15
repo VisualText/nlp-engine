@@ -5240,6 +5240,26 @@ return true;
 
 
 /********************************************
+* FN:		MAKELITERAL
+* SUBJ:	makeliteral(start, end, text [, type]), compiled runtime (#450).
+* NOTE:	Reduces like singler(), then Pat::makeLiteral, as the interpreter.
+********************************************/
+
+bool Arun::makeliteral(Nlppp *nlppp, long long num1, long long num2, _TCHAR *text)
+{
+return makeliteral(nlppp, num1, num2, text, 0);
+}
+
+bool Arun::makeliteral(Nlppp *nlppp, long long num1, long long num2,
+	_TCHAR *text, _TCHAR *type)
+{
+if (!singler(nlppp, num1, num2) || !nlppp->red_)
+	return false;
+return Pat::makeLiteral(nlppp->red_, text, type, nlppp);
+}
+
+
+/********************************************
 * FN:		SINGLER
 * CR:		06/02/00 AM.
 * SUBJ:	Runtime variant of post action.

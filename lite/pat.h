@@ -290,6 +290,9 @@ public:
 
 	static Ielt *preWildStop(Ielt *ielt, Delt<Ielt> *next);	// #449.
 	static bool laterMatches(Delt<Ielt> *d, Node<Pn> *node, bool right);	// #427.
+	static bool redLiteral(Delt<Iarg> *args, Nlppp *nlppp);	// #450.
+	static bool makeLiteral(Node<Pn> *sub, _TCHAR *text, _TCHAR *type,
+		Nlppp *nlppp);													// #450.
 	static void markFiredRule(Nlppp *nlppp, long ruleline);	// #73.
 
 	static bool wildFillLeft(

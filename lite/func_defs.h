@@ -125,6 +125,7 @@ enum funcDef
 	FNlistadd,
 	FNlistnode,
 	FNLJ,
+	FNmakeliteral,	// #450.
 	FNlj,
 	FNloaddict,	// 06/11/26 DD.
 	FNloadkbb,	// 06/11/26 DD.

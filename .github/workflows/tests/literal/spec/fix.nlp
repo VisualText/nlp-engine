@@ -1,0 +1,12 @@
+###############################################
+# FILE:     fix.nlp
+# SUBJ:     makeliteral() (#450): OCR read "70" as "7O"; make it a number token.
+# NOTE:     Part of the literal regression; expected output is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@POST
+  makeliteral(1, 2, "70");
+@RULES
+_xNIL <- 7 O @@

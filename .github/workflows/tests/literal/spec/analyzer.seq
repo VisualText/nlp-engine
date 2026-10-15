@@ -1,0 +1,5 @@
+tokenize	nil	# 
+nlp	fix	# makeliteral(): OCR "7O" -> num token "70"
+nlp	force	# forced type and inferred punctuation
+nlp	show	# what the new tokens report
+nlp	use	# a later pass matches the literal as _xNUM

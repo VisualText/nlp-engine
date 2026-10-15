@@ -1048,6 +1048,37 @@ jobs:
           fi
           echo "[smart-wildcard] wildcards stop before later elements"
 
+      - name: makeliteral() post action (#450) (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # makeliteral(start, end, text [, type]) replaces rule elements with one
+          # token whose text is the given string, typed as the tokenizer would
+          # (#450): OCR "7O" becomes a num token "70" that later passes match
+          # as _xNUM, keeping the original offsets.
+          FIX=.github/workflows/tests/literal
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          OUT="$FIX/input/text.txt_log/output.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(literal): no output.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' \
+            'He alpha text=He at 0-1' \
+            'paid alpha text=paid at 3-6' \
+            '70 num text=70 at 8-9' \
+            'dollars alpha text=dollars at 11-17' \
+            ', punct text=, at 19-19' \
+            'USA alpha text=USA at 21-23' \
+            '_xNUM matched: 70 dollars')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(literal): output.txt was:"; echo "$got"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[literal] makeliteral() makes a token later passes match"
+
       - name: factorial() up to 20! (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash

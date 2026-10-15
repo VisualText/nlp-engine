@@ -709,6 +709,7 @@ switch (fnid)																	// 12/21/01 AM.
 		return fnSetlookahead(args,nlppp,/*UP*/sem);					// 12/14/03 AM.
 	case FNsetunsealed:
 	case FNsingle:
+	case FNmakeliteral:		// Post action, run by Pat::postAction (#450).
 	case FNsingler:
 	case FNsinglex:
 	case FNsinglezap:
