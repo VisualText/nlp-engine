@@ -18,6 +18,7 @@ All rights reserved.
 *******************************************************************************/
 
 #include "StdAfx.h"
+#include <filesystem>		// #323.
 #include <fstream>											// Upgrade	// 01/24/01 AM.
 
 #include <stdio.h>
@@ -34,8 +35,6 @@ All rights reserved.
 #include "prim/io.h"
 
 // Local defs.
-bool resolve_file_win(_TCHAR*,_TCHAR*,_TCHAR*);		// 07/01/03 AM.
-bool resolve_file_unix(_TCHAR*,_TCHAR*,_TCHAR*);	// 07/01/03 AM.
 
 /**************************************************
 *						INDENT
@@ -120,91 +119,21 @@ while (num-- > 0)
 LIBPRIM_API bool
 resolve_file(_TCHAR *fname, _TCHAR *bname, /*DU*/ _TCHAR *buf)
 {
-#ifndef LINUX
-return resolve_file_win(fname,bname,buf);
-#else
-return resolve_file_unix(fname,bname,buf);
-#endif
-}
-
-
-// VARIANT.
-bool
-resolve_file_win(_TCHAR *fname, _TCHAR *bname, /*DU*/ _TCHAR *buf)
-{
+// One way for every platform (#323): a name with a root ("/x", "C:\\x",
+// "\\x") is used as is, any other is taken relative to BNAME.
 if (Str_empty(fname))
 	{
 	*buf = '\0';
 	return false;
 	}
-if ((_istalpha(*fname) && *(fname+1) == ':')	// eg, "c:"
- || (*fname == '\\') )	// Another absolute name in Windows.
-	{
-	_tcscpy(buf, fname);
-	return true;
-	}
-
-// Relative name
-
-if (Str_empty(bname))
-	{
-	// Keep it relative and hope for the best.
-	_tcscpy(buf, fname);
-	return true;
-	}
-
-// If basename ends in slash, catenate.
-_TCHAR *ptr = bname;
-while (*ptr)
-	++ptr;
---ptr;	// Back up to last char.
-if (*ptr == '\\')	// Base ends in slash.
-	{
-	_stprintf(buf,_T("%s%s"),bname,fname);
-	return true;
-	}
-_stprintf(buf,_T("%s\\%s"),bname,fname);
+std::filesystem::path p(fname);
+if (!p.has_root_path() && !Str_empty(bname))
+	p = std::filesystem::path(bname) / p;
+_tcscpy(buf, p.string().c_str());
 return true;
 }
 
 
-// VARIANT.
-bool
-resolve_file_unix(_TCHAR *fname, _TCHAR *bname, /*DU*/ _TCHAR *buf)
-{
-if (Str_empty(fname))
-	{
-	*buf = '\0';
-	return false;
-	}
-if (*fname == '/')	// Name starts with slash.  Absolute Linux/Unix.
-	{
-	_tcscpy(buf, fname);
-	return true;
-	}
-
-// Relative name
-
-if (Str_empty(bname))
-	{
-	// Keep it relative and hope for the best.
-	_tcscpy(buf, fname);
-	return true;
-	}
-
-// If basename ends in slash, catenate.
-_TCHAR *ptr = bname;
-while (*ptr)
-	++ptr;
---ptr;	// Back up to last char.
-if (*ptr == '/')	// Base ends in slash.
-	{
-	_stprintf(buf,_T("%s%s"),bname,fname);
-	return true;
-	}
-_stprintf(buf,_T("%s/%s"),bname,fname);
-return true;
-}
 
 /********************************************
 * FN:		RUN_SILENT

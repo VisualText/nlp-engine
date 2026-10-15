@@ -906,6 +906,9 @@ genSeqfile(fout);																// 03/08/00 AM.
 //delete fout;																	// 03/08/00 AM.
 // should probably have had: delete outStr;							// 03/08/00 AM.
 
+// Close it first: copying a file still open for writing could leave its
+// last, unflushed lines out of the sequence file (#323).
+fout.close();
 copy_file(fname, this->getSeqfile());	// Copy to sequence file.
 }
 
