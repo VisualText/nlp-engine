@@ -1154,6 +1154,40 @@ jobs:
           fi
           echo "[dict-shape] dictionary join, split, _name lines and bare entries"
 
+      - name: mkdir() and kbdumptree() without the shell (#323) (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # mkdir() was a shell "mkdir PATH": a path with spaces (or, on
+          # Windows, forward slashes) made nothing, a path with & ran a
+          # command, and it always returned 1. kbdumptree() ran "cat" on
+          # Linux and macOS. Both use std::filesystem / C++ now (#323).
+          FIX=.github/workflows/tests/fs-ops
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log" "$FIX/output" "$FIX/made" pwned_323.txt
+          mkdir -p "$FIX/logs"
+          ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          OUT="$FIX/input/text.txt_log/output.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(fs-ops): no output.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' 'plain 1' 'spaces 1' 'nested 1' 'again 1' 'dump 1')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(fs-ops): output.txt was:"; echo "$got"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          for d in plain "with spaces" a/b/c; do
+            [ -d "$FIX/made/$d" ] || { echo "FAIL(fs-ops): mkdir() did not make $d"; exit 1; }
+          done
+          if [ -e pwned_323.txt ]; then
+            echo "FAIL(fs-ops): mkdir() ran a shell command from its path"; exit 1
+          fi
+          DUMP="$FIX/made/dump.kb"
+          grep -q 'add hier "concept" "fsTest" "child"' "$DUMP" || { echo "FAIL(fs-ops): dump.kb lacks the child"; cat "$DUMP"; exit 1; }
+          grep -q '^"blue"' "$DUMP" || { echo "FAIL(fs-ops): dump.kb lacks the attribute"; cat "$DUMP"; exit 1; }
+          [ "$(tr -d '\r' < "$DUMP" | grep -v '^$' | tail -1)" = quit ] || { echo "FAIL(fs-ops): dump.kb does not end in quit"; cat "$DUMP"; exit 1; }
+          echo "[fs-ops] mkdir() and kbdumptree() work without the shell"
+
       - name: factorial() up to 20! (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash

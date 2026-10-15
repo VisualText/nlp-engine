@@ -12,6 +12,7 @@ All rights reserved.
 *******************************************************************************/
 
 #include "StdAfx.h"
+#include <filesystem>		// #323.
 #include <limits.h>	//MAXINT,MAXLONG,MAX_INT,MAX_LONG			// 01/20/00 AM.
 #include <locale.h>	// For char handling.							// 01/06/03 AM.
 #include <math.h>		// For math, log10.								// 04/29/04 AM.
@@ -11284,10 +11285,14 @@ ok = (_tsystem(cmd) ? false : true);
 #endif
 #endif
 
-_TCHAR cmd[2048];	// 09/08/28 AM.
-_stprintf(cmd,_T("mkdir %s"), str);	// 09/08/28 AM.
-run_silent(cmd);			// system() w/o DOC CMD PROMPT POPUP.	// 09/28/08 AM.
-ok = true;	// 09/28/08 AM.
+// Was a shell "mkdir STR": a path with spaces failed, one with & or ;
+// ran a command, and it always reported success (#323).
+{
+std::error_code ec;
+std::filesystem::path dp(str);
+std::filesystem::create_directories(dp, ec);
+ok = std::filesystem::is_directory(dp, ec);
+}
 
 if (!ok)
 	{

@@ -11,6 +11,7 @@ All rights reserved.
 *******************************************************************************/
 
 #include "StdAfx.h"
+#include <filesystem>		// #323.
 #include "machine.h"		// 03/09/00 AM.
 #include "u_out.h"		// 01/19/06 AM.
 #include "prim/libprim.h"	// 01/18/06 AM.
@@ -91,9 +92,12 @@ for (;;)																			// 12/18/01 AM.
 bool file_exists(const _TCHAR *iname)
 {
 
-//ifstream inFile(iname, std::ios::in | std::ios::nocreate);
-std::_t_ifstream inFile(CTCHAR2CA(iname), std::ios::in);
-return (inFile ? true : false);
+// A file, not a directory: opening a directory for reading succeeds on
+// Linux and macOS, so a directory used to "exist" there (#323).
+if (!iname || !*iname)
+	return false;
+std::error_code ec;
+return std::filesystem::is_regular_file(std::filesystem::path(iname), ec);
 }
 
 

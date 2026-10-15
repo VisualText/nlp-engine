@@ -14,6 +14,7 @@ All rights reserved.
 
 
 #include "StdAfx.h"
+#include <filesystem>		// #323.
 #ifdef LINUX
 #ifdef _ODBC
 #include <sql.h>
@@ -17641,10 +17642,14 @@ ok = (_tsystem(cmd) ? false : true);
 #endif
 #endif
 
-_TCHAR cmd[2048];	// 09/28/08 AM.
-_stprintf(cmd,_T("mkdir %s"), str);	// 09/28/08 AN.
-run_silent(cmd);			// system() w/o DOC CMD PROMPT POPUP.	// 09/28/08 AM.
-ok = true;	// 09/28/08 AM.
+// Was a shell "mkdir STR": a path with spaces failed, one with & or ;
+// ran a command, and it always reported success (#323).
+{
+std::error_code ec;
+std::filesystem::path dp(str);
+std::filesystem::create_directories(dp, ec);
+ok = std::filesystem::is_directory(dp, ec);
+}
 
 if (!ok)
 	{

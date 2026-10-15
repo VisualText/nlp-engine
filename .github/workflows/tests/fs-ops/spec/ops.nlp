@@ -1,0 +1,22 @@
+###############################################
+# FILE:     ops.nlp
+# SUBJ:     mkdir() and kbdumptree() (#323).
+# NOTE:     mkdir() was a shell "mkdir PATH": paths with spaces or
+#           forward slashes (on Windows) made nothing, a path with & ran
+#           a command, and it always returned 1. kbdumptree() ran "cat"
+#           on Linux and macOS. Expected output is in the CI step.
+###############################################
+
+@CODE
+L("base") = G("$apppath") + "/made";
+"output.txt" << "plain " << mkdir(L("base") + "/plain") << "\n";
+"output.txt" << "spaces " << mkdir(L("base") + "/with spaces") << "\n";
+"output.txt" << "nested " << mkdir(L("base") + "/a/b/c") << "\n";
+"output.txt" << "again " << mkdir(L("base") + "/plain") << "\n";
+# Must not run "echo": the CI step checks no pwned_323.txt appears.
+mkdir(L("base") + "/x & echo pwned > pwned_323.txt");
+
+L("con") = makeconcept(findroot(), "fsTest");
+addstrval(makeconcept(L("con"), "child"), "color", "blue");
+"output.txt" << "dump " << kbdumptree(L("con"), L("base") + "/dump.kb") << "\n";
+@@CODE
