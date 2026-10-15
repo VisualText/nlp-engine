@@ -266,12 +266,31 @@ bool DICTTok::ApplyDictFiles() {
 		}
 		CON *c = (CON *)con;
 
+		// A token the dictionary splits into words (#426): replace it with
+		// the words and go on from the first of them.
+		if (con && splitToken(node, con))
+			continue;
+
 		int length = 0;
 		CONCEPT *end = NULL;
 		Node<Pn> *endNode = MatchLongest(con,node,&end,length,0);
 		ATTR *attrs = cg_->findAttrs(end);
 		if (endNode && end && attrs) {
 			CON *e = (CON *)end;
+
+			// A phrase whose words become one token (#434): look the joined
+			// token up in turn, so "hotrod s=vehicle" applies to it.
+			if (length > 1 && cg_->findVals(end, _T("join"))) {
+				VAL *jv = cg_->findVals(end, _T("join"));
+				long long jnum = 1;
+				if (cg_->isValNum(jv))
+					cg_->popVal(jv, jnum);
+				Node<Pn> *joined = jnum ? joinPhrase(node, endNode) : 0;
+				if (joined) {
+					node = joined;
+					continue;
+				}
+			}
 
 			// Construct phrase text from the end up
 			std::string text = "";
@@ -349,6 +368,15 @@ bool DICTTok::ApplyDictFiles() {
 				// to the span's length -- "well-known" read "well - kno" and
 				// "New York" read "new york".					// 10/13/26 DD.
 				suggestedN->getData()->setText(pn->getText());
+
+				// Attributes for every node of this name, from a dictionary
+				// line such as "_bridge type=location" (#417). The entry's
+				// own attributes, applied next, win over them.
+				if (suggName[0] == '_') {
+					CONCEPT *shared = cg_->findWordInMemory(suggName);
+					if (shared)
+						applyAttrs(suggestedN, shared);
+				}
 
 				findAttrs(suggestedN, con, name, true);
 				node = suggestedN;
@@ -464,6 +492,206 @@ Node<Pn>* DICTTok::MatchLongest(CONCEPT *con, Node<Pn> *parentN, CONCEPT **end, 
 		}
 	}
 	return pn;
+}
+
+/********************************************
+* FN:		LOOKUPWORD
+* SUBJ:	A word's dictionary concept: as written, lowercase, then Capitalized.
+********************************************/
+
+CONCEPT *DICTTok::lookupWord(_TCHAR *name) {
+	_TCHAR buf[PATHSIZ];
+	CONCEPT *con = cg_->findWordConcept(name);
+	if (!con)
+		con = cg_->findWordConcept(str_to_lower(name, buf));
+	if (!con)
+		con = findCapitalized(cg_, buf);	// #386.
+	return con;
+}
+
+/********************************************
+* FN:		MAKELITTOK
+* SUBJ:	A token whose text is NAME, not the input it spans (#426, #434).
+* NOTE:	Typed as the tokenizer would type NAME: all digits num, one ASCII
+*			punctuation character punct, otherwise alpha.
+********************************************/
+
+Node<Pn> *DICTTok::makeLitTok(const _TCHAR *name, long start, long end, long ustart,
+	long uend, _TCHAR *text, long line) {
+	long len = (long) _tcslen(name);
+	if (!len || len >= MAXSTR)
+		return 0;
+	_TCHAR buf[MAXSTR];
+	_tcscpy(buf, name);
+	_TCHAR *lcstr = 0;
+	Sym *sym = internTok(buf, len, htab_, lcstr);
+	if (!sym)
+		return 0;
+	enum Pntype typ = PNNUM;
+	for (const _TCHAR *p = name; *p; ++p)
+		if (*p < '0' || *p > '9')
+			typ = PNALPHA;
+	if (typ == PNALPHA && len == 1 && (_TUCHAR) name[0] < 0x80 && !alphabetic(name[0]))
+		typ = PNPUNCT;
+	Node<Pn> *node = Pn::makeTnode(start, end, ustart, uend, typ, text, sym->getStr(), sym, line);
+	if (node)
+		node->getData()->setLiteral(true);
+	return node;
+}
+
+/********************************************
+* FN:		REPLACERANGE
+* SUBJ:	Put the sibling list NFIRST..NLAST in place of FIRST..LAST, and
+*			delete FIRST..LAST.
+********************************************/
+
+void DICTTok::replaceRange(Node<Pn> *first, Node<Pn> *last, Node<Pn> *nfirst,
+	Node<Pn> *nlast) {
+	Node<Pn> *lefty = first->Left();
+	Node<Pn> *righty = last->Right();
+	if (lefty) {
+		lefty->setRight(nfirst);
+		nfirst->setLeft(lefty);
+	} else {
+		Node<Pn> *up = first->Up();
+		nfirst->setUp(up);
+		if (up)
+			up->setDown(nfirst);
+		first->setUp(0);
+	}
+	if (righty) {
+		righty->setLeft(nlast);
+		nlast->setRight(righty);
+	}
+	first->setLeft(0);
+	last->setRight(0);
+	tree_->deleteSubsNC(first);
+}
+
+/********************************************
+* FN:		SPLITTOKEN
+* SUBJ:	Replace a token with the words of its split= value (#426).
+* EX:		licenseplate split="license plate"
+* NOTE:	The words are separated by whitespace in the value and become
+*			adjacent tokens (no whitespace node between them). When their
+*			letters spell the token, each word gets the offsets of its own
+*			letters; otherwise (clutter, a misspelling) each spans the whole
+*			token. Only tokens straight from the tokenizer are split, so a
+*			word is never split again. NODE becomes the first word.
+********************************************/
+
+bool DICTTok::splitToken(Node<Pn>* &node, CONCEPT *con) {
+	Pn *pn = node->getData();
+	if (pn->getType() == PNNODE || pn->getType() == PNWHITE || pn->getLiteral())
+		return false;
+	VAL *vals = cg_->findVals(con, _T("split"));
+	if (!vals || !cg_->isValStr(vals))
+		return false;
+	_TCHAR value[MAXSTR];
+	value[0] = '\0';
+	cg_->popSval(vals, value);
+
+	std::vector<std::string> words;
+	std::string spelled;
+	for (_TCHAR *p = value; *p; ) {
+		while (*p == ' ' || *p == '\t')
+			++p;
+		_TCHAR *w = p;
+		while (*p && *p != ' ' && *p != '\t')
+			++p;
+		if (p > w) {
+			words.push_back(std::string(w, p - w));
+			spelled += words.back();
+		}
+	}
+	if (words.empty())
+		return false;
+
+	// Do the words spell the token, ignoring ASCII case?
+	long blen = pn->getEnd() - pn->getStart() + 1;
+	_TCHAR *text = pn->getText();
+	bool aligned = text && (long) spelled.size() == blen;
+	for (long i = 0; aligned && i < blen; ++i) {
+		_TCHAR a = text[i], b = spelled[i];
+		if (a >= 'A' && a <= 'Z') a += 'a' - 'A';
+		if (b >= 'A' && b <= 'Z') b += 'a' - 'A';
+		if (a != b)
+			aligned = false;
+	}
+
+	long bpos = pn->getStart();
+	long upos = pn->getUstart();
+	_TCHAR *tpos = text;
+	Node<Pn> *first = 0, *prev = 0;
+	for (size_t i = 0; i < words.size(); ++i) {
+		const std::string &w = words[i];
+		long wb = (long) w.size();
+		long wu = 0;
+		for (size_t k = 0; k < w.size(); ++k)
+			if (((unsigned char) w[k] & 0xC0) != 0x80)
+				++wu;
+		Node<Pn> *piece;
+		if (aligned) {
+			piece = makeLitTok(w.c_str(), bpos, bpos + wb - 1, upos, upos + wu - 1, tpos, pn->getLine());
+			bpos += wb;
+			upos += wu;
+			tpos += wb;
+		} else
+			piece = makeLitTok(w.c_str(), pn->getStart(), pn->getEnd(), pn->getUstart(),
+				pn->getUend(), text, pn->getLine());
+		if (!piece) {
+			if (first)
+				tree_->deleteSubsNC(first);
+			return false;
+		}
+		if (prev) {
+			prev->setRight(piece);
+			piece->setLeft(prev);
+			replaceNum(piece, _T("SP"), 1);
+		} else {
+			first = piece;
+			copyAttrsToSuggested(pn, piece, node);	// NL, SP, NOSP, TABS.
+		}
+		Pn *pp = piece->getData();
+		findAttrs(piece, lookupWord(pp->getName()), pp->getName(), false);
+		prev = piece;
+	}
+
+	replaceRange(node, node, first, prev);
+	node = first;
+	return true;
+}
+
+/********************************************
+* FN:		JOINPHRASE
+* SUBJ:	Replace a phrase's tokens with one token of its words (#434).
+* EX:		hot - rod join=1   turns "hot-rod" into the token "hotrod".
+* NOTE:	Whitespace and punctuation are dropped; the token keeps the case
+*			of the input and spans the phrase. Returns the token, or 0.
+********************************************/
+
+Node<Pn> *DICTTok::joinPhrase(Node<Pn> *node, Node<Pn> *endNode) {
+	std::string joined;
+	for (Node<Pn> *n = node; n; n = n->Right()) {
+		Pn *p = n->getData();
+		if (p->getType() == PNNODE)
+			return 0;
+		if (p->getType() != PNWHITE && p->getType() != PNPUNCT)
+			joined += p->getName();
+		if (n == endNode)
+			break;
+	}
+	Pn *pn = node->getData();
+	Pn *pe = endNode->getData();
+	Node<Pn> *tok = makeLitTok(joined.c_str(), pn->getStart(), pe->getEnd(),
+		pn->getUstart(), pe->getUend(), pn->getText(), pn->getLine());
+	if (!tok)
+		return 0;
+	copyAttrsToSuggested(pn, tok, endNode);	// NL, SP, NOSP, TABS.
+	Pn *tp = tok->getData();
+	findAttrs(tok, lookupWord(tp->getName()), tp->getName(), false);
+	replaceRange(node, endNode, tok, tok);
+	return tok;
 }
 
 bool DICTTok::copyAttrsToSuggested(Pn *pn, Node<Pn> *suggestedPn, Node<Pn> *endNode) {
@@ -915,11 +1143,6 @@ void DICTTok::makeTextAttrs(Node<Pn> *node, Node<Pn> *last) {
 }
 
 inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, bool isSuggested) {
-	_TCHAR attrName[NAMESIZ];
-	_TCHAR bufval[NAMESIZ];
-
-	ATTR *attrs = cg_->findAttrs(con);
-	bool reduceIt = false;
 	bool lower = false;
 	bool cap = false;
 	bool upper = false;
@@ -966,6 +1189,20 @@ inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, bool i
 		}		
 	}
 
+	return applyAttrs(node, con);
+}
+
+/********************************************
+* FN:		APPLYATTRS
+* SUBJ:	Put a dictionary entry's attributes on a node.
+* RET:	True if the entry has an s= (suggested node) attribute.
+********************************************/
+
+bool DICTTok::applyAttrs(Node<Pn> *node, CONCEPT *con) {
+	_TCHAR attrName[NAMESIZ];
+	_TCHAR bufval[NAMESIZ];
+	ATTR *attrs = cg_->findAttrs(con);
+	bool reduceIt = false;
 	_TCHAR *val;
 
 	while (attrs) {
@@ -1002,7 +1239,8 @@ inline bool DICTTok::findAttrs(Node<Pn> *node, CONCEPT *con, _TCHAR *str, bool i
 		_TCHAR *strattr, *strval;
 		parse_->internStr(attrName, strattr);
 
-		if (_tcscmp(_T("pos"),strattr) && _tcscmp(_T("s"),strattr) && _tcscmp(_T("l"),strattr)) {
+		if (_tcscmp(_T("pos"),strattr) && _tcscmp(_T("s"),strattr) && _tcscmp(_T("l"),strattr)
+			&& _tcscmp(_T("join"),strattr) && _tcscmp(_T("split"),strattr)) {
 			// This needs to loop if there is more than one value for the same attribute
 			if (cg_->isValStr(vals)) {
 				cg_->popSval(vals,bufval);

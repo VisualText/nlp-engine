@@ -1113,6 +1113,47 @@ jobs:
           fi
           echo "[element-eq] attr=value on an element tests the attribute"
 
+      - name: Dictionary join=, split=, _name lines and bare entries (#433 #434 #426 #417) (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # A bare dictionary line (no attributes) used to end the read of the
+          # file (#433). join=1 makes a phrase one token (#434), split="a b"
+          # makes a token several words (#426), and a "_bridge type=x" line puts
+          # attributes on every _bridge node (#417).
+          FIX=.github/workflows/tests/dict-shape
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log" "$FIX/output"
+          mkdir -p "$FIX/logs"
+          ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          OUT="$FIX/input/text.txt_log/output.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(dict-shape): no output.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' \
+            'A alpha text=A at 0-0' \
+            '_vehicle node text=HOT-ROD at 2-8 speed=fast [HOTROD 2-8]' \
+            'near alpha text=near at 10-13' \
+            'the alpha text=the at 15-17' \
+            '_bridge node text=viaduct at 19-25 type=location kind=raised [viaduct 19-25]' \
+            'and alpha text=and at 27-29' \
+            '_bridge node text=bridge at 31-36 type=location kind=generic [bridge 31-36]' \
+            '; punct text=; at 37-37' \
+            'my alpha text=my at 39-40' \
+            '_phrase node text=licenseplate at 42-53 [license 42-48, plate 49-53]' \
+            ', punct text=, at 54-54' \
+            '_weather node text=weathervconditions at 56-73 [weather 56-73, conditions 56-73]' \
+            ', punct text=, at 74-74' \
+            'email alpha text=email at 76-81' \
+            '; punct text=; at 82-82' \
+            '_phrase node text=license plate at 84-96 [license 84-90, plate 92-96]' \
+            '. punct text=. at 97-97')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(dict-shape): output.txt was:"; echo "$got"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[dict-shape] dictionary join, split, _name lines and bare entries"
+
       - name: factorial() up to 20! (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash
