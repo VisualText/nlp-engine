@@ -15,9 +15,9 @@ All rights reserved.
 #include "lite/nlp_engine.h"
 #include "version.h"
 
-#define NLP_ENGINE_VERSION "4.2.32"
+#define NLP_ENGINE_VERSION "4.2.33"
 
-bool cmdReadArgs(int, _TCHAR *argv[], _TCHAR *&, _TCHAR *&, _TCHAR *&, _TCHAR *&, bool &, bool &, bool &, bool &, bool &, bool &, int &, bool &);
+bool cmdReadArgs(int, _TCHAR *argv[], _TCHAR *&, _TCHAR *&, _TCHAR *&, _TCHAR *&, bool &, bool &, bool &, bool &, bool &, bool &, int &, bool &, bool &);
 void cmdHelpargs(_TCHAR *);
 
 #include "lite/nlpdebug.h"
@@ -46,14 +46,17 @@ int _tmain(
 	bool compileAna = false; // Compile only the analyzer to C++.
 	int debugPort = 0;       // -debug <port>: rule-level debug server. 0 = off.
 	bool stream = false;     // -STDIN: read input file paths from stdin.
+	bool dictSource = false; // -DICTSOURCE: nodes record their .dict file and line.
 
 	/////////////////////////////////////////////////
 	// GET APP INFORMATION
 	/////////////////////////////////////////////////
 
 	// Get analyzer name, input and output filenames from command line.
-	if (!cmdReadArgs(argc, argv, analyzerpath, input, output, workdir, develop, compile, compiled, silent, compileKB, compileAna, debugPort, stream))
+	if (!cmdReadArgs(argc, argv, analyzerpath, input, output, workdir, develop, compile, compiled, silent, compileKB, compileAna, debugPort, stream, dictSource))
 		exit(1);
+	if (dictSource)
+		NLP_ENGINE::setDictSource(true);	// #432.
 
 	// Rule-level debugger. Blocks until a client attaches, so it is only started
 	// for an actual analysis run -- attaching to a compile would wait forever on
@@ -129,7 +132,8 @@ bool cmdReadArgs(
 	bool &compileKB,   // true - compile only the KB to C++.
 	bool &compileAna,  // true - compile only the analyzer to C++.
 	int &debugPort,	   // -debug <port>: rule-level debug server. 0 = off.
-	bool &stream	   // -STDIN: read input file paths from stdin.
+	bool &stream,	   // -STDIN: read input file paths from stdin.
+	bool &dictSource   // -DICTSOURCE: nodes record their .dict file and line.
 )
 {
 	_TCHAR *ptr;
@@ -277,6 +281,10 @@ bool cmdReadArgs(
 			{
 				stream = true;
 			}
+			else if (!strcmp_i(ptr, _T("dictsource"))) // #432.
+			{
+				dictSource = true;
+			}
 			else
 			{
 				// Used to be ignored silently, so a typo like -ANALYZER ran with
@@ -417,6 +425,8 @@ void cmdHelpargs(_TCHAR *name)
 				 << _T("           [-STDIN] load once, then analyze one input file path per stdin line;") << std::endl
 				 << _T("                    a blank line or EOF ends the run. Each input is analyzed") << std::endl
 				 << _T("                    when the next line arrives, so $islastfile can be set.") << std::endl
+				 << _T("           [-DICTSOURCE] nodes built from .dict entries get dictfile and dictline") << std::endl
+				 << _T("                    attributes naming the entry's file and line") << std::endl
 				 << std::endl
 				 << _T("Directories in the nlp.exe files:") << std::endl
 				 << _T("   data        nlp engine bootstrap grammar") << std::endl

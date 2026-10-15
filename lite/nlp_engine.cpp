@@ -800,6 +800,10 @@ int NLP_ENGINE::close(_TCHAR *analyzer)
     return 0;
 }
 
+void NLP_ENGINE::setDictSource(bool on) {
+    CG::setDictSource(on);	// #432.
+}
+
 int NLP_ENGINE::createDir(_TCHAR *dirPath) {
     std::error_code ec;		// #323.
     if (!std::filesystem::exists(std::filesystem::path(dirPath), ec)) {

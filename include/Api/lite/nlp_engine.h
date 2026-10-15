@@ -59,6 +59,10 @@ public:
         bool silent=false
  	);
 
+	// -DICTSOURCE (#432): dictionary entries record their file and line on
+	// the nodes dicttok builds. Set before the analyzer is loaded.
+	static void setDictSource(bool on);
+
 	~NLP_ENGINE();
 
     _TCHAR *m_analyzer;

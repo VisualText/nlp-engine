@@ -1188,6 +1188,48 @@ jobs:
           [ "$(tr -d '\r' < "$DUMP" | grep -v '^$' | tail -1)" = quit ] || { echo "FAIL(fs-ops): dump.kb does not end in quit"; cat "$DUMP"; exit 1; }
           echo "[fs-ops] mkdir() and kbdumptree() work without the shell"
 
+      - name: -DICTSOURCE marks nodes with their dictionary file and line (#432) (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # With -DICTSOURCE, nodes dicttok builds from .dict entries get
+          # dictfile and dictline attributes (#432, #475); without it, none.
+          FIX=.github/workflows/tests/dict-source
+          OUT="$FIX/input/text.txt_log/output.txt"
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log" "$FIX/output"
+          mkdir -p "$FIX/logs"
+          ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          if [ -s "$OUT" ]; then
+            echo "FAIL(dict-source): attributes without -DICTSOURCE:"; cat "$OUT"; exit 1
+          fi
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log" "$FIX/output"
+          mkdir -p "$FIX/logs"
+          ./bin/nlp -ANA "$FIX" -WORK ./ -DICTSOURCE "$FIX/input/text.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(dict-source): no output.txt with -DICTSOURCE"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' \
+            '_vehicle words.dict:6' \
+            '  HOTROD words.dict:6' \
+            '_bridge words.dict:14' \
+            '  viaduct words.dict:14' \
+            '_bridge words.dict:13' \
+            '  bridge words.dict:13' \
+            '_phrase words.dict:3' \
+            '  license words.dict:9' \
+            '  plate words.dict:9' \
+            '_weather words.dict:11' \
+            '  weather words.dict:10' \
+            '  conditions words.dict:10' \
+            'email words.dict:7' \
+            '_phrase words.dict:3')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(dict-source): output.txt was:"; echo "$got"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[dict-source] -DICTSOURCE marks dictionary nodes with file and line"
+
       - name: factorial() up to 20! (Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash

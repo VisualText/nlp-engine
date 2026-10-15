@@ -224,6 +224,12 @@ public:
 	// Loaded dictionary only: never searches *full files or logs a miss.
 	CONCEPT *findWordInMemory(_TCHAR*);								// 10/13/26 DD.
 
+	// -DICTSOURCE: give each dictionary entry dictfile and dictline
+	// attributes, so the nodes dicttok builds say where they came from.
+	// Static: set once per process, and no change to the object layout.
+	static void setDictSource(bool on);							// #432.
+	static bool getDictSource();									// #432.
+
 	CONCEPT *matchDictKB(std::string dictFilename, std::vector<std::filesystem::path> kbfiles);
 	std::string removeExtension(const std::string& filename);
 	bool openDict(std::vector<std::filesystem::path>& files);

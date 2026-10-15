@@ -143,7 +143,8 @@ public:
 	void replaceRange(Node<Pn> *first, Node<Pn> *last, Node<Pn> *nfirst,
 		Node<Pn> *nlast);
 	bool splitToken(Node<Pn>* &node, CONCEPT *con);
-	Node<Pn> *joinPhrase(Node<Pn> *node, Node<Pn> *endNode);
+	Node<Pn> *joinPhrase(Node<Pn> *node, Node<Pn> *endNode, CONCEPT *entry);
+	void markSource(Node<Pn> *node, CONCEPT *entry);	// -DICTSOURCE (#432).
 
 private:
 	//Parse *parse;			// The analyze instance that we're tokenizing for.

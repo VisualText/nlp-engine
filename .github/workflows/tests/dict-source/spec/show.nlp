@@ -1,0 +1,22 @@
+###############################################
+# FILE:     show.nlp
+# SUBJ:     Each node from a dictionary entry, and its children, with
+#           the entry's file and line (-DICTSOURCE, #432).
+# NOTE:     Part of the dict-source regression; expected output is in
+#           the CI step. Without -DICTSOURCE nothing is printed.
+###############################################
+
+@CODE
+L("n") = pndown(pnroot());
+while (L("n")) {
+    if (pnvar(L("n"), "dictfile"))
+        "output.txt" << pnname(L("n")) << " " << pnvar(L("n"), "dictfile") << ":" << pnvar(L("n"), "dictline") << "\n";
+    L("c") = pndown(L("n"));
+    while (L("c")) {
+        if (pnvar(L("c"), "dictfile"))
+            "output.txt" << "  " << pnname(L("c")) << " " << pnvar(L("c"), "dictfile") << ":" << pnvar(L("c"), "dictline") << "\n";
+        L("c") = pnnext(L("c"));
+    }
+    L("n") = pnnext(L("n"));
+}
+@@CODE
