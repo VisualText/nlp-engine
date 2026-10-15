@@ -1153,6 +1153,26 @@ jobs:
           fi
           echo "[type-tests] iscon, isstr, isnum, isfloat, ispn and isarray"
 
+      - name: "-DATUM sets G($datum) (NLPPlus #1)"
+        shell: bash
+        run: |
+          set -eo pipefail
+          # NLP_ENGINE::setDatum and nlp -DATUM pass a string the analyzer
+          # reads as G("$datum"), eg the output format a caller wants. The
+          # engine API always passed none before.
+          FIX=.github/workflows/tests/datum
+          OUT="$FIX/input/text.txt_log/output.txt"
+          for v in json xml; do
+            rm -rf "$FIX/logs" "$FIX/input/text.txt_log" "$FIX/output"
+            mkdir -p "$FIX/logs"
+            ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ -DATUM "$v" "$FIX/input/text.txt"
+            got=$(tr -d '\r' < "$OUT")
+            if [ "$got" != "datum=[$v]" ]; then
+              echo "FAIL(datum): wanted datum=[$v], got: $got"; exit 1
+            fi
+          done
+          echo "[datum] -DATUM reaches G(\$datum)"
+
       - name: factorial() up to 20!
         shell: bash
         run: |

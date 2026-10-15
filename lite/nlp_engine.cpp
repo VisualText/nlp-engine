@@ -632,7 +632,8 @@ void NLP_ENGINE::analyzeFile(
         m_compiled,      // If running compiled analyzer.
         &std::_t_cout,	   // Stream for cout() in NLP++
         obuf,       // 05/11/02 AM.
-        MAXSTR	   // 05/11/02 AM.
+        MAXSTR,	   // 05/11/02 AM.
+        datumArg()  // G("$datum").
         );
 
     // A caller reading a stream's cout() output needs each input's share now,
@@ -686,7 +687,8 @@ int NLP_ENGINE::analyze(
         m_compiled,      // If running compiled analyzer.
         &std::_t_cout,	   // Stream for cout() in NLP++
         outbuf,       // 05/11/02 AM.
-        outlen	   // 05/11/02 AM.
+        outlen,	   // 05/11/02 AM.
+        datumArg()  // G("$datum").
         );
 
 //std::_t_cout << _T("AFTER ANALYSIS: ") << std::endl; // 09/27/20 AM.
@@ -735,7 +737,7 @@ int NLP_ENGINE::analyze(
         m_outdir,
         m_compiled,      // If running compiled analyzer.
         &std::_t_cout,	   // Stream for cout() in NLP++
-        NULL   // datum
+        datumArg()  // G("$datum"); was always NULL.
         );
 
 
@@ -814,6 +816,19 @@ int NLP_ENGINE::close(_TCHAR *analyzer)
 
 void NLP_ENGINE::setDictSource(bool on) {
     CG::setDictSource(on);	// #432.
+}
+
+void NLP_ENGINE::setDatum(const _TCHAR *datum) {
+    m_datum = datum ? datum : _T("");
+}
+
+const _TCHAR *NLP_ENGINE::getDatum() {
+    return m_datum.c_str();
+}
+
+// The datum to pass to an analysis: 0 when unset, as before.
+_TCHAR *NLP_ENGINE::datumArg() {
+    return m_datum.empty() ? 0 : (_TCHAR *) m_datum.c_str();
 }
 
 int NLP_ENGINE::createDir(_TCHAR *dirPath) {
