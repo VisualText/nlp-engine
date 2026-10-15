@@ -45,39 +45,16 @@ All rights reserved.
 
 void copy_file(const _TCHAR *iname, const _TCHAR *oname)
 {
-
-//ifstream inFile(iname, std::ios::in | std::ios::nocreate);
-std::_t_ifstream inFile(CTCHAR2CA(iname), std::ios::in);							// Upgrade.	// 01/24/01 AM.
-if (!inFile)
+// A byte-for-byte copy (#323). Was a character loop through text-mode streams.
+std::error_code ec;
+std::filesystem::copy_file(std::filesystem::path(iname), std::filesystem::path(oname),
+	std::filesystem::copy_options::overwrite_existing, ec);
+if (ec)
 	{
 	std::_t_strstream gerrStr;
-	gerrStr << _T("Could not open input file '") << iname << _T("'.") << std::ends;
+	gerrStr << _T("Could not copy '") << iname << _T("' to '") << oname << _T("': ")
+			  << ec.message().c_str() << _T(".") << std::ends;
 	errOut(&gerrStr,false);
-	return;					// 06/15/99 AM.
-	}
-
-std::_t_ofstream outFile(CTCHAR2CA(oname), std::ios::out);
-if (!outFile)
-	{
-	std::_t_strstream gerrStr;
-	gerrStr << _T("Could not open output file '") << oname << _T("'.") << std::ends;
-	errOut(&gerrStr,false);
-	return;					// 06/15/99 AM.
-	}
-
-// Echo input file to output.
-// << and >> ignore whitespace!
-_TCHAR ch;
-
-// Changing handling of EOF.												// 12/16/01 AM.
-//while ((ch = inFile.get()) != EOF)									// 12/16/01 AM.
-//	outFile.put(ch);															// 12/16/01 AM.
-for (;;)																			// 12/18/01 AM.
-	{
-	ch = inFile.get();														// 12/18/01 AM.
-	if (inFile.eof())															// 12/18/01 AM.
-		break;																	// 12/18/01 AM.
-	outFile.put(ch);															// 12/18/01 AM.
 	}
 }
 

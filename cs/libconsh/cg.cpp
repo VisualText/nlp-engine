@@ -552,7 +552,7 @@ std::_t_ofstream f_main(TCHAR2A(o_main));
 
 // Use forward-slash separators in the generated `take` statements. The
 // take parser (cmd_take -> resolve_file in cs/libprim/io.cpp) does NOT
-// normalize backslashes to slashes on Linux; resolve_file_unix
+// normalize backslashes to slashes on Linux; resolve_file
 // concatenates verbatim and then fopen sees one filename with literal
 // '\' chars. Windows historically accepted forward slashes here, so
 // emitting them on both platforms preserves Windows behavior bit-for-bit

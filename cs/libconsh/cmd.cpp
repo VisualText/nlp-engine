@@ -1611,7 +1611,9 @@ if (args)
 
 // Handling relative filename.											// 07/01/03 AM.
 _TCHAR buf[FNAME_SIZE+1];														// 07/01/03 AM.
-if (!resolve_file(fil,cg->getAppdir(),/*DU*/buf))					// 07/01/03 AM.
+_TCHAR *appdir = cg->getAppdir();
+if (_tcslen(fil) + (appdir ? _tcslen(appdir) : 0) + 2 > FNAME_SIZE	// #323.
+ || !resolve_file(fil,appdir,/*DU*/buf))					// 07/01/03 AM.
 	{
 	std::_t_cerr << _T("[Bad filename=") << fil << _T("]") << std::endl;
 	return false;
