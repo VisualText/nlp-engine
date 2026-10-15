@@ -1,0 +1,12 @@
+###############################################
+# FILE:     use.nlp
+# SUBJ:     A later pass matches the literal as an ordinary number token.
+###############################################
+
+@NODES _ROOT
+
+@POST
+  "output.txt" << "_xNUM matched: " << N("$text", 1) << " " << N("$text", 3) << "\n";
+  single();
+@RULES
+_money <- _xNUM _xWHITE [s] dollars @@

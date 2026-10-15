@@ -351,6 +351,8 @@ if (!strcmp_i(func, _T("single")))		// Single-tier (simple) reduction.
 	return redSingle(args,nlppp);											// 05/26/01 AM.
 else if (!strcmp_i(func, _T("singler")))		// Single-tier, range.
 	return redSingler(args,nlppp);										// 01/17/99 AM.
+else if (!strcmp_i(func, _T("makeliteral")))	// Range to one token (#450).
+	return redLiteral(args,nlppp);
 else if (!strcmp_i(func, _T("singlex")))		// Single-tier,range,excise.
 	return redSinglex(args,nlppp);										// 01/17/99 AM.
 if (!strcmp_i(func, _T("singlezap")))
@@ -897,6 +899,125 @@ if (savefirst)						// FIX.	// 02/04/13 AM.
 if (savelast)						// FIX.	// 02/04/13 AM.
 	nlppp->last_   = savelast;	// FIX	// 11/21/99 AM.
 return ok;																		// 11/19/99 AM.
+}
+
+
+/********************************************
+* FN:		MAKELITERAL
+* SUBJ:	Turn a node just built by singler() into a token (#450).
+* NOTE:	The node becomes a leaf named TEXT, of TYPE ("num", "alpha",
+*			"punct", "white", "ctrl", "emoji" or "node"), or of the type the
+*			tokenizer would give TEXT: all digits num, all whitespace white,
+*			one ASCII punctuation character punct, otherwise alpha. It keeps
+*			the offsets of the nodes it replaced, and its $text is TEXT.
+*			Shared by makeliteral() in the interpreter and the compiled runtime.
+********************************************/
+
+bool Pat::makeLiteral(Node<Pn> *sub, _TCHAR *text, _TCHAR *type, Nlppp *nlppp)
+{
+Parse *parse = nlppp->parse_;
+if (!sub || !text || !*text)
+	{
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[makeliteral: Needs a node and a non-empty text.]") << std::ends;
+	parse->errOut(&gerrStr,false);
+	return false;
+	}
+enum Pntype typ = PNALPHA;
+if (type && *type)
+	{
+	if (!strcmp_i(type, _T("num")))			typ = PNNUM;
+	else if (!strcmp_i(type, _T("alpha")))	typ = PNALPHA;
+	else if (!strcmp_i(type, _T("punct")))	typ = PNPUNCT;
+	else if (!strcmp_i(type, _T("white")))	typ = PNWHITE;
+	else if (!strcmp_i(type, _T("ctrl")))	typ = PNCTRL;
+	else if (!strcmp_i(type, _T("emoji")))	typ = PNEMOJI;
+	else if (!strcmp_i(type, _T("node")))	typ = PNNODE;
+	else
+		{
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[makeliteral: Unknown type=") << type
+				  << _T(". Use num, alpha, punct, white, ctrl, emoji or node.]") << std::ends;
+		parse->errOut(&gerrStr,false);
+		return false;
+		}
+	}
+else
+	{
+	bool digits = true, white = true;
+	for (_TCHAR *p = text; *p; ++p)
+		{
+		if (*p < '0' || *p > '9')
+			digits = false;
+		if (*p != ' ' && *p != '\t' && *p != '\n' && *p != '\r')
+			white = false;
+		}
+	if (digits)
+		typ = PNNUM;
+	else if (white)
+		typ = PNWHITE;
+	else if (!text[1] && (_TUCHAR) text[0] < 0x80 && !alphabetic(text[0]))
+		typ = PNPUNCT;
+	}
+
+// The replaced nodes go; the token has no children.
+Tree<Pn> *tree = (Tree<Pn> *) parse->getTree();
+if (sub->Down())
+	{
+	tree->deleteSubsNC(sub->Down());
+	sub->setDown(0);
+	}
+
+Sym *sym = parse->getSym(text);
+Pn *pn = sub->getData();
+pn->setName(sym->getStr());
+pn->setSym(sym);
+pn->setType(typ);
+pn->setLiteral(true);
+pn->setBuilt(true);
+nlppp->excised_ = true;		// The matched nodes are gone, as with singlezap.
+return true;
+}
+
+
+/********************************************
+* FN:		REDLITERAL
+* SUBJ:	makeliteral(start, end, text [, type]): replace rule elements START..END
+*			with one token whose text is TEXT (#450).
+* EX:		@POST makeliteral(1, 2, "70");  @RULES _xNIL <- 7 O @@
+*			Later passes see "70" as a num token: _xNUM matches it.
+* NOTE:	Like singlezap, it replaces the matched nodes, so put it last.
+********************************************/
+
+bool Pat::redLiteral(Delt<Iarg> *args, Nlppp *nlppp)
+{
+Parse *parse = nlppp->parse_;
+Delt<Iarg> *d1 = args, *d2 = args ? args->Right() : 0;
+Delt<Iarg> *d3 = d2 ? d2->Right() : 0, *d4 = d3 ? d3->Right() : 0;
+if (!d3 || (d4 && d4->Right()))
+	{
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[makeliteral: Use makeliteral(start, end, text) or makeliteral(start, end, text, type).]")
+			  << std::ends;
+	parse->errOut(&gerrStr,false);
+	return false;
+	}
+Iarg *a3 = d3->getData(), *a4 = d4 ? d4->getData() : 0;
+if (a3->getType() != IASTR || (a4 && a4->getType() != IASTR))
+	{
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[makeliteral: Text and type must be strings.]") << std::ends;
+	parse->errOut(&gerrStr,false);
+	return false;
+	}
+
+// Reduce the range as singler(start, end) does, then make it a token.
+d2->setRight(0);
+bool ok = redSingler(d1, nlppp);
+d2->setRight(d3);
+if (!ok || !nlppp->red_)
+	return false;
+return makeLiteral(nlppp->red_, a3->getStr(), a4 ? a4->getStr() : 0, nlppp);
 }
 
 

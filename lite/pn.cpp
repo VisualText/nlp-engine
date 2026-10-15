@@ -64,6 +64,7 @@ static const int bitBASE = 01;		// Node's BASE attribute.
 static const int bitUNSEALED = 02;	// UNSEALED attr.				// 10/09/99 AM.
 static const int bitFIRED = 04;		// FIRED flag.					// 05/21/01 DD.
 static const int bitBUILT= 010;		// BUILT flag.					// 05/25/01 AM.
+static const int bitLITERAL = 020;	// Made by makeliteral(): text is the name (#450).
 // 02, 04, 010, 020, 040, 0100...
 
 
@@ -440,6 +441,17 @@ if (x)
 else
 	flags_ &= (~bitFIRED);
 }
+bool Pn::getLiteral() const
+{
+return (flags_ & bitLITERAL) != 0;
+}
+void Pn::setLiteral(bool x)
+{
+if (x)
+	flags_ |= bitLITERAL;
+else
+	flags_ &= (~bitLITERAL);
+}
 void Pn::setBuilt(bool x)													// 05/25/01 AM.
 {
 if (x)
@@ -641,6 +653,8 @@ for (; nodes; nodes = nodes->Right())
 
 _TCHAR *Pn::pnStr()
 {
+if (getLiteral() && name_)		// A literal's text isn't the input's (#450).
+	return make_str(name_, (long) _tcslen(name_));
 return make_str(Text, End - Start + 1);
 }
 
@@ -649,6 +663,8 @@ _TCHAR *Pn::pnStr(
 	long &len		/*UP*/													// 07/23/00 AM.
 	)
 {
+if (getLiteral() && name_)		// A literal's text isn't the input's (#450).
+	return make_str(name_, len = (long) _tcslen(name_));
 return make_str(Text, len = (End - Start + 1));
 }
 

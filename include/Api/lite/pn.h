@@ -100,6 +100,7 @@ public:
 	bool getUnsealed() const;		// 10/09/99 AM.
 	bool getFired() const;			// 05/21/01 Dd.
 	bool getBuilt() const;			// 05/25/01 AM.
+	bool getLiteral() const;		// Text is its own name, not the input's (#450).
 
 	void getTextStartEnd(_TCHAR* &, long &, long &);			// 12/29/99 AM.
 	void getTextUstartUend(_TCHAR* &, long &, long &);	// [UNICODE]	// 06/15/22 AM.
@@ -128,6 +129,7 @@ public:
 	void setUnsealed(bool);			// 10/09/99 AM.
 	void setFired(bool);				// 05/21/01 Dd.
 	void setBuilt(bool);				// 05/25/01 AM.
+	void setLiteral(bool);				// #450.
 
 	// GET THE TEXT FOR THE CURRENT NODE.
 	_TCHAR *pnStr();																// 11/06/98 AM.

@@ -1,0 +1,16 @@
+###############################################
+# FILE:     force.nlp
+# SUBJ:     makeliteral() with a forced type, and with an inferred punctuation type.
+###############################################
+
+@NODES _ROOT
+
+@POST
+  makeliteral(1, 1, "USA", "alpha");
+@RULES
+_xNIL <- usa @@
+
+@POST
+  makeliteral(1, 1, ",");
+@RULES
+_xNIL <- \; @@
