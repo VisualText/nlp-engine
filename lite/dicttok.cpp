@@ -285,7 +285,7 @@ bool DICTTok::ApplyDictFiles() {
 				long long jnum = 1;
 				if (cg_->isValNum(jv))
 					cg_->popVal(jv, jnum);
-				Node<Pn> *joined = jnum ? joinPhrase(node, endNode) : 0;
+				Node<Pn> *joined = jnum ? joinPhrase(node, endNode, end) : 0;
 				if (joined) {
 					node = joined;
 					continue;
@@ -654,6 +654,7 @@ bool DICTTok::splitToken(Node<Pn>* &node, CONCEPT *con) {
 		}
 		Pn *pp = piece->getData();
 		findAttrs(piece, lookupWord(pp->getName()), pp->getName(), false);
+		markSource(piece, con);	// The split= entry, if the word has none.
 		prev = piece;
 	}
 
@@ -670,7 +671,7 @@ bool DICTTok::splitToken(Node<Pn>* &node, CONCEPT *con) {
 *			of the input and spans the phrase. Returns the token, or 0.
 ********************************************/
 
-Node<Pn> *DICTTok::joinPhrase(Node<Pn> *node, Node<Pn> *endNode) {
+Node<Pn> *DICTTok::joinPhrase(Node<Pn> *node, Node<Pn> *endNode, CONCEPT *entry) {
 	std::string joined;
 	for (Node<Pn> *n = node; n; n = n->Right()) {
 		Pn *p = n->getData();
@@ -690,8 +691,39 @@ Node<Pn> *DICTTok::joinPhrase(Node<Pn> *node, Node<Pn> *endNode) {
 	copyAttrsToSuggested(pn, tok, endNode);	// NL, SP, NOSP, TABS.
 	Pn *tp = tok->getData();
 	findAttrs(tok, lookupWord(tp->getName()), tp->getName(), false);
+	markSource(tok, entry);	// The join= entry, if the word has none.
 	replaceRange(node, endNode, tok, tok);
 	return tok;
+}
+
+/********************************************
+* FN:		MARKSOURCE
+* SUBJ:	Under -DICTSOURCE, give a token made by join= or split= the file
+*			and line of the entry that made it, unless its own word has an
+*			entry (#432).
+********************************************/
+
+void DICTTok::markSource(Node<Pn> *node, CONCEPT *entry) {
+	if (!CG::getDictSource() || !node || !entry)
+		return;
+	if (Ivar::nodeVarhasval(node->getData(), _T("dictfile")))
+		return;
+	_TCHAR buf[MAXSTR];
+	_TCHAR *key, *val;
+	VAL *vals = cg_->findVals(entry, _T("dictfile"));
+	if (vals && cg_->isValStr(vals)) {
+		cg_->popSval(vals, buf);
+		parse_->internStr(_T("dictfile"), key);
+		parse_->internStr(buf, val);
+		replaceStr(node, key, val);
+	}
+	vals = cg_->findVals(entry, _T("dictline"));
+	if (vals && cg_->isValNum(vals)) {
+		long long num = 0;
+		cg_->popVal(vals, num);
+		parse_->internStr(_T("dictline"), key);
+		replaceNum(node, key, num);
+	}
 }
 
 bool DICTTok::copyAttrsToSuggested(Pn *pn, Node<Pn> *suggestedPn, Node<Pn> *endNode) {

@@ -3864,6 +3864,10 @@ bool CG::readDicts(std::vector<std::filesystem::path> files, std::vector<std::fi
 	return true;
 }
 
+static bool dictSource = false;	// -DICTSOURCE (#432).
+void CG::setDictSource(bool on) { dictSource = on; }
+bool CG::getDictSource() { return dictSource; }
+
 bool CG::readDict(std::string file, std::vector<std::filesystem::path> kbfiles) {
 	_TCHAR buf[MAXMSG];
 	int lineCount = 0;
@@ -4198,6 +4202,17 @@ bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, i
 			addSval(parentCon,_T("l"),val);
 		} else if (isPhrase && !suggestedAttr) {
 			addSval(parentCon,_T("s"),_T("phrase"));
+		}
+
+		// -DICTSOURCE: where the entry is, for the debugger and editors
+		// (#432, #475). A word on several lines keeps its first. A lazily
+		// loaded *full.dict line has no line number, so only its file.
+		if (dictSource && parentCon && !findVals(parentCon, _T("dictfile"))) {
+			_TCHAR fname[MAXSTR];
+			_stprintf(fname, _T("%.*s"), (int)(MAXSTR - 1), filename.c_str());
+			addSval(parentCon,_T("dictfile"),fname);
+			if (lineCount > 0)
+				addVal(parentCon,_T("dictline"),(long long) lineCount);
 		}
 
 	}

@@ -85,7 +85,11 @@ You can get help on nlp.exe:
                  [-OUT outdir] output directory
                  [-WORK workdir] working directory
                  [-DEV][-SILENT] -DEV generates logs, -SILENT suppresses logs/output files (off by default)
+                 [-DEBUG port] wait for a rule debugger on 127.0.0.1:port, then run under it
                  [infile [outfile]] when no -IN or -OUT specified
+                 [-STDIN] load once, then analyze one input file path per stdin line
+                 [-DICTSOURCE] nodes built from .dict entries get dictfile and dictline
+                          attributes naming the entry's file and line
 
       Directories in the nlp.exe files:
          data        nlp engine bootstrap grammar
@@ -106,6 +110,8 @@ Switch | Function
 -WORK | Working director where the library and executable files are
 -DEV / -SILENT | -DEV generates logs, -SILENT suppresses logs/output files (off by default)
 -DEBUG | Port to serve the debug protocol on. The engine waits for a client, then stops at pass boundaries, rule attempts and statements so the client can step and inspect. Used by the VS Code extension's debugger; see "What's New in Version 4".
+-STDIN | Load the analyzer once, then analyze one input file path per line of standard input. A blank line or end of input ends the run.
+-DICTSOURCE | Nodes that dicttok builds from `.dict` entries get `dictfile` and `dictline` attributes naming the entry's file and line, so a debugger or editor can jump to it. Off by default: it adds two attributes to every dictionary entry.
 [infile [outfile]] | when no -IN or -OUT specified
 
 # Calling NLP++ Analyzers from C++
