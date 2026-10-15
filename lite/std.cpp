@@ -12,6 +12,7 @@ All rights reserved.
 
 
 #include "StdAfx.h"
+#include <filesystem>		// #323.
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -32,21 +33,12 @@ long file_size(_TCHAR *fname)
 {
 long len=0;
 
-/* Open a file */
-// CHANGING THIS TO A BETTER MEASURE.									// 07/18/00 AM.
-#ifdef LINUX
-std::_t_ifstream x;					// 10/26/06 AM.
-x.open(fname,std::ios::binary);	// 10/26/06 AM.
-x.seekg(0,std::ios::end);			// 10/26/06 AM.
-len = x.tellg();				// 10/26/06 AM.
-x.close();						// 10/26/06 AM.
-#else
-struct _stat buf;
-int result = _tstat(fname, &buf);
-if (result == 0) {
-       len = buf.st_size;
-}
-#endif
+// One way on every platform (#323). Was a seek to the end of an
+// opened file on Linux and _tstat elsewhere.
+std::error_code ec;
+std::uintmax_t sz = std::filesystem::file_size(std::filesystem::path(fname), ec);
+if (!ec)
+	len = (long) sz;
 
 #ifdef VCPPONLY_
 //int fh;

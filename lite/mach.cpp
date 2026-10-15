@@ -11,6 +11,7 @@ All rights reserved.
 *******************************************************************************/
 
 #include "StdAfx.h"
+#include <filesystem>		// #323.
 #include <time.h>
 #ifndef LINUX
 #include <direct.h>
@@ -265,25 +266,11 @@ void _tmain( void ){
 
 LITE_API bool dir_exists(_TCHAR *name)
 {
-_TCHAR cwd[MAXSTR];
-
-/* Get the current working directory: */
-#ifndef LINUX
-if(_tgetcwd( cwd, MAXSTR) == NULL)
-	{
-	std::_t_strstream gerrStr;
-	gerrStr << _T("[dir_exists: Couldn't get working dir.]") << std::ends;
-	errOut(&gerrStr,false);
+// Was a chdir() there and back, and on Linux and macOS always true (#323).
+if (!name || !*name)
 	return false;
-	}
-
-if(_tchdir(name))
-	return false;
-
-// Was able to change to it. Now change back.
-_tchdir(cwd);
-#endif
-return true;
+std::error_code ec;
+return std::filesystem::is_directory(std::filesystem::path(name), ec);
 }
 
 
@@ -297,11 +284,11 @@ return true;
 
 LITE_API bool make_dir(_TCHAR *name)
 {
-#ifndef LINUX
-if(_tmkdir(name) == 0)
-	return true;
-#endif
-return false;
+// On Linux and macOS this used to do nothing and return false (#323).
+if (!name || !*name)
+	return false;
+std::error_code ec;
+return std::filesystem::create_directory(std::filesystem::path(name), ec);
 }
 
 
@@ -315,11 +302,14 @@ return false;
 
 LITE_API bool rm_dir(_TCHAR *name)
 {
-#ifndef LINUX
-if(_trmdir(name) == 0)
-	return true;
-#endif
-return false;
+// On Linux and macOS this used to do nothing and return false (#323).
+if (!name || !*name)
+	return false;
+std::error_code ec;
+std::filesystem::path p(name);
+if (!std::filesystem::is_directory(p, ec))
+	return false;
+return std::filesystem::remove(p, ec);	// Only if empty.
 }
 
 
@@ -335,9 +325,8 @@ LITE_API bool remove_path(_TCHAR *name)
 {
 if (!safe_dir(name))
 	return false;
-if(_tremove(name) == 0)
-	return true;
-return false;
+std::error_code ec;
+return std::filesystem::remove(std::filesystem::path(name), ec);
 }
 
 /********************************************

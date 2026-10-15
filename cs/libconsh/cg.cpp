@@ -3066,9 +3066,12 @@ delete f_attr;												// 08/07/03 AM.
 // Terminate the last command file.
 f_phr  << std::endl << _T("quit") << std::endl << std::endl;
 
-// TODO: CATENATE THE COMMAND FILES TO THE OUTPUT FILE.
-#ifndef LINUX
-// Do the catenate in C++.
+// Catenate the command files to the output file, in C++ on every
+// platform: Linux and macOS ran "cat", through the shell (#323). Flush
+// the files still open first, or their last lines may be missing.
+f_hier.close();
+f_word.close();
+f_phr.close();
 _TCHAR buf[MAXMSG];
 std::_t_ofstream *f_dump = new std::_t_ofstream(TCHAR2A(file));	// Final output file.
 std::_t_ifstream *f_in = new std::_t_ifstream(TCHAR2A(o_hier));
@@ -3095,14 +3098,6 @@ while (f_in->getline(buf, MAXMSG))		// Copy first file.
 delete f_in;
 
 delete f_dump;
-
-#else
-_TCHAR cmd[MAXPATH*9];
-_TCHAR *cp = _T("cat");
-_stprintf(cmd, _T("%s %s %s %s %s > %s"),
-	cp, o_hier, o_word, o_attr, o_phr, file);
-int systemRet = _tsystem(cmd);
-#endif
 
 *cgerr << _T("[Done with modular kb dump.]") << std::endl;
 return true;

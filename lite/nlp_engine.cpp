@@ -229,7 +229,7 @@ int NLP_ENGINE::init(
         return -1;
     }
 
-    struct stat st;
+    std::error_code ec;		// #323.
     if (!bprintf(m_anadir,_T("%s"),analyzer)) {
         std::_t_cerr << _T("[Error: analyzer path too long: ") << analyzer << _T("]") << std::endl;
         m_analyzer = 0;
@@ -237,7 +237,7 @@ int NLP_ENGINE::init(
     }
 
     if (m_workingFolder[0] != '\0') {
-        if (stat(analyzer,&st) != 0) {
+        if (!std::filesystem::exists(std::filesystem::path(analyzer), ec)) {
             if (!bprintf(m_anadir, _T("%s%sanalyzers%s%s"),m_workingFolder,DIR_STR,DIR_STR,analyzer)) {
                 std::_t_cerr << _T("[Error: analyzer path too long: ") << analyzer << _T("]") << std::endl;
                 m_analyzer = 0;
@@ -251,7 +251,7 @@ int NLP_ENGINE::init(
     }
     m_analyzer = 0;
 
-    if (stat(m_anadir,&st) != 0) {
+    if (!std::filesystem::exists(std::filesystem::path(m_anadir), ec)) {
         // A failure, not a success: returning 0 here let analyze() go on and
         // a compile run of a missing analyzer report success (#484).
         std::_t_cerr << _T("[analyzer directory not found: ") << m_anadir << _T("]") << std::endl;
@@ -801,13 +801,9 @@ int NLP_ENGINE::close(_TCHAR *analyzer)
 }
 
 int NLP_ENGINE::createDir(_TCHAR *dirPath) {
-    struct stat st;
-    if (stat(dirPath,&st) != 0) {
-#ifdef LINUX
-	    mkdir(dirPath, 0755);
-#else
-	    CreateDirectory(dirPath,NULL);
-#endif
+    std::error_code ec;		// #323.
+    if (!std::filesystem::exists(std::filesystem::path(dirPath), ec)) {
+	    std::filesystem::create_directories(std::filesystem::path(dirPath), ec);
 	    std::_t_cerr << _T("[Creating output directory: ") << dirPath << _T("]") << std::endl;
 	}
     return 0;

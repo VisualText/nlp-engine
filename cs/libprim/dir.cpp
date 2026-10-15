@@ -10,6 +10,7 @@ All rights reserved.
 *
 *******************************************************************************/
 #include "StdAfx.h"
+#include <filesystem>		// #323.
 #ifdef LINUX
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -34,14 +35,8 @@ make_dir(_TCHAR *dir)
 {
 if (!dir || !*dir)
 	return false;
-#ifdef LINUX
-if (mkdir(dir, 0755) == 0)
-	return true;
-#else
-if (_tmkdir(dir) == 0)
-	return true;
-#endif
-return false;
+std::error_code ec;
+return std::filesystem::create_directory(std::filesystem::path(dir), ec);	// #323.
 }
 
 
@@ -57,12 +52,9 @@ rm_dir(_TCHAR *dir)
 {
 if (!dir || !*dir)
 	return false;
-#ifdef LINUX
-if (rmdir(dir) == 0)
-	return true;
-#else
-if (_trmdir(dir) == 0)
-	return true;
-#endif
-return false;
+std::error_code ec;
+std::filesystem::path p(dir);
+if (!std::filesystem::is_directory(p, ec))
+	return false;
+return std::filesystem::remove(p, ec);	// Only if empty.	// #323.
 }
