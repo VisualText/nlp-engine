@@ -1,0 +1,33 @@
+###############################################
+# FILE:     show.nlp
+# SUBJ:     Each top node: name, type, $text, offsets, and the
+#           attributes the dictionary gave it; then its children.
+# NOTE:     Part of the dict-shape regression; expected output is in
+#           the CI step.
+###############################################
+
+@CODE
+L("n") = pndown(pnroot());
+while (L("n")) {
+    if (pntype(L("n")) != "white") {
+        "output.txt" << pnname(L("n")) << " " << pntype(L("n")) << " text=" << pnvar(L("n"), "$text")
+                     << " at " << pnvar(L("n"), "$ostart") << "-" << pnvar(L("n"), "$oend");
+        if (pnvar(L("n"), "type")) "output.txt" << " type=" << pnvar(L("n"), "type");
+        if (pnvar(L("n"), "kind")) "output.txt" << " kind=" << pnvar(L("n"), "kind");
+        if (pnvar(L("n"), "speed")) "output.txt" << " speed=" << pnvar(L("n"), "speed");
+        L("c") = pndown(L("n"));
+        L("sep") = " [";
+        while (L("c")) {
+            if (pntype(L("c")) != "white") {
+                "output.txt" << L("sep") << pnname(L("c")) << " " << pnvar(L("c"), "$ostart")
+                             << "-" << pnvar(L("c"), "$oend");
+                L("sep") = ", ";
+            }
+            L("c") = pnnext(L("c"));
+        }
+        if (L("sep") == ", ") "output.txt" << "]";
+        "output.txt" << "\n";
+    }
+    L("n") = pnnext(L("n"));
+}
+@@CODE

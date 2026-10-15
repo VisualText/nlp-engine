@@ -134,6 +134,17 @@ public:
 		VAL *val
 		);
 
+	// Dictionary entries that reshape tokens (#426, #434) and attributes
+	// shared by every node of a name (#417).
+	bool applyAttrs(Node<Pn> *node, CONCEPT *con);
+	CONCEPT *lookupWord(_TCHAR *name);
+	Node<Pn> *makeLitTok(const _TCHAR *name, long start, long end, long ustart,
+		long uend, _TCHAR *text, long line);
+	void replaceRange(Node<Pn> *first, Node<Pn> *last, Node<Pn> *nfirst,
+		Node<Pn> *nlast);
+	bool splitToken(Node<Pn>* &node, CONCEPT *con);
+	Node<Pn> *joinPhrase(Node<Pn> *node, Node<Pn> *endNode);
+
 private:
 	//Parse *parse;			// The analyze instance that we're tokenizing for.
 	bool bad_;					// If unknown char seen.	// 01/15/99 AM.

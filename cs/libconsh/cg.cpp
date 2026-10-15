@@ -3902,8 +3902,9 @@ bool CG::readDict(std::string file, std::vector<std::filesystem::path> kbfiles) 
 		strip_block_comments(buf, inBlock, '#');
 		if (unicu::isStrWhiteSpace(buf))
 			continue;
-		if (!parseDictLine(buf, ambigKB, file, lineCount))
-			return false;
+		// A bad line is reported (cgerr) and skipped. It used to end the
+		// read, silently dropping every entry after it (#433).
+		parseDictLine(buf, ambigKB, file, lineCount);
 	}
 
 	allDictStream_.close();
@@ -4083,11 +4084,10 @@ bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, i
 			return false;
 		}
 
-		if (eqSign == -1) {
-			sprintf(errout_, "%d 1 [missing equal sign - %s]", lineCount, filename.c_str());
-			*cgerr << errout_ << std::endl;
-			return false;
-		}
+		// No attributes: the line is all words, eg "license plate" (#433).
+		// It used to be a "missing equal sign" error.
+		if (eqSign == -1)
+			eqSign = tokint + 1;
 
 		// Loop through tokens
 

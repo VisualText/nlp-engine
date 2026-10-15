@@ -1,0 +1,15 @@
+# Regression for the dictionary tokenizer (#433 #434 #426 #417).
+# A bare entry (no attributes) used to end the read of the file.
+license plate
+# join=1: the phrase becomes one token, looked up in turn.
+hot - rod join=1
+hotrod s=vehicle speed=fast
+e - mail join=1
+# split=: one token becomes several words.
+licenseplate split="license plate"
+weathervconditions split="weather conditions"
+weather conditions s=weather
+# _name: attributes for every _bridge node; an entry's own win.
+bridge s=bridge
+viaduct s=bridge kind=raised
+_bridge type=location kind=generic
