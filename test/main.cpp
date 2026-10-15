@@ -110,6 +110,35 @@ int _tmain( // 09/23/20 AM.
         ++failures;
     }
 
+    // Two engines open in one process (#791): closing one must leave the
+    // other working. Each engine set the process-wide string table only when
+    // made, so an analyzer loaded by the first engine after a second was made
+    // kept its names in the second's table, and closing the second left the
+    // first crashing or producing nothing.
+    NLP_ENGINE *first = new NLP_ENGINE(workingFolder);
+    for (int cycle = 0; cycle < 3; ++cycle) {
+        NLP_ENGINE *second = new NLP_ENGINE(workingFolder);
+        std::istringstream ssi4("A second engine.");
+        std::ostringstream sso4;
+        second->analyze(anaParse,&ssi4,&sso4);
+        std::istringstream ssi5("Hello world!");
+        std::ostringstream sso5;
+        first->analyze(anaParse,&ssi5,&sso5);		// Loads while second is newest.
+        second->close();
+        delete second;
+        std::istringstream ssi6("Hello again.");
+        std::ostringstream sso6;
+        if (first->analyze(anaParse,&ssi6,&sso6) < 0 || sso6.str().empty()) {
+            std::_t_cout << _T("[FAIL: an engine broken after closing another (#791), cycle ")
+                         << cycle << _T("]") << std::endl;
+            ++failures;
+            break;
+        }
+    }
+    first->close();
+    delete first;
+    std::_t_cout << _T("[two engines: ok unless FAIL above]") << std::endl;
+
     delete nlpEngine;
     std::_t_cout << (failures ? _T("FAILED") : _T("ok")) << std::endl;
     return failures ? 1 : 0;
