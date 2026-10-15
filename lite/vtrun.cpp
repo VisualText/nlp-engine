@@ -122,6 +122,23 @@ void *VTRun::getHtab()
 return htab_;
 }
 
+/********************************************
+* FN:		USESTAB
+* SUBJ:	Make this runtime's string table the process default (#791).
+* NOTE:	Htab::gstab_ is one per process, and analyzer loading interns rule
+*			and function names into it. Each runtime used to set it only when
+*			made, so with two engines open, the one made last owned every
+*			analyzer's names; closing it freed them under the other engine,
+*			whose next analyzer load crashed or produced nothing. Each
+*			NLP_ENGINE entry point now calls this first.
+********************************************/
+
+void VTRun::useStab()
+{
+if (stab_)
+	Htab::setGstab((Stab *)stab_);
+}
+
 
 //*******************************************
 
@@ -159,7 +176,12 @@ if (htab_)
 	delete (Htab *) htab_;
 	}
 if (stab_)
+	{
+	// Don't leave the process default pointing at a freed table (#791).
+	if (Htab::getGstab() == (Stab *) stab_)
+		Htab::setGstab(0);
 	delete (Stab *) stab_;
+	}
 if (htfunc_)
 	Ifunc::deleteHtab(htfunc_);
 if (alist_)

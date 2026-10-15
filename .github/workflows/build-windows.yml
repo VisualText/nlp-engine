@@ -1153,6 +1153,19 @@ jobs:
           fi
           echo "[type-tests] iscon, isstr, isnum, isfloat, ispn and isarray"
 
+      - name: Two engines in one process (#791)
+        shell: bash
+        run: |
+          set -eo pipefail
+          # test-nlp drives NLP_ENGINE through its C++ API: three analyzers,
+          # then two engines open at once, closing one and using the other.
+          # Closing an engine used to free the analyzer names of every engine
+          # made before it, which then crashed or produced nothing (#791).
+          cmake --build build --config Release --target test-nlp
+          ./bin/Release/test-nlp.exe > test-nlp.out 2>&1 || { tail -40 test-nlp.out; exit 1; }
+          grep -q "^ok" test-nlp.out || { tail -40 test-nlp.out; exit 1; }
+          echo "[two-engines] closing one engine leaves the other working"
+
       - name: factorial() up to 20!
         shell: bash
         run: |

@@ -56,6 +56,9 @@ public:
 	void zero();                  // Zero out ds.
 
 	void *getHtab();	// 06/24/03 AM.
+	// Make this runtime's string table the process default (Htab::gstab_),
+	// which analyzer loading interns rule and function names into (#791).
+	void useStab();
 
    bool isBuiltin(_TCHAR *name);
 

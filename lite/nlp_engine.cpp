@@ -210,6 +210,10 @@ int NLP_ENGINE::init(
     // If calling a different analyzer, clear out info. // [DEGLOB]	// 10/15/20 AM.
     // Todo: The NLP object should store all analyzer information.  // [DEGLOB]	// 10/15/20 AM.
     NLP_ENGINE::zeroAna();  // [DEGLOB]	// 10/15/20 AM.
+    // This engine's string table must be the process default while it
+    // loads analyzers, or their names land in another engine's (#791).
+    if (m_vtrun)
+        m_vtrun->useStab();
  
     // Convenience ptr.
     //m_vtrun = VTRun_Ptr;    // [DEGLOB]	// 10/15/20 AM.
@@ -432,6 +436,8 @@ int NLP_ENGINE::analyze(
     bool compileAna
 	)
 {
+    if (m_vtrun)
+        m_vtrun->useStab();     // #791.
     // Respect init() failure. On a re-entrant analyze() in a long-lived process
     // (e.g. the node/python addon), a name-collision in addAna can leave a fresh
     // NLP unregistered; if make_analyzer/makeCG then fails, init() deletes m_nlp
@@ -501,6 +507,8 @@ int NLP_ENGINE::analyzeStream(
     bool compiled
 	)
 {
+    if (m_vtrun)
+        m_vtrun->useStab();     // #791.
     if (NLP_ENGINE::init(analyzer,develop,silent,false,compiled,false,false) < 0)
         return -1;
 
@@ -648,6 +656,8 @@ int NLP_ENGINE::analyze(
     bool compileAna
 	)
 {
+    if (m_vtrun)
+        m_vtrun->useStab();     // #791.
 
     // Respect init() failure (see file-I/O overload above): bail instead of
     // dereferencing a freed m_nlp.
@@ -697,6 +707,8 @@ int NLP_ENGINE::analyze(
     bool compileAna
 	)
 {
+    if (m_vtrun)
+        m_vtrun->useStab();     // #791.
 
     // Respect init() failure (see file-I/O overload above): bail instead of
     // dereferencing a freed m_nlp.
