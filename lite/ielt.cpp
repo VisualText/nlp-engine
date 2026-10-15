@@ -1354,11 +1354,23 @@ for (dpair = list->getFirst(); dpair; dpair = dpair->Right())
 		Dlist<Iarg> *args = vals ? Iarg::copy_args(vals, parse, true) : 0;
 		// Element values are strings; the actions that take numbers get
 		// numbers, as they do from a @PRE region (the compiled form needs it).
-		if (args && (!strcmp_i(key, _T("numrange"))
-						 || !strcmp_i(key, _T("length"))
-						 || !strcmp_i(key, _T("lengthr"))))
+		// For the var comparisons only the value (second argument) can be a
+		// number: vargt=("count" 2) must compare with 2, not "2".
+		Delt<Iarg> *from = 0;
+		if (!args)
+			;
+		else if (!strcmp_i(key, _T("numrange"))
+				 || !strcmp_i(key, _T("length"))
+				 || !strcmp_i(key, _T("lengthr")))
+			from = args->getFirst();
+		else if (!strcmp_i(key, _T("vareq"))
+				 || !strcmp_i(key, _T("varne"))
+				 || !strcmp_i(key, _T("vargt"))
+				 || !strcmp_i(key, _T("varlt")))
+			from = args->getFirst() ? args->getFirst()->Right() : 0;
+		if (from)
 			{
-			for (Delt<Iarg> *darg = args->getFirst(); darg; darg = darg->Right())
+			for (Delt<Iarg> *darg = from; darg; darg = darg->Right())
 				{
 				Iarg *arg = darg->getData();
 				long long num = 0;
@@ -1370,6 +1382,40 @@ for (dpair = list->getFirst(); dpair; dpair = dpair->Right())
 					}
 				}
 			}
+		if (!elt->pres_)
+			elt->pres_ = new Dlist<Ipre>();
+		elt->pres_->rpush(new Ipre(name, args, ord, ord));
+		}
+	else if (vals && vals->getFirst() && !vals->getFirst()->Right())
+		{
+		// attr="value" on the element is an attribute test (#438):
+		//   _xALPHA [pos="noun"]  is  vareq=("pos" "noun")  is  <n,n> vareq("pos","noun");
+		// A value of digits only compares as a number. A misspelled modifier
+		// would land here too, so warn when the key is one edit from one.
+		const _TCHAR *similar = nearModifier(key);
+		if (similar)
+			{
+			std::_t_strstream gerrStr;
+			gerrStr << _T("[Element key=") << key << _T(" is not a modifier; testing it as an attribute. Did you mean ")
+					  << similar << _T("?]") << std::ends;
+			parse->errOut(&gerrStr,false,true);
+			}
+		_TCHAR *name = 0, *attr = 0;
+		parse->internStr(_T("vareq"), /*UP*/ name);
+		parse->internStr(key, /*UP*/ attr);
+		Dlist<Iarg> *args = new Dlist<Iarg>();
+		args->rpush(new Iarg(attr));
+		Iarg *val = vals->getFirst()->getData();
+		long long num = 0;
+		_TCHAR *vstr = (val->getType() == IASTR) ? val->getStr() : 0;
+		bool digits = vstr && *vstr;
+		for (_TCHAR *p = vstr; digits && *p; ++p)
+			if (*p < '0' || *p > '9')
+				digits = false;
+		if (digits && str_to_long(vstr, num))
+			args->rpush(new Iarg(num));
+		else
+			args->rpush(Iarg::copy_arg(val));
 		if (!elt->pres_)
 			elt->pres_ = new Dlist<Ipre>();
 		elt->pres_->rpush(new Ipre(name, args, ord, ord));
@@ -1419,6 +1465,54 @@ else if (elt->max_ == -1)
 
 	min_ = 0;			// Recover. min is a "don't care".
 	}
+}
+
+
+/********************************************
+* FN:		NEARMODIFIER
+* SUBJ:	The element modifier KEY is one edit away from, if any (#438).
+* NOTE:	An unknown key with a value is an attribute test, so a typo such as
+*			mtch=(...) would silently test an attribute named "mtch". Used to warn.
+********************************************/
+
+static bool oneEdit(const _TCHAR *a, const _TCHAR *b)
+{
+size_t la = _tcslen(a), lb = _tcslen(b);
+if (la > lb + 1 || lb > la + 1)
+	return false;
+size_t i = 0, j = 0;
+int edits = 0;
+while (i < la && j < lb)
+	{
+	if (_totlower(a[i]) == _totlower(b[j]))
+		{ ++i; ++j; continue; }
+	if (++edits > 1)
+		return false;
+	if (la > lb) ++i;
+	else if (lb > la) ++j;
+	else { ++i; ++j; }
+	}
+edits += (int) ((la - i) + (lb - j));
+return edits == 1;
+}
+
+const _TCHAR *Ielt::nearModifier(_TCHAR *key)
+{
+static const _TCHAR *mods[] = {
+	_T("attr"), _T("attrs"), _T("base"), _T("deaccent"), _T("dejunk"), _T("except"),
+	_T("excepts"), _T("fail"), _T("fails"), _T("group"), _T("layer"), _T("layers"),
+	_T("look"), _T("lookahead"), _T("match"), _T("matches"), _T("max"), _T("min"),
+	_T("nest"), _T("one"), _T("opt"), _T("option"), _T("optional"), _T("pass"),
+	_T("passes"), _T("plus"), _T("recurse"), _T("rename"), _T("singlet"), _T("star"),
+	_T("tree"), _T("trig"), _T("trigger"), _T("unsealed"), _T("xsinglet"), _T("xtree"),
+	0
+	};
+if (!key || _tcslen(key) < 3)
+	return 0;		// Too short to tell a typo from a real attribute name.
+for (const _TCHAR **p = mods; *p; ++p)
+	if (oneEdit(key, *p))
+		return *p;
+return 0;
 }
 
 

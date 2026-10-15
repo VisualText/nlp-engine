@@ -1,0 +1,14 @@
+###############################################
+# FILE:     number_eq.nlp
+# SUBJ:     A number attribute; digits compare as a number. (attr=value form)
+# NOTE:     Part of the element-eq regression (#438); expected output
+#           is in the CI step.
+###############################################
+
+@NODES _ROOT
+
+@POST
+  "output.txt" << "number attr=value: " << phrasetext() << "\n";
+  noop();
+@RULES
+_xNIL <- _xALPHA [count=3] @@

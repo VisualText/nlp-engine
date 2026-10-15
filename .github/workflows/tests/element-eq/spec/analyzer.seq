@@ -1,0 +1,10 @@
+tokenize	nil	# 
+nlp	mark	# 
+nlp	text_eq	# 
+nlp	text_vareq	# 
+nlp	number_eq	# 
+nlp	number_vareq	# 
+nlp	both_eq	# 
+nlp	both_vareq	# 
+nlp	greater	# 
+nlp	typo	# 
