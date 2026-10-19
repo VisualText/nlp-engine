@@ -1,0 +1,2 @@
+tokenize	nil	# tokenize only -- fixture builds its own KB
+nlp	arrays	# jsonwrite array grouping, round-tripped through jsonparse
