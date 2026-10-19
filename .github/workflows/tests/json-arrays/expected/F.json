@@ -1,0 +1,36 @@
+{
+  "caseF": {
+    "person": [
+      {
+        "id": "1",
+        "v": "person1",
+        "phone": [
+          {
+            "id": "1",
+            "v": "phone1"
+          },
+          {
+            "id": "2",
+            "v": "phone2"
+          }
+        ],
+        "email": {
+          "v": "email"
+        }
+      },
+      {
+        "id": "2",
+        "v": "person2",
+        "phone": [
+          {
+            "id": "1",
+            "v": "phone1"
+          }
+        ]
+      }
+    ],
+    "count": {
+      "v": "count"
+    }
+  }
+}

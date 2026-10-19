@@ -1389,6 +1389,36 @@ jobs:
           fi
           echo "[json] jsonwrite serializes and jsonparse round-trips"
 
+      - name: JSON arrays
+        shell: bash
+        run: |
+          set -eo pipefail
+          # jsonwrite groups counted concepts (item1, item2) into arrays.
+          # Until 4.2.37 an array followed by a plain sibling was not JSON,
+          # two arrays side by side merged, and "a1b2" counted as 12. Each
+          # case must match its expected file and survive a jsonparse round
+          # trip unchanged.
+          FIX=.github/workflows/tests/json-arrays
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
+          OUT="$FIX/input/text.txt_log/out.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(json arrays): no out.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' 'A:same' 'B:same' 'C:same' 'E:same' 'F:same')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(json arrays): round trip, out.txt was:"; echo "$got"; exit 1
+          fi
+          for c in A B C E F; do
+            if ! tr -d '\r' < "$FIX/input/text.txt_log/$c.json" | diff - "$FIX/expected/$c.json"; then
+              echo "FAIL(json arrays): case $c differs from expected/$c.json"; exit 1
+            fi
+          done
+          echo "[json arrays] counted concepts become valid, separate arrays"
+
       - name: callanalyzer runs another analyzer, loaded once
         shell: bash
         run: |

@@ -16,9 +16,11 @@
 *			into C++ is the only lever that removes it.
 *
 * WARN:	The output must stay BYTE-IDENTICAL to what JsonKB produces, because
-*			existing analyzers' output files are checked in and compared.  That
-*			includes deliberately reproducing a bug in KBFuncs.nlp's
-*			SeparateConCount -- see separate_con_count below.
+*			existing analyzers' output files are checked in and compared.
+*			JsonKB and this file were fixed together (4.2.37), so they still
+*			agree: an array followed by a plain sibling, two arrays side by
+*			side, and a digit inside a counted name -- see separate_con_count
+*			and json_recurse below.
 *******************************************************************************/
 
 #include "StdAfx.h"
@@ -92,23 +94,17 @@ return std::string((size_t)(copies * 2), ' ');
 * CR:		08/04/26 DD.
 * SUBJ:	Split a counted concept name into base name and count.
 * RET:	True if the name ends in digits; base and num are then set.
-* NOTE:	Mirrors SeparateConCount in KBFuncs.nlp, INCLUDING ITS BUG.
+* NOTE:	Mirrors SeparateConCount in KBFuncs.nlp.
 *
-*			That function scans backwards collecting digits and is meant to
-*			stop at the first non-digit, but its else branch is the no-op
-*			statement `L("stop");` where `L("stop") = 1;` was intended.  So
-*			the scan never stops early and keeps collecting digits from
-*			earlier in the name: "a1b2" yields base "a1" and count "12"
-*			rather than base "a1b" and count "2".
+*			The scan stops at the first non-digit from the end, so "a1b2" is
+*			base "a1b" and count "2".  Until 4.2.37 both this and the NLP++
+*			original kept collecting digits past the letter (the NLP++ else
+*			branch was the no-op `L("stop");`), making "a1b2" base "a1" and
+*			count "12".
 *
-*			Reproduced deliberately.  This decides which children become a
-*			JSON array, so "fixing" it here would silently change the output
-*			of any analyzer whose concept names contain interior digits.
-*			The two should be fixed together, as their own change.
-*
-*			Also note the loop condition is `i > 0`, so index 0 is never
-*			examined: a name that is all digits after the first character
-*			still keeps its first character as the base.
+*			The loop condition is `i > 0`, so index 0 is never examined: a
+*			name that is all digits after the first character still keeps its
+*			first character as the base.
 ********************************************/
 
 static bool separate_con_count(
@@ -135,9 +131,9 @@ long len = (long) strlen(conname);
 // NOTE: `i > 0`, matching the NLP++ loop, so index 0 is never looked at.
 for (long i = len - 1; i > 0; --i)
 	{
-	if (isdigit((unsigned char)conname[i]))
-		num.insert(num.begin(), conname[i]);	// prepend, as L("c") + L("num")
-	// else: the NLP++ no-op.  Deliberately does NOT break.
+	if (!isdigit((unsigned char)conname[i]))
+		break;
+	num.insert(num.begin(), conname[i]);	// prepend, as L("c") + L("num")
 	}
 
 if (num.empty())
@@ -173,6 +169,27 @@ for (CONCEPT *child = cg->Down(con); child; child = cg->Next(child))
 	nbuf[0] = '\0';
 	cg->conceptName(child, /*UP*/ nbuf);
 	if (first == nbuf)
+		return true;
+	}
+return false;
+}
+
+/********************************************
+* FN:		JSON_HAS_ATTRIBUTES
+* CR:		10/18/26 DD.
+* SUBJ:	Would json_attributes emit anything for this concept?
+* NOTE:	Mirrors JsonHasAttributes.  An array element writes its "id"
+*			first and needs to know whether a comma follows it.
+********************************************/
+
+static bool json_has_attributes(CG *cg, CONCEPT *con)
+{
+_TCHAR abuf[MAXSTR];
+for (ATTR *attrs = cg->findAttrs(con); attrs; cg->popAttr(attrs))
+	{
+	abuf[0] = '\0';
+	cg->attrName(attrs, /*UP*/ abuf, MAXSTR);
+	if (!is_count_con(cg, abuf, con))
 		return true;
 	}
 return false;
@@ -264,10 +281,19 @@ return has_attrs;
 * FN:		JSON_RECURSE
 * CR:		08/04/26 DD.
 * SUBJ:	Emit a concept's children.
-* NOTE:	Mirrors JsonKBRecurse, including its "has concount" state machine:
-*			a run of counted siblings (date1, date2, ...) is emitted as a
-*			JSON array under the shared base name, each element carrying an
-*			"id" holding the count.
+* NOTE:	Mirrors JsonKBRecurse: a run of counted siblings with the same
+*			base name (date1, date2, ...) is emitted as a JSON array under
+*			that name, each element carrying an "id" holding the count.
+*
+*			The separator is written before each sibling, once it is known
+*			what the sibling is.  Until 4.2.37 it was written after, which
+*			put the comma inside an array that a plain sibling then closed
+*			(with a stray extra brace and no comma after the "]"), so the
+*			file was not JSON.  A counted sibling with a different base name
+*			(item2 then thing1) was also added to the open array instead of
+*			starting its own.  Every shape that was already valid JSON is
+*			written byte for byte as before -- including the array that
+*			follows a plain sibling opening on the same line as its "},".
 ********************************************/
 
 static void json_recurse(
@@ -279,7 +305,8 @@ static void json_recurse(
 {
 CONCEPT *con = cg->Down(parent);
 bool first = true;
-bool has_concount = false;
+bool in_array = false;
+std::string array_base;
 _TCHAR nbuf[MAXSTR];
 std::string base, num;
 
@@ -288,25 +315,45 @@ while (con)
 	nbuf[0] = '\0';
 	cg->conceptName(con, /*UP*/ nbuf);
 	bool counted = separate_con_count(nbuf, /*UP*/ base, num);
+	bool continues = counted && in_array && base == array_base;
+
+	if (!first)
+		{
+		if (continues)
+			os << _T(",\n");
+		else if (in_array)
+			{
+			os << _T("\n") << json_indent(level + 1).c_str() << _T("],\n");
+			in_array = false;
+			}
+		else if (counted)
+			os << _T(",");
+		else
+			os << _T(",\n");
+		}
 
 	if (counted)
 		{
-		if (!has_concount)
+		if (!continues)
+			{
 			os << json_indent(level + 1).c_str()
 				<< json_escape(base.c_str()).c_str() << _T(": [\n");
-		else
-			os << _T("\n");
+			in_array = true;
+			array_base = base;
+			}
 
 		os << json_indent(level + 2).c_str() << _T("{\n");
 		os << json_indent(level + 3).c_str() << _T("\"id\": \"")
-			<< num.c_str() << _T("\",\n");
-		first = !json_attributes(cg, os, con, level + 2);
-		has_concount = true;
+			<< num.c_str() << _T("\"");
+		if (json_has_attributes(cg, con))
+			{
+			os << _T(",\n");
+			json_attributes(cg, os, con, level + 2);
+			}
 
 		if (cg->Down(con))
 			{
-			if (!first)
-				os << _T(",\n");
+			os << _T(",\n");
 			json_recurse(cg, os, con, level + 2);
 			}
 		else
@@ -314,35 +361,25 @@ while (con)
 		}
 	else
 		{
-		if (has_concount)
-			{
-			os << _T("\n") << json_indent(level + 2).c_str() << _T("}");
-			os << _T("\n") << json_indent(level + 1).c_str() << _T("]");
-			has_concount = false;
-			}
-		if (!first)
-			os << _T("\n");
 		os << json_indent(level + 1).c_str()
 			<< json_escape(nbuf).c_str() << _T(": {\n");
-		first = !json_attributes(cg, os, con, level + 1);
+		bool hasattrs = json_attributes(cg, os, con, level + 1);
 
 		if (cg->Down(con))
 			{
-			if (!first)
+			if (hasattrs)
 				os << _T(",\n");
 			json_recurse(cg, os, con, level + 1);
 			}
-		else if (!has_concount)
+		else
 			os << _T("\n") << json_indent(level + 1).c_str() << _T("}");
 		}
 
 	con = cg->Next(con);
-	if (con)
-		os << _T(",");
 	first = false;
 	}
 
-if (has_concount)
+if (in_array)
 	os << _T("\n") << json_indent(level + 1).c_str() << _T("]");
 os << _T("\n") << json_indent(level).c_str() << _T("}");
 }

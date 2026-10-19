@@ -1,0 +1,74 @@
+###############################################
+# FILE:     arrays.nlp
+# SUBJ:     Regression for how jsonwrite groups counted concepts into arrays.
+# NOTE:     Until 4.2.37 jsonwrite (and the JsonKB it was copied from) wrote
+#           the comma after each child, so an array followed by a plain
+#           sibling came out with a stray brace and no comma -- not JSON.
+#           Two arrays side by side merged into one, and a digit inside a
+#           name ("a1b2") was taken as part of the count.
+#
+#           Each case is written to <case>.json and compared in CI with
+#           expected/<case>.json, then read back with jsonparse and written
+#           again; the second document must equal the first.
+#
+#           Expected out.txt:
+#           A:same
+#           B:same
+#           C:same
+#           E:same
+#           F:same
+###############################################
+
+@DECL
+Mk(L("p"),L("name")) {
+	L("c") = makeconcept(L("p"),L("name"));
+	addstrval(L("c"),"v",L("name"));
+	return L("c");
+}
+Check(L("label"),L("con")) {
+	jsonwrite(L("label") + ".json",L("con"));
+	L("first") = readfile(G("$apppath") + "/input/text.txt_log/" + L("label") + ".json");
+	L("back") = makeconcept(findroot(),L("label") + "back");
+	L("wrapped") = jsonparse(L("first"),L("back"));
+	jsonwrite(L("label") + "-again.json",down(L("back")));
+	L("second") = readfile(G("$apppath") + "/input/text.txt_log/" + L("label") + "-again.json");
+	if (L("wrapped") && L("first") == L("second"))
+		"out.txt" << L("label") << ":same\n";
+	else
+		"out.txt" << L("label") << ":DIFFERENT\n";
+}
+@@DECL
+
+@CODE
+# A: an array, then a plain sibling
+L("r") = makeconcept(findroot(),"caseA");
+Mk(L("r"),"item1"); Mk(L("r"),"item2"); Mk(L("r"),"name");
+Check("A",L("r"));
+
+# B: two arrays side by side
+L("r") = makeconcept(findroot(),"caseB");
+Mk(L("r"),"item1"); Mk(L("r"),"item2"); Mk(L("r"),"thing1"); Mk(L("r"),"thing2");
+Check("B",L("r"));
+
+# C: a digit inside the base name
+L("r") = makeconcept(findroot(),"caseC");
+Mk(L("r"),"a1b1"); Mk(L("r"),"a1b2");
+Check("C",L("r"));
+
+# E: array elements with no attributes, one with a child, then a plain sibling
+L("r") = makeconcept(findroot(),"caseE");
+makeconcept(L("r"),"row1");
+L("x") = makeconcept(L("r"),"row2");
+Mk(L("x"),"cell");
+Mk(L("r"),"tail");
+Check("E",L("r"));
+
+# F: an array inside an element of an array, then a plain sibling
+L("r") = makeconcept(findroot(),"caseF");
+L("p") = Mk(L("r"),"person1");
+Mk(L("p"),"phone1"); Mk(L("p"),"phone2"); Mk(L("p"),"email");
+L("p") = Mk(L("r"),"person2");
+Mk(L("p"),"phone1");
+Mk(L("r"),"count");
+Check("F",L("r"));
+@@CODE

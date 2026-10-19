@@ -1,0 +1,1 @@
+The fixture builds its own knowledge base, not from this text.
