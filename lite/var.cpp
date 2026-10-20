@@ -14,6 +14,7 @@ All rights reserved.
 *******************************************************************************/
 
 #include "StdAfx.h"
+#include <string>
 #include "machine.h"		// 03/09/00 AM.
 #include "u_out.h"		// 01/19/06 AM.
 #include "lite/lite.h"				// 07/07/03 AM.
@@ -2453,17 +2454,31 @@ else
 	parse->setVars(dlist);
 	}
 
-// Set up proper path for file.
-// Should check if it's relative or absolute.
-_TCHAR buf[MAXSTR];
+// A relative name goes in the output folder. An absolute path ("/x",
+// "\x", "C:...") is used as given, as openfile() does: it used to be
+// appended to the output folder too, so the open failed and every write
+// was silently dropped. (The old MAXSTR buffer also overflowed on a long
+// path.)
+std::string path;
+if (fname[0] == '/' || fname[0] == '\\' || (fname[0] && fname[1] == ':'))
+	path = fname;
+else
+	path = std::string(parse->getOutdir()) + DIR_CH + fname;
 _TCHAR *str = 0;
-//sprintf(buf, "%s\\output\\%s", parse->getAppdir(), fname); // 03/10/99 AM.
-//sprintf_s(buf, "%s\\output\\%s", parse->getAppdir(), fname); // 03/10/99 AM.
-_stprintf(buf, _T("%s%c%s"), parse->getOutdir(),DIR_CH, fname);	 // 03/10/99 AM.
-parse->internStr(buf, /*UP*/ str);
+parse->internStr(path.data(), /*UP*/ str);
 
 // Open the output file for APPENDING.
 ostr = new std::_t_ofstream(TCHAR2CA(str), std::ios::app);
+if (!*ostr)
+	{
+	// Report it once. The var keeps the failed stream, so later writes to
+	// this name do nothing instead of repeating the error.
+	std::_t_strstream gerrStr;
+	gerrStr << _T("[Output op: can't open file ") << str << _T("]") << std::ends;
+	parse->errOut(&gerrStr,false);
+	std::_t_cerr << _T("[Error: can't open output file ") << str
+				 << _T(". Nothing written to it.]") << std::endl;
+	}
 #ifdef UNICODE
 *ostr << BOM_UTF8;
 #endif
