@@ -280,6 +280,44 @@ jobs:
           grep -qF '("note" "lone * and / here")' "$TREE" || { echo "FAIL(data block comments): dict string lost its * or /"; exit 1; }
           echo "[block comments] /* */ and .seq // are skipped in .seq, .kb, .dict and .kbb"
 
+      - name: Long kbb/dict lines and NLP++ errors (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # Three failures that exited 0 with nothing on the console.
+          # kbb-long-line: readKBB read lines into a 2,048-byte buffer and
+          # silently stopped loading at the first longer line. Its long line
+          # is a quoted array, which also loaded a stray 0 after each value.
+          # kbb-long-value: parseKBBLine and parseDictLine copied values
+          # unbounded into 512-byte buffers, overflowing the stack at startup.
+          # code-region-error: an NLP++ error still abandons the rest of its
+          # region, but is now echoed to stderr, not only written to err.log.
+          check() {
+            FIX=.github/workflows/tests/$1
+            rm -rf "$FIX/logs" "$FIX/input/text.txt_log" "$FIX/output"
+            ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" 2> "/tmp/$1.err"
+            if [ ! -f "$FIX/input/text.txt_log/out.txt" ]; then
+              echo "FAIL($1): no out.txt"; cat "/tmp/$1.err"; exit 1
+            fi
+            got=$(tr -d '\r' < "$FIX/input/text.txt_log/out.txt")
+            if [ "$got" != "$2" ]; then
+              echo "FAIL($1): out.txt was '$got'"; cat "/tmp/$1.err"; exit 1
+            fi
+          }
+          check kbb-long-line '30|item30|140'
+          check kbb-long-value '30|item30|600|3000|600|3000|noun'
+          check code-region-error "$(printf 'item 1\nitem 2\nitem 3\nnext pass ran')"
+          ERR=/tmp/code-region-error.err
+          grep -qF '[Error in NLP++ @CODE: pass 2 (loop) line 13, rest of the region skipped.' "$ERR" \
+            || { echo "FAIL(code-region-error): @CODE error not on stderr"; cat "$ERR"; exit 1; }
+          # The @POST rule matches all four words: one line, not four.
+          n=$(grep -cF '[Error in NLP++ @POST: pass 4 (post) line 6,' "$ERR" || true)
+          if [ "$n" != 1 ]; then
+            echo "FAIL(code-region-error): @POST error echoed $n times, want 1"; cat "$ERR"; exit 1
+          fi
+          echo "[long lines] kbb/dict lines and values of any length load; NLP++ errors reach stderr"
+
       - name: Run-mode globals ($dev / $silent, Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash

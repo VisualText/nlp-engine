@@ -1640,6 +1640,41 @@ else
 	return ::errOut(st,retval,inputpass_,inputline_);
 }
 
+
+/********************************************
+* FN:		NLPPPERROR
+* SUBJ:	Echo an NLP++ runtime error to stderr.
+* NOTE:	The error trail goes to err.log only, so a region that stopped
+*			on an error (eg findconcept(0,...)) looked like a clean run: exit 0
+*			and nothing on the console. Once per input for each pass and line,
+*			so an error in a rule that fires on every match prints one line.
+********************************************/
+
+void Parse::nlpppError(const _TCHAR *region, const _TCHAR *effect)
+{
+if (!nlpppErrs_.insert(std::make_pair(currpass_, line_)).second)
+	return;
+
+// currpass_ is the pass the failing code is in, which for a function call
+// is the function's pass rather than the one running (seq_).
+_TCHAR *file = 0;
+Dlist<Seqn> *seqs = ana ? ana->getSeqlist() : 0;
+for (Delt<Seqn> *d = seqs ? seqs->getFirst() : 0; d; d = d->Right())
+	if (d->getData()->getPassnum() == currpass_)
+		{
+		file = d->getData()->getRulesfilename();
+		break;
+		}
+
+std::_t_cerr << _T("[Error in NLP++ ") << region << _T(": pass ") << currpass_;
+if (file && *file)
+	std::_t_cerr << _T(" (") << file << _T(")");
+std::_t_cerr << _T(" line ") << line_ << _T(", ") << effect;
+if (input && *input)
+	std::_t_cerr << _T(". Input: ") << input;
+std::_t_cerr << _T(". Details in err.log.]") << std::endl;
+}
+
 /********************************************
 * FN:		NEWBLOB
 * CR:		02/27/03 AM.

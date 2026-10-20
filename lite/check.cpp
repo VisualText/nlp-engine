@@ -154,6 +154,7 @@ for (dcheck = checks->getFirst(); dcheck; dcheck = dcheck->Right())
 			std::_t_strstream gerrStr;
 			gerrStr << _T("[Check: Error in NLP++.]") << std::ends;
 			nlppp->parse_->errOut(&gerrStr,false);
+			nlppp->parse_->nlpppError(_T("@CHECK"), _T("rest of the check skipped"));
 			}
 				// 11/22/99 AM.
 		if (val)

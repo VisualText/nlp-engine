@@ -1,0 +1,17 @@
+# findconcept() on a null concept at item 3 is an NLP++ error. It abandons
+# the rest of the @CODE region (items 3-5 and "loop finished" never write),
+# and nlp exits 0. That is unchanged. What the CI step asserts is that the
+# error is now on stderr, naming the pass, file and line, not only in the
+# input's err.log.
+@CODE
+L("i") = 1;
+while (L("i") <= 5) {
+	"out.txt" << "item " << str(L("i")) << "\n";
+	L("parent") = makeconcept(findroot(),"reprotest");
+	if (L("i") == 3)
+		L("parent") = 0;
+	L("c") = findconcept(L("parent"),"anything");	# line 13
+	L("i")++;
+}
+"out.txt" << "loop finished\n";
+@@CODE
