@@ -167,6 +167,45 @@ jobs:
           fi
           echo "[long lines] kbb/dict lines and values of any length load; NLP++ errors reach stderr"
 
+      - name: Lazy kbb lookups from any pass, and << to a path
+        shell: bash
+        run: |
+          set -eo pipefail
+          # kbb-lazy-lookup: a key of a lazy *full.kbb used to be found only if
+          # the tokenizer or dictfindword() had loaded it, and down() listed
+          # only those. findconcept/getconcept now search the file on a miss,
+          # down() loads it whole, and the tokenizer searches only dictionary
+          # files (top concept "dictionary", or a .dict twin) -- not domain
+          # KBs, which made spelling candidates 100x slower.
+          FIX=.github/workflows/tests/kbb-lazy-lookup
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log" "$FIX/output"
+          ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" 2> /tmp/lazy.err
+          got=$(tr -d '\r' < "$FIX/input/text.txt_log/out.txt")
+          want=$(printf 'domain not a word: 1\ntwin linked: 1\nkilo: 1\nnested: 1\nquoted key: 1\nmiss: 1\nmiss again: 1\ngetconcept: 1\nchildren: 17')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(kbb-lazy-lookup): out.txt was:"; echo "$got"; cat /tmp/lazy.err; exit 1
+          fi
+          # output-path: "path" << x silently wrote nothing for an absolute
+          # path (it was appended to the output folder). $apppath follows -ANA,
+          # so give it an absolute one.
+          FIX=.github/workflows/tests/output-path
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log" "$FIX/output"
+          ABS="$(pwd -W 2>/dev/null || pwd)/$FIX"
+          ./bin/nlp -ANA "$ABS" -WORK ./ "$ABS/input/text.txt" 2> /tmp/opath.err
+          check() {
+            got=$(tr -d '\r' < "$1" 2>/dev/null || echo "(missing)")
+            [ "$got" = "$2" ] || { echo "FAIL(output-path): $1 was '$got'"; cat /tmp/opath.err; exit 1; }
+          }
+          check "$FIX/output/abs.txt" "$(printf 'one\ntwo')"
+          check "$FIX/output/expr.txt" expr
+          check "$FIX/input/text.txt_log/rel.txt" rel
+          check "$FIX/input/text.txt_log/out.txt" done
+          n=$(grep -c "can't open output file" /tmp/opath.err || true)
+          if [ "$n" != 1 ]; then
+            echo "FAIL(output-path): bad path reported $n times on stderr, want 1"; cat /tmp/opath.err; exit 1
+          fi
+          echo "[lazy kbb] findconcept/getconcept/down reach a lazy file's keys; << writes to an absolute path"
+
       # INTEL MACS (#231). The steps above built and tested arm64 (Apple
       # Silicon). Build the same tree for x86_64 too and merge the two with
       # lipo, so nlpm.exe and the compile libraries are universal binaries:

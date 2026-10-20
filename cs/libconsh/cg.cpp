@@ -904,7 +904,10 @@ CONCEPT *CG::findConcept(
 	_TCHAR *name
 	)
 {
-return (CONCEPT *) kbm_->acon_->con_get_child((CON *)parent, name);
+CONCEPT *con = (CONCEPT *) kbm_->acon_->con_get_child((CON *)parent, name);
+if (con || fullKBBs_.empty() || lazyBusy_ || !parent || !name)
+	return con;
+return findLazyKey(parent, name);		// A key of a lazy *full.kbb.
 }
 
 // Find the nth concept under parent.
@@ -1962,6 +1965,9 @@ CONCEPT *CG::getConcept(CONCEPT *parent, _TCHAR *name)
 CONCEPT *con = (CONCEPT *) kbm_->acon_->con_get_child((CON *) parent, name);
 if (con)																// FIX.	// 08/07/00 AM.
 	return con;														// FIX.	// 08/07/00 AM.
+if (!fullKBBs_.empty() && !lazyBusy_ && parent && name
+	 && (con = findLazyKey(parent, name)))
+	return con;							// A key of a lazy *full.kbb.
 dirty_ = true;		// Todo: check if made concept.					// 05/12/00 AM.
 return (CONCEPT *) kbm_->acon_->con_add_basic(name, (CON *) parent);			// 08/07/00 AM.
 }
@@ -3714,7 +3720,7 @@ for (FullFile &f : fullDicts_)
 	}
 for (FullFile &f : fullKBBs_)
 	{
-	if (!f.merge || !f.merged.insert(str).second)
+	if (!f.merge || !f.words || !f.merged.insert(str).second)
 		continue;
 	CONCEPT *found = searchKBBFile(f, str);
 	CONCEPT *meaning = 0;
@@ -4795,7 +4801,17 @@ bool CG::openFullKBB(const std::string &file, bool merge)
 		rootName = _T("dictionary");		// no top concept found; fall back
 	f.root = getConcept(findRoot(), rootName.data());
 
-	std::_t_cerr << _T("[Lazy-loading words from ") << file
+	// Searched for every word only if it is a dictionary: its top concept
+	// is "dictionary", or a same-stem .dict twin sits beside it (en-full.kbb
+	// with en-full.dict). A domain KB (an ICD index, synonyms) is searched
+	// only when findconcept/getconcept/down ask for its keys: searching it
+	// for every token and spelling candidate made a spell pass 100x slower.
+	std::filesystem::path twin(file);
+	twin.replace_extension(".dict");
+	f.words = rootName == _T("dictionary") || std::filesystem::exists(twin);
+
+	std::_t_cerr << _T("[Lazy-loading ") << (f.words ? _T("words") : _T("keys"))
+				 << _T(" from ") << file
 				 << _T(" under \"") << rootName << _T("\"]") << std::endl;
 
 	// A word missed before this file was open may be in it. Only matters when
@@ -4874,6 +4890,8 @@ CONCEPT *CG::findFullKBBWord(_TCHAR *str)
 	for (FullFile &f : fullKBBs_) {
 		if (f.merge)
 			continue;					// Searched by mergeFullWord.
+		if (!f.words)
+			continue;					// A domain KB: findconcept only.
 		CONCEPT *word = searchKBBFile(f, str);
 		if (word && !first)
 			first = word;
@@ -4885,10 +4903,22 @@ CONCEPT *CG::findFullKBBWord(_TCHAR *str)
 // (the word line plus its indented senses) into the KB, cache it, and return it.
 CONCEPT *CG::searchKBBFile(FullFile &f, _TCHAR *str)
 {
+	std::streamoff keyStart;
+	if (!locateKBBKey(f, str, keyStart))
+		return 0;
+	CONCEPT *word = buildKBBBlock(f, keyStart);
+	if (f.words)
+		cacheWordCon(str, word);	// A domain key (eg an ICD code) is no word.
+	return word;
+}
+
+// Binary-search one open *full.kbb for the key line "  key:". Sets keyStart to
+// the byte offset of that line.
+bool CG::locateKBBKey(FullFile &f, const std::string &str, std::streamoff &keyStart)
+{
 	std::string buf;
-	_TCHAR *line;
 	std::streamoff lo = 0, hi = f.size;
-	std::streamoff keyStart, afterKey;
+	std::streamoff afterKey;
 	std::string key;
 
 	// Lower-bound: first word line whose word >= str.
@@ -4902,7 +4932,7 @@ CONCEPT *CG::searchKBBFile(FullFile &f, _TCHAR *str)
 			hi = mid;
 			continue;
 		}
-		if (strcmp(key.c_str(), str) < 0) {
+		if (key < str) {
 			if (afterKey <= lo)		// Defensive: never move lo backwards/sideways
 				break;				// (would loop forever). str is past EOF here.
 			lo = afterKey;
@@ -4917,12 +4947,17 @@ CONCEPT *CG::searchKBBFile(FullFile &f, _TCHAR *str)
 	f.stream.seekg(lo);
 	do {
 		if (!nextKBBKey(f, keyStart, key, afterKey))
-			return 0;
-	} while (strcmp(key.c_str(), str) < 0);
-	if (strcmp(key.c_str(), str) != 0)
-		return 0;
+			return false;
+	} while (key < str);
+	return key == str;
+}
 
-	// Build the word's block under the "dictionary" root.
+// Build the block of the key line at keyStart (the key plus its indented
+// lines) under the file's top concept, and return the key's concept.
+CONCEPT *CG::buildKBBBlock(FullFile &f, std::streamoff keyStart)
+{
+	std::string buf;
+	_TCHAR *line;
 	f.stream.clear();
 	f.stream.seekg(keyStart);
 
@@ -4930,6 +4965,8 @@ CONCEPT *CG::searchKBBFile(FullFile &f, _TCHAR *str)
 	cons.push_back(f.root);						// cons[0] = parent for the word.
 	int32_t index = 0;
 
+	bool busy = lazyBusy_;						// Making the key must not
+	lazyBusy_ = true;							// search the file again.
 	bool inBlock = false;						// Single-line "/* */" only.
 	readFullLine(f.stream, buf);				// The word line.
 	line = buf.data();
@@ -4956,9 +4993,98 @@ CONCEPT *CG::searchKBBFile(FullFile &f, _TCHAR *str)
 			break;
 		parseKBBLine(line, cons, index, f.root);
 	}
-
-	cacheWordCon(str, word);
+	lazyBusy_ = busy;
 	return word;
+}
+
+/********************************************
+* FN:		FINDLAZYKEY
+* SUBJ:	Find a key of a lazy *full.kbb on demand.
+* RET:	The key's concept, or 0.
+* NOTE:	findconcept() and getconcept() call this on a miss. A key under
+*			the top concept of an open *full.kbb is binary-searched in that
+*			file only and its block built, so a later pass finds it the
+*			ordinary way: it used to be found only if the tokenizer or a
+*			dictfindword() call had loaded it. A name the file lacks is
+*			remembered, so it is searched once. SaveKB quotes a name with a
+*			space ("heart attack":), so that form is tried too.
+********************************************/
+
+CONCEPT *CG::findLazyKey(CONCEPT *parent, _TCHAR *name)
+{
+	for (FullFile &f : fullKBBs_) {
+		if (f.root != parent)
+			continue;
+		if (f.all || f.misses.count(name))
+			return 0;
+		std::streamoff keyStart;
+		std::string key = name;
+		bool found = locateKBBKey(f, key, keyStart);
+		if (!found) {
+			key = "\"" + key + "\"";
+			found = locateKBBKey(f, key, keyStart);
+		}
+		if (!found) {
+			f.misses.insert(name);
+			return 0;
+		}
+		if (f.merge)
+			f.merged.insert(name);		// mergeFullWord must not build it twice.
+		CONCEPT *con = buildKBBBlock(f, keyStart);
+		if (f.words)
+			cacheWordCon(name, con);
+		return con;
+	}
+	return 0;
+}
+
+/********************************************
+* FN:		LOADLAZY
+* SUBJ:	Load every key of a lazy *full.kbb, for down() and next().
+* NOTE:	Only for the file whose top concept is con. Keys already in memory
+*			are kept and not built twice. Costs what loading the file eagerly
+*			would, once, and only in an analyzer that lists the keys.
+********************************************/
+
+void CG::loadLazy(CONCEPT *con)
+{
+	if (!con || fullKBBs_.empty())
+		return;
+	for (FullFile &f : fullKBBs_) {
+		if (f.root != con || f.all)
+			continue;
+		f.all = true;
+
+		// Names already loaded, read once: searching the children for each
+		// key would be quadratic on a large file.
+		std::set<std::string> have;
+		std::vector<_TCHAR> name(MAXMSG * 4);
+		for (CONCEPT *c = Down(con); c; c = Next(c)) {
+			conceptName(c, name.data(), (long) name.size());
+			have.insert(name.data());
+		}
+
+		std::streamoff keyStart, afterKey;
+		std::string key;
+		f.stream.clear();
+		f.stream.seekg(0);
+		while (nextKBBKey(f, keyStart, key, afterKey)) {
+			std::string bare = key;
+			if (bare.size() > 1 && bare.front() == '"' && bare.back() == '"')
+				bare = bare.substr(1, bare.size() - 2);
+			if (have.count(bare))
+				continue;
+			CONCEPT *c = buildKBBBlock(f, keyStart);
+			if (f.words && c)
+				cacheWordCon(bare.data(), c);
+			if (f.merge)
+				f.merged.insert(bare);
+			f.stream.clear();
+			f.stream.seekg(afterKey);			// buildKBBBlock read ahead.
+		}
+		f.stream.clear();
+		return;
+	}
 }
 
 // Look up str across every open *full.dict, returning the first match.

@@ -1,0 +1,18 @@
+###############################################
+# FILE:     write.nlp
+# SUBJ:     << to a path. An absolute path is used as given; a relative name
+#           goes in the input's _log folder; a path that can't be opened is
+#           reported once, to err.log and stderr.
+###############################################
+
+@CODE
+L("abs") = G("$apppath") + "/output/abs.txt";
+L("abs") << "one\n";
+L("abs") << "two\n";
+G("$apppath") + "/output/expr.txt" << "expr\n";
+"rel.txt" << "rel\n";
+L("bad") = G("$apppath") + "/no/such/dir/x.txt";
+L("bad") << "a\n";
+L("bad") << "b\n";
+"out.txt" << "done\n";
+@@CODE

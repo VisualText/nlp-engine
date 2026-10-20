@@ -1,0 +1,21 @@
+# A domain KB: lazily loaded, and searched only when a pass asks for a key.
+codes
+  "heart attack": code=I21
+  alpha: rank=1
+    A001: desc=first
+    A002: desc=second
+  bravo: rank=2
+  charlie: rank=3
+  delta: rank=4
+  echo: rank=5
+  foxtrot: rank=6
+  golf: rank=7
+  hotel: rank=8
+  india: rank=9
+  juliet: rank=10
+  kilo: rank=11
+  lima: rank=12
+  mike: rank=13
+  november: rank=14
+  oscar: rank=15
+  papa: rank=16

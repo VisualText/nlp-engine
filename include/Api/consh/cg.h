@@ -270,6 +270,13 @@ public:
 		// already in memory, once each, and merged into them.	// 09/14/26 DD.
 		bool             merge = false;
 		std::set<std::string> merged;	// merge only: words already searched.
+		// Searched for every word by the tokenizer and dictfindword: a kbb
+		// whose top concept is "dictionary", or that has a same-stem .dict
+		// twin. Any other kbb (a domain KB) is searched only by findconcept,
+		// getconcept and down on its top concept.
+		bool             words = true;
+		bool             all = false;		// down() loaded the whole file.
+		std::set<std::string> misses;		// Keys findconcept found absent.
 	};
 	bool stemEndsWithFull(const std::string &stem);
 	bool openFullKBB(const std::string &file, bool merge = false);
@@ -288,6 +295,12 @@ public:
 	CONCEPT *findFullDictWord(_TCHAR *str);
 	CONCEPT *mergeFullWord(_TCHAR *str, CONCEPT *word);	// 09/14/26 DD.
 	CONCEPT *searchKBBFile(FullFile &f, _TCHAR *str);
+	bool locateKBBKey(FullFile &f, const std::string &key, std::streamoff &keyStart);
+	CONCEPT *buildKBBBlock(FullFile &f, std::streamoff keyStart);
+	CONCEPT *findLazyKey(CONCEPT *parent, _TCHAR *name);
+	// Load every key of the lazy file whose top concept is con, so down()
+	// and next() see them all. No-op for any other concept.
+	void loadLazy(CONCEPT *con);
 	CONCEPT *searchDictFile(FullFile &f, _TCHAR *str);
 	void cacheWordCon(_TCHAR *name, CONCEPT *con);
 	void logMissingWord(_TCHAR *str);
@@ -701,6 +714,7 @@ private:
 	// Negative cache + log of words not found in any "*full" file, so each
 	// unknown word is searched once and recorded once for later KB curation.
 	std::set<std::string> fullMissCache_;	// Run-wide: words absent, skip re-search.
+	bool lazyBusy_ = false;		// Building a lazy block: no nested lazy lookups.
 	std::set<std::string> loggedThisFile_;	// Per-file: words already in this file's log.
 	std::_t_ofstream fullMissLog_;
 	bool fullMissLogOpen_ = false;
