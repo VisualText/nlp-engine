@@ -1145,7 +1145,10 @@ CONCEPT *child = 0;
 if (name1 && *name1)		// 2nd arg was name.
 	child = cg->findConcept(conc1, name1);
 else							// 2nd arg was num.
+	{
+	cg->loadLazy(conc1);		// A lazy *full.kbb: every key counts.
 	child = cg->findConcept(conc1, num1);
+	}
 
 if (child)															// FIX.	// 11/15/00 AM.
 	sem = new RFASem(child, RS_KBCONCEPT, cg);
@@ -2480,6 +2483,7 @@ CONCEPT *hier1 = hier_sem->getKBconcept();
 // Need to get the current KB.
 CG *cg = parse->getAna()->getCG();
 
+cg->loadLazy(hier1);		// A lazy *full.kbb: list every key, not only loaded ones.
 CONCEPT *conc = cg->Down(hier1);
 //	return false;		// 04/28/00 AM.
 

@@ -1,0 +1,2 @@
+dicttokz	nil	# tokenize against the dictionary
+nlp	lookup	# a later pass looks keys up

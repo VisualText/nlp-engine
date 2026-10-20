@@ -244,6 +244,7 @@ if (sem->getType() != RS_KBCONCEPT)
 	return 0;
 	}
 CONCEPT *conc1 = sem->getKBconcept();
+cg->loadLazy(conc1);		// A lazy *full.kbb: every key counts.
 CONCEPT *child = cg->findConcept(conc1, num);
 
 delete sem;													// MEM LEAK.	// 06/27/00 AM.
@@ -1850,6 +1851,7 @@ CONCEPT *hier1 = hier_sem->getKBconcept();
 Parse *parse = nlppp->getParse();
 CG *cg = parse->getAna()->getCG();
 
+cg->loadLazy(hier1);		// A lazy *full.kbb: list every key, not only loaded ones.
 CONCEPT *conc = cg->Down(hier1);
 //	return false;		// 06/02/00 AM.
 

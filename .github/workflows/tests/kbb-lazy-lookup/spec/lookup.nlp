@@ -1,0 +1,33 @@
+###############################################
+# FILE:     lookup.nlp
+# SUBJ:     Look keys up in the lazy codes-full.kbb the ordinary way, after
+#           tokenizing. Each line is 1 when the engine behaves.
+###############################################
+
+@CODE
+L("codes") = findconcept(findroot(),"codes");
+# The tokenizer and dictfindword do not search a domain KB: "golf" is in the
+# input and in codes-full.kbb, but it is not a dictionary word.
+"out.txt" << "domain not a word: " << str(dictfindword("golf") == 0) << "\n";
+# A twin kbb is still searched by the tokenizer, linked to its dict word.
+"out.txt" << "twin linked: " << str(conval(dictfindword("hotel"),"meaning") != 0) << "\n";
+# findconcept loads a key on demand, with its whole block.
+L("kilo") = findconcept(L("codes"),"kilo");
+"out.txt" << "kilo: " << str(numval(L("kilo"),"rank") == 11) << "\n";
+L("a1") = findconcept(findconcept(L("codes"),"alpha"),"A001");
+"out.txt" << "nested: " << str(strval(L("a1"),"desc") == "first") << "\n";
+"out.txt" << "quoted key: " << str(strval(findconcept(L("codes"),"heart attack"),"code") == "I21") << "\n";
+"out.txt" << "miss: " << str(findconcept(L("codes"),"zulu") == 0) << "\n";
+"out.txt" << "miss again: " << str(findconcept(L("codes"),"zulu") == 0) << "\n";
+# getconcept finds the file's key instead of making an empty one.
+"out.txt" << "getconcept: " << str(numval(getconcept(L("codes"),"lima"),"rank") == 12) << "\n";
+# down() lists every key once: 17, with kilo, alpha, lima, heart attack
+# loaded above and not built twice.
+L("n") = 0;
+L("c") = down(L("codes"));
+while (L("c")) {
+	L("n")++;
+	L("c") = next(L("c"));
+}
+"out.txt" << "children: " << str(L("n")) << "\n";
+@@CODE
