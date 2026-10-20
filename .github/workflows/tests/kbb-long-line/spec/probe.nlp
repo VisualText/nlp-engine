@@ -1,0 +1,23 @@
+###############################################
+# FILE:     probe.nlp
+# SUBJ:     Count what longline.kbb loaded, and the values on its long line.
+# NOTE:     Expected out.txt: 30|item30|140
+###############################################
+
+@CODE
+L("root") = findconcept(findroot(),"longline");
+L("n") = 0;
+L("c") = down(L("root"));
+while (L("c")) {
+	L("n")++;
+	L("last") = conceptname(L("c"));
+	L("c") = next(L("c"));
+}
+L("vals") = 0;
+L("v") = attrvals(findattr(findconcept(L("root"),"item10"),"term"));
+while (L("v")) {
+	L("vals")++;
+	L("v") = nextval(L("v"));
+}
+"out.txt" << str(L("n")) << "|" << L("last") << "|" << str(L("vals")) << "\n";
+@@CODE

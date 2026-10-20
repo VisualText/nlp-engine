@@ -1,0 +1,24 @@
+###############################################
+# FILE:     probe.nlp
+# SUBJ:     Measure the long values longline.kbb and longvalue.dict loaded.
+# NOTE:     Expected out.txt: 30|item30|600|3000|600|3000|noun
+###############################################
+
+@CODE
+L("root") = findconcept(findroot(),"longline");
+L("n") = 0;
+L("c") = down(L("root"));
+while (L("c")) {
+	L("n")++;
+	L("last") = conceptname(L("c"));
+	L("c") = next(L("c"));
+}
+L("k10") = strlength(strval(findconcept(L("root"),"item10"),"note"));
+L("k20") = strlength(strval(findconcept(L("root"),"item20"),"note"));
+L("d1") = strlength(strval(dictfindword("longword"),"note"));
+L("d2") = strlength(strval(dictfindword("bigword"),"note"));
+L("pos") = strval(dictfindword("afterword"),"pos");
+"out.txt" << str(L("n")) << "|" << L("last") << "|" << str(L("k10")) << "|"
+	<< str(L("k20")) << "|" << str(L("d1")) << "|" << str(L("d2")) << "|"
+	<< L("pos") << "\n";
+@@CODE
