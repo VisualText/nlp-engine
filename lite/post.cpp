@@ -199,6 +199,7 @@ for (dpost = posts->getFirst(); dpost; dpost = dpost->Right())
 			std::_t_strstream gerrStr;
 			gerrStr << _T("[Post actions: Error in NLP++.]") << std::ends;
 			errOut(&gerrStr,false, parse->currpass_,parse->line_);			// 03/05/03 AM.
+			parse->nlpppError(_T("@POST"), _T("rest of the pass skipped"));
 //			errOut(false);
 			ok = false;												// FIX.	// 12/18/03 AM.
 			nlppp->exitpass_ = true;							// FIX.	// 12/18/03 AM.

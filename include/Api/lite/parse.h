@@ -20,6 +20,7 @@ All rights reserved.
 #include <strstream>	// 09/27/19 AM.
 #endif
 #include <time.h>
+#include <set>
 
 typedef void TREE;	// 07/07/03 AM.
 typedef void LTREE;	// 07/07/03 AM.
@@ -227,6 +228,8 @@ public:
 	void prettySeq();			// Print analyzer sequence.
 	bool errOut(bool,bool=false);											// 08/24/02 AM.
 	bool errOut(std::_t_strstream*,bool,bool=false);                 // 02/25/05 AM.
+	// Echo an NLP++ error to stderr: region ("@CODE"), what it skipped.
+	void nlpppError(const _TCHAR *region, const _TCHAR *effect);
 
 	inline void prettyPassnum(int,  /*UP*/ _TCHAR *);
 	inline void prettyParsedone();
@@ -648,6 +651,9 @@ private:
 
 	// Line number of input file being processed.					// 08/24/02 AM.
 	long inputline_;															// 08/24/02 AM.
+
+	// (pass, line) of NLP++ errors already echoed to stderr for this input.
+	std::set<std::pair<long,long>> nlpppErrs_;
 
 	// Pass info to analyzer, to G("$datum") variable.				// 03/13/03 AM.
 	_TCHAR *datum_;																// 03/13/03 AM.

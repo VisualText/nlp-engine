@@ -57,7 +57,7 @@ public:
 										bool &exitpass);						// 02/06/01 AM.
 	static void execPostcode(Parse *parse, Seqn *seqn);	// @POSTCODE (#392).
 	static void execActions(Parse *parse, Dlist<Iaction> *codes,
-										bool &exitpass);
+										bool &exitpass, const _TCHAR *region);
 	static bool codeAction(Iaction *action, Parse *parse,
 		/*UP*/ bool &badname);												// 01/14/00 AM.
 

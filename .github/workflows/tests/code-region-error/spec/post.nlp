@@ -1,0 +1,8 @@
+# The same error in @POST, on a rule that matches every word. It is echoed
+# to stderr once, not once per match.
+@NODES _ROOT
+
+@POST
+	findconcept(0,"anything");
+@RULES
+_xNIL <- _xALPHA @@

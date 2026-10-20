@@ -3072,28 +3072,30 @@ f_phr  << std::endl << _T("quit") << std::endl << std::endl;
 f_hier.close();
 f_word.close();
 f_phr.close();
-_TCHAR buf[MAXMSG];
+// Any length of line: a MAXMSG buffer cut the dump off at the first
+// line of 2048+ chars, eg a long attribute value.
+std::string buf;
 std::_t_ofstream *f_dump = new std::_t_ofstream(TCHAR2A(file));	// Final output file.
 std::_t_ifstream *f_in = new std::_t_ifstream(TCHAR2A(o_hier));
-while (f_in->getline(buf, MAXMSG))		// Copy first file.
+while (std::getline(*f_in, buf))		// Copy first file.
 	*f_dump << buf << std::endl;
 delete f_in;
 
 *f_dump << std::endl;								// Separate commands.
 f_in = new std::_t_ifstream(TCHAR2A(o_word));
-while (f_in->getline(buf, MAXMSG))		// Copy first file.
+while (std::getline(*f_in, buf))		// Copy first file.
 	*f_dump << buf << std::endl;
 delete f_in;
 
 *f_dump << std::endl;								// Separate commands.
 f_in = new std::_t_ifstream(TCHAR2A(o_attr));
-while (f_in->getline(buf, MAXMSG))		// Copy first file.
+while (std::getline(*f_in, buf))		// Copy first file.
 	*f_dump << buf << std::endl;
 delete f_in;
 
 *f_dump << std::endl;								// Separate commands.
 f_in = new std::_t_ifstream(TCHAR2A(o_phr));
-while (f_in->getline(buf, MAXMSG))		// Copy first file.
+while (std::getline(*f_in, buf))		// Copy first file.
 	*f_dump << buf << std::endl;
 delete f_in;
 
@@ -3869,7 +3871,9 @@ void CG::setDictSource(bool on) { dictSource = on; }
 bool CG::getDictSource() { return dictSource; }
 
 bool CG::readDict(std::string file, std::vector<std::filesystem::path> kbfiles) {
-	_TCHAR buf[MAXMSG];
+	// Any length of line. A MAXMSG buffer used to skip (with a cgerr
+	// message) any line of 2048+ chars; parseDictLine is no longer limited.
+	std::string line;
 	int lineCount = 0;
 	bool inBlock = false;					// Open "/*" carried between lines.
 
@@ -3877,25 +3881,9 @@ bool CG::readDict(std::string file, std::vector<std::filesystem::path> kbfiles) 
 
 	allDictStream_.open(file, std::ios::in);
 
-	for (;;) {
-		allDictStream_.getline(buf, MAXMSG);
-		if (allDictStream_.bad())
-			break;								// unrecoverable I/O error
-		if (allDictStream_.eof() && allDictStream_.gcount() == 0)
-			break;								// clean end of file
+	while (std::getline(allDictStream_, line)) {
+		_TCHAR *buf = line.data();
 		lineCount++;
-		// A line longer than the buffer leaves failbit set (but not eof).
-		// Recover -- clear the error and discard the rest of the line -- so the
-		// remaining entries are still read, instead of getline() aborting the
-		// whole file and silently dropping every entry after an over-long line.
-		if (allDictStream_.fail() && !allDictStream_.eof()) {
-			allDictStream_.clear();
-			allDictStream_.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
-			sprintf(errout_, "%d 1 [dict line too long (limit %d chars), skipped - %s]",
-					lineCount, MAXMSG - 1, file.c_str());
-			*cgerr << errout_ << std::endl;
-			continue;
-		}
 		// Blank out /* ... */ before the line lexer sees it. A comment-only
 		// line becomes all white and is dropped by the check below.	// 07/31/26 DD.
 		strip_block_comments(buf, inBlock, '#');
@@ -3927,9 +3915,11 @@ bool CG::readDict(std::string file, std::vector<std::filesystem::path> kbfiles) 
 bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, int lineCount) {
 	bool dirty;
 	CONCEPT *wordCon, *parentCon;
-	_TCHAR token[MAXSTR];
-	_TCHAR attr[MAXSTR];
-	_TCHAR val[MAXSTR];
+	// Sized to the data: these were _TCHAR[MAXSTR], and a quoted value or word
+	// of 512+ chars was copied in unbounded, overflowing the stack.
+	std::string token;
+	std::string attr;
+	std::string val;
 	DICT_CALL caller;
 	caller.line = lineCount;
 
@@ -4104,29 +4094,27 @@ bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, i
 			addValue = false;
 			int len = lens[i];
 			int beg = begins[i];
-			_tcsnccpy(token, &line[beg],len);
-			token[len] = '\0';
+			token.assign(&line[beg],len);
 			cc = token[0];
 			if (cc == '\\') {
 				beg++;
 				len--;
-				_tcsnccpy(token, &line[beg],len);
-				token[len] = '\0';
+				token.assign(&line[beg],len);
 				cc = token[0];
 			}
 
 			// Tokens before the first token before the equals sign
 			if (i < eqSign - 1) {
-				wordCon = kbm_->dict_get_word(token,dirty,caller);
+				wordCon = kbm_->dict_get_word(token.data(),dirty,caller);
 				if (parentCon) {
-					parentCon = getConcept(parentCon,token);
+					parentCon = getConcept(parentCon,token.data());
 					isPhrase = true;
 				} else {
 					parentCon = wordCon;
 				}
 				// add ambigous concept to word concept
 				if (ambigKB) {
-					CONCEPT *kbcon = findConcept(ambigKB,token);
+					CONCEPT *kbcon = findConcept(ambigKB,token.data());
 					if (kbcon) {
 						CONCEPT *ambigCon = NULL;
 						if (!findVal(wordCon,"meaning",ambigCon)) {
@@ -4140,8 +4128,7 @@ bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, i
 
 			} else if (cc == '"') {
 				int len = lens[i] - 2;
-				_tcsnccpy(val, &token[1], len);
-				val[len] = '\0';
+				val.assign(token, 1, len > 0 ? len : 0);
 				addValue = true;
 				wasQuoted = true;
 
@@ -4157,22 +4144,17 @@ bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, i
 					i++;
 					vend = begins[i] + lens[i];
 				}
-				int vlen = vend - vbeg;
-				if (vlen >= MAXSTR)
-					vlen = MAXSTR - 1;
-				_tcsnccpy(val, &line[vbeg], vlen);
-				val[vlen] = '\0';
+				val.assign(&line[vbeg], vend - vbeg);
 				addValue = true;
 				attrFlag = false;
 
 			} else {
-				_tcsnccpy(attr, token, lens[i]);
-				attr[lens[i]] = '\0';
+				attr.assign(token, 0, lens[i]);
 				attrFlag = true;
-				if (!_tcsicmp(attr, _T("l"))) {
+				if (!_tcsicmp(attr.c_str(), _T("l"))) {
 					suggestedLit = true;
 				}
-				else if (!_tcsicmp(attr, _T("s"))) {
+				else if (!_tcsicmp(attr.c_str(), _T("s"))) {
 					suggestedAttr = true;
 				}
 			}
@@ -4180,12 +4162,12 @@ bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, i
 			if (addValue) {
 				// A double-quoted value is always a string, even if it looks
 				// numeric (at="123"): preserve the author's intent.	// #385.
-				if (!wasQuoted && unicu::isNumeric(val)) {
+				if (!wasQuoted && unicu::isNumeric(val.data())) {
 					long long vnum = 0;
-					unicu::strToLong(val,vnum);
-					addVal(parentCon,attr,vnum);
+					unicu::strToLong(val.data(),vnum);
+					addVal(parentCon,attr.data(),vnum);
 				} else
-					addSval(parentCon,attr,val);
+					addSval(parentCon,attr.data(),val.data());
 				attrFlag = false;
 				addValue = false;
 				wasQuoted = false;
@@ -4199,7 +4181,7 @@ bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, i
 		}
 
 		if (isPhrase && suggestedLit) {
-			addSval(parentCon,_T("l"),val);
+			addSval(parentCon,_T("l"),val.data());
 		} else if (isPhrase && !suggestedAttr) {
 			addSval(parentCon,_T("s"),_T("phrase"));
 		}
@@ -4261,7 +4243,10 @@ bool CG::readKBBs(std::vector<std::filesystem::path> files) {
 }
 
 bool CG::readKBB(std::string file) {
-	_TCHAR buf[MAXMSG];
+	// Any length of line. This was getline() into a MAXMSG buffer: a line of
+	// 2048+ chars set failbit, peek() then returned EOF, and every line after
+	// it was silently dropped.
+	std::string line;
 
 	std::ifstream streamer;
 	streamer.open(file, std::ios::in);
@@ -4270,8 +4255,8 @@ bool CG::readKBB(std::string file) {
 	int32_t index = 0;					// Indentation state, carried between lines.
 	bool inBlock = false;				// Open "/*" carried between lines.
 
-	while (streamer.peek() != EOF) {
-		streamer.getline(buf,MAXMSG);
+	while (std::getline(streamer, line)) {
+		_TCHAR *buf = line.data();
 		// Blank out /* ... */ before the line lexer sees it.	// 07/31/26 DD.
 		// Only a line the stripper actually touched is dropped when it comes
 		// back all white: parseKBBLine reads leading spaces as indentation and
@@ -4283,7 +4268,7 @@ bool CG::readKBB(std::string file) {
 		parseKBBLine(buf, cons, index, findRoot());
 	}
 
-	allDictStream_.close();
+	streamer.close();
 
 	if (inBlock) {
 		// Every entry after the "/*" was blanked out -- report rather than
@@ -4302,15 +4287,22 @@ void CG::parseKBBLine(_TCHAR *buf, std::vector<CONCEPT *> &cons, int32_t &index,
 		bool found;
 		CONCEPT *con = 0, *parent;
 		std::vector<std::pair<int,int>> conIndices;
-		_TCHAR word[MAXSTR];
-		_TCHAR attr[MAXSTR];
-		_TCHAR val[MAXSTR];
+		// Sized to the data: these were _TCHAR[MAXSTR], and a concept name,
+		// attribute or value of 512+ chars was copied in unbounded.
+		std::string word;
+		std::string attr;
+		std::string val;
 		int32_t indent = 0;
 		int32_t lastIndent = 0;
 		bool attrFlag = false;
 		bool openSquare = false;
 		bool openDouble = false;
 		bool collectingConcept = false;
+		// A quoted value was just stored. The empty text between its closing
+		// quote and the next ',', ']' or space is not another value: it used
+		// to be stored as the number 0 after every quoted value but the last
+		// on a line (["a","b"] loaded as a, 0, b, 0).
+		bool quoted = false;
 
 		icu::StringPiece sp(buf);
 		const char *line = sp.data();
@@ -4324,6 +4316,11 @@ void CG::parseKBBLine(_TCHAR *buf, std::vector<CONCEPT *> &cons, int32_t &index,
 		int32_t ulen = 0;
 		found = false;
 		U8_NEXT(line, end, length, c);
+
+		// Copy n bytes of the line from start (none if n < 1).
+		auto take = [&](std::string &s, int32_t n) {
+			s.assign(&line[start], n > 0 ? n : 0);
+		};
 
 		// Get indent
 		int spaces = 0;
@@ -4366,14 +4363,16 @@ void CG::parseKBBLine(_TCHAR *buf, std::vector<CONCEPT *> &cons, int32_t &index,
 			// last one (which EOL terminates) was silently dropped.
 			else if (conceptDone && attrFlag && !openDouble && !openSquare
 						&& unicu::isWhiteSpace(c)) {
-				_tcsnccpy(val, &line[start], end-start-1);
-				val[end-start-1] = '\0';
-				if (unicu::isNumeric(val)) {
+				take(val, end-start-1);
+				if (quoted)
+					;
+				else if (unicu::isNumeric(val.data())) {
 					long long vnum = 0;
-					unicu::strToLong(val, vnum);
-					addVal(con, attr, vnum);
+					unicu::strToLong(val.data(), vnum);
+					addVal(con, attr.data(), vnum);
 				} else
-					addSval(con, attr, val);
+					addSval(con, attr.data(), val.data());
+				quoted = false;
 				start = end;
 				attrFlag = false;
 				openDouble = false;
@@ -4389,7 +4388,7 @@ void CG::parseKBBLine(_TCHAR *buf, std::vector<CONCEPT *> &cons, int32_t &index,
 			}
 			else if (conceptDone && openSquare && collectingConcept && (c == ']' || c ==',')) {
 				CONCEPT *conPath = addConceptByPath(line,conIndices);
-				addVal(con,attr,conPath);
+				addVal(con,attr.data(),conPath);
 				start = end;
 				if (c != ',') {
 					openDouble = false;
@@ -4400,14 +4399,14 @@ void CG::parseKBBLine(_TCHAR *buf, std::vector<CONCEPT *> &cons, int32_t &index,
 				conIndices.clear();		
 			}
 			else if (conceptDone && openSquare && openDouble && c == '"') {
-				_tcsnccpy(val, &line[start],end-start-1);
-				val[end-start-1] = '\0';
-				if (!_tcscmp(val, _T("concept")) || collectingConcept) {
+				take(val, end-start-1);
+				if (val == _T("concept") || collectingConcept) {
 					collectingConcept = true;
 					conIndices.push_back(std::make_pair(start,end-1));
 				} else {
 					start = end;
-					addSval(con,attr,val);
+					addSval(con,attr.data(),val.data());
+					quoted = true;
 				}
 				start = end;
 				// Add to concept path
@@ -4435,19 +4434,21 @@ void CG::parseKBBLine(_TCHAR *buf, std::vector<CONCEPT *> &cons, int32_t &index,
 						 (!openSquare && !openDouble && c == ',') ||
 						 (openDouble && c == '"') ||
 						  end == length)) {
-				_tcsnccpy(val, &line[start],end-start);
 				int adjust = length && c != ']' && c != '"' && c != ',' ? 0 : 1;
-				val[end-start-adjust] = '\0';
+				take(val, end-start-adjust);
 				// An unquoted numeric value is stored as a number; a quoted value
 				// (openDouble) is always a string. This is what lets a KBB round-
 				// trip num/float vs string, instead of everything being a string.
 				// -- #439.
-				if (!openDouble && unicu::isNumeric(val)) {
+				if (quoted && !openDouble)
+					;
+				else if (!openDouble && unicu::isNumeric(val.data())) {
 					long long vnum = 0;
-					unicu::strToLong(val,vnum);
-					addVal(con,attr,vnum);
+					unicu::strToLong(val.data(),vnum);
+					addVal(con,attr.data(),vnum);
 				} else
-					addSval(con,attr,val);
+					addSval(con,attr.data(),val.data());
+				quoted = openDouble;
 				start = end;
 				if (end >= length) {
 					conceptDone = false;
@@ -4464,23 +4465,22 @@ void CG::parseKBBLine(_TCHAR *buf, std::vector<CONCEPT *> &cons, int32_t &index,
 				openDouble = false;			
 			}
 			else if (conceptDone && c == '=') {
-				_tcsnccpy(attr, &line[start],end-start-1);
 				int adjust = openDouble ? 2 : 1;  // This is in case the attribute was double quoted
-				attr[end-start-adjust] = '\0';
+				take(attr, end-start-adjust);
 				openDouble = false;
+				quoted = false;
 				start = end;
 				attrFlag = true;			
 			}
 			else if (!conceptDone && (c == ':' || end == length || (openDouble && !attrFlag && c == '"'))) {
-				_tcsnccpy(word, &line[start],end-start);
 				int adjust = (c == ':' || c == '"') ? 1 : 0;
 				openDouble = false;
-				word[end-start-adjust] = '\0';
+				take(word, end-start-adjust);
 				if (index == 0)
 					parent = root;
 				else
 					parent = cons[index-1];
-				con = makeConcept(parent,word);
+				con = makeConcept(parent,word.data());
 				// Backup if indent less than last
 				for (int j=lastIndent; j && j>=index; j--)
 					cons.pop_back();
@@ -4499,12 +4499,13 @@ void CG::parseKBBLine(_TCHAR *buf, std::vector<CONCEPT *> &cons, int32_t &index,
 CONCEPT *CG::addConceptByPath(const char *line, std::vector<std::pair<int,int>> conIndices) {
 	CONCEPT *con = findRoot();
 	int i = 0;
-	_TCHAR word[MAXMSG];
+	std::string word;
     for (auto indice: conIndices) {
-		_tcsnccpy(word, &line[indice.first],indice.second);
-		word[indice.second-indice.first] = '\0';
+		// indice.second is an end offset, not a length. Copying that many
+		// bytes into a MAXMSG buffer overflowed it on a long line.
+		word.assign(&line[indice.first], indice.second - indice.first);
 		if (i++)
-			con = makeConcept(con,word);
+			con = makeConcept(con,word.data());
     }
 	return con;
 }
@@ -4518,14 +4519,16 @@ CONCEPT *CG::addConceptByPath(const char *line, std::vector<std::pair<int,int>> 
 * if it is not, we warn and fall back to loading it the normal way.
 ********************************************/
 
-// Trim a trailing CR and/or LF left by getline on a CRLF file opened in binary
-// mode. Returns the new length.
-static int32_t chompCRLF(_TCHAR *buf)
+// Read one whole line of any length into str, CR/LF trimmed. The lazy loaders
+// used getline() into a MAXMSG buffer, which failed on a 2048+ char line.
+// false at end of file, like getline().
+static bool readFullLine(std::istream &in, std::string &str)
 {
-	int32_t n = (int32_t) _tcslen(buf);
-	while (n > 0 && (buf[n-1] == '\r' || buf[n-1] == '\n'))
-		buf[--n] = '\0';
-	return n;
+	if (!std::getline(in, str))
+		return false;
+	while (!str.empty() && (str.back() == '\r' || str.back() == '\n'))
+		str.pop_back();
+	return true;
 }
 
 // True if the file stem ends in the word "full" (eg "en-full", or just "full").
@@ -4604,15 +4607,14 @@ void CG::setMissingLogDir(const _TCHAR *dir)
 // byte offset just after it. false at end of file.
 bool CG::nextKBBKey(FullFile &f, std::streamoff &keyStart, std::string &key, std::streamoff &afterKey, bool *multiLine)
 {
-	_TCHAR line[MAXMSG];
+	std::string str;
 	while (true) {
 		std::streamoff pos = f.stream.tellg();
 		if (pos < 0)
 			return false;
-		f.stream.getline(line, MAXMSG);
-		if (f.stream.fail())
+		if (!readFullLine(f.stream, str))
 			return false;
-		chompCRLF(line);
+		_TCHAR *line = str.data();
 		// Single-line "/* ... */" only: this file is binary-searched, so a
 		// comment that runs past its own line cannot be recognized from an
 		// arbitrary seek. Report it and let the caller reject the file.
@@ -4649,15 +4651,14 @@ bool CG::nextKBBKey(FullFile &f, std::streamoff &keyStart, std::string &key, std
 // open *full.dict and return its first token (the word).
 bool CG::nextDictKey(FullFile &f, std::streamoff &keyStart, std::string &key, std::streamoff &afterKey, bool *multiLine)
 {
-	_TCHAR line[MAXMSG];
+	std::string str;
 	while (true) {
 		std::streamoff pos = f.stream.tellg();
 		if (pos < 0)
 			return false;
-		f.stream.getline(line, MAXMSG);
-		if (f.stream.fail())
+		if (!readFullLine(f.stream, str))
 			return false;
-		chompCRLF(line);
+		_TCHAR *line = str.data();
 		// Single-line "/* ... */" only -- see nextKBBKey.
 		bool inBlock = false;
 		if (strip_block_comments(line, inBlock, '#') && inBlock && multiLine)
@@ -4774,30 +4775,25 @@ bool CG::openFullKBB(const std::string &file, bool merge)
 	// "en-roots-full.kbb" has its own top concept ("roots"), and its words must
 	// hang off that so the analyzer can find it (getconcept(findroot(),"roots")).
 	// This also creates that concept up front, before any word is looked up.
-	_TCHAR rootName[MAXMSG];
-	rootName[0] = '\0';
+	std::string rootName;
 	f.stream.clear();
 	f.stream.seekg(0);
 	{
-		_TCHAR line[MAXMSG];
-		while (f.stream.getline(line, MAXMSG)) {
-			chompCRLF(line);
+		std::string str;
+		while (readFullLine(f.stream, str)) {
+			_TCHAR *line = str.data();
 			bool inBlock = false;			// Single-line "/* */" only.
 			strip_block_comments(line, inBlock, '#');
 			if (line[0] == '#' || line[0] == '\0' || line[0] == ' ')
 				continue;					// comment, blank, or indented line
-			int i = 0;
-			while (line[i] && line[i] != ':') {
-				rootName[i] = line[i];
-				i++;
-			}
-			rootName[i] = '\0';
+			for (int i = 0; line[i] && line[i] != ':'; i++)
+				rootName += line[i];
 			break;
 		}
 	}
-	if (!rootName[0])
-		strcpy(rootName, _T("dictionary"));	// no top concept found; fall back
-	f.root = getConcept(findRoot(), rootName);
+	if (rootName.empty())
+		rootName = _T("dictionary");		// no top concept found; fall back
+	f.root = getConcept(findRoot(), rootName.data());
 
 	std::_t_cerr << _T("[Lazy-loading words from ") << file
 				 << _T(" under \"") << rootName << _T("\"]") << std::endl;
@@ -4889,7 +4885,8 @@ CONCEPT *CG::findFullKBBWord(_TCHAR *str)
 // (the word line plus its indented senses) into the KB, cache it, and return it.
 CONCEPT *CG::searchKBBFile(FullFile &f, _TCHAR *str)
 {
-	_TCHAR line[MAXMSG];
+	std::string buf;
+	_TCHAR *line;
 	std::streamoff lo = 0, hi = f.size;
 	std::streamoff keyStart, afterKey;
 	std::string key;
@@ -4900,7 +4897,7 @@ CONCEPT *CG::searchKBBFile(FullFile &f, _TCHAR *str)
 		f.stream.clear();
 		f.stream.seekg(mid);
 		if (mid != 0)
-			f.stream.getline(line, MAXMSG);		// Align to a line start.
+			std::getline(f.stream, buf);		// Align to a line start.
 		if (!nextKBBKey(f, keyStart, key, afterKey)) {
 			hi = mid;
 			continue;
@@ -4934,8 +4931,8 @@ CONCEPT *CG::searchKBBFile(FullFile &f, _TCHAR *str)
 	int32_t index = 0;
 
 	bool inBlock = false;						// Single-line "/* */" only.
-	f.stream.getline(line, MAXMSG);				// The word line.
-	chompCRLF(line);
+	readFullLine(f.stream, buf);				// The word line.
+	line = buf.data();
 	strip_block_comments(line, inBlock, '#');
 	parseKBBLine(line, cons, index, f.root);
 	CONCEPT *word = cons.size() > 1 ? cons[1] : 0;
@@ -4943,10 +4940,9 @@ CONCEPT *CG::searchKBBFile(FullFile &f, _TCHAR *str)
 	while (true) {
 		if (f.stream.peek() == EOF)
 			break;
-		f.stream.getline(line, MAXMSG);
-		if (f.stream.fail())
+		if (!readFullLine(f.stream, buf))
 			break;
-		chompCRLF(line);
+		line = buf.data();
 		// A comment line inside the word's block must not look like the blank
 		// line that ends it, so skip it rather than falling into the test
 		// below. Lines the stripper left alone keep their old meaning.
@@ -4983,7 +4979,7 @@ CONCEPT *CG::findFullDictWord(_TCHAR *str)
 // words are routed through dict_get_word, so they are findable/cached for free.
 CONCEPT *CG::searchDictFile(FullFile &f, _TCHAR *str)
 {
-	_TCHAR line[MAXMSG];
+	std::string buf;
 	std::streamoff lo = 0, hi = f.size;
 	std::streamoff keyStart, afterKey;
 	std::string key;
@@ -4993,7 +4989,7 @@ CONCEPT *CG::searchDictFile(FullFile &f, _TCHAR *str)
 		f.stream.clear();
 		f.stream.seekg(mid);
 		if (mid != 0)
-			f.stream.getline(line, MAXMSG);
+			std::getline(f.stream, buf);
 		if (!nextDictKey(f, keyStart, key, afterKey)) {
 			hi = mid;
 			continue;
@@ -5024,10 +5020,9 @@ CONCEPT *CG::searchDictFile(FullFile &f, _TCHAR *str)
 	while (true) {
 		if (f.stream.peek() == EOF)
 			break;
-		f.stream.getline(line, MAXMSG);
-		if (f.stream.fail())
+		if (!readFullLine(f.stream, buf))
 			break;
-		chompCRLF(line);
+		_TCHAR *line = buf.data();
 		bool inBlock = false;					// Single-line "/* */" only.
 		strip_block_comments(line, inBlock, '#');
 		int i = 0;

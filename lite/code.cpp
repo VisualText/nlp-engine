@@ -156,7 +156,7 @@ if (!(codes = rulesfile->getCodes()))
 	return;
 	}
 
-execActions(parse, codes, exitpass);
+execActions(parse, codes, exitpass, _T("@CODE"));
 parse->setCodeexit(exitpass);	// If @CODE exits the pass, skip @POSTCODE.
 }
 
@@ -176,7 +176,7 @@ Dlist<Iaction> *codes = rulesfile ? rulesfile->getPostcodes() : 0;
 if (!codes)
 	return;
 bool exitpass = false;
-execActions(parse, codes, exitpass);
+execActions(parse, codes, exitpass, _T("@POSTCODE"));
 }
 
 
@@ -185,7 +185,8 @@ execActions(parse, codes, exitpass);
 * SUBJ:	Execute the actions of a @CODE or @POSTCODE region.
 ********************************************/
 
-void Code::execActions(Parse *parse, Dlist<Iaction> *codes, bool &exitpass)
+void Code::execActions(Parse *parse, Dlist<Iaction> *codes, bool &exitpass,
+	const _TCHAR *region)
 {
 bool ok = true;																// 01/14/00 AM.
 exitpass = false;
@@ -220,6 +221,7 @@ for (daction = codes->getFirst(); daction; daction = daction->Right())
 			std::_t_strstream gerrStr;
 			gerrStr << _T("[Code actions: Error in NLP++.]") << std::ends;
 			parse->errOut(&gerrStr,false);
+			parse->nlpppError(region, _T("rest of the region skipped"));
 			}
 
 		if (val)

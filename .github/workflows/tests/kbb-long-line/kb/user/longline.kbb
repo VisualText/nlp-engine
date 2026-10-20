@@ -1,0 +1,34 @@
+# 30 concepts. item10's line is ~2,700 chars of short values. readKBB
+# read lines into a 2,048-byte buffer: the load silently stopped at
+# item10 (loaded 10 of 30), with nothing in any log.
+longline
+  item1: n=1
+  item2: n=2
+  item3: n=3
+  item4: n=4
+  item5: n=5
+  item6: n=6
+  item7: n=7
+  item8: n=8
+  item9: n=9
+  item10: term=["term number 000","term number 001","term number 002","term number 003","term number 004","term number 005","term number 006","term number 007","term number 008","term number 009","term number 010","term number 011","term number 012","term number 013","term number 014","term number 015","term number 016","term number 017","term number 018","term number 019","term number 020","term number 021","term number 022","term number 023","term number 024","term number 025","term number 026","term number 027","term number 028","term number 029","term number 030","term number 031","term number 032","term number 033","term number 034","term number 035","term number 036","term number 037","term number 038","term number 039","term number 040","term number 041","term number 042","term number 043","term number 044","term number 045","term number 046","term number 047","term number 048","term number 049","term number 050","term number 051","term number 052","term number 053","term number 054","term number 055","term number 056","term number 057","term number 058","term number 059","term number 060","term number 061","term number 062","term number 063","term number 064","term number 065","term number 066","term number 067","term number 068","term number 069","term number 070","term number 071","term number 072","term number 073","term number 074","term number 075","term number 076","term number 077","term number 078","term number 079","term number 080","term number 081","term number 082","term number 083","term number 084","term number 085","term number 086","term number 087","term number 088","term number 089","term number 090","term number 091","term number 092","term number 093","term number 094","term number 095","term number 096","term number 097","term number 098","term number 099","term number 100","term number 101","term number 102","term number 103","term number 104","term number 105","term number 106","term number 107","term number 108","term number 109","term number 110","term number 111","term number 112","term number 113","term number 114","term number 115","term number 116","term number 117","term number 118","term number 119","term number 120","term number 121","term number 122","term number 123","term number 124","term number 125","term number 126","term number 127","term number 128","term number 129","term number 130","term number 131","term number 132","term number 133","term number 134","term number 135","term number 136","term number 137","term number 138","term number 139"]
+  item11: n=11
+  item12: n=12
+  item13: n=13
+  item14: n=14
+  item15: n=15
+  item16: n=16
+  item17: n=17
+  item18: n=18
+  item19: n=19
+  item20: n=20
+  item21: n=21
+  item22: n=22
+  item23: n=23
+  item24: n=24
+  item25: n=25
+  item26: n=26
+  item27: n=27
+  item28: n=28
+  item29: n=29
+  item30: n=30
