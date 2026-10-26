@@ -1,0 +1,3 @@
+@CODE
+"out.txt" << "after-pass\n";
+@@CODE

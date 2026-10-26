@@ -452,6 +452,7 @@ int NLP_ENGINE::analyze(
 
     if (!m_nlp)  // defensive: never analyze without a live analyzer object.
         return -1;
+    armRunLimit();
 
     // #639: a missing input-file argument (easy to hit with -COMPILED, whose
     // syntax differs from -COMPILE only by the trailing input path) used to
@@ -514,6 +515,7 @@ int NLP_ENGINE::analyzeStream(
 
     if (!m_nlp)  // defensive: never analyze without a live analyzer object.
         return -1;
+    armRunLimit();
 
     std::filesystem::path fname(analyzer);
     fname /= _T("logs");
@@ -670,6 +672,7 @@ int NLP_ENGINE::analyze(
 
     if (!m_nlp)  // defensive: never analyze without a live analyzer object.
         return -1;
+    armRunLimit();
 
     // The analyzer's cout() writes to standard output.
     
@@ -722,6 +725,7 @@ int NLP_ENGINE::analyze(
 
     if (!m_nlp)  // defensive: never analyze without a live analyzer object.
         return -1;
+    armRunLimit();
 
     // The analyzer's cout() writes to standard output.
 
@@ -824,6 +828,29 @@ void NLP_ENGINE::setDatum(const _TCHAR *datum) {
 
 const _TCHAR *NLP_ENGINE::getDatum() {
     return m_datum.c_str();
+}
+
+// A time limit on each text's analysis, in milliseconds; 0 is none. A run
+// past it stops at its next while turn or pass, and lastRunStopped() says
+// so. See Parse::overBudget for why.                           // 10/25/26 DD.
+void NLP_ENGINE::setRunLimit(long long ms) {
+    m_runLimitMs = ms > 0 ? ms : 0;
+}
+
+long long NLP_ENGINE::getRunLimit() {
+    return m_runLimitMs;
+}
+
+// Whether the last analyze() or analyzeStream() call stopped a run (any of
+// its inputs) at the time limit.
+bool NLP_ENGINE::lastRunStopped() {
+    return m_nlp && m_nlp->getRunStopped();
+}
+
+// init() may have made a new NLP; give it the limit, and clear the flag.
+void NLP_ENGINE::armRunLimit() {
+    m_nlp->setRunLimit(m_runLimitMs);
+    m_nlp->setRunStopped(false);
 }
 
 // The datum to pass to an analysis: 0 when unset, as before.

@@ -15,9 +15,9 @@ All rights reserved.
 #include "lite/nlp_engine.h"
 #include "version.h"
 
-#define NLP_ENGINE_VERSION "4.2.40"
+#define NLP_ENGINE_VERSION "4.2.41"
 
-bool cmdReadArgs(int, _TCHAR *argv[], _TCHAR *&, _TCHAR *&, _TCHAR *&, _TCHAR *&, bool &, bool &, bool &, bool &, bool &, bool &, int &, bool &, bool &, _TCHAR *&);
+bool cmdReadArgs(int, _TCHAR *argv[], _TCHAR *&, _TCHAR *&, _TCHAR *&, _TCHAR *&, bool &, bool &, bool &, bool &, bool &, bool &, int &, bool &, bool &, _TCHAR *&, double &);
 void cmdHelpargs(_TCHAR *);
 
 #include "lite/nlpdebug.h"
@@ -48,13 +48,14 @@ int _tmain(
 	bool stream = false;     // -STDIN: read input file paths from stdin.
 	bool dictSource = false; // -DICTSOURCE: nodes record their .dict file and line.
 	_TCHAR *datum = 0;       // -DATUM value: G("$datum") in the analyzer.
+	double timeLimit = 0;    // -TIMELIMIT seconds: stop a run past it. 0 = none.
 
 	/////////////////////////////////////////////////
 	// GET APP INFORMATION
 	/////////////////////////////////////////////////
 
 	// Get analyzer name, input and output filenames from command line.
-	if (!cmdReadArgs(argc, argv, analyzerpath, input, output, workdir, develop, compile, compiled, silent, compileKB, compileAna, debugPort, stream, dictSource, datum))
+	if (!cmdReadArgs(argc, argv, analyzerpath, input, output, workdir, develop, compile, compiled, silent, compileKB, compileAna, debugPort, stream, dictSource, datum, timeLimit))
 		exit(1);
 	if (dictSource)
 		NLP_ENGINE::setDictSource(true);	// #432.
@@ -73,6 +74,8 @@ int _tmain(
 	NLP_ENGINE *nlpEngine = new NLP_ENGINE(workdir ? workdir : _T(""));
 	if (datum)
 		nlpEngine->setDatum(datum);
+	if (timeLimit > 0)
+		nlpEngine->setRunLimit((long long)(timeLimit * 1000.0));
 	if (compile)
 	{
 		// Compile mode: generate C++ code for the analyzer and KB.
@@ -109,8 +112,11 @@ int _tmain(
 	}
 	NlpDebug::runEnd();
 	NlpDebug::shutdown();
+	// A run stopped at -TIMELIMIT exits 2: it is neither a success nor the
+	// missing analyzer or input that exits 1.						// 10/25/26 DD.
+	bool stopped = nlpEngine->lastRunStopped();
 	delete nlpEngine;
-	return rc < 0 ? 1 : 0;
+	return rc < 0 ? 1 : (stopped ? 2 : 0);
 }
 
 /********************************************
@@ -137,7 +143,8 @@ bool cmdReadArgs(
 	int &debugPort,	   // -debug <port>: rule-level debug server. 0 = off.
 	bool &stream,	   // -STDIN: read input file paths from stdin.
 	bool &dictSource,  // -DICTSOURCE: nodes record their .dict file and line.
-	_TCHAR *&datum     // -DATUM value: G("$datum") in the analyzer.
+	_TCHAR *&datum,    // -DATUM value: G("$datum") in the analyzer.
+	double &timeLimit  // -TIMELIMIT seconds: stop a run past it.
 )
 {
 	_TCHAR *ptr;
@@ -149,6 +156,7 @@ bool cmdReadArgs(
 	bool f_work = false;
 	bool f_debug = false;
 	bool f_datum = false;
+	bool f_timelimit = false;
 	bool flag = false;
 	bool compiledck = false; // If compiled/interp arg seen.
 	bool doubledash = false;
@@ -233,6 +241,8 @@ bool cmdReadArgs(
 				f_debug = flag = true;			// Expecting a TCP port.
 			else if (!strcmp_i(ptr, _T("datum")))
 				f_datum = flag = true;			// Expecting G("$datum").
+			else if (!strcmp_i(ptr, _T("timelimit")))
+				f_timelimit = flag = true;		// Expecting seconds.
 			else if (!strcmp_i(ptr, _T("dev"))) // 12/25/98 AM.
 			{
 				if (silent)
@@ -357,6 +367,18 @@ bool cmdReadArgs(
 				datum = ptr;
 				f_datum = flag = false;
 			}
+			else if (f_timelimit)
+			{
+				timeLimit = _tstof(ptr);
+				if (timeLimit <= 0)
+				{
+					std::_t_cerr << _T("[") << argv[0]
+								 << _T(": -TIMELIMIT needs a number of seconds above 0.]") << std::endl;
+					cmdHelpargs(argv[0]);
+					return false;
+				}
+				f_timelimit = flag = false;
+			}
 			else if (f_debug)
 			{
 				debugPort = _ttoi(ptr);
@@ -389,7 +411,7 @@ bool cmdReadArgs(
 	{
 		// The last argument was an option that takes a value, eg "-ANA".
 		std::_t_cerr << _T("[") << argv[0] << _T(": ")
-					 << (f_ana ? _T("-ANA") : f_in ? _T("-IN") : f_out ? _T("-OUT") : f_work ? _T("-WORK") : f_datum ? _T("-DATUM") : _T("-DEBUG"))
+					 << (f_ana ? _T("-ANA") : f_in ? _T("-IN") : f_out ? _T("-OUT") : f_work ? _T("-WORK") : f_datum ? _T("-DATUM") : f_timelimit ? _T("-TIMELIMIT") : _T("-DEBUG"))
 					 << _T(" needs a value.]") << std::endl;
 		cmdHelpargs(argv[0]);
 		return false;
@@ -438,6 +460,8 @@ void cmdHelpargs(_TCHAR *name)
 				 << _T("                    a blank line or EOF ends the run. Each input is analyzed") << std::endl
 				 << _T("                    when the next line arrives, so $islastfile can be set.") << std::endl
 				 << _T("           [-DATUM value] pass a string the analyzer reads as G(\"$datum\")") << std::endl
+				 << _T("           [-TIMELIMIT seconds] stop an input's analysis that runs longer, at its") << std::endl
+				 << _T("                    next while turn or pass; the run then exits 2") << std::endl
 				 << _T("           [-DICTSOURCE] nodes built from .dict entries get dictfile and dictline") << std::endl
 				 << _T("                    attributes naming the entry's file and line") << std::endl
 				 << std::endl

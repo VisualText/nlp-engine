@@ -1,0 +1,3 @@
+@CODE
+"out.txt" << "before\n";
+@@CODE

@@ -8426,6 +8426,20 @@ return iassign(typ, varname, nelt, index, nlppp, (long long)val);
 
 
 /********************************************
+* FN:		OVERBUDGET
+* CR:		10/25/26 DD.
+* SUBJ:	Has this run passed its time limit? Compiled runtime.
+* NOTE:	Generated into every compiled while condition, as the interpreter
+*			asks Parse::overBudget on every turn (Iwhilestmt::eval).
+********************************************/
+
+bool Arun::overbudget(Nlppp *nlppp)
+{
+return nlppp && nlppp->parse_ && nlppp->parse_->overBudget();
+}
+
+
+/********************************************
 * FN:		TRUTH
 * CR:		05/13/00 AM.
 * SUBJ:	NLP++ exprs, compiled runtime.

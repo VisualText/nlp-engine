@@ -21,6 +21,7 @@ All rights reserved.
 #endif
 #include <time.h>
 #include <set>
+#include <chrono>
 
 typedef void TREE;	// 07/07/03 AM.
 typedef void LTREE;	// 07/07/03 AM.
@@ -657,6 +658,20 @@ private:
 
 	// Pass info to analyzer, to G("$datum") variable.				// 03/13/03 AM.
 	_TCHAR *datum_;																// 03/13/03 AM.
+
+	// RUN LIMIT.  A time limit on this text's analysis, so an analyzer whose
+	// loop never ends is stopped instead of taking its process with it: every
+	// turn of a while loop, and every pass, asks overBudget().  0, the
+	// default, is no limit.											// 10/25/26 DD.
+public:
+	void setRunLimit(long long ms);
+	bool overBudget(bool now=false);	// True once past the limit; stays true.
+	bool runStopped() { return runStopped_; }
+private:
+	long long runLimitMs_ = 0;
+	std::chrono::steady_clock::time_point runDeadline_;
+	unsigned long runTicks_ = 0;		// Calls since the clock was last read.
+	bool runStopped_ = false;
 
 #ifndef STABLE_
 public:

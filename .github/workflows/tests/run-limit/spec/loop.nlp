@@ -1,0 +1,23 @@
+###############################################
+# FILE:     loop.nlp
+# SUBJ:     A loop that never ends is stopped by -TIMELIMIT.
+# NOTE:     Like the loop that killed a document extractor: every turn
+#           makes a new string, so without a limit it runs until the
+#           process is killed for its memory. With -TIMELIMIT 2 the run
+#           stops at the next while turn after two seconds; the line after
+#           the loop and the pass after this one do not run, and nlp exits 2.
+#           Expected out.txt:
+#           before
+###############################################
+
+@CODE
+
+L("s") = "x";
+L("n") = 0;
+while (L("n") >= 0) {
+	L("n")++;
+	L("s") = "x" + str(L("n"));
+}
+"out.txt" << "after-loop\n";
+
+@@CODE

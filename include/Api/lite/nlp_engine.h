@@ -171,6 +171,14 @@ public:
     void setDatum(const _TCHAR *datum);
     const _TCHAR *getDatum();
 
+    // A time limit on each text's analysis, in milliseconds; 0 (the
+    // default) is none. A run past it is stopped -- at its next while turn
+    // or pass -- instead of looping until something kills the process, and
+    // lastRunStopped() is true after the analyze() call that stopped one.
+    void setRunLimit(long long ms);
+    long long getRunLimit();
+    bool lastRunStopped();
+
 private:
     void analyzeFile(const std::string &file, _TCHAR *outdir, std::_t_ofstream *fp);
     int createDir(_TCHAR *dirPath);
@@ -181,7 +189,9 @@ private:
     // passed as different path-forms maps to one entry -- see #658 / #380.
     void anaRegName(const _TCHAR *path, _TCHAR *out);
     _TCHAR *datumArg();
+    void armRunLimit();
 
     // At the end of the class, so its layout is unchanged before it.
     std::basic_string<_TCHAR> m_datum;    // G("$datum") for analyses.
+    long long m_runLimitMs = 0;           // setRunLimit; 0 = none.
 };

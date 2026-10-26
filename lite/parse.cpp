@@ -521,6 +521,11 @@ CG *cg = ana->getCG();
 // Cosmetic rewrite as for loop.											// 11/10/99 AM.
 for (seq = ana->getSeq(); seq; seq = seq->Right())
 	{
+	// A run past its time limit runs no more passes. The pass that ran
+	// out stopped at its next while turn; the rest are skipped whole.	// 10/25/26 DD.
+	if (overBudget(true))
+		break;
+
 	++rulepass_;																// 02/03/05 AM.
 
 	if (cg && !cg->getUserkbLoaded()										// 07/11/26 DD.
@@ -566,6 +571,82 @@ if (gui_.IsMessage(GUI_MESSAGE_ABORT))									// 11/10/99 DD.
 	}
 #endif
 }
+
+/********************************************
+* FN:		SETRUNLIMIT
+* CR:		10/25/26 DD.
+* SUBJ:	Give this text's analysis a time limit, from now.
+* NOTE:	0 or less is no limit, as before.
+********************************************/
+
+void Parse::setRunLimit(long long ms)
+{
+runLimitMs_ = ms > 0 ? ms : 0;
+runStopped_ = false;
+runTicks_ = 0;
+if (runLimitMs_)
+	runDeadline_ = std::chrono::steady_clock::now()
+					 + std::chrono::milliseconds(runLimitMs_);
+}
+
+
+/********************************************
+* FN:		OVERBUDGET
+* CR:		10/25/26 DD.
+* SUBJ:	Has this run passed its time limit?
+* RET:	True once it has, and from then on.
+* NOTE:	Asked on every turn of every while loop, so it reads the clock only
+*			every 256th call -- a loop turn is a few microseconds, and the
+*			limit is in seconds. `now` reads it regardless, for the check
+*			between passes, which come too seldom to count.
+*			The first time it is over, the run is marked stopped (here and on
+*			the NLP object, for NLP_ENGINE::lastRunStopped) and says so once,
+*			in err.log and on stderr.
+*
+*			WHY: NLP++ is a C++ extension. A grammar whose loop never ends
+*			cannot be interrupted from outside -- a Python caller has no
+*			thread to stop, only a process to kill -- and a loop that interns
+*			a string a turn grows until the process is killed for memory.
+*			One such loop took a document extractor down five times in half
+*			an hour on one document. With a limit it stops that run; the
+*			string table goes with the run, so the memory comes back.
+********************************************/
+
+bool Parse::overBudget(bool now)
+{
+if (runStopped_)
+	return true;
+if (!runLimitMs_)
+	return false;
+if (!now && (++runTicks_ & 0xFF))
+	return false;
+if (std::chrono::steady_clock::now() < runDeadline_)
+	return false;
+
+runStopped_ = true;
+if (nlp_)
+	nlp_->setRunStopped(true);
+
+_TCHAR *file = 0;
+Dlist<Seqn> *seqs = ana ? ana->getSeqlist() : 0;
+for (Delt<Seqn> *d = seqs ? seqs->getFirst() : 0; d; d = d->Right())
+	if (d->getData()->getPassnum() == currpass_)
+		{
+		file = d->getData()->getRulesfilename();
+		break;
+		}
+
+std::_t_strstream gerrStr;
+gerrStr << _T("[Run stopped: past its time limit of ") << runLimitMs_
+		  << _T(" ms in pass ") << currpass_;
+if (file)
+	gerrStr << _T(" (") << file << _T(")");
+gerrStr << _T("; the rest of the analysis was not run.]") << std::ends;
+std::_t_cerr << gerrStr.str() << std::endl;
+errOut(&gerrStr,false);
+return true;
+}
+
 
 /********************************************
 * FN:		FINEXECUTE

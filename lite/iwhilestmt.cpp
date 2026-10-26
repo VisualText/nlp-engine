@@ -260,6 +260,15 @@ _TCHAR *str;
 
 for (;;)				// EXECUTE THE WHILE-LOOP.
 	{
+	// A run past its time limit (Parse::setRunLimit) stops here, and fails
+	// the region: the code after a loop that did not finish would run on
+	// whatever it left half done. Parse::overBudget has said why.	// 10/25/26 DD.
+	if (nlppp->parse_->overBudget())
+		{
+		ok = false;
+		goto done;
+		}
+
 	ok = cond_->eval(nlppp, /*UP*/ c_val);
 	if (!ok || !c_val)
 		{
@@ -478,7 +487,8 @@ enum RFASemtype typ = RSNULL;
 // function with all possible return types!  Elegant!  Can be an inline.
 // This can be a general way....(but not totally optimized.)
 // If var, evals it. (see Iwhilestmt::eval).
-*fcode << indent << _T("while (Arun::truth(");				// FIX!	// 04/29/01 AM.
+// The run limit applies to compiled analyzers too (see eval).	// 10/25/26 DD.
+*fcode << indent << _T("while (!Arun::overbudget(nlppp) && Arun::truth(");
 if (!cond_->genEval(gen))
 	{
 	*fcode << _T("\n// ERROR in whilestmt condition.") << std::endl;
