@@ -114,6 +114,36 @@ Switch | Function
 -DICTSOURCE | Nodes that dicttok builds from `.dict` entries get `dictfile` and `dictline` attributes naming the entry's file and line, so a debugger or editor can jump to it. Off by default: it adds two attributes to every dictionary entry.
 [infile [outfile]] | when no -IN or -OUT specified
 
+## Large inputs
+
+An input is read into memory whole and analyzed as one parse tree, so memory
+grows with the document and with the analyzer. Measured on 64-bit Windows:
+
+Analyzer | Memory per MB of input | Time per MB of input
+------------ | ------------- | -------------
+tokenizer and one pass | about 60 MB | 1 to 3 seconds
+parse-en-us | about 700 MB | about 4 minutes
+
+Both grow in a straight line, so a document twice as big takes twice the
+memory and time. The largest input is 2,000,000,000 bytes on every platform;
+a bigger file is refused with a message on stderr.
+
+When a document will not fit, split it into pieces at paragraph breaks and
+stream the pieces through `-STDIN`. The analyzer loads once and the KB carries
+over from piece to piece, as in a folder run. List the pieces in order:
+a folder run takes files in whatever order the file system gives them.
+
+    mkdir pieces
+    awk -v RS= -v max=1000000 '
+      { if (size && size + length($0) > max) { close(f); n++; size = 0 }
+        f = sprintf("pieces/part%05d.txt", n); print $0 "\n" > f
+        size += length($0) + 2 }' big.txt
+    ls pieces/part*.txt | nlp -ANA <analyzer> -WORK <workdir> -STDIN
+
+Each piece gets its own tree and its own output folder. Node offsets count
+from the start of the piece, and a rule cannot match across two pieces.
+`$isfirstfile` and `$islastfile` mark the first and last piece.
+
 # Calling NLP++ Analyzers from C++
 
 There is a test directory in the repository that builds a test.exe that calls analyzers using c++ code.

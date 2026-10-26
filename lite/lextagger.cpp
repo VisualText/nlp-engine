@@ -125,9 +125,10 @@ bool LexTagger::posParse(
 if (!fname || !*fname)
 	return false;
 
-long flen = file_size(fname);		// Get file size from system.
-if (flen <= 0)
+long long fsize = file_size(fname);	// Get file size from system.
+if (fsize <= 0 || fsize > INPUT_MAX)	// Too big for a long length.	// 10/25/26 DD.
 	return false;
+long flen = (long) fsize;
 
 // Get parse tree also...
 ///////////////////////

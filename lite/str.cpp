@@ -1489,9 +1489,10 @@ buf = 0;
 if (!fname || !*fname || (maxline <= 1))
 	return false;
 
-long flen = file_size(fname);		// Get file size from system.
-if (flen <= 0)
+long long fsize = file_size(fname);	// Get file size from system.
+if (fsize <= 0 || fsize > INPUT_MAX)	// Too big for a long length.	// 10/25/26 DD.
 	return false;
+long flen = (long) fsize;
 long cushion = (flen / (maxline-1));	// Max possible newlines to be inserted.
 long biglen = flen + cushion;
 

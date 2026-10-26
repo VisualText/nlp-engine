@@ -260,10 +260,12 @@ void read_file(
 {
 // Get file length.
 
-len = file_size(fname);
+long long fsize = file_size(fname);
+len = 0;
 buf = 0;
-if (len <= 0)
+if (fsize <= 0 || fsize > INPUT_MAX)	// Too big for a long length.	// 10/25/26 DD.
 	return;
+len = (long) fsize;
 ++len;		// Add one for null termination.							// 05/28/00 AM.
 
 // Allocate a buffer to hold all the chars of file.

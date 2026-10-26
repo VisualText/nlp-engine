@@ -29,16 +29,16 @@ All rights reserved.
 * NOTE:	Could do (_O_RDONLY | _O_TEXT), but count seems unaffected.
 ********************************************/
 
-long file_size(_TCHAR *fname)
+long long file_size(_TCHAR *fname)
 {
-long len=0;
+long long len=0;	// Was long: a file over 2 GB went negative on Windows.	// 10/25/26 DD.
 
 // One way on every platform (#323). Was a seek to the end of an
 // opened file on Linux and _tstat elsewhere.
 std::error_code ec;
 std::uintmax_t sz = std::filesystem::file_size(std::filesystem::path(fname), ec);
 if (!ec)
-	len = (long) sz;
+	len = (long long) sz;
 
 #ifdef VCPPONLY_
 //int fh;
