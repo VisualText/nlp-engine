@@ -744,6 +744,13 @@ jobs:
           if [ "$out" != "$want" ]; then
             echo "FAIL(stdin blank line): stdout was:"; echo "$out"; exit 1
           fi
+          # A UTF-8 BOM ahead of the first path, as a .NET or PowerShell caller
+          # on Windows writes, used to make the first input "no such input file".
+          out=$( { printf '\xEF\xBB\xBF'; printf '%s\n' a.txt b.txt c.txt; } | ./bin/nlp -ANA "$FIX" -WORK ./ -STDIN | tr -d '\r')
+          want=$(printf '%s\n' "first=1 last=0 dir=1 n=1" "first=0 last=0 dir=1 n=2" "first=0 last=1 dir=1 n=3")
+          if [ "$out" != "$want" ]; then
+            echo "FAIL(stdin BOM): stdout was:"; echo "$out"; exit 1
+          fi
           echo "[stdin] one load, KB carried across inputs, last-file flag set at end of stream"
 
       - name: Non-ASCII punctuation in rules (#467) (Non-20.04)

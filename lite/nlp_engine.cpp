@@ -529,7 +529,13 @@ int NLP_ENGINE::analyzeStream(
     const char *space = " \t\r\n";
     std::string line, held;
     long count = 0;
+    bool first = true;
     while (std::getline(in, line)) {
+        // A .NET or PowerShell caller on Windows writes a UTF-8 BOM ahead of
+        // the first line, which made the first path "no such input file".
+        if (first && line.compare(0, 3, "\xEF\xBB\xBF") == 0)
+            line.erase(0, 3);
+        first = false;
         size_t beg = line.find_first_not_of(space);
         if (beg == std::string::npos)
             break;  // A blank line ends the stream, like EOF.
