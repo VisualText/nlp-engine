@@ -279,6 +279,40 @@ jobs:
           rm -rf "$BIG"
           echo "[input-size] inputs over 2 GB are refused with a message, never read in part"
 
+      - name: Zone mode runs the passes after a zone line once per zone
+        shell: bash
+        run: |
+          set -eo pipefail
+          # "zone _line" in analyzer.seq: the passes before it run on the whole
+          # document and build _line nodes; each _line then runs the passes
+          # after it on its own, seeing only itself under _ROOT, with G()
+          # carried over and $isfirstzone/$islastzone set. Afterward a zone
+          # stays as a childless stub, so memory goes by the largest zone.
+          # The passes after "endzone" run once, on the stubs, at the end.
+          FIX=.github/workflows/tests/zone-mode
+          rm -rf "$FIX/logs" "$FIX"/input/*_log "$FIX/output"
+          out=$(./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ -DEV "$FIX/input/text.txt" | tr -d '\r')
+          want=$(printf '%s\n' \
+            "zone 1: first=1 last=0 lines under root=1 words=2 text=one two" \
+            "zone 2: first=0 last=0 lines under root=1 words=3 text=three four five" \
+            "zone 3: first=0 last=1 lines under root=1 words=1 text=six" \
+            "summary: zones=3 stubs=3 first=0 last=0")
+          if [ "$out" != "$want" ]; then
+            echo "FAIL(zone-mode): stdout was:"; echo "$out"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          # The final tree keeps the three zones as stubs with no children.
+          tree=$(tr -d '\r' < "$FIX/input/text.txt_log/final.tree" | grep -c '^      ' || true)
+          if [ "$tree" != "0" ] || [ "$(grep -c '^   _line ' "$FIX/input/text.txt_log/final.tree")" != "3" ]; then
+            echo "FAIL(zone-mode): final.tree is not three _line stubs:"; cat "$FIX/input/text.txt_log/final.tree"; exit 1
+          fi
+          # -DEV writes per-zone pass trees, named by zone.
+          for z in 001 002 003; do
+            if [ ! -f "$FIX/input/text.txt_log/z$z-ana004.tree" ]; then
+              echo "FAIL(zone-mode): no z$z-ana004.tree"; ls "$FIX/input/text.txt_log"; exit 1
+            fi
+          done
+          echo "[zone-mode] one run of the zone passes per zone, zones kept as stubs"
+
       - name: Lazy kbb lookups from any pass, and << to a path
         shell: bash
         run: |

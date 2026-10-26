@@ -225,6 +225,13 @@ public:
 		long len = 0
 		);
 	void execute();			// EXECUTE THE TEXT ANALYSIS.
+	// One pass of execute() or executeZones(); see RUN_ in parse.cpp.
+	int runPass(Delt<Seqn> *seq, long &num);
+	// Zone mode: the passes after a "zone _type" line run once per _type node.
+	int executeZones(Delt<Seqn> *first, _TCHAR *ztype);
+	long getZoneNum() {return zoneNum_;}
+	bool getZoneFirst() {return zoneFirst_;}
+	bool getZoneLast() {return zoneLast_;}
 
 	void prettySeq();			// Print analyzer sequence.
 	bool errOut(bool,bool=false);											// 08/24/02 AM.
@@ -655,6 +662,9 @@ private:
 
 	// (pass, line) of NLP++ errors already echoed to stderr for this input.
 	std::set<std::pair<long,long>> nlpppErrs_;
+	long zoneNum_;			// Zone being run, from 1; 0 when not in zone mode.
+	bool zoneFirst_;		// $isfirstzone.
+	bool zoneLast_;		// $islastzone.
 
 	// Pass info to analyzer, to G("$datum") variable.				// 03/13/03 AM.
 	_TCHAR *datum_;																// 03/13/03 AM.

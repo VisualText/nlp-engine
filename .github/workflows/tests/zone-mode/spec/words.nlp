@@ -1,0 +1,6 @@
+@NODES _line
+
+@RULES
+_word <-
+	_xALPHA
+	@@

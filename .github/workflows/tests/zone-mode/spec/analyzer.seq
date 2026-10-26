@@ -1,0 +1,7 @@
+tokenize	nil	# 
+nlp	lines	# skim: one _line node per input line
+zone	_line	# the passes below run once per _line
+nlp	words	# groups the words of a line
+nlp	report	# what this zone sees
+endzone	nil	# the passes below run once, after the last zone
+nlp	summary	# the whole document: stubs and the counter
