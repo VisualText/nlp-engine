@@ -119,6 +119,13 @@ public:
 		Node<Pn> *select
 		);
 
+	// Most rule matches one region of a rec pass may take before the
+	// region is stopped. NLP_REC_LIMIT overrides it; 0 means no limit.
+	static long recLimit();
+	// Count a match in the current region; true once over the limit.
+	static bool overRecLimit(Nlppp *nlppp, long &matches, long size);
+	static long regionSize(Node<Pn> *start, Node<Pn> *end);
+
 	static	// RECINFLOOP	// 05/10/13 AM.
 	inline bool RecinfLoop(		// 06/09/05 AM.
 		Nlppp *nlppp,

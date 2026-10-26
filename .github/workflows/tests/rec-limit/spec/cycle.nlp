@@ -1,0 +1,14 @@
+# A rec pass that takes one match per word. With NLP_REC_LIMIT=1 the
+# region may take only one, so it is stopped after its second.
+@NODES _ROOT
+
+@CHECK
+  if (N("i",1) != G("t") % 3)
+    fail();
+@POST
+  N("hits",1) = N("hits",1) + 1;
+  G("t")++;
+@RULES
+_xNIL <-
+	_xALPHA
+	@@

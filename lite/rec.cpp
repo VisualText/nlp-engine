@@ -455,6 +455,8 @@ if (!start || !rules || !parse)
 Delt<Irule> *prule;			// Current rules; also, the rule that matched.
 Node<Pn> *node;
 bool matched = false;		// If any rules matched.
+long matches = 0;			// Matches in this region, for recLimit().
+long size = regionSize(start, end);	// Nodes in this region at the start.
 
 // 11/20/99 AM. Using this object to collect the entire parse state.
 Nlppp nlppp(															// 11/20/99 AM.
@@ -525,7 +527,12 @@ for (;;)							// WHILE RECURSING....
 				}
 
 			matched = true;	// A RULE MATCHED IN THIS CYCLE.
-			
+			if (overRecLimit(&nlppp, matches, size))	// Region never settles.
+				{
+				delete (Tree<Pn> *) nlppp.collect_;
+				return true;
+				}
+
 			// Optimization.  Go back according to SPAN.				// 02/04/05 AM.
 //			start = recMoveback(&nlppp);									// 02/04/05 AM.
 	
@@ -589,6 +596,8 @@ Slist<Irule> *rules = 0;	// Current rules list.
 Selt<Irule> *prule = 0;		// Current rules; also, the rule that matched.
 Node<Pn> *node;
 bool matched = false;
+long matches = 0;			// Matches in this region, for recLimit().
+long size = regionSize(start, end);	// Nodes in this region at the start.
 
 // 11/20/99 AM. Using this object to collect the entire parse state.
 Nlppp nlppp(															// 11/20/99 AM.
@@ -725,6 +734,13 @@ for (;;)							// WHILE RECURSING.....
 			nlppp.sem_ = 0;		// Zero out.					// 11/20/99 AM.
 			nlppp.dsem_ = 0;		// Zero out.					// 11/20/99 AM.
 			matched = true;			// A RULE MATCHED IN THIS CYCLE.
+			if (overRecLimit(&nlppp, matches, size))	// Region never settles.
+				{
+				if (rules)
+					Slist<Irule>::DeleteSlist(rules);
+				delete (Tree<Pn> *) nlppp.collect_;
+				return true;
+				}
 			node = matchRestart(&nlppp);	// RECOPT1	// 04/27/06 AM.
 			break;						// RESTART AT BEGINNING OF PHRASE.
 			}
@@ -741,6 +757,62 @@ for (;;)							// WHILE RECURSING.....
 delete (Tree<Pn> *) nlppp.collect_;
 return true;
 }
+
+/********************************************
+* FN:		RECLIMIT
+* SUBJ:	Scale of the most rule matches one region of a rec pass may take.
+* NOTE:	RecinfLoop only counts a match that rebuilds a node over the same
+*			span, and not one that regroups or excises, so a rule whose
+*			loop guard is never set (parse-en-us pos50, "much I have been
+*			to blame.") repeated a pass forever. overRecLimit counts every
+*			match. NLP_REC_LIMIT sets the scale (default 1000); 0 means no
+*			limit.
+********************************************/
+
+long Rec::recLimit()
+{
+static long limit = -1;
+if (limit < 0)
+	{
+	const char *s = getenv("NLP_REC_LIMIT");
+	limit = (s && *s) ? atol(s) : 1000;
+	if (limit < 0)
+		limit = 0;
+	}
+return limit;
+}
+
+// Nodes in a region, start through end (or the end of the list).
+long Rec::regionSize(Node<Pn> *start, Node<Pn> *end)
+{
+long n = 0;
+for (Node<Pn> *x = start; x; x = x->Right())
+	{
+	++n;
+	if (x == end)
+		break;
+	}
+return n;
+}
+
+// A region may take recLimit() matches plus recLimit()/50 per node it
+// started with: 1,000 plus 20 a node by default. Measured over every
+// analyzer in the analyzers repo and a 738 KB novel, no region took more
+// than 2.3 matches a node. The engine's own rules-file grammar is not
+// limited: it reads a whole pass file as one region.
+bool Rec::overRecLimit(Nlppp *nlppp, long &matches, long size)
+{
+long scale = recLimit();
+if (!scale || nlppp->parse_->getRulesFile())
+	return false;
+long long limit = (long long) scale + (long long) scale * size / 50;
+if (++matches <= limit)
+	return false;
+nlppp->parse_->recLimitError(nlppp->rule_ ? nlppp->rule_->getLine() : 0,
+	matches - 1, size);
+return true;
+}
+
 
 /********************************************
 * FN:		RECINFLOOP
@@ -1172,6 +1244,8 @@ if (!start || !pass->rules || !parse)
 //Delt<Irule> *prule;			// Current rules; also, the rule that matched.
 Node<Pn> *node;
 bool matched = false;		// If any rules matched.
+long matches = 0;			// Matches in this region, for recLimit().
+long size = regionSize(start, end);	// Nodes in this region at the start.
 
 // Using this object to collect the entire parse state.
 // Reset the nlppp object.
@@ -1293,6 +1367,8 @@ for (;;)							// WHILE RECURSING....
 				}
 
 			matched = true;	// A RULE MATCHED IN THIS CYCLE.
+			if (overRecLimit(nlppp, matches, size))	// Region never settles.
+				return true;
 			// RESET START AND END OF PHRASE.
 			start = nlppp->start_ = nlppp->select_->Down();
 			end = nlppp->end_ = 0;
@@ -1596,6 +1672,8 @@ if (!start || !pass->rules || !parse)
 //Delt<Irule> *prule;			// Current rules; also, the rule that matched.
 Node<Pn> *node;
 bool matched = false;		// If any rules matched.
+long matches = 0;			// Matches in this region, for recLimit().
+long size = regionSize(start, end);	// Nodes in this region at the start.
 
 // Using this object to collect the entire parse state.
 // Reset the nlppp object.
@@ -1710,6 +1788,8 @@ for (;;)							// WHILE RECURSING....
 				}
 
 			matched = true;	// A RULE MATCHED IN THIS CYCLE.
+			if (overRecLimit(nlppp, matches, size))	// Region never settles.
+				return true;
 			// RESET START AND END OF PHRASE.
 			start = nlppp->start_ = nlppp->select_->Down();
 			end = nlppp->end_ = 0;

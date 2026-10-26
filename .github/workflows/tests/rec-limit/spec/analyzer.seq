@@ -1,0 +1,4 @@
+tokenize	nil	# 
+nlp	number	# number the words 0, 1, 2
+rec	cycle	# matches each word once, in turn: 3 matches in one region
+nlp	report	# runs after the rec pass, stopped or not
