@@ -553,6 +553,7 @@ public:
 	static bool    iassign(int,_TCHAR*,int,long long,Nlppp*,bool);		// 12/10/02 AM.
 	static long long    iassign(int,_TCHAR*,int,long long,Nlppp*,int);
 
+	static bool overbudget(Nlppp*);		// Run past its time limit.	// 10/25/26 DD.
 	static bool truth(long long);
 	static bool truth(float);
 	static bool truth(_TCHAR *);

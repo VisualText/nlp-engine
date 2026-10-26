@@ -93,6 +93,7 @@ All rights reserved.
 #define _tcsnccpy	strncpy
 #define _tgetenv	getenv
 #define _ttoi		atoi
+#define _tstof		atof		// nlp -TIMELIMIT seconds.	// 10/25/26 DD.
 #define _tsystem	system
 #define _stprintf	sprintf
 #define _ftprintf	fprintf

@@ -455,6 +455,18 @@ private:
 	// Intended for notable errors.              // VTLOG	// 05/06/13 AM.
 	_TCHAR *logfile_;                            // VTLOG	// 05/06/13 AM.
 
+	// RUN LIMIT for each text's analysis, in milliseconds (0 = none), and
+	// whether a run since the flag was cleared was stopped at it.  Each new
+	// Parse takes the limit; Parse::overBudget sets the flag.	// 10/25/26 DD.
+public:
+	void setRunLimit(long long ms) { runLimitMs_ = ms > 0 ? ms : 0; }
+	long long getRunLimit() { return runLimitMs_; }
+	void setRunStopped(bool stopped) { runStopped_ = stopped; }
+	bool getRunStopped() { return runStopped_; }
+private:
+	long long runLimitMs_ = 0;
+	bool runStopped_ = false;
+
 // When code is well debugged and stable, can remove the stuff below.
 #ifndef STABLE_
 public:

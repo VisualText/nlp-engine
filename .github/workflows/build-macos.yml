@@ -235,6 +235,32 @@ jobs:
           fi
           echo "[str positions] every string position is a character"
 
+      - name: A run past -TIMELIMIT is stopped
+        timeout-minutes: 3
+        shell: bash
+        run: |
+          set -o pipefail
+          # A loop that never ends used to run until something killed the
+          # process; one that makes a string a turn, until it ran out of
+          # memory. With -TIMELIMIT the run stops at the next while turn past
+          # the limit: the code after the loop and the passes after it do not
+          # run, the stop is reported on stderr, and nlp exits 2.
+          FIX=.github/workflows/tests/run-limit
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          rc=0
+          ./bin/nlp -TIMELIMIT 2 -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" 2> /tmp/runlimit.err || rc=$?
+          if [ "$rc" != 2 ]; then
+            echo "FAIL(run limit): exit $rc, wanted 2"; cat /tmp/runlimit.err; exit 1
+          fi
+          got=$(tr -d '\r' < "$FIX/input/text.txt_log/out.txt")
+          if [ "$got" != "before" ]; then
+            echo "FAIL(run limit): out.txt was:"; echo "$got"; echo "wanted: before"; exit 1
+          fi
+          grep -qF '[Run stopped: past its time limit of 2000 ms in pass 3 (loop)' /tmp/runlimit.err \
+            || { echo "FAIL(run limit): no stop message on stderr"; cat /tmp/runlimit.err; exit 1; }
+          echo "[run limit] a loop that never ends is stopped at -TIMELIMIT"
+
       # INTEL MACS (#231). The steps above built and tested arm64 (Apple
       # Silicon). Build the same tree for x86_64 too and merge the two with
       # lipo, so nlpm.exe and the compile libraries are universal binaries:

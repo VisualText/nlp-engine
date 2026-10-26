@@ -1,0 +1,4 @@
+tokenize	nil	# tokenize only -- fixture needs no dictionary
+nlp	before	# runs, and says so
+nlp	loop	# never ends on its own
+nlp	after	# must not run once the limit stops the loop
