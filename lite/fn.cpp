@@ -6264,9 +6264,10 @@ else {
 }
 */
 
-icu::UnicodeString ustr = icu::UnicodeString::fromUTF8(icu::StringPiece(name1));
-const UChar *strBuf = ustr.getTerminatedBuffer();
-len = unicu::strLen(strBuf);
+// Characters (code points), the unit strpiece and strindexof use. This
+// counted UTF-16 units, so a character outside the Basic Multilingual Plane
+// (an emoji) was two here and one everywhere else.			// 10/25/26 DD.
+len = str_chars(name1);
 
 sem = new RFASem(len);
 
@@ -6313,7 +6314,12 @@ if (!str1)																		// 10/30/00 AM.
 	return parse->errOut(true); // UNFIXED 														// 05/18/01 AM.
 	}
 
-_TCHAR buf[MAXSTR];
+// A piece is never longer than the string, so a buffer the string's size
+// in bytes always holds it. This was MAXSTR (512), and every piece of 512
+// characters or more failed with "strpiece: Error." -- an empty answer to a
+// loop that then cut the other way.							// 10/25/26 DD.
+long siz = (long)_tcslen(str1) + 1;
+_TCHAR *buf = Chars::create(siz);
 
 #ifdef JUNK_
 _TCHAR *c;
@@ -6333,14 +6339,16 @@ if (!buf[0])														// FIX.	// 02/09/01 AM.
 	return true;													// FIX.	// 02/09/01 AM.
 #endif
 
-if (!str_piece(str1,start,end,MAXSTR,/*UP*/buf))					// 11/18/02 AM.
+if (!str_piece(str1,start,end,siz,/*UP*/buf))							// 10/25/26 DD.
 	{
+	Chars::destroy(buf);
 	_stprintf(Errbuf,_T("[strpiece: Error.]"));								// 11/18/02 AM.
 	return parse->errOut(true); // UNFIXED 											// 11/18/02 AM.
 	}
 
 _TCHAR *str;
 parse->internStr(buf, /*UP*/ str);
+Chars::destroy(buf);
 
 // Return as str type.
 sem = new RFASem(str, RSSTR);
@@ -12342,7 +12350,7 @@ return true;
 * FN:		FNSTRINDEXOF
 * CR:		08/03/26 DD.
 * SUBJ:	Position of the first occurrence of a substring.
-* RET:	True (executed ok); sem = zero-based index, or -1 if absent.
+* RET:	True (executed ok); sem = zero-based CHARACTER index, or -1 if absent.
 * FORMS:	strindexof(str, substr)
 * NOTE:	strchr takes only a single character and returns the tail of the
 *			string rather than a position, so getting an index used to mean
@@ -12372,9 +12380,12 @@ if (!Arg::done((DELTS*)args, _T("strindexof"),parse))
 long long at = -1LL;
 if (str && *str && sub && *sub)
 	{
+	// In characters, so the answer can be handed to strpiece. It was
+	// hit - str, a BYTE offset: past the match on any text with a
+	// multi-byte character ahead of it.						// 10/25/26 DD.
 	_TCHAR *hit = _tcsstr(str, sub);
 	if (hit)
-		at = (long long)(hit - str);
+		at = str_char_index(str, hit);
 	}
 sem = new RFASem(at);
 return true;
@@ -12385,7 +12396,7 @@ return true;
 * FN:		FNSTRLASTINDEXOF
 * CR:		08/03/26 DD.
 * SUBJ:	Position of the last occurrence of a substring.
-* RET:	True (executed ok); sem = zero-based index, or -1 if absent.
+* RET:	True (executed ok); sem = zero-based CHARACTER index, or -1 if absent.
 * FORMS:	strlastindexof(str, substr)
 ********************************************/
 
@@ -12413,11 +12424,14 @@ long long at = -1LL;
 if (str && *str && sub && *sub)
 	{
 	_TCHAR *hit = _tcsstr(str, sub);
+	_TCHAR *last = 0;
 	while (hit)
 		{
-		at = (long long)(hit - str);
+		last = hit;
 		hit = _tcsstr(hit + 1, sub);
 		}
+	if (last)
+		at = str_char_index(str, last);						// 10/25/26 DD.
 	}
 sem = new RFASem(at);
 return true;

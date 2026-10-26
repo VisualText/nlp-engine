@@ -358,6 +358,35 @@ jobs:
           fi
           echo "[lazy kbb] findconcept/getconcept/down reach a lazy file's keys; << writes to an absolute path"
 
+      - name: String positions are characters (Non-20.04)
+        if: matrix.id != 'docker-ubuntu-20.04'
+        shell: bash
+        run: |
+          set -eo pipefail
+          # strindexof and strlastindexof answered in bytes, strlength in
+          # UTF-16 units, and strpiece and strchar in characters, so on text
+          # outside ASCII a position from one was wrong in another. A loop
+          # that cut at the first colon until none was left never ended on
+          # a curly apostrophe ahead of the colon. strpiece also refused any
+          # piece of 512 characters or more. All five count characters now,
+          # and strpiece has no length limit.
+          FIX=.github/workflows/tests/str-positions
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log"
+          mkdir -p "$FIX/logs"
+          timeout 120 ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          if [ -f "$FIX/logs/make_ana.log" ]; then cat "$FIX/logs/make_ana.log"; fi
+          OUT="$FIX/input/text.txt_log/out.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(str positions): no out.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' 'len:36' 'colon:26' 'lasta:16' 'tail:TEIXEIRA' 'emoji-len:5' 'emoji-colon:3' 'emoji-lastb:2' 'emoji-piece:b' 'long:600' 'long-piece:599' 'label:TEIXEIRA' 'turns:1')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(str positions): out.txt was:"; echo "$got"
+            echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[str positions] every string position is a character"
+
       - name: Run-mode globals ($dev / $silent, Non-20.04)
         if: matrix.id != 'docker-ubuntu-20.04'
         shell: bash

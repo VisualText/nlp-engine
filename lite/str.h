@@ -188,6 +188,8 @@ bool convert_to_float(_TCHAR *str1, _TCHAR *str2, /*UP*/ float &fnum);
 bool s_to_f(_TCHAR *str, /*UP*/ float *fnum);							// 08/23/01 AM.
 
 bool str_piece(_TCHAR*,long,long,long,/*UP*/_TCHAR*);					// 11/18/02 AM.
+long long str_chars(const _TCHAR*);										// 10/25/26 DD.
+long long str_char_index(const _TCHAR*, const _TCHAR*);				// 10/25/26 DD.
 bool str_unique_chars(_TCHAR*,/*UP*/_TCHAR*);
 
 // Should go in a morph module.
