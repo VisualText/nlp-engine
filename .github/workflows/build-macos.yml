@@ -167,6 +167,30 @@ jobs:
           fi
           echo "[long lines] kbb/dict lines and values of any length load; NLP++ errors reach stderr"
 
+      - name: Inputs over 2 GB are refused with a message
+        shell: bash
+        run: |
+          set -eo pipefail
+          # file_size() returned a long, which is 32 bits on Windows: a file of
+          # 2 to 4 GB went negative and was "not found" in err.log only, and one
+          # over 4 GB wrapped to a small size and was read in part, silently.
+          # Text lengths and node offsets are still long, so an input over
+          # INPUT_MAX (2,000,000,000 bytes) is refused, on stderr as well.
+          # dd seek= sets the size without writing the data, and the engine
+          # refuses the file before reading any of it.
+          FIX=.github/workflows/tests/stdin-stream
+          BIG="$FIX/big"
+          mkdir -p "$BIG"
+          for size in 2200000000 4294967396; do
+            dd if=/dev/zero of="$BIG/big.txt" bs=1 count=0 seek=$size 2> /dev/null
+            err=$(./bin/nlp -ANA "$FIX" -WORK ./ "$BIG/big.txt" 2>&1 > /dev/null | tr -d '\r')
+            if ! grep -q "is $size bytes. The largest input is 2000000000 bytes" <<< "$err"; then
+              echo "FAIL(input-size $size): stderr was:"; echo "$err"; rm -rf "$BIG"; exit 1
+            fi
+          done
+          rm -rf "$BIG"
+          echo "[input-size] inputs over 2 GB are refused with a message, never read in part"
+
       - name: Lazy kbb lookups from any pass, and << to a path
         shell: bash
         run: |

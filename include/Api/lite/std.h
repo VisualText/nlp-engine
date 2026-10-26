@@ -13,7 +13,11 @@ All rights reserved.
 *
 *******************************************************************************/
 
-long LITE_API file_size(_TCHAR *fname);
+// Largest input text, in bytes.  Text lengths and node offsets are long
+// (32 bits on Windows) and ICU's are int32_t, so this holds everywhere.	// 10/25/26 DD.
+#define INPUT_MAX 2000000000LL
+
+long long LITE_API file_size(_TCHAR *fname);
 int open_outfile(_TCHAR *fname);
 void close_outfile(int fh);
 

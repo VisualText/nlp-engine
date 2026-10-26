@@ -355,6 +355,17 @@ if (count_)
 * ALLOC:	Creates buffer that must be freed.
 ********************************************/
 
+// An input over INPUT_MAX is refused on stderr as well as in err.log,
+// since the run otherwise looks clean.								// 10/25/26 DD.
+static bool inputTooLarge(const std::basic_string<_TCHAR> &msg)
+{
+std::_t_cerr << msg << std::endl;
+std::_t_strstream gerrStr;
+gerrStr << msg << std::ends;
+::errOut(&gerrStr,false,0,0);
+return false;
+}
+
 bool Parse::readFile()
 {
 // Get file length.
@@ -362,23 +373,35 @@ long len;
 long ulen;	// [UNICODE]
 _TCHAR *buf;
 
+// A file over INPUT_MAX used to be "not found" from 2 to 4 GB and read
+// only in part beyond that.											// 10/25/26 DD.
+long long fsize = file_size(input);
+if (fsize > INPUT_MAX)
+	{
+	std::basic_ostringstream<_TCHAR> msg;
+	msg << _T("[File=") << input << _T(" is ") << fsize
+		<< _T(" bytes. The largest input is ") << INPUT_MAX
+		<< _T(" bytes; split it into smaller files.]");
+	return inputTooLarge(msg.str());
+	}
+
 // DOING DIRTY FILE CONVERSIONS!											// 07/18/00 AM.
 //read_file(input, /*UP*/ len, buf);									// 07/18/00 AM.
 //readConvert(input, buf, len, MAXSTR);								// 07/26/01 AM.
 readConvertU(input,buf,len,MAXLINE);	// BIG LINE.					// 07/26/01 AM.
-ulen = u_strlen(buf);	// [UNICODE]
-setUlength(ulen);	// [UNICODE]
-setLength(len);
-setUlength(ulen);	// [UNICODE]
-setText(buf);
 
-if (len <= 0)
+if (len <= 0 || !buf)	// Before u_strlen, which can't take a null.	// 10/25/26 DD.
 	{
 	std::_t_strstream gerrStr;
 	gerrStr << _T("[File=") << input << _T(" not found.]") << std::ends;
 	::errOut(&gerrStr,false,0,0);
 	return false;
 	}
+
+ulen = u_strlen(buf);	// [UNICODE]
+setLength(len);
+setUlength(ulen);	// [UNICODE]
+setText(buf);
 
 if (Verbose())
 	{
@@ -418,7 +441,18 @@ if (!inbuf || !*inbuf)
 
 // Get file length.
 if (!len)						// If parsing entire input buffer,
-	len = _tcsclen(inbuf);
+	{
+	size_t n = _tcsclen(inbuf);
+	if (n > (size_t) INPUT_MAX)	// Was cut silently by the cast to long.	// 10/25/26 DD.
+		{
+		std::basic_ostringstream<_TCHAR> msg;
+		msg << _T("[Input buffer is ") << (long long) n
+			<< _T(" characters. The largest input is ") << INPUT_MAX
+			<< _T("; split it into smaller pieces.]");
+		return inputTooLarge(msg.str());
+		}
+	len = (long) n;
+	}
 if (len <= 0)
 	return false;
 
