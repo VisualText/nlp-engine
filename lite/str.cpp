@@ -2054,12 +2054,15 @@ if (start < 0 || end < 0)
 	if (end < 0)
 		end += nchars;
 	}
-long len = end-start+1;
-
+// siz is the size of buf in BYTES. It used to be compared with the number
+// of CHARACTERS asked for, which refused any piece of MAXSTR (512) or more
+// from a caller with a 512-byte buffer, and let a caller that sized buf in
+// characters overflow it with multi-byte text. The copy is bounded below,
+// where its length in bytes is known.						// 10/25/26 DD.
 if (end < start
- || start < 0
- || len >= siz )
+ || start < 0)
 	return false;
+long len = end-start+1;
 
 UChar32 c = 1;
 int32_t s = 0;
@@ -2080,9 +2083,54 @@ while (c && i<len) {
 	i++;
 }
 len = e-s;
+if (len >= siz)
+	return false;
 _tcsnccpy(buf,&(str[s]),len);
 buf[len] = '\0';
 return true;
+}
+
+
+/********************************************
+* FN:	   STR_CHARS
+* CR:	   10/25/26 DD.
+* SUBJ: Length of a UTF-8 string in characters (code points).
+* NOTE: The one unit every NLP++ string position is in: strlength,
+*		strpiece, strchar, strindexof and strlastindexof all count this way,
+*		so a position one of them returns can be handed to another.
+*		Before, strindexof counted bytes and strlength UTF-16 units, and
+*		on text outside ASCII the numbers did not line up.
+********************************************/
+
+long long str_chars(const _TCHAR *str)
+{
+if (!str)
+	return 0;
+long long n = 0;
+for (const unsigned char *c = (const unsigned char *)str; *c; ++c)
+	if ((*c & 0xC0) != 0x80)		// not a continuation byte
+		++n;
+return n;
+}
+
+
+/********************************************
+* FN:	   STR_CHAR_INDEX
+* CR:	   10/25/26 DD.
+* SUBJ: Character position of a pointer into a UTF-8 string.
+* RET:  Characters from str up to, not including, at; -1 if at is not in str.
+********************************************/
+
+long long str_char_index(const _TCHAR *str, const _TCHAR *at)
+{
+if (!str || !at || at < str)
+	return -1;
+long long n = 0;
+for (const unsigned char *c = (const unsigned char *)str;
+	  c < (const unsigned char *)at && *c; ++c)
+	if ((*c & 0xC0) != 0x80)
+		++n;
+return n;
 }
 
 

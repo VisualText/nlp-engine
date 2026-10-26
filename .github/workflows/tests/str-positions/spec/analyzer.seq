@@ -1,0 +1,2 @@
+tokenize	nil	# tokenize only -- fixture needs no dictionary
+nlp	positions	# string positions are characters, everywhere

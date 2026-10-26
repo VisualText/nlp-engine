@@ -7069,7 +7069,7 @@ long long Arun::strlength(
 {
 if (!name1 || !*name1)
 	return 0;
-return _tcsclen(name1);
+return str_chars(name1);		// characters, as interpreted strlength	// 10/25/26 DD.
 }
 
 // VARIANT.																// 01/23/01/00 AM.
@@ -7095,7 +7095,7 @@ switch (sem->getType())
 delete sem;
 if (!st || !*st)
 	return 0;
-return _tcsclen(st);
+return str_chars(st);			// 10/25/26 DD.
 }
 
 long long Arun::strlength(		// 07/11/03 AM.
@@ -7146,7 +7146,10 @@ if (!buf[0])														// FIX.	// 02/09/01 AM.
 	return 0;														// FIX.	// 02/09/01 AM.
 #endif
 
-long long xlen = end - start + 1;												// 07/16/03 AM.
+// Sized in BYTES. It was end - start + 1, a count of CHARACTERS, and
+// str_piece copies bytes, so a piece with a multi-byte character in it
+// overran the buffer.												// 10/25/26 DD.
+long long xlen = (long long)_tcslen(str1);
 _TCHAR *buf = Chars::create(xlen+1);										// 07/16/03 AM.
 
 if (!str_piece(str1,start,end,xlen+1,/*UP*/buf))					// 11/18/02 AM.

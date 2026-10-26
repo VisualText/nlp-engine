@@ -1,0 +1,66 @@
+###############################################
+# FILE:     positions.nlp
+# SUBJ:     A string position is a character, in every string function.
+# NOTE:     strindexof and strlastindexof answered in BYTES, while strpiece
+#           and strchar count characters (code points) and strlength counted
+#           UTF-16 units. On text with one curly apostrophe ahead of a colon
+#           the index pointed past the colon, so a loop that cut at the first
+#           colon until none was left never got there, and allocated a string
+#           a turn until the process was killed at 2 GB. strpiece also
+#           refused any piece of 512 characters or more, which is why that
+#           loop's first cut failed outright.
+#           The label loop below is that loop, capped at 20 turns so a
+#           regression fails here instead of hanging the job.
+#           Expected out.txt:
+#           len:36
+#           colon:26
+#           lasta:16
+#           tail:TEIXEIRA
+#           emoji-len:5
+#           emoji-colon:3
+#           emoji-lastb:2
+#           emoji-piece:b
+#           long:600
+#           long-piece:599
+#           label:TEIXEIRA
+#           turns:1
+###############################################
+
+@CODE
+
+L("s") = "Registrar’s Signature NAME: TEIXEIRA";
+L("i") = strindexof(L("s"),":");
+"out.txt" << "len:"   << str(strlength(L("s"))) << "\n";
+"out.txt" << "colon:" << str(L("i")) << "\n";
+"out.txt" << "lasta:" << str(strlastindexof(L("s"),"a")) << "\n";
+"out.txt" << "tail:"  << strtrim(strpiece(L("s"),L("i") + 1,-1)) << "\n";
+
+# One character outside the Basic Multilingual Plane: two UTF-16 units,
+# four bytes, one character.
+L("e") = "a😀b:c";
+"out.txt" << "emoji-len:"   << str(strlength(L("e"))) << "\n";
+"out.txt" << "emoji-colon:" << str(strindexof(L("e"),":")) << "\n";
+"out.txt" << "emoji-lastb:" << str(strlastindexof(L("e"),"b")) << "\n";
+"out.txt" << "emoji-piece:" << strpiece(L("e"),2,2) << "\n";
+
+L("long") = "";
+L("n") = 0;
+while (L("n") < 600) {
+	L("long") = L("long") + "x";
+	L("n")++;
+}
+"out.txt" << "long:"       << str(strlength(L("long"))) << "\n";
+"out.txt" << "long-piece:" << str(strlength(strpiece(L("long"),1,-1))) << "\n";
+
+# The loop that hung: cut at the first colon until none is left.
+L("v") = L("s");
+L("turns") = 0;
+while (strcontains(":",L("v")) && L("turns") < 20) {
+	L("k") = strindexof(L("v"),":");
+	L("v") = strtrim(strpiece(L("v"),L("k") + 1,-1));
+	L("turns")++;
+}
+"out.txt" << "label:" << L("v") << "\n";
+"out.txt" << "turns:" << str(L("turns")) << "\n";
+
+@@CODE
