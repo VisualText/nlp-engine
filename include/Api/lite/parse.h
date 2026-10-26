@@ -138,6 +138,7 @@ public:
 	bool getCodeexit();				// @CODE exited the current pass (#392).
 	_TCHAR *getAlgo();					// 05/31/00 AM.
 	bool	getIntern();				// 05/26/01 AM.
+	bool	getRulesFile() {return rulesFile_;}
 	long	getCurrpass();	// REN.	// 08/22/02 AM.
 	long	getRulepass();				// 02/03/05 AM.
 	long	getInputpass();			// 08/23/02 AM.
@@ -193,6 +194,7 @@ public:
 	void setAlgo(_TCHAR *);			// 05/31/00 AM.
 	void setFbatchstart(bool);		// 10/19/00 AM.
 	void setIntern(bool);			// 05/26/01 AM.
+	void setRulesFile(bool x) {rulesFile_ = x;}
 	void setCurrpass(long);// REN.	// 08/22/02 AM.
 	void setRulepass(long);			// 02/03/05 AM.
 	void setInputpass(long);		// 08/23/02 AM.
@@ -238,6 +240,7 @@ public:
 	bool errOut(std::_t_strstream*,bool,bool=false);                 // 02/25/05 AM.
 	// Echo an NLP++ error to stderr: region ("@CODE"), what it skipped.
 	void nlpppError(const _TCHAR *region, const _TCHAR *effect);
+	void recLimitError(long ruleline, long matches, long nodes);
 
 	inline void prettyPassnum(int,  /*UP*/ _TCHAR *);
 	inline void prettyParsedone();
@@ -603,6 +606,7 @@ private:
 	// If this parse interns an analyzers (eg, RFB or user's analyzer),
 	// then record if any syntax errors were encountered.			// 05/26/01 AM.
 	bool intern_;	// If interned analyzer successfully.			// 05/26/01 AM.
+	bool rulesFile_;	// If parsing a rules file with the RFB grammar.
 
 	Dlist<Iarg> *blobs_;	// Global list for blobs.					// 02/27/03 AM.
 
@@ -665,6 +669,7 @@ private:
 	long zoneNum_;			// Zone being run, from 1; 0 when not in zone mode.
 	bool zoneFirst_;		// $isfirstzone.
 	bool zoneLast_;		// $islastzone.
+	std::set<std::pair<long,long>> recLimitErrs_;	// (pass, rule line) reported.
 
 	// Pass info to analyzer, to G("$datum") variable.				// 03/13/03 AM.
 	_TCHAR *datum_;																// 03/13/03 AM.

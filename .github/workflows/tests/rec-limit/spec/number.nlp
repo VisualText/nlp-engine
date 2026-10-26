@@ -1,0 +1,9 @@
+@NODES _ROOT
+
+@POST
+  N("i",1) = G("n");
+  G("n")++;
+@RULES
+_xNIL <-
+	_xALPHA
+	@@

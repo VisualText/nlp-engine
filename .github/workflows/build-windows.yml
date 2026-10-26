@@ -313,6 +313,34 @@ jobs:
           done
           echo "[zone-mode] one run of the zone passes per zone, zones kept as stubs"
 
+      - name: A rec pass that never settles is stopped
+        shell: bash
+        run: |
+          set -eo pipefail
+          # A rec pass repeats while any rule matches, so a rule that kept
+          # matching without changing what it matched (parse-en-us pos50 on
+          # "much I have been to blame.") hung forever with nothing said. A
+          # region may now take 1,000 matches plus 20 a node; NLP_REC_LIMIT
+          # scales that and 0 lifts it. The fixture's rec pass takes 3 matches
+          # in a 6-node region, so at NLP_REC_LIMIT=1 it is stopped at 2 and
+          # the pass after it still runs.
+          FIX=.github/workflows/tests/rec-limit
+          rm -rf "$FIX/logs" "$FIX"/input/*_log
+          out=$(./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" 2> rec.err | tr -d '\r')
+          if [ "$out" != "matches=3" ] || grep -q "rec pass" rec.err; then
+            echo "FAIL(rec-limit default): stdout was: $out"; cat rec.err; exit 1
+          fi
+          rm -rf "$FIX/logs" "$FIX"/input/*_log
+          out=$(NLP_REC_LIMIT=1 ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt" 2> rec.err | tr -d '\r')
+          if [ "$out" != "matches=2" ]; then
+            echo "FAIL(rec-limit 1): stdout was: $out"; cat rec.err; exit 1
+          fi
+          if ! grep -q "Error in rec pass 3 (cycle): rules matched 1 times in a region of 6 nodes" rec.err; then
+            echo "FAIL(rec-limit 1): no rec pass error on stderr:"; cat rec.err; exit 1
+          fi
+          rm -f rec.err
+          echo "[rec-limit] a rec pass region past its match limit is stopped, with a message"
+
       - name: Lazy kbb lookups from any pass, and << to a path
         shell: bash
         run: |

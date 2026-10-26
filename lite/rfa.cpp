@@ -305,6 +305,7 @@ if (debug)					// 10/13/99 AM.
 	*gout << _T("Rules file name=") << file << std::endl;
 
 parse.setInput(file);		// Input rules file for the parse.
+parse.setRulesFile(true);	// The engine's own grammar: no rec match limit.
 //delete [] file;				// 11/19/98 AM.
 Chars::destroy(file);
 

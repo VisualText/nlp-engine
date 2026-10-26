@@ -89,6 +89,7 @@ verbose = false;		// Default.  // 12/26/98 AM.
 intern_ = true;																// 05/26/01 AM.
 zoneNum_ = 0;
 zoneFirst_ = zoneLast_ = false;
+rulesFile_ = false;
 currpass_ = 0;			// 07/24/01 AM.
 rulepass_ = 0;			// 02/03/05 AM.
 inputpass_ = 0;		// 08/23/02 AM.
@@ -2008,6 +2009,46 @@ std::_t_cerr << _T(" line ") << line_ << _T(", ") << effect;
 if (input && *input)
 	std::_t_cerr << _T(". Input: ") << input;
 std::_t_cerr << _T(". Details in err.log.]") << std::endl;
+}
+
+/********************************************
+* FN:		RECLIMITERROR
+* SUBJ:	Report a rec pass region stopped at the match limit.
+* NOTE:	A rule that keeps matching without changing what it matched
+*			(eg, its loop guard is never set) repeated a rec pass forever,
+*			with nothing on the console. Once per input for each pass and
+*			rule.
+********************************************/
+
+void Parse::recLimitError(long ruleline, long matches, long nodes)
+{
+if (!recLimitErrs_.insert(std::make_pair(currpass_, ruleline)).second)
+	return;
+
+_TCHAR *file = 0;
+Dlist<Seqn> *seqs = ana ? ana->getSeqlist() : 0;
+for (Delt<Seqn> *d = seqs ? seqs->getFirst() : 0; d; d = d->Right())
+	if (d->getData()->getPassnum() == currpass_)
+		{
+		file = d->getData()->getRulesfilename();
+		break;
+		}
+
+std::basic_ostringstream<_TCHAR> msg;
+msg << _T("[Error in rec pass ") << currpass_;
+if (file && *file)
+	msg << _T(" (") << file << _T(")");
+msg << _T(": rules matched ") << matches << _T(" times in a region of ")
+	<< nodes << _T(" nodes without settling, so the region was stopped there.")
+	<< _T(" Last rule to match: line ") << ruleline;
+if (input && *input)
+	msg << _T(". Input: ") << input;
+msg << _T(". NLP_REC_LIMIT sets the limit; 0 lifts it.]");
+std::_t_cerr << msg.str() << std::endl;
+
+std::_t_strstream gerrStr;
+gerrStr << msg.str() << std::ends;
+::errOut(&gerrStr,false,currpass_,ruleline);
 }
 
 /********************************************
