@@ -908,6 +908,16 @@ switch (vtype)
 			sem = new RFASem((long long)processingDir);
 			return true;
 			}
+		if (!strcmp_i(name, _T("isfirstzone")))	// Passes after a zone line.
+			{
+			sem = new RFASem((long long)(nlppp->getParse()->getZoneFirst() ? 1 : 0));
+			return true;
+			}
+		if (!strcmp_i(name, _T("islastzone")))
+			{
+			sem = new RFASem((long long)(nlppp->getParse()->getZoneLast() ? 1 : 0));
+			return true;
+			}
 		if (!strcmp_i(name, _T("dev")))			// $DEV			// 08/04/26 AM.
 			{
 			// True when the engine was run with -DEV.  Lets an analyzer

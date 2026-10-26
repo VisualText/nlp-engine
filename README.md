@@ -144,6 +144,46 @@ Each piece gets its own tree and its own output folder. Node offsets count
 from the start of the piece, and a rule cannot match across two pieces.
 `$isfirstfile` and `$islastfile` mark the first and last piece.
 
+### Zone mode
+
+Zone mode does the same inside one run, without splitting the file. A
+`zone` line in `analyzer.seq` names a node type, and every pass after it
+runs once per node of that type:
+
+    nlp       textzone100   # skim: build one _TEXTZONE per paragraph
+    zone      _TEXTZONE     # the passes below run once per _TEXTZONE
+    nlp       sent100
+    rec       pos50
+    ...
+    endzone   nil           # the passes below run once, at the end
+    nlp       displayKB
+
+- The passes before the `zone` line run over the whole document and build
+  the zones. A zone node inside another is not a separate zone.
+- Each zone then runs the passes after the `zone` line on its own. Everything
+  outside the zone is hidden, so its rules, `@PATH _ROOT ...` and `@CODE`
+  work as they would on a document that is just that zone. `@CODE` and
+  `@POSTCODE` run once per zone; `$isfirstzone` and `$islastzone` mark the
+  first and last.
+- The KB and `G()` carry from zone to zone. Node offsets count from the
+  start of the document, and there is one set of output files.
+- After its passes a zone keeps its node, attributes and span, and its
+  subtree is freed. Memory goes by the largest zone, not the document.
+- The passes after an `endzone` line run once, after the last zone, on the
+  zone stubs and the whole KB: the place for work that belongs to the whole
+  document, such as dumping the KB.
+- A zone pass may change its zone but not the tree above it (eg, group
+  `_TEXTZONE` nodes into sections); that stops the run with an error.
+- With `-DEV`, the first three zones write their pass trees as
+  `z001-ana040.tree` and so on.
+- A compiled analyzer ignores the `zone` and `endzone` lines and runs every
+  pass on the whole document.
+
+On *Pride and Prejudice* (738 KB) with parse-en-us zoned by `_TEXTZONE`, peak
+memory went from 473 MB to 153 MB and time from 275 to 283 seconds;
+99.995% of words got the same part-of-speech tag, and the KB at the end was
+byte-identical.
+
 # Calling NLP++ Analyzers from C++
 
 There is a test directory in the repository that builds a test.exe that calls analyzers using c++ code.

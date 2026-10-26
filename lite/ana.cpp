@@ -589,6 +589,23 @@ if (empty(s_algo))
 	}
 else if (	!strcmp_i(s_algo, _T("folder")))							// 02/03/05 DD
 	return true;																// 02/03/05 DD.
+else if (	!strcmp_i(s_algo, _T("zone")))	// "zone _type": the passes below
+	{												// run once per _type node.
+	if (empty(s_data))
+		{
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[In sequence file: zone line missing a node type, eg zone _paragraph.]")
+				  << std::ends;
+		errOut(&gerrStr,false);
+		return false;
+		}
+	if (gen)
+		std::_t_cerr << _T("[Warning: a compiled analyzer ignores the zone line; ")
+						 << _T("its later passes run on the whole document.]") << std::endl;
+	return true;
+	}
+else if (	!strcmp_i(s_algo, _T("endzone")))	// The passes below run once,
+	return true;									// after the last zone.
 else if (	!strcmp_i(s_algo, _T("tokenize"))
 			|| !strcmp_i(s_algo, _T("tok"))
 			|| !strcmp_i(s_algo, _T("token"))

@@ -15,6 +15,7 @@ All rights reserved.
 #ifdef LINUX
 #include <iostream>	// 09/27/19 AM.
 #include <strstream>	// 09/27/19 AM.
+#include <vector>
 #ifdef _ODBC
 #include <sql.h>
 #include <sqlext.h>
@@ -86,6 +87,8 @@ eana_ = 0;				// 10/13/99 AM.
 vars_ = 0;				// 12/07/98 AM.
 verbose = false;		// Default.  // 12/26/98 AM.
 intern_ = true;																// 05/26/01 AM.
+zoneNum_ = 0;
+zoneFirst_ = zoneLast_ = false;
 currpass_ = 0;			// 07/24/01 AM.
 rulepass_ = 0;			// 02/03/05 AM.
 inputpass_ = 0;		// 08/23/02 AM.
@@ -505,6 +508,212 @@ return !strcmp_i(salgo, _T("dicttok"))
 	 || !strcmp_i(salgo, _T("pat"));
 }
 
+// What runPass() and executeZones() tell their caller.
+static const int RUN_OK = 0;		// Go on to the next pass.
+static const int RUN_STOP = 1;	// Past the time limit: run no more passes, but finish up.
+static const int RUN_ABORT = 2;	// A pass failed: stop without finishing up.
+
+/********************************************
+* FN:		RUNPASS
+* SUBJ:	Run one pass, numbering it ++num.
+* NOTE:	Shared by execute() and executeZones(), so a zone pass has the same
+*			time limit and deferred kb/user load as any other.
+********************************************/
+
+int Parse::runPass(Delt<Seqn> *seq, long &num)
+{
+// A run past its time limit runs no more passes. The pass that ran
+// out stopped at its next while turn; the rest are skipped whole.	// 10/25/26 DD.
+if (overBudget(true))
+	return RUN_STOP;
+
+++rulepass_;																	// 02/03/05 AM.
+
+// KB whose kb/user read was deferred (interpreted run): load it just before
+// the first pass that consumes it, so pre-tokenizer passes run first.	// 07/11/26 DD.
+CG *cg = ana ? ana->getCG() : 0;
+if (cg && !cg->getUserkbLoaded()
+	 && kbConsumerAlgo(seq->getData()->getAlgoname()))
+	{
+	cg->readKB(_T("user"));
+	cg->setUserkbLoaded(true);
+	}
+
+if (!stepExecute(seq, ++num))		// 05/15/99 AM.		// 08/22/02 AM.
+	return RUN_ABORT;
+return RUN_OK;
+}
+
+/********************************************
+* FN:		EXECUTEZONES
+* SUBJ:	Run the passes after a "zone _type" line once per _type node.
+* NOTE:	The passes before the zone line run over the whole document and
+*			build the zones. Each zone then runs the rest of the passes on its
+*			own: everything off the path from the root down to it is hidden,
+*			so its rules, @PATH _ROOT ... and @CODE work as they would on a
+*			document that is just that zone. The KB and G() carry from zone to
+*			zone. Then the zone's subtree is freed and the zone node stays as
+*			a stub, so memory goes by the largest zone, not the document.
+*			A zone pass may change anything in its zone but not the tree above
+*			it (eg, group _paragraph nodes into _section); that stops the run.
+*			An endzone line ends the zone passes: the passes after it run once,
+*			after the last zone, on the stubs with the whole KB, for work that
+*			belongs to the whole document (eg, dumping the KB).
+*			With -DEV, the first ZONE_DUMPS zones write z001-ana075.tree and
+*			so on; later zones write no pass trees or pass times.
+********************************************/
+
+#define ZONE_DUMPS 3
+
+struct ZoneLink {		// One level of the path from the root to a zone.
+	Node<Pn> *parent;		// Its parent.
+	Node<Pn> *first;		// The parent's first child.
+	Node<Pn> *node;		// The node on the path.
+	Node<Pn> *left;		// Its siblings.
+	Node<Pn> *right;
+};
+
+// The ztype nodes under node, in document order. Zones do not nest.
+static void findZones(Node<Pn> *node, _TCHAR *ztype, std::vector<Node<Pn> *> &zones)
+{
+for (; node; node = node->pRight)
+	{
+	_TCHAR *name = node->getData()->getName();
+	if (name && !_tcscmp(name, ztype))
+		zones.push_back(node);
+	else
+		findZones(node->pDown, ztype, zones);
+	}
+}
+
+// Leave only the path from root to zone in the tree; record how to undo it.
+static void hidePath(Node<Pn> *root, Node<Pn> *zone, std::vector<ZoneLink> &links)
+{
+links.clear();
+for (Node<Pn> *n = zone; n && n != root; )
+	{
+	Node<Pn> *first = n;
+	while (first->pLeft)
+		first = first->pLeft;
+	ZoneLink l = {first->pUp, first, n, n->pLeft, n->pRight};
+	links.push_back(l);
+	n = first->pUp;
+	}
+for (size_t i = 0; i < links.size(); ++i)
+	{
+	ZoneLink &l = links[i];
+	l.parent->pDown = l.node;
+	l.node->pUp = l.parent;
+	l.node->pLeft = l.node->pRight = 0;
+	}
+}
+
+// Whether the path is still as hidePath left it. Walks down from the root,
+// so it reads no node a pass may have freed.
+static bool pathIntact(Node<Pn> *root, std::vector<ZoneLink> &links)
+{
+Node<Pn> *p = root;
+for (size_t i = links.size(); i-- > 0; )
+	{
+	Node<Pn> *n = p->pDown;
+	if (n != links[i].node || n->pLeft || n->pRight)
+		return false;
+	p = n;
+	}
+return true;
+}
+
+static void restorePath(std::vector<ZoneLink> &links)
+{
+for (size_t i = 0; i < links.size(); ++i)
+	{
+	ZoneLink &l = links[i];
+	l.parent->pDown = l.first;
+	l.node->pUp = (l.node == l.first) ? l.parent : 0;
+	l.node->pLeft = l.left;
+	l.node->pRight = l.right;
+	}
+}
+
+int Parse::executeZones(Delt<Seqn> *first, _TCHAR *ztype)
+{
+Tree<Pn> *tree = (Tree<Pn> *) getTree();
+Node<Pn> *root = tree ? tree->getRoot() : 0;
+std::vector<Node<Pn> *> zones;
+if (root)
+	findZones(root->pDown, ztype, zones);
+
+long base = currpass_;		// The zone line's own pass number.
+long num = base;
+int result = RUN_OK;
+Delt<Seqn> *seq;
+
+// An endzone line ends the zone passes; the passes after it run once,
+// after the last zone, on the skeleton of stubs with the whole KB.
+Delt<Seqn> *endz = 0;
+for (seq = first; seq && !endz; seq = seq->Right())
+	if (seq->getData()->getActive()
+		 && !strcmp_i(str(seq->getData()->getAlgoname()), _T("endzone")))
+		endz = seq;
+
+if (zones.empty())
+	{
+	std::_t_cerr << _T("[zone: no ") << ztype
+					 << _T(" nodes, so the passes after the zone line ran on the whole document.]")
+					 << std::endl;
+	for (seq = first; seq && result == RUN_OK; seq = seq->Right())
+		result = runPass(seq, num);		// stepExecute skips the endzone line.
+	currpass_ = num;
+	return result;
+	}
+
+std::vector<ZoneLink> links;
+long nzones = (long) zones.size();
+for (long z = 0; z < nzones && result == RUN_OK; ++z)
+	{
+	zoneNum_ = z + 1;
+	zoneFirst_ = (z == 0);
+	zoneLast_ = (z == nzones - 1);
+	hidePath(root, zones[z], links);
+
+	num = base;
+	for (seq = first; seq && seq != endz && result == RUN_OK; seq = seq->Right())
+		result = runPass(seq, num);
+
+	if (!pathIntact(root, links))
+		{
+		std::_t_strstream gerrStr;
+		gerrStr << _T("[Error in zone mode: a pass changed the tree above ") << ztype
+				  << _T(" zone ") << zoneNum_ << _T(" of ") << nzones
+				  << _T(", so the run stopped there. A pass after the zone line may change only its zone.]")
+				  << std::ends;
+		std::_t_cerr << gerrStr.str() << std::endl;
+		errOut(&gerrStr,false);
+		zoneNum_ = 0;
+		zoneFirst_ = zoneLast_ = false;
+		return RUN_ABORT;		// The other zones cannot be put back.
+		}
+	restorePath(links);
+
+	if (result == RUN_OK && zones[z]->pDown)
+		tree->deleteSubs(zones[z]->pDown);	// Keep the zone node as a stub.
+	}
+
+zoneNum_ = 0;
+zoneFirst_ = zoneLast_ = false;
+
+// The wrap-up passes, once, on the whole document. The endzone line takes
+// a pass number of its own, as the zone line does.
+if (endz && result == RUN_OK)
+	{
+	++num;
+	for (seq = endz->Right(); seq && result == RUN_OK; seq = seq->Right())
+		result = runPass(seq, num);
+	}
+currpass_ = num;
+return result;
+}
+
 void Parse::execute()
 {
 Delt<Seqn> *seq;
@@ -548,28 +757,24 @@ if (!ana)	// 05/05/09 AM.
 	return;	// 05/05/09 AM.
 	}
 
-// KB whose kb/user read was deferred (interpreted run): load it just before
-// the first pass that consumes it, so pre-tokenizer passes run first.	// 07/11/26 DD.
-CG *cg = ana->getCG();
-
 // Cosmetic rewrite as for loop.											// 11/10/99 AM.
 for (seq = ana->getSeq(); seq; seq = seq->Right())
 	{
-	// A run past its time limit runs no more passes. The pass that ran
-	// out stopped at its next while turn; the rest are skipped whole.	// 10/25/26 DD.
-	if (overBudget(true))
-		break;
-
-	++rulepass_;																// 02/03/05 AM.
-
-	if (cg && !cg->getUserkbLoaded()										// 07/11/26 DD.
-		 && kbConsumerAlgo(seq->getData()->getAlgoname()))
+	Seqn *pass = seq->getData();
+	if (pass->getActive() && !strcmp_i(str(pass->getAlgoname()), _T("zone")))
 		{
-		cg->readKB(_T("user"));
-		cg->setUserkbLoaded(true);
+		// The zone line takes a pass number, as a folder line does, so the
+		// passes after it keep the numbers the sequence file gives them.
+		++currpass_;
+		if (executeZones(seq->Right(), pass->getRulesfilename()) == RUN_ABORT)
+			return;
+		break;
 		}
 
-	if (!stepExecute(seq, ++currpass_))		// 05/15/99 AM.		// 08/22/02 AM.
+	int run = runPass(seq, currpass_);
+	if (run == RUN_STOP)
+		break;
+	if (run == RUN_ABORT)
 		return;																	// 05/15/99 AM.
 
 #ifdef GEODUCK_
@@ -876,6 +1081,19 @@ _TCHAR *prefix = _T("ana");		// Prefix for naming files.
 bool flogfiles = eana_->getFlogfiles();								// 10/13/99 AM.
 bool ftimepass = eana_->getFtimepass();								// 10/13/99 AM.
 
+// In zone mode, only the first ZONE_DUMPS zones write pass trees and times;
+// 2,500 zones of a 130-pass analyzer would otherwise write 325,000 trees.
+_TCHAR zprefix[] = _T("z000-ana");
+if (zoneNum_ > ZONE_DUMPS)
+	flogfiles = ftimepass = false;
+else if (zoneNum_ > 0)
+	{
+	zprefix[1] = (_TCHAR) ('0' + zoneNum_ / 100 % 10);
+	zprefix[2] = (_TCHAR) ('0' + zoneNum_ / 10 % 10);
+	zprefix[3] = (_TCHAR) ('0' + zoneNum_ % 10);
+	prefix = zprefix;
+	}
+
 iniPass(num,prefix,flogfiles,ftimepass,pass->getActive(),sfile,salgo,				// 05/20/00 AM.
 			/*DU*/fout,sout,s_time,pretname);
 
@@ -901,7 +1119,9 @@ if (pass->getActive() && algo)	// Execute active pass.			// 01/08/99 AM.
 		}
 	Code::execPostcode(this, pass);	// @POSTCODE, after the rules (#392).
 	}
-else if (!strcmp_i(str(salgo),_T("folder")))							// 02/03/05 DD.
+else if (!strcmp_i(str(salgo),_T("folder"))							// 02/03/05 DD.
+		 || !strcmp_i(str(salgo),_T("zone"))		// Handled by execute().
+		 || !strcmp_i(str(salgo),_T("endzone")))
 	;																				// 02/03/05 DD.
 else if (!algo && pass->getActive())									// 01/15/99 AM.
 	{

@@ -1,0 +1,18 @@
+@CODE
+G("zones") = G("zones") + 1;
+L("line") = pndown(pnroot());
+L("lines") = 0;
+L("x") = L("line");
+while (L("x")) {
+  L("lines")++;
+  L("x") = pnnext(L("x"));
+  }
+L("n") = 0;
+L("w") = pndown(L("line"));
+while (L("w")) {
+  if (pnname(L("w")) == "_word")
+    L("n")++;
+  L("w") = pnnext(L("w"));
+  }
+cout() << "zone " << G("zones") << ": first=" << G("$isfirstzone") << " last=" << G("$islastzone") << " lines under root=" << L("lines") << " words=" << L("n") << " text=" << pnvar(L("line"),"$text") << "\n";
+@@CODE

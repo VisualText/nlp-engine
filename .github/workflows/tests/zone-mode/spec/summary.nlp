@@ -1,0 +1,10 @@
+@CODE
+L("stubs") = 0;
+L("x") = pndown(pnroot());
+while (L("x")) {
+  if (pnname(L("x")) == "_line" && !pndown(L("x")))
+    L("stubs")++;
+  L("x") = pnnext(L("x"));
+  }
+cout() << "summary: zones=" << G("zones") << " stubs=" << L("stubs") << " first=" << G("$isfirstzone") << " last=" << G("$islastzone") << "\n";
+@@CODE

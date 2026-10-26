@@ -613,7 +613,9 @@ for (dseq = seqs->getFirst(); dseq; dseq = dseq->Right())
 		Gen::nl(fcode);														// 04/04/03 AM.
 		}
 	else if (!_tcscmp(_T("stub"),name) || !_tcscmp(_T("end"),name)			// 06/04/00 AM.
-		|| !_tcscmp(_T("folder"),name))									// 08/24/08 AM.
+		|| !_tcscmp(_T("folder"),name)										// 08/24/08 AM.
+		|| !_tcscmp(_T("zone"),name)	// Interpreted runs only, for now.
+		|| !_tcscmp(_T("endzone"),name))
 		;			// Ignore these.											// 06/04/00 AM.
 	else
 		{

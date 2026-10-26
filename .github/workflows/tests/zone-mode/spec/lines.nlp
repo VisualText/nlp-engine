@@ -1,0 +1,7 @@
+@NODES _ROOT
+
+@RULES
+_line <-
+	_xWILD [plus fails=(\n)]
+	_xWILD [one matches=(\n)]
+	@@
