@@ -523,6 +523,13 @@ static const int RUN_ABORT = 2;	// A pass failed: stop without finishing up.
 
 int Parse::runPass(Delt<Seqn> *seq, long &num)
 {
+// zone and endzone lines are markers, not passes: like a folder line, they
+// take no pass number, so pass numbers (and ana###.tree names) match the
+// sequence view's.
+const _TCHAR *salgo = str(seq->getData()->getAlgoname());
+if (!strcmp_i(salgo, _T("zone")) || !strcmp_i(salgo, _T("endzone")))
+	return RUN_OK;
+
 // A run past its time limit runs no more passes. The pass that ran
 // out stopped at its next while turn; the rest are skipped whole.	// 10/25/26 DD.
 if (overBudget(true))
@@ -644,7 +651,7 @@ std::vector<Node<Pn> *> zones;
 if (root)
 	findZones(root->pDown, ztype, zones);
 
-long base = currpass_;		// The zone line's own pass number.
+long base = currpass_;		// The last pass before the zone line.
 long num = base;
 int result = RUN_OK;
 Delt<Seqn> *seq;
@@ -703,11 +710,9 @@ for (long z = 0; z < nzones && result == RUN_OK; ++z)
 zoneNum_ = 0;
 zoneFirst_ = zoneLast_ = false;
 
-// The wrap-up passes, once, on the whole document. The endzone line takes
-// a pass number of its own, as the zone line does.
+// The wrap-up passes, once, on the whole document.
 if (endz && result == RUN_OK)
 	{
-	++num;
 	for (seq = endz->Right(); seq && result == RUN_OK; seq = seq->Right())
 		result = runPass(seq, num);
 	}
@@ -764,9 +769,7 @@ for (seq = ana->getSeq(); seq; seq = seq->Right())
 	Seqn *pass = seq->getData();
 	if (pass->getActive() && !strcmp_i(str(pass->getAlgoname()), _T("zone")))
 		{
-		// The zone line takes a pass number, as a folder line does, so the
-		// passes after it keep the numbers the sequence file gives them.
-		++currpass_;
+		// The zone line takes no pass number (see runPass).
 		if (executeZones(seq->Right(), pass->getRulesfilename()) == RUN_ABORT)
 			return;
 		break;

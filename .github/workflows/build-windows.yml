@@ -305,10 +305,11 @@ jobs:
           if [ "$tree" != "0" ] || [ "$(grep -c '^   _line ' "$FIX/input/text.txt_log/final.tree")" != "3" ]; then
             echo "FAIL(zone-mode): final.tree is not three _line stubs:"; cat "$FIX/input/text.txt_log/final.tree"; exit 1
           fi
-          # -DEV writes per-zone pass trees, named by zone.
+          # -DEV writes per-zone pass trees, named by zone. The zone line takes
+          # no pass number, as in the sequence view, so words is pass 3.
           for z in 001 002 003; do
-            if [ ! -f "$FIX/input/text.txt_log/z$z-ana004.tree" ]; then
-              echo "FAIL(zone-mode): no z$z-ana004.tree"; ls "$FIX/input/text.txt_log"; exit 1
+            if [ ! -f "$FIX/input/text.txt_log/z$z-ana003.tree" ]; then
+              echo "FAIL(zone-mode): no z$z-ana003.tree"; ls "$FIX/input/text.txt_log"; exit 1
             fi
           done
           echo "[zone-mode] one run of the zone passes per zone, zones kept as stubs"
