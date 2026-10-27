@@ -1,0 +1,2221 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<vertice>
+  <id>1</id>
+  <label>_TEXTZONE</label>
+</vertice>
+<vertice>
+  <id>2</id>
+  <label>_sent</label>
+</vertice>
+<edge>
+  <source>1</source>
+  <target>2</target>
+</edge>
+<vertice voice="passive">
+  <id>3</id>
+  <label>_clause</label>
+</vertice>
+<edge>
+  <source>2</source>
+  <target>3</target>
+</edge>
+<vertice stem="also">
+  <id>4</id>
+  <label>_adv</label>
+</vertice>
+<edge>
+  <source>3</source>
+  <target>4</target>
+</edge>
+<vertice stem="also">
+  <id>5</id>
+  <label>Also</label>
+</vertice>
+<edge>
+  <source>4</source>
+  <target>5</target>
+</edge>
+<vertice stem="unseal" voice="passive">
+  <id>6</id>
+  <label>_vg</label>
+</vertice>
+<edge>
+  <source>3</source>
+  <target>6</target>
+</edge>
+<vertice stem="unseal" voice="passive">
+  <id>7</id>
+  <label>_verb</label>
+</vertice>
+<edge>
+  <source>6</source>
+  <target>7</target>
+</edge>
+<vertice stem="unseal">
+  <id>8</id>
+  <label>unsealed</label>
+</vertice>
+<edge>
+  <source>7</source>
+  <target>8</target>
+</edge>
+<vertice stem="today">
+  <id>9</id>
+  <label>_adv</label>
+</vertice>
+<edge>
+  <source>3</source>
+  <target>9</target>
+</edge>
+<vertice stem="today">
+  <id>10</id>
+  <label>today</label>
+</vertice>
+<edge>
+  <source>9</source>
+  <target>10</target>
+</edge>
+<vertice stem="court">
+  <id>11</id>
+  <label>_advl</label>
+</vertice>
+<edge>
+  <source>3</source>
+  <target>11</target>
+</edge>
+<vertice stem="in">
+  <id>12</id>
+  <label>_prep</label>
+</vertice>
+<edge>
+  <source>11</source>
+  <target>12</target>
+</edge>
+<vertice>
+  <id>13</id>
+  <label>in</label>
+</vertice>
+<edge>
+  <source>12</source>
+  <target>13</target>
+</edge>
+<vertice stem="court">
+  <id>14</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>11</source>
+  <target>14</target>
+</edge>
+<vertice stem="federal">
+  <id>15</id>
+  <label>_adj</label>
+</vertice>
+<edge>
+  <source>14</source>
+  <target>15</target>
+</edge>
+<vertice stem="federal">
+  <id>16</id>
+  <label>federal</label>
+</vertice>
+<edge>
+  <source>15</source>
+  <target>16</target>
+</edge>
+<vertice stem="court">
+  <id>17</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>14</source>
+  <target>17</target>
+</edge>
+<vertice stem="court">
+  <id>18</id>
+  <label>court</label>
+</vertice>
+<edge>
+  <source>17</source>
+  <target>18</target>
+</edge>
+<vertice>
+  <id>19</id>
+  <label>_advl</label>
+</vertice>
+<edge>
+  <source>3</source>
+  <target>19</target>
+</edge>
+<vertice stem="in">
+  <id>20</id>
+  <label>_prep</label>
+</vertice>
+<edge>
+  <source>19</source>
+  <target>20</target>
+</edge>
+<vertice>
+  <id>21</id>
+  <label>in</label>
+</vertice>
+<edge>
+  <source>20</source>
+  <target>21</target>
+</edge>
+<vertice>
+  <id>22</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>19</source>
+  <target>22</target>
+</edge>
+<vertice>
+  <id>23</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>22</source>
+  <target>23</target>
+</edge>
+<vertice stem="the">
+  <id>24</id>
+  <label>_det</label>
+</vertice>
+<edge>
+  <source>23</source>
+  <target>24</target>
+</edge>
+<vertice>
+  <id>25</id>
+  <label>the</label>
+</vertice>
+<edge>
+  <source>24</source>
+  <target>25</target>
+</edge>
+<vertice>
+  <id>26</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>23</source>
+  <target>26</target>
+</edge>
+<vertice>
+  <id>27</id>
+  <label>_caps</label>
+</vertice>
+<edge>
+  <source>26</source>
+  <target>27</target>
+</edge>
+<vertice stem="eastern">
+  <id>28</id>
+  <label>_adj</label>
+</vertice>
+<edge>
+  <source>27</source>
+  <target>28</target>
+</edge>
+<vertice stem="eastern">
+  <id>29</id>
+  <label>Eastern</label>
+</vertice>
+<edge>
+  <source>28</source>
+  <target>29</target>
+</edge>
+<vertice stem="district">
+  <id>30</id>
+  <label>District</label>
+</vertice>
+<edge>
+  <source>27</source>
+  <target>30</target>
+</edge>
+<vertice stem="of">
+  <id>31</id>
+  <label>_prep</label>
+</vertice>
+<edge>
+  <source>22</source>
+  <target>31</target>
+</edge>
+<vertice>
+  <id>32</id>
+  <label>of</label>
+</vertice>
+<edge>
+  <source>31</source>
+  <target>32</target>
+</edge>
+<vertice>
+  <id>33</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>22</source>
+  <target>33</target>
+</edge>
+<vertice>
+  <id>34</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>33</source>
+  <target>34</target>
+</edge>
+<vertice>
+  <id>35</id>
+  <label>_caps</label>
+</vertice>
+<edge>
+  <source>34</source>
+  <target>35</target>
+</edge>
+<vertice stem="new">
+  <id>36</id>
+  <label>New</label>
+</vertice>
+<edge>
+  <source>35</source>
+  <target>36</target>
+</edge>
+<vertice>
+  <id>37</id>
+  <label>York</label>
+</vertice>
+<edge>
+  <source>35</source>
+  <target>37</target>
+</edge>
+<vertice stem="be" voice="active" tense="past">
+  <id>38</id>
+  <label>_vg</label>
+</vertice>
+<edge>
+  <source>3</source>
+  <target>38</target>
+</edge>
+<vertice stem="be" tense="past">
+  <id>39</id>
+  <label>_verb</label>
+</vertice>
+<edge>
+  <source>38</source>
+  <target>39</target>
+</edge>
+<vertice>
+  <id>40</id>
+  <label>_be</label>
+</vertice>
+<edge>
+  <source>39</source>
+  <target>40</target>
+</edge>
+<vertice>
+  <id>41</id>
+  <label>was</label>
+</vertice>
+<edge>
+  <source>40</source>
+  <target>41</target>
+</edge>
+<vertice stem="Tim Leissner">
+  <id>42</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>3</source>
+  <target>42</target>
+</edge>
+<vertice stem="plea">
+  <id>43</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>42</source>
+  <target>43</target>
+</edge>
+<vertice stem="the">
+  <id>44</id>
+  <label>_det</label>
+</vertice>
+<edge>
+  <source>43</source>
+  <target>44</target>
+</edge>
+<vertice>
+  <id>45</id>
+  <label>the</label>
+</vertice>
+<edge>
+  <source>44</source>
+  <target>45</target>
+</edge>
+<vertice stem="guilty">
+  <id>46</id>
+  <label>_adj</label>
+</vertice>
+<edge>
+  <source>43</source>
+  <target>46</target>
+</edge>
+<vertice stem="guilty">
+  <id>47</id>
+  <label>guilty</label>
+</vertice>
+<edge>
+  <source>46</source>
+  <target>47</target>
+</edge>
+<vertice stem="plea">
+  <id>48</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>43</source>
+  <target>48</target>
+</edge>
+<vertice stem="plea">
+  <id>49</id>
+  <label>plea</label>
+</vertice>
+<edge>
+  <source>48</source>
+  <target>49</target>
+</edge>
+<vertice stem="of">
+  <id>50</id>
+  <label>_prep</label>
+</vertice>
+<edge>
+  <source>42</source>
+  <target>50</target>
+</edge>
+<vertice>
+  <id>51</id>
+  <label>of</label>
+</vertice>
+<edge>
+  <source>50</source>
+  <target>51</target>
+</edge>
+<vertice stem="Tim Leissner">
+  <id>52</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>42</source>
+  <target>52</target>
+</edge>
+<vertice stem="Tim Leissner">
+  <id>53</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>52</source>
+  <target>53</target>
+</edge>
+<vertice>
+  <id>54</id>
+  <label>_caps</label>
+</vertice>
+<edge>
+  <source>53</source>
+  <target>54</target>
+</edge>
+<vertice>
+  <id>55</id>
+  <label>Tim</label>
+</vertice>
+<edge>
+  <source>54</source>
+  <target>55</target>
+</edge>
+<vertice>
+  <id>56</id>
+  <label>Leissner</label>
+</vertice>
+<edge>
+  <source>54</source>
+  <target>56</target>
+</edge>
+<vertice>
+  <id>57</id>
+  <label>_clause</label>
+</vertice>
+<edge>
+  <source>2</source>
+  <target>57</target>
+</edge>
+<vertice>
+  <id>58</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>57</source>
+  <target>58</target>
+</edge>
+<vertice>
+  <id>59</id>
+  <label>48</label>
+</vertice>
+<edge>
+  <source>58</source>
+  <target>59</target>
+</edge>
+<vertice>
+  <id>60</id>
+  <label>_clause</label>
+</vertice>
+<edge>
+  <source>2</source>
+  <target>60</target>
+</edge>
+<vertice>
+  <id>61</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>60</source>
+  <target>61</target>
+</edge>
+<vertice stem="the">
+  <id>62</id>
+  <label>_det</label>
+</vertice>
+<edge>
+  <source>61</source>
+  <target>62</target>
+</edge>
+<vertice>
+  <id>63</id>
+  <label>the</label>
+</vertice>
+<edge>
+  <source>62</source>
+  <target>63</target>
+</edge>
+<vertice stem="former">
+  <id>64</id>
+  <label>_adj</label>
+</vertice>
+<edge>
+  <source>61</source>
+  <target>64</target>
+</edge>
+<vertice stem="former">
+  <id>65</id>
+  <label>former</label>
+</vertice>
+<edge>
+  <source>64</source>
+  <target>65</target>
+</edge>
+<vertice>
+  <id>66</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>61</source>
+  <target>66</target>
+</edge>
+<vertice>
+  <id>67</id>
+  <label>_caps</label>
+</vertice>
+<edge>
+  <source>66</source>
+  <target>67</target>
+</edge>
+<vertice stem="southeast">
+  <id>68</id>
+  <label>Southeast</label>
+</vertice>
+<edge>
+  <source>67</source>
+  <target>68</target>
+</edge>
+<vertice stem="asia">
+  <id>69</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>67</source>
+  <target>69</target>
+</edge>
+<vertice>
+  <id>70</id>
+  <label>_nounCountry</label>
+</vertice>
+<edge>
+  <source>69</source>
+  <target>70</target>
+</edge>
+<vertice>
+  <id>71</id>
+  <label>Asia</label>
+</vertice>
+<edge>
+  <source>70</source>
+  <target>71</target>
+</edge>
+<vertice stem="Chairman">
+  <id>72</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>67</source>
+  <target>72</target>
+</edge>
+<vertice>
+  <id>73</id>
+  <label>_caps</label>
+</vertice>
+<edge>
+  <source>72</source>
+  <target>73</target>
+</edge>
+<vertice stem="chairman">
+  <id>74</id>
+  <label>Chairman</label>
+</vertice>
+<edge>
+  <source>73</source>
+  <target>74</target>
+</edge>
+<vertice stem="and">
+  <id>75</id>
+  <label>_conj</label>
+</vertice>
+<edge>
+  <source>60</source>
+  <target>75</target>
+</edge>
+<vertice>
+  <id>76</id>
+  <label>and</label>
+</vertice>
+<edge>
+  <source>75</source>
+  <target>76</target>
+</edge>
+<vertice>
+  <id>77</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>60</source>
+  <target>77</target>
+</edge>
+<vertice stem="participate">
+  <id>78</id>
+  <label>_adj</label>
+</vertice>
+<edge>
+  <source>77</source>
+  <target>78</target>
+</edge>
+<vertice stem="participate">
+  <id>79</id>
+  <label>participating</label>
+</vertice>
+<edge>
+  <source>78</source>
+  <target>79</target>
+</edge>
+<vertice stem="manage">
+  <id>80</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>77</source>
+  <target>80</target>
+</edge>
+<vertice stem="manage">
+  <id>81</id>
+  <label>managing</label>
+</vertice>
+<edge>
+  <source>80</source>
+  <target>81</target>
+</edge>
+<vertice stem="director">
+  <id>82</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>77</source>
+  <target>82</target>
+</edge>
+<vertice stem="director">
+  <id>83</id>
+  <label>director</label>
+</vertice>
+<edge>
+  <source>82</source>
+  <target>83</target>
+</edge>
+<vertice>
+  <id>84</id>
+  <label>_advl</label>
+</vertice>
+<edge>
+  <source>60</source>
+  <target>84</target>
+</edge>
+<vertice stem="of">
+  <id>85</id>
+  <label>_prep</label>
+</vertice>
+<edge>
+  <source>84</source>
+  <target>85</target>
+</edge>
+<vertice>
+  <id>86</id>
+  <label>of</label>
+</vertice>
+<edge>
+  <source>85</source>
+  <target>86</target>
+</edge>
+<vertice>
+  <id>87</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>84</source>
+  <target>87</target>
+</edge>
+<vertice stem="the">
+  <id>88</id>
+  <label>_det</label>
+</vertice>
+<edge>
+  <source>87</source>
+  <target>88</target>
+</edge>
+<vertice>
+  <id>89</id>
+  <label>the</label>
+</vertice>
+<edge>
+  <source>88</source>
+  <target>89</target>
+</edge>
+<vertice>
+  <id>90</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>87</source>
+  <target>90</target>
+</edge>
+<vertice>
+  <id>91</id>
+  <label>_caps</label>
+</vertice>
+<edge>
+  <source>90</source>
+  <target>91</target>
+</edge>
+<vertice stem="financial">
+  <id>92</id>
+  <label>_adj</label>
+</vertice>
+<edge>
+  <source>91</source>
+  <target>92</target>
+</edge>
+<vertice stem="financial">
+  <id>93</id>
+  <label>Financial</label>
+</vertice>
+<edge>
+  <source>92</source>
+  <target>93</target>
+</edge>
+<vertice stem="institution">
+  <id>94</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>91</source>
+  <target>94</target>
+</edge>
+<vertice stem="institution">
+  <id>95</id>
+  <label>Institution</label>
+</vertice>
+<edge>
+  <source>94</source>
+  <target>95</target>
+</edge>
+<vertice voice="active">
+  <id>96</id>
+  <label>_clause</label>
+</vertice>
+<edge>
+  <source>2</source>
+  <target>96</target>
+</edge>
+<vertice>
+  <id>97</id>
+  <label>_advl</label>
+</vertice>
+<edge>
+  <source>96</source>
+  <target>97</target>
+</edge>
+<vertice stem="to">
+  <id>98</id>
+  <label>_prep</label>
+</vertice>
+<edge>
+  <source>97</source>
+  <target>98</target>
+</edge>
+<vertice>
+  <id>99</id>
+  <label>to</label>
+</vertice>
+<edge>
+  <source>98</source>
+  <target>99</target>
+</edge>
+<vertice stem="information">
+  <id>100</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>97</source>
+  <target>100</target>
+</edge>
+<vertice stem="a">
+  <id>101</id>
+  <label>_det</label>
+</vertice>
+<edge>
+  <source>100</source>
+  <target>101</target>
+</edge>
+<vertice>
+  <id>102</id>
+  <label>_adj</label>
+</vertice>
+<edge>
+  <source>100</source>
+  <target>102</target>
+</edge>
+<vertice>
+  <id>103</id>
+  <label>two</label>
+</vertice>
+<edge>
+  <source>102</source>
+  <target>103</target>
+</edge>
+<vertice>
+  <id>104</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>102</source>
+  <target>104</target>
+</edge>
+<vertice>
+  <id>105</id>
+  <label>count</label>
+</vertice>
+<edge>
+  <source>104</source>
+  <target>105</target>
+</edge>
+<vertice stem="criminal">
+  <id>106</id>
+  <label>_adj</label>
+</vertice>
+<edge>
+  <source>100</source>
+  <target>106</target>
+</edge>
+<vertice stem="criminal">
+  <id>107</id>
+  <label>criminal</label>
+</vertice>
+<edge>
+  <source>106</source>
+  <target>107</target>
+</edge>
+<vertice stem="information">
+  <id>108</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>100</source>
+  <target>108</target>
+</edge>
+<vertice stem="information">
+  <id>109</id>
+  <label>information</label>
+</vertice>
+<edge>
+  <source>108</source>
+  <target>109</target>
+</edge>
+<vertice stem="charge" voice="active" tense="present">
+  <id>110</id>
+  <label>_vg</label>
+</vertice>
+<edge>
+  <source>96</source>
+  <target>110</target>
+</edge>
+<vertice stem="charge">
+  <id>111</id>
+  <label>_verb</label>
+</vertice>
+<edge>
+  <source>110</source>
+  <target>111</target>
+</edge>
+<vertice stem="charge">
+  <id>112</id>
+  <label>charging</label>
+</vertice>
+<edge>
+  <source>111</source>
+  <target>112</target>
+</edge>
+<vertice stem="Leissner">
+  <id>113</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>96</source>
+  <target>113</target>
+</edge>
+<vertice stem="Leissner">
+  <id>114</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>113</source>
+  <target>114</target>
+</edge>
+<vertice>
+  <id>115</id>
+  <label>Leissner</label>
+</vertice>
+<edge>
+  <source>114</source>
+  <target>115</target>
+</edge>
+<vertice stem="with">
+  <id>116</id>
+  <label>_prep</label>
+</vertice>
+<edge>
+  <source>2</source>
+  <target>116</target>
+</edge>
+<vertice>
+  <id>117</id>
+  <label>with</label>
+</vertice>
+<edge>
+  <source>116</source>
+  <target>117</target>
+</edge>
+<vertice voice="active">
+  <id>118</id>
+  <label>_clause</label>
+</vertice>
+<edge>
+  <source>2</source>
+  <target>118</target>
+</edge>
+<vertice voice="active">
+  <id>119</id>
+  <label>_vg</label>
+</vertice>
+<edge>
+  <source>118</source>
+  <target>119</target>
+</edge>
+<vertice stem="conspire" voice="active" tense="present">
+  <id>120</id>
+  <label>_vg</label>
+</vertice>
+<edge>
+  <source>119</source>
+  <target>120</target>
+</edge>
+<vertice stem="conspire">
+  <id>121</id>
+  <label>_verb</label>
+</vertice>
+<edge>
+  <source>120</source>
+  <target>121</target>
+</edge>
+<vertice stem="conspire">
+  <id>122</id>
+  <label>conspiring</label>
+</vertice>
+<edge>
+  <source>121</source>
+  <target>122</target>
+</edge>
+<vertice stem="to">
+  <id>123</id>
+  <label>_prep</label>
+</vertice>
+<edge>
+  <source>119</source>
+  <target>123</target>
+</edge>
+<vertice>
+  <id>124</id>
+  <label>to</label>
+</vertice>
+<edge>
+  <source>123</source>
+  <target>124</target>
+</edge>
+<vertice stem="launder" voice="active" tense="present">
+  <id>125</id>
+  <label>_vg</label>
+</vertice>
+<edge>
+  <source>119</source>
+  <target>125</target>
+</edge>
+<vertice stem="launder">
+  <id>126</id>
+  <label>_verb</label>
+</vertice>
+<edge>
+  <source>125</source>
+  <target>126</target>
+</edge>
+<vertice stem="launder">
+  <id>127</id>
+  <label>launder</label>
+</vertice>
+<edge>
+  <source>126</source>
+  <target>127</target>
+</edge>
+<vertice stem="money">
+  <id>128</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>118</source>
+  <target>128</target>
+</edge>
+<vertice stem="money">
+  <id>129</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>128</source>
+  <target>129</target>
+</edge>
+<vertice stem="money">
+  <id>130</id>
+  <label>money</label>
+</vertice>
+<edge>
+  <source>129</source>
+  <target>130</target>
+</edge>
+<vertice stem="and">
+  <id>131</id>
+  <label>_conj</label>
+</vertice>
+<edge>
+  <source>2</source>
+  <target>131</target>
+</edge>
+<vertice>
+  <id>132</id>
+  <label>and</label>
+</vertice>
+<edge>
+  <source>131</source>
+  <target>132</target>
+</edge>
+<vertice voice="active">
+  <id>133</id>
+  <label>_clause</label>
+</vertice>
+<edge>
+  <source>2</source>
+  <target>133</target>
+</edge>
+<vertice voice="active">
+  <id>134</id>
+  <label>_vg</label>
+</vertice>
+<edge>
+  <source>133</source>
+  <target>134</target>
+</edge>
+<vertice stem="conspire" voice="active" tense="present">
+  <id>135</id>
+  <label>_vg</label>
+</vertice>
+<edge>
+  <source>134</source>
+  <target>135</target>
+</edge>
+<vertice stem="conspire">
+  <id>136</id>
+  <label>_verb</label>
+</vertice>
+<edge>
+  <source>135</source>
+  <target>136</target>
+</edge>
+<vertice stem="conspire">
+  <id>137</id>
+  <label>conspiring</label>
+</vertice>
+<edge>
+  <source>136</source>
+  <target>137</target>
+</edge>
+<vertice stem="to">
+  <id>138</id>
+  <label>_prep</label>
+</vertice>
+<edge>
+  <source>134</source>
+  <target>138</target>
+</edge>
+<vertice>
+  <id>139</id>
+  <label>to</label>
+</vertice>
+<edge>
+  <source>138</source>
+  <target>139</target>
+</edge>
+<vertice stem="violate" voice="active" tense="present">
+  <id>140</id>
+  <label>_vg</label>
+</vertice>
+<edge>
+  <source>134</source>
+  <target>140</target>
+</edge>
+<vertice stem="violate">
+  <id>141</id>
+  <label>_verb</label>
+</vertice>
+<edge>
+  <source>140</source>
+  <target>141</target>
+</edge>
+<vertice stem="violate">
+  <id>142</id>
+  <label>violate</label>
+</vertice>
+<edge>
+  <source>141</source>
+  <target>142</target>
+</edge>
+<vertice stem="FCPA">
+  <id>143</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>133</source>
+  <target>143</target>
+</edge>
+<vertice stem="the">
+  <id>144</id>
+  <label>_det</label>
+</vertice>
+<edge>
+  <source>143</source>
+  <target>144</target>
+</edge>
+<vertice>
+  <id>145</id>
+  <label>the</label>
+</vertice>
+<edge>
+  <source>144</source>
+  <target>145</target>
+</edge>
+<vertice stem="FCPA">
+  <id>146</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>143</source>
+  <target>146</target>
+</edge>
+<vertice>
+  <id>147</id>
+  <label>FCPA</label>
+</vertice>
+<edge>
+  <source>146</source>
+  <target>147</target>
+</edge>
+<vertice stem="by">
+  <id>148</id>
+  <label>_prep</label>
+</vertice>
+<edge>
+  <source>133</source>
+  <target>148</target>
+</edge>
+<vertice>
+  <id>149</id>
+  <label>by</label>
+</vertice>
+<edge>
+  <source>148</source>
+  <target>149</target>
+</edge>
+<vertice>
+  <id>150</id>
+  <label>_fnword</label>
+</vertice>
+<edge>
+  <source>2</source>
+  <target>150</target>
+</edge>
+<vertice>
+  <id>151</id>
+  <label>both</label>
+</vertice>
+<edge>
+  <source>150</source>
+  <target>151</target>
+</edge>
+<vertice>
+  <id>152</id>
+  <label>_clause</label>
+</vertice>
+<edge>
+  <source>2</source>
+  <target>152</target>
+</edge>
+<vertice stem="pay" voice="active">
+  <id>153</id>
+  <label>_verb</label>
+</vertice>
+<edge>
+  <source>152</source>
+  <target>153</target>
+</edge>
+<vertice stem="pay">
+  <id>154</id>
+  <label>paying</label>
+</vertice>
+<edge>
+  <source>153</source>
+  <target>154</target>
+</edge>
+<vertice stem="bribe">
+  <id>155</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>152</source>
+  <target>155</target>
+</edge>
+<vertice stem="bribe">
+  <id>156</id>
+  <label>bribes</label>
+</vertice>
+<edge>
+  <source>155</source>
+  <target>156</target>
+</edge>
+<vertice stem="Malaysian">
+  <id>157</id>
+  <label>_advl</label>
+</vertice>
+<edge>
+  <source>152</source>
+  <target>157</target>
+</edge>
+<vertice stem="to">
+  <id>158</id>
+  <label>_prep</label>
+</vertice>
+<edge>
+  <source>157</source>
+  <target>158</target>
+</edge>
+<vertice>
+  <id>159</id>
+  <label>to</label>
+</vertice>
+<edge>
+  <source>158</source>
+  <target>159</target>
+</edge>
+<vertice stem="Malaysian">
+  <id>160</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>157</source>
+  <target>160</target>
+</edge>
+<vertice stem="various">
+  <id>161</id>
+  <label>_adj</label>
+</vertice>
+<edge>
+  <source>160</source>
+  <target>161</target>
+</edge>
+<vertice stem="various">
+  <id>162</id>
+  <label>various</label>
+</vertice>
+<edge>
+  <source>161</source>
+  <target>162</target>
+</edge>
+<vertice stem="Malaysian">
+  <id>163</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>160</source>
+  <target>163</target>
+</edge>
+<vertice stem="malaysian">
+  <id>164</id>
+  <label>Malaysian</label>
+</vertice>
+<edge>
+  <source>163</source>
+  <target>164</target>
+</edge>
+<vertice stem="and">
+  <id>165</id>
+  <label>_conj</label>
+</vertice>
+<edge>
+  <source>2</source>
+  <target>165</target>
+</edge>
+<vertice>
+  <id>166</id>
+  <label>and</label>
+</vertice>
+<edge>
+  <source>165</source>
+  <target>166</target>
+</edge>
+<vertice>
+  <id>167</id>
+  <label>_clause</label>
+</vertice>
+<edge>
+  <source>2</source>
+  <target>167</target>
+</edge>
+<vertice stem="official">
+  <id>168</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>167</source>
+  <target>168</target>
+</edge>
+<vertice stem="Abu Dhabi">
+  <id>169</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>168</source>
+  <target>169</target>
+</edge>
+<vertice>
+  <id>170</id>
+  <label>_caps</label>
+</vertice>
+<edge>
+  <source>169</source>
+  <target>170</target>
+</edge>
+<vertice>
+  <id>171</id>
+  <label>Abu</label>
+</vertice>
+<edge>
+  <source>170</source>
+  <target>171</target>
+</edge>
+<vertice>
+  <id>172</id>
+  <label>Dhabi</label>
+</vertice>
+<edge>
+  <source>170</source>
+  <target>172</target>
+</edge>
+<vertice stem="official">
+  <id>173</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>168</source>
+  <target>173</target>
+</edge>
+<vertice stem="official">
+  <id>174</id>
+  <label>officials</label>
+</vertice>
+<edge>
+  <source>173</source>
+  <target>174</target>
+</edge>
+<vertice stem="and">
+  <id>175</id>
+  <label>_conj</label>
+</vertice>
+<edge>
+  <source>2</source>
+  <target>175</target>
+</edge>
+<vertice>
+  <id>176</id>
+  <label>and</label>
+</vertice>
+<edge>
+  <source>175</source>
+  <target>176</target>
+</edge>
+<vertice voice="active">
+  <id>177</id>
+  <label>_clause</label>
+</vertice>
+<edge>
+  <source>2</source>
+  <target>177</target>
+</edge>
+<vertice stem="circumvent" voice="active" tense="present">
+  <id>178</id>
+  <label>_vg</label>
+</vertice>
+<edge>
+  <source>177</source>
+  <target>178</target>
+</edge>
+<vertice stem="circumvent">
+  <id>179</id>
+  <label>_verb</label>
+</vertice>
+<edge>
+  <source>178</source>
+  <target>179</target>
+</edge>
+<vertice stem="circumvent">
+  <id>180</id>
+  <label>circumventing</label>
+</vertice>
+<edge>
+  <source>179</source>
+  <target>180</target>
+</edge>
+<vertice stem="control">
+  <id>181</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>177</source>
+  <target>181</target>
+</edge>
+<vertice stem="control">
+  <id>182</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>181</source>
+  <target>182</target>
+</edge>
+<vertice stem="the">
+  <id>183</id>
+  <label>_det</label>
+</vertice>
+<edge>
+  <source>182</source>
+  <target>183</target>
+</edge>
+<vertice>
+  <id>184</id>
+  <label>the</label>
+</vertice>
+<edge>
+  <source>183</source>
+  <target>184</target>
+</edge>
+<vertice stem="internal">
+  <id>185</id>
+  <label>_adj</label>
+</vertice>
+<edge>
+  <source>182</source>
+  <target>185</target>
+</edge>
+<vertice stem="internal">
+  <id>186</id>
+  <label>internal</label>
+</vertice>
+<edge>
+  <source>185</source>
+  <target>186</target>
+</edge>
+<vertice stem="account">
+  <id>187</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>182</source>
+  <target>187</target>
+</edge>
+<vertice stem="account">
+  <id>188</id>
+  <label>accounting</label>
+</vertice>
+<edge>
+  <source>187</source>
+  <target>188</target>
+</edge>
+<vertice stem="control">
+  <id>189</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>182</source>
+  <target>189</target>
+</edge>
+<vertice stem="control">
+  <id>190</id>
+  <label>controls</label>
+</vertice>
+<edge>
+  <source>189</source>
+  <target>190</target>
+</edge>
+<vertice stem="of">
+  <id>191</id>
+  <label>_prep</label>
+</vertice>
+<edge>
+  <source>181</source>
+  <target>191</target>
+</edge>
+<vertice>
+  <id>192</id>
+  <label>of</label>
+</vertice>
+<edge>
+  <source>191</source>
+  <target>192</target>
+</edge>
+<vertice>
+  <id>193</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>181</source>
+  <target>193</target>
+</edge>
+<vertice stem="the">
+  <id>194</id>
+  <label>_det</label>
+</vertice>
+<edge>
+  <source>193</source>
+  <target>194</target>
+</edge>
+<vertice>
+  <id>195</id>
+  <label>the</label>
+</vertice>
+<edge>
+  <source>194</source>
+  <target>195</target>
+</edge>
+<vertice>
+  <id>196</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>193</source>
+  <target>196</target>
+</edge>
+<vertice>
+  <id>197</id>
+  <label>_caps</label>
+</vertice>
+<edge>
+  <source>196</source>
+  <target>197</target>
+</edge>
+<vertice stem="financial">
+  <id>198</id>
+  <label>_adj</label>
+</vertice>
+<edge>
+  <source>197</source>
+  <target>198</target>
+</edge>
+<vertice stem="financial">
+  <id>199</id>
+  <label>Financial</label>
+</vertice>
+<edge>
+  <source>198</source>
+  <target>199</target>
+</edge>
+<vertice stem="institution">
+  <id>200</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>197</source>
+  <target>200</target>
+</edge>
+<vertice stem="institution">
+  <id>201</id>
+  <label>Institution</label>
+</vertice>
+<edge>
+  <source>200</source>
+  <target>201</target>
+</edge>
+<vertice stem="while">
+  <id>202</id>
+  <label>_fnword</label>
+</vertice>
+<edge>
+  <source>2</source>
+  <target>202</target>
+</edge>
+<vertice>
+  <id>203</id>
+  <label>while</label>
+</vertice>
+<edge>
+  <source>202</source>
+  <target>203</target>
+</edge>
+<vertice voice="passive">
+  <id>204</id>
+  <label>_clause</label>
+</vertice>
+<edge>
+  <source>2</source>
+  <target>204</target>
+</edge>
+<vertice stem="he">
+  <id>205</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>204</source>
+  <target>205</target>
+</edge>
+<vertice stem="he">
+  <id>206</id>
+  <label>_pro</label>
+</vertice>
+<edge>
+  <source>205</source>
+  <target>206</target>
+</edge>
+<vertice>
+  <id>207</id>
+  <label>_proSubj</label>
+</vertice>
+<edge>
+  <source>206</source>
+  <target>207</target>
+</edge>
+<vertice>
+  <id>208</id>
+  <label>he</label>
+</vertice>
+<edge>
+  <source>207</source>
+  <target>208</target>
+</edge>
+<vertice stem="employ" voice="active" tense="past">
+  <id>209</id>
+  <label>_vg</label>
+</vertice>
+<edge>
+  <source>204</source>
+  <target>209</target>
+</edge>
+<vertice stem="be" tense="past">
+  <id>210</id>
+  <label>_verb</label>
+</vertice>
+<edge>
+  <source>209</source>
+  <target>210</target>
+</edge>
+<vertice>
+  <id>211</id>
+  <label>_be</label>
+</vertice>
+<edge>
+  <source>210</source>
+  <target>211</target>
+</edge>
+<vertice>
+  <id>212</id>
+  <label>was</label>
+</vertice>
+<edge>
+  <source>211</source>
+  <target>212</target>
+</edge>
+<vertice stem="employ">
+  <id>213</id>
+  <label>_verb</label>
+</vertice>
+<edge>
+  <source>209</source>
+  <target>213</target>
+</edge>
+<vertice stem="employ">
+  <id>214</id>
+  <label>employed</label>
+</vertice>
+<edge>
+  <source>213</source>
+  <target>214</target>
+</edge>
+<vertice stem="by">
+  <id>215</id>
+  <label>_prep</label>
+</vertice>
+<edge>
+  <source>204</source>
+  <target>215</target>
+</edge>
+<vertice>
+  <id>216</id>
+  <label>by</label>
+</vertice>
+<edge>
+  <source>215</source>
+  <target>216</target>
+</edge>
+<vertice>
+  <id>217</id>
+  <label>_clause</label>
+</vertice>
+<edge>
+  <source>2</source>
+  <target>217</target>
+</edge>
+<vertice stem="it">
+  <id>218</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>217</source>
+  <target>218</target>
+</edge>
+<vertice>
+  <id>219</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>218</source>
+  <target>219</target>
+</edge>
+<vertice>
+  <id>220</id>
+  <label>_pro</label>
+</vertice>
+<edge>
+  <source>219</source>
+  <target>220</target>
+</edge>
+<vertice>
+  <id>221</id>
+  <label>_proSubj</label>
+</vertice>
+<edge>
+  <source>220</source>
+  <target>221</target>
+</edge>
+<vertice>
+  <id>222</id>
+  <label>_proObj</label>
+</vertice>
+<edge>
+  <source>221</source>
+  <target>222</target>
+</edge>
+<vertice>
+  <id>223</id>
+  <label>it</label>
+</vertice>
+<edge>
+  <source>222</source>
+  <target>223</target>
+</edge>
+<vertice>
+  <id>224</id>
+  <label>_qEOS</label>
+</vertice>
+<edge>
+  <source>1</source>
+  <target>224</target>
+</edge>
+<vertice>
+  <id>225</id>
+  <label>_sent</label>
+</vertice>
+<edge>
+  <source>1</source>
+  <target>225</target>
+</edge>
+<vertice>
+  <id>226</id>
+  <label>_clause</label>
+</vertice>
+<edge>
+  <source>225</source>
+  <target>226</target>
+</edge>
+<vertice stem="filing">
+  <id>227</id>
+  <label>_advl</label>
+</vertice>
+<edge>
+  <source>226</source>
+  <target>227</target>
+</edge>
+<vertice>
+  <id>228</id>
+  <label>_prep</label>
+</vertice>
+<edge>
+  <source>227</source>
+  <target>228</target>
+</edge>
+<vertice>
+  <id>229</id>
+  <label>According</label>
+</vertice>
+<edge>
+  <source>228</source>
+  <target>229</target>
+</edge>
+<vertice>
+  <id>230</id>
+  <label>to</label>
+</vertice>
+<edge>
+  <source>228</source>
+  <target>230</target>
+</edge>
+<vertice stem="filing">
+  <id>231</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>227</source>
+  <target>231</target>
+</edge>
+<vertice stem="court">
+  <id>232</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>231</source>
+  <target>232</target>
+</edge>
+<vertice stem="court">
+  <id>233</id>
+  <label>court</label>
+</vertice>
+<edge>
+  <source>232</source>
+  <target>233</target>
+</edge>
+<vertice stem="filing">
+  <id>234</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>231</source>
+  <target>234</target>
+</edge>
+<vertice stem="filing">
+  <id>235</id>
+  <label>filings</label>
+</vertice>
+<edge>
+  <source>234</source>
+  <target>235</target>
+</edge>
+<vertice voice="passive">
+  <id>236</id>
+  <label>_clause</label>
+</vertice>
+<edge>
+  <source>225</source>
+  <target>236</target>
+</edge>
+<vertice>
+  <id>237</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>236</source>
+  <target>237</target>
+</edge>
+<vertice>
+  <id>238</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>237</source>
+  <target>238</target>
+</edge>
+<vertice>
+  <id>239</id>
+  <label>Leissner</label>
+</vertice>
+<edge>
+  <source>238</source>
+  <target>239</target>
+</edge>
+<vertice stem="order" voice="passive" tense="present">
+  <id>240</id>
+  <label>_vg</label>
+</vertice>
+<edge>
+  <source>236</source>
+  <target>240</target>
+</edge>
+<vertice stem="have" tense="present">
+  <id>241</id>
+  <label>_verb</label>
+</vertice>
+<edge>
+  <source>240</source>
+  <target>241</target>
+</edge>
+<vertice>
+  <id>242</id>
+  <label>_have</label>
+</vertice>
+<edge>
+  <source>241</source>
+  <target>242</target>
+</edge>
+<vertice>
+  <id>243</id>
+  <label>has</label>
+</vertice>
+<edge>
+  <source>242</source>
+  <target>243</target>
+</edge>
+<vertice stem="be">
+  <id>244</id>
+  <label>_verb</label>
+</vertice>
+<edge>
+  <source>240</source>
+  <target>244</target>
+</edge>
+<vertice>
+  <id>245</id>
+  <label>_be</label>
+</vertice>
+<edge>
+  <source>244</source>
+  <target>245</target>
+</edge>
+<vertice>
+  <id>246</id>
+  <label>been</label>
+</vertice>
+<edge>
+  <source>245</source>
+  <target>246</target>
+</edge>
+<vertice stem="order">
+  <id>247</id>
+  <label>_verb</label>
+</vertice>
+<edge>
+  <source>240</source>
+  <target>247</target>
+</edge>
+<vertice stem="order">
+  <id>248</id>
+  <label>ordered</label>
+</vertice>
+<edge>
+  <source>247</source>
+  <target>248</target>
+</edge>
+<vertice voice="active">
+  <id>249</id>
+  <label>_clause</label>
+</vertice>
+<edge>
+  <source>225</source>
+  <target>249</target>
+</edge>
+<vertice stem="forfeit" voice="active">
+  <id>250</id>
+  <label>_vg</label>
+</vertice>
+<edge>
+  <source>249</source>
+  <target>250</target>
+</edge>
+<vertice stem="to">
+  <id>251</id>
+  <label>_prep</label>
+</vertice>
+<edge>
+  <source>250</source>
+  <target>251</target>
+</edge>
+<vertice>
+  <id>252</id>
+  <label>to</label>
+</vertice>
+<edge>
+  <source>251</source>
+  <target>252</target>
+</edge>
+<vertice stem="forfeit">
+  <id>253</id>
+  <label>_verb</label>
+</vertice>
+<edge>
+  <source>250</source>
+  <target>253</target>
+</edge>
+<vertice stem="forfeit">
+  <id>254</id>
+  <label>forfeit</label>
+</vertice>
+<edge>
+  <source>253</source>
+  <target>254</target>
+</edge>
+<vertice>
+  <id>255</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>249</source>
+  <target>255</target>
+</edge>
+<vertice>
+  <id>256</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>255</source>
+  <target>256</target>
+</edge>
+<vertice>
+  <id>257</id>
+  <label>_money</label>
+</vertice>
+<edge>
+  <source>256</source>
+  <target>257</target>
+</edge>
+<vertice>
+  <id>258</id>
+  <label>_num</label>
+</vertice>
+<edge>
+  <source>257</source>
+  <target>258</target>
+</edge>
+<vertice>
+  <id>259</id>
+  <label>43</label>
+</vertice>
+<edge>
+  <source>258</source>
+  <target>259</target>
+</edge>
+<vertice>
+  <id>260</id>
+  <label>_num</label>
+</vertice>
+<edge>
+  <source>257</source>
+  <target>260</target>
+</edge>
+<vertice>
+  <id>261</id>
+  <label>million</label>
+</vertice>
+<edge>
+  <source>260</source>
+  <target>261</target>
+</edge>
+<vertice stem="crime">
+  <id>262</id>
+  <label>_advl</label>
+</vertice>
+<edge>
+  <source>249</source>
+  <target>262</target>
+</edge>
+<vertice stem="as">
+  <id>263</id>
+  <label>_prep</label>
+</vertice>
+<edge>
+  <source>262</source>
+  <target>263</target>
+</edge>
+<vertice>
+  <id>264</id>
+  <label>as</label>
+</vertice>
+<edge>
+  <source>263</source>
+  <target>264</target>
+</edge>
+<vertice stem="crime">
+  <id>265</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>262</source>
+  <target>265</target>
+</edge>
+<vertice stem="result">
+  <id>266</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>265</source>
+  <target>266</target>
+</edge>
+<vertice stem="a">
+  <id>267</id>
+  <label>_det</label>
+</vertice>
+<edge>
+  <source>266</source>
+  <target>267</target>
+</edge>
+<vertice stem="result">
+  <id>268</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>266</source>
+  <target>268</target>
+</edge>
+<vertice stem="result">
+  <id>269</id>
+  <label>result</label>
+</vertice>
+<edge>
+  <source>268</source>
+  <target>269</target>
+</edge>
+<vertice stem="of">
+  <id>270</id>
+  <label>_prep</label>
+</vertice>
+<edge>
+  <source>265</source>
+  <target>270</target>
+</edge>
+<vertice>
+  <id>271</id>
+  <label>of</label>
+</vertice>
+<edge>
+  <source>270</source>
+  <target>271</target>
+</edge>
+<vertice stem="crime">
+  <id>272</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>265</source>
+  <target>272</target>
+</edge>
+<vertice>
+  <id>273</id>
+  <label>_pro</label>
+</vertice>
+<edge>
+  <source>272</source>
+  <target>273</target>
+</edge>
+<vertice>
+  <id>274</id>
+  <label>_proPoss</label>
+</vertice>
+<edge>
+  <source>273</source>
+  <target>274</target>
+</edge>
+<vertice>
+  <id>275</id>
+  <label>his</label>
+</vertice>
+<edge>
+  <source>274</source>
+  <target>275</target>
+</edge>
+<vertice stem="crime">
+  <id>276</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>272</source>
+  <target>276</target>
+</edge>
+<vertice stem="crime">
+  <id>277</id>
+  <label>crimes</label>
+</vertice>
+<edge>
+  <source>276</source>
+  <target>277</target>
+</edge>
+<vertice>
+  <id>278</id>
+  <label>_qEOS</label>
+</vertice>
+<edge>
+  <source>1</source>
+  <target>278</target>
+</edge>

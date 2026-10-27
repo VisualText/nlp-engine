@@ -519,3 +519,16 @@ jobs:
           tolerance: same
           output: parse-en-us-diff-mac.txt
 
+      # parse-en-us runs zone mode (one _TEXTZONE at a time, each freed to a
+      # stub after its passes), so final.tree is only the zone skeleton. The
+      # whole parse is checked through out.xml, which buff_out writes zone by
+      # zone and is byte-identical to the unzoned analyzer's.
+      - name: Full English Test, parse XML
+        uses: LouisBrunner/diff-action@v0.2.0
+        with:
+          old: .github/workflows/tests/parse-en-us/out.xml
+          new: ./analyzers/parse-en-us/input/doj.txt_log/out.xml
+          mode: addition
+          tolerance: same
+          output: parse-en-us-xml-diff-mac.txt
+
