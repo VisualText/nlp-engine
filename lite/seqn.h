@@ -88,6 +88,7 @@ public:
 	void setAlgoname(_TCHAR *);			// 01/08/99 AM.
 	void setComment(_TCHAR *);			// 01/08/99 AM.
 	void setPassnum(int);				// 09/23/99 AM.
+	bool isZoneMarker();		// A zone or endzone line: not a pass, no number.
 	void setRecid(int);					// 05/31/00 AM.
 
 	// General

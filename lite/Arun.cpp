@@ -119,6 +119,7 @@ _TCHAR *prefix = _T("ana");		// Prefix for naming files.
 bool flogfiles = parse->eana_->getFlogfiles();
 bool ftimepass = parse->eana_->getFtimepass();
 
+prefix = parse->zonePrefix(prefix, flogfiles, ftimepass);	// Zone mode.
 parse->iniPass(num,prefix,flogfiles,ftimepass,true,0,salgo,			// 05/21/00 AM.
 			/*DU*/fout,sout,s_time,pretname);
 
@@ -153,6 +154,7 @@ _TCHAR *prefix = _T("ana");		// Prefix for naming files.
 bool flogfiles = parse->eana_->getFlogfiles();
 bool ftimepass = parse->eana_->getFtimepass();
 
+prefix = parse->zonePrefix(prefix, flogfiles, ftimepass);	// Zone mode.
 parse->iniPass(num,prefix,flogfiles,ftimepass,true,0,salgo,
 			/*DU*/fout,sout,s_time,pretname);
 
@@ -188,6 +190,7 @@ _TCHAR *prefix = _T("ana");		// Prefix for naming files.
 bool flogfiles = parse->eana_->getFlogfiles();
 bool ftimepass = parse->eana_->getFtimepass();
 
+prefix = parse->zonePrefix(prefix, flogfiles, ftimepass);	// Zone mode.
 parse->iniPass(num,prefix,flogfiles,ftimepass,true,0,salgo,
 			/*DU*/fout,sout,s_time,pretname);
 
@@ -224,6 +227,7 @@ _TCHAR *prefix = _T("ana");		// Prefix for naming files.
 bool flogfiles = parse->eana_->getFlogfiles();
 bool ftimepass = parse->eana_->getFtimepass();
 
+prefix = parse->zonePrefix(prefix, flogfiles, ftimepass);	// Zone mode.
 parse->iniPass(num,prefix,flogfiles,ftimepass,true,0,salgo,
 			/*DU*/fout,sout,s_time,pretname);
 
@@ -261,6 +265,7 @@ _TCHAR *prefix = _T("ana");		// Prefix for naming files.
 bool flogfiles = parse->eana_->getFlogfiles();
 bool ftimepass = parse->eana_->getFtimepass();
 
+prefix = parse->zonePrefix(prefix, flogfiles, ftimepass);	// Zone mode.
 parse->iniPass(num,prefix,flogfiles,ftimepass,true,0,salgo,
 			/*DU*/fout,sout,s_time,pretname);
 
@@ -294,6 +299,7 @@ _TCHAR *prefix = _T("ana");		// Prefix for naming files.
 bool flogfiles = parse->eana_->getFlogfiles();
 bool ftimepass = parse->eana_->getFtimepass();
 
+prefix = parse->zonePrefix(prefix, flogfiles, ftimepass);	// Zone mode.
 parse->iniPass(num,prefix,flogfiles,ftimepass,true,0,salgo,			// 05/21/00 AM.
 			/*DU*/fout,sout,s_time,pretname);
 
@@ -303,6 +309,19 @@ ln.Gather(parse);
 parse->finPass(num,flogfiles,fout,sout,
 										pretname,ftimepass,s_time);		// 05/21/00 AM.
 return true;
+}
+
+
+/********************************************
+* FN:		ZONES
+* SUBJ:	Zone mode in a compiled analyzer.
+* NOTE:	run_analyzer() ends with this after a zone line; see Seqn::gen.
+********************************************/
+
+bool Arun::zones(Parse *parse, const _TCHAR *ztype,
+	bool (*zonefn)(Parse *), bool (*endfn)(Parse *))
+{
+return parse->runZones(ztype, zonefn, endfn);
 }
 
 
@@ -355,6 +374,7 @@ _TCHAR *prefix = _T("ana");		// Prefix for naming files.
 bool flogfiles = parse->eana_->getFlogfiles();
 bool ftimepass = parse->eana_->getFtimepass();
 
+prefix = parse->zonePrefix(prefix, flogfiles, ftimepass);	// Zone mode.
 parse->iniPass(num,prefix,flogfiles,ftimepass,true,sfile,salgo,		// 05/20/00 AM.
 			/*DU*/fout,sout,s_time,pretname);
 
@@ -415,6 +435,7 @@ _TCHAR *prefix = _T("ana");		// Prefix for naming files.
 bool flogfiles = parse->eana_->getFlogfiles();
 bool ftimepass = parse->eana_->getFtimepass();
 
+prefix = parse->zonePrefix(prefix, flogfiles, ftimepass);	// Zone mode.
 parse->iniPass(num,prefix,flogfiles,ftimepass,true,sfile,salgo,		// 05/20/00 AM.
 			/*DU*/fout,sout,s_time,pretname);
 

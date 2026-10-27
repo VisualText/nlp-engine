@@ -818,7 +818,7 @@ Ifile *rf;																		// 12/20/01 AM.
 for (selt = (Delt<Seqn> *)Aseq::firstPass(nlp); selt; selt = selt->Right())
 	{
 	seqn = selt->getData();
-	seqn->setPassnum(++currseqpass);	// In case...					// 05/20/01 AM.
+	seqn->setPassnum(seqn->isZoneMarker() ? 0 : ++currseqpass);	// 05/20/01 AM.
 	if (seqn->getActive())			// Pass that will be executed.
 		{
 		if (!(seqn->getAlgo())												// 12/20/01 AM.
@@ -865,7 +865,7 @@ int num = 0;					// Current pass number.
 
 num = 0;
 for (seq = Aseq::firstPass(nlp); seq; seq = Aseq::nextPass(seq))
-	Aseq::setPassnum(seq, ++num);
+	Aseq::setPassnum(seq, ((Delt<Seqn> *) seq)->getData()->isZoneMarker() ? 0 : ++num);
 }
 
 

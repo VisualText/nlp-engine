@@ -567,8 +567,8 @@ return RUN_OK;
 *			An endzone line ends the zone passes: the passes after it run once,
 *			after the last zone, on the stubs with the whole KB, for work that
 *			belongs to the whole document (eg, dumping the KB).
-*			With -DEV, the first ZONE_DUMPS zones write z001-ana075.tree and
-*			so on; later zones write no pass trees or pass times.
+*			With -DEV, only the first ZONE_DUMPS zones write pass trees
+*			(see zonePrefix).
 ********************************************/
 
 #define ZONE_DUMPS 3
@@ -582,7 +582,7 @@ struct ZoneLink {		// One level of the path from the root to a zone.
 };
 
 // The ztype nodes under node, in document order. Zones do not nest.
-static void findZones(Node<Pn> *node, _TCHAR *ztype, std::vector<Node<Pn> *> &zones)
+static void findZones(Node<Pn> *node, const _TCHAR *ztype, std::vector<Node<Pn> *> &zones)
 {
 for (; node; node = node->pRight)
 	{
@@ -645,15 +645,8 @@ for (size_t i = 0; i < links.size(); ++i)
 
 int Parse::executeZones(Delt<Seqn> *first, _TCHAR *ztype)
 {
-Tree<Pn> *tree = (Tree<Pn> *) getTree();
-Node<Pn> *root = tree ? tree->getRoot() : 0;
-std::vector<Node<Pn> *> zones;
-if (root)
-	findZones(root->pDown, ztype, zones);
-
 long base = currpass_;		// The last pass before the zone line.
 long num = base;
-int result = RUN_OK;
 Delt<Seqn> *seq;
 
 // An endzone line ends the zone passes; the passes after it run once,
@@ -664,17 +657,76 @@ for (seq = first; seq && !endz; seq = seq->Right())
 		 && !strcmp_i(str(seq->getData()->getAlgoname()), _T("endzone")))
 		endz = seq;
 
+int result = zoneLoop(ztype,
+	[&]() {
+		int r = RUN_OK;
+		num = base;
+		for (seq = first; seq && seq != endz && r == RUN_OK; seq = seq->Right())
+			r = runPass(seq, num);
+		return r;
+		},
+	[&]() {
+		int r = RUN_OK;
+		for (seq = endz ? endz->Right() : 0; seq && r == RUN_OK; seq = seq->Right())
+			r = runPass(seq, num);
+		return r;
+		},
+	[&]() {		// No zones: the zone passes run on the whole document.
+		int r = RUN_OK;
+		for (seq = first; seq && r == RUN_OK; seq = seq->Right())
+			r = runPass(seq, num);		// stepExecute skips the endzone line.
+		return r;
+		});
+currpass_ = num;
+return result;
+}
+
+/********************************************
+* FN:		RUNZONES
+* SUBJ:	Zone mode for a compiled analyzer.
+* NOTE:	The generated run_analyzer() puts the passes between the zone and
+*			endzone lines in zonefn, and the passes after endzone in endfn
+*			(0 without an endzone line); see Seqn::gen.
+********************************************/
+
+bool Parse::runZones(const _TCHAR *ztype, bool (*zonefn)(Parse *),
+	bool (*endfn)(Parse *))
+{
+auto run = [this](bool (*fn)(Parse *)) {
+	return (fn && !fn(this)) ? RUN_ABORT : RUN_OK;
+	};
+return zoneLoop(ztype,
+	[&]() { return run(zonefn); },
+	[&]() { return run(endfn); },
+	[&]() { int r = run(zonefn); return r == RUN_OK ? run(endfn) : r; }
+	) != RUN_ABORT;
+}
+
+/********************************************
+* FN:		ZONELOOP
+* SUBJ:	Run zone() once per ztype zone, then wrap() once.
+* NOTE:	Shared by executeZones() and runZones(). With no ztype zones,
+*			runs whole() on the whole document instead.
+********************************************/
+
+int Parse::zoneLoop(const _TCHAR *ztype, const std::function<int()> &zone,
+	const std::function<int()> &wrap, const std::function<int()> &whole)
+{
+Tree<Pn> *tree = (Tree<Pn> *) getTree();
+Node<Pn> *root = tree ? tree->getRoot() : 0;
+std::vector<Node<Pn> *> zones;
+if (root)
+	findZones(root->pDown, ztype, zones);
+
 if (zones.empty())
 	{
 	std::_t_cerr << _T("[zone: no ") << ztype
 					 << _T(" nodes, so the passes after the zone line ran on the whole document.]")
 					 << std::endl;
-	for (seq = first; seq && result == RUN_OK; seq = seq->Right())
-		result = runPass(seq, num);		// stepExecute skips the endzone line.
-	currpass_ = num;
-	return result;
+	return whole();
 	}
 
+int result = RUN_OK;
 std::vector<ZoneLink> links;
 long nzones = (long) zones.size();
 for (long z = 0; z < nzones && result == RUN_OK; ++z)
@@ -684,9 +736,7 @@ for (long z = 0; z < nzones && result == RUN_OK; ++z)
 	zoneLast_ = (z == nzones - 1);
 	hidePath(root, zones[z], links);
 
-	num = base;
-	for (seq = first; seq && seq != endz && result == RUN_OK; seq = seq->Right())
-		result = runPass(seq, num);
+	result = zone();
 
 	if (!pathIntact(root, links))
 		{
@@ -711,13 +761,30 @@ zoneNum_ = 0;
 zoneFirst_ = zoneLast_ = false;
 
 // The wrap-up passes, once, on the whole document.
-if (endz && result == RUN_OK)
-	{
-	for (seq = endz->Right(); seq && result == RUN_OK; seq = seq->Right())
-		result = runPass(seq, num);
-	}
-currpass_ = num;
+if (result == RUN_OK)
+	result = wrap();
 return result;
+}
+
+/********************************************
+* FN:		ZONEPREFIX
+* SUBJ:	Name a pass's dump files in zone mode.
+* NOTE:	With -DEV, the first ZONE_DUMPS zones write z001-ana075.tree and
+*			so on; 2,500 zones of a 130-pass analyzer would otherwise write
+*			325,000 trees. Later zones write no pass trees or pass times.
+*			Called before iniPass() by interpreted and compiled passes.
+********************************************/
+
+_TCHAR *Parse::zonePrefix(_TCHAR *prefix, bool &flogfiles, bool &ftimepass)
+{
+if (zoneNum_ > ZONE_DUMPS)
+	flogfiles = ftimepass = false;
+else if (zoneNum_ > 0)
+	{
+	_stprintf(zprefix_, _T("z%03ld-%s"), zoneNum_ % 1000, prefix);
+	prefix = zprefix_;
+	}
+return prefix;
 }
 
 void Parse::execute()
@@ -1085,18 +1152,7 @@ _TCHAR *prefix = _T("ana");		// Prefix for naming files.
 bool flogfiles = eana_->getFlogfiles();								// 10/13/99 AM.
 bool ftimepass = eana_->getFtimepass();								// 10/13/99 AM.
 
-// In zone mode, only the first ZONE_DUMPS zones write pass trees and times;
-// 2,500 zones of a 130-pass analyzer would otherwise write 325,000 trees.
-_TCHAR zprefix[] = _T("z000-ana");
-if (zoneNum_ > ZONE_DUMPS)
-	flogfiles = ftimepass = false;
-else if (zoneNum_ > 0)
-	{
-	zprefix[1] = (_TCHAR) ('0' + zoneNum_ / 100 % 10);
-	zprefix[2] = (_TCHAR) ('0' + zoneNum_ / 10 % 10);
-	zprefix[3] = (_TCHAR) ('0' + zoneNum_ % 10);
-	prefix = zprefix;
-	}
+prefix = zonePrefix(prefix, flogfiles, ftimepass);	// Zone mode.
 
 iniPass(num,prefix,flogfiles,ftimepass,pass->getActive(),sfile,salgo,				// 05/20/00 AM.
 			/*DU*/fout,sout,s_time,pretname);
@@ -1151,9 +1207,7 @@ return true;
 * SUBJ:	Initial work for one pass of a parse.
 ********************************************/
 
-#ifndef LINUX
-inline
-#endif
+// Not inline: compiled passes (Arun.cpp) call it too.
  void Parse::iniPass(
 	int num,					// Current pass number.
 	_TCHAR *prefix,			// Prefix for naming dump files.

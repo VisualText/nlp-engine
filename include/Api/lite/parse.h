@@ -22,6 +22,7 @@ All rights reserved.
 #include <time.h>
 #include <set>
 #include <chrono>
+#include <functional>
 
 typedef void TREE;	// 07/07/03 AM.
 typedef void LTREE;	// 07/07/03 AM.
@@ -231,6 +232,14 @@ public:
 	int runPass(Delt<Seqn> *seq, long &num);
 	// Zone mode: the passes after a "zone _type" line run once per _type node.
 	int executeZones(Delt<Seqn> *first, _TCHAR *ztype);
+	// The same for a compiled analyzer: zonefn runs the zone passes, endfn
+	// the passes after endzone (or 0). Called by Arun::zones.
+	bool runZones(const _TCHAR *ztype, bool (*zonefn)(Parse *),
+		bool (*endfn)(Parse *));
+	int zoneLoop(const _TCHAR *ztype, const std::function<int()> &zone,
+		const std::function<int()> &wrap, const std::function<int()> &whole);
+	// Dump-file prefix for a pass in zone mode; may turn dumps off.
+	_TCHAR *zonePrefix(_TCHAR *prefix, bool &flogfiles, bool &ftimepass);
 	long getZoneNum() {return zoneNum_;}
 	bool getZoneFirst() {return zoneFirst_;}
 	bool getZoneLast() {return zoneLast_;}
@@ -533,10 +542,7 @@ public:
 		bool ftimepass,
 		clock_t &s_time
 		);
-#ifndef LINUX
-        inline
-#endif
-	void iniPass(														// 05/20/00 AM.
+	void iniPass(	// Not inline: Arun.cpp calls it too.														// 05/20/00 AM.
 		int num,					// Current pass number.
 		_TCHAR *prefix,			// Prefix for naming dump files.
 		bool flogfiles,
@@ -687,6 +693,8 @@ private:
 	std::chrono::steady_clock::time_point runDeadline_;
 	unsigned long runTicks_ = 0;		// Calls since the clock was last read.
 	bool runStopped_ = false;
+
+	_TCHAR zprefix_[32] = {0};	// zonePrefix()'s "z001-ana".
 
 #ifndef STABLE_
 public:
