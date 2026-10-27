@@ -1825,6 +1825,37 @@ jobs:
           fi
           echo "[compiled-bridge] interpreter-only builtins work in a compiled analyzer"
 
+      - name: Compiled analyzer runs zone mode
+        shell: bash
+        run: |
+          set -eo pipefail
+          # A compiled analyzer used to ignore zone and endzone lines and run
+          # every pass on the whole document. run_analyzer() now hands the
+          # zone passes to Arun::zones. Build the zone-mode fixture compiled
+          # and compare it with the interpreted run, -DEV trees included.
+          FIX=.github/workflows/tests/zone-mode
+          LIBS="$(cygpath -m "$GITHUB_WORKSPACE")/compile-libs"
+          rm -rf "$FIX/logs" "$FIX"/input/*_log "$FIX/output" "$FIX/run" "$FIX/build"
+          mkdir -p "$FIX/logs"
+          ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ -DEV "$FIX/input/text.txt" | tr -d '\r' | grep -E '^(zone|summary)' > zone-interpreted.txt
+          (cd "$FIX/input/text.txt_log" && ls *.tree) > zone-trees.txt
+          rm -rf "$FIX/input/text.txt_log"
+          cp .github/workflows/tests/compiled-bridge/CMakeLists.txt .github/workflows/tests/compiled-bridge/StdAfx.h "$FIX/"
+          ./bin/Release/nlp.exe -COMPILEANA -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          grep -q "Arun::zones" "$FIX/run/analyzer.cpp"
+          cmake -S "$FIX" -B "$FIX/build" -A x64 -DENGINE_LIBS="$LIBS"
+          cmake --build "$FIX/build" --config Release
+          rm -rf "$FIX/input/text.txt_log" "$FIX/output"
+          ./bin/Release/nlp.exe -COMPILED -ANA "$FIX" -WORK ./ -DEV "$FIX/input/text.txt" | tr -d '\r' | grep -E '^(zone|summary)' > zone-compiled.txt
+          if ! diff zone-interpreted.txt zone-compiled.txt; then
+            echo "FAIL(compiled zone mode): compiled output differs from interpreted"; exit 1
+          fi
+          if ! diff zone-trees.txt <(cd "$FIX/input/text.txt_log" && ls *.tree); then
+            echo "FAIL(compiled zone mode): compiled -DEV trees differ from interpreted"; exit 1
+          fi
+          rm -f "$FIX/CMakeLists.txt" "$FIX/StdAfx.h" zone-interpreted.txt zone-compiled.txt zone-trees.txt
+          echo "[compiled zone mode] a compiled analyzer runs the zone passes once per zone"
+
       - name: Upload nlpengine-compile-libs.zip
         uses: actions/upload-artifact@v4
         with:

@@ -202,6 +202,8 @@ public:
 	static bool python(Parse *, int, const _TCHAR *);           // 07/14/26. compiled python pass.
 	static bool lines(Parse *, int);
 	static void runPostcode(Parse *parse, const PASS *pass);	// #392.
+	static bool zones(Parse *parse, const _TCHAR *ztype,	// Zone mode.
+		bool (*zonefn)(Parse *), bool (*endfn)(Parse *));
 	static bool patExecute(
 		Parse *,
 		const PASS *,

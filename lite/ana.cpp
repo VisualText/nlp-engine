@@ -511,7 +511,7 @@ Ifile *rf = 0;																	// 12/20/01 AM.
 for (selt = slist->getFirst(); selt; selt = selt->Right())
 	{
 	seqn = selt->getData();
-	seqn->setPassnum(++currseqpass);										// 05/10/00 AM.
+	seqn->setPassnum(seqn->isZoneMarker() ? 0 : ++currseqpass);	// 05/10/00 AM.
 	if (seqn->getActive())
 		{
 		if (!internPass(seqn, rfa, erfa))	// Asynchrony.			// 12/11/99 AM.
@@ -599,9 +599,6 @@ else if (	!strcmp_i(s_algo, _T("zone")))	// "zone _type": the passes below
 		errOut(&gerrStr,false);
 		return false;
 		}
-	if (gen)
-		std::_t_cerr << _T("[Warning: a compiled analyzer ignores the zone line; ")
-						 << _T("its later passes run on the whole document.]") << std::endl;
 	return true;
 	}
 else if (	!strcmp_i(s_algo, _T("endzone")))	// The passes below run once,

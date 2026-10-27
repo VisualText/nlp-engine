@@ -191,6 +191,14 @@ void Seqn::setRulesfile(Ifile		*x)	{rulesfile_	= x;}
 void Seqn::setActive(bool			 x)	{active_		= x;}
 void Seqn::setDisplaytree(bool x)		{displaytree_ = x;}
 void Seqn::setPassnum(int x)				{passnum_	= x;}	// 09/23/99 AM.
+
+// zone and endzone lines are markers, not passes: they take no pass number,
+// as in the run (Parse::runPass) and the sequence view.
+bool Seqn::isZoneMarker()
+{
+return algo_name_ && (!strcmp_i(algo_name_, _T("zone"))
+							 || !strcmp_i(algo_name_, _T("endzone")));
+}
 void Seqn::setRecid(int x)					{recid_		= x;}
 void Seqn::setComment(_TCHAR			*x)
 {
@@ -588,18 +596,58 @@ Gen::nl(fcode);																// 04/04/03 AM.
 *fcode << _T("if (!Arun::init_analyzer(parse)) return false;");
 Gen::nl(fcode);																// 04/04/03 AM.
 
-int count = 0;
 Delt<Seqn> *dseq;
 Seqn *seq;
 _TCHAR *name;
 bool active = false;															// 08/04/02 AM.
+int count = 0;		// Pass number, as Ana numbers passes: zone lines take none.
+// Zone mode: run_analyzer() runs the passes before the zone line, then hands
+// zonepasses() and endzonepasses() to Arun::zones (see Parse::executeZones).
+int part = 0;		// 0 before the zone line, 1 zone passes, 2 after endzone.
 for (dseq = seqs->getFirst(); dseq; dseq = dseq->Right())
 	{
 	// Should have enum type for algorithm type.
 	seq = dseq->getData();
 	name = seq->getAlgoname();												// 06/04/00 AM.
 	active = seq->getActive();												// 08/04/02 AM.
-	++count;
+	if (!seq->isZoneMarker())
+		++count;
+	if (active && part == 0 && !_tcscmp(_T("zone"),name))
+		{
+		bool endz = false;
+		for (Delt<Seqn> *d = dseq->Right(); d && !endz; d = d->Right())
+			endz = d->getData()->getActive()
+					 && !_tcscmp(_T("endzone"), d->getData()->getAlgoname());
+		*fcode << _T("return Arun::zones(parse,_T(\"") << seq->getRulesfilename()
+				 << _T("\"),zonepasses,") << (endz ? _T("endzonepasses") : _T("0"))
+				 << _T(");");
+		Gen::nl(fcode);
+		*fcode << _T("}");
+		Gen::eol(fcode);
+		*fhead << _T("bool zonepasses(Parse *);");
+		Gen::nl(fhead);
+		*fcode << _T("bool zonepasses(Parse *parse)");
+		Gen::nl(fcode);
+		*fcode << _T("{");
+		Gen::nl(fcode);
+		part = 1;
+		continue;
+		}
+	if (active && part == 1 && !_tcscmp(_T("endzone"),name))
+		{
+		*fcode << _T("return true;");
+		Gen::nl(fcode);
+		*fcode << _T("}");
+		Gen::eol(fcode);
+		*fhead << _T("bool endzonepasses(Parse *);");
+		Gen::nl(fhead);
+		*fcode << _T("bool endzonepasses(Parse *parse)");
+		Gen::nl(fcode);
+		*fcode << _T("{");
+		Gen::nl(fcode);
+		part = 2;
+		continue;
+		}
 	if (!_tcscmp(_T("nlp"), name))
 		{
 		if (active)																// 08/04 02 AM.
@@ -614,7 +662,7 @@ for (dseq = seqs->getFirst(); dseq; dseq = dseq->Right())
 		}
 	else if (!_tcscmp(_T("stub"),name) || !_tcscmp(_T("end"),name)			// 06/04/00 AM.
 		|| !_tcscmp(_T("folder"),name)										// 08/24/08 AM.
-		|| !_tcscmp(_T("zone"),name)	// Interpreted runs only, for now.
+		|| !_tcscmp(_T("zone"),name)
 		|| !_tcscmp(_T("endzone"),name))
 		;			// Ignore these.											// 06/04/00 AM.
 	else

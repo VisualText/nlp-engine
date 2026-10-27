@@ -176,8 +176,8 @@ runs once per node of that type:
   `_TEXTZONE` nodes into sections); that stops the run with an error.
 - With `-DEV`, the first three zones write their pass trees as
   `z001-ana040.tree` and so on.
-- A compiled analyzer ignores the `zone` and `endzone` lines and runs every
-  pass on the whole document.
+- Compiled analyzers run zones the same way (since 4.2.49; before that they
+  ignored the `zone` and `endzone` lines).
 
 On *Pride and Prejudice* (738 KB) with parse-en-us zoned by `_TEXTZONE`, peak
 memory went from 473 MB to 153 MB and time from 275 to 283 seconds;
