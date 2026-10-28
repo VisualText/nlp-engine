@@ -202,4 +202,5 @@ private:
     std::basic_string<_TCHAR> m_datum;    // G("$datum") for analyses.
     long long m_runLimitMs = 0;           // setRunLimit; 0 = none.
     std::basic_string<_TCHAR> m_zoneRange; // setZoneRange; empty = every zone.
+    bool m_inputFailed = false;           // analyze(): an input was missing.
 };

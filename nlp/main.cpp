@@ -18,7 +18,7 @@ All rights reserved.
 
 #include <vector>
 
-#define NLP_ENGINE_VERSION "4.2.50"
+#define NLP_ENGINE_VERSION "4.2.51"
 
 bool cmdReadArgs(int, _TCHAR *argv[], _TCHAR *&, _TCHAR *&, _TCHAR *&, _TCHAR *&, bool &, bool &, bool &, bool &, bool &, bool &, int &, bool &, bool &, _TCHAR *&, double &, _TCHAR *&);
 void cmdHelpargs(_TCHAR *);
@@ -467,28 +467,50 @@ bool cmdReadArgs(
 void cmdHelpargs(_TCHAR *name)
 {
 	std::_t_cout << std::endl
-				 << _T("usage: nlp [--version] [--help]") << std::endl
-				 << _T("           [-INTERP][-COMPILED] INTERP is the default") << std::endl
-				 << _T("           [-COMPILE] compile analyzer and KB to C++ (does not run analyzer)") << std::endl
-				 << _T("           [-COMPILEKB] compile only the KB to C++ (does not load grammar or run analyzer)") << std::endl
-				 << _T("           [-COMPILEANA] compile only the analyzer to C++ (does not regenerate the KB or run analyzer)") << std::endl
-				 << _T("           [-ANA analyzer] name or path to NLP++ analyzer folder") << std::endl
-				 << _T("           [-IN infile] input text file path") << std::endl
-				 << _T("           [-OUT outdir] output directory") << std::endl
-				 << _T("           [-WORK workdir] working directory") << std::endl
-				 << _T("           [-DEV][-SILENT] -DEV generates logs, -SILENT suppresses logs/output files (off by default)") << std::endl
-				 << _T("           [-DEBUG port] wait for a rule debugger on 127.0.0.1:port, then run under it") << std::endl
-				 << _T("           [infile [outfile]] when no -IN or -OUT specified") << std::endl
-				 << _T("           [-STDIN] load once, then analyze one input file path per stdin line;") << std::endl
-				 << _T("                    a blank line or EOF ends the run. Each input is analyzed") << std::endl
-				 << _T("                    when the next line arrives, so $islastfile can be set.") << std::endl
-				 << _T("           [-DATUM value] pass a string the analyzer reads as G(\"$datum\")") << std::endl
-				 << _T("           [-TIMELIMIT seconds] stop an input's analysis that runs longer, at its") << std::endl
-				 << _T("                    next while turn or pass; the run then exits 2") << std::endl
-				 << _T("           [-ZONES 40-45] zone mode: run only these zones (7, 40-45, 3,40-45);") << std::endl
-				 << _T("                    the others get only the passes before the zone line") << std::endl
-				 << _T("           [-DICTSOURCE] nodes built from .dict entries get dictfile and dictline") << std::endl
-				 << _T("                    attributes naming the entry's file and line") << std::endl
+				 << _T("usage: nlp -ANA <analyzer> [-WORK <engine folder>] [options] <input> [<outdir>]") << std::endl
+				 << _T("       nlp -ANA <analyzer> [-WORK <engine folder>] [options] -STDIN") << std::endl
+				 << _T("       nlp --help | --version") << std::endl
+				 << std::endl
+				 << _T("Running") << std::endl
+				 << _T("  -ANA analyzer       analyzer folder: a path, or a name under <engine folder>/analyzers") << std::endl
+				 << _T("  -WORK folder        the engine folder, holding data/ and analyzers/ (default: current folder)") << std::endl
+				 << _T("  -IN input           input file, or a folder of them; or give it as the first plain argument") << std::endl
+				 << _T("  -OUT folder         folder for this run's logs and trees, in place of <input>_log;") << std::endl
+				 << _T("                      made if missing. Or give it as the second plain argument") << std::endl
+				 << _T("  -STDIN              load once, then analyze one input file path per stdin line;") << std::endl
+				 << _T("                      a blank line or EOF ends the run. Each input is analyzed") << std::endl
+				 << _T("                      when the next line arrives, so $islastfile can be set") << std::endl
+				 << _T("  -DATUM value        a string the analyzer reads as G(\"$datum\")") << std::endl
+				 << std::endl
+				 << _T("Debugging") << std::endl
+				 << _T("  -DEV                write logs and the parse tree after every pass (slow on large inputs)") << std::endl
+				 << _T("  -SILENT             write no logs or output files, not even the analyzer's own") << std::endl
+				 << _T("  -DEBUG port         wait for a rule debugger on 127.0.0.1:port, then run under it") << std::endl
+				 << _T("  -DICTSOURCE         nodes built from .dict entries get dictfile and dictline") << std::endl
+				 << _T("                      attributes naming the entry's file and line") << std::endl
+				 << std::endl
+				 << _T("Limits and zone mode") << std::endl
+				 << _T("  -TIMELIMIT seconds  stop an input's analysis that runs longer, at its next") << std::endl
+				 << _T("                      while turn or pass; the run then exits 2") << std::endl
+				 << _T("  -ZONES 40-45        zone mode: run only these zones (7, 40-45, 3,40-45; from 1,") << std::endl
+				 << _T("                      as in z040-ana###.tree); the others get only the passes") << std::endl
+				 << _T("                      before the zone line") << std::endl
+				 << std::endl
+				 << _T("Compiled analyzers") << std::endl
+				 << _T("  -COMPILE            generate C++ for the analyzer and its KB; does not analyze") << std::endl
+				 << _T("  -COMPILEKB          generate C++ for the KB only") << std::endl
+				 << _T("  -COMPILEANA         generate C++ for the analyzer only") << std::endl
+				 << _T("  -COMPILED           run the compiled analyzer (bin/run and bin/kb libraries)") << std::endl
+				 << _T("  -INTERP             run the analyzer from its .nlp files (the default)") << std::endl
+				 << std::endl
+				 << _T("Environment") << std::endl
+				 << _T("  NLP_REC_LIMIT=N     a rec pass region may match N times plus N/50 per node;") << std::endl
+				 << _T("                      N is 1000 by default, and 0 lifts the limit") << std::endl
+				 << std::endl
+				 << _T("Exit status") << std::endl
+				 << _T("  0  success") << std::endl
+				 << _T("  1  bad arguments, or a missing analyzer, input or output folder") << std::endl
+				 << _T("  2  a run stopped at -TIMELIMIT") << std::endl
 				 << std::endl
 				 << _T("Directories in the nlp.exe files:") << std::endl
 				 << _T("   data        nlp engine bootstrap grammar") << std::endl
