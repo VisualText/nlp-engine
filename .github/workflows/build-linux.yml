@@ -934,6 +934,22 @@ jobs:
           if ./bin/nlp -ANA "$FIX" -WORK ./; then
             echo "FAIL: missing input exited 0"; exit 1
           fi
+          # An input file that does not exist exits 1 too, and leaves no
+          # stray <file>_log folder (4.2.51).
+          rm -rf "$FIX/input/no-such-file.txt_log"
+          if ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/no-such-file.txt"; then
+            echo "FAIL: missing input file exited 0"; exit 1
+          fi
+          if [ -d "$FIX/input/no-such-file.txt_log" ]; then
+            echo "FAIL: missing input file left a _log folder"; exit 1
+          fi
+          # -OUT makes its folder; it used to fall back to <file>_log.
+          rm -rf "$FIX/out-new"
+          ./bin/nlp -ANA "$FIX" -WORK ./ -OUT "$FIX/out-new" "$FIX/input/a.txt" > /dev/null
+          if [ ! -f "$FIX/out-new/final.tree" ]; then
+            echo "FAIL: -OUT did not make its folder"; exit 1
+          fi
+          rm -rf "$FIX/out-new"
           ./bin/nlp -ANA "$FIX" -WORK ./ "$FIX/input/a.txt" > /dev/null
           echo "[exit-codes] failures exit 1, a good run exits 0"
 

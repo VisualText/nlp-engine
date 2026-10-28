@@ -468,6 +468,7 @@ int NLP_ENGINE::analyze(
 
     readFiles(infile);
     std::string file;
+    m_inputFailed = false;
 
     std::filesystem::path fname(analyzer);
     fname /= _T("logs");
@@ -487,7 +488,7 @@ int NLP_ENGINE::analyze(
 
     delete fp;  // Closes file.log; it was never flushed before.
 //    NLP_ENGINE::close();  // NO.  // 09/27/20 AM.
-    return 0;
+    return m_inputFailed ? -1 : 0;	// A missing input exits 1 (#484).
 }
 
 // Long-running batch (#548): load the analyzer and KB once, then analyze one
@@ -591,6 +592,14 @@ void NLP_ENGINE::analyzeFile(
         fits = bprintf(m_infile, _T("%s%sinput%s%s"),m_anadir,DIR_STR,DIR_STR,file.c_str());
     if (!fits) {
         std::_t_cerr << _T("[Error: input path too long, skipped: ") << file << _T("]") << std::endl;
+        m_inputFailed = true;
+        return;
+    }
+    // A missing input used to go on: it made a stray <file>_log folder, said
+    // "Couldn't create parse instance" and exited 0.			// 10/27/26 DD.
+    if (!std::filesystem::exists(m_infile)) {
+        std::_t_cerr << _T("[Error: no such input file: ") << file << _T("]") << std::endl;
+        m_inputFailed = true;
         return;
     }
     std::_t_cerr << _T("[infile path: ") << m_infile << _T("]") << std::endl;
@@ -600,13 +609,22 @@ void NLP_ENGINE::analyzeFile(
 
     bool create = true;
     if (outdir) {
-        if (std::filesystem::is_directory(outdir)) {
-            if (!bprintf(m_outdir, _T("%s"), outdir)) {
-                std::_t_cerr << _T("[Error: output folder path too long: ") << outdir << _T("]") << std::endl;
-                return;
-            }
-            create = false;
+        // -OUT names the folder for this run's logs and trees, in place of
+        // <file>_log. A folder that did not exist was ignored without a word,
+        // and everything went to <file>_log instead; now it is made.	// 10/27/26 DD.
+        if (!std::filesystem::exists(outdir))
+            NLP_ENGINE::createDir(outdir);
+        if (!std::filesystem::is_directory(outdir)) {
+            std::_t_cerr << _T("[Error: cannot make output folder: ") << outdir << _T("]") << std::endl;
+            m_inputFailed = true;
+            return;
         }
+        if (!bprintf(m_outdir, _T("%s"), outdir)) {
+            std::_t_cerr << _T("[Error: output folder path too long: ") << outdir << _T("]") << std::endl;
+            m_inputFailed = true;
+            return;
+        }
+        create = false;
     }
     if (!m_silent && create) {
         if (!bprintf(m_outdir, _T("%s_log"),file.c_str())) {
