@@ -13,11 +13,14 @@ All rights reserved.
 *******************************************************************************/
 
 #include "lite/nlp_engine.h"
+#include "lite/zonerange.h"
 #include "version.h"
 
-#define NLP_ENGINE_VERSION "4.2.49"
+#include <vector>
 
-bool cmdReadArgs(int, _TCHAR *argv[], _TCHAR *&, _TCHAR *&, _TCHAR *&, _TCHAR *&, bool &, bool &, bool &, bool &, bool &, bool &, int &, bool &, bool &, _TCHAR *&, double &);
+#define NLP_ENGINE_VERSION "4.2.50"
+
+bool cmdReadArgs(int, _TCHAR *argv[], _TCHAR *&, _TCHAR *&, _TCHAR *&, _TCHAR *&, bool &, bool &, bool &, bool &, bool &, bool &, int &, bool &, bool &, _TCHAR *&, double &, _TCHAR *&);
 void cmdHelpargs(_TCHAR *);
 
 #include "lite/nlpdebug.h"
@@ -49,13 +52,14 @@ int _tmain(
 	bool dictSource = false; // -DICTSOURCE: nodes record their .dict file and line.
 	_TCHAR *datum = 0;       // -DATUM value: G("$datum") in the analyzer.
 	double timeLimit = 0;    // -TIMELIMIT seconds: stop a run past it. 0 = none.
+	_TCHAR *zones = 0;       // -ZONES 40-45: run only these zones in zone mode.
 
 	/////////////////////////////////////////////////
 	// GET APP INFORMATION
 	/////////////////////////////////////////////////
 
 	// Get analyzer name, input and output filenames from command line.
-	if (!cmdReadArgs(argc, argv, analyzerpath, input, output, workdir, develop, compile, compiled, silent, compileKB, compileAna, debugPort, stream, dictSource, datum, timeLimit))
+	if (!cmdReadArgs(argc, argv, analyzerpath, input, output, workdir, develop, compile, compiled, silent, compileKB, compileAna, debugPort, stream, dictSource, datum, timeLimit, zones))
 		exit(1);
 	if (dictSource)
 		NLP_ENGINE::setDictSource(true);	// #432.
@@ -76,6 +80,8 @@ int _tmain(
 		nlpEngine->setDatum(datum);
 	if (timeLimit > 0)
 		nlpEngine->setRunLimit((long long)(timeLimit * 1000.0));
+	if (zones)
+		nlpEngine->setZoneRange(zones);	// Checked in cmdReadArgs.
 	if (compile)
 	{
 		// Compile mode: generate C++ code for the analyzer and KB.
@@ -144,7 +150,8 @@ bool cmdReadArgs(
 	bool &stream,	   // -STDIN: read input file paths from stdin.
 	bool &dictSource,  // -DICTSOURCE: nodes record their .dict file and line.
 	_TCHAR *&datum,    // -DATUM value: G("$datum") in the analyzer.
-	double &timeLimit  // -TIMELIMIT seconds: stop a run past it.
+	double &timeLimit,  // -TIMELIMIT seconds: stop a run past it.
+	_TCHAR *&zones     // -ZONES spec: run only these zones in zone mode.
 )
 {
 	_TCHAR *ptr;
@@ -157,6 +164,7 @@ bool cmdReadArgs(
 	bool f_debug = false;
 	bool f_datum = false;
 	bool f_timelimit = false;
+	bool f_zones = false;
 	bool flag = false;
 	bool compiledck = false; // If compiled/interp arg seen.
 	bool doubledash = false;
@@ -243,6 +251,8 @@ bool cmdReadArgs(
 				f_datum = flag = true;			// Expecting G("$datum").
 			else if (!strcmp_i(ptr, _T("timelimit")))
 				f_timelimit = flag = true;		// Expecting seconds.
+			else if (!strcmp_i(ptr, _T("zones")))
+				f_zones = flag = true;			// Expecting zone numbers.
 			else if (!strcmp_i(ptr, _T("dev"))) // 12/25/98 AM.
 			{
 				if (silent)
@@ -379,6 +389,19 @@ bool cmdReadArgs(
 				}
 				f_timelimit = flag = false;
 			}
+			else if (f_zones)
+			{
+				std::vector<std::pair<long,long>> ranges;
+				if (!parseZoneRange(ptr, ranges))
+				{
+					std::_t_cerr << _T("[") << argv[0]
+								 << _T(": -ZONES needs zone numbers from 1, eg 7, 40-45 or 3,40-45.]") << std::endl;
+					cmdHelpargs(argv[0]);
+					return false;
+				}
+				zones = ptr;
+				f_zones = flag = false;
+			}
 			else if (f_debug)
 			{
 				debugPort = _ttoi(ptr);
@@ -411,7 +434,7 @@ bool cmdReadArgs(
 	{
 		// The last argument was an option that takes a value, eg "-ANA".
 		std::_t_cerr << _T("[") << argv[0] << _T(": ")
-					 << (f_ana ? _T("-ANA") : f_in ? _T("-IN") : f_out ? _T("-OUT") : f_work ? _T("-WORK") : f_datum ? _T("-DATUM") : f_timelimit ? _T("-TIMELIMIT") : _T("-DEBUG"))
+					 << (f_ana ? _T("-ANA") : f_in ? _T("-IN") : f_out ? _T("-OUT") : f_work ? _T("-WORK") : f_datum ? _T("-DATUM") : f_timelimit ? _T("-TIMELIMIT") : f_zones ? _T("-ZONES") : _T("-DEBUG"))
 					 << _T(" needs a value.]") << std::endl;
 		cmdHelpargs(argv[0]);
 		return false;
@@ -462,6 +485,8 @@ void cmdHelpargs(_TCHAR *name)
 				 << _T("           [-DATUM value] pass a string the analyzer reads as G(\"$datum\")") << std::endl
 				 << _T("           [-TIMELIMIT seconds] stop an input's analysis that runs longer, at its") << std::endl
 				 << _T("                    next while turn or pass; the run then exits 2") << std::endl
+				 << _T("           [-ZONES 40-45] zone mode: run only these zones (7, 40-45, 3,40-45);") << std::endl
+				 << _T("                    the others get only the passes before the zone line") << std::endl
 				 << _T("           [-DICTSOURCE] nodes built from .dict entries get dictfile and dictline") << std::endl
 				 << _T("                    attributes naming the entry's file and line") << std::endl
 				 << std::endl

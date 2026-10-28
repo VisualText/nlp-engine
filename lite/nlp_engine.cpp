@@ -11,6 +11,7 @@ MIT License
 *******************************************************************************/
 
 #include "nlp_engine.h"
+#include "lite/zonerange.h"
 
 #include <filesystem>
 #include <ctime>
@@ -853,10 +854,28 @@ bool NLP_ENGINE::lastRunStopped() {
     return m_nlp && m_nlp->getRunStopped();
 }
 
-// init() may have made a new NLP; give it the limit, and clear the flag.
+// init() may have made a new NLP; give it the limit and the zone range, and
+// clear the flag.
 void NLP_ENGINE::armRunLimit() {
     m_nlp->setRunLimit(m_runLimitMs);
     m_nlp->setRunStopped(false);
+    m_nlp->setZoneRange(m_zoneRange.c_str());
+}
+
+bool NLP_ENGINE::setZoneRange(const _TCHAR *spec) {
+    if (!spec || !*spec || !_tcscmp(spec, _T("0"))) {
+        m_zoneRange.clear();
+        return true;
+    }
+    std::vector<std::pair<long,long>> ranges;
+    if (!parseZoneRange(spec, ranges))
+        return false;
+    m_zoneRange = spec;
+    return true;
+}
+
+const _TCHAR *NLP_ENGINE::getZoneRange() {
+    return m_zoneRange.c_str();
 }
 
 // The datum to pass to an analysis: 0 when unset, as before.

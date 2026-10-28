@@ -50,6 +50,7 @@ All rights reserved.
 #include "consh/cg.h"
 //#include "iarg.h"				// 05/23/01 AM.
 #include "parse.h"
+#include "lite/zonerange.h"
 #include "lite/nlpdebug.h"
 #include "lite/nlp.h"		// FOR DEBUGGING!!!	// 10/10/99 AM.
 #include "var.h"											// 09/26/00 AM.
@@ -721,19 +722,49 @@ if (root)
 if (zones.empty())
 	{
 	std::_t_cerr << _T("[zone: no ") << ztype
-					 << _T(" nodes, so the passes after the zone line ran on the whole document.]")
-					 << std::endl;
+					 << _T(" nodes, so the passes after the zone line ran on the whole document")
+					 << (zoneRange_.empty() ? _T("") : _T(" and -ZONES had no zones to pick"))
+					 << _T(".]") << std::endl;
 	return whole();
 	}
 
 int result = RUN_OK;
 std::vector<ZoneLink> links;
 long nzones = (long) zones.size();
+
+// -ZONES: the zones outside the range are skipped, so they get only the
+// passes before the zone line. $isfirstzone and $islastzone mark the first
+// and last zone that runs.
+long firstRun = -1, lastRun = -1;
+for (long z = 0; z < nzones; ++z)
+	if (zoneSelected(z + 1))
+		{
+		if (firstRun < 0)
+			firstRun = z;
+		lastRun = z;
+		}
+if (!zoneRange_.empty())
+	{
+	long nrun = 0;
+	for (long z = firstRun; firstRun >= 0 && z <= lastRun; ++z)
+		if (zoneSelected(z + 1))
+			++nrun;
+	std::_t_cerr << _T("[zone: -ZONES runs ");
+	if (nrun)
+		std::_t_cerr << nrun;
+	else
+		std::_t_cerr << _T("none");
+	std::_t_cerr << _T(" of the ") << nzones << _T(" ") << ztype
+					 << _T(" zones.]") << std::endl;
+	}
+
 for (long z = 0; z < nzones && result == RUN_OK; ++z)
 	{
+	if (!zoneSelected(z + 1))
+		continue;
 	zoneNum_ = z + 1;
-	zoneFirst_ = (z == 0);
-	zoneLast_ = (z == nzones - 1);
+	zoneFirst_ = (z == firstRun);
+	zoneLast_ = (z == lastRun);
 	hidePath(root, zones[z], links);
 
 	result = zone();
@@ -772,19 +803,41 @@ return result;
 * NOTE:	With -DEV, the first ZONE_DUMPS zones write z001-ana075.tree and
 *			so on; 2,500 zones of a 130-pass analyzer would otherwise write
 *			325,000 trees. Later zones write no pass trees or pass times.
+*			With -ZONES, every zone that runs writes them instead.
 *			Called before iniPass() by interpreted and compiled passes.
 ********************************************/
 
 _TCHAR *Parse::zonePrefix(_TCHAR *prefix, bool &flogfiles, bool &ftimepass)
 {
-if (zoneNum_ > ZONE_DUMPS)
+if (zoneNum_ > ZONE_DUMPS && zoneRange_.empty())
 	flogfiles = ftimepass = false;
 else if (zoneNum_ > 0)
 	{
-	_stprintf(zprefix_, _T("z%03ld-%s"), zoneNum_ % 1000, prefix);
+	_stprintf(zprefix_, _T("z%03ld-%s"), zoneNum_, prefix);
 	prefix = zprefix_;
 	}
 return prefix;
+}
+
+/********************************************
+* FN:		SETZONERANGE
+* SUBJ:	Run only the zones a -ZONES spec names (see zonerange.h).
+********************************************/
+
+void Parse::setZoneRange(const _TCHAR *spec)
+{
+if (!parseZoneRange(spec, zoneRange_))
+	zoneRange_.clear();		// None or bad: every zone.
+}
+
+bool Parse::zoneSelected(long num)
+{
+if (zoneRange_.empty())
+	return true;
+for (size_t i = 0; i < zoneRange_.size(); ++i)
+	if (num >= zoneRange_[i].first && num <= zoneRange_[i].second)
+		return true;
+return false;
 }
 
 void Parse::execute()

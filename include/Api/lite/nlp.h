@@ -467,6 +467,14 @@ private:
 	long long runLimitMs_ = 0;
 	bool runStopped_ = false;
 
+	// ZONE RANGE (-ZONES): each new Parse runs only these zones; see
+	// Parse::setZoneRange. Empty is every zone.
+public:
+	void setZoneRange(const _TCHAR *spec) { zoneRange_ = spec ? spec : _T(""); }
+	const _TCHAR *getZoneRange() { return zoneRange_.c_str(); }
+private:
+	std::basic_string<_TCHAR> zoneRange_;
+
 // When code is well debugged and stable, can remove the stuff below.
 #ifndef STABLE_
 public:
