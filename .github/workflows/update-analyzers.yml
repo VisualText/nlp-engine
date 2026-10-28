@@ -5,9 +5,18 @@
 # Why a PR (not commit+tag+release like the analyzers/visualtext-files jobs):
 # nlp-engine has its own version (NLP_ENGINE_VERSION in nlp/main.cpp) and a
 # heavy per-platform release pipeline. A submodule bump should NOT auto-cut an
-# engine release, and shouldn't land on master unreviewed. So this opens a PR
-# you merge; merging it (a human action) DOES trigger the normal build/test
-# workflows, unlike a GITHUB_TOKEN auto-commit.
+# engine release, and shouldn't land on master untested. So this opens a PR
+# with auto-merge on: it merges itself once the required builds pass.
+#
+# The PR is opened with CLASSIC_PAT, not GITHUB_TOKEN. A PR opened with
+# GITHUB_TOKEN never starts other workflows, so the required builds never ran
+# and every bump sat blocked until merged by hand with the admin override.
+#
+# A parse-en-us change can change the parse-en-us final.tree/out.xml the builds
+# compare against. Then the PR stays open with a red check: update the
+# baseline on the PR branch and it merges itself.
+#
+# Needs "Allow auto-merge" on in the repo settings.
 #
 # Event-driven: fired by analyzers (event-type analyzers-release) when its
 # parse-en-us bump releases — no more nightly polling. Still runnable by hand.
@@ -42,8 +51,10 @@ jobs:
           echo "Status:"; git submodule status analyzers
 
       - name: Open PR if the pointer moved
+        id: cpr
         uses: peter-evans/create-pull-request@v6
         with:
+          token: ${{ secrets.CLASSIC_PAT }}
           branch: auto/bump-analyzers
           delete-branch: true
           title: "Auto: bump analyzers submodule to latest upstream"
@@ -53,5 +64,13 @@ jobs:
             commit (which includes whatever has been released into analyzers,
             e.g. parse-en-us fixes).
 
-            Review the pointer change and merge. If this PR is empty, analyzers
-            was already current.
+            Auto-merge is on: this merges itself once the required builds
+            pass. If a build fails on the parse-en-us final.tree/out.xml
+            baseline, the parser's output changed: update the baseline on
+            this branch.
+
+      - name: Turn on auto-merge
+        if: steps.cpr.outputs.pull-request-number
+        env:
+          GH_TOKEN: ${{ secrets.CLASSIC_PAT }}
+        run: gh pr merge --auto --merge "${{ steps.cpr.outputs.pull-request-number }}" -R "$GITHUB_REPOSITORY"
