@@ -42,12 +42,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: recursive
+          submodules: true   # not recursive: only the analyzers pointer is bumped
           fetch-depth: 0
 
       - name: Move analyzers to latest upstream
         run: |
-          git submodule update --remote --recursive analyzers
+          git submodule update --remote analyzers
           echo "Status:"; git submodule status analyzers
 
       - name: Open PR if the pointer moved
