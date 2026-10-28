@@ -168,7 +168,8 @@ runs once per node of that type:
 - The KB and `G()` carry from zone to zone. Node offsets count from the
   start of the document, and there is one set of output files.
 - After its passes a zone keeps its node, attributes and span, and its
-  subtree is freed. Memory goes by the largest zone, not the document.
+  subtree is freed. Memory goes by the largest zone and by the tree the
+  passes before the `zone` line build, which is of the whole document.
 - The passes after an `endzone` line run once, after the last zone, on the
   zone stubs and the whole KB: the place for work that belongs to the whole
   document, such as dumping the KB.
@@ -176,6 +177,14 @@ runs once per node of that type:
   `_TEXTZONE` nodes into sections); that stops the run with an error.
 - With `-DEV`, the first three zones write their pass trees as
   `z001-ana040.tree` and so on.
+- `-ZONES 40-45` runs only those zones (also `-ZONES 7` or `-ZONES 3,40-45`;
+  numbers from 1, as in the tree names). The other zones get only the passes
+  before the `zone` line, so a problem in zone 4,000 of a book can be rerun in
+  seconds. `$isfirstzone` and `$islastzone` mark the first and last zone that
+  runs, and with `-DEV` every zone that runs writes its pass trees. The KB and
+  `G()` start without what the skipped zones would have added, so a zone that
+  depends on earlier ones can come out differently than in a full run.
+  (Since 4.2.50.)
 - Compiled analyzers run zones the same way (since 4.2.49; before that they
   ignored the `zone` and `endzone` lines).
 

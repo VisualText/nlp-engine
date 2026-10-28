@@ -1463,6 +1463,7 @@ Parse *parse;					// The current text analysis instance.
 parse = new Parse();															// 05/13/99 AM.
 parse->nlp_ = this;															// 06/25/03 AM.
 parse->setRunLimit(runLimitMs_);	// 0 = none; see Parse::overBudget.	// 10/25/26 DD.
+parse->setZoneRange(zoneRange_.c_str());	// -ZONES; empty = every zone.
 parse->htab_ = this->htab_;												// 06/25/03 AM.
 
 parse->setEana(eana);														// 10/13/99 AM.
@@ -1610,6 +1611,7 @@ Parse *parse;					// The current text analysis instance.
 parse = new Parse();															// 05/13/99 AM.
 parse->nlp_ = this;															// 06/25/03 AM.
 parse->setRunLimit(runLimitMs_);	// 0 = none; see Parse::overBudget.	// 10/25/26 DD.
+parse->setZoneRange(zoneRange_.c_str());	// -ZONES; empty = every zone.
 parse->htab_ = this->htab_;												// 06/25/03 AM.
 
 parse->setEana(eana);														// 10/13/99 AM.

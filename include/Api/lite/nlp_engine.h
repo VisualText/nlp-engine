@@ -179,6 +179,13 @@ public:
     long long getRunLimit();
     bool lastRunStopped();
 
+    // Zone mode: run only these zones of each input, eg "40-45" or
+    // "3,40-45" (zone numbers from 1, as in z040-ana###.tree). The others
+    // get only the passes before the zone line. Empty or 0 is every zone.
+    // False, and no change, if the spec is not that form.
+    bool setZoneRange(const _TCHAR *spec);
+    const _TCHAR *getZoneRange();
+
 private:
     void analyzeFile(const std::string &file, _TCHAR *outdir, std::_t_ofstream *fp);
     int createDir(_TCHAR *dirPath);
@@ -194,4 +201,5 @@ private:
     // At the end of the class, so its layout is unchanged before it.
     std::basic_string<_TCHAR> m_datum;    // G("$datum") for analyses.
     long long m_runLimitMs = 0;           // setRunLimit; 0 = none.
+    std::basic_string<_TCHAR> m_zoneRange; // setZoneRange; empty = every zone.
 };

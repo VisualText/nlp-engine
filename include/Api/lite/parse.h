@@ -23,6 +23,7 @@ All rights reserved.
 #include <set>
 #include <chrono>
 #include <functional>
+#include <vector>
 
 typedef void TREE;	// 07/07/03 AM.
 typedef void LTREE;	// 07/07/03 AM.
@@ -695,6 +696,14 @@ private:
 	bool runStopped_ = false;
 
 	_TCHAR zprefix_[32] = {0};	// zonePrefix()'s "z001-ana".
+
+	// ZONE RANGE (-ZONES 40-45): run only these zones; the others get only
+	// the passes before the zone line. Empty, the default, is every zone.
+public:
+	void setZoneRange(const _TCHAR *spec);
+private:
+	bool zoneSelected(long num);
+	std::vector<std::pair<long,long>> zoneRange_;	// [first, last], from 1.
 
 #ifndef STABLE_
 public:

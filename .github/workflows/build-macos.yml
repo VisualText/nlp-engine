@@ -226,6 +226,36 @@ jobs:
           done
           echo "[zone-mode] one run of the zone passes per zone, zones kept as stubs"
 
+      - name: -ZONES runs only the zones it names
+        shell: bash
+        run: |
+          set -eo pipefail
+          # -ZONES 2-3: zone 1 gets only the passes before the zone line, so
+          # it keeps its tokens and is no stub. $isfirstzone and $islastzone
+          # mark the first and last zone that runs, and -DEV writes trees for
+          # every zone that runs.
+          FIX=.github/workflows/tests/zone-mode
+          rm -rf "$FIX/logs" "$FIX"/input/*_log "$FIX/output"
+          out=$(./bin/nlp -ANA "$FIX" -WORK ./ -DEV -ZONES 2-3 "$FIX/input/text.txt" | tr -d '\r')
+          want=$(printf '%s\n' \
+            "zone 1: first=1 last=0 lines under root=1 words=3 text=three four five" \
+            "zone 2: first=0 last=1 lines under root=1 words=1 text=six" \
+            "summary: zones=2 stubs=2 first=0 last=0")
+          if [ "$out" != "$want" ]; then
+            echo "FAIL(-ZONES): stdout was:"; echo "$out"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          L="$FIX/input/text.txt_log"
+          if [ -f "$L/z001-ana003.tree" ] || [ ! -f "$L/z002-ana003.tree" ] || [ ! -f "$L/z003-ana003.tree" ]; then
+            echo "FAIL(-ZONES): wrong zone trees:"; ls "$L"; exit 1
+          fi
+          # A list, and a spec that is not zone numbers.
+          out=$(./bin/nlp -ANA "$FIX" -WORK ./ -ZONES 1,3 "$FIX/input/text.txt" | tr -d '\r' | grep -c '^zone ' || true)
+          if [ "$out" != "2" ]; then echo "FAIL(-ZONES 1,3): ran $out zones"; exit 1; fi
+          if ./bin/nlp -ANA "$FIX" -WORK ./ -ZONES 3-1 "$FIX/input/text.txt" > /dev/null 2>&1; then
+            echo "FAIL(-ZONES 3-1): a bad range was accepted"; exit 1
+          fi
+          echo "[-ZONES] only the named zones run"
+
       - name: A rec pass that never settles is stopped
         shell: bash
         run: |
