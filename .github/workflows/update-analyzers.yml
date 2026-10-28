@@ -73,4 +73,14 @@ jobs:
         if: steps.cpr.outputs.pull-request-number
         env:
           GH_TOKEN: ${{ secrets.CLASSIC_PAT }}
-        run: gh pr merge --auto --merge "${{ steps.cpr.outputs.pull-request-number }}" -R "$GITHUB_REPOSITORY"
+          PR: ${{ steps.cpr.outputs.pull-request-number }}
+        # GitHub refuses auto-merge on a PR that is already mergeable ("clean
+        # status"); with nothing to wait for, merge it now. Any other failure
+        # stays a failure: a plain merge with this admin token would bypass
+        # the required builds.
+        run: |
+          if ! out=$(gh pr merge --auto --merge "$PR" -R "$GITHUB_REPOSITORY" 2>&1); then
+            echo "$out"
+            echo "$out" | grep -q "clean status" || exit 1
+            gh pr merge --merge "$PR" -R "$GITHUB_REPOSITORY"
+          fi
