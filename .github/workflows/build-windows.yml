@@ -324,9 +324,11 @@ jobs:
           # every zone that runs.
           FIX=.github/workflows/tests/zone-mode
           rm -rf "$FIX/logs" "$FIX"/input/*_log "$FIX/output"
-          out=$(./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ -DEV -ZONES 2-3 "$FIX/input/text.txt" | tr -d '')
-          want=$(printf '%s
-'             "zone 1: first=1 last=0 lines under root=1 words=3 text=three four five"             "zone 2: first=0 last=1 lines under root=1 words=1 text=six"             "summary: zones=2 stubs=2 first=0 last=0")
+          out=$(./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ -DEV -ZONES 2-3 "$FIX/input/text.txt" | tr -d '\r')
+          want=$(printf '%s\n' \
+            "zone 1: first=1 last=0 lines under root=1 words=3 text=three four five" \
+            "zone 2: first=0 last=1 lines under root=1 words=1 text=six" \
+            "summary: zones=2 stubs=2 first=0 last=0")
           if [ "$out" != "$want" ]; then
             echo "FAIL(-ZONES): stdout was:"; echo "$out"; echo "wanted:"; echo "$want"; exit 1
           fi
@@ -335,7 +337,7 @@ jobs:
             echo "FAIL(-ZONES): wrong zone trees:"; ls "$L"; exit 1
           fi
           # A list, and a spec that is not zone numbers.
-          out=$(./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ -ZONES 1,3 "$FIX/input/text.txt" | tr -d '' | grep -c '^zone ' || true)
+          out=$(./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ -ZONES 1,3 "$FIX/input/text.txt" | tr -d '\r' | grep -c '^zone ' || true)
           if [ "$out" != "2" ]; then echo "FAIL(-ZONES 1,3): ran $out zones"; exit 1; fi
           if ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ -ZONES 3-1 "$FIX/input/text.txt" > /dev/null 2>&1; then
             echo "FAIL(-ZONES 3-1): a bad range was accepted"; exit 1
