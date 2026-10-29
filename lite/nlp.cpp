@@ -460,8 +460,14 @@ _TCHAR errout[MAXMSG];															// 03/22/99 AM.
 _TCHAR *logdirname = _T("logs");													// 05/19/01 AM.
 _TCHAR logdir[MAXSTR];															// 05/19/01 AM.
 _stprintf(logdir, _T("%s%c%s"), appdir,DIR_CH,logdirname);				// 05/19/01 AM.
-if (!dir_exists(logdir))													// 05/19/01 AM.
-	make_dir(logdir);															// 05/19/01 AM.
+// std::filesystem, not dir_exists()/make_dir(): both are no-ops on
+// Linux/macOS (see NLP-ENGINE-527 below), so logs/ was never made there
+// and make_ana.log, cgerr.log and file.log silently failed to open. A
+// failed analyzer build then left no diagnostics at all off Windows.
+{
+std::error_code ec;
+std::filesystem::create_directory(logdir, ec);
+}
 
 
 // SOME GLOBAL INITS.														// 09/27/00 AM.

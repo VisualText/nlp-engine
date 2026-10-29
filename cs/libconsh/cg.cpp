@@ -3888,6 +3888,10 @@ bool CG::readDict(std::string file, std::vector<std::filesystem::path> kbfiles) 
 	allDictStream_.open(file, std::ios::in);
 
 	while (std::getline(allDictStream_, line)) {
+		// A CRLF file (eg a Windows checkout) read on Linux/macOS keeps
+		// the '\r', which would end up in the last word or value.
+		if (!line.empty() && line.back() == '\r')
+			line.pop_back();
 		_TCHAR *buf = line.data();
 		lineCount++;
 		// Blank out /* ... */ before the line lexer sees it. A comment-only
@@ -4262,6 +4266,11 @@ bool CG::readKBB(std::string file) {
 	bool inBlock = false;				// Open "/*" carried between lines.
 
 	while (std::getline(streamer, line)) {
+		// A CRLF file (eg a Windows checkout) read on Linux/macOS keeps
+		// the '\r': the concept on every line was then named "verbs\r"
+		// and findconcept("verbs") came back null, with no error.
+		if (!line.empty() && line.back() == '\r')
+			line.pop_back();
 		_TCHAR *buf = line.data();
 		// Blank out /* ... */ before the line lexer sees it.	// 07/31/26 DD.
 		// Only a line the stripper actually touched is dropped when it comes
@@ -5194,6 +5203,9 @@ int32_t length2 = strp.length();
 bool done = false;
 
 while (allDictStream_.getline(buf, MAXMSG) && !done) {
+	size_t blen = strlen(buf);
+	if (blen && buf[blen-1] == '\r')	// CRLF file read on Linux/macOS.
+		buf[blen-1] = '\0';
 	icu::StringPiece sp(buf);
 	const char *line = sp.data();
 	int32_t length = sp.length();
