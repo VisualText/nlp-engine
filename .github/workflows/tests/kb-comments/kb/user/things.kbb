@@ -1,0 +1,8 @@
+# a knowledge base with comments (#817)
+root
+  t1: a=1
+  t2 # a concept with a comment and no colon
+  # a comment line between concepts
+    t2child
+  t3: c="x#y", d=4
+  t4: e=5, f="a # b" # trailing

@@ -992,6 +992,7 @@ switch (arg->getType())
 				else																// 10/01/01 AM.
 				ofile 
 						<< sem->getFloat();									// 09/09/01 AM.
+				break;		// Was missing: a float also printed "<ostream>" (#818).
 			case RSOSTREAM:													// 05/21/01 AM.
 				ofile << _T("<ostream>");							// 05/21/01 AM.
 				break;															// 05/21/01 AM.

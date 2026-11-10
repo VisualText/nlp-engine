@@ -1,0 +1,19 @@
+@CODE
+"output.txt" << "alpha pos=" << strval(dictfindword("alpha"), "pos") << "\n";
+"output.txt" << "beta pos=" << strval(dictfindword("beta"), "pos") << "\n";
+"output.txt" << "pound sym=" << strval(dictfindword("#"), "sym") << "\n";
+"output.txt" << "gamma=" << conceptname(dictfindword("gamma")) << "\n";
+L("r") = findconcept(findroot(), "root");
+"output.txt" << "root:";
+L("c") = down(L("r"));
+while (L("c")) {
+    "output.txt" << " " << conceptname(L("c"));
+    L("c") = next(L("c"));
+}
+"output.txt" << "\n";
+"output.txt" << "t2 child=" << conceptname(down(findconcept(L("r"), "t2"))) << "\n";
+L("t3") = findconcept(L("r"), "t3");
+"output.txt" << "t3 c=" << strval(L("t3"), "c") << " d=" << numval(L("t3"), "d") << "\n";
+L("t4") = findconcept(L("r"), "t4");
+"output.txt" << "t4 e=" << numval(L("t4"), "e") << " f=" << strval(L("t4"), "f") << "\n";
+@@CODE
