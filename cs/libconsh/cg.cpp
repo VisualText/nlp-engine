@@ -4005,7 +4005,9 @@ bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, i
 				backSlash = false;
 			}
 			else if (!inString) {
-				if (c == '#') {
+				// A # starts a comment that runs to the end of the line; \# is a
+				// literal pound sign (handled as escaped punctuation below).
+				if (c == '#' && !backSlash) {
 					comment = true;
 					break;
 				}
@@ -4073,8 +4075,10 @@ bool CG::parseDictLine(_TCHAR *buf, CONCEPT *ambigKB, const std::string &file, i
 			tokint++;
 		}
 		
-		// If comment, skip line
-		if (comment)
+		// A line that is only a comment adds nothing. A trailing comment ends
+		// the line but keeps the entry before it: "alpha pos=noun # note"
+		// used to drop alpha entirely (#816).
+		if (comment && tokint == 0)
 			return true;
 
 		if (inString) {
@@ -4319,6 +4323,28 @@ void CG::parseKBBLine(_TCHAR *buf, std::vector<CONCEPT *> &cons, int32_t &index,
 		// on a line (["a","b"] loaded as a, 0, b, 0).
 		bool quoted = false;
 
+		// Cut a trailing # comment off the line before parsing it: the first #
+		// outside double quotes ends the line, and the whitespace before it goes
+		// too. The parser below used to stop at any #, even inside "x#y", and a
+		// concept with a comment but no colon ("t2 # note") was never created,
+		// because a concept is only made at ':' or at the end of the line (#817).
+		{
+			bool inQuote = false;
+			for (_TCHAR *p = buf; *p; ++p) {
+				if (*p == '\\' && p[1]) {
+					++p;					// skip the escaped character
+				} else if (*p == '"') {
+					inQuote = !inQuote;
+				} else if (*p == '#' && !inQuote) {
+					*p = '\0';
+					while (p > buf && (p[-1] == ' ' || p[-1] == '\t'
+										|| p[-1] == '\r' || p[-1] == '\n'))
+						*--p = '\0';
+					break;
+				}
+			}
+		}
+
 		icu::StringPiece sp(buf);
 		const char *line = sp.data();
 		int32_t length = sp.length();
@@ -4369,14 +4395,13 @@ void CG::parseKBBLine(_TCHAR *buf, std::vector<CONCEPT *> &cons, int32_t &index,
 
 		// Get the rest
 		while (c) {
-			if (c == '#') {
-				break;
-			}
+			// (A # that starts a comment was already cut off above; a # left
+			// here is inside double quotes and is part of the value.)
 			// A space ends an unquoted attribute value in the inline KBB form
 			// "attr=val attr=val ..." (eg "m01: pos=verb vform=past tense=past").
 			// Without this, each space just reset start and every value but the
 			// last one (which EOL terminates) was silently dropped.
-			else if (conceptDone && attrFlag && !openDouble && !openSquare
+			if (conceptDone && attrFlag && !openDouble && !openSquare
 						&& unicu::isWhiteSpace(c)) {
 				take(val, end-start-1);
 				if (quoted)

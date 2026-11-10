@@ -1,0 +1,5 @@
+# a dictionary with comments (#816)
+alpha pos=noun # a trailing comment keeps the entry
+beta pos=verb
+\# sym=pound # an escaped pound sign is a word, not a comment
+gamma  # a bare word with a comment

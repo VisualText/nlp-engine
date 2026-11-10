@@ -255,6 +255,37 @@ jobs:
           fi
           echo "[long lines] kbb/dict lines and values of any length load; NLP++ errors reach stderr"
 
+      - name: "# comments in .dict and .kbb keep the entry before them (#816 #817)"
+        shell: bash
+        run: |
+          set -eo pipefail
+          # A trailing # comment dropped the whole .dict entry before it (#816).
+          # In a .kbb, a concept with a comment and no colon was never created,
+          # and a # inside a quoted value ended the line (#817). \# in a .dict
+          # is a literal pound sign.
+          FIX=.github/workflows/tests/kb-comments
+          rm -rf "$FIX/logs" "$FIX/input/text.txt_log" "$FIX/output"
+          mkdir -p "$FIX/logs"
+          ./bin/Release/nlp.exe -ANA "$FIX" -WORK ./ "$FIX/input/text.txt"
+          OUT="$FIX/input/text.txt_log/output.txt"
+          if [ ! -f "$OUT" ]; then
+            echo "FAIL(kb-comments): no output.txt -- the analyzer did not build"; exit 1
+          fi
+          got=$(tr -d '\r' < "$OUT")
+          want=$(printf '%s\n' \
+            'alpha pos=noun' \
+            'beta pos=verb' \
+            'pound sym=pound' \
+            'gamma=gamma' \
+            'root: t1 t2 t3 t4' \
+            't2 child=t2child' \
+            't3 c=x#y d=4' \
+            't4 e=5 f=a # b')
+          if [ "$got" != "$want" ]; then
+            echo "FAIL(kb-comments): output.txt was:"; echo "$got"; echo "wanted:"; echo "$want"; exit 1
+          fi
+          echo "[kb-comments] # comments in .dict and .kbb files"
+
       - name: Inputs over 2 GB are refused with a message
         shell: bash
         run: |
