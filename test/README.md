@@ -15,7 +15,7 @@ The NLPPlus package uses the NLP Engine C++ libraries and is built using This mo
 and [nanobind](https://nanobind.readthedocs.io/en/latest/index.html) modules. It was originally designed by
 Canadian David Huggins-Daines who was contracted by Conceptual Systems.
 
-The repository for the Python NLPPlus package is found here: [https://github.com/VisualText/py-package-nlpengine](https://github.com/VisualText/py-package-nlpengine).
+The repository for the Python NLPPlus package is found here: [https://github.com/VisualText/py-package-nlpengine](https://github.com/VisualText/py-package-nlpengine). The package itself is published on [PyPI](https://pypi.org/project/NLPPlus/).
 
 ### HPCC Systems
 
