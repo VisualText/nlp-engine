@@ -61,8 +61,8 @@ Version 3 is the release line in which NLP++ became **compilable, cloud-buildabl
 - New `loadkbb` and `loaddict` NLP++ functions.
 
 ### Native language bindings
-- **Node.js** — `npm install nlpplus` embeds the engine directly (new in Version 3).
-- **Python** — `pip install NLPPlus` native bindings gained the compile / cloud-compile APIs (`compile()`, `cloud_compile()`).
+- **[Node.js](https://www.npmjs.com/package/nlpplus)** — `npm install nlpplus` embeds the engine directly (new in Version 3).
+- **[Python](https://pypi.org/project/NLPPlus/)** — `pip install NLPPlus` native bindings gained the compile / cloud-compile APIs (`compile()`, `cloud_compile()`).
 
 ### NLP++ language & robustness
 - `_xVAR("attribute")` match-list special for attribute access in rules.
