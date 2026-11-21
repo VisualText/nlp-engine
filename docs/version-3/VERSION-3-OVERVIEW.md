@@ -69,14 +69,14 @@ The engine has run on Windows, Linux, and macOS for years. What was *new* in v3 
 ## Native language bindings
 
 ### Node.js — `npm-package-nlpengine` (`nlpplus`) — **NEW in v3**
-**Repo:** [VisualText/npm-package-nlpengine](https://github.com/VisualText/npm-package-nlpengine) · **v1.0.5** · Node native addon (node-addon-api).
+**Repo:** [VisualText/npm-package-nlpengine](https://github.com/VisualText/npm-package-nlpengine) · **Package:** [nlpplus on npm](https://www.npmjs.com/package/nlpplus) · **v1.0.5** · Node native addon (node-addon-api).
 Version 3's brand-new package — it brings the engine to the JavaScript/Node ecosystem for the first time.
 - **Scaffolded from scratch with Claude**; Windows build bundles ICU runtime DLLs so the addon is self-contained.
 - Tests isolated per-process to survive the engine's process-global teardown.
 - `cloudCompile` multipart upload; publish switched to **npm trusted publishing (OIDC)**.
 
 ### Python — `py-package-nlpengine` (`NLPPlus`) — pre-existing, enhanced in v3
-**Repo:** [VisualText/py-package-nlpengine](https://github.com/VisualText/py-package-nlpengine) · **v2.0.9** · pip-installable native bindings (no subprocess).
+**Repo:** [VisualText/py-package-nlpengine](https://github.com/VisualText/py-package-nlpengine) · **Package:** [NLPPlus on PyPI](https://pypi.org/project/NLPPlus/) · **v2.0.9** · pip-installable native bindings (no subprocess).
 The Python package predates v3; in this cycle it gained the new compile workflow.
 - Native C++ bindings (pybind / scikit-build-core), embeds the **nlp-engine v3.x** submodule.
 - **New compile-mode and cloud-compile APIs** (`compile()`, `cloud_compile()`).
